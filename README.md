@@ -47,7 +47,7 @@ User Authentication:
 Scheduling: 
 - `classes`: index page for students to search for class sessions
 - `classes/:id`: detail / signup page for a class session
-- `schedule`: edit page for volunteers to create/edit schedules
+- `schedule`: show/edit page for volunteers to create/edit schedules
 
 ## Models
 
