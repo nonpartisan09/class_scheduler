@@ -18,14 +18,15 @@ class Tutor < User
 			f_name: Faker::Name.first_name,
 			l_name: Faker::Name.last_name,
 			phone_number: Faker::PhoneNumber.phone_number,
-			language: ["English", "Spanish"].sample
+			language: ["English", "Spanish"].sample,
+			schedule: Schedule.random
 		})
 	end
 
 	private
 
 	def ensure_schedule
-		self.schedule = Schedule.new
+		self.schedule ||= Schedule.new
 	end
 
 end
