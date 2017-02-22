@@ -7,7 +7,7 @@ class Tutor < User
 	end
 
 	def self.by_availability(schedule = {})
-		Tutor.joins(:schedule).where(schedules: schedule)
+		Tutor.joins(:schedules).where(schedules: schedule)
 	end
 
 	# for testing
@@ -19,7 +19,7 @@ class Tutor < User
 			l_name: Faker::Name.last_name,
 			phone_number: Faker::PhoneNumber.phone_number,
 			language: ["English", "Spanish"].sample,
-			klasses: [Klass.seed]
+			klasses: [Klass.seed, Klass.seed]
 		})
 	end
 

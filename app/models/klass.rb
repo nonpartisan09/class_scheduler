@@ -4,16 +4,20 @@ class Klass < ApplicationRecord
 
 	after_initialize :ensure_schedule
 
-	NAMES = %w(Citizenship English)
+	CATEGORIES = ["Citizenship", "English"]
+	LANGUAGES = ["English", "Spanish"]
 
 	validates :category, :schedule, :tutor, presence: true
-	validates :category, inclusion: {in: NAMES}
+	validates :category, inclusion: {in: CATEGORIES}
+	validates :language, inclusion: {in: LANGUAGES}
 
 	def self.seed
 		Klass.new ({
-			category: ["Citizenship", "English"].sample,
+			category: CATEGORIES.sample,
 			title: ["Intro", "Level II"].sample,
-			language: ["English", "Spanish"].sample
+			description: Faker::Lorem.paragraph,
+			language: LANGUAGES.sample,
+			schedule: Schedule.random
 		})
 	end
 
