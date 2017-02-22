@@ -1,0 +1,2 @@
+class Klass < ApplicationRecord
+end
