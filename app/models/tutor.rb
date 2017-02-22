@@ -1,6 +1,6 @@
 class Tutor < User
-	has_one :schedule, dependent: :destroy
-	after_initialize :ensure_schedule
+	has_many :klasses, dependent: :destroy
+	has_many :schedules, through: :klasses, inverse_of: :tutor, dependent: :destroy
 
 	def set_schedule(schedule = {})
 		self.schedule.update(schedule)
@@ -19,14 +19,9 @@ class Tutor < User
 			l_name: Faker::Name.last_name,
 			phone_number: Faker::PhoneNumber.phone_number,
 			language: ["English", "Spanish"].sample,
-			schedule: Schedule.random
+			klasses: [Klass.seed]
 		})
 	end
 
-	private
-
-	def ensure_schedule
-		self.schedule ||= Schedule.new
-	end
 
 end

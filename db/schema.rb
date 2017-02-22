@@ -10,13 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170222191627) do
+ActiveRecord::Schema.define(version: 20170222205901) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "schedules", force: :cascade do |t|
+  create_table "klasses", force: :cascade do |t|
     t.integer  "tutor_id"
+    t.string   "type",        null: false
+    t.string   "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.string   "title",       null: false
+    t.index ["tutor_id"], name: "index_klasses_on_tutor_id", using: :btree
+    t.index ["type"], name: "index_klasses_on_type", using: :btree
+  end
+
+  create_table "schedules", force: :cascade do |t|
+    t.integer  "klass_id"
     t.boolean  "sun_mor",    default: false, null: false
     t.boolean  "sun_aft",    default: false, null: false
     t.boolean  "sun_eve",    default: false, null: false
@@ -40,7 +51,7 @@ ActiveRecord::Schema.define(version: 20170222191627) do
     t.boolean  "sat_eve",    default: false, null: false
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
-    t.index ["tutor_id"], name: "index_schedules_on_tutor_id", using: :btree
+    t.index ["klass_id"], name: "index_schedules_on_klass_id", using: :btree
   end
 
   create_table "users", force: :cascade do |t|

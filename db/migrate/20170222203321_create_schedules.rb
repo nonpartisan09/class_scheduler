@@ -1,7 +1,7 @@
 class CreateSchedules < ActiveRecord::Migration[5.0]
   def change
     create_table :schedules do |t|
-    	t.references :tutor
+    	t.references :klass
     	t.boolean :sun_mor, null: false, default: false
     	t.boolean :sun_aft, null: false, default: false
     	t.boolean :sun_eve, null: false, default: false

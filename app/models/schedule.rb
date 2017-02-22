@@ -1,5 +1,6 @@
 class Schedule < ApplicationRecord
-	belongs_to :tutor
+	belongs_to :klass
+	has_one :tutor, through: :klass
 
 	def self.random
 		sched = self.new
