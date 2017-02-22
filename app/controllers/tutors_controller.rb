@@ -28,6 +28,7 @@ class TutorsController < ApplicationController
 
     respond_to do |format|
       if @tutor.save
+        sign_in @tutor
         format.html { redirect_to @tutor, notice: 'Tutor was successfully created.' }
         format.json { render :show, status: :created, location: @tutor }
       else
@@ -69,6 +70,8 @@ class TutorsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def tutor_params
-      params.fetch(:tutor, {})
+      params
+        .require(:tutor)
+        .permit(:f_name, :l_name, :email, :password)
     end
 end

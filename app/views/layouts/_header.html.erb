@@ -1,0 +1,4 @@
+<nav id="header">
+	<%= current_user ? "Hi #{current_user.f_name}!" : 'no current user' %>
+	<%= button_to "Sign out", destroy_user_session_path, method: :delete %>
+</nav>
