@@ -4,9 +4,9 @@ class AddColumnsToUsers < ActiveRecord::Migration[5.0]
   	add_column :users, :f_name, :string, null: false
   	add_column :users, :l_name, :string, null: false
   	add_column :users, :type, :string, 
-  		null: false, default: "student"
+  		null: false, default: "Student"
   	add_column :users, :language, :string, 
-  		null: false, default: "english"
+  		null: false, default: "English"
 
   	add_index :users, :f_name
   	add_index :users, :l_name
