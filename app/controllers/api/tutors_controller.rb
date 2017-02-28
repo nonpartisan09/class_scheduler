@@ -13,7 +13,7 @@ class Api::TutorsController < ApplicationController
 	end
 
 	def index
-		@tutors = Tutor.all.includes(:schedules)
+		@tutors = Tutor.joins(:schedules).all
 
 		unless tutor_search_params.empty?
 			@tutors = @tutors.where(tutor_search_params)
@@ -26,9 +26,26 @@ class Api::TutorsController < ApplicationController
 		unless schedule_params.empty?
 			@tutors = @tutors.where(schedules: schedule_params)
 		end
+		# checks class description field by presence of keywords instead of exact match
+
+		if keywords
+			@tutors = filter_by_keywords(@tutors, keywords.split(" ").map(&:strip))
+		end
+
 	end
 
 	private
+
+	def keywords
+		params.fetch(:class, {}).permit(:description)[:description]
+	end
+
+	def filter_by_keywords(query, keywords)
+		keywords.each do |kw|
+			query = query.where("klasses.description like ?", "%#{kw}%")
+		end
+		query
+	end
 
 	def tutor_params
 		params.require(:tutor).permit(
@@ -45,13 +62,8 @@ class Api::TutorsController < ApplicationController
 
 	def tutor_search_params
 		params.fetch(:tutor, {}).permit(
-			:email, 
-			:phone_number, 
 			:f_name, 
 			:l_name, 
-			:profile_src, 
-			:type, 
-			:language
 		).to_h
 	end
 
@@ -60,7 +72,7 @@ class Api::TutorsController < ApplicationController
 			:id,
 			:category,
 			:title,
-			:description
+			:keywords
 		).to_h
 	end
 
