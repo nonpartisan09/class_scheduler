@@ -1,4 +1,5 @@
 class Api::TutorsController < ApplicationController
+  before_action :authenticate_api_tutor!, except: [:create]
 	def create
 		@tutor = Tutor.new(tutor_params)
 		if @tutor.save
