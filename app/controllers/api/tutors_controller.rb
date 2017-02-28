@@ -8,6 +8,16 @@ class Api::TutorsController < ApplicationController
 		end
 	end
 
+	def update
+		@tutor = Tutor.find(params[:id])
+
+		if @tutor.update(tutor_params)
+			render 'api/tutors/show'
+		else
+			render json: @tutor.errors, status: :unprocessable_entity
+		end
+	end
+
 	def show
 		@tutor = Tutor.find(params[:id])
 	end
@@ -26,6 +36,7 @@ class Api::TutorsController < ApplicationController
 		unless schedule_params.empty?
 			@tutors = @tutors.where(schedules: schedule_params)
 		end
+
 		# checks class description field by presence of keywords instead of exact match
 
 		if keywords
