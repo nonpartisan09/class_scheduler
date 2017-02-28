@@ -6,10 +6,6 @@ class Tutor < User
 		self.schedule.update(schedule)
 	end
 
-	def self.by_availability(schedule = {})
-		Tutor.joins(:schedules).where(schedules: schedule)
-	end
-
 	# for testing
 	def self.seed
 		self.new ({

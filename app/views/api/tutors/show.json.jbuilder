@@ -1,0 +1,1 @@
+json.partial! 'api/tutors/tutor', tutor: @tutor
