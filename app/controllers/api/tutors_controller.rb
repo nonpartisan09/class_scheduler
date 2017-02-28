@@ -26,9 +26,6 @@ class Api::TutorsController < ApplicationController
 		unless schedule_params.empty?
 			@tutors = @tutors.where(schedules: schedule_params)
 		end
-
-		fail
-
 	end
 
 	private
