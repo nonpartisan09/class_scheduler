@@ -1,0 +1,36 @@
+{
+  "name": "class_scheduler",
+  "version": "1.0.0",
+  "description": "**Problem:** There is a strong demand from immigrants for naturalization classes in NYC. There is also a large supply of volunteers offering to teach such classes. The bottleneck is that connecting immigrants and volunteers is done manually by non-profit staff, who do not have the capacity to provide matching/scheduling services.",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs",
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/loschorts/class_scheduler.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/loschorts/class_scheduler/issues"
+  },
+  "homepage": "https://github.com/loschorts/class_scheduler#readme",
+  "devDependencies": {
+    "babel-core": "^6.24.0",
+    "babel-loader": "^6.4.0",
+    "babel-preset-es2015": "^6.24.0",
+    "babel-preset-react": "^6.23.0",
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2",
+    "react-redux": "^5.0.3",
+    "react-router": "^4.0.0",
+    "redux": "^3.6.0",
+    "webpack": "^2.2.1"
+  }
+}

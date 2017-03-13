@@ -15,3 +15,8 @@
 
 # Ignore Byebug command history file.
 .byebug_history
+
+# Ignore Webpack Bundle
+
+node_modules/
+bundle.*
