@@ -1,5 +1,6 @@
 import React from 'react';
 import {render} from 'react-dom';
+import 'whatwg-fetch';
 
 import configureStore from './store/configure_store';
 
@@ -10,7 +11,6 @@ import AppProvider from './components/app_provider';
 import AppRouter from './components/app_router';
 
 const history = createHistory()
-
 const store = configureStore(history);
 
 const App = () => (

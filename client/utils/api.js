@@ -1,0 +1,1 @@
+const getTutors () => fetch('api/tutors').then(r => r.json())
