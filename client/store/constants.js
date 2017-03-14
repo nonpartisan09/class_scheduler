@@ -1,7 +1,10 @@
 const keys = [
-	'RECEIVE_CURRENT_USER'
+	// session
+	'RECEIVE_CURRENT_USER',
+	// language
+	'SET_LANGUAGE'
 ]
 
 const constants = {}
-key.forEach(key => constants[key] = key)
+keys.forEach(key => constants[key] = key)
 export default constants;

@@ -23,7 +23,10 @@ export const translatable = dict => component => {
 	const mapState = ({language}, ownProps) => ({language: ownProps.language || language.default})
 	class Translatable extends React.Component {
 		render(){
-			return React.createElement(component, {tr: new Translator(dict, this.props.language)})
+			return React.createElement(component, Object.assign(
+				{tr: new Translator(dict, this.props.language)}, 
+				this.props)
+			)
 		}
 	}
 	return connect(mapState)( Translatable )
