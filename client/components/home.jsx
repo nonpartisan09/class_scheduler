@@ -1,8 +1,20 @@
 import React from 'react'
-import {Translator} from '../utils/translate'
+import {translatable} from '../utils/translate'
+import {connect} from 'react-redux'
 
-const t = new Translator("Home", "english")
 
-const Home = () => <div>{t("test")}</div>
+let Test = translatable("Home")( ({tr}) => <div>{tr("test")}</div> )
+
+class Home extends React.Component {
+	render(){
+		return(
+			<div>
+				<Test/>
+				<Test language="spanish"/>
+			</div>
+		);
+	}
+}
+
 
 export default Home;

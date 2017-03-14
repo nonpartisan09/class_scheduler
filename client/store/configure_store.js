@@ -4,12 +4,15 @@ import { routerReducer, routerMiddleware } from 'react-router-redux';
 import thunk from 'redux-thunk';
 import logger from 'redux-logger';
 
+import language from '../reducers/language';
+
 const middleware = [
 	thunk, 
 	logger(), 
 ]
 
 const reducers = {
+	language,
 	routing: routerReducer
 }
 
