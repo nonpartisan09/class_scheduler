@@ -1,12 +1,11 @@
 import React from 'react'
 import {Router, Route} from 'react-router'
 import {ConnectedRouter} from 'react-router-redux'
-
-const Placeholder = () => <div>Hello</div>
+import Home from './home'
 
 const AppRouter = ({history}) => (
 	<ConnectedRouter history={history}>
-		<Route path="/" component={Placeholder}/>
+		<Route path="/" component={Home}/>
 	</ConnectedRouter>
 );
 
