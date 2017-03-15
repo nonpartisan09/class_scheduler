@@ -6,7 +6,8 @@
 	height: calc(100% - 10rem);
 	background: $gray;
 
-	@include mq($medium) {
+	@media (max-width: $small) {
 		height: calc(100% - (2 * #{$header-height}));		
 	}
+
 }

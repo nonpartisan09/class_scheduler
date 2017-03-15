@@ -6,7 +6,3 @@ $header-height: 3rem;
 $small: 640px;
 $medium: 700px;
 $large: 900px;
-
-@mixin mq($point) {
-  @media only screen and (max-width: $point) { @content; }
-}

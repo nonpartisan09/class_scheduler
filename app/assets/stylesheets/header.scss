@@ -11,7 +11,35 @@
 	height: $header-height;
 }
 
-.header-links > * {
+#header-menu > * {
 	margin: 0 1em;
 	font-weight: 600;
+}
+
+#header-menu-button {
+	display: none;
+}
+
+@media (max-width: $small) {
+	#header-menu-button {
+		display: initial;
+	}
+
+	#header-menu {
+		padding: 0;
+		margin: 0;
+		position: absolute;
+		flex-direction: column;
+		align-items: flex-start;
+		top: $header-height;
+		right: 0;
+		background: white;
+	}
+
+	#header-menu a:visited {
+		color: black;
+	}
+	#header-menu.hide {
+		display: none;
+	}
 }
