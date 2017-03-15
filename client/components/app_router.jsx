@@ -1,11 +1,17 @@
 import React from 'react'
-import {Router, Route} from 'react-router'
+import {BrowserRouter, Route, IndexRoute} from 'react-router'
 import {ConnectedRouter} from 'react-router-redux'
+
+import Layout from './layout'
 import Home from './home'
 
 const AppRouter = ({history}) => (
 	<ConnectedRouter history={history}>
-		<Route path="/" component={Home}/>
+
+    <Route path="/" component={Layout}>
+    	<Route path="/home" component={Home}/>
+    </Route>
+    
 	</ConnectedRouter>
 );
 

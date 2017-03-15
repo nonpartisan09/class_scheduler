@@ -1,17 +1,14 @@
 import React from 'react'
 import {Link} from 'react-router';
+import {translate} from '../utils/translate'
 
-const Header = () => (
+const Header = ({tr}) => (
 	<header id="app-header">
 		<nav className="links">
-			<Link to="/student/sign_up">
-			</Link>
-			<Link to="/volunteer/sign_up">
-			</Link>
-			<Link to="/student/sign_up">
-			</Link>
+			<div>HEADER</div>
 		</nav>
 	</header>
 );
 
-export default Header;
+// export default Header;
+export default translate("App")(Header);

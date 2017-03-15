@@ -7,4 +7,5 @@ const keys = [
 
 const constants = {}
 keys.forEach(key => constants[key] = key)
+
 export default constants;

@@ -1,10 +1,14 @@
 import Home from '../translations/home'
+import App from '../translations/app'
+
 import {connect} from 'react-redux'
 import React from 'react'
-if (typeof window.localStorage.language === 'undefined') window.localStorage.language = "english";
+
+if (!window.localStorage.language) window.localStorage.language = "eng";
 
 const dictionaries = {
-	Home
+	Home,
+	App
 }
 
 class Translator {
@@ -15,12 +19,14 @@ class Translator {
 	}
 
 	translate(tag, lang = this.defaultLang) {
-		return this.dict[lang][tag];
+		return this.dict[tag][lang];
 	}
 }
 
-export const translatable = dict => component => {
-	const mapState = ({language}, ownProps) => ({language: ownProps.language || language.default})
+const mapState = ({language}, ownProps) => ({language: ownProps.language || language.default})
+const reduxWrapper = connect(mapState)
+
+export const translate = dict => component => {
 	class Translatable extends React.Component {
 		render(){
 			return React.createElement(component, Object.assign(
@@ -29,5 +35,6 @@ export const translatable = dict => component => {
 			)
 		}
 	}
-	return connect(mapState)( Translatable )
+	return Translatable;
+	return reduxWrapper( Translatable );
 }
