@@ -1,13 +1,9 @@
 @import "variables.scss";
 
 #billboard {
+	@include column();
 	color: white;
 	padding: 1rem;
-	height: calc(100% - 10rem);
+	height: 70vh;
 	background: $gray;
-
-	@media (max-width: $small) {
-		height: calc(100% - (2 * #{$header-height}));		
-	}
-
 }

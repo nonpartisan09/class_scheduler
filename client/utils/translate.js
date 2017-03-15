@@ -7,8 +7,8 @@ import React from 'react'
 if (!window.localStorage.language) window.localStorage.language = "eng";
 
 const dictionaries = {
+	App,
 	Home,
-	App
 }
 
 class Translator {
@@ -19,12 +19,9 @@ class Translator {
 	}
 
 	translate(tag, lang = this.defaultLang) {
-		return this.dict[tag][lang];
+		return this.dict[tag][lang] || this.dict[tag]["eng"];
 	}
 }
-
-const mapState = ({language}, ownProps) => ({language: ownProps.language || language.default})
-const reduxWrapper = connect(mapState)
 
 export const translate = dict => component => {
 	class Translatable extends React.Component {
@@ -35,6 +32,8 @@ export const translate = dict => component => {
 			)
 		}
 	}
-	return Translatable;
+	const mapState = ({language}, ownProps) => ({language: ownProps.language || language.default})
+	const reduxWrapper = connect(mapState)
+
 	return reduxWrapper( Translatable );
 }

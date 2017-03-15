@@ -6,6 +6,7 @@
 }
 
 #app-header {
+	@include row();
 	margin: 0 1em;
 	justify-content: space-between;
 	height: $header-height;
@@ -20,7 +21,7 @@
 	display: none;
 }
 
-@media (max-width: $small) {
+@media (max-width: $large) {
 	#header-menu-button {
 		display: initial;
 	}

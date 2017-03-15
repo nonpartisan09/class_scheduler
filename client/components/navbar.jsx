@@ -28,16 +28,13 @@ class Navbar extends React.Component {
 				<menu id="header-menu" className={`row ${showMenu}`}>
 					<Link to="/student/sign_up">{tr("student_sign_up_link")}</Link>
 					<Link to="/volunteer/sign_up">{tr("volunteer_sign_up_link")}</Link>
+					<Link to="/sign_in">{tr("sign_in_link")}</Link>
 					<Link to="/" onClick={toggleLanguage(language)}>{tr("language_toggle")}</Link>
 				</menu>
 			</nav>
 		);		
 	}
 }
-
-const mapState = ({language}) => ({
-	language: language.default
-})
 
 const mapDispatch = dispatch => ({
 	toggleLanguage: language => e => {
@@ -50,4 +47,4 @@ const mapDispatch = dispatch => ({
 	}
 })
 
-export default connect(mapState, mapDispatch)(translate("App")(Navbar));
+export default connect(null, mapDispatch)(translate("App")(Navbar));

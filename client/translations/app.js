@@ -7,6 +7,10 @@ module.exports = {
 		eng: "Volunteer to teach",
 		spa: "Voluntario para enseñar"
 	},
+	sign_in_link: {
+		eng: "Login",
+		spa: "Iniciar sesión"
+	},
 	language_toggle: {
 		eng: "Español",
 		spa: "English"

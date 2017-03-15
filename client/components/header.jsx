@@ -6,7 +6,7 @@ import Logo from './logo'
 import Navbar from './navbar'
 
 const Header = () => (
-	<header id="app-header" className="row">
+	<header id="app-header">
 		<Logo/>
 		<Navbar/>
 	</header>
