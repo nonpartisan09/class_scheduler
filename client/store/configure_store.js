@@ -1,5 +1,4 @@
 import { createStore, applyMiddleware, combineReducers } from 'redux';
-import { routerReducer, routerMiddleware } from 'react-router-redux';
 
 import thunk from 'redux-thunk';
 import logger from 'redux-logger';
@@ -12,15 +11,14 @@ const middleware = [
 ]
 
 const reducers = {
-	language,
-	routing: routerReducer
+	language
 }
 
-const configureStore = (history, preloadedState = {}) => {
+const configureStore = (preloadedState = {}) => {
 	return createStore(
 		combineReducers(reducers),
     preloadedState,
-    applyMiddleware(...middleware, routerMiddleware(history))
+    applyMiddleware(...middleware)
   );
 };
 

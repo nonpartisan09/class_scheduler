@@ -10,12 +10,11 @@ import createHistory from 'history/createBrowserHistory';
 import AppProvider from './components/app_provider';
 import AppRouter from './components/app_router';
 
-const history = createHistory()
-const store = configureStore(history);
+const store = configureStore();
 
 const App = () => (
 	<AppProvider store={store}>
-		<AppRouter history={history}/>
+		<AppRouter />
 	</AppProvider>
 )
 
