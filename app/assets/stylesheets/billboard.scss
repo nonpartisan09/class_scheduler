@@ -1,0 +1,12 @@
+@import "variables.scss";
+
+#billboard {
+	color: white;
+	padding: 1rem;
+	height: calc(100% - 10rem);
+	background: $gray;
+
+	@include mq($medium) {
+		height: calc(100% - (2 * #{$header-height}));		
+	}
+}

@@ -1,0 +1,17 @@
+@import "variables.scss";
+
+#logo {
+	color: $light-blue;
+	font-weight: 800;
+}
+
+#app-header {
+	margin: 0 1em;
+	justify-content: space-between;
+	height: $header-height;
+}
+
+.header-links > * {
+	margin: 0 1em;
+	font-weight: 600;
+}

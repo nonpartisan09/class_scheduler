@@ -1,0 +1,12 @@
+$light-blue: #42c2f4;
+$gray: #c3d5e0;
+$font-stack: "Open Sans", sans-serif;
+$header-height: 3rem;
+
+$small: 640px;
+$medium: 700px;
+$large: 900px;
+
+@mixin mq($point) {
+  @media only screen and (max-width: $point) { @content; }
+}

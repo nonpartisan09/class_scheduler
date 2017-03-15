@@ -14,19 +14,30 @@
  *= require_self
  */
 
+@import "variables.scss";
+
+html, body, #root, #layout {
+	height: 100%;
+	width: 100%;
+}
+
 body {
 	margin: auto;
 	padding: 0px;
-	max-width: 1024px;
+	max-width: 90rem;
+	font-family: $font-stack;
 }
 
-#header {
-	color: white;
-	background: black;
-	width: 100%;
+.row {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
 }
 
-#root {
-	height: 100%;
-	width: 100%;
+.column {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
 }
