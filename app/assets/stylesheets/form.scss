@@ -1,0 +1,18 @@
+@import "variables.scss";
+
+form {
+	@include column();
+	align-items: flex-start;
+	max-width: 50%;
+	margin: auto;
+	border: 1px solid black;
+	padding: 1em;
+}
+
+form label {
+	@include row();
+}
+
+label input {
+	margin: .5em .5em;
+}

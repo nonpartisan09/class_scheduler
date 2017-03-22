@@ -14,5 +14,11 @@ module.exports = {
 	language_toggle: {
 		eng: "Español",
 		spa: "English"
+	},
+	contact: {
+		eng: "contact"
+	},
+	home: {
+		eng: "home"
 	}
 }

@@ -1,0 +1,8 @@
+@import "variables.scss";
+
+#app-footer {
+	@include row();
+	height: 3rem;
+	border-top: 1px solid black;
+	justify-content: space-around;
+}

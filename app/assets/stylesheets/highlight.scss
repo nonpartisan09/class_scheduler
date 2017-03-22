@@ -4,15 +4,17 @@
 	@include row();
 
 	padding: 1rem;
-	min-height: 40vh;
-	max-width: 60%;
+	max-width: 80%;
 	margin: auto;
 	white-space: wrap;
 	justify-content: space-between;
 
+	@media (min-height: $large) {
+		max-width: 100%;
+	}
+
 	@media (max-width: $medium) {
 		max-width: 100%;
-		min-height: 0;
 		flex-direction: column;
 		.highlight-thumb {
 			display: none;

@@ -3,6 +3,7 @@ import {Route} from 'react-router'
 
 import Header from './header'
 import Home from './home'
+import Footer from './footer'
 
 class Layout extends React.Component {
 	render(){
@@ -11,6 +12,7 @@ class Layout extends React.Component {
 			<div id="layout">
 				<Header/>
 				{children}
+				<Footer/>
 			</div>
 		)
 	}
