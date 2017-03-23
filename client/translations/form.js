@@ -24,5 +24,9 @@ module.exports = {
 	language: {
 		eng: "language",
 		spa: "lingua"
+	},
+	language_warning: {
+		eng: "You have signed up for non-english classes. Be aware that restrictions are in place about what types of languages are acceptable for the naturalization exam.",
+		spa: ""
 	}
 }

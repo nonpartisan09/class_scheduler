@@ -50,7 +50,7 @@ class Form extends React.Component {
 				label={f.label}
 				display={f.display}
 				type={f.type || "text"}
-				placeholder="email@example.com"
+				placeholder={f.placeholder || ""}
 				value={values[f.label]}
 				errors={errors[f.label]}
 				validate={validate.email}

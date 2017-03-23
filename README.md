@@ -11,6 +11,11 @@ volunteers.
 
 ## Minimum Viable Product
 
+- Multilingual pages
+
+- Authentication
+	- Student / Volunteer Sign-up && Login
+
 - Scheduling
 	- Volunteers can create class sessions
 	- Students can search for class sessions by location, date, and language
@@ -27,12 +32,10 @@ volunteers.
 	- Free to use
 	- Free/Cheap to maintain
 
-## Bonus Features
+- Admin view
+	- view Student-Tutor connections
+	- view / delete accounts
 
-- Admin portal
-- Multilingual pages
-- Support other types of classes
-- Custom branding / design materials
 
 ## Views
 
