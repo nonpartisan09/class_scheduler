@@ -1,28 +1,29 @@
 import React from 'react';
 import FormInput from './form_input';
-import validate from '../utils/validate';
 import {translate} from '../utils/translate';
+import InputErrors from './input_errors';
+import {connect} from 'react-redux';
+import {clearErrors, receiveErrors} from '../actions/errors';
 
 class Form extends React.Component {
 	constructor(props){
 		super(props);
-		this.state = {values: {}, errors: {}}
+		this.state = {values: {}}
 
 		props.fields.forEach(f => {
 			this.state.values[f.label] = f.initial || "";
-			this.state.errors[f.label] = [];
 		})
 
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.changeHandler = this.changeHandler.bind(this);
-		this.errorHandler = this.errorHandler.bind(this);
 	}
 	handleSubmit(e){
 		e.preventDefault();
+		const {clearErrors, receiveErrors, id, onSubmit} = this.props
+		const {values} = this.state
 
-		this.props.onSubmit(this.state).then( errors => {
-			this.setState({ errors })
-		});
+		clearErrors(id)
+		onSubmit(values)
 	}
 	changeHandler(label){
 		return e => {
@@ -32,16 +33,12 @@ class Form extends React.Component {
 			this.setState(newState)
 		}
 	}
-	errorHandler(label) {
-		return err => {
-			const newState = JSON.parse(JSON.stringify(this.state))
-			newState.errors[label] = err;
-			this.setState(newState)
-		}
-	}
 	render() {
 		const {tr, fields, id, submitLabel, title, options} = this.props;
-		const { values, errors } = this.state;
+		const errors = this.props.errors[id] || {};
+
+		const { values } = this.state;
+
 		const formInputs = fields.map( (f, i) => (
 			<FormInput
 				options={f.options}
@@ -53,16 +50,14 @@ class Form extends React.Component {
 				placeholder={f.placeholder || ""}
 				value={values[f.label]}
 				errors={errors[f.label]}
-				validate={validate.email}
 				onChange={this.changeHandler(f.label)}
-				onError={this.errorHandler(f.label)}
-				validationMessage={f.validationMessage}
 			/>
 		));
 
 		return (
 			<form id={id} onSubmit={this.handleSubmit}>
 				<h2 className="form-title">{title}</h2>
+				<InputErrors label="Server Error" errors={errors.server}/>
 				{ formInputs }
 				<input type="submit" value={submitLabel}/>
 			</form>
@@ -70,4 +65,7 @@ class Form extends React.Component {
 	}
 }
 
-export default Form;
+const mapState = ({errors}) => ({errors})
+const mapDispatch = ({clearErrors, receiveErrors})
+
+export default connect(mapState, mapDispatch)(Form);

@@ -1,18 +1,18 @@
 class Api::StudentsController < ApplicationController
   before_action :authenticate_api_student!, except: [:create]
 	def create
-		debugger
 		@student = Student.new(student_params)
 		if @student.save
+			sign_in(@student)
 			render 'api/students/show'
 		else
+			p @student.errors.messages
 			render json: @student.errors, status: :unprocessable_entity
 		end
 	end
 
 	def update
 		@student = Student.find(params[:id])
-
 		if @student.update(student_params)
 			render 'api/students/show'
 		else

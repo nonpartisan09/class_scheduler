@@ -1,7 +1,6 @@
 import React from 'react'
 
 const SelectInput = ({title, onChange, value, options}) => {
-
 	const opts = options.map( (o, i) => {
 		return (
 			<option 

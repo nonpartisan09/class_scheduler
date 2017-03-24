@@ -2,7 +2,10 @@ const keys = [
 	// session
 	'RECEIVE_CURRENT_USER',
 	// language
-	'SET_LANGUAGE'
+	'SET_LANGUAGE',
+	// errors
+	'CLEAR_ERRORS',
+	'RECEIVE_ERRORS',
 ]
 
 const constants = {}

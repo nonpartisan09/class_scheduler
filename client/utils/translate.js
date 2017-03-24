@@ -12,7 +12,7 @@ export const translate = dict => component => {
 		try {
 			result = Dictionaries[dict][tag][lang]
 		} catch (err) {
-			throw Error(`Couldn't translate dict: ${dict}, lang: ${lang}, tag: ${tag}`)
+			console.error(`Couldn't translate dict: ${dict}, lang: ${lang}, tag: ${tag}`)
 		}
 		return result
 	}

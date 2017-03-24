@@ -18,3 +18,10 @@ form label {
 	width: 100%;
 	@include column();
 }
+
+.input-errors {
+	color: red;
+	font-size: smaller;
+	list-style: none;
+	padding: 0;
+}
