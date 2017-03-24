@@ -3,39 +3,35 @@ import Form from './form'
 import Billboard from './billboard'
 import {translate} from '../utils/translate'
 import validate from '../utils/validate'
+import {studentSignup} from '../utils/auth'
+
+const stop = res => {debugger}
 
 class StudentSignup extends React.Component {
 	constructor() {
 		super();
-		this.oldLang;
 		this.handleSubmit = this.handleSubmit.bind(this);
 	}
 	handleSubmit(state) {
 		const {tr} = this.props;
-		
-		if (state.values.language !== "eng") alert(tr("language_warning"));
 
 		return new Promise((resolve, reject) => {
-			resolve({
-				email: ["email error"], 
-				first_name: ["first name error"],
-				last_name: ["last name error"]
-			})
-		});
+			studentSignup(state, stop, stop);
+		});			
 	}
 	render() {
 		const {tr} = this.props
 
 		const fields = [
-			{label: "language", display: tr("language"), type: "select", initial: "eng", 
-			options: [
-				{value: "eng", label: "English", default: true},
-				{value: "spa", label: "Spanish"}
-			]},
 			{label: "email",  display: tr("email")},
 			{label: "first_name",  display: tr("first_name")},
 			{label: "last_name",  display: tr("last_name")},
 			{label: "password", display: tr("password"), type: "password"},
+			{label: "language", info: tr("language_warning"), display: tr("preferred_language"), type: "select", initial: "eng", 
+			options: [
+				{value: "eng", label: "English", default: true},
+				{value: "spa", label: "Spanish"}
+			]},
 		]
 
 		const billboardBody = <h3>{tr("billboard_text")}</h3>

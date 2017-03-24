@@ -19,7 +19,8 @@ class FormInput extends React.Component {
 			onChange, 
 			onError,
 			errorMessage,
-			options
+			options,
+			info
 		} = this.props;
 
 		let input;
@@ -39,6 +40,7 @@ class FormInput extends React.Component {
 			<label>{display}
 				{input}
 				{React.createElement(InputErrors, this.props)}
+				<p>{info}</p>
 			</label>
 		);
 	}

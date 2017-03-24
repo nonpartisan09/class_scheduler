@@ -21,12 +21,12 @@ module.exports = {
 	billboard_text: {
 		eng: "Sign up for FREE classes."
 	},
-	language: {
-		eng: "language",
-		spa: "lingua"
+	preferred_language: {
+		eng: "Preferred Language",
+		spa: "Lingua"
 	},
 	language_warning: {
-		eng: "You have signed up for non-english classes. Be aware that restrictions are in place about what types of languages are acceptable for the naturalization exam.",
+		eng: "Note: Individuals less than 70 years old or having less than 12 years of U.S. Residency are not eligible for non-english naturalization exams.",
 		spa: ""
 	}
 }

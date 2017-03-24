@@ -45,7 +45,7 @@ class Form extends React.Component {
 		const formInputs = fields.map( (f, i) => (
 			<FormInput
 				options={f.options}
-				title={title}
+				info={f.info}
 				key={`${id}-${f.label}-${i}`}
 				label={f.label}
 				display={f.display}
@@ -62,7 +62,7 @@ class Form extends React.Component {
 
 		return (
 			<form id={id} onSubmit={this.handleSubmit}>
-				<h2>{title}</h2>
+				<h2 className="form-title">{title}</h2>
 				{ formInputs }
 				<input type="submit" value={submitLabel}/>
 			</form>

@@ -1,26 +1,40 @@
 class Api::StudentsController < ApplicationController
-  before_action :authenticate_api_student!
+  before_action :authenticate_api_student!, except: [:create]
 	def create
-		@tutor = Tutor.new(tutor_params)
-		if @tutor.save
-			render 'api/tutors/show'
+		debugger
+		@student = Student.new(student_params)
+		if @student.save
+			render 'api/students/show'
 		else
-			render json: @tutor.errors, status: :unprocessable_entity
+			render json: @student.errors, status: :unprocessable_entity
 		end
 	end
 
 	def update
-		@tutor = Tutor.find(params[:id])
+		@student = Student.find(params[:id])
 
-		if @tutor.update(tutor_params)
-			render 'api/tutors/show'
+		if @student.update(student_params)
+			render 'api/students/show'
 		else
-			render json: @tutor.errors, status: :unprocessable_entity
+			render json: @student.errors, status: :unprocessable_entity
 		end
 	end
 
 	def show
-		@tutor = Tutor.find(params[:id])
+		@student = Student.find(params[:id])
+	end
+
+	private 
+	def student_params
+		params.require(:user).permit(
+			:email, 
+			:password, 
+			:phone_number, 
+			:f_name, 
+			:l_name, 
+			:profile_src, 
+			:language
+		)
 	end
 
 end

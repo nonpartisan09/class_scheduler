@@ -9,10 +9,12 @@ form {
 	padding: 1em;
 }
 
-form label {
-	@include row();
+.form-title {
+	margin: auto;
+	margin-bottom: .5em;
 }
 
-label input {
-	margin: .5em .5em;
+form label {
+	width: 100%;
+	@include column();
 }
