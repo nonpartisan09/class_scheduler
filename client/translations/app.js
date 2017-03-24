@@ -20,5 +20,9 @@ module.exports = {
 	},
 	home: {
 		eng: "home"
+	},
+	logout: {
+		eng: "Logout",
+		spa: "Logoout"
 	}
 }
