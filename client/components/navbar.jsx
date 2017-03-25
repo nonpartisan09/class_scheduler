@@ -3,6 +3,7 @@ import {translate} from '../utils/translate'
 import {Link} from 'react-router'
 import {connect} from 'react-redux'
 import {setLanguage} from '../actions/language'
+import clickOutside from 'react-click-outside'
 
 class Navbar extends React.Component {
 	constructor(){
@@ -10,6 +11,13 @@ class Navbar extends React.Component {
 		this.state = {
 			showing: false
 		}
+		this.hide = this.hide.bind(this);
+	}
+	handleClickOutside(){
+		this.hide();
+	}
+	hide(){
+		this.setState({showing: false})
 	}
 	addToggle(){
 		return (e) => {
@@ -25,7 +33,7 @@ class Navbar extends React.Component {
 			return (	
 				<nav className="header-nav column logged-out">
 					<Link id="header-menu-button" to="" onClick={this.addToggle()}>Menu</Link>
-					<menu id="header-menu" className={`row ${showMenu}`}>
+					<menu id="header-menu" className={`row ${showMenu}`} onClick={this.hide}>
 						<Link to="/student/sign_up">{tr("student_sign_up_link")}</Link>
 						<Link to="/volunteer/sign_up">{tr("volunteer_sign_up_link")}</Link>
 						<Link to="/sign_in">{tr("sign_in_link")}</Link>
@@ -37,7 +45,7 @@ class Navbar extends React.Component {
 			return (
 				<nav className="header-nav column">
 					<Link id="header-menu-button" className="logged-in" to="" onClick={this.addToggle()}>Hi, {user.f_name}!</Link>
-					<menu id="header-menu" className={`logged-in row ${showMenu}`}>
+					<menu id="header-menu" className={`logged-in row ${showMenu}`} onClick={this.hide}>
 						<Link to="/logout">{tr("logout")}</Link>
 						<Link to="/" onClick={toggleLanguage(language)}>{tr("language_toggle")}</Link>
 					</menu>
@@ -59,4 +67,4 @@ const mapDispatch = dispatch => ({
 	}
 })
 
-export default connect(mapState, mapDispatch)(translate("App")(Navbar));
+export default connect(mapState, mapDispatch)(translate("App")(clickOutside(Navbar)));
