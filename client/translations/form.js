@@ -31,5 +31,17 @@ module.exports = {
 	},
 	login: {
 		eng: "Login",
+	},
+	classes: {
+		eng: "Classes"
+	},
+	classes_info: {
+		eng: "Please select the classes you are available to teach."
+	},
+	volunteer_language_info: {
+		eng: "Please select the languages you can teach in."
+	},
+	volunteer_language: {
+		eng: "Languages"
 	}
 }

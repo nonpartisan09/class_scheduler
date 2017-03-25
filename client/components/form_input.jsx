@@ -3,6 +3,7 @@ import validate from '../utils/validate'
 import InputErrors from './input_errors'
 import TextInput from './text_input'
 import SelectInput from './select_input'
+import CheckboxInput from './checkbox_input'
 
 class FormInput extends React.Component {
 
@@ -25,6 +26,9 @@ class FormInput extends React.Component {
 
 		let input;
 		switch (type) {
+			case "checkbox":
+				input = React.createElement(CheckboxInput, this.props)
+				break;
 			case "text": 
 			case "password":
 				input = React.createElement(TextInput, this.props)
@@ -38,9 +42,9 @@ class FormInput extends React.Component {
 
 		return (
 			<label>{display}
+				<p className="input-info">{info}</p>
 				{input}
 				{React.createElement(InputErrors, this.props)}
-				<p>{info}</p>
 			</label>
 		);
 	}

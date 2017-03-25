@@ -4,6 +4,7 @@ import {Router, Route, IndexRoute, hashHistory} from 'react-router'
 import Layout from './layout'
 import Home from './home'
 import StudentSignup from './student_signup';
+import VolunteerSignup from './volunteer_signup';
 import Login from './login'
 
 const AppRouter = () => (
@@ -12,6 +13,7 @@ const AppRouter = () => (
     	<Route path="/home" component={Home}/>
     	<Route path="/sign_in" component={Login}/>
     	<Route path="/student/sign_up" component={StudentSignup}/>
+    	<Route path="/volunteer/sign_up" component={VolunteerSignup}/>
     	<IndexRoute component={Home}/>
     </Route>
 	</Router>

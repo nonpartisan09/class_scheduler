@@ -14,6 +14,11 @@ form {
 	margin-bottom: .5em;
 }
 
+.input-info {
+	font-size: smaller;
+	color: gray;
+}
+
 form label {
 	width: 100%;
 	@include column();

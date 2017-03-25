@@ -1,6 +1,7 @@
 class Api::TutorsController < ApplicationController
   before_action :authenticate_api_tutor!, except: [:create]
 	def create
+		debugger
 		@tutor = Tutor.new(tutor_params)
 		if @tutor.save
 			render 'api/tutors/show'
@@ -60,7 +61,7 @@ class Api::TutorsController < ApplicationController
 	end
 
 	def tutor_params
-		params.require(:tutor).permit(
+		params.require(:user).permit(
 			:email, 
 			:password, 
 			:phone_number, 
@@ -68,7 +69,8 @@ class Api::TutorsController < ApplicationController
 			:l_name, 
 			:profile_src, 
 			:type, 
-			:language
+			language: [:eng, :spa],
+			classes: [:naturalization, :english, :legal]
 		)
 	end
 

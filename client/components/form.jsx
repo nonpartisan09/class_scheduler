@@ -4,6 +4,7 @@ import {translate} from '../utils/translate';
 import InputErrors from './input_errors';
 import {connect} from 'react-redux';
 import {clearErrors, receiveErrors} from '../actions/errors';
+import deepDup from '../utils/deep_dup';
 
 class Form extends React.Component {
 	constructor(props){
@@ -28,7 +29,7 @@ class Form extends React.Component {
 	changeHandler(label){
 		return e => {
 			e.preventDefault();
-			const newState = JSON.parse(JSON.stringify(this.state))
+			const newState = deepDup(this.state)
 			newState.values[label] = e.currentTarget.value;
 			this.setState(newState)
 		}
@@ -47,7 +48,7 @@ class Form extends React.Component {
 				label={f.label}
 				display={f.display}
 				type={f.type || "text"}
-				placeholder={f.placeholder || ""}
+				placeholder={f.placeholder}
 				value={values[f.label]}
 				errors={errors[f.label]}
 				onChange={this.changeHandler(f.label)}

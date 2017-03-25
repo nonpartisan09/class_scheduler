@@ -23,6 +23,28 @@ export const studentSignup = params => (
 	})
 )
 
+export const volunteerSignup = params => ( 
+	new Promise((res, rej) => {
+		const success = r => res(r);
+		const error = e => {
+			if (e.status === 422) {			
+				rej(e.responseJSON);
+			} else {
+				rej({server: ["Server Error"]})
+			}
+		}
+		$.ajax({
+			url: "/api/tutors", 
+			method: "POST",
+			data: { 
+				user: params,
+			},
+			success,
+			error
+		})
+	})
+)
+
 export const logout = () => (
 	new Promise((res, rej) => {
 		const success = r => { 
