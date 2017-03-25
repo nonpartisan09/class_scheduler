@@ -1,6 +1,7 @@
 const keys = [
 	// session
 	'RECEIVE_CURRENT_USER',
+	'LOGOUT',
 	// language
 	'SET_LANGUAGE',
 	// errors

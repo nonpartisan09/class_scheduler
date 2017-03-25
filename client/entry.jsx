@@ -10,9 +10,18 @@ import createHistory from 'history/createBrowserHistory';
 import AppProvider from './components/app_provider';
 import AppRouter from './components/app_router';
 
+let user
+
+try {
+	user = JSON.parse(localStorage.getItem("user"))
+} catch(e) {
+	user = {}
+}
+
+
 const store = configureStore({
 	session: {
-		user: JSON.parse(localStorage.getItem("user"))
+		user
 	}
 });
 

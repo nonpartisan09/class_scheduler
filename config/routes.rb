@@ -4,6 +4,7 @@ Rails.application.routes.draw do
 	namespace :api, defaults: {format: :json} do 
 	  resources :tutors, only: [:create, :update, :show, :index]
 	  resources :students, only: [:create, :update, :show, :index]
+	  devise_for :users
 	  devise_for :tutors
 	  devise_for :students
 	end

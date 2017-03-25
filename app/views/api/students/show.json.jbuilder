@@ -1,1 +1,1 @@
-json.partial! 'api/students/student', student: @student
+json.partial! 'api/students/student', locals: {student: @user}

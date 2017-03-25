@@ -16,3 +16,18 @@ export const studentSignup = params => dispatch => {
 		err => dispatch(receiveErrors("student-signup", err))
 	)
 }
+
+export const logout = () => dispatch => {
+	localStorage.setItem('user', JSON.stringify({}))
+	API.logout().then(() => {dispatch({type: "LOGOUT"})})
+}
+
+export const login = params => dispatch => {
+	return API.login(params).then(
+		user => {
+			localStorage.setItem('user', JSON.stringify(user))
+			dispatch(receiveCurrentUser(user))
+		},
+		err => dispatch(receiveErrors("login", err))
+	)
+}
