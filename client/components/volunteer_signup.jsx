@@ -19,6 +19,7 @@ class VolunteerSignup extends React.Component {
 		this.onSubmit = this.onSubmit.bind(this);
 	}
 	onSubmit(state) {
+		console.log(state)
 		this.props.volunteerSignup(state)
 	}
 	componentWillMount() {
@@ -37,7 +38,7 @@ class VolunteerSignup extends React.Component {
 			{label: "password", display: tr("password"), type: "password"},
 			{label: "phone_number", display: tr("phone_number"), 
 				info: `${tr("format")}: 555-555-5555`},
-			{label: "profile_src", display: tr("profile_pic"), type: "upload"}
+			{label: "img_blob", display: tr("profile_pic"), type: "upload"}
 		]
 
 		const billboardBody = <h3>{tr("billboard_text")}</h3>
@@ -53,6 +54,7 @@ class VolunteerSignup extends React.Component {
 					id="volunteer-signup"
 					fields={fields}
 					submitLabel="Sign up!"
+					onChange={state => console.log(state.values.profile_src.length)}
 					onSubmit={this.onSubmit}
 				/>
 			</section>

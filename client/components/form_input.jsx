@@ -4,6 +4,7 @@ import InputErrors from './input_errors'
 import TextInput from './text_input'
 import SelectInput from './select_input'
 import CheckboxInput from './checkbox_input'
+import UploadInput from './upload_input'
 
 class FormInput extends React.Component {
 
@@ -35,6 +36,9 @@ class FormInput extends React.Component {
 				break;
 			case "select":
 				input = React.createElement(SelectInput, this.props)
+				break;
+			case "upload":
+				input = React.createElement(UploadInput, this.props);
 				break;
 			default: 
 				throw (`unrecognized input type: ${type}`)

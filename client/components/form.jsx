@@ -31,7 +31,10 @@ class Form extends React.Component {
 			e.preventDefault();
 			const newState = deepDup(this.state)
 			newState.values[label] = e.currentTarget.value;
-			this.setState(newState)
+			this.setState(newState, () => {
+				const {onChange} = this.props
+				if (onChange) onChange(this.state)
+			})
 		}
 	}
 	render() {

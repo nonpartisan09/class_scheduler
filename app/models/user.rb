@@ -4,7 +4,12 @@ class User < ApplicationRecord
 
   validates :f_name, :l_name, presence: true
   validate :phone_number_format
+  validate :profile_src, presence: true, length: {maximum: 150_000}
   
+  def image_blob= 
+    
+  end
+
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
          
