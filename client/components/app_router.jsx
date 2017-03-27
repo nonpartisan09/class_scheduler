@@ -6,6 +6,7 @@ import Home from './home'
 import StudentSignup from './student_signup';
 import VolunteerSignup from './volunteer_signup';
 import Login from './login'
+import VolunteerDashboard from './volunteer_dashboard'
 
 const AppRouter = () => (
 	<Router history={hashHistory}>
@@ -14,6 +15,7 @@ const AppRouter = () => (
     	<Route path="/sign_in" component={Login}/>
     	<Route path="/student/sign_up" component={StudentSignup}/>
     	<Route path="/volunteer/sign_up" component={VolunteerSignup}/>
+    	<Route path="/volunteer/dashboard" component={VolunteerDashboard}/>
     	<IndexRoute component={Home}/>
     </Route>
 	</Router>

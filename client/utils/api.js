@@ -30,7 +30,7 @@ export const volunteerSignup = params => (
 			if (e.status === 422) {			
 				rej(e.responseJSON);
 			} else {
-				rej({server: ["Server Error"]})
+				rej({server: [e.responseJSON]})
 			}
 		}
 		$.ajax({

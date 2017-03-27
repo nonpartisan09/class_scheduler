@@ -1,6 +1,9 @@
 class Klass < ApplicationRecord
 	belongs_to :tutor
 	has_one :schedule, dependent: :destroy
+	has_one :language, 
+		as: :owner,
+		dependent: :destroy
 
 	after_initialize :ensure_schedule
 

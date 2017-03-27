@@ -3,7 +3,7 @@ import Dictionaries from '../translations'
 import {connect} from 'react-redux'
 import React from 'react'
 
-if (!window.localStorage.language) window.localStorage.language = "eng";
+if (!window.localStorage.getItem("language")) window.localStorage.setItem("language", "eng");
 
 export const translate = dict => component => {
 

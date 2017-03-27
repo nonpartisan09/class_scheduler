@@ -9,9 +9,11 @@ const session = (state = initialState, action) => {
 
 	switch (action.type) {
 		case C.RECEIVE_CURRENT_USER: 
+			window.localStorage.setItem('user', JSON.stringify(action.user))
 			newState.user = action.user;
 			return newState;
 		case C.LOGOUT: 
+			window.localStorage.setItem('user', JSON.stringify({}))
 			newState.user = {};
 			return newState;
 		default: 

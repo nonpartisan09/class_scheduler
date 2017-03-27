@@ -1,48 +1,47 @@
 class Api::TutorsController < ApplicationController
   before_action :authenticate_api_tutor!, except: [:create]
 	def create
-		debugger
-		@tutor = Tutor.new(tutor_params)
-		if @tutor.save
+		@user = Tutor.new(tutor_params)
+		if @user.save
 			render 'api/tutors/show'
 		else
-			render json: @tutor.errors, status: :unprocessable_entity
+			render json: @user.errors, status: :unprocessable_entity
 		end
 	end
 
 	def update
-		@tutor = Tutor.find(params[:id])
+		@user = Tutor.find(params[:id])
 
-		if @tutor.update(tutor_params)
+		if @user.update(tutor_params)
 			render 'api/tutors/show'
 		else
-			render json: @tutor.errors, status: :unprocessable_entity
+			render json: @user.errors, status: :unprocessable_entity
 		end
 	end
 
 	def show
-		@tutor = Tutor.find(params[:id])
+		@user = Tutor.find(params[:id])
 	end
 
 	def index
-		@tutors = Tutor.joins(:schedules).all
+		@users = Tutor.joins(:schedules).all
 
 		unless tutor_search_params.empty?
-			@tutors = @tutors.where(tutor_search_params)
+			@users = @users.where(tutor_search_params)
 		end
 
 		unless klass_params.empty?
-			@tutors = @tutors.where(klasses: klass_params)
+			@users = @users.where(klasses: klass_params)
 		end
 
 		unless schedule_params.empty?
-			@tutors = @tutors.where(schedules: schedule_params)
+			@users = @users.where(schedules: schedule_params)
 		end
 
 		# checks class description field by presence of keywords instead of exact match
 
 		if keywords
-			@tutors = filter_by_keywords(@tutors, keywords.split(" ").map(&:strip))
+			@users = filter_by_keywords(@users, keywords.split(" ").map(&:strip))
 		end
 
 	end
@@ -69,8 +68,6 @@ class Api::TutorsController < ApplicationController
 			:l_name, 
 			:profile_src, 
 			:type, 
-			language: [:eng, :spa],
-			classes: [:naturalization, :english, :legal]
 		)
 	end
 

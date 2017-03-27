@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170222203321) do
+ActiveRecord::Schema.define(version: 20170326165254) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,6 +24,15 @@ ActiveRecord::Schema.define(version: 20170222203321) do
     t.datetime "created_at",                      null: false
     t.datetime "updated_at",                      null: false
     t.index ["tutor_id"], name: "index_klasses_on_tutor_id", using: :btree
+  end
+
+  create_table "languages", force: :cascade do |t|
+    t.string   "language"
+    t.string   "owner_type"
+    t.integer  "owner_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["owner_type", "owner_id"], name: "index_languages_on_owner_type_and_owner_id", using: :btree
   end
 
   create_table "schedules", force: :cascade do |t|
@@ -72,7 +81,6 @@ ActiveRecord::Schema.define(version: 20170222203321) do
     t.string   "l_name",                                     null: false
     t.string   "profile_src"
     t.string   "type",                   default: "Student", null: false
-    t.string   "language",               default: "English", null: false
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
     t.index ["f_name"], name: "index_users_on_f_name", using: :btree
     t.index ["l_name"], name: "index_users_on_l_name", using: :btree

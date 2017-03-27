@@ -1,6 +1,17 @@
 class Tutor < User
 	has_many :klasses, dependent: :destroy
-	has_many :schedules, through: :klasses, inverse_of: :tutor, dependent: :destroy
+	has_many :schedules, 
+		through: :klasses, 
+		inverse_of: :tutor, 
+		dependent: :destroy
+
+	has_one :preferred_language, as: :owner, class_name: :Language
+	has_many :taught_languages,
+		through: :klasses,
+		inverse_of: :tutor,
+		dependent: :destroy
+
+
 
 	def set_schedule(schedule = {})
 		self.schedule.update(schedule)
