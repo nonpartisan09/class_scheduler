@@ -7,6 +7,9 @@ const keys = [
 	// errors
 	'CLEAR_ERRORS',
 	'RECEIVE_ERRORS',
+	// requests pending
+	'REQUEST_PENDING',
+	'REQUEST_RESOLVED'
 ]
 
 const constants = {}

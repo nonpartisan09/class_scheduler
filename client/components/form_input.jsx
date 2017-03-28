@@ -45,10 +45,10 @@ class FormInput extends React.Component {
 		}
 
 		return (
-			<label>{display}
+			<label className="form-input">{display}
+				{React.createElement(InputErrors, this.props)}
 				<p className="input-info">{info}</p>
 				{input}
-				{React.createElement(InputErrors, this.props)}
 			</label>
 		);
 	}

@@ -1,8 +1,9 @@
 class Api::TutorsController < ApplicationController
   before_action :authenticate_api_tutor!, except: [:create]
 	def create
-		@user = Tutor.new(tutor_params)
+		@user = Tutor.new(user_params)
 		if @user.save
+			sign_in(@user)
 			render 'api/tutors/show'
 		else
 			render json: @user.errors, status: :unprocessable_entity
@@ -12,7 +13,7 @@ class Api::TutorsController < ApplicationController
 	def update
 		@user = Tutor.find(params[:id])
 
-		if @user.update(tutor_params)
+		if @user.update(user_params)
 			render 'api/tutors/show'
 		else
 			render json: @user.errors, status: :unprocessable_entity
@@ -57,18 +58,6 @@ class Api::TutorsController < ApplicationController
 			query = query.where("klasses.description like ?", "%#{kw}%")
 		end
 		query
-	end
-
-	def tutor_params
-		params.require(:user).permit(
-			:email, 
-			:password, 
-			:phone_number, 
-			:f_name, 
-			:l_name, 
-			:profile_src, 
-			:type, 
-		)
 	end
 
 	def tutor_search_params

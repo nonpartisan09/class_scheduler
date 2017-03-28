@@ -33,12 +33,17 @@ class VolunteerSignup extends React.Component {
 		const {tr, errors} = this.props
 		const fields = [
 			{label: "email",  display: tr("email")},
+			{label: "password", display: tr("password"), type: "password"},
 			{label: "f_name",  display: tr("first_name")},
 			{label: "l_name",  display: tr("last_name")},
-			{label: "password", display: tr("password"), type: "password"},
 			{label: "phone_number", display: tr("phone_number"), 
 				info: `${tr("format")}: 555-555-5555`},
-			{label: "img_blob", display: tr("profile_pic"), type: "upload"}
+			{label: "language", display: tr("preferred_language"), type: "select", initial: "eng", 
+			options: [
+				{value: "eng", label: "English", default: true},
+				{value: "spa", label: "Spanish"}
+			]},
+			{label: "image", display: tr("profile_pic"), type: "upload"}
 		]
 
 		const billboardBody = <h3>{tr("billboard_text")}</h3>
@@ -49,14 +54,15 @@ class VolunteerSignup extends React.Component {
 					title={tr("billboard_title")} 
 					body={billboardBody}
 				/>
-				<Form 
-					title="Volunteer Signup"
-					id="volunteer-signup"
-					fields={fields}
-					submitLabel="Sign up!"
-					onChange={state => console.log(state.values.profile_src.length)}
-					onSubmit={this.onSubmit}
-				/>
+				<main>
+					<Form 
+						title="Volunteer Signup"
+						id="volunteer-signup"
+						fields={fields}
+						submitLabel={tr("sign_up")}
+						onSubmit={this.onSubmit}
+					/>
+				</main>
 			</section>
 		);
 	}

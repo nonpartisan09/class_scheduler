@@ -39,13 +39,16 @@ module.exports = {
 		eng: "Languages"
 	},
 	phone_number: {
-		eng: "phone_number"
+		eng: "Phone Number"
 	},
 	format: {
 		eng: "Format"
 	},
 	profile_pic: {
 		eng: "Profile Pic"
+	},
+	sign_up: {
+		eng: "Create my account"
 	}
 
 }

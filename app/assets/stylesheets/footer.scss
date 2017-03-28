@@ -2,6 +2,7 @@
 
 #app-footer {
 	@include row();
+	background: white;
 	height: 3rem;
 	border-top: 1px solid black;
 	justify-content: space-around;

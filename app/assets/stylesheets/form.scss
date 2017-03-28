@@ -3,13 +3,20 @@
 form {
 	@include column();
 	align-items: flex-start;
-	max-width: 50%;
-	margin: auto;
-	border: 1px solid black;
 	padding: 1em;
 }
 
+.form-submit {
+	margin: auto;
+}
+
+.form-input {
+	margin-bottom: 1em;
+	width: 100%;
+}
+
 .form-title {
+	font-weight: bolder;
 	margin: auto;
 	margin-bottom: .5em;
 }

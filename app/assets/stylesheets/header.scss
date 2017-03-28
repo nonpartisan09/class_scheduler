@@ -18,8 +18,9 @@
 
 #app-header {
 	@include row();
-	margin: 0 1em;
+	background: white;
 	justify-content: space-between;
+	padding: 0 1em;
 	height: $header-height;
 }
 
@@ -33,7 +34,8 @@
 }
 
 #header-menu-button.logged-in {
-	display: initial;
+	@include row();
+	align-items: center;
 }
 
 #header-menu.hide {

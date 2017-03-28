@@ -26,6 +26,17 @@ body {
 	padding: 0px;
 	max-width: 90rem;
 	font-family: $font-stack;
+	background: gray;
+}
+
+main {
+	background: white;
+	width: 100%;
+	
+	@media (min-width: $large) {
+		margin: 3em auto;
+		max-width: 48em;
+	}
 }
 
 .row {
@@ -41,4 +52,15 @@ body {
 .center {
 	justify-content: center;
 	align-items: center;
+}
+
+.button {
+	cursor: pointer;
+	min-width: 9em;
+	min-height: 4em;
+	color: white;
+	border-radius: 1em;
+	font-size: 1em;
+	font-weight: bold;
+	background: red;
 }

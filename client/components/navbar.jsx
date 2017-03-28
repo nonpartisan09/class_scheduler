@@ -28,7 +28,6 @@ class Navbar extends React.Component {
 	}
 	render() {
 		const showMenu = this.state.showing ? "show" : "hide"
-
 		const {toggleLanguage, language, tr, user, logout} = this.props;
 		if (!user.id) {
 			return (	
@@ -45,7 +44,10 @@ class Navbar extends React.Component {
 		} else {
 			return (
 				<nav className="header-nav column">
-					<Link id="header-menu-button" className="logged-in" to="" onClick={this.addToggle()}>Hi, {user.f_name}!</Link>
+					<span id="header-menu-button" className="logged-in" onClick={this.addToggle()}>
+						<Link to="">Hi, {user.f_name}!</Link>
+						<img className="thumbnail-small" src={user.profile_src}/>
+					</span>
 					<menu id="header-menu" className={`logged-in row ${showMenu}`} onClick={this.hide}>
 						<Link to="/" onClick={logout}>{tr("logout")}</Link>
 						<Link to="/" onClick={toggleLanguage(language)}>{tr("language_toggle")}</Link>
@@ -58,7 +60,7 @@ class Navbar extends React.Component {
 
 const mapState = ({session: {user}}) => ({user})
 const mapDispatch = dispatch => ({
-	logout: ()=>{dispatch(logout())},
+	logout: () => dispatch(logout()),
 	toggleLanguage: language => e => {
 		e.preventDefault();
 		if (language === "eng") {

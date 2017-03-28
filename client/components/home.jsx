@@ -18,15 +18,17 @@ class Home extends React.Component {
 					title={tr("billboard_title")} 
 					body={billboardBody}
 				/>
-				<Highlight
-					img=""
-					title={tr("how_it_works_title")}
-					body={howItWorksBody}/>
-				<Highlight
-					img=""
-					title={tr("about_us_title")}
-					body={aboutUsBody}
-					dir="right" />
+				<main>
+					<Highlight
+						img=""
+						title={tr("how_it_works_title")}
+						body={howItWorksBody}/>
+					<Highlight
+						img=""
+						title={tr("about_us_title")}
+						body={aboutUsBody}
+						dir="right" />
+				</main>
 			</section>
 		);
 	}

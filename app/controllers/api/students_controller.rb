@@ -1,27 +1,27 @@
 class Api::StudentsController < ApplicationController
   before_action :authenticate_api_student!, except: [:create]
 	def create
-		@student = Student.new(student_params)
-		if @student.save
-			sign_in(@student)
+		@user = Student.new(user_params)
+		if @user.save
+			sign_in(@user)
 			render 'api/students/show'
 		else
-			p @student.errors.messages
-			render json: @student.errors, status: :unprocessable_entity
+			p @user.errors.messages
+			render json: @user.errors, status: :unprocessable_entity
 		end
 	end
 
 	def update
-		@student = Student.find(params[:id])
-		if @student.update(student_params)
+		@user = Student.find(params[:id])
+		if @user.update(user_params)
 			render 'api/students/show'
 		else
-			render json: @student.errors, status: :unprocessable_entity
+			render json: @user.errors, status: :unprocessable_entity
 		end
 	end
 
 	def show
-		@student = Student.find(params[:id])
+		@user = Student.find(params[:id])
 	end
 
 	private 
@@ -33,6 +33,7 @@ class Api::StudentsController < ApplicationController
 			:f_name, 
 			:l_name, 
 			:profile_src, 
+			:image,
 			:language
 		)
 	end
