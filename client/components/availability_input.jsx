@@ -1,13 +1,16 @@
 import React from 'react'
 import {translate} from '../utils/translate'
-import {Slots, Days} from '../utils/availability'
+import {Slots, Days, Capitalize} from '../utils/availability'
 
 const DayToggle = ({label, onClick, on})=> {
-	const availClass = on ? "available" : "unavailable"
 	return (
-		<div className={`day-toggle ${availClass}`} onClick={onClick}>
-			{label}
-		</div>
+		<td>
+			<input 
+				type="checkbox" 
+				checked={on} 
+				onClick={onClick}
+			/>
+		</td>
 	)
 }
 
@@ -23,9 +26,10 @@ const DayGrouping = ({day, toggleHandler, state, tr}) => {
 		)
 	)
 	return (
-		<div className={`day-grouping ${day}`}>
+		<tr className={"day-grouping"}>
+			<td className="day-name">{Capitalize(day)}</td>
 			{toggles}
-		</div>
+		</tr>
 	)
 }
 
@@ -58,9 +62,20 @@ class AvailabilityInput extends React.Component {
 				tr={tr}
 			/>
 		))
+
 		return (
 			<div className="availability-input">
-				{days}
+				<table className="slot-labels">
+					<tbody>
+						<tr>
+							<th className="slot-label">Day</th>
+							<th className="slot-label">Morning</th>
+							<th className="slot-label">Afternoon</th>
+							<th className="slot-label">Evening</th>
+						</tr>
+						{days}
+					</tbody>
+				</table>
 			</div>
 		)
 	}

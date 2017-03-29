@@ -31,3 +31,5 @@ export const Days = [
 	"fri",
 	"sat",
 ]
+
+export const Capitalize = day => day[0].toUpperCase() + day.slice(1)

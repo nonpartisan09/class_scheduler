@@ -1,24 +1,12 @@
 @import "variables.scss";
 
-
-.availability-input {
-	@include column();
-	max-width: 90%;
-}
-.day-grouping {
-	@include row();
-	width: 100%;
-	margin-bottom: 1em;
+.slot-label {
+	transform: rotate(-45);
 }
 
-.day-toggle {
-	padding: .5em;
-	margin: .2em;
-	flex: 1;
-	width: 33%;
-	height: 3em;
-	border: 1px solid black;
-	border-radius: 5px;
+.day-name {
+	text-align: left;
+	margin-right: 1em;
 }
 
 .day-toggle.available {
@@ -27,4 +15,15 @@
 
 .day-toggle.unavailable {
 	background: gray;
+}
+
+.availability-input {
+		td, th {
+		padding: 0 1em 0 1em;
+		text-align: center;
+		@media (max-width: $small) {
+			padding: 0;
+			text-align: center;
+		}
+	}
 }

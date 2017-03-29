@@ -20,9 +20,9 @@ class NewClassForm extends React.Component {
 			{label: "name", display: tr("name")},
 			{label: "description", display: tr("description"), type: "textarea", info: tr("max_chars")},
 			{label: "category", display: tr("category"), type: "select", options: [
-				{label: "Legal", value: "legal"},
 				{label: "Naturalization", value: "naturalization"},
 				{label: "English", value: "english"},
+				{label: "Legal", value: "legal"},
 			]},
 			{label: "availability", display: tr("availability"), type: "availability"},
 		]
