@@ -13,8 +13,10 @@ class NewClassForm extends React.Component {
 	store(state){
 		window.localStorage.setItem("newClassForm", JSON.stringify(state))
 	}
+	onChange(state){
+		console.log(state.availability)
+	}
 	onSubmit(state){
-		console.log(state)
 		this.props.createClass(this.formId, state);
 	}
 	render(){
@@ -42,6 +44,7 @@ class NewClassForm extends React.Component {
 					submitLabel={tr("create_class")}
 					onChange={this.store}
 					onSubmit={this.onSubmit}
+					onChange={this.onChange}
 				/>
 			</section>
 		)

@@ -33,7 +33,7 @@ class Form extends React.Component {
 			newState.values[label] = e.currentTarget.value;
 			this.setState(newState, () => {
 				const {onChange} = this.props
-				if (onChange) onChange(this.state)
+				if (onChange) onChange(this.state.values)
 			})
 		}
 	}

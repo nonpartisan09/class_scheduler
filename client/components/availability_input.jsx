@@ -2,9 +2,9 @@ import React from 'react'
 import {translate} from '../utils/translate'
 import {Slots, Days, Capitalize} from '../utils/availability'
 
-const DayToggle = ({label, onClick, on})=> {
+const DayToggle = ({label, onClick, on, className})=> {
 	return (
-		<td>
+		<td className={className}>
 			<input 
 				type="checkbox" 
 				checked={on} 
@@ -19,6 +19,7 @@ const DayGrouping = ({day, toggleHandler, state, tr}) => {
 	const toggles = slots.map(slot => (
 			<DayToggle 
 				key={slot}
+				className={`${slot}-toggle`}
 				label={tr(slot)} 
 				onClick={toggleHandler(slot)}
 				on={state[slot]}

@@ -2,27 +2,19 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
 
-  attr_accessor :image, :language
+  LANGUAGES = ["eng", "spa"] 
+      
+  attr_accessor :image
 
-  validates :f_name, :l_name, :phone_number, presence: true
-  validates :language, presence: {in: Language::ALL}
+  validates :f_name, :l_name, :phone_number, :language, presence: true
+  validates :language, inclusion: {in: LANGUAGES}
   validate :phone_number_format
   validate :image_uploaded # hybrid upload/validator function
-
-  has_one :primary_language,
-    as: :owner,
-    class_name: :Language,
-    dependent: :destroy,
-    autosave: true
-
-  def language=(language)
-    @language = language
-    self.primary_language = Language.new(language: language, owner: self)
-  end
-
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
-         
+
+
+
   private 
 
   def image_uploaded
