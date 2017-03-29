@@ -11,9 +11,9 @@ import AppProvider from './components/app_provider';
 import AppRouter from './components/app_router';
 
 let user
-
 try {
-	user = JSON.parse(localStorage.getItem("user"))
+	const cached = JSON.parse(localStorage.getItem("user"))
+	if (cached) user = cached;
 } catch(e) {
 	user = {}
 }
@@ -22,6 +22,9 @@ try {
 const store = configureStore({
 	session: {
 		user
+	},
+	language: {
+		default: user.language || "eng"
 	}
 });
 

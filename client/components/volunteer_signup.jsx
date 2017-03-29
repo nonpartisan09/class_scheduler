@@ -3,7 +3,7 @@ import Form from './form'
 import Billboard from './billboard'
 import {translate} from '../utils/translate'
 import validate from '../utils/validate'
-import {volunteerSignup} from '../actions/session'
+import {signup} from '../actions/session'
 import {connect} from 'react-redux'
 import {hashHistory} from 'react-router'
 
@@ -17,10 +17,10 @@ class VolunteerSignup extends React.Component {
 	constructor(props) {
 		super(props);
 		this.onSubmit = this.onSubmit.bind(this);
+		this.formId="volunteer-signup"
 	}
 	onSubmit(state) {
-		console.log(state)
-		this.props.volunteerSignup(state)
+		this.props.signup(this.formId, state)
 	}
 	componentWillMount() {
 		redirectIfLoggedIn(this.props.user);
@@ -38,7 +38,7 @@ class VolunteerSignup extends React.Component {
 			{label: "l_name",  display: tr("last_name")},
 			{label: "phone_number", display: tr("phone_number"), 
 				info: `${tr("format")}: 555-555-5555`},
-			{label: "language", display: tr("preferred_language"), type: "select", initial: "eng", 
+			{label: "language", display: tr("language"), type: "select", initial: "eng", 
 			options: [
 				{value: "eng", label: "English", default: true},
 				{value: "spa", label: "Spanish"}
@@ -56,8 +56,8 @@ class VolunteerSignup extends React.Component {
 				/>
 				<main>
 					<Form 
-						title="Volunteer Signup"
-						id="volunteer-signup"
+						title={tr("volunteer_signup_title")}
+						id={this.formId}
 						fields={fields}
 						submitLabel={tr("sign_up")}
 						onSubmit={this.onSubmit}
@@ -71,7 +71,7 @@ class VolunteerSignup extends React.Component {
 const mapState = ({session: {user}}) => ({user})
 
 const mapDispatch = ({
-	volunteerSignup
+	signup: signup("tutors")
 })
 
 export default translate("Form")(connect(mapState, mapDispatch)(VolunteerSignup));

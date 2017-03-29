@@ -3,16 +3,17 @@ import Form from './form'
 import Billboard from './billboard'
 import {translate} from '../utils/translate'
 import validate from '../utils/validate'
-import {studentSignup} from '../actions/session'
+import {signup} from '../actions/session'
 import {connect} from 'react-redux'
 
 class StudentSignup extends React.Component {
 	constructor() {
 		super();
 		this.onSubmit = this.onSubmit.bind(this);
+		this.formId = "student-sign-up"
 	}
 	onSubmit(state) {
-		this.props.studentSignup(state)
+		this.props.signup(this.formId, state)
 	}
 	render() {
 		const {tr, errors} = this.props
@@ -24,7 +25,7 @@ class StudentSignup extends React.Component {
 			{label: "l_name",  display: tr("last_name")},
 			{label: "phone_number", display: tr("phone_number"), 
 				info: `${tr("format")}: 555-555-5555`},
-			{label: "language", display: tr("preferred_language"), info: tr("language_warning"), type: "select", initial: "eng", 
+			{label: "language", display: tr("language"), info: tr("language_warning"), type: "select", initial: "eng", 
 			options: [
 				{value: "eng", label: "English", default: true},
 				{value: "spa", label: "Spanish"}
@@ -43,7 +44,7 @@ class StudentSignup extends React.Component {
 				<main>
 					<Form 
 						title="Student Signup"
-						id="student-signup"
+						id={this.formId}
 						fields={fields}
 						submitLabel={tr("sign_up")}
 						onSubmit={this.onSubmit}
@@ -55,7 +56,7 @@ class StudentSignup extends React.Component {
 }
 
 const mapDispatch = ({
-	studentSignup
+	signup: signup("students")
 })
 
 export default translate("Form")(connect(null, mapDispatch)(StudentSignup));

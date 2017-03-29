@@ -2,23 +2,30 @@ import React from 'react'
 import Dropzone from 'react-dropzone'
 import {read} from '../utils/file'
 import AvatarEditor from 'react-avatar-editor'
+import {translate} from '../utils/translate'
 
 const crop = {
   aspect: 1/1,
 }
 
 class UploadInput extends React.Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     this.state = {
       raw: "",
-      cropped: ""
+      cropped: "",
+      edit: false
     }
     this.onDrop = this.onDrop.bind(this);
     this.setCropped = this.setCropped.bind(this);
+    this.openEditMode = this.openEditMode.bind(this);
+
   }
   onDrop(acceptedFiles, rejectedFiles) {
     read(acceptedFiles[0], raw => { this.setState({raw}) })
+  }
+  openEditMode() {
+    this.setState({edit: true})
   }
   setCropped(){
     this.cropped.getImageScaledToCanvas().toBlob(cropped => {
@@ -33,8 +40,19 @@ class UploadInput extends React.Component {
     });  
   }
   render() {
-    const {raw, cropped} = this.state;
-    if (raw) {
+    const {initial, tr} = this.props;
+    const {raw, cropped, edit} = this.state;
+    if (!edit && initial) {
+      return (
+        <div className="thumbnail-editor-preview"
+          style={{
+            backgroundImage: `url(${initial})`
+          }}
+          onClick={this.openEditMode}>
+          <span>Click to upload a new picture.</span>
+        </div>
+      )
+    } else if (raw) {
       return (
         <AvatarEditor
           ref={c => c ? this.cropped = c : null}
@@ -53,7 +71,7 @@ class UploadInput extends React.Component {
       return (
           <div className="upload-input">
             <Dropzone onDrop={this.onDrop}>
-              <div>Drop Image here, or click to select file to upload.</div>
+              <div>{tr("edit_thumbnail")}</div>
             </Dropzone>
           </div>
       );
@@ -61,4 +79,4 @@ class UploadInput extends React.Component {
   }
 }
 
-export default UploadInput;
+export default translate("Form")(UploadInput);

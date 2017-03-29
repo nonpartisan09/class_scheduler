@@ -2,33 +2,38 @@ import C from '../store/constants'
 import * as API from '../utils/api'
 import {receiveErrors} from './errors'
 import {requestPending, requestResolved} from './requests_pending'
+import {setLanguage} from './language'
+export const receiveCurrentUser = user => dispatch => {
 
-export const receiveCurrentUser = user => ({
-	type: C.RECEIVE_CURRENT_USER,
-	user
-})
+	dispatch({
+		type: C.RECEIVE_CURRENT_USER,
+		user
+	})
+	dispatch(setLanguage(user.language))
+}
 
-export const studentSignup = params => dispatch => {
-	dispatch(requestPending("student-signup"))
+export const signup = type => (form_id, params) => dispatch => {
+	dispatch(requestPending(form_id))
 
-	return API.studentSignup(params).then(
+	return API.signup(type, params).then(
 		user => {
 			dispatch(receiveCurrentUser(user))
-			dispatch(requestResolved("student-signup"))
+			dispatch(requestResolved(form_id))
 		},
-		err => dispatch(receiveErrors("student-signup", err))
+		err => dispatch(receiveErrors(form_id, err))
 	)
 }
 
-export const volunteerSignup = params => dispatch => {
-	dispatch(requestPending("volunteer-signup"))
 
-	return API.volunteerSignup(params).then(
+export const editProfile = type => (form_id, params) => dispatch => {
+	dispatch(requestPending(form_id))
+
+	return API.editProfile(type, params).then(
 		user => {
 			dispatch(receiveCurrentUser(user))
-			dispatch(requestResolved("volunteer-signup"))
+			dispatch(requestResolved(form_id))
 		},
-		err => dispatch(receiveErrors("volunteer-signup", err))
+		err => dispatch(receiveErrors(form_id, err))
 	)
 }
 

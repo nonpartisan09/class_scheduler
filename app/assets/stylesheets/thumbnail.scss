@@ -1,5 +1,21 @@
+@import "variables.scss";
+
 .thumbnail-small {
 	width: 2em;
 	height: 2em;
 	margin: .5em;
+}
+
+.thumbnail-editor-preview {
+	@include column();
+	justify-content: flex-start;
+	height: 250px;
+	width: 250px;
+	color: white;
+}
+
+.thumbnail-editor-preview span {
+	width: 100%;
+	text-align: center;
+	background: rgba(0,0,0,.5);
 }

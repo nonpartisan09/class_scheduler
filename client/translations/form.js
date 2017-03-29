@@ -17,7 +17,7 @@ module.exports = {
 	billboard_text: {
 		eng: "Sign up for FREE classes."
 	},
-	preferred_language: {
+	language: {
 		eng: "Preferred Language",
 	},
 	language_warning: {
@@ -49,6 +49,21 @@ module.exports = {
 	},
 	sign_up: {
 		eng: "Create my account"
+	},
+	edit_title: {
+		eng: "Edit Profile Info"
+	},
+	edit: {
+		eng: "Update my information"
+	},
+	volunteer_signup_title: {
+		eng: "Create Volunteer Account"
+	},
+	edit_thumbnail: {
+		eng: "Click or drop file to upload"
+	},
+	change_password: {
+		eng: "Change Password"
 	}
 
 }

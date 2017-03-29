@@ -13,4 +13,10 @@ class ApplicationController < ActionController::Base
 			:language
 		)
 	end
+
+	def ensure_current_api_user
+		if !current_api_user || current_api_user.id != params[:id].to_i
+			render json: {errors: ["unauthorized"]}, status: 401
+		end
+	end
 end

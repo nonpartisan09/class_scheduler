@@ -52,6 +52,7 @@ class Form extends React.Component {
 				display={f.display}
 				type={f.type || "text"}
 				placeholder={f.placeholder}
+				initial={f.initial}
 				value={values[f.label]}
 				errors={errors[f.label]}
 				onChange={this.changeHandler(f.label)}

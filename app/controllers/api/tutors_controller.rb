@@ -1,5 +1,6 @@
 class Api::TutorsController < ApplicationController
-  before_action :authenticate_api_tutor!, except: [:create]
+	before_action :authenticate_api_user!, only: [:update, :destroy]
+
 	def create
 		@user = Tutor.new(user_params)
 		if @user.save
@@ -14,6 +15,7 @@ class Api::TutorsController < ApplicationController
 		@user = Tutor.find(params[:id])
 
 		if @user.update(user_params)
+			sign_in(@user)
 			render 'api/tutors/show'
 		else
 			render json: @user.errors, status: :unprocessable_entity

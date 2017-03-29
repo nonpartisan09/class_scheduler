@@ -5,6 +5,7 @@ import TextInput from './text_input'
 import SelectInput from './select_input'
 import CheckboxInput from './checkbox_input'
 import UploadInput from './upload_input'
+import AvailabilityInput from './availability_input'
 
 class FormInput extends React.Component {
 
@@ -31,6 +32,7 @@ class FormInput extends React.Component {
 				input = React.createElement(CheckboxInput, this.props)
 				break;
 			case "text": 
+			case "textarea":
 			case "password":
 				input = React.createElement(TextInput, this.props)
 				break;
@@ -39,6 +41,9 @@ class FormInput extends React.Component {
 				break;
 			case "upload":
 				input = React.createElement(UploadInput, this.props);
+				break;
+			case "availability":
+				input = React.createElement(AvailabilityInput, this.props);
 				break;
 			default: 
 				throw (`unrecognized input type: ${type}`)

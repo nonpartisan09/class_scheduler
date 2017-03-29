@@ -1,7 +1,7 @@
 // export const getTutors () => fetch('api/tutors').then(r => r.json())
 // export const getStudents () => fetch('api/students').then(r => r.json())
 
-export const studentSignup = params => ( 
+export const signup = (type, params) => ( 
 	new Promise((res, rej) => {
 		const success = r => res(r);
 		const error = e => {
@@ -12,7 +12,7 @@ export const studentSignup = params => (
 			}
 		}
 		$.ajax({
-			url: "/api/students", 
+			url: `api/${type}`,
 			method: "POST",
 			data: { 
 				user: params,
@@ -23,19 +23,21 @@ export const studentSignup = params => (
 	})
 )
 
-export const volunteerSignup = params => ( 
+export const editProfile = (type, params) => {
+	console.log(params)
+	return ( 
 	new Promise((res, rej) => {
 		const success = r => res(r);
 		const error = e => {
 			if (e.status === 422) {			
 				rej(e.responseJSON);
 			} else {
-				rej({server: [e.responseJSON]})
+				rej({server: ["Server Error"]})
 			}
 		}
 		$.ajax({
-			url: "/api/tutors", 
-			method: "POST",
+			url: `api/${type}/${params.id}`,
+			method: "PATCH",
 			data: { 
 				user: params,
 			},
@@ -44,6 +46,7 @@ export const volunteerSignup = params => (
 		})
 	})
 )
+}
 
 export const logout = () => (
 	new Promise((res, rej) => {

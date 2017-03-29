@@ -1,0 +1,30 @@
+@import "variables.scss";
+
+
+.availability-input {
+	@include column();
+	max-width: 90%;
+}
+.day-grouping {
+	@include row();
+	width: 100%;
+	margin-bottom: 1em;
+}
+
+.day-toggle {
+	padding: .5em;
+	margin: .2em;
+	flex: 1;
+	width: 33%;
+	height: 3em;
+	border: 1px solid black;
+	border-radius: 5px;
+}
+
+.day-toggle.available {
+	background: green;
+}
+
+.day-toggle.unavailable {
+	background: gray;
+}
