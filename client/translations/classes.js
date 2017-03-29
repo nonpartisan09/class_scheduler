@@ -1,6 +1,6 @@
 export default {
-	name: {
-		eng: "Name"
+	title: {
+		eng: "Title"
 	},
 	availability: {
 		eng: "Availability"
@@ -83,4 +83,19 @@ export default {
 	"sat_eve": {
 		eng: "Saturday Evening"
 	},
+	english: {
+		eng: "English",
+	},
+	spanish: {
+		eng: "Spanish",
+	},
+	naturalization: {
+		eng: "Naturalization",
+	},
+	legal: {
+		eng: "Legal"
+	},
+	language: {
+		eng: "Language"
+	}
 }

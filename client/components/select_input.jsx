@@ -10,7 +10,6 @@ const SelectInput = ({title, onChange, value, options}) => {
 			</option>
 		);
 	})
-
 	return (
 	  <select value={value} onChange={onChange}>
 	  	{ opts }

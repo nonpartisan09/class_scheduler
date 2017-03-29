@@ -1,13 +1,8 @@
 import React from 'react'
 
-const TextInput = ({onChange, type, label, placeholder, value}) => (
-	<input 
-		onChange={onChange} 
-		type={type} 
-		name={label} 
-		placeholder={placeholder} 
-		value={value}
-	/>
-);
+const TextInput = ({type, onChange, value}) => React.createElement(
+	type === "textarea" ? "textarea" : "input", 
+	{type, onChange, value}
+)
 
 export default TextInput

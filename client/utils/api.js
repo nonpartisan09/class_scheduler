@@ -87,3 +87,23 @@ export const login = params => (
 		})
 	})
 )
+
+
+export const createClass = params => (
+	new Promise((res, rej) => {
+		const success = r => { 
+			res(r);
+		}
+		const error = e => {
+			rej(e.responseJSON)
+		}
+
+		$.ajax({
+			url: "/api/klasses",
+			method: "POST",
+			data: {klass: params},
+			success, 
+			error
+		})
+	})
+)

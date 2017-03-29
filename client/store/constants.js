@@ -9,7 +9,11 @@ const keys = [
 	'RECEIVE_ERRORS',
 	// requests pending
 	'REQUEST_PENDING',
-	'REQUEST_RESOLVED'
+	'REQUEST_RESOLVED',
+	// classes
+	'REQUEST_CREATE_CLASS',
+	'RECEIVE_CLASS',
+	'RECEIVE_CLASS_ERRORS',
 ]
 
 const constants = {}

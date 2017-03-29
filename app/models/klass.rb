@@ -1,18 +1,21 @@
 class Klass < ApplicationRecord
+
+	attr_accessor :availability
+
 	belongs_to :tutor
-	has_one :schedule, dependent: :destroy
+	has_one :schedule, dependent: :destroy, autosave: true
 	has_one :language, 
 		as: :owner,
 		dependent: :destroy
 
 	after_initialize :ensure_schedule
 
-	CATEGORIES = ["Citizenship", "English"]
-	LANGUAGES = ["English", "Spanish"]
+	CATEGORIES = ["naturalization", "english", "legal"]
 
-	validates :category, :schedule, :tutor, presence: true
+	validates :category, :language, :schedule, :tutor, presence: true
 	validates :category, inclusion: {in: CATEGORIES}
-	validates :language, inclusion: {in: LANGUAGES}
+	validates :description, length: {maximum: 140}
+	validates :title, length: {maximum: 60}
 
 	def self.seed
 		Klass.new ({
@@ -24,12 +27,19 @@ class Klass < ApplicationRecord
 		})
 	end
 
+	def availability= avail
+		@availability = avail
+		self.schedule = Schedule.new(@availability)
+	end
+
+	# def language=(language)
+ #    write_attribute(:language, Language.new(language: language, owner: self))
+ #  end
+
 	private
 
 	def ensure_schedule
-		self.schedule ||= Schedule.new
+		self.schedule ||= Schedule.new()
 	end
-
-
 
 end

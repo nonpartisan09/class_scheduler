@@ -1,6 +1,8 @@
 import React from 'react'
 import Form from './form'
 import {translate} from '../utils/translate'
+import {createClass} from '../actions/classes'
+import {connect} from 'react-redux'
 
 class NewClassForm extends React.Component {
 	constructor(){
@@ -13,16 +15,21 @@ class NewClassForm extends React.Component {
 	}
 	onSubmit(state){
 		console.log(state)
+		this.props.createClass(state);
 	}
 	render(){
 		const {tr} = this.props;
 		const fields = [
-			{label: "name", display: tr("name")},
+			{label: "title", display: tr("title")},
 			{label: "description", display: tr("description"), type: "textarea", info: tr("max_chars")},
-			{label: "category", display: tr("category"), type: "select", options: [
-				{label: "Naturalization", value: "naturalization"},
-				{label: "English", value: "english"},
-				{label: "Legal", value: "legal"},
+			{label: "category", display: tr("category"), type: "select", initial: "naturalization", options: [
+				{label: tr("naturalization"), value: "naturalization"},
+				{label: tr("english"), value: "english"},
+				{label: tr("legal"), value: "legal"},
+			]},
+			{label: "language", display: tr("language"), type: "select", initial: "eng", options: [
+				{label: tr("english"), value: "eng"},
+				{label: tr("spanish"), value: "spa"},
 			]},
 			{label: "availability", display: tr("availability"), type: "availability"},
 		]
@@ -41,4 +48,8 @@ class NewClassForm extends React.Component {
 	}
 }
 
-export default translate("Classes")(NewClassForm);
+const mapDispatch = ({
+	createClass
+})
+
+export default connect(null, mapDispatch)(translate("Classes")(NewClassForm));

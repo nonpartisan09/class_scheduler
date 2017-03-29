@@ -40,7 +40,7 @@ class VolunteerSignup extends React.Component {
 				info: `${tr("format")}: 555-555-5555`},
 			{label: "language", display: tr("language"), type: "select", initial: "eng", 
 			options: [
-				{value: "eng", label: "English", default: true},
+				{value: "eng", label: "English"},
 				{value: "spa", label: "Spanish"}
 			]},
 			{label: "image", display: tr("profile_pic"), type: "upload"}
