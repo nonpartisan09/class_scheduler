@@ -7,7 +7,7 @@ const classes = (state = {}, action) => {
 
 	switch (action.type) {
 		case C.RECEIVE_CLASS: 
-			newState[action.class.id] = action.class
+			newState[action.klass.id] = action.klass
 			return newState;
 		default: 
 			return state;

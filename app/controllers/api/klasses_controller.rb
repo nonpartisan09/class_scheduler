@@ -14,7 +14,6 @@ class Api::KlassesController < ApplicationController
 
 	end
 
-
 	private
 	def klass_params
 		params.require(:klass).permit(

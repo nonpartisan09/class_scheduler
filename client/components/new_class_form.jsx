@@ -7,7 +7,7 @@ import {connect} from 'react-redux'
 class NewClassForm extends React.Component {
 	constructor(){
 		super()
-		this.formId = "new-class"
+		this.formId = "new-class-form"
 		this.onSubmit = this.onSubmit.bind(this)
 	}
 	store(state){
@@ -15,7 +15,7 @@ class NewClassForm extends React.Component {
 	}
 	onSubmit(state){
 		console.log(state)
-		this.props.createClass(state);
+		this.props.createClass(this.formId, state);
 	}
 	render(){
 		const {tr} = this.props;

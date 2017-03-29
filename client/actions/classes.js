@@ -1,8 +1,9 @@
 import C from '../store/constants';
 import {requestPending, requestResolved} from './requests_pending'
+import {receiveErrors} from './errors'
 import * as API from '../utils/api'
 
-export const createClass = klass => dispatch =>{
+export const createClass = (formId, klass) => dispatch =>{
 	dispatch(requestPending("create_class"))
 	API.createClass(klass).then(
 		klass => {
@@ -10,7 +11,8 @@ export const createClass = klass => dispatch =>{
 			dispatch(requestResolved("create_class"))
 		},
 		errors => {
-			dispatch(receiveClassErrors(errors))
+			errors["availability"] = errors["schedule.availability"]
+			dispatch(receiveErrors(formId, errors))
 			dispatch(requestResolved("create_class"))
 		},
 	)
@@ -19,9 +21,4 @@ export const createClass = klass => dispatch =>{
 export const receiveClass = klass => ({
 	type: C.RECEIVE_CLASS,
 	klass
-})
-
-export const receiveClassErrors = errors => ({
-	type: C.RECEIVE_CLASS_ERRORS,
-	errors
 })

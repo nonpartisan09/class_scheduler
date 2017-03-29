@@ -40,7 +40,7 @@ class Form extends React.Component {
 	render() {
 		const {tr, fields, id, submitLabel, title, options} = this.props;
 		const errors = this.props.errors[id] || {};
-
+		console.log(errors)
 		const { values } = this.state;
 
 		const formInputs = fields.map( (f, i) => (
