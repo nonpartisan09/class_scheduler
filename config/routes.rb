@@ -5,6 +5,7 @@ Rails.application.routes.draw do
 		resources :klasses
 	  resources :tutors
 	  resources :students
+	  get :current_user, to: "sessions#show"
 	  devise_for :users
 	  devise_for :tutors
 	  devise_for :students

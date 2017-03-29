@@ -1,6 +1,24 @@
 // export const getTutors () => fetch('api/tutors').then(r => r.json())
 // export const getStudents () => fetch('api/students').then(r => r.json())
 
+export const fetchCurrentUser = () => ( 
+	new Promise((res, rej) => {
+		const success = r => res(r);
+		const error = e => {
+			if (e.status === 422) {			
+				rej(e.responseJSON);
+			} else {
+				rej({server: ["Server Error"]})
+			}
+		}
+		$.ajax({
+			url: `api/current_user`,
+			method: "GET",
+			success,
+			error
+		})
+	})
+)
 export const signup = (type, params) => ( 
 	new Promise((res, rej) => {
 		const success = r => res(r);

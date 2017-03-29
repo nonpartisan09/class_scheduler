@@ -9,7 +9,7 @@ class Klass < ApplicationRecord
 		dependent: :destroy,
 		autosave: true
 
-	after_initialize :ensure_schedule
+	after_initialize :ensure_schedule, :ensure_language
 
 	CATEGORIES = ["naturalization", "english", "legal"]
 
@@ -33,14 +33,18 @@ class Klass < ApplicationRecord
 		self.schedule = Schedule.new(@availability)
 	end
 
-	def language=(language)
-    @language = Language.new(language: language, owner: self)
+	def language=(lang)
+    @language = Language.new(language: lang, owner: self)
   end
 
 	private
 
 	def ensure_schedule
 		self.schedule ||= Schedule.new()
+	end
+
+	def ensure_language
+		self.language ||= Language.new()
 	end
 
 end

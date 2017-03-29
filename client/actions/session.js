@@ -3,6 +3,11 @@ import * as API from '../utils/api'
 import {receiveErrors} from './errors'
 import {requestPending, requestResolved} from './requests_pending'
 import {setLanguage} from './language'
+
+export const fetchCurrentUser = () => dispatch => {
+	API.fetchCurrentUser().then(user => {dispatch(receiveCurrentUser(user))})
+}
+
 export const receiveCurrentUser = user => dispatch => {
 
 	dispatch({

@@ -5,7 +5,13 @@ import Header from './header'
 import Home from './home'
 import Footer from './footer'
 
+import {fetchCurrentUser} from '../actions/session'
+import {connect} from 'react-redux'
+
 class Layout extends React.Component {
+	componentDidMount(){
+		this.props.fetchCurrentUser();
+	}
 	render(){
 		const {children} = this.props;
 		return (
@@ -18,4 +24,8 @@ class Layout extends React.Component {
 	}
 }
 
-export default Layout;
+const mapDispatch =({
+	fetchCurrentUser
+})
+
+export default connect(null, mapDispatch)(Layout);
