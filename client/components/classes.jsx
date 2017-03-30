@@ -2,19 +2,16 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {translate} from '../utils/translate'
 import {Link} from 'react-router'
+import ClassList from './class_list'
 
 class Classes extends React.Component {
 	render(){
-		const {user, children} = this.props
+		const {user: {classes_taught }} = this.props
+
 		return(
 			<main>
-				<Link 
-					className="button"
-					to="volunteer/classes/new">
-					Add a new class
-				</Link>
-				{children}
-				<div>Below</div>
+				<Link to="volunteer/classes/new"> Add a new class </Link>
+				<ClassList id="volunteer-class-list" klasses={classes_taught} editable={true}/>
 			</main>
 		);
 	}

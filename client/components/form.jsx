@@ -63,7 +63,7 @@ class Form extends React.Component {
 				<h2 className="form-title">{title}</h2>
 				<InputErrors label="Server Error" errors={errors.server}/>
 				{ formInputs }
-				<input className="form-submit button" type="submit" value={submitLabel}/>
+				<input className="form-submit big button" type="submit" value={submitLabel}/>
 			</form>
 		)
 	}

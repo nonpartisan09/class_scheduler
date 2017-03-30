@@ -27,3 +27,37 @@
 		}
 	}
 }
+
+.class-list {
+	padding: 1em;
+	list-style: none;
+	h3 {
+		margin-top: 0;
+	}
+}
+
+.class-thumbnail {
+	margin-bottom: 1em;
+	padding-left: 1em;
+}
+
+.naturalization {
+	border-left: 3px solid green;
+	.category {
+		color: green;
+	}
+}
+
+.english {
+	border-left: 3px solid orange;
+	.category {
+		color: orange;
+	}
+}
+
+.legal {
+	border-left: 3px solid teal;
+	.category {
+	color: teal;
+	}
+}

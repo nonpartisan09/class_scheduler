@@ -14,6 +14,7 @@
  *= require_self
  */
 
+@import "bootstrap";
 @import "variables.scss";
 
 html, body, #root, #layout {
@@ -61,12 +62,21 @@ textarea {
 
 .button {
 	cursor: pointer;
-	min-width: 9em;
-	min-height: 4em;
 	color: white;
-	border-radius: 1em;
-	font-size: 1em;
-	font-weight: bold;
-	background: red;
+	box-shadow: 1px 1px 1px gray;
+	border-radius: 2px;
+	padding: 0 .2em;
+	background: $gray;
+	text-decoration: none;
 }
 
+.big {
+	font-size: 1em;
+	font-weight: bolder;
+	padding: 1em;
+}
+
+.quiet {
+	font-size: smaller;
+	color: gray;
+}

@@ -36,12 +36,17 @@ const DayGrouping = ({day, toggleHandler, state, tr}) => {
 
 
 class AvailabilityInput extends React.Component {
-	constructor(){
-		super()
+	constructor(props){
+		super(props)
+
+
 		this.state = {}
 		Slots.forEach(slot => {
 			this.state[slot] = false
 		})
+
+		if (props.initial) this.state = Object.assign({}, props.initial);
+
 		this.toggleHandler = this.toggleHandler.bind(this);
 	}
 	toggleHandler(slot){

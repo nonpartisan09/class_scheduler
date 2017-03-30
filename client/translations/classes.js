@@ -1,4 +1,7 @@
 export default {
+	edit: {
+		eng: "Edit"
+	},
 	title: {
 		eng: "Title"
 	},
@@ -97,5 +100,11 @@ export default {
 	},
 	language: {
 		eng: "Language"
+	},
+	id: {
+		eng: "ID"
+	},
+	schedule: {
+		eng: "Schedule"
 	}
 }

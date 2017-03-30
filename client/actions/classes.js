@@ -7,7 +7,7 @@ export const createClass = (formId, klass) => dispatch =>{
 	dispatch(requestPending("create_class"))
 	API.createClass(klass).then(
 		klass => {
-			dispatch(receiveClass(klass))
+			dispatch(receiveTaughtClass(klass))
 			dispatch(requestResolved("create_class"))
 		},
 		errors => {
@@ -18,7 +18,7 @@ export const createClass = (formId, klass) => dispatch =>{
 	)
 }
 
-export const receiveClass = klass => ({
-	type: C.RECEIVE_CLASS,
+export const receiveTaughtClass = klass => ({
+	type: C.RECEIVE_TAUGHT_CLASS,
 	klass
 })

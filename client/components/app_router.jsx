@@ -10,6 +10,8 @@ import VolunteerDashboard from './volunteer_dashboard'
 import VolunteerProfile from './volunteer_profile'
 import Classes from './classes'
 import NewClassForm from './new_class_form'
+import EditClassForm from './edit_class_form'
+
 const AppRouter = () => (
 	<Router history={hashHistory}>
     <Route path="/" component={Layout}>
@@ -20,7 +22,7 @@ const AppRouter = () => (
     	<Route path="volunteer" component={VolunteerDashboard}>
             <Route path="profile" component={VolunteerProfile}/>
             <Route path="classes/new" component={NewClassForm}/>
-            <Route path="classes/edit/:id" component={NewClassForm}/>
+            <Route path="classes/edit/:id" component={EditClassForm}/>
             <Route path="classes" component={Classes}/>
             <Route path="messages" component={VolunteerProfile}/>
         </Route>
