@@ -3,7 +3,7 @@ import FormInput from './form_input';
 import {translate} from '../utils/translate';
 import InputErrors from './input_errors';
 import {connect} from 'react-redux';
-import {clearErrors, receiveErrors} from '../actions/errors';
+import {clearErrors, receiveErrors} from '../actions/notices';
 import deepDup from '../utils/deep_dup';
 
 class Form extends React.Component {

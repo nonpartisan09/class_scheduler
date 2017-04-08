@@ -1,6 +1,7 @@
 import C from '../store/constants';
 import * as API from '../utils/api';
-import { receiveFormErrors } from './form';
+import {receiveNotice} from './notices';
+import { receiveFormErrors } from './forms';
 import {requestPending, requestResolved} from './requests_pending';
 import {setLanguage} from './language';
 
@@ -13,8 +14,8 @@ export const receiveCurrentUser = user => dispatch => {
 	dispatch({
 		type: C.RECEIVE_CURRENT_USER,
 		user
-	})
-	dispatch(setLanguage(user.language))
+	});
+	dispatch(setLanguage(user.language));
 }
 
 export const signup = formData => dispatch => {
@@ -24,10 +25,9 @@ export const signup = formData => dispatch => {
 		e => {
 			if (e.responseJSON) {
 				dispatch(receiveFormErrors('signup', e.responseJSON.errors));
+				dispatch(receiveNotice('errors', 'not_saved'));
 			} else {
-				dispatch(
-					receiveApplicationError('something went wrong',
-				}));
+				dispatch(receiveNotice('errors', 'server_error'));
 			}
 		},
 	);

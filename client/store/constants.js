@@ -15,6 +15,8 @@ const keys = [
 	'REQUEST_CREATE_CLASS',
 	'RECEIVE_TAUGHT_CLASS',
 	'RECEIVE_CLASS_ERRORS',
+	// notices
+	'RECEIVE_NOTICE'
 
 ];
 

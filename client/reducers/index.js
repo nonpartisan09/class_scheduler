@@ -1,10 +1,10 @@
 import language from './language';
 import session from './session';
-import errors from './errors';
+import notices from './notices';
 import requestsPending from './requests_pending';
 import classes from './classes';
-import form from './form';
+import forms from './forms';
 
 export default {
-	language, session, errors, requestsPending, classes, form,
+	language, session, notices, requestsPending, classes, forms,
 }

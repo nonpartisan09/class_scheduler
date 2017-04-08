@@ -7,7 +7,7 @@ import { PageHeader, FormGroup, ControlLabel, FormControl, Button }
 
 import { translate } from '../utils/translate';
 import { signup } from '../actions/session';
-import { updateValue } from '../actions/form';
+import { updateValue } from '../actions/forms';
 
 import FieldGroup from './field_group';
 
@@ -72,7 +72,7 @@ class Signup extends React.Component {
 	}
 };
 
-const mapState = ({ form: { signup } }) => ({ formData: signup });
+const mapState = ({ forms: { signup } }) => ({ formData: signup });
 const mapDispatch = ({ 
 	updateValue: updateValue('signup'),
 	signup
