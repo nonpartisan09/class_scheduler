@@ -6,7 +6,7 @@ import configureStore from './store/configure_store';
 import AppProvider from './components/app_provider';
 import AppRouter from './components/app_router';
 
-const user = JSON.parse(localStorage.getItem("user")) || {}
+const user = window.currentUser || {}
 
 const store = configureStore({
 	session: {
