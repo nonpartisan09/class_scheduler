@@ -45,7 +45,7 @@ class Navbar extends React.Component {
 			return (
 				<nav className="header-nav column">
 					<span id="header-menu-button" className="logged-in" onClick={this.addToggle()}>
-						<Link to="">Hi, {user.f_name}!</Link>
+						<Link to="">Hi, {user.first_name}!</Link>
 						<img className="thumbnail-small" src={user.profile_src}/>
 					</span>
 					<menu id="header-menu" className={`logged-in row ${showMenu}`} onClick={this.hide}>

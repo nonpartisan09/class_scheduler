@@ -34,8 +34,8 @@ class VolunteerSignup extends React.Component {
 		const fields = [
 			{label: "email",  display: tr("email")},
 			{label: "password", display: tr("password"), type: "password"},
-			{label: "f_name",  display: tr("first_name")},
-			{label: "l_name",  display: tr("last_name")},
+			{label: "first_name",  display: tr("first_name")},
+			{label: "last_name",  display: tr("last_name")},
 			{label: "phone_number", display: tr("phone_number"), 
 				info: `${tr("format")}: 555-555-5555`},
 			{label: "language", display: tr("language"), type: "select", initial: "eng", 

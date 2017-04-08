@@ -21,8 +21,8 @@ class VolunteerProfile extends React.Component {
 		const {tr, errors, user } = this.props
 		const fields = [
 			{label: "email",  display: tr("email"), initial: user.email},
-			{label: "f_name",  display: tr("first_name"), initial: user.f_name},
-			{label: "l_name",  display: tr("last_name"), initial: user.l_name},
+			{label: "first_name",  display: tr("first_name"), initial: user.first_name},
+			{label: "last_name",  display: tr("last_name"), initial: user.last_name},
 			{label: "phone_number", display: tr("phone_number"), initial: user.phone_number, 
 				info: `${tr("format")}: 555-555-5555`},
 			{label: "language", display: tr("language"), type: "select", initial: user.language, 
