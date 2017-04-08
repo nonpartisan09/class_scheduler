@@ -4,14 +4,16 @@ import {translate} from '../utils/translate'
 import {setLanguage} from '../actions/language'
 import {connect} from 'react-redux'
 import Logo from './logo'
-import Navbar from './navbar'
+import {Navbar, Nav, NavItem, NavDropdown, MenuItem} from 'react-bootstrap'
 
 const Footer = ({toggleLanguage, language, tr}) => (
-	<footer id="app-footer">
-		<Link to="/">{tr("home")}</Link>
-		<Link to="/contact">{tr("contact")}</Link>
-		<Link to="/" onClick={toggleLanguage(language)}>{tr("language_toggle")}</Link>
-	</footer>
+  <Navbar>
+    <Nav>
+      <NavItem eventKey={1} href="#">{tr("home")}</NavItem>
+      <NavItem eventKey={2} href="#">{tr("contact")}</NavItem>
+      <NavItem eventKey={2} onClick={toggleLanguage(language)} href="#">{tr("language_toggle")}</NavItem>
+    </Nav>
+  </Navbar>
 );
 
 const mapDispatch = dispatch => ({

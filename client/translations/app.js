@@ -1,4 +1,7 @@
 module.exports = {
+	user: {
+		eng: "User"
+	},
 	student_sign_up_link: {
 		eng: "Sign up for FREE classes",
 		spa: "Regístrate para clases gratis"

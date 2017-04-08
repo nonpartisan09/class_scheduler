@@ -16,5 +16,8 @@ module.exports = {
 	},
 	about_us_text: {
 		eng: "Tutoria began as a group of volunteers who met through NY Cares. We're committed to providing education services to immigrants throughout the greater NYC area and beyond."
+	},
+	find_classes: {
+		eng: "Find Classes"
 	}
 }

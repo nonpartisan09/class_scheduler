@@ -17,8 +17,8 @@ const AppRouter = () => (
     <Route path="/" component={Layout}>
     	<Route path="home" component={Home}/>
     	<Route path="sign_in" component={Login}/>
-    	<Route path="student/sign_up" component={StudentSignup}/>
-    	<Route path="volunteer/sign_up" component={VolunteerSignup}/>
+    	<Route path="student/signup" component={StudentSignup}/>
+    	<Route path="volunteer/signup" component={VolunteerSignup}/>
     	<Route path="volunteer" component={VolunteerDashboard}>
             <Route path="profile" component={VolunteerProfile}/>
             <Route path="classes/new" component={NewClassForm}/>

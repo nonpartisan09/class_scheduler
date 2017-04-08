@@ -1,7 +1,6 @@
 import React from 'react'
 import {translate} from '../utils/translate'
-
-import Billboard from './billboard'
+import {Jumbotron, Button} from 'react-bootstrap'
 import Highlight from './highlight'
 
 class Home extends React.Component {
@@ -14,10 +13,11 @@ class Home extends React.Component {
 
 		return(
 			<section id="home">
-				<Billboard 
-					title={tr("billboard_title")} 
-					body={billboardBody}
-				/>
+			  <Jumbotron>
+			    <h1>{tr("billboard_title")}</h1>
+			    <p>{tr("billboard_text")}</p>
+			    <p><Button bsStyle="primary">{tr("find_classes")}</Button></p>
+			  </Jumbotron>
 				<main>
 					<Highlight
 						img=""
