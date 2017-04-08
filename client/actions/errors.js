@@ -4,7 +4,7 @@ export const clearErrors = id => ({
 	type: C.CLEAR_ERRORS,
 	id
 })
-export const receiveErrors = (id, errors) => ({
+export const receiveApplicationError = error => ({
 	type: C.RECEIVE_ERRORS,
 	id, 
 	errors

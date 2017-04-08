@@ -13,16 +13,15 @@ const initialState = () => ({
 
 const errors = (state = initialState(), action) => {
 
+	const { field, form, value, errors } = action;
 	const newState = deepDup(state);
 
 	switch (action.type) {
 		case C.RECEIVE_VALUE:
-			const { field, form, value } = action;
-			if (!newState[form]) newState[form] = newForm();
 			newState[form].values[field] = value;
 			return newState;
-		case C.RECEIVE_ERRORS: 
-			newState.errors[action.field] = action.errors;
+		case C.RECEIVE_FORM_ERRORS: 
+			newState[form].errors = errors;
 			return newState;
 		case C.CLEAR_ERRORS: 
 			delete newState.errors[action.field];

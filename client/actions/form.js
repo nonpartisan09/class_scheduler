@@ -8,3 +8,9 @@ export const updateValue = form => (field, value) => dispatch => {
 		value,
 	});
 };
+
+export const receiveFormErrors = (form, errors) => ({
+	type: C.RECEIVE_FORM_ERRORS,
+	form,
+	errors
+})
