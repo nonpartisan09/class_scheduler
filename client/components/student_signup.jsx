@@ -1,114 +1,59 @@
-import React from 'react'
-import Form from './form'
-import Billboard from './billboard'
-import {translate} from '../utils/translate'
-import validate from '../utils/validate'
-import {signup} from '../actions/session'
-import {connect} from 'react-redux'
-import {FormGroup, ControlLabel, HelpBlock, Checkbox, Radio, FormControl, Button} from 'react-bootstrap';
+import React from 'react';
 
-function FieldGroup({ id, label, help, ...props }) {
-  return (
-    <FormGroup controlId={id}>
-      <ControlLabel>{label}</ControlLabel>
-      <FormControl {...props} />
-      {help && <HelpBlock>{help}</HelpBlock>}
-    </FormGroup>
-  );
+import { connect } from 'react-redux';
+
+import {
+	PageHeader, FormGroup, ControlLabel, FormControl, Button,
+} from 'react-bootstrap';
+
+import { translate } from '../utils/translate';
+import { signup } from '../actions/session';
+import FieldGroup from './field_group';
+
+
+class Signup extends React.Component {
+	render() {
+		const { tr, signup } = this.props;
+		return (
+			<main>
+				<PageHeader>{tr("sign_up")}</PageHeader>
+				<form>
+
+				  <FieldGroup
+						id="signup-about"
+						name="user[email]"
+						type={tr("email")}
+						placeholder={tr("email")}
+				  />
+				  <FieldGroup
+						id="signup-password"
+						name="user[password]"
+						label={tr("password")}
+						type="password"
+				  />
+				   <FieldGroup
+						id="signup-password-confirm"
+						label={tr("confirm_password")}
+						type="password"
+				  />
+
+				  <FormGroup controlId="formControlsTextarea">
+						<ControlLabel>{tr("about")}</ControlLabel>
+						<FormControl 
+							componentClass="textarea" 
+							placeholder="textarea"
+							name="user[about]" />
+				  </FormGroup>
+
+				  <Button type="submit">
+						{tr("sign_up")}
+				  </Button>
+
+				</form>
+			</main>
+		);
+	}
 }
-
-const StudentSignup = () => (
-  <form>
-    <FieldGroup
-      id="formControlsText"
-      type="text"
-      label="Text"
-      placeholder="Enter text"
-    />
-    <FieldGroup
-      id="formControlsEmail"
-      type="email"
-      label="Email address"
-      placeholder="Enter email"
-    />
-    <FieldGroup
-      id="formControlsPassword"
-      label="Password"
-      type="password"
-    />
-    <FieldGroup
-      id="formControlsFile"
-      type="file"
-      label="File"
-      help="Example block-level help text here."
-    />
-
-    <Checkbox checked readOnly>
-      Checkbox
-    </Checkbox>
-    <Radio checked readOnly>
-      Radio
-    </Radio>
-
-    <FormGroup>
-      <Checkbox inline>
-        1
-      </Checkbox>
-      {' '}
-      <Checkbox inline>
-        2
-      </Checkbox>
-      {' '}
-      <Checkbox inline>
-        3
-      </Checkbox>
-    </FormGroup>
-    <FormGroup>
-      <Radio inline>
-        1
-      </Radio>
-      {' '}
-      <Radio inline>
-        2
-      </Radio>
-      {' '}
-      <Radio inline>
-        3
-      </Radio>
-    </FormGroup>
-
-    <FormGroup controlId="formControlsSelect">
-      <ControlLabel>Select</ControlLabel>
-      <FormControl componentClass="select" placeholder="select">
-        <option value="select">select</option>
-        <option value="other">...</option>
-      </FormControl>
-    </FormGroup>
-    <FormGroup controlId="formControlsSelectMultiple">
-      <ControlLabel>Multiple select</ControlLabel>
-      <FormControl componentClass="select" multiple>
-        <option value="select">select (multiple)</option>
-        <option value="other">...</option>
-      </FormControl>
-    </FormGroup>
-
-    <FormGroup controlId="formControlsTextarea">
-      <ControlLabel>Textarea</ControlLabel>
-      <FormControl componentClass="textarea" placeholder="textarea" />
-    </FormGroup>
-
-    <FormGroup>
-      <ControlLabel>Static text</ControlLabel>
-      <FormControl.Static>
-        email@example.com
-      </FormControl.Static>
-    </FormGroup>
-
-    <Button type="submit">
-      Submit
-    </Button>
-  </form>
-);
 
 // class StudentSignup extends React.Component {
 // 	constructor() {

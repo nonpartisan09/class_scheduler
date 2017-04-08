@@ -18,6 +18,8 @@ class Home extends React.Component {
 			    <p>{tr("billboard_text")}</p>
 			    <p><Button bsStyle="primary">{tr("find_classes")}</Button></p>
 			  </Jumbotron>
+
+			  
 				<main>
 					<Highlight
 						img=""

@@ -11,6 +11,15 @@ module.exports = {
 	password: {
 		eng: "Password",
 	},
+	confirm_password: {
+		eng: "Confirm Password"
+	},
+	about: {
+		eng: "About Me"
+	},
+	about_info: {
+		eng: "Tell us a little bit about yourself."
+	},
 	billboard_title: {
 		eng: "Sign up"
 	},
