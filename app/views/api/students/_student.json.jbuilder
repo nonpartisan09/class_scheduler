@@ -1,1 +1,0 @@
-json.extract! student, :id, :f_name, :l_name, :profile_src

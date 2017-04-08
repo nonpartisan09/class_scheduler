@@ -1,1 +1,0 @@
-json.partial! 'api/tutors/tutor', locals: {tutor: @user}

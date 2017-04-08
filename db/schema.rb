@@ -10,58 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170326163405) do
+ActiveRecord::Schema.define(version: 20170222044020) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-
-  create_table "klasses", force: :cascade do |t|
-    t.integer  "tutor_id"
-    t.string   "category",    null: false
-    t.string   "title",       null: false
-    t.string   "description"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-    t.string   "language"
-    t.index ["tutor_id"], name: "index_klasses_on_tutor_id", using: :btree
-  end
-
-  create_table "languages", force: :cascade do |t|
-    t.string   "language"
-    t.string   "owner_type"
-    t.integer  "owner_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["owner_type", "owner_id"], name: "index_languages_on_owner_type_and_owner_id", using: :btree
-  end
-
-  create_table "schedules", force: :cascade do |t|
-    t.integer  "klass_id"
-    t.boolean  "sun_mor",    default: false, null: false
-    t.boolean  "sun_aft",    default: false, null: false
-    t.boolean  "sun_eve",    default: false, null: false
-    t.boolean  "mon_mor",    default: false, null: false
-    t.boolean  "mon_aft",    default: false, null: false
-    t.boolean  "mon_eve",    default: false, null: false
-    t.boolean  "tue_mor",    default: false, null: false
-    t.boolean  "tue_aft",    default: false, null: false
-    t.boolean  "tue_eve",    default: false, null: false
-    t.boolean  "wed_mor",    default: false, null: false
-    t.boolean  "wed_aft",    default: false, null: false
-    t.boolean  "wed_eve",    default: false, null: false
-    t.boolean  "thu_mor",    default: false, null: false
-    t.boolean  "thu_aft",    default: false, null: false
-    t.boolean  "thu_eve",    default: false, null: false
-    t.boolean  "fri_mor",    default: false, null: false
-    t.boolean  "fri_aft",    default: false, null: false
-    t.boolean  "fri_eve",    default: false, null: false
-    t.boolean  "sat_mor",    default: false, null: false
-    t.boolean  "sat_aft",    default: false, null: false
-    t.boolean  "sat_eve",    default: false, null: false
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
-    t.index ["klass_id"], name: "index_schedules_on_klass_id", using: :btree
-  end
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "",        null: false
@@ -81,7 +33,7 @@ ActiveRecord::Schema.define(version: 20170326163405) do
     t.string   "l_name",                                     null: false
     t.string   "profile_src"
     t.string   "type",                   default: "Student", null: false
-    t.string   "language"
+    t.string   "language",               default: "English", null: false
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
     t.index ["f_name"], name: "index_users_on_f_name", using: :btree
     t.index ["l_name"], name: "index_users_on_l_name", using: :btree
