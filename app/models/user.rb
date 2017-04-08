@@ -2,7 +2,7 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
 
-  has_one :image 
+  has_one :image,
     as: :owner
 
   accepts_nested_attributes_for :image

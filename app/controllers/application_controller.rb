@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
 			:password, 
 			:first_name, 
 			:last_name, 
-			image: [:public_id]
+			{image: [:public_id]},
 			:language
 		)
 	end
