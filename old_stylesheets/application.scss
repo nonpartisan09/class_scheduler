@@ -1,0 +1,82 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+
+@import "bootstrap";
+@import "variables.scss";
+
+html, body, #root, #layout {
+	height: 100%;
+	width: 100%;
+}
+
+body {
+	margin: auto;
+	padding: 0px;
+	max-width: 90rem;
+	font-family: $font-stack;
+	background: gray;
+}
+
+main {
+	background: white;
+	width: 100%;
+	
+	@media (min-width: $large) {
+		margin: 3em auto;
+		width: 90%;
+	}
+}
+
+textarea {
+	height: 10em;
+	width: 20em;
+}
+
+.row {
+	display: flex;
+	flex-direction: row;
+}
+
+.column {
+	display: flex;
+	flex-direction: column;
+}
+
+.center {
+	justify-content: center;
+	align-items: center;
+}
+
+.button {
+	cursor: pointer;
+	color: white;
+	box-shadow: 1px 1px 1px gray;
+	border-radius: 2px;
+	padding: 0 .2em;
+	background: $gray;
+	text-decoration: none;
+}
+
+.big {
+	font-size: 1em;
+	font-weight: bolder;
+	padding: 1em;
+}
+
+.quiet {
+	font-size: smaller;
+	color: gray;
+}
