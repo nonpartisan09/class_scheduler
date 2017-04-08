@@ -1,6 +1,8 @@
 // export const getTutors () => fetch('api/tutors').then(r => r.json())
 // export const getStudents () => fetch('api/students').then(r => r.json())
 
+
+
 export const fetchCurrentUser = () => ( 
 	new Promise((res, rej) => {
 		const success = r => res(r);
@@ -19,27 +21,14 @@ export const fetchCurrentUser = () => (
 		})
 	})
 )
-export const signup = (type, params) => ( 
-	new Promise((res, rej) => {
-		const success = r => res(r);
-		const error = e => {
-			if (e.status === 422) {			
-				rej(e.responseJSON);
-			} else {
-				rej({server: ["Server Error"]})
-			}
-		}
-		$.ajax({
-			url: `api/${type}`,
-			method: "POST",
-			data: { 
-				user: params,
-			},
-			success,
-			error
-		})
+
+export const signup = params => ( 
+	$.ajax({
+		url: 'api/users',
+		method: 'post',
+		data: { user: params },
 	})
-)
+);
 
 export const editProfile = (type, params) => {
 	console.log(params)

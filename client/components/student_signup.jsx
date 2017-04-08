@@ -2,47 +2,64 @@ import React from 'react';
 
 import { connect } from 'react-redux';
 
-import {
-	PageHeader, FormGroup, ControlLabel, FormControl, Button,
-} from 'react-bootstrap';
+import { PageHeader, FormGroup, ControlLabel, FormControl, Button }
+	from 'react-bootstrap';
 
 import { translate } from '../utils/translate';
 import { signup } from '../actions/session';
+import { updateValue } from '../actions/form';
+
 import FieldGroup from './field_group';
 
-
 class Signup extends React.Component {
-	render() {
-		const { tr, signup } = this.props;
+	constructor(){
+		super();
+		this.input = this.input.bind(this);
+		this.submit = this.submit.bind(this);
+	}
+	input(field) {
+		return e => {
+			e.preventDefault();
+			this.props.updateValue(field, e.currentTarget.value);
+		};
+	}
+	submit(e) {
+		e.preventDefault();
+		const { signup, formData: { values } } = this.props;
+		signup(values);
+	}
+	render(){
+		const { tr } = this.props;
+		// const tr = field => field;
 		return (
 			<main>
 				<PageHeader>{tr("sign_up")}</PageHeader>
-				<form>
-
+				<form onSubmit={ this.submit }>
 				  <FieldGroup
-						id="signup-about"
-						name="user[email]"
+						id="signup-email"
 						type={tr("email")}
+						onChange={this.input('email')}
 						placeholder={tr("email")}
 				  />
 				  <FieldGroup
 						id="signup-password"
-						name="user[password]"
 						label={tr("password")}
 						type="password"
+						onChange={this.input('password')}
 				  />
-				   <FieldGroup
+				  <FieldGroup
 						id="signup-password-confirm"
 						label={tr("confirm_password")}
 						type="password"
+						onChange={this.input('password-confirm')}
 				  />
 
 				  <FormGroup controlId="formControlsTextarea">
 						<ControlLabel>{tr("about")}</ControlLabel>
 						<FormControl 
-							componentClass="textarea" 
-							placeholder="textarea"
-							name="user[about]" />
+							componentClass="textarea"
+							onChange={this.input('about')}
+						/>
 				  </FormGroup>
 
 				  <Button type="submit">
@@ -53,7 +70,17 @@ class Signup extends React.Component {
 			</main>
 		);
 	}
-}
+};
+
+const mapState = ({ form: { signup } }) => ({ formData: signup });
+const mapDispatch = ({ 
+	updateValue: updateValue('signup'),
+	signup
+});
+
+export default translate("Form")(connect(mapState, mapDispatch)(Signup));
+
+// export default connect(mapState, mapDispatch)(Signup);
 
 // class StudentSignup extends React.Component {
 // 	constructor() {
@@ -103,9 +130,3 @@ class Signup extends React.Component {
 // 		);
 // 	}
 // }
-
-const mapDispatch = ({
-	signup: signup("students")
-})
-
-export default translate("Form")(connect(null, mapDispatch)(StudentSignup));

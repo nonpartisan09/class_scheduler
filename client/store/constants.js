@@ -4,7 +4,8 @@ const keys = [
 	'LOGOUT',
 	// language
 	'SET_LANGUAGE',
-	// errors
+	// form
+	'RECEIVE_VALUE',
 	'CLEAR_ERRORS',
 	'RECEIVE_ERRORS',
 	// requests pending
@@ -14,9 +15,10 @@ const keys = [
 	'REQUEST_CREATE_CLASS',
 	'RECEIVE_TAUGHT_CLASS',
 	'RECEIVE_CLASS_ERRORS',
-]
 
-const constants = {}
-keys.forEach(key => constants[key] = key)
+];
+
+const constants = {};
+keys.forEach(key => constants[key] = key);
 
 export default constants;

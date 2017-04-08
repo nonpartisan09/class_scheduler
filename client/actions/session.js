@@ -17,17 +17,24 @@ export const receiveCurrentUser = user => dispatch => {
 	dispatch(setLanguage(user.language))
 }
 
-export const signup = type => (form_id, params) => dispatch => {
-	dispatch(requestPending(form_id))
+export const signup = formData => dispatch => {
 
-	return API.signup(type, params).then(
-		user => {
-			dispatch(receiveCurrentUser(user))
-			dispatch(requestResolved(form_id))
-		},
-		err => dispatch(receiveErrors(form_id, err))
+	debugger
+	API.signup(formData.values).then(
+		user => dispatch(receiveCurrentUser(user)),
+		err => dispatch(receiveErrors('signup', err))
 	)
-}
+
+	// dispatch(requestPending(form_id))
+
+	// return API.signup(type, params).then(
+	// 	user => {
+	// 		dispatch(receiveCurrentUser(user))
+	// 		dispatch(requestResolved(form_id))
+	// 	},
+	// 	err => dispatch(receiveErrors(form_id, err))
+	// )
+};
 
 
 export const editProfile = type => (form_id, params) => dispatch => {

@@ -1,6 +1,8 @@
-import React from React;
+import React from 'react';
+import { FormGroup, ControlLabel, FormControl, HelpBlock } 
+	from 'react-bootstrap';
 
-FieldGroup = ({ id, label, help, ...props }) => {
+const FieldGroup = ({ id, label, help, ...props }) => {
   return (
     <FormGroup controlId={id}>
       <ControlLabel>{label}</ControlLabel>

@@ -3,7 +3,6 @@ import {translate} from '../utils/translate'
 import {Link} from 'react-router'
 import {connect} from 'react-redux'
 import {setLanguage} from '../actions/language'
-import clickOutside from 'react-click-outside'
 import {logout} from '../actions/session'
 import {Navbar, Nav, NavItem, NavDropdown, MenuItem} from 'react-bootstrap'
 
@@ -103,4 +102,4 @@ const mapDispatch = dispatch => ({
 	}
 })
 
-export default connect(mapState, mapDispatch)(translate("App")(clickOutside(AppNavBar)));
+export default connect(mapState, mapDispatch)(translate("App")(AppNavBar));

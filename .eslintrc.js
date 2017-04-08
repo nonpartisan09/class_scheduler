@@ -9,6 +9,9 @@ module.exports = {
     	"no-tabs": "off",
     	"indent": "off",
         "react/jsx-indent": "off",
-        "no-mixed-spaces-and-tabs": "off"
+        "react/jsx-indent-props": "off",
+        "react/prop-types": "off",
+        "no-mixed-spaces-and-tabs": "off",
+        "quotes": "off",
     }
 };
