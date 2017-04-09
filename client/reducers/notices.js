@@ -14,7 +14,6 @@ const notices = (state = initialState(), action) => {
 	const { type, message, category } = action;
 	switch (type) {
 		case C.RECEIVE_NOTICE: 
-			debugger
 			newState[category].push(message);
 			return newState;
 		default: 

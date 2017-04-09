@@ -10,6 +10,13 @@ import { signup } from '../actions/session';
 import { updateValue } from '../actions/forms';
 
 import FieldGroup from './field_group';
+import InputErrors from './input_errors';
+
+const mapState = ({ forms: { signup } }) => ({ formData: signup });
+const mapDispatch = ({ 
+	updateValue: updateValue('signup'),
+	signup
+});
 
 class Signup extends React.Component {
 	constructor(){
@@ -29,7 +36,7 @@ class Signup extends React.Component {
 		signup(values);
 	}
 	render(){
-		const { tr } = this.props;
+		const { tr, formData: { values, errors} } = this.props;
 		// const tr = field => field;
 		return (
 			<main>
@@ -37,25 +44,33 @@ class Signup extends React.Component {
 				<form onSubmit={ this.submit }>
 				  <FieldGroup
 						id="signup-email"
-						type={tr("email")}
+						type="email"
+						label={tr("email")}
 						onChange={this.input('email')}
 						placeholder={tr("email")}
+						errors={errors.email}
+						form="signup"
 				  />
 				  <FieldGroup
 						id="signup-password"
 						label={tr("password")}
 						type="password"
 						onChange={this.input('password')}
+						errors={errors.password}
+						form="signup"
 				  />
 				  <FieldGroup
 						id="signup-password-confirm"
 						label={tr("confirm_password")}
 						type="password"
 						onChange={this.input('password-confirm')}
+						errors={errors['password-confirm']}
+						form="signup"
 				  />
 
 				  <FormGroup controlId="formControlsTextarea">
 						<ControlLabel>{tr("about")}</ControlLabel>
+						<InputErrors form="signup" errors={errors.about} />
 						<FormControl 
 							componentClass="textarea"
 							onChange={this.input('about')}
@@ -71,12 +86,6 @@ class Signup extends React.Component {
 		);
 	}
 };
-
-const mapState = ({ forms: { signup } }) => ({ formData: signup });
-const mapDispatch = ({ 
-	updateValue: updateValue('signup'),
-	signup
-});
 
 export default translate("Form")(connect(mapState, mapDispatch)(Signup));
 
