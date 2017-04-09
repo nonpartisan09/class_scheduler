@@ -22,13 +22,16 @@ export const fetchCurrentUser = () => (
 	})
 )
 
-export const signup = params => ( 
-	$.ajax({
-		url: 'api/users',
-		method: 'post',
-		data: { user: params },
-	})
-);
+export const signup = params => {
+	console.log(params)
+	return ( 
+		$.ajax({
+			url: 'api/users',
+			method: 'post',
+			data: { user: params },
+		})
+	);
+}
 
 export const editProfile = (type, params) => {
 	console.log(params)

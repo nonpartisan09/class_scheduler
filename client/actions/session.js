@@ -18,9 +18,9 @@ export const receiveCurrentUser = user => dispatch => {
 	dispatch(setLanguage(user.language));
 }
 
-export const signup = formData => dispatch => {
-
-	API.signup(formData.values).then(
+export const signup = params => dispatch => {
+	console.log(params)
+	API.signup(params).then(
 		user => dispatch(receiveCurrentUser(user)),
 		e => {
 			if (e.responseJSON) {

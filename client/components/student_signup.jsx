@@ -60,7 +60,7 @@ class Signup extends React.Component {
 						form="signup"
 				  />
 				  <FieldGroup
-						id="signup-password-confirm"
+						id="signup-password-confirmation"
 						label={tr("confirm_password")}
 						type="password"
 						onChange={this.input('password-confirm')}
