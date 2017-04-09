@@ -19,9 +19,12 @@ export const receiveCurrentUser = user => dispatch => {
 }
 
 export const signup = params => dispatch => {
-	console.log(params)
+	console.log(params); 
 	API.signup(params).then(
-		user => dispatch(receiveCurrentUser(user)),
+		user => {
+			debugger
+			dispatch(receiveCurrentUser(user))
+		},
 		e => {
 			if (e.responseJSON) {
 				dispatch(receiveFormErrors('signup', e.responseJSON.errors));
@@ -30,7 +33,7 @@ export const signup = params => dispatch => {
 				dispatch(receiveNotice('errors', 'server_error'));
 			}
 		},
-	);
+	)
 };
 
 	// dispatch(requestPending(form_id))

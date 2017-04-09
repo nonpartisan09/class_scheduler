@@ -23,7 +23,8 @@ export const fetchCurrentUser = () => (
 )
 
 export const signup = params => {
-	console.log(params)
+	console.log(params);
+
 	return ( 
 		$.ajax({
 			url: 'api/users',
@@ -31,7 +32,7 @@ export const signup = params => {
 			data: { user: params },
 		})
 	);
-}
+};
 
 export const editProfile = (type, params) => {
 	console.log(params)
