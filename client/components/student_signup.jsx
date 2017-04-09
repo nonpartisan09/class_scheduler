@@ -61,10 +61,10 @@ class Signup extends React.Component {
 				  />
 				  <FieldGroup
 						id="signup-password-confirmation"
-						label={tr("confirm_password")}
+						label={tr("password_confirmation")}
 						type="password"
-						onChange={this.input('password-confirm')}
-						errors={errors['password-confirm']}
+						onChange={this.input('password_confirmation')}
+						errors={errors['password_confirmation']}
 						form="signup"
 				  />
 

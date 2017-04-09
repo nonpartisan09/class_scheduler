@@ -11,7 +11,7 @@ module.exports = {
 	password: {
 		eng: "Password",
 	},
-	confirm_password: {
+	password_confirmation: {
 		eng: "Confirm Password"
 	},
 	about: {
