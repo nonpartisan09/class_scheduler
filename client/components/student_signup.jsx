@@ -11,6 +11,7 @@ import { updateValue } from '../actions/forms';
 
 import FieldGroup from './field_group';
 import InputErrors from './input_errors';
+import ImageInput from './image_input';
 
 const mapState = ({ forms: { signup } }) => ({ formData: signup });
 const mapDispatch = ({ 
@@ -43,6 +44,22 @@ class Signup extends React.Component {
 				<PageHeader>{tr("sign_up")}</PageHeader>
 				<form onSubmit={ this.submit }>
 				  <FieldGroup
+						id="signup-first-name"
+						label={tr("first_name")}
+						type="text"
+						onChange={this.input('first_name')}
+						errors={errors.first_name}
+						form="signup"
+				  />
+				  <FieldGroup
+						id="signup-password"
+						label={tr("last_name")}
+						type="text"
+						onChange={this.input('last_name')}
+						errors={errors.last_name}
+						form="signup"
+				  />
+				  <FieldGroup
 						id="signup-email"
 						type="email"
 						label={tr("email")}
@@ -67,7 +84,6 @@ class Signup extends React.Component {
 						errors={errors['password_confirmation']}
 						form="signup"
 				  />
-
 				  <FormGroup controlId="formControlsTextarea">
 						<ControlLabel>{tr("about")}</ControlLabel>
 						<InputErrors form="signup" errors={errors.about} />
@@ -75,6 +91,10 @@ class Signup extends React.Component {
 							componentClass="textarea"
 							onChange={this.input('about')}
 						/>
+				  </FormGroup>
+
+				  <FormGroup>
+				  	<ImageInput />
 				  </FormGroup>
 
 				  <Button type="submit">
@@ -88,54 +108,3 @@ class Signup extends React.Component {
 };
 
 export default translate("Form")(connect(mapState, mapDispatch)(Signup));
-
-// export default connect(mapState, mapDispatch)(Signup);
-
-// class StudentSignup extends React.Component {
-// 	constructor() {
-// 		super();
-// 		this.onSubmit = this.onSubmit.bind(this);
-// 		this.formId = "student-sign-up"
-// 	}
-// 	onSubmit(state) {
-// 		this.props.signup(this.formId, state)
-// 	}
-// 	render() {
-// 		const {tr, errors} = this.props
-
-// 		const fields = [
-// 			{label: "email",  display: tr("email")},
-// 			{label: "password", display: tr("password"), type: "password"},
-// 			{label: "first_name",  display: tr("first_name")},
-// 			{label: "last_name",  display: tr("last_name")},
-// 			{label: "phone_number", display: tr("phone_number"), 
-// 				info: `${tr("format")}: 555-555-5555`},
-// 			{label: "language", display: tr("language"), info: tr("language_warning"), type: "select", initial: "eng", 
-// 			options: [
-// 				{value: "eng", label: "English", default: true},
-// 				{value: "spa", label: "Spanish"}
-// 			]},
-// 			{label: "image", display: tr("profile_pic"), type: "upload"}
-// 		]
-
-// 		const billboardBody = <h3>{tr("billboard_text")}</h3>
-
-// 		return (
-// 			<section id="student-sign-up-page">
-// 				<Billboard 
-// 					title={tr("billboard_title")} 
-// 					body={billboardBody}
-// 				/>
-// 				<main>
-// 					<Form 
-// 						title="Student Signup"
-// 						id={this.formId}
-// 						fields={fields}
-// 						submitLabel={tr("sign_up")}
-// 						onSubmit={this.onSubmit}
-// 					/>
-// 				</main>
-// 			</section>
-// 		);
-// 	}
-// }

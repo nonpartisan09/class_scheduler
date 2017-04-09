@@ -1,14 +1,14 @@
-import React from 'react'
-import Dropzone from 'react-dropzone'
-import {read} from '../utils/file'
-import AvatarEditor from 'react-avatar-editor'
-import {translate} from '../utils/translate'
+import React from 'react';
+import Dropzone from 'react-dropzone';
+import {read} from '../utils/file';
+import AvatarEditor from 'react-avatar-editor';
+import {translate} from '../utils/translate';
 
 const crop = {
-  aspect: 1/1,
-}
+  aspect: 1,
+};
 
-class UploadInput extends React.Component {
+class ImageInput extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -79,4 +79,4 @@ class UploadInput extends React.Component {
   }
 }
 
-export default translate("Form")(UploadInput);
+export default translate("Form")(ImageInput);
