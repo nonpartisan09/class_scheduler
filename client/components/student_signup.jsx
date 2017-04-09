@@ -12,6 +12,7 @@ import { updateValue } from '../actions/forms';
 import FieldGroup from './field_group';
 import InputErrors from './input_errors';
 import ImageInput from './image_input';
+import { upload } from '../utils/cloudinary';
 
 const mapState = ({ forms: { signup } }) => ({ formData: signup });
 const mapDispatch = ({ 
