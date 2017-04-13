@@ -1,4 +1,7 @@
 module.exports = {
+	change: {
+		eng: "Change"
+	},
 	email: {
 		eng: "Email",
 	},

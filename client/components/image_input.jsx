@@ -1,6 +1,6 @@
 import React from 'react';
 import Dropzone from 'react-dropzone';
-import {read} from '../utils/file';
+import { read } from '../utils/file';
 import AvatarEditor from 'react-avatar-editor';
 import {translate} from '../utils/translate';
 import { Image } from '../utils/cloudinary';
@@ -11,82 +11,86 @@ const crop = {
 
 class ImageInput extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
-      raw: "",
-      cropped: "",
-      edit: false
-    }
+      raw: null,
+      cropped: null,
+      edit: true,
+    };
     this.onDrop = this.onDrop.bind(this);
     this.setCropped = this.setCropped.bind(this);
-    this.openEditMode = this.openEditMode.bind(this);
     this.reset = this.reset.bind(this);
   }
   reset () {
-    this.setState({raw: "", cropped: "", edit: false})
+    this.setState({ raw: null, cropped: null });
   }
   onDrop(acceptedFiles, rejectedFiles) {
-    read(acceptedFiles[0], raw => { this.setState({raw}) })
+    read(acceptedFiles[0], raw => { this.setState({ raw }) });
   }
-  openEditMode() {
-    this.setState({edit: true})
+  setCropped(e) {
+    if (e) e.preventDefault();
+
+    this.cropped.getImageScaledToCanvas().toBlob( blob => {
+      read(blob, cropped => {
+        this.setState({ cropped });
+      });
+    });
   }
-  setCropped(){
-    this.cropped.getImageScaledToCanvas().toBlob(cropped => {
-      read(cropped, cropped => {
-        this.setState({cropped}, () => {
-          this.props.onChange({
-            preventDefault: ()=>{},
-            currentTarget: {value: this.state.cropped}
-          })
-        })
-      })
-    });  
+  dropZone() {
+    const { tr } = this.props;
+
+    return(
+      <Dropzone onDrop={this.onDrop}>
+        <div>{tr("edit_thumbnail")}</div>
+      </Dropzone>
+    );
+  }
+  editor(){
+    return(
+      <div>
+        <AvatarEditor
+          ref={c => c ? this.cropped = c : null}
+          image={this.state.raw}
+          width={250}
+          height={250}
+          border={50}
+          color={[255, 255, 255, 0.6]} // RGBA 
+          scale={1.2}
+          rotate={0}
+        /> 
+        <button onClick={this.setCropped}>OK</button>
+      </div>
+    );
+  }
+  thumbnail() {
+    const { tr } = this.props;
+    const { cropped } = this.state;
+    return (
+      <div>
+        <img src={cropped} />
+        <button onClick={this.reset}>{tr("change")}</button>
+      </div>
+    );
   }
   render() {
-    const {initial, tr} = this.props;
-    const {raw, cropped, edit} = this.state;
+    console.log(this.state);
+    const { raw, cropped, image } = this.state;
 
-    return <Image publicId="profile_src/bxnfdi6oh6ibnczedng5" />;
-    // if (!edit && initial) {
-    //   return (
-    //     <div className="thumbnail-editor-preview"
-    //       style={{
-    //         backgroundImage: `url(${initial})`
-    //       }}
-    //       onClick={this.openEditMode}>
-    //       <span>Click to upload a new picture.</span>
-    //     </div>
-    //   )
-    // } else if (raw) {
-    //   return (
-    //     <div className="upload-input">
-    //       <AvatarEditor
-    //         ref={c => c ? this.cropped = c : null}
-    //         onLoadSuccess={this.setCropped}
-    //         onImageChange={this.setCropped}
-    //         image={raw}
-    //         width={250}
-    //         height={250}
-    //         border={50}
-    //         color={[255, 255, 255, 0.6]} // RGBA 
-    //         scale={1.2}
-    //         rotate={0}
-    //       />
-    //       <button onClick={this.reset}>reset</button>
-    //       <button>OK</button>
-    //    </div>
+    let content;
 
-    //   )
-    // } else {
-    //   return (
-    //       <div className="upload-input">
-    //         <Dropzone onDrop={this.onDrop}>
-    //           <div>{tr("edit_thumbnail")}</div>
-    //         </Dropzone>
-    //       </div>
-    //   );
-    // }
+    if (cropped) {
+      content = this.thumbnail();
+    } else if (!raw && !cropped) {
+      content = this.dropZone();
+    } else if (!cropped) {
+      content = this.editor();
+    }
+
+    return (
+      <div className="image-upload-input">
+        {content}
+      </div>
+    );
   }
 }
 
