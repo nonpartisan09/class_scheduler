@@ -24,7 +24,8 @@ export const fetchCurrentUser = () => (
 
 export const signup = params => {
 	console.log(params);
-
+	params.image_attributes = params.image;
+	delete params.image;
 	return ( 
 		$.ajax({
 			url: 'api/users',

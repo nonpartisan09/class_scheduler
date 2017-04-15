@@ -5,10 +5,6 @@ import AvatarEditor from 'react-avatar-editor';
 import {translate} from '../utils/translate';
 import { Image } from '../utils/cloudinary';
 
-const crop = {
-  aspect: 1,
-};
-
 class ImageInput extends React.Component {
   constructor(props) {
     super(props);
@@ -28,11 +24,14 @@ class ImageInput extends React.Component {
     read(acceptedFiles[0], raw => { this.setState({ raw }) });
   }
   setCropped(e) {
-    if (e) e.preventDefault();
+    if (e && e.preventDefault());
 
     this.cropped.getImageScaledToCanvas().toBlob( blob => {
       read(blob, cropped => {
-        this.setState({ cropped });
+        this.setState(
+          { cropped }, 
+          ()=> this.props.onChange(this.state.cropped),
+        );
       });
     });
   }
@@ -68,13 +67,12 @@ class ImageInput extends React.Component {
     return (
       <div>
         <img src={cropped} />
-        <button onClick={this.reset}>{tr("change")}</button>
+        <button onClick={this.reset}>{tr("remove")}</button>
       </div>
     );
   }
   render() {
-    console.log(this.state);
-    const { raw, cropped, image } = this.state;
+    const { raw, cropped } = this.state;
 
     let content;
 

@@ -25,6 +25,9 @@ class Signup extends React.Component {
 		super();
 		this.input = this.input.bind(this);
 		this.submit = this.submit.bind(this);
+		this.setImageData = this.setImageData.bind(this);
+		this.signup = this.signup.bind(this);
+		this.state = {values: {}, errors: {}};
 	}
 	input(field) {
 		return e => {
@@ -34,12 +37,23 @@ class Signup extends React.Component {
 	}
 	submit(e) {
 		e.preventDefault();
-		const { signup, formData: { values } } = this.props;
-		signup(values);
+		upload(this.state.values.image.data)
+		.then( public_id => this.setState(
+			{ values: { image: { public_id } } },
+			this.signup,
+		));
 	}
-	render(){
-		const { tr, formData: { values, errors} } = this.props;
-		// const tr = field => field;
+	signup() {
+		const { formData: { values } } = this.props;
+		const data = Object.assign({}, values, this.state.values);
+		debugger
+		this.props.signup(data);
+	}
+	setImageData(data) {
+		this.setState({ values: { image: { data } } });
+	}
+	render() {
+		const { tr, formData: { errors } } = this.props;
 		return (
 			<main>
 				<PageHeader>{tr("sign_up")}</PageHeader>
@@ -95,7 +109,9 @@ class Signup extends React.Component {
 				  </FormGroup>
 
 				  <FormGroup>
-				  	<ImageInput />
+				  	<ImageInput 
+				  		onChange={this.setImageData}
+				  	/>
 				  </FormGroup>
 
 				  <Button type="submit">

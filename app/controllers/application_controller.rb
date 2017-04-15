@@ -13,7 +13,7 @@ class ApplicationController < ActionController::Base
     	:password, 
     	:password_confirmation,
     	:language,
-      {image: [:profile_src]}, 
+      {image_attributes: [:profile_src]}, 
       :about
     ])
 
@@ -24,7 +24,7 @@ class ApplicationController < ActionController::Base
     	:password, 
     	:password_confirmation,
     	:language,
-      {image: [:profile_src]}, 
+      {image_attributes: [:profile_src]}, 
       :about
     ])
   end

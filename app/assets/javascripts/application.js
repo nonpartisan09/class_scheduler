@@ -14,8 +14,8 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require cable.js
-//= require jquery.cloudinary.js
-//= require jquery.fileupload.js
-//= require jquery.iframe-transport.js
 //= require jquery.ui.widget.js
+//= require jquery.iframe-transport.js
+//= require jquery.fileupload.js
+//= require jquery.cloudinary.js
 //= require bundle.js

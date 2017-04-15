@@ -1,6 +1,6 @@
 module.exports = {
-	change: {
-		eng: "Change"
+	remove: {
+		eng: "Remove"
 	},
 	email: {
 		eng: "Email",
