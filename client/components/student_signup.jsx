@@ -38,7 +38,7 @@ class Signup extends React.Component {
 	submit(e) {
 		e.preventDefault();
 		upload(this.state.values.image.data)
-		.then( public_id => this.setState(
+		.then( ({public_id}) => this.setState(
 			{ values: { image: { public_id } } },
 			this.signup,
 		));
@@ -46,7 +46,6 @@ class Signup extends React.Component {
 	signup() {
 		const { formData: { values } } = this.props;
 		const data = Object.assign({}, values, this.state.values);
-		debugger
 		this.props.signup(data);
 	}
 	setImageData(data) {

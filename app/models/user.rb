@@ -3,7 +3,10 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable and :omniauthable
 
   has_one :image,
-    as: :owner
+    as: :owner,
+    autosave: true,
+    dependent: :destroy,
+    inverse_of: :owner
 
   accepts_nested_attributes_for :image
       

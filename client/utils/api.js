@@ -23,7 +23,6 @@ export const fetchCurrentUser = () => (
 )
 
 export const signup = params => {
-	console.log(params);
 	params.image_attributes = params.image;
 	delete params.image;
 	return ( 
@@ -36,7 +35,6 @@ export const signup = params => {
 };
 
 export const editProfile = (type, params) => {
-	console.log(params)
 	return ( 
 	new Promise((res, rej) => {
 		const success = r => res(r);
