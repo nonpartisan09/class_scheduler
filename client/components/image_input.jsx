@@ -30,7 +30,10 @@ class ImageInput extends React.Component {
       read(blob, cropped => {
         this.setState(
           { cropped }, 
-          ()=> this.props.onChange(this.state.cropped),
+          () => this.props.onChange({ 
+            preventDefault: ()=>{},
+            currentTarget: { value: this.state.cropped } 
+          }),
         );
       });
     });

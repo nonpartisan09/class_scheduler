@@ -7,7 +7,7 @@ import {setLanguage} from './language';
 
 export const fetchCurrentUser = () => dispatch => {
 	API.fetchCurrentUser().then(user => {dispatch(receiveCurrentUser(user))})
-}
+};
 
 export const receiveCurrentUser = user => dispatch => {
 
@@ -16,13 +16,11 @@ export const receiveCurrentUser = user => dispatch => {
 		user
 	});
 	dispatch(setLanguage(user.language));
-}
+};
 
 export const signup = params => dispatch => {
-	console.log(params); 
 	API.signup(params).then(
 		user => {
-			debugger
 			dispatch(receiveCurrentUser(user))
 		},
 		e => {
@@ -33,7 +31,7 @@ export const signup = params => dispatch => {
 				dispatch(receiveNotice('errors', 'server_error'));
 			}
 		},
-	)
+	);
 };
 
 	// dispatch(requestPending(form_id))
@@ -55,18 +53,18 @@ export const editProfile = type => (form_id, params) => dispatch => {
 			dispatch(requestResolved(form_id))
 		},
 		err => dispatch(receiveErrors(form_id, err))
-	)
-}
+	);
+};
 
 export const logout = () => dispatch => {
-	API.logout().then(() => {dispatch({type: C.LOGOUT})})
-}
+	API.logout().then(() => { dispatch({ type: C.LOGOUT }) });
+};
 
 export const login = params => dispatch => {
 	return API.login(params).then(
 		user => {
-			dispatch(receiveCurrentUser(user))
+			dispatch(receiveCurrentUser(user));
 		},
-		err => dispatch(receiveErrors("login", err))
-	)
-}
+		err => dispatch(receiveErrors("login", err));
+	);
+};
