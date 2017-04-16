@@ -9,16 +9,20 @@ export const upload = file => {
 	const resource_type = 'image';
 	const url = `https://api.cloudinary.com/v1_1/${cloud_name}/${resource_type}/upload`;
 
-	return new Promise((success, error) => {
-		$.ajax({
-			url,
-			method,
-			data: {
-				file,
-				upload_preset,
-			},
-			success,
-			error
-		})
-	});
+	if (file) {
+		return new Promise((success, error) => {
+			$.ajax({
+				url,
+				method,
+				data: {
+					file,
+					upload_preset,
+				},
+				success,
+				error
+			})
+		});
+	} else {
+		return Promise.resolve({ public_id: null });
+	}
 };

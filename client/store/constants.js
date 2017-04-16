@@ -8,6 +8,7 @@ const keys = [
 	'RECEIVE_VALUE',
 	'CLEAR_ERRORS',
 	'RECEIVE_FORM_ERRORS',
+	'RECEIVE_FORM_ERROR',
 	// requests pending
 	'REQUEST_PENDING',
 	'REQUEST_RESOLVED',

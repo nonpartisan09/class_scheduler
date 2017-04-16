@@ -14,3 +14,10 @@ export const receiveFormErrors = (form, errors) => ({
 	form,
 	errors
 })
+
+export const receiveFormError = (form, field, error) => ({
+	type: C.RECEIVE_FORM_ERROR,
+	form,
+	field,
+	error
+})

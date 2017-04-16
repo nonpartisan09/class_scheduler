@@ -17,7 +17,7 @@ import { upload } from '../utils/cloudinary';
 const mapState = ({ forms: { signup } }) => ({ formData: signup });
 const mapDispatch = ({ 
 	updateValue: updateValue('signup'),
-	signup
+	signup,
 });
 
 class Signup extends React.Component {
@@ -34,9 +34,13 @@ class Signup extends React.Component {
 		};
 	}
 	submit(e) {
+		const { formData } = this.props;
+
 		e.preventDefault();
-		upload(this.props.formData.values.imageData)
-		.then(({ public_id }) => this.signup(public_id));
+		upload(formData.values.imageData)
+		.then(
+			({ public_id }) => this.signup(public_id),
+		);
 	}
 	signup(publicId) {
 		const { formData: { values } } = this.props;
@@ -44,7 +48,7 @@ class Signup extends React.Component {
 		this.props.signup(data);
 	}
 	render() {
-		const { tr, formData: { errors } } = this.props;
+		const { tr, formData: { values, errors } } = this.props;
 		return (
 			<main>
 				<PageHeader>{tr("sign_up")}</PageHeader>
@@ -100,7 +104,10 @@ class Signup extends React.Component {
 				  </FormGroup>
 
 				  <FormGroup>
+				  	<ControlLabel>{tr("profile_pic")}</ControlLabel>
 				  	<ImageInput 
+				  		form="signup"
+				  		errors={errors.image && errors.image.public_id}
 				  		onChange={this.input('imageData')}
 				  	/>
 				  </FormGroup>

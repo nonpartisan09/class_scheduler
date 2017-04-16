@@ -4,7 +4,7 @@ import { read } from '../utils/file';
 import AvatarEditor from 'react-avatar-editor';
 import {translate} from '../utils/translate';
 import { Image } from '../utils/cloudinary';
-
+import InputErrors from './input_errors';
 class ImageInput extends React.Component {
   constructor(props) {
     super(props);
@@ -18,13 +18,17 @@ class ImageInput extends React.Component {
     this.reset = this.reset.bind(this);
   }
   reset () {
-    this.setState({ raw: null, cropped: null });
+    this.setState({ raw: null, cropped: null }, 
+    () => this.props.onChange({ 
+      preventDefault: () => {},
+      currentTarget: { value: this.state.cropped } 
+    }));
   }
-  onDrop(acceptedFiles, rejectedFiles) {
+  onDrop(acceptedFiles) {
     read(acceptedFiles[0], raw => { this.setState({ raw }) });
   }
   setCropped(e) {
-    if (e && e.preventDefault());
+    if (e.preventDefault) e.preventDefault();
 
     this.cropped.getImageScaledToCanvas().toBlob( blob => {
       read(blob, cropped => {
@@ -76,7 +80,8 @@ class ImageInput extends React.Component {
   }
   render() {
     const { raw, cropped } = this.state;
-
+    const { form, errors } = this.props;
+    console.log(errors)
     let content;
 
     if (cropped) {
@@ -89,6 +94,7 @@ class ImageInput extends React.Component {
 
     return (
       <div className="image-upload-input">
+        <InputErrors form={form} errors={errors} />
         {content}
       </div>
     );
