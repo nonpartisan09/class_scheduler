@@ -21,3 +21,8 @@ export const receiveFormError = (form, field, error) => ({
 	field,
 	error
 })
+
+export const clearFormErrors = form => ({
+	type: C.CLEAR_FORM_ERRORS,
+	form
+})

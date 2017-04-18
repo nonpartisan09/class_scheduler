@@ -17,6 +17,8 @@ const store = configureStore({
 	},
 });
 
+window.store = store;
+
 const App = () => (
 	<AppProvider store={store}>
 		<AppRouter />

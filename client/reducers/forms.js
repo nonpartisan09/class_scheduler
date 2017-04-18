@@ -26,8 +26,9 @@ const errors = (state = initialState(), action) => {
 		case C.RECEIVE_FORM_ERROR:
 			newState[form].errors[field] = error;
 			return newState;
-		case C.CLEAR_ERRORS: 
-			delete newState.errors[action.field];
+		case C.CLEAR_FORM_ERRORS: 
+			debugger
+			newState[form].errors = {};
 			return newState;
 		default: 
 			return state;

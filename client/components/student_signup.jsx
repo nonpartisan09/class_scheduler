@@ -74,7 +74,6 @@ class Signup extends React.Component {
 						type="email"
 						label={tr("email")}
 						onChange={this.input('email')}
-						placeholder={tr("email")}
 						errors={errors.email}
 						form="signup"
 				  />

@@ -1,7 +1,7 @@
 import C from '../store/constants';
 import * as API from '../utils/api';
 import { receiveNotice } from './notices';
-import { receiveFormErrors } from './forms';
+import { receiveFormErrors, clearFormErrors } from './forms';
 import { requestPending, requestResolved } from './requests_pending';
 import { setLanguage } from './language';
 import { cleanupKeys } from '../utils/cleanup_keys';
@@ -20,9 +20,10 @@ export const fetchCurrentUser = () => dispatch => {
 };
 
 export const signup = params => dispatch => {
+	dispatch(clearFormErrors('signup'));
 	API.signup(params).then(
 		user => {
-			dispatch(receiveCurrentUser(user))
+			dispatch(receiveCurrentUser(user));
 		},
 		e => {
 			if (e.responseJSON) {
