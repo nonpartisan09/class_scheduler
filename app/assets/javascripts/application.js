@@ -12,7 +12,6 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require turbolinks
 //= require cable.js
 //= require jquery.ui.widget.js
 //= require jquery.iframe-transport.js

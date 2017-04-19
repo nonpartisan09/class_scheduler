@@ -1,7 +1,7 @@
 import C from '../store/constants'
 import deepDup from '../utils/deep_dup'
 
-const initialState = {default: (window.localStorage.language || "en")}
+const initialState = { default: "en" }
 
 const language = (state = initialState, action) => {
 
