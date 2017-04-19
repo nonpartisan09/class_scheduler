@@ -3,6 +3,8 @@
 const cloud_name = 'tutoria';
 const upload_preset = 'profile_src';
 
+export const urlFor = (publicId) => `https://res.cloudinary.com/tutoria/image/upload/${publicId}`
+
 export const upload = file => {
 	console.log('start image post')
 	const method = 'post';

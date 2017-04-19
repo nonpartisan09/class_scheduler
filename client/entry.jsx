@@ -6,14 +6,9 @@ import configureStore from './store/configure_store';
 import AppProvider from './components/app_provider';
 import AppRouter from './components/app_router';
 
-const user = window.currentUser || {};
-
 const store = configureStore({
 	session: {
-		user,
-	},
-	language: {
-		default: user.language || 'eng',
+		user: JSON.parse(window.localStorage.currentUser),
 	},
 });
 

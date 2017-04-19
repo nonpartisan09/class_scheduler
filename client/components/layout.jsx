@@ -9,9 +9,9 @@ import {fetchCurrentUser} from '../actions/session'
 import {connect} from 'react-redux'
 
 class Layout extends React.Component {
-	// componentDidMount(){
-	// 	this.props.fetchCurrentUser();
-	// }
+	componentDidMount(){
+		this.props.fetchCurrentUser();
+	}
 	render(){
 		const {children} = this.props;
 		return (

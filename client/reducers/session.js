@@ -9,13 +9,17 @@ const session = (state = initialState, action) => {
 
 	switch (action.type) {
 		case C.RECEIVE_CURRENT_USER: 
-			newState.user = action.user;
+			window.localStorage.user = JSON.stringify(
+				newState.user = action.user
+			);
 			return newState;
 		case C.RECEIVE_TAUGHT_CLASS:
 			newState.user.classes_taught.push(action.klass)
 			return newState;
 		case C.LOGOUT: 
-			newState.user = {};
+			window.localStorage.user = JSON.stringify(
+				newState.user = {}
+			);			
 			return newState;
 		default: 
 			return state;

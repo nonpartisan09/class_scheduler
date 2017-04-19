@@ -3,10 +3,10 @@ import {translate} from '../utils/translate'
 import {Link} from 'react-router'
 import {connect} from 'react-redux'
 import {setLanguage} from '../actions/language'
-import {logout} from '../actions/session'
+import { logout } from '../actions/session'
 import {Navbar, Nav, NavItem, NavDropdown, MenuItem} from 'react-bootstrap'
-
-const notLoggedIn = ({tr, toggleLanguage, language}) => (
+import { urlFor } from '../utils/cloudinary'
+const notLoggedIn = (props) => (
   <Navbar>
     <Navbar.Header>
       <Navbar.Brand>
@@ -16,17 +16,46 @@ const notLoggedIn = ({tr, toggleLanguage, language}) => (
     </Navbar.Header>
     <Navbar.Collapse>
 	    <Nav>
-	      <NavItem eventKey={1} href="/#/student/signup">{tr("student_sign_up_link")}</NavItem>
-	      <NavItem eventKey={2} href="/#/volunteer/signup">{tr("volunteer_sign_up_link")}</NavItem>
-	      <NavItem eventKey={2} onClick={toggleLanguage(language)} href="#">{tr("language_toggle")}</NavItem>
-
-	      <NavDropdown eventKey={3} title={tr("user")} id="basic-nav-dropdown">
-	        <MenuItem eventKey={3.1}>{tr("sign_in_link")}</MenuItem>
-	        <MenuItem divider />
-	      </NavDropdown>
+	      <NavItem eventKey={1} href="/#/student/signup">{props.tr("student_sign_up_link")}</NavItem>
+	      <NavItem eventKey={2} href="/#/volunteer/signup">{props.tr("volunteer_sign_up_link")}</NavItem>
+	      {React.createElement(DropDownMenu, props)}
 	    </Nav>
     </Navbar.Collapse>
   </Navbar>
+);
+
+const DropDownMenu = ({ user, logout, tr, toggleLanguage, language }) => {
+	if (!user) {
+		return (
+			<div>
+				<NavItem eventKey={2} onClick={toggleLanguage(language)} href="#">{tr("language_toggle")}</NavItem>
+				<NavItem eventKey={2} href="login">{tr("sign_in_link")}</NavItem>	
+			</div>	
+		);
+	} else {
+		return (
+    <NavDropdown 
+    	eventKey={3} 
+    	title={<Greeting user={user} />} 
+    	id="basic-nav-dropdown">
+			<MenuItem eventKey={2} >
+				<a href="#" onClick={toggleLanguage(language)}>
+					{tr("language_toggle")}
+				</a>
+			</MenuItem>
+      <MenuItem eventKey={3.1}>
+      	<a onClick={ logout }>{ tr("logout") }</a>
+      </MenuItem>
+    </NavDropdown>			
+		);
+	}
+}
+
+const Greeting = ({ user }) => (
+	<span className="greeting">
+		{user.first_name}
+		<img className="avatar" src={urlFor(user.public_id)} />
+	</span>
 );
 
 const AppNavBar = (props) => {
@@ -89,7 +118,7 @@ const AppNavBar = (props) => {
 // 	}
 // }
 
-const mapState = ({session: {user}}) => ({user})
+const mapState = ({session: { user }}) => ({user})
 const mapDispatch = dispatch => ({
 	logout: () => dispatch(logout()),
 	toggleLanguage: language => e => {

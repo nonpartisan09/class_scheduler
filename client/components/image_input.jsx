@@ -81,7 +81,6 @@ class ImageInput extends React.Component {
   render() {
     const { raw, cropped } = this.state;
     const { form, errors } = this.props;
-    console.log(errors)
     let content;
 
     if (cropped) {
