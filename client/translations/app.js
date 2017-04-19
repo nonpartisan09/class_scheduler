@@ -1,31 +1,31 @@
 module.exports = {
 	user: {
-		eng: "User"
+		en: "User"
 	},
 	student_sign_up_link: {
-		eng: "Sign up for FREE classes",
-		spa: "Regístrate para clases gratis"
+		en: "Sign up for FREE classes",
+		es: "Regístrate para clases gratis"
 	},
 	volunteer_sign_up_link: {
-		eng: "Volunteer to teach",
-		spa: "Voluntario para enseñar"
+		en: "Volunteer to teach",
+		es: "Voluntario para enseñar"
 	},
 	sign_in_link: {
-		eng: "Login",
-		spa: "Iniciar sesión"
+		en: "Login",
+		es: "Iniciar sesión"
 	},
 	language_toggle: {
-		eng: "Español",
-		spa: "English"
+		en: "Español",
+		es: "English"
 	},
 	contact: {
-		eng: "contact"
+		en: "contact"
 	},
 	home: {
-		eng: "home"
+		en: "home"
 	},
 	logout: {
-		eng: "Logout",
-		spa: "Logoout"
+		en: "Logout",
+		es: "Logoout"
 	}
 }

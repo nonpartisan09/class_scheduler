@@ -1,6 +1,6 @@
 module.exports = {
 	login: {
-		eng: "Login",
-		spa: "Login"
+		en: "Login",
+		es: "Login"
 	}
 }

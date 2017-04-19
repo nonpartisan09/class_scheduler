@@ -19,10 +19,10 @@ const Footer = ({toggleLanguage, language, tr}) => (
 const mapDispatch = dispatch => ({
 	toggleLanguage: language => e => {
 		e.preventDefault();
-		if (language === "eng") {
-			dispatch(setLanguage("spa"))
+		if (language === "en") {
+			dispatch(setLanguage("es"))
 		} else {
-			dispatch(setLanguage("eng"))			
+			dispatch(setLanguage("en"))			
 		}
 	}
 })

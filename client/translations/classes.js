@@ -1,110 +1,110 @@
 export default {
 	edit: {
-		eng: "Edit"
+		en: "Edit"
 	},
 	title: {
-		eng: "Title"
+		en: "Title"
 	},
 	availability: {
-		eng: "Availability"
+		en: "Availability"
 	},
 	description: {
-		eng: "Description"
+		en: "Description"
 	},
 	category: {
-		eng: "Category"
+		en: "Category"
 	},
 	max_chars: {
-		eng: "(max 140 chars)"
+		en: "(max 140 chars)"
 	},
 	class_form_title: {
-		eng: "Register a new class"
+		en: "Register a new class"
 	},
 	create_class:{
-		eng: "Create class"
+		en: "Create class"
 	}, 
 	"sun_mor": {
-		eng: "Sunday Morning"
+		en: "Sunday Morning"
 	},
 	"sun_aft": {
-		eng: "Sunday Afternoon"
+		en: "Sunday Afternoon"
 	},
 	"sun_eve": {
-		eng: "Sunday Evening"
+		en: "Sunday Evening"
 	},
 	"mon_mor": {
-		eng: "Monday Morning"
+		en: "Monday Morning"
 	},
 	"mon_aft": {
-		eng: "Monday Afternoon"
+		en: "Monday Afternoon"
 	},
 	"mon_eve": {
-		eng: "Monday Evening"
+		en: "Monday Evening"
 	},
 	"tue_mor": {
-		eng: "Tuesday Morning"
+		en: "Tuesday Morning"
 	},
 	"tue_aft": {
-		eng: "Tuesday Afternoon"
+		en: "Tuesday Afternoon"
 	},
 	"tue_eve": {
-		eng: "Tuesday Evening"
+		en: "Tuesday Evening"
 	},
 	"wed_mor": {
-		eng: "Wednesday Morning"
+		en: "Wednesday Morning"
 	},
 	"wed_aft": {
-		eng: "Wednesday Afternoon"
+		en: "Wednesday Afternoon"
 	},
 	"wed_eve": {
-		eng: "Wednesday Evening"
+		en: "Wednesday Evening"
 	},
 	"thu_mor": {
-		eng: "Thursday Morning"
+		en: "Thursday Morning"
 	},
 	"thu_aft": {
-		eng: "Thursday Afternoon"
+		en: "Thursday Afternoon"
 	},
 	"thu_eve": {
-		eng: "Thursday Evening"
+		en: "Thursday Evening"
 	},
 	"fri_mor": {
-		eng: "Friday Morning"
+		en: "Friday Morning"
 	},
 	"fri_aft": {
-		eng: "Friday Afternoon"
+		en: "Friday Afternoon"
 	},
 	"fri_eve": {
-		eng: "Friday Evening"
+		en: "Friday Evening"
 	},
 	"sat_mor": {
-		eng: "Saturday Morning"
+		en: "Saturday Morning"
 	},
 	"sat_aft": {
-		eng: "Saturday Afternoon"
+		en: "Saturday Afternoon"
 	},
 	"sat_eve": {
-		eng: "Saturday Evening"
+		en: "Saturday Evening"
 	},
 	english: {
-		eng: "English",
+		en: "English",
 	},
 	spanish: {
-		eng: "Spanish",
+		en: "Spanish",
 	},
 	naturalization: {
-		eng: "Naturalization",
+		en: "Naturalization",
 	},
 	legal: {
-		eng: "Legal"
+		en: "Legal"
 	},
 	language: {
-		eng: "Language"
+		en: "Language"
 	},
 	id: {
-		eng: "ID"
+		en: "ID"
 	},
 	schedule: {
-		eng: "Schedule"
+		en: "Schedule"
 	}
 }

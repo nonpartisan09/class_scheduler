@@ -1,81 +1,81 @@
 module.exports = {
 	remove: {
-		eng: "Remove"
+		en: "Remove"
 	},
 	email: {
-		eng: "Email",
+		en: "Email",
 	},
 	first_name: {
-		eng: "First name",
+		en: "First name",
 	},
 	last_name: {
-		eng: "Last name",
+		en: "Last name",
 	},
 	password: {
-		eng: "Password",
+		en: "Password",
 	},
 	password_confirmation: {
-		eng: "Confirm Password"
+		en: "Confirm Password"
 	},
 	about: {
-		eng: "About Me"
+		en: "About Me"
 	},
 	about_info: {
-		eng: "Tell us a little bit about yourself."
+		en: "Tell us a little bit about yourself."
 	},
 	billboard_title: {
-		eng: "Sign up"
+		en: "Sign up"
 	},
 	billboard_text: {
-		eng: "Sign up for FREE classes."
+		en: "Sign up for FREE classes."
 	},
 	language: {
-		eng: "Preferred Language",
+		en: "Preferred Language",
 	},
 	language_warning: {
-		eng: "Note: Individuals less than 70 years old or having less than 12 years of U.S. Residency are not eligible for non-english naturalization exams.",
+		en: "Note: Individuals less than 70 years old or having less than 12 years of U.S. Residency are not eligible for non-english naturalization exams.",
 	},
 	login: {
-		eng: "Login",
+		en: "Login",
 	},
 	classes: {
-		eng: "Classes"
+		en: "Classes"
 	},
 	classes_info: {
-		eng: "Please select the classes you are available to teach."
+		en: "Please select the classes you are available to teach."
 	},
 	volunteer_language_info: {
-		eng: "Please select the languages you can teach in."
+		en: "Please select the languages you can teach in."
 	},
 	volunteer_language: {
-		eng: "Languages"
+		en: "Languages"
 	},
 	phone_number: {
-		eng: "Phone Number"
+		en: "Phone Number"
 	},
 	format: {
-		eng: "Format"
+		en: "Format"
 	},
 	profile_pic: {
-		eng: "Profile Pic"
+		en: "Profile Pic"
 	},
 	sign_up: {
-		eng: "Create my account"
+		en: "Create my account"
 	},
 	edit_title: {
-		eng: "Edit Profile Info"
+		en: "Edit Profile Info"
 	},
 	edit: {
-		eng: "Update my information"
+		en: "Update my information"
 	},
 	volunteer_signup_title: {
-		eng: "Create Volunteer Account"
+		en: "Create Volunteer Account"
 	},
 	edit_thumbnail: {
-		eng: "Click or drop file to upload"
+		en: "Click or drop file to upload"
 	},
 	change_password: {
-		eng: "Change Password"
+		en: "Change Password"
 	}
 
 }

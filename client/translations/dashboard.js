@@ -1,11 +1,11 @@
 export default {
 	profile: {
-		eng: "Profile"
+		en: "Profile"
 	},	
 	classes: {
-		eng: "Classes"
+		en: "Classes"
 	},	
 	messages: {
-		eng: "Messages"
+		en: "Messages"
 	},
 }
