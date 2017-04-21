@@ -1,7 +1,7 @@
-import C from '../store/constants'
-import deepDup from '../utils/deep_dup'
+import C from '../store/constants';
+import deepDup from '../utils/deep_dup';
 
-const initialState = {user: {}}
+const initialState = { user: {} };
 
 const session = (state = initialState, action) => {
 
@@ -14,7 +14,7 @@ const session = (state = initialState, action) => {
 			);
 			return newState;
 		case C.RECEIVE_TAUGHT_CLASS:
-			newState.user.classes_taught.push(action.klass)
+			newState.user.classes_taught.push(action.klass);
 			return newState;
 		case C.LOGOUT: 
 			window.localStorage.user = JSON.stringify(

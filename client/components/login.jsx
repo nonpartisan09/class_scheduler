@@ -1,49 +1,63 @@
-import React from 'react'
-import Form from './form'
-import Billboard from './billboard'
-import {translate} from '../utils/translate'
-import validate from '../utils/validate'
-import {login} from '../actions/session'
-import {connect} from 'react-redux'
+import React from 'react';
+import { connect } from 'react-redux';
+import { PageHeader, FormGroup, ControlLabel, FormControl, Button }
+	from 'react-bootstrap';
+import { translate } from '../utils/translate';
+import { login } from '../actions/session';
+import { updateValue } from '../actions/forms';
+import FieldGroup from './field_group';
+
+const mapState = ({ forms: { login } }) => ({ formData: login });
+const mapDispatch = ({ 
+	updateValue: updateValue('login'),
+	login,
+});
 
 class Login extends React.Component {
-	constructor() {
+	constructor(){
 		super();
-		this.onSubmit = this.onSubmit.bind(this);
+		this.input = this.input.bind(this);
+		this.submit = this.submit.bind(this);
 	}
-	onSubmit(state) {
-		this.props.login(state)
+	input(field) {
+		return e => {
+			e.preventDefault();
+			this.props.updateValue(field, e.currentTarget.value);
+		};
+	}
+	submit(e) {
+		const { login, formData: { values } } = this.props;
+		login(values);
 	}
 	render() {
-		const {tr, errors} = this.props
-
-		const fields = [
-			{label: "email",  display: tr("email")},
-			{label: "password", display: tr("password"), type: "password"},
-		]
-
-		const billboardBody = <h3>{tr("billboard_text")}</h3>
-
+		const { tr, formData: { errors }} = this.props;
 		return (
-			<section id="login-page">
-				<Billboard 
-					title={tr("billboard_title")} 
-					body={billboardBody}
-				/>
-				<Form 
-					title={tr("login")}
-					id="login"
-					fields={fields}
-					submitLabel="Login"
-					onSubmit={this.onSubmit}
-				/>
-			</section>
+			<main>
+				<PageHeader>{tr("login")}</PageHeader>
+				<form onSubmit={ this.submit }>
+				  <FieldGroup
+						id="login-email"
+						type="email"
+						label={tr("email")}
+						onChange={this.input('email')}
+						errors={errors.email}
+						form="login"
+				  />
+				  <FieldGroup
+						id="login-password"
+						label={tr("password")}
+						type="password"
+						onChange={this.input('password')}
+						errors={errors.password}
+						form="login"
+				  />
+				  <Button type="submit">
+						{tr("sign_up")}
+				  </Button>
+				</form>
+			</main>
 		);
 	}
-}
+};
 
-const mapDispatch = ({
-	login
-})
-
-export default translate("Form")(connect(null, mapDispatch)(Login));
+export default translate("Form")(connect(mapState, mapDispatch)(Login));

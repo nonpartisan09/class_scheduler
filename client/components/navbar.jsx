@@ -18,7 +18,7 @@ class AppNavBar extends React.Component {
 		const { user, logout, tr, toggleLanguage, language } = this.props;
 		return ([
 			<NavItem key={"nav_item_1"} eventKey={2} onClick={toggleLanguage(language)} href="#">{tr("language_toggle")}</NavItem>,
-			<NavItem key={"nav_item_2"} eventKey={2} href="login">{tr("sign_in_link")}</NavItem>
+			<NavItem key={"nav_item_2"} eventKey={2} href="/#/login">{tr("sign_in_link")}</NavItem>
 		]);
 	}
 	loggedIn() {

@@ -47,7 +47,7 @@ export const signup = params => dispatch => {
 	// )
 
 export const editProfile = type => (form_id, params) => dispatch => {
-	dispatch(requestPending(form_id))
+	dispatch(requestPending(form_id));
 
 	return API.editProfile(type, params).then(
 		user => {

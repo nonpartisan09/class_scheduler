@@ -1,36 +1,20 @@
-import React from 'react'
-import {Router, Route, IndexRoute, hashHistory} from 'react-router'
+import React from 'react';
+import { Router, Route, IndexRoute, hashHistory } from 'react-router';
 
-import Layout from './layout'
-import Home from './home'
-import StudentSignup from './student_signup';
-// import VolunteerSignup from './volunteer_signup';
-// import Login from './login'
-// import VolunteerDashboard from './volunteer_dashboard'
-// import VolunteerProfile from './volunteer_profile'
-// import Classes from './classes'
-// import NewClassForm from './new_class_form'
-// import EditClassForm from './edit_class_form'
+import Layout from './layout';
+import Home from './home';
+import Signup from './signup';
+import Login from './login';
 
 const AppRouter = () => (
 	<Router history={hashHistory}>
     <Route path="/" component={Layout}>
-    	<Route path="home" component={Home}/>
-        <Route path="student/signup" component={StudentSignup}/>
-        <IndexRoute component={Home}/>
+    	<Route path="home" component={Home} />
+        <Route path="signup" component={Signup} />
+        <Route path="login" component={Login} />
+        <IndexRoute component={Home} />
     </Route>
     </Router>
 );
-
-    	// <Route path="sign_in" component={Login}/>
-        // <Route path="volunteer/signup" component={VolunteerSignup}/>
-        // <Route path="volunteer" component={VolunteerDashboard}>
-        //     <Route path="profile" component={VolunteerProfile}/>
-        //     <Route path="classes/new" component={NewClassForm}/>
-        //     <Route path="classes/edit/:id" component={EditClassForm}/>
-        //     <Route path="classes" component={Classes}/>
-        //     <Route path="messages" component={VolunteerProfile}/>
-        // </Route>
-
 
 export default AppRouter;
