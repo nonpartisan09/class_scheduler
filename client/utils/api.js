@@ -68,22 +68,22 @@ export const logout = () => (
 	new Promise((res, rej) => {
 		const success = r => { 
 			res(r);
-		}
+		};
 		const error = e => {
-			if (e.status === 422) {			
+			if (e.responseJSON) {
 				rej(e.responseJSON);
 			} else {
-				rej({server: ["Server Error"]})
+				rej({ server: ["Server Error"] });
 			}
-		}		
+		};
 		$.ajax({
 			url: "/api/users/sign_out",
 			method: "DELETE",
 			success, 
-			error
-		})
+			error,
+		});
 	})
-)
+);
 
 export const login = params => (
 	new Promise((res, rej) => {

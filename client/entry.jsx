@@ -8,7 +8,7 @@ import AppRouter from './components/app_router';
 
 const store = configureStore({
 	session: {
-		user: JSON.parse(window.localStorage.currentUser),
+		user: JSON.parse(window.localStorage.user),
 	},
 });
 
