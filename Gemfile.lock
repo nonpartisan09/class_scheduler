@@ -42,6 +42,7 @@ GEM
     autoprefixer-rails (6.4.0.3)
       execjs
     aws_cf_signer (0.1.3)
+    bcrypt (3.1.11)
     bootstrap (4.0.0.alpha6)
       autoprefixer-rails (>= 6.0.3)
       sass (>= 3.4.19)
@@ -188,6 +189,7 @@ PLATFORMS
 
 DEPENDENCIES
   autoprefixer-rails
+  bcrypt
   bootstrap
   byebug
   cloudinary

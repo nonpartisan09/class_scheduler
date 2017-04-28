@@ -14,7 +14,7 @@ export const fetchCurrentUser = () => (
 			}
 		}
 		$.ajax({
-			url: `api/current_user`,
+			url: `api/session/show`,
 			method: "GET",
 			success,
 			error
@@ -89,37 +89,37 @@ export const login = params => (
 	new Promise((res, rej) => {
 		const success = r => { 
 			res(r);
-		}
+		};
 		const error = e => {
-			rej(e.responseJSON)
-		}
+			rej(e.responseJSON);
+		};
 
 		$.ajax({
 			url: "/api/users/sign_in",
 			method: "POST",
-			data: params,
+			data: { user: params },
 			success, 
-			error
-		})
+			error,
+		});
 	})
-)
+);
 
 
 export const createClass = params => (
 	new Promise((res, rej) => {
 		const success = r => { 
 			res(r);
-		}
+		};
 		const error = e => {
-			rej(e.responseJSON)
-		}
+			rej(e.responseJSON);
+		};
 
 		$.ajax({
 			url: "/api/klasses",
 			method: "POST",
-			data: {klass: params},
+			data: { klass: params },
 			success, 
-			error
-		})
+			error,
+		});
 	})
 )

@@ -26,6 +26,7 @@ export const signup = params => dispatch => {
 			dispatch(receiveCurrentUser(user));
 		},
 		e => {
+			console.log(e);
 			if (e.responseJSON) {
 				dispatch(receiveFormErrors('signup', cleanupKeys(e.responseJSON.errors)));
 				dispatch(receiveNotice('errors', 'not_saved'));
