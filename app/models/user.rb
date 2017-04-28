@@ -12,7 +12,4 @@ class User < ApplicationRecord
       
   validates :first_name, :last_name, :language, :about, :image, presence: true
   validates :password, confirmation: true 
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
-
 end
