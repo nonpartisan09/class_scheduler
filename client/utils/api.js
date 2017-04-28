@@ -14,7 +14,7 @@ export const fetchCurrentUser = () => (
 			}
 		}
 		$.ajax({
-			url: `api/session/show`,
+			url: `api/session`,
 			method: "GET",
 			success,
 			error
@@ -77,7 +77,7 @@ export const logout = () => (
 			}
 		};
 		$.ajax({
-			url: "/api/users/sign_out",
+			url: "/api/session",
 			method: "DELETE",
 			success, 
 			error,
@@ -95,7 +95,7 @@ export const login = params => (
 		};
 
 		$.ajax({
-			url: "/api/users/sign_in",
+			url: "/api/session",
 			method: "POST",
 			data: { user: params },
 			success, 

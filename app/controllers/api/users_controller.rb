@@ -14,12 +14,6 @@ class Api::UsersController < ApplicationController
 		@user = User.find(params[:id])
 	end
 
-	def guest
-		@user = User.new_guest
-		login(@user)
-		render :show
-	end
-
 	private
 
 	def user_params
