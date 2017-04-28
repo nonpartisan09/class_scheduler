@@ -25,12 +25,12 @@ class Login extends React.Component {
 			this.props.updateValue(field, e.currentTarget.value);
 		};
 	}
-	submit(e) {
+	submit (e) {
 		const { login, formData: { values } } = this.props;
 		login(values);
 	}
 	render() {
-		const { tr, formData: { errors }} = this.props;
+		const { tr, formData: { errors } } = this.props;
 		return (
 			<main>
 				<PageHeader>{tr("login")}</PageHeader>
