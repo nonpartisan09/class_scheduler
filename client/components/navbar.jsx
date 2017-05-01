@@ -56,8 +56,8 @@ class AppNavBar extends React.Component {
 		    </Navbar.Header>
 		    <Navbar.Collapse>
 			    <Nav>
-			      <NavItem eventKey={1} href="/#/student/signup">{tr("student_sign_up_link")}</NavItem>
-			      <NavItem eventKey={2} href="/#/volunteer/signup">{tr("volunteer_sign_up_link")}</NavItem>
+			      <NavItem eventKey={1} href="/#/signup">{tr("student_sign_up_link")}</NavItem>
+			      <NavItem eventKey={2} href="/#/signup">{tr("volunteer_sign_up_link")}</NavItem>
 			      { loggedIn ? this.loggedIn() : this.notLoggedIn() }
 			    </Nav>
 		    </Navbar.Collapse>
