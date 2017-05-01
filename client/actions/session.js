@@ -6,6 +6,7 @@ import { requestPending, requestResolved } from './requests_pending';
 import { setLanguage } from './language';
 import { cleanupKeys } from '../utils/cleanup_keys';
 
+
 export const receiveCurrentUser = user => dispatch => {
 
 	dispatch({
@@ -14,6 +15,11 @@ export const receiveCurrentUser = user => dispatch => {
 	});
 	
 	if (typeof user.language === "string") dispatch(setLanguage(user.language));
+	if (Object.keys(user).length > 0) dispatch({
+		type: C.RECEIVE_NOTICE,
+		category: "successes",
+		message: "Successfully Logged In",
+	})
 };
 
 export const fetchCurrentUser = () => dispatch => {
