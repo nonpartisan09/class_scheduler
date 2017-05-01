@@ -12,7 +12,8 @@ export const receiveCurrentUser = user => dispatch => {
 		type: C.RECEIVE_CURRENT_USER,
 		user
 	});
-	dispatch(setLanguage(user.language));
+	
+	if (typeof user.language === "string") dispatch(setLanguage(user.language));
 };
 
 export const fetchCurrentUser = () => dispatch => {

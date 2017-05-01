@@ -52,7 +52,7 @@ class Login extends React.Component {
 						form="login"
 				  />
 				  <Button type="submit">
-						{tr("sign_up")}
+						{tr("login")}
 				  </Button>
 				</form>
 			</main>

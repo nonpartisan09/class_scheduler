@@ -5,7 +5,10 @@
 
 export const fetchCurrentUser = () => ( 
 	new Promise((res, rej) => {
-		const success = r => res(r);
+		const success = r => {
+			r = r || {};
+			res(r);
+		}
 		const error = e => {
 			if (e.status === 422) {			
 				rej(e.responseJSON);

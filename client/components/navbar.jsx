@@ -15,7 +15,7 @@ const Greeting = ({ user }) => (
 
 class AppNavBar extends React.Component {
 	notLoggedIn() {
-		const { user, logout, tr, toggleLanguage, language } = this.props;
+		const { user, tr, toggleLanguage, language } = this.props;
 		return ([
 			<NavItem key={"nav_item_1"} eventKey={2} onClick={toggleLanguage(language)} href="#">{tr("language_toggle")}</NavItem>,
 			<NavItem key={"nav_item_2"} eventKey={2} href="/#/login">{tr("sign_in_link")}</NavItem>
@@ -44,7 +44,7 @@ class AppNavBar extends React.Component {
 		return first_name ? this.loggedIn() : this.notLoggedIn();
 	}
 	render(){
-		const { user, logout, tr, toggleLanguage, language } = this.props;
+		const { user, tr, toggleLanguage, language } = this.props;
 		const loggedIn = !!user.first_name;
 	  return (
 	  	<Navbar>
@@ -68,15 +68,20 @@ class AppNavBar extends React.Component {
 
 const mapState = ({session: { user }}) => ({user})
 const mapDispatch = dispatch => ({
-	logout: () => dispatch(logout()),
-	toggleLanguage: language => e => {
-		e.preventDefault();
-		if (language === "en") {
-			dispatch(setLanguage("es"))
-		} else {
-			dispatch(setLanguage("en"))			
+	logout() {
+		console.log(logout)
+		dispatch(logout())
+	},
+	toggleLanguage(language) {
+		return e => {
+			e.preventDefault();
+			if (language === "en") {
+				dispatch(setLanguage("es"))
+			} else {
+				dispatch(setLanguage("en"))			
+			}
 		}
-	}
+	} 
 })
 
 export default connect(mapState, mapDispatch)(translate("App")(AppNavBar));

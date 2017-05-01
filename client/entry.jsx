@@ -6,10 +6,20 @@ import configureStore from './store/configure_store';
 import AppProvider from './components/app_provider';
 import AppRouter from './components/app_router';
 
+
+// if localStorage.user, use them;
+
+let user = {};
+
+try {
+	user = JSON.parse(window.localStorage.user) || {}
+} catch (e) {
+	console.log('invalid localStorage user')
+}
+
+
 const store = configureStore({
-	session: {
-		user: JSON.parse(window.localStorage.user),
-	},
+	session: { user },
 });
 
 window.store = store;
