@@ -1,6 +1,6 @@
 import C from '../store/constants';
 import * as API from '../utils/api';
-import { receiveNotice } from './notices';
+import { receiveNotice, clearNotices } from './notices';
 import { receiveFormErrors, clearFormErrors } from './forms';
 import { requestPending, requestResolved } from './requests_pending';
 import { setLanguage } from './language';
@@ -17,8 +17,8 @@ export const receiveCurrentUser = user => dispatch => {
 	if (typeof user.language === "string") dispatch(setLanguage(user.language));
 	if (Object.keys(user).length > 0) dispatch({
 		type: C.RECEIVE_NOTICE,
-		category: "successes",
-		message: "Successfully Logged In",
+		category: "success",
+		message: "login_success",
 	})
 };
 
@@ -28,20 +28,20 @@ export const fetchCurrentUser = () => dispatch => {
 
 export const signup = params => dispatch => {
 	dispatch(clearFormErrors('signup'));
+	dispatch(clearNotices());
 	API.signup(params).then(
 		user => {
 			dispatch(receiveCurrentUser(user));
 		},
 		e => {
-			console.log(e);
 			if (e.responseJSON) {
-				dispatch(receiveFormErrors('signup', cleanupKeys(e.responseJSON.errors)));
-				dispatch(receiveNotice('errors', 'not_saved'));
+				dispatch(receiveFormErrors('signup', cleanupKeys(e.responseJSON)));
+				dispatch(receiveNotice('danger', 'not_saved'));
 			} else {
-				dispatch(receiveNotice('errors', 'server_error'));
+				dispatch(receiveNotice('danger', 'server_error'));
 			}
 		},
-	);
+	); 
 };
 
 	// dispatch(requestPending(form_id))

@@ -5,3 +5,7 @@ export const receiveNotice = (category, message) => ({
 	category,
 	message
 })
+
+export const clearNotices = () => ({
+	type: C.CLEAR_NOTICES,
+})

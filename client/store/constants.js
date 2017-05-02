@@ -18,7 +18,8 @@ const keys = [
 	'RECEIVE_TAUGHT_CLASS',
 	'RECEIVE_CLASS_ERRORS',
 	// notices
-	'RECEIVE_NOTICE'
+	'RECEIVE_NOTICE',
+	'CLEAR_NOTICES'
 
 ];
 
