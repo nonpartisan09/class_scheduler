@@ -1,0 +1,27 @@
+<%= form_with(model: english_class, local: true) do |form| %>
+  <% if english_class.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(english_class.errors.count, "error") %> prohibited this english_class from being saved:</h2>
+
+      <ul>
+      <% english_class.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :class_date %>
+    <%= form.date_select :class_date, id: :english_class_class_date %>
+  </div>
+
+  <div class="field">
+    <%= form.label :class_time %>
+    <%= form.time_select :class_time, id: :english_class_class_time %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
