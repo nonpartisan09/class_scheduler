@@ -1,0 +1,15 @@
+<!-- PAGE HEADER
+============================== -->
+<div class="page__header">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12">
+        <h3 class="page-header__title"><%= page_header || '' %></h3>
+        <ol class="breadcrumb page-header__breadcrumb text-center">
+          <li> <%= link_to "Home", root_path %></li>
+          <li class="active"> <%= page_header || '' %></li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>

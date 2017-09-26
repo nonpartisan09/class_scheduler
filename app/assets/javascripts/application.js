@@ -12,5 +12,11 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require jquery.plugin
+//= require jquery.countdown
+//= require wow
+//= require jquery.waypoints
+//= require inview
+//= require counter
 //= require turbolinks
 //= require_tree .

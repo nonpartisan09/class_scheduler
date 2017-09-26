@@ -3163,6 +3163,16 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   z-index: 2;
   margin-left: -1px;
 }
+
+.name {
+    display: block;
+    padding: 11px 5px;
+    color: #9e9e9e;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 500;
+}
+
 .nav {
   margin-bottom: 0;
   padding-left: 0;
