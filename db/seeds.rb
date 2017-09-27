@@ -9,17 +9,25 @@
 Role.create({
     name: 'Admin',
     url_slug: 'admin',
-    description: 'A volunteer with access to the admin panel'
+    description: 'A volunteer with access to the admin panel',
+    displayable: false
 })
 
 Role.create({
     name: 'Volunteer',
     url_slug: 'volunteer',
-    description: 'A volunteer with no access to the admin panel'
+    description: 'A volunteer with no access to the admin panel',
+    displayable: true
 })
 
 Role.create({
     name: 'Student',
     url_slug: 'student',
-    description: 'A student'
+    description: 'A student',
+    displayable: true
+})
+
+TermsAndConditions.create({
+    description: 'some text',
+    version: 1
 })

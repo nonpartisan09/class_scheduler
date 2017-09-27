@@ -5,6 +5,8 @@ class CreateUsers < ActiveRecord::Migration[5.1]
       t.string :last_name
       t.string :display_name
       t.string :url_slug
+      t.numeric :terms_and_conditions
+      t.boolean :contact_permission
 
       t.timestamps
 
