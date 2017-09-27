@@ -7,7 +7,8 @@ class User < ActiveRecord::Base
       :registerable,
       :trackable,
       :recoverable,
-      :validatable
+      :validatable,
+      password_length: 8..30
 
   validates_confirmation_of :password
 

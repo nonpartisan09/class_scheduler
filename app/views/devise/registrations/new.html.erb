@@ -3,8 +3,14 @@
   <%= render :partial=>'partials/page_header', :locals => { page_header: 'Sign Up' } %>
 
   <div class="container">
-    <%= form_for(resource, as: resource_name, url: api_v1_registrations_path) do |f| %>
-      <%= devise_error_messages! %>
+    <%= form_for(resource, as: resource_name, url: api_v1_registrations_path ) do |f| %>
+      <%- if @message %>
+        <%= @message %>
+      <% end -%>
+
+      <div class="field">
+        <%= f.hidden_field :role_ids, { value: [ @role ], autofocus: true } %>
+      </div>
 
       <div class="field">
         <%= f.label :username %><br />
@@ -37,6 +43,12 @@
       <div class="field">
         <%= f.label :password_confirmation %><br />
         <%= f.password_field :password_confirmation, autocomplete: "off" %>
+      </div>
+
+      <div class="field">
+        <%= f.check_box :terms_and_conditions %>
+        <span>Please accept our</span>
+        <%= link_to "terms and conditions", terms_and_conditions_path, :target => "_blank" %>
       </div>
 
       <div class="actions">
