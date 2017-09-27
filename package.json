@@ -1,7 +1,8 @@
 {
   "name": "tutoria",
   "private": true,
-  "dependencies": {
+  "dependencies": {},
+  "devDependencies": {
     "eslint": "^4.7.2"
   }
 }
