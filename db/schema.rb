@@ -47,7 +47,7 @@ ActiveRecord::Schema.define(version: 20170927220321) do
     t.string "last_name"
     t.string "display_name"
     t.string "url_slug"
-    t.decimal "terms_and_conditions", precision: 10
+    t.integer "terms_and_conditions", precision: 10
     t.boolean "contact_permission"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
