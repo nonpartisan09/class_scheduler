@@ -3,7 +3,7 @@
   <%= render :partial=>'partials/page_header', :locals => { page_header: 'Sign Up' } %>
 
   <div class="container">
-    <%= form_for(resource, as: resource_name, url: api_v1_registrations_path ) do |f| %>
+    <%= form_for(resource, as: resource_name, url: registrations_path ) do |f| %>
       <%- if @message %>
         <%= @message %>
       <% end -%>

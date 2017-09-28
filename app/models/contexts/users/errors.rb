@@ -22,4 +22,8 @@ module Contexts::Users::Errors
 
   end
 
+  class UnknownSignInError < RuntimeError
+
+  end
+
 end

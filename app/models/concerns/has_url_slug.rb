@@ -1,6 +1,6 @@
 require 'active_support/concern'
 
-module HasUrl
+module HasUrlSlug
   extend ActiveSupport::Concern
 
   included do
@@ -17,11 +17,9 @@ module HasUrl
 
       label = generate_label
 
-
       if label.present?
         # We check to see if the slug is entirely made up of integer values
-        # and then convert it to the word equivalent to prevent confusing
-        # the search filter later on
+        # and then convert it to the word equivalent
 
         if self.class.consists_of_only_numbers?(label)
           slug_as_integer = label.strip.to_i

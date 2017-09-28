@@ -22,11 +22,11 @@
       <!-- Account links -->
       <%- if @current_user.present? %>
         <li><div class="name"><%= @current_user[:display_name] %></div></li>
-        <li><%= link_to 'Sign Out', api_v1_sign_out_path, method: :delete %></li>
+        <li><%= link_to 'Sign Out', sign_out_path, method: :delete %></li>
       <% else %>
-        <li><%= link_to 'Sign In', api_v1_sign_in_path %></li>
-        <li><%= link_to 'Sign up as a student', api_v1_sign_up_path(:role => @student_role) %></li>
-        <li><%= link_to 'Sign up as a volunteer teacher', api_v1_sign_up_path(:role => @volunteer_role) %></li>
+        <li><%= link_to 'Sign In', sign_in_path %></li>
+        <li><%= link_to 'Sign up as a student', sign_up_path(:role => @student_role) %></li>
+        <li><%= link_to 'Sign up as a volunteer teacher', sign_up_path(:role => @volunteer_role) %></li>
     <% end -%>
 
       <li><a href="shopping-cart.html">My Cart (0)</a></li>

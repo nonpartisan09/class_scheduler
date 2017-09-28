@@ -11,4 +11,8 @@ class ApplicationController < ActionController::Base
   def t_and_c
     render :t_and_c
   end
+
+  def not_found
+    render :not_found
+  end
 end

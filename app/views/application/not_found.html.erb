@@ -1,0 +1,47 @@
+<body class="body_plain">
+
+<%= render :partial=>'partials/page_header', :locals => { page_header: 'Error Page' } %>
+
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="body-plain__title">
+        <h1 class="text-center">404 Error</h1>
+      </div>
+    </div>
+  </div> <!-- / .row -->
+  <div class="row">
+    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4 col-sm-offset-3 col-md-offset-3 col-lg-offset-4">
+      <div class="body-plain__form text-center">
+        <p class="lead text-primary">Oops!</p>
+        <p>
+          Page doesn't exist or some other error occurred.
+        </p>
+        <p>
+          Go to our <%= link_to "homepage", "#" %> or go back to the <a href="#">previous page</a>.
+        </p>
+        <hr />
+        <p>
+          You can also try our search:
+        </p>
+        <form role="form">
+          <div class="input-group">
+            <label for="search-results__input" class="sr-only">Email address</label>
+            <input type="text" class="form-control" id="search-results__input" placeholder="Search here...">
+            <span class="input-group-btn">
+                  <button class="btn btn-primary" type="button">Search</button>
+                </span>
+          </div>
+        </form>
+      </div>
+
+      <!-- Footer -->
+      <div class="body-plain__footer">
+        Copyright 2015 <%= link_to "Simpleqode.com", "http://simpleqode.com/" %> All Rights Reserved.
+      </div>
+    </div>
+  </div> <!-- / .row -->
+</div> <!-- / .container -->
+
+<%= render :partial=>'partials/page_footer' %>
+</body>

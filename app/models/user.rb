@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  include HasUrl
+  include HasUrlSlug
   has_and_belongs_to_many :roles
 
   devise :rememberable,

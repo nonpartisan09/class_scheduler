@@ -3,9 +3,11 @@
 <%= render :partial=>'partials/page_header', :locals => { page_header: 'Sign In' } %>
 
 <div class="container">
-  <h2>Sign in</h2>
+  <%- if @message %>
+    <%= @message %>
+  <% end -%>
 
-  <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+  <%= form_for(resource, as: resource_name, url: sign_in_path) do |f| %>
     <div class="field">
       <%= f.label :email %><br />
       <%= f.email_field :email, autofocus: true %>
