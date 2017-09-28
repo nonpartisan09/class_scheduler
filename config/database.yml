@@ -47,8 +47,8 @@ test:
 #   production:
 #     url: <%= ENV['DATABASE_URL'] %>
 #
-production:
-  <<: *default
-  database: tutoria_production
-  username: tutoria
   password: <%= ENV['TUTORIA_DATABASE_PASSWORD'] %>
+
+production:
+  encoding: utf8
+
