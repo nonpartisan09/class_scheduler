@@ -29,11 +29,11 @@
 
         <!-- Home -->
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-            Home <span class="fa fa-angle-down"></span>
-          </a>
+          <%= link_to 'Home', "#", :class =>"dropdown-toggle", :data_toggle=>"dropdown" %>
+          <span class="fa fa-angle-down"></span>
+
           <ul class="dropdown-menu" role="menu">
-            <li><a href="index.html">Home: Default</a></li>
+            <li><%= link_to 'Home: Default', "/" %></li>
             <li><a href="index_carousel.html">Home: Carousel</a></li>
           </ul>
         </li>

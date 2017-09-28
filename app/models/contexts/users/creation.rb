@@ -20,18 +20,18 @@ module Contexts
         end
 
         if check_if_email_exists? && check_if_display_name_exists?
-          raise Users::Errors::AlreadyUsedDisplayNameAndEmail, 'This email and username are already in use. Have you forgotten your password?'
+          raise Users::Errors::MultipleErrors, 'This email and username are already in use. Have you forgotten your password?'
         end
 
         if check_if_email_exists?
-          raise Users::Errors::AlreadyUsedDisplayNameAndEmail,'This email is already in use. Have you forgotten your password?'
+          raise Users::Errors::AlreadyUsedEmail,'This email is already in use. Have you forgotten your password?'
         end
 
         if check_if_display_name_exists?
-          raise Users::Errors::AlreadyUsedDisplayNameAndEmail, 'This username is already used.'
+          raise Users::Errors::AlreadyUsedDisplayName, 'This username is already used.'
         end
 
-        unless check_terms_and_conditions?
+        if check_t_and_c_unticked?
           raise Users::Errors::MustAgreeToTermsAndConditions, 'You must agree to terms and conditions.'
         end
       end
@@ -47,8 +47,8 @@ module Contexts
 
       private
 
-      def check_terms_and_conditions?
-        @user.terms_and_conditions
+      def check_t_and_c_unticked?
+        @user.terms_and_conditions == 0
       end
 
       def check_if_email_exists?

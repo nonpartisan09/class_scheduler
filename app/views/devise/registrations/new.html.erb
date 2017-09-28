@@ -46,7 +46,7 @@
       </div>
 
       <div class="field">
-        <%= f.check_box :terms_and_conditions %>
+        <%= f.check_box :terms_and_conditions, {}, checked_value=1, unchecked_value=0 %>
         <span>Please accept our</span>
         <%= link_to "terms and conditions", terms_and_conditions_path, :target => "_blank" %>
       </div>
