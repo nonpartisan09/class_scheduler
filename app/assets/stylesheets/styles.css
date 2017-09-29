@@ -8045,7 +8045,7 @@ footer {
 .section_feedback {
   padding-top: 90px;
   padding-bottom: 90px;
-  background: url(bg_feedback.jpg) no-repeat center center / cover;
+  background: url('../images/bg_feedback.jpg') no-repeat center center / cover;
 }
 .feedback__icon {
   margin: 0 auto 30px;
@@ -8629,7 +8629,7 @@ iframe[src="about:blank"] {
 .coming-soon__countdown {
   margin-bottom: 36px;
   padding: 90px 0;
-  background: url(../img/bg_coming-soon.jpg) no-repeat center bottom / cover;
+  background: url('../images/bg_coming-soon.jpg') no-repeat center bottom / cover;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   text-align: center;
   text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.2);
