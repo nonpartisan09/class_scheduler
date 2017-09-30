@@ -17,6 +17,10 @@ default: &default
   password:
   host: localhost
 
+production:
+  <<: *default
+  database: tutoria_production
+
 development:
   <<: *default
   database: tutoria_development
@@ -47,8 +51,5 @@ test:
 #   production:
 #     url: <%= ENV['DATABASE_URL'] %>
 #
-  password: <%= ENV['TUTORIA_DATABASE_PASSWORD'] %>
 
-production:
-  encoding: utf8
 

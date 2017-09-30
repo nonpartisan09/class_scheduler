@@ -5,8 +5,6 @@ module Contexts
         @user = user
         @resource_name = resource_name
 
-        @errors = {}
-
         if check_if_email_exists? && check_if_display_name_exists? && check_terms_and_conditions?
           raise Users::Errors::MultipleErrors, 'This email and username are already in use. Have you forgotten your password? Please agree to terms and conditions.'
         end
