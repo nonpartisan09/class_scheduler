@@ -12,7 +12,7 @@ Rails.application.routes.draw do
     post 'sign_in' => 'sessions#create'
     delete 'sign_out' => 'sessions#destroy'
     get 'sign_up/:role' => 'registrations#new', :as => "sign_up"
-    post 'registrations' => 'registrations#create'
+    post 'sign_up/:role' => 'registrations#create'
     get 'password' => 'passwords#new'
   end
 

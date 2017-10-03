@@ -2,19 +2,15 @@ module Contexts::Users::Errors
   class AlreadySignedIn < RuntimeError
   end
 
+  class AlreadyUsedEmailAlreadyUsedDisplayName < RuntimeError
+
+  end
+
   class AlreadyUsedDisplayName < RuntimeError
 
   end
 
-  class MultipleErrors < RuntimeError
-
-  end
-
   class AlreadyUsedEmail < RuntimeError
-
-  end
-
-  class MustAgreeToTermsAndConditions < RuntimeError
 
   end
 

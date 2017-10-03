@@ -7,14 +7,14 @@ class RegistrationsController < Devise::RegistrationsController
     yield resource if block_given?
 
     validate_role_params
-    @role = role_id
-
     respond_with(resource, render: :new)
   end
 
   def create
     if !@current_user
       begin
+        validate_role_params
+
         build_resource(sign_up_params)
 
         @registration = Contexts::Users::Creation.new(resource, resource_name)
@@ -37,11 +37,11 @@ class RegistrationsController < Devise::RegistrationsController
           respond_with @user
         end
 
-      rescue Contexts::Users::Errors::AlreadyUsedEmail,
-          Contexts::Users::Errors::MustAgreeToTermsAndConditions,
+      rescue Contexts::Users::Errors::AlreadyUsedEmailAlreadyUsedDisplayName,
           Contexts::Users::Errors::AlreadyUsedDisplayName,
-          Contexts::Users::Errors::MultipleErrors, Contexts::Users::Errors::UnknownRegistrationError => e
+          Contexts::Users::Errors::AlreadyUsedEmail => e
         @message = e.message
+
         render :new
       end
     elsif @current_user
@@ -49,21 +49,17 @@ class RegistrationsController < Devise::RegistrationsController
     end
   end
 
-  def role_id
-    role = Role.where("url_slug = ? AND displayable = ?", params[:role], true)
-
-    unless role.empty?
-      role.take.id
-    end
-  end
-
   private
 
   def validate_role_params
-    unless role_id.present?
+    @role = Role.where("url_slug = ? AND displayable = ?", params[:role], true)
+
+    if @role.present?
+      @role_url_slug = @role.take.url_slug
+      @role_id = @role.take.id
+    else
       raise Contexts::Users::Errors::UnknownRegistrationError, 'It seems there was a problem with your registration, thanks for contacting us.'
     end
-
   end
 
   def configure_permitted_parameters

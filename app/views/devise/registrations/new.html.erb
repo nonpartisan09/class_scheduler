@@ -3,33 +3,35 @@
   <%= render :partial=>'partials/page_header', :locals => { page_header: 'Sign Up' } %>
 
   <div class="container">
-    <%= form_for(resource, as: resource_name, url: registrations_path ) do |f| %>
+    <%= form_for(resource, as: resource_name, url: sign_up_path(:role => @role_url_slug)) do |f| %>
       <%- if @message %>
-        <%= @message %>
+        <div class="error">
+          <%= @message %>
+        </div>
       <% end -%>
 
       <div class="field">
-        <%= f.hidden_field :role_ids, { value: [ @role ], autofocus: true } %>
+        <%= f.hidden_field :role_ids, { value: [ @role_id ], autofocus: true } %>
       </div>
 
       <div class="field">
         <%= f.label :username %><br />
-        <%= f.text_field :display_name, autofocus: true %>
+        <%= f.text_field :display_name, autofocus: true, :required => true%>
       </div>
 
       <div class="field">
         <%= f.label :first_name %><br />
-        <%= f.text_field :first_name, autofocus: true %>
+        <%= f.text_field :first_name, autofocus: true, :required => true%>
       </div>
 
       <div class="field">
         <%= f.label :last_name %><br />
-        <%= f.text_field :last_name, autofocus: true %>
+        <%= f.text_field :last_name, autofocus: true, :required => true %>
       </div>
 
       <div class="field">
         <%= f.label :email %><br />
-        <%= f.email_field :email, autofocus: true %>
+        <%= f.email_field :email, autofocus: true, :required => true %>
       </div>
 
       <div class="field">
@@ -37,16 +39,16 @@
         <% if @minimum_password_length %>
         <em>(<%= @minimum_password_length %> characters minimum)</em>
         <% end %><br />
-        <%= f.password_field :password, autocomplete: "off" %>
+        <%= f.password_field :password, autocomplete: "off", :required => true %>
       </div>
 
       <div class="field">
         <%= f.label :password_confirmation %><br />
-        <%= f.password_field :password_confirmation, autocomplete: "off" %>
+        <%= f.password_field :password_confirmation, autocomplete: "off", :required => true%>
       </div>
 
       <div class="field">
-        <%= f.check_box :terms_and_conditions, {}, checked_value=1, unchecked_value=0 %>
+        <%= f.check_box :terms_and_conditions, { :required => true }, checked_value=1, unchecked_value=0%>
         <span>Please accept our</span>
         <%= link_to "terms and conditions", terms_and_conditions_path, :target => "_blank" %>
       </div>

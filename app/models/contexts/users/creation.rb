@@ -5,20 +5,8 @@ module Contexts
         @user = user
         @resource_name = resource_name
 
-        if check_if_email_exists? && check_if_display_name_exists? && check_terms_and_conditions?
-          raise Users::Errors::MultipleErrors, 'This email and username are already in use. Have you forgotten your password? Please agree to terms and conditions.'
-        end
-
-        if check_if_email_exists? && check_terms_and_conditions?
-          raise Users::Errors::MultipleErrors, 'This email is already in use. Have you forgotten your password? Please agree to terms and conditions.'
-        end
-
-        if check_if_display_name_exists? && check_terms_and_conditions?
-          raise Users::Errors::MultipleErrors, 'This username is already in use. Please agree to terms and conditions.'
-        end
-
         if check_if_email_exists? && check_if_display_name_exists?
-          raise Users::Errors::MultipleErrors, 'This email and username are already in use. Have you forgotten your password?'
+          raise Users::Errors::AlreadyUsedEmailAlreadyUsedDisplayName, 'This email and username are already in use. Have you forgotten your password?'
         end
 
         if check_if_email_exists?
@@ -29,9 +17,6 @@ module Contexts
           raise Users::Errors::AlreadyUsedDisplayName, 'This username is already used.'
         end
 
-        if check_t_and_c_unticked?
-          raise Users::Errors::MustAgreeToTermsAndConditions, 'You must agree to terms and conditions.'
-        end
       end
 
       def execute
