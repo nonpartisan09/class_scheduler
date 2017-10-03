@@ -1,2 +1,0 @@
-class EnglishClass < ApplicationRecord
-end
