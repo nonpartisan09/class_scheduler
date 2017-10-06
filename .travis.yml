@@ -1,0 +1,8 @@
+language: ruby
+rvm:
+ - 2.3.4
+ - jruby
+ - rbx-2
+
+services:
+  - mysql
