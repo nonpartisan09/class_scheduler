@@ -1,2 +1,0 @@
-class Booking < ApplicationRecord
-end

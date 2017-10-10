@@ -1,0 +1,326 @@
+<body>
+
+<%= render :partial=>'partials/static_top_bar' %>
+
+<div class="navbar navbar-default navbar-static-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <!-- Toggle button -->
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+
+    <%= link_to 'Beatrix', root_path, :class => 'navbar-brand' %>
+    </div>
+    <div class="collapse navbar-collapse">
+
+      <ul class="nav navbar-nav navbar-right">
+
+        <li class="dropdown">
+          <%= link_to 'Home', "#", :class =>"dropdown-toggle", :data_toggle=>"dropdown" %>
+          <span class="fa fa-angle-down"></span>
+
+          <ul class="dropdown-menu" role="menu">
+            <li><%= link_to 'Home: Default', "/" %></li>
+            <li><%= link_to "Home: Carousel", "index_carousel.html" %></li>
+          </ul>
+        </li>
+
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            Profile <span class="fa fa-angle-down"></span>
+          </a>
+          <ul class="dropdown-menu" role="menu">
+            <li class="dropdown-submenu">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Sign In</a>
+              <!-- Dropdown submenu -->
+              <ul class="dropdown-menu">
+                <li><%= link_to 'Sign In: Default', sign_in_path %></li>
+                <li><%= link_to 'Sign In: Option 1', sign_in_path %></li>
+              </ul>
+            </li>
+            <li class="dropdown-submenu">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Sign Up</a>
+              <ul class="dropdown-menu">
+                <li><%= link_to 'Sign Up: Default', sign_up_path(:student) %></li>
+                <li><%= link_to 'Sign Up: Option 1', sign_up_path(:volunteer) %></li>
+              </ul>
+            </li>
+            <li><%= link_to 'User Profile', "profile.html" %></li>
+          </ul>
+        </li>
+
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            Portfolio <span class="fa fa-angle-down"></span>
+          </a>
+          <ul class="dropdown-menu" role="menu">
+            <li><%= link_to "Portfolio", "portfolio.html" %></li>
+            <li><a href="portfolio-item.html">Portfolio Item</a></li>
+          </ul>
+        </li>
+
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            Blog <span class="fa fa-angle-down"></span>
+          </a>
+          <ul class="dropdown-menu" role="menu">
+            <li><%= link_to "Blog", "blog.html" %></li>
+            <li><a href="blog-post.html">Blog Post</a></li>
+          </ul>
+        </li>
+
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            Shop <span class="fa fa-angle-down"></span>
+          </a>
+          <ul class="dropdown-menu" role="menu">
+            <li><%= link_to "Shop", "shop.html" %></li>
+            <li><a href="shop-item.html">Shop Item</a></li>
+            <li><a href="shopping-cart.html">Shopping Cart</a></li>
+          </ul>
+        </li>
+
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            More Pages <span class="fa fa-angle-down"></span>
+          </a>
+          <ul class="dropdown-menu" role="menu">
+            <li class="active"><a href="about-us.html">About Us</a></li>
+            <li><a href="coming-soon.html">Coming Soon</a></li>
+            <li><a href="contact-us.html">Contact Us</a></li>
+            <li class="dropdown-submenu">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Help Center</a>
+              <ul class="dropdown-menu">
+                <li><a href="help-center.html">Help Center</a></li>
+                <li><a href="help-item.html">Help Item</a></li>
+              </ul>
+            </li>
+            <li class="dropdown-submenu">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Pricing Options</a>
+              <ul class="dropdown-menu">
+                <li><a href="pricing_boxes.html">Pricing Options: Boxes</a></li>
+                <li><a href="pricing_table.html">Pricing Options: Table</a></li>
+              </ul>
+            </li>
+            <li><%= link_to "Services", "services.html" %></li>
+            <li><a href="search-results.html">Search Results</a></li>
+            <li><%= link_to "Timeline", "timeline.html" %></li>
+            <li><a href="error-page.html">404 Error</a></li>
+          </ul>
+        </li>
+
+        <li><a href="ui-elements.html">UI Elements</a></li>
+      </ul>
+      <!-- Search form (for collapsed menu only) -->
+      <form class="navbar-form navbar-left visible-xs visible-sm" role="search">
+        <div class="form-group">
+          <label class="sr-only" for="nav-search-xs">Search</label>
+          <input type="search" class="form-control" id="nav-search-xs" placeholder="Search here...">
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<%= render :partial=>'partials/page_header', :locals => { page_header: 'About Us' } %>
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm-6">
+      <h3 class="header header_plain">Welcome to our company</h3>
+      <p>
+        Sed at porta tellus. Sed sit amet ipsum non dolor tincidunt vestibulum eget et urna. In et placerat eros. Curabitur tristique lacinia tortor ut ornare. Proin vehicula rhoncus fermentum. Integer scelerisque aliquam turpis. Quisque pellentesque, sem vel molestie posuere, orci sapien interdum mauris, eget condimentum purus arcu ut augue.
+      </p>
+      <p>
+        Nunc in neque nec arcu vulputate ullamcorper. Ut id orci ac arcu consectetur fringilla. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Duis hendrerit enim id arcu lacinia, id commodo ante semper. Sed vel ante nec nisi vestibulum congue. Pellentesque non lacus in tortor rutrum tristique.
+      </p>
+    </div>
+    <div class="col-sm-6">
+      <h3 class="header header_plain">Video Introduction</h3>
+      <div class="embed-responsive embed-responsive-16by9">
+        <iframe src="//player.vimeo.com/video/67449472?title=0&amp;byline=0&amp;portrait=0" width="500" height="281" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+      </div>
+    </div>
+  </div> <!-- / .row -->
+  <div class="row">
+    <div class="col-xs-12"><hr class="hr_lg" /></div>
+    <div class="col-sm-6">
+      <h3 class="header header_plain">Our Key Skills</h3>
+
+      <!-- Skills chart -->
+      <div class="skills">
+
+        <!-- Skills grid -->
+        <div class="skills__grid">
+          <div class="skills-grid__col" data-left="0"></div>
+          <div class="skills-grid__col" data-left="25%"></div>
+          <div class="skills-grid__col" data-left="50%"></div>
+          <div class="skills-grid__col" data-left="75%"></div>
+          <div class="skills-grid__col" data-left="100%"></div>
+        </div> <!-- / .skills grid -->
+
+        <!-- Skills progress bars -->
+        <div class="skills__progress">
+          <div class="skills-progress__bar" data-width="85%" data-queue="1">
+            <span>CSS3</span>
+          </div>
+          <div class="skills-progress__bar" data-width="60%" data-queue="2">
+            <span>JavaScript</span>
+          </div>
+          <div class="skills-progress__bar" data-width="70%" data-queue="3">
+            <span>Photoshop</span>
+          </div>
+          <div class="skills-progress__bar" data-width="95%" data-queue="4">
+            <span>HTML5</span>
+          </div>
+        </div> <!-- / .skills progress -->
+
+      </div> <!-- / .skills -->
+    </div>
+    <div class="col-sm-6">
+      <h3 class="header header_plain">Who we are</h3>
+      <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+        <div class="panel panel-default">
+          <div class="panel-heading" role="tab" id="headingOne">
+            <h4 class="panel-title">
+              <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                Company Goals
+              </a>
+            </h4>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+            <div class="panel-body text-muted">
+              Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod.
+            </div>
+          </div>
+        </div>
+        <div class="panel panel-default">
+          <div class="panel-heading" role="tab" id="headingTwo">
+            <h4 class="panel-title">
+              <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                Company Philosophy
+              </a>
+            </h4>
+          </div>
+          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+            <div class="panel-body text-muted">
+              Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch.
+            </div>
+          </div>
+        </div>
+        <div class="panel panel-default">
+          <div class="panel-heading" role="tab" id="headingThree">
+            <h4 class="panel-title">
+              <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                Company Prospects
+              </a>
+            </h4>
+          </div>
+          <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+            <div class="panel-body text-muted">
+              Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> <!-- / .row -->
+  <div class="row">
+    <div class="col-xs-12">
+      <hr class="hr_lg" />
+    </div>
+  </div> <!-- / .row -->
+  <div class="row row_authors">
+    <!-- Author #1 -->
+    <div class="col-xs-12 col-sm-4">
+      <div class="authors__item">
+        <div class="authors__img wow flipInY" data-wow-offset>
+          <%= image_tag "/assets/photo_1.jpg", :class=>"img-responsive", :alt=>"..." %>
+        </div>
+        <div class="authors__content">
+          <div class="authors__title">John Doe, Designer</div>
+          <div class="authors__intro">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras eu lacus enim. Aliquam eu elit justo.
+          </div>
+          <ul class="authors__contact">
+            <li class="facebook">
+              <a href=""><i class="fa fa-facebook"></i></a>
+            </li>
+            <li class="twitter">
+              <a href=""><i class="fa fa-twitter"></i></a>
+            </li>
+            <li class="linkedin">
+              <a href=""><i class="fa fa-linkedin"></i></a>
+            </li>
+            <li class="envelope">
+              <a href=""><i class="fa fa-envelope-o"></i></a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <!-- Author #2 -->
+    <div class="col-xs-12 col-sm-4">
+      <div class="authors__item">
+        <div class="authors__img wow flipInY" data-wow-delay=".2s">
+          <%= image_tag "/assets/photo_2.jpg", :class=>"img-responsive", :alt=>"..." %>
+        </div>
+        <div class="authors__content">
+          <div class="authors__title">Judy Roe, Designer</div>
+          <div class="authors__intro">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras eu lacus enim. Aliquam eu elit justo.
+          </div>
+          <ul class="authors__contact">
+            <li class="facebook">
+              <a href=""><i class="fa fa-facebook"></i></a>
+            </li>
+            <li class="twitter">
+              <a href=""><i class="fa fa-twitter"></i></a>
+            </li>
+            <li class="linkedin">
+              <a href=""><i class="fa fa-linkedin"></i></a>
+            </li>
+            <li class="envelope">
+              <a href=""><i class="fa fa-envelope-o"></i></a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <!-- Author #3 -->
+    <div class="col-xs-12 col-sm-4">
+      <div class="authors__item">
+        <div class="authors__img wow flipInY" data-wow-delay=".4s">
+          <%= image_tag "/assets/photo_3.jpg", :class=>"img-responsive", :alt=>"..." %>
+        </div>
+        <div class="authors__content">
+          <div class="authors__title">Richard Doe, Developer</div>
+          <div class="authors__intro">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras eu lacus enim. Aliquam eu elit justo.
+          </div>
+          <ul class="authors__contact">
+            <li class="facebook">
+              <a href=""><i class="fa fa-facebook"></i></a>
+            </li>
+            <li class="twitter">
+              <a href=""><i class="fa fa-twitter"></i></a>
+            </li>
+            <li class="linkedin">
+              <a href=""><i class="fa fa-linkedin"></i></a>
+            </li>
+            <li class="envelope">
+              <a href=""><i class="fa fa-envelope-o"></i></a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= render :partial=>'partials/page_footer' %>
+

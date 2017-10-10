@@ -1,68 +1,24 @@
-# Class Scheduler Application
+# README
 
-**Problem:** There is a strong demand from immigrants for naturalization classes
-in NYC. There is also a large supply of volunteers offering to teach such
-classes. The bottleneck is that connecting immigrants and volunteers is done
-manually by non-profit staff, who do not have the capacity to provide
-matching/scheduling services.
+This README would normally document whatever steps are necessary to get the
+application up and running.
 
-**Purpose:** Build a Rails app that lets students schedule naturalization classes with
-volunteers.
+Things you may want to cover:
 
-## Minimum Viable Product
+* Ruby version
 
-- Multilingual pages
+* System dependencies
 
-- Authentication
-	- Student / Volunteer Sign-up && Login
+* Configuration
 
-- Scheduling
-	- Volunteers can create class sessions
-	- Students can search for class sessions by location, date, and language
-	- Students and volunteers can communicate
+* Database creation
 
-- Credibility/Safety
-	- Non-anonymous volunteer accounts
-	- Students and volunteers can review each other
-	- Legal Disclaimer
+* Database initialization
 
-- Mobile first design
+* How to run the test suite
 
-- Cost
-	- Free to use
-	- Free/Cheap to maintain
+* Services (job queues, cache servers, search engines, etc.)
 
-- Admin view
-	- view Student-Tutor connections
-	- view / delete accounts
+* Deployment instructions
 
-
-## Views
-
-Meta: 
-- `/`
-
-User Authentication:
-- `students/signup`
-- `volunteers/signup`
-- `login`
-
-Scheduling: 
-- `classes`: index page for students to search for class sessions
-- `classes/:id`: detail / signup page for a class session
-- `schedule`: show/edit page for volunteers to create/edit schedules
-
-## Models
-
-- `Student`
-- `Volunteer`
-- `ClassSession`
-- `Review`
-- `Message`
-
-## Libraries
-
-- [Full Calendar](https://fullcalendar.io/)
-
-
-## Wireframes
+* ...

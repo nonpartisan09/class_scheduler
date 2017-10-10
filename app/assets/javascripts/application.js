@@ -12,9 +12,14 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require cable.js
-//= require jquery.ui.widget.js
-//= require jquery.iframe-transport.js
-//= require jquery.fileupload.js
-//= require jquery.cloudinary.js
-//= require bundle.js
+//= require jquery.plugin
+//= require jquery.countdown
+//= require turbolinks
+//= require bootstrap
+//= require jquery.waypoints
+//= require inview
+//= require wow
+//= require custom
+//= require scrolltopcontrol
+//= require counter
+//= require_tree .

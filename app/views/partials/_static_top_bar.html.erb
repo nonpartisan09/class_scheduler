@@ -1,0 +1,36 @@
+<!-- STATIC TOPBAR
+============================== -->
+<div class="topbar hidden-xs hidden-sm">
+  <div class="container">
+    <!-- Social links -->
+    <ul class="topbar-nav topbar-nav_left">
+      <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+      <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+      <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+      <li><a href="#"><i class="fa fa-vk"></i></a></li>
+      <li><a href="#"><i class="fa fa-stumbleupon"></i></a></li>
+    </ul>
+    <ul class="topbar-nav topbar-nav_right">
+      <li>
+        <!-- Search form -->
+        <form class="form-inline topbar__search" role="form">
+          <label class="sr-only" for="nav-search">Search</label>
+          <input type="search" class="form-control" id="nav-search" placeholder="Search here...">
+          <button type="submit"><i class="fa fa-search"></i></button>
+        </form>
+      </li>
+      <!-- Account links -->
+      <%- if @current_user.present? %>
+        <li><div class="name"><%= @current_user[:display_name] %></div></li>
+        <li><%= link_to 'Sign Out', sign_out_path, method: :delete %></li>
+      <% else %>
+        <li><%= link_to 'Sign In', sign_in_path %></li>
+        <li><%= link_to 'Sign up as a student', sign_up_path(:role => @student_role) %></li>
+        <li><%= link_to 'Sign up as a volunteer teacher', sign_up_path(:role => @volunteer_role) %></li>
+    <% end -%>
+
+      <li><a href="shopping-cart.html">My Cart (0)</a></li>
+    </ul>
+  </div> <!-- / .container -->
+</div> <!-- / .topbar -->
+<div class="navbar__hr hidden-xs hidden-sm"></div>
