@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
+  respond_to :json, :xml, :html
 
   def index
     @current_user = current_user

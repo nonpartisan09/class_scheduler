@@ -5,6 +5,12 @@ class UsersController < ApplicationController
     sign_in(user, bypass: true)
   end
 
+  def show
+    unless current_user
+       redirect_to sign_in_path
+    end
+  end
+
   private
 
   def permitted_params
@@ -12,8 +18,7 @@ class UsersController < ApplicationController
       :display_name,
       :email,
       :password,
-      :contact_permission,
-      :terms_and_conditions,
+      :terms_and_conditions
     )
   end
 end

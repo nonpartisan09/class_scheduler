@@ -20,7 +20,7 @@ module Contexts
       end
 
       def execute
-        #To do make this value dynamic once active admin is up
+        #TODO make this value dynamic once active admin is up
         @user.terms_and_conditions = TermsAndConditions.last.id
         @user.save
 

@@ -2,6 +2,9 @@ class SessionsController < Devise::SessionsController
   def new
     self.resource = resource_class.new(sign_in_params)
 
+    @student_role = Role.find_by_url_slug('student').url_slug
+    @volunteer_role = Role.find_by_url_slug('volunteer').url_slug
+
     if self.resource.email.present?
       @message = "It seems you have entered the wrong credentials."
     end
@@ -12,7 +15,10 @@ class SessionsController < Devise::SessionsController
   end
 
   def create
-    super
+    self.resource = warden.authenticate!(auth_options)
+    sign_in(resource_name, resource)
+    yield resource if block_given?
+    respond_with resource, location: after_sign_in_path_for(resource)
   end
 
   def destroy
