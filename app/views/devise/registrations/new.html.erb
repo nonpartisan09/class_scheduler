@@ -1,6 +1,4 @@
-  <!-- PAGE HEADER
-============================== -->
-  <%= render :partial=>'partials/page_header', :locals => { page_header: 'Sign Up' } %>
+<%= render :partial=>'partials/page_header', :locals => { page_header: 'Sign Up' } %>
 
   <div class="container">
     <%= form_for(resource, as: resource_name, url: sign_up_path(:role => @role_url_slug)) do |f| %>

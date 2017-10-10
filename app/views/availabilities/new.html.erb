@@ -1,0 +1,60 @@
+<%= render :partial=>'partials/page_header', :locals => { page_header: 'New Availability' } %>
+
+<div class="container">
+  <%= form_for(@availability, url: availabilities_path) do |f| %>
+    <%- if flash[:notice] %>
+      <div class="error">
+        <%= flash[:notice] %>
+      </div>
+      <br />
+      <br />
+    <% end -%>
+
+    <div class="field">
+      <%= f.label :timezone %><br />
+      <%= f.time_zone_select(:timezone, ActiveSupport::TimeZone.all.sort, :autofocus => true, :required => true) %>
+    </div>
+
+    <br/>
+    <br/>
+    <div class="field">
+
+      <%= f.radio_button :day, "Monday", autofocus: true, :required => true %>
+      <%= f.label :day, "Monday" %><br />
+
+      <%= f.radio_button :day, "Tuesday", autofocus: true, :required => true %>
+      <%= f.label :Tuesday %><br />
+
+      <%= f.radio_button :day, "Wednesday", autofocus: true, :required => true %>
+      <%= f.label :Wednesday %><br />
+
+      <%= f.radio_button :day, "Thursday", autofocus: true, :required => true %>
+      <%= f.label :Thursday %><br />
+
+      <%= f.radio_button :day, "Friday", autofocus: true, :required => true %>
+      <%= f.label :Friday %><br />
+
+      <%= f.radio_button :day, "Saturday", autofocus: true, :required => true %>
+      <%= f.label :Saturday %><br />
+
+      <%= f.radio_button :day, "Sunday", autofocus: true, :required => true %>
+      <%= f.label :Sunday %><br />
+    </div>
+
+    <br />
+
+    <div class="field">
+      <%= f.label :start_time %><br />
+      <%= f.time_field :start_time, autofocus: true, :required => true %>
+    </div>
+
+    <div class="field">
+      <%= f.label :end_time %><br />
+      <%= f.time_field :end_time, autofocus: true, :required => true %>
+    </div>
+    <br/>
+    <div class="actions">
+      <%= f.submit "Create new availability" %>
+    </div>
+  <% end %>
+</div>

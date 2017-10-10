@@ -3,8 +3,8 @@
 <% end -%>
 
 <%- if devise_mapping.registerable? && controller_name != 'registrations' %>
-  <%= link_to "Sign up as a student", sign_up_path(:student) %><br />
-  <%= link_to "Sign up as a volunteer teacher", sign_up_path(:volunteer) %><br />
+  <%= link_to "Sign up as a student", sign_up_path(:role => @student_role) %><br />
+  <%= link_to "Sign up as a volunteer teacher", sign_up_path(:role => @volunteer_role) %><br />
 <% end -%>
 
 <%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>

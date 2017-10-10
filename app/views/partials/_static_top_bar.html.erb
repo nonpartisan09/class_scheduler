@@ -22,14 +22,21 @@
       <!-- Account links -->
       <%- if @current_user.present? %>
         <li><div class="name"><%= @current_user[:display_name] %></div></li>
+        <li><%= link_to 'My Profile', my_profile_path %></li>
         <li><%= link_to 'Sign Out', sign_out_path, method: :delete %></li>
+        <%- if @current_user.volunteer? %>
+          <li><%= link_to 'My availabilities', availabilities_path %></li>
+          <li><%= link_to 'New availability', new_availability_path %></li>
+        <%end %>
+
+        <%- if @current_user.student? %>
+          <li><%= link_to 'New search', search_path %></li>
+        <%end %>
       <% else %>
         <li><%= link_to 'Sign In', sign_in_path %></li>
         <li><%= link_to 'Sign up as a student', sign_up_path(:role => @student_role) %></li>
         <li><%= link_to 'Sign up as a volunteer teacher', sign_up_path(:role => @volunteer_role) %></li>
     <% end -%>
-
-      <li><a href="shopping-cart.html">My Cart (0)</a></li>
     </ul>
   </div> <!-- / .container -->
 </div> <!-- / .topbar -->

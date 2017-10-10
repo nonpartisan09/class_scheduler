@@ -1,0 +1,37 @@
+<%= render :partial=>'partials/page_header', :locals => { page_header: 'My availabilities' } %>
+
+<div class="container">
+  Can teach:
+  <%- @courses.each do |course| %>
+    <div class="courses">
+      <%= course.name %>
+    </div>
+  <% end %>
+
+  <br/>
+  On the following days:
+  <%- @availabilities.each do |availability| %>
+    <br/>
+    <br/>
+    <div class="field weekday">
+      <%= availability.day %>
+    </div>
+    <div class="field timezone">
+      <%= availability.timezone %>
+    </div>
+
+    <div class="field start_time">
+      <%= availability.start_in_time_zone %>
+    </div>
+
+    <div class="field end_time">
+      <%= availability.end_in_time_zone %>
+    </div>
+
+    <%= link_to 'Delete',
+        availability,
+        method: :delete,
+        data: { confirm: 'Are you sure?' } %>
+<% end %>
+
+</div>
