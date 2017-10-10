@@ -31,3 +31,15 @@ TermsAndConditions.create({
     description: 'some text',
     version: 1
 })
+
+Course.create({
+    name: 'Test1'
+})
+
+Course.create({
+    name: 'Test2'
+})
+
+Course.create({
+    name: 'Test3'
+})

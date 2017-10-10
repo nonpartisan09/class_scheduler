@@ -2,8 +2,12 @@ Rails.application.routes.draw do
   root 'application#index'
   get 'terms_and_conditions' => 'application#t_and_c'
 
-  resources :english_classes
   resources :users
+  resources :availabilities
+  resources :courses
+
+  get 'search' => 'availabilities#search'
+  get 'results' => 'availabilities#results'
 
   # needed for devise
   devise_scope :user do
@@ -14,6 +18,7 @@ Rails.application.routes.draw do
     get 'sign_up/:role' => 'registrations#new', :as => "sign_up"
     post 'sign_up/:role' => 'registrations#create'
     get 'password' => 'passwords#new'
+    get 'my_profile' => 'user_profiles#show'
   end
 
   devise_for :users,
