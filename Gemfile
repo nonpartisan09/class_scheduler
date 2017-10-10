@@ -45,6 +45,7 @@ group :development, :test do
   gem 'capybara', '~> 2.13'
   gem 'selenium-webdriver'
   gem 'rspec-rails', '~> 3.6'
+  gem 'factory_girl_rails'
 
   # Use mysql as the database for Active Record
   gem 'mysql2', '>= 0.3.18', '< 0.5'
@@ -60,6 +61,7 @@ group :development do
 end
 
 group :test do
+  gem 'database_cleaner'
   gem 'shoulda'
   gem 'shoulda-matchers'
 end
