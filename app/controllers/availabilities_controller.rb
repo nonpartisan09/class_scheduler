@@ -1,7 +1,7 @@
 class AvailabilitiesController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: [:results]
   before_action :check_if_volunteer?, except: [:search, :results]
-  before_action :check_if_student?, only: [:search, :results]
+  before_action :check_if_student?, only: [:search ]
 
   def results
     if params[:course]
@@ -10,8 +10,7 @@ class AvailabilitiesController < ApplicationController
       @existing_teachers = @course.users
 
       unless @existing_teachers.present?
-        @message = 'Sorry, no matches found.'
-        render :search
+        render json: { }
       end
 
       if params[:day].present? || params[:start_time].present? || params[:end_time].present?
@@ -40,7 +39,7 @@ class AvailabilitiesController < ApplicationController
         end
       end
 
-      respond_with(@existing_teachers, :results)
+      render json: { teachers: @existing_teachers }
     end
   end
 

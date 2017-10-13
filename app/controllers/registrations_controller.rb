@@ -11,41 +11,38 @@ class RegistrationsController < Devise::RegistrationsController
   end
 
   def create
-    if !@current_user
-      begin
-        validate_role_params
+    begin
+      validate_role_params
 
-        build_resource(sign_up_params)
+      build_resource(sign_up_params)
 
-        @registration = Contexts::Users::Creation.new(resource, resource_name)
+      @registration = Contexts::Users::Creation.new(resource, resource_name)
 
-        @registration.execute
+      @registration.execute
 
-        if @user.persisted?
-          if @user.active_for_authentication?
-            sign_up(resource_name, @user)
+      if @user.persisted?
+        if @user.active_for_authentication?
+          sign_up(resource_name, @user)
 
-            respond_with @user, location: after_sign_up_path_for(@user)
-          else
-            expire_data_after_sign_in!
-            respond_with @user, location: after_inactive_sign_up_path_for(@user)
-          end
+          set_user_cookie(@user)
+          respond_with @user, location: after_sign_up_path_for(@user)
         else
-          clean_up_passwords @user
-          set_minimum_password_length
-
-          respond_with @user
+          expire_data_after_sign_in!
+          respond_with @user, location: after_inactive_sign_up_path_for(@user)
         end
+      else
+        clean_up_passwords @user
+        set_minimum_password_length
 
-      rescue Contexts::Users::Errors::AlreadyUsedEmailAlreadyUsedDisplayName,
-          Contexts::Users::Errors::AlreadyUsedDisplayName,
-          Contexts::Users::Errors::AlreadyUsedEmail => e
-        @message = e.message
-
-        render :new
+        respond_with @user
       end
-    elsif @current_user
-      redirect_to '/'
+
+    rescue Contexts::Users::Errors::AlreadyUsedEmailAlreadyUsedDisplayName,
+        Contexts::Users::Errors::AlreadyUsedDisplayName,
+        Contexts::Users::Errors::AlreadyUsedEmail => e
+      @message = e.message
+
+      render :new
     end
   end
 
@@ -79,6 +76,18 @@ class RegistrationsController < Devise::RegistrationsController
   end
 
   def resource_name
-    :user
+    :users
+  end
+
+  private
+
+  def set_user_cookie(resource)
+    role = if resource.volunteer?
+             'volunteer'
+           elsif resource.student?
+             'student'
+           end
+    cookies[:username] = current_user.first_name
+    cookies[:user_role] = role
   end
 end

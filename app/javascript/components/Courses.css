@@ -1,0 +1,32 @@
+.courseHeader {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.courseContainer {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+}
+
+.course {
+    border-radius: 2px;
+    position: relative;
+    margin: 0 50px 50px;
+    width: 300px;
+    height: 200px;
+    text-align: center;
+    background-size: 50%;
+}
+
+.courseLabel {
+    width: 100%;
+    background-color: rgba(79, 79, 79, 0.8);
+    padding: 12px 48px;
+    text-align: left;
+    color: white;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+}

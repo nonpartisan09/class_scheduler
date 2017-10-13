@@ -12,14 +12,6 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require jquery.plugin
-//= require jquery.countdown
 //= require turbolinks
 //= require bootstrap
-//= require jquery.waypoints
-//= require inview
-//= require wow
-//= require custom
-//= require scrolltopcontrol
-//= require counter
 //= require_tree .

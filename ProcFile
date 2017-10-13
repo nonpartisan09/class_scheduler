@@ -1,0 +1,2 @@
+web: bundle exec rails s
+webpacker: webpack-dev-server --port 5001

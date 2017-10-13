@@ -6,6 +6,12 @@ class CoursesController < ApplicationController
     @course.save
   end
 
+  def index
+    @courses = Course.all
+
+    respond_with(@courses)
+  end
+
   private
 
   def permitted_params

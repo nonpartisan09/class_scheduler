@@ -1,4 +1,9 @@
 <%= render :partial=>'partials/page_header', :locals => { page_header: 'New Search' } %>
+
+<div id='search'>
+
+</div>
+
 <div class='container'>
   <%= form_tag results_path, method: 'get' do %>
     <%- if @message %>
@@ -6,37 +11,6 @@
       <br />
       <br />
     <% end -%>
-
-    <div class='field'>
-      <%= select_tag :course, options_for_select(@courses.collect{ |u| [u.name, u.id] }) %>
-    </div>
-    <br />
-
-    <div class='field'>
-
-      <%= check_box_tag :day, 'Monday', { autofocus: true, :multiple => true } %>
-      <%= label_tag :day, 'Monday' %><br />
-
-      <%= check_box_tag :day, 'Tuesday',{ autofocus: true, :multiple => true } %>
-      <%= label_tag :Tuesday %><br />
-
-      <%= check_box_tag :day, 'Wednesday', { autofocus: true, :multiple => true } %>
-      <%= label_tag :Wednesday %><br />
-
-      <%= check_box_tag :day, 'Thursday', { autofocus: true, :multiple => true } %>
-      <%= label_tag :Thursday %><br />
-
-      <%= check_box_tag :day, 'Friday', { autofocus: true, :multiple => true } %>
-      <%= label_tag :Friday %><br />
-
-      <%= check_box_tag :day, 'Saturday', { autofocus: true, :multiple => true } %>
-      <%= label_tag :Saturday %><br />
-
-      <%= check_box_tag :day, 'Sunday', { autofocus: true, :multiple => true } %>
-      <%= label_tag :Sunday %><br />
-    </div>
-
-    <br />
 
     <div class='field'>
       <%= label_tag :start_time %><br />

@@ -1,0 +1,80 @@
+a:hover {
+  text-decoration: none;
+}
+
+.navigation {
+  width: 100%;
+  margin-top: 24px;
+  text-align: right;
+}
+
+.homepageContainer {
+  position: relative;
+  width: 100%;
+  margin-top: 36px;
+  height: 350px;
+  background: url('/assets/community.jpg') no-repeat center;
+  background-size: cover;
+}
+
+.mask {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  right: 0;
+  bottom: 0;
+  padding-left: 48px;
+  background-color: rgba(79,79,79, 0.4);
+}
+
+.title {
+  color: #fff;
+  font-size: 36px;
+  text-transform: uppercase;
+}
+
+.subtitle {
+  color: #fff;
+  font-size: 24px;
+}
+
+.sliding-u-l-r-l {
+  display: inline-block;
+  position: relative;
+  padding-bottom: 1px;
+  margin-right: 24px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.sliding-u-l-r-l:before {
+  content: '';
+  display: block;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 1px;
+  width: 0;
+  transition: width 0s ease, background .15s ease;
+}
+.sliding-u-l-r-l:after {
+  content: '';
+  display: block;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  width: 0;
+  background: darkslategrey;
+  transition: width .15s ease;
+}
+.sliding-u-l-r-l:hover:before {
+  width: 100%;
+  background: darkslategrey;
+  transition: width .15s ease;
+}
+.sliding-u-l-r-l:hover:after {
+  width: 100%;
+  background: transparent;
+  transition: all 0s ease;
+}
