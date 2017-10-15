@@ -1,30 +1,5 @@
-<%= render :partial=>'partials/page_header', :locals => { page_header: 'New Search' } %>
+<%= content_tag :div,
+    id: 'data',
+    data: @data.to_json do %>
+<% end %>
 
-<div id='search'>
-
-</div>
-
-<div class='container'>
-  <%= form_tag results_path, method: 'get' do %>
-    <%- if @message %>
-      <%= @message %>
-      <br />
-      <br />
-    <% end -%>
-
-    <div class='field'>
-      <%= label_tag :start_time %><br />
-      <%= time_field_tag :start_time %>
-    </div>
-
-    <div class='field'>
-      <%= label_tag :end_time %><br />
-      <%= time_field_tag :end_time %>
-    </div>
-    <br/>
-    <div class='actions'>
-      <%= submit_tag 'Search' %>
-    </div>
-
-  <% end %>
-</div>

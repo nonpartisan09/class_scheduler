@@ -18,28 +18,13 @@ class SessionsController < Devise::SessionsController
     self.resource = warden.authenticate!(auth_options)
     sign_in(resource_name, resource)
     yield resource if block_given?
-    set_user_cookie(resource)
     respond_with resource, location: after_sign_in_path_for(resource)
   end
 
   def destroy
     Devise.sign_out_all_scopes ? sign_out : sign_out(resource_name)
     yield if block_given?
-    cookies.delete :username
-    cookies.delete :user_role
 
     respond_to_on_destroy
-  end
-
-  private
-
-  def set_user_cookie(resource)
-    role = if resource.volunteer?
-             'volunteer'
-           elsif resource.student?
-             'student'
-           end
-    cookies[:username] = current_user.first_name
-    cookies[:user_role] = role
   end
 end

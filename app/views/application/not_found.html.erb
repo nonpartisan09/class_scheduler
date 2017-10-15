@@ -1,5 +1,4 @@
 <body class="body_plain">
-<%= render :partial=>'partials/page_header', :locals => { page_header: 'Error Page' } %>
 <div class="container">
   <div class="row">
     <div class="col-xs-12">
@@ -17,28 +16,10 @@
         </p>
         <p>
           Go to our
-          <%= link_to "homepage", "#" %>
+          <%= link_to "homepage", root_path %>
           or go back to the
-          <%= link_to "previous page", "#" %>>.
+          <%= link_to "previous page", "#" %>.
         </p>
-        <hr />
-        <p>
-          You can also try our search:
-        </p>
-        <form role="form">
-          <div class="input-group">
-            <label for="search-results__input" class="sr-only">Email address</label>
-            <input type="text" class="form-control" id="search-results__input" placeholder="Search here...">
-            <span class="input-group-btn">
-                    <button class="btn btn-primary" type="button">Search</button>
-                  </span>
-          </div>
-        </form>
-      </div>
-
-      <!-- Footer -->
-      <div class="body-plain__footer">
-        Copyright 2015 <%= link_to "Simpleqode.com", "http://simpleqode.com/" %> All Rights Reserved.
       </div>
     </div>
   </div>

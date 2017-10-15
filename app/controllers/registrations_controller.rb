@@ -6,6 +6,9 @@ class RegistrationsController < Devise::RegistrationsController
 
     yield resource if block_given?
 
+    courses = Course.all
+    @data = { :classes => courses }
+
     validate_role_params
     respond_with(resource, render: :new)
   end
@@ -24,7 +27,6 @@ class RegistrationsController < Devise::RegistrationsController
         if @user.active_for_authentication?
           sign_up(resource_name, @user)
 
-          set_user_cookie(@user)
           respond_with @user, location: after_sign_up_path_for(@user)
         else
           expire_data_after_sign_in!
@@ -76,18 +78,6 @@ class RegistrationsController < Devise::RegistrationsController
   end
 
   def resource_name
-    :users
-  end
-
-  private
-
-  def set_user_cookie(resource)
-    role = if resource.volunteer?
-             'volunteer'
-           elsif resource.student?
-             'student'
-           end
-    cookies[:username] = current_user.first_name
-    cookies[:user_role] = role
+    :user
   end
 end

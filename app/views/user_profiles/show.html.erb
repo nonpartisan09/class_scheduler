@@ -1,22 +1,4 @@
-<%= render :partial=>'partials/page_header', :locals => { page_header: 'My Profile' } %>
-
-<div class="container">
-
-  <div>Username: <%= @user_profile.username %></div>
-  <br />
-
-  <div>Available to mentor:</div>
-  <% @user_profile.courses.each do |course| %>
-    <tr>
-      <td><%= course.name %></td>
-    </tr>
-  <% end %>
-  <br />
-  <br />
-  <div>Languages</div>
-  <div>English: <%= @user_profile.english  %></div>
-  <div>Spanish: <%= @user_profile.spanish  %></div>
-  <br />
-  <br />
-  <div>Location:</div>  <%= @user_profile.location  %>
-</div>
+<%= content_tag :div,
+    id: 'data',
+    data: @data.to_json do %>
+<% end %>

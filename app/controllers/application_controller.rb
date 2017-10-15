@@ -3,9 +3,18 @@ class ApplicationController < ActionController::Base
   respond_to :json, :xml, :html
 
   def index
-    @current_user = current_user
-    @student_role = Role.find_by_url_slug('student').url_slug
-    @volunteer_role = Role.find_by_url_slug('volunteer').url_slug
+    if current_user
+      user = UserDecorator.new(current_user).decorate
+    else
+      user = { }
+    end
+    courses = Course.all
+
+    @data = {
+        :currentUser => user,
+        :courses => courses
+    }
+
     render :index
   end
 

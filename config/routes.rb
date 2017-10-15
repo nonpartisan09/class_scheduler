@@ -5,23 +5,23 @@ Rails.application.routes.draw do
   resources :availabilities
   resources :courses
 
-  devise_for :users,
-      only: [:sessions, :registrations, :passwords],
-      singular: :user
-
   get 'search' => 'availabilities#search'
   get 'results' => 'availabilities#results'
+  get 'my_profile', to: 'user_profiles#show'
 
   # needed for devise
   devise_scope :user do
-    get 'sign_in' => 'sessions#new'
+    get 'sign_in', to: 'sessions#new'
     post 'sign_in' => 'sessions#create'
     delete 'sign_out' => 'sessions#destroy'
-    get 'sign_up/:role' => 'registrations#new', :as => "sign_up"
+    get 'sign_up/:role', to:'registrations#new'
     post 'sign_up/:role' => 'registrations#create'
     get 'password' => 'passwords#new'
-    get 'my_profile' => 'user_profiles#show'
   end
+
+  devise_for :users,
+      only: [:sessions, :registrations, :passwords],
+      singular: :user
 
   get '*unmatched_route' => 'application#not_found'
 end

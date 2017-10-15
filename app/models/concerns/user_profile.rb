@@ -5,8 +5,19 @@ class UserProfile
     @user = user
   end
 
-  def username
-    @username ||= user.display_name
+  def decorate
+    {
+      :display_name => display_name,
+      :courses => courses,
+      :languages => { :english => english, :spanish => spanish },
+      :location => location,
+      :student => student,
+      :teacher => teacher
+    }
+  end
+
+  def display_name
+    @display_name ||= user.display_name
   end
 
   def courses
@@ -23,5 +34,13 @@ class UserProfile
 
   def location
     @location ||= "somewhere over the rainbow"
+  end
+
+  def student
+    @user.student?
+  end
+
+  def teacher
+    @user.volunteer?
   end
 end

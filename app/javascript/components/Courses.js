@@ -1,19 +1,12 @@
+import _ from 'lodash';
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+
 import './Courses.css';
 
 class Courses extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      courses: { }
-    }
-  }
-  componentDidMount(){
-    this.fetchClasses();
-  }
   render() {
-    if (this.state.courses[0]) {
+    if (_.size(this.props.courses) > 0) {
       return (
         <div>
           <h3 className='courseHeader'>
@@ -29,28 +22,10 @@ class Courses extends Component {
     }
   }
 
-  fetchClasses() {
-    return fetch('/courses', {
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      }
-    }).then(response => {
-      if (response.status < 400) {
-
-        return response.json().then((json)=> {
-          return this.setState({
-            courses: json
-          });
-        });
-      }
-    })
-  }
-
   renderClasses() {
-    const { courses } = this.state;
+    const { courses } = this.props;
 
-    if (courses[0]) {
+    if (_.size(courses) > 0) {
       return courses.map((item) => {
         return (
           <div key={item.id} className='course' style={ { background: `url(/assets/${item.url_slug}.jpg) no-repeat center` } }>
@@ -66,11 +41,11 @@ class Courses extends Component {
 }
 
 Courses.propTypes = {
-
+  courses: PropTypes.array
 };
 
 Courses.defaultProps = {
-
+  courses: [ ]
 };
 
 export default Courses;

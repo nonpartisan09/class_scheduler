@@ -1,34 +1,19 @@
+import _ from 'lodash';
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import './Header.css';
 
 class Header extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      user: '',
-    };
-  }
-
-  componentDidMount(){
-    this.checkCookie()
-  }
-
-  componentWillUpdate() {
-    return document.cookie && ( document.cookie.split(';', 2)[0].split('=', 2)[1] !== this.state.user )
-  }
-
   render() {
-
-   if ( this.state.user ) {
+   if ( _.size(this.props.currentUser) > 0 ) {
      return (
        <nav className='navigation' >
 
          { this.renderRoleLinks() }
 
          <Link to='/my_profile' className='sliding-u-l-r-l' rel='nofollow'>
-           { this.state.user }
+           { this.props.currentUser.display_name }
          </Link>
          <a data-method='delete' href={ '/sign_out' } className='sliding-u-l-r-l' rel='nofollow'>
            Sign Out
@@ -53,13 +38,13 @@ class Header extends Component {
   }
 
   renderRoleLinks() {
-    if (this.state.role === 'student') {
+    if (this.props.currentUser.student) {
       return (
         <Link to={ '/search' } className='sliding-u-l-r-l'>
           Search
         </Link>
       );
-    } else if ( this.state.role === 'teacher') {
+    } else if (this.props.currentUser.teacher) {
       return (
         <span>
           <Link to='/availabilities/new' className='sliding-u-l-r-l'>
@@ -73,17 +58,14 @@ class Header extends Component {
       );
     }
   }
-
-  checkCookie() {
-    if (document.cookie) {
-      const cookies = document.cookie.split(';', 2);
-
-      this.setState({
-        user: cookies[0].split('=', 2)[1],
-        role: cookies[1].split('=', 2)[1]
-      });
-    }
-  }
 }
+
+Header.propTypes = {
+  currentUser: PropTypes.object,
+};
+
+Header.defaultProps = {
+  currentUser: { }
+};
 
 export default Header;

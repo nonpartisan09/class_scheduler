@@ -1,5 +1,5 @@
 class AvailabilitiesController < ApplicationController
-  before_action :authenticate_user!, except: [:results]
+  before_action :authenticate_user!
   before_action :check_if_volunteer?, except: [:search, :results]
   before_action :check_if_student?, only: [:search ]
 
@@ -44,7 +44,19 @@ class AvailabilitiesController < ApplicationController
   end
 
   def search
-    @courses = Course.all
+    user = UserDecorator.new(current_user)
+    courses = Course.all
+    timezones = ActiveSupport::TimeZone.all.sort
+    days =  Date::DAYNAMES
+
+    @data = {
+        :currentUser => user.decorate,
+        :courses => courses,
+        :timezones => timezones,
+        :days => days
+    }
+
+    render :search
   end
 
   def new

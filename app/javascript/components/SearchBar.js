@@ -1,5 +1,7 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
+import Header from './Header';
+
 import PropTypes from 'prop-types';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
@@ -31,19 +33,16 @@ class SearchBar extends Component {
       day: '',
       course: '',
       teachers: { },
-      courses: { },
       start_time: { },
       end_time: { }
     };
   }
 
-  componentWillMount(){
-    this.fetchClasses();
-  }
-
   render() {
     return (
       <div className='searchBarContainer'>
+        <Header currentUser={ this.props.currentUser }/>
+
         <div className='errorField'>
           { this.state.error }
         </div>
@@ -62,6 +61,7 @@ class SearchBar extends Component {
             value={ this.state.day }
             onChange={ this.handleDayChange }
             autoWidth
+            multiple
           >
             <MenuItem value='Monday' primaryText='Monday' />
             <MenuItem value='Tuesday' primaryText='Tuesday' />
@@ -74,14 +74,14 @@ class SearchBar extends Component {
 
           <TimePicker
             format="24hr"
-            hintText="24hr Format"
+            hintText="Start Time - 24Hr Format"
             value={ this.state.start_time }
             onChange={ this.handleChangeStartTime }
           />
 
           <TimePicker
             format="24hr"
-            hintText="24hr Format"
+            hintText="End Time - 24Hr Format"
             value={ this.state.end_time }
             onChange={ this.handleChangeEndTime }
           />
@@ -139,9 +139,9 @@ class SearchBar extends Component {
   }
 
   renderClasses() {
-    const { courses } = this.state;
+    const { courses } = this.props;
 
-    if (courses[0]) {
+    if (_.size(courses)) {
       return courses.map((item) => {
         return (
           <MenuItem key={ item.id } value={ item.id } primaryText={ item.name } />
@@ -173,32 +173,16 @@ class SearchBar extends Component {
       day: value
     });
   }
-
-  fetchClasses() {
-    return fetch('/courses', {
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      }
-    }).then(response => {
-      if (response.status < 400) {
-
-        return response.json().then((json)=> {
-          return this.setState({
-            courses: json
-          });
-        });
-      }
-    })
-  }
 }
 
 SearchBar.propTypes = {
-
+  courses: PropTypes.array,
+  currentUser: PropTypes.object,
 };
 
 SearchBar.defaultProps = {
-
+  courses: [],
+  currentUser: { }
 };
 
 export default SearchBar;

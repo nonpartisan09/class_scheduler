@@ -3,12 +3,14 @@ class UserProfilesController < ApplicationController
 
   def show
     unless current_user.present?
-      redirect_to "/404"
+      redirect_to root_path
     end
+    user = UserProfile.new(current_user)
+    user = user.decorate
 
-    @user_profile = UserProfile.new(current_user)
+    @data = { :currentUser => user }
 
-    respond_with @user_profile
+    render :show
   end
 
   private
