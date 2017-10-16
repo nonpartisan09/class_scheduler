@@ -1,5 +1,5 @@
 class AvailabilitiesController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: [ :results ]
   before_action :check_if_volunteer?, except: [:search, :results]
   before_action :check_if_student?, only: [:search ]
 
@@ -8,10 +8,6 @@ class AvailabilitiesController < ApplicationController
       @course = Course.find(params[:course])
 
       @existing_teachers = @course.users
-
-      unless @existing_teachers.present?
-        render json: { }
-      end
 
       if params[:day].present? || params[:start_time].present? || params[:end_time].present?
         @existing_teachers = @existing_teachers.pluck(:id)
@@ -60,12 +56,22 @@ class AvailabilitiesController < ApplicationController
   end
 
   def new
-    @availability = Availability.new
-    @courses = Course.all
-    @current_user = current_user
-    @course = Course.new
+    availability = Availability.new
+    user = UserDecorator.new(current_user)
+    courses = Course.all
+    timezones = ActiveSupport::TimeZone.all.sort
+    days =  Date::DAYNAMES
 
-    respond_with(@availability, render: :new)
+    @data = {
+        :availabilities => { },
+        :availability => availability,
+        :currentUser => user.decorate,
+        :courses => courses,
+        :timezones => timezones,
+        :days => days
+    }
+
+    render :new
   end
 
   def create
@@ -76,11 +82,7 @@ class AvailabilitiesController < ApplicationController
     rescue Contexts::Availabilities::Errors::UnknownAvailabilityError,
         Contexts::Availabilities::Errors::OverlappingAvailability,
         Contexts::Availabilities::Errors::ShortAvailability => e
-      @message = e.message
-
-      respond_with @availability do |format|
-        format.html { redirect_to new_availability_path, notice: @message }
-      end
+      render :json=> { :message=> e.message }, :status=> 422
     else
 
       redirect_to availabilities_path
@@ -88,10 +90,17 @@ class AvailabilitiesController < ApplicationController
   end
 
   def index
-    @courses = current_user.courses
-    @availabilities = Availability.where(:user => current_user)
+    user = UserDecorator.new(current_user).decorate
+    courses = current_user.courses
+    availabilities = Availability.where(:user => current_user)
 
-    respond_with(@availabilities, render: :index)
+    @data = {
+        :currentUser => user,
+        :courses => courses,
+        :availabilities => availabilities
+    }
+
+    respond_with(@data, :index)
   end
 
   def destroy
@@ -121,10 +130,10 @@ class AvailabilitiesController < ApplicationController
 
   def permitted_params
     params.require(:availability).permit(
-        :day,
-        :start_time,
-        :end_time,
-        :timezone
-    )
-  end
+          :day,
+          :start_time,
+          :end_time,
+          :timezone
+      )
+    end
 end

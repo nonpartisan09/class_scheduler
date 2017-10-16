@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import _ from 'lodash';
+
 import TextField from 'material-ui/TextField';
 import Checkbox from 'material-ui/Checkbox';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -10,11 +13,10 @@ import Header from './Header';
 import Joi from 'joi-browser';
 import validate from 'react-joi-validation';
 
-import PropTypes from 'prop-types';
 import './SignUp.css';
 
 const schema = {
-  role: Joi.string().required(),
+  role: Joi.string(),
   courses: Joi.array(),
 
   first_name: Joi.string().required().options({
@@ -31,7 +33,6 @@ const schema = {
       }
     }
   }),
-  display_name: Joi.string().required(),
   password: Joi.string().min(8).required(),
   password_confirmation: Joi.any().valid(Joi.ref('password')).required().options({
     language: {
@@ -55,6 +56,7 @@ class SignUp extends Component {
     super(props, context);
 
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.changeHandlerCourses = this.changeHandlerCourses.bind(this);
   }
 
   render() {
@@ -83,16 +85,18 @@ class SignUp extends Component {
           { this.renderClasses() }
 
           <TextField
-            name='display_name'
-            value={ display_name }
+            name='email'
+            value={ email }
+            className='signUpEmailInputField'
             hintText=''
-            floatingLabelText='Username'
+            floatingLabelText='Email'
             floatingLabelFixed
-            errorText={ errors.display_name }
-            onChange={ changeHandler('display_name') }
-            onBlur={ validateHandler('display_name') }
+            errorText={ errors.email }
+            onChange={ changeHandler('email') }
+            onBlur={ validateHandler('email') }
             fullWidth
           />
+
           <br />
 
           <TextField
@@ -108,19 +112,6 @@ class SignUp extends Component {
           />
 
           <br />
-
-          <TextField
-            name='email'
-            value={ email }
-            className='signUpEmailInputField'
-            hintText=''
-            floatingLabelText='Email'
-            floatingLabelFixed
-            errorText={ errors.email }
-            onChange={ changeHandler('email') }
-            onBlur={ validateHandler('email') }
-            fullWidth
-          />
 
           <br />
           <TextField
@@ -186,7 +177,6 @@ class SignUp extends Component {
      const { changeHandler, validateHandler, errors } = this.props;
      const { currentUser: { courses } } = this.props;
 
-
      return (
        <div>
          { this.renderClassLabel() }
@@ -195,28 +185,27 @@ class SignUp extends Component {
            floatingLabelFixed
            floatingLabelText='Select One or More Class'
            value={ courses }
-           onChange={ this.changeStuff }
+           onChange={ this.changeHandlerCourses }
            onBlur={ validateHandler('courses') }
            multiple
            errorText={ errors.courses }
          >
-           { _.map(classes, ({ name, id }) => <MenuItem key={id} insetChildren checked={courses && courses.indexOf(id) > -1} value={id} primaryText={ <span> { name } </span> }/>) }
+           { _.map(classes, ({ name, id }) => <MenuItem key={id} insetChildren checked={ _.indexOf(courses, name) } value={id} primaryText={ <span> { name } </span> }/>) }
          </SelectField>
        </div>
      );
    }
   }
 
-  changeStuff(event, index, value) {
-    console.warn('event, index, value:');
-    console.warn(event, index, value);
-    const { changeHandler, validateHandler, errors } = this.props;
-
-    change('courses');
+  changeHandlerCourses(event, index, value) {
+    const { changeValue, currentUser: { courses } } = this.props;
+    const newValue = courses.push(value);
+    changeValue('courses', { value: newValue });
   }
 
   renderClassLabel() {
     const { match: { params: { role } } } = this.props;
+
     if (role === 'volunteer') {
       return (
         <div>
@@ -233,9 +222,21 @@ class SignUp extends Component {
   }
 
   handleSubmit() {
-    const { errors, onSubmit } = this.props;
+    const { errors } = this.props;
 
     if (_.size(errors) === 0) {
+      const { match: { params: { role } } } = this.props;
+      const { router } = this.context;
+
+      if (role === 'volunteer') {
+        const link = '/availabilities/new';
+
+        router.push(link);
+      } else if (role === 'student' ) {
+        const link = '/search/';
+        router.push(link);
+      }
+
     }
   }
 }
@@ -244,7 +245,6 @@ SignUp.propTypes = {
   errors: PropTypes.object,
   currentUser: PropTypes.shape({
     courses: PropTypes.array,
-    display_name: PropTypes.string,
     first_name: PropTypes.string,
     email: PropTypes.string,
     password: PropTypes.string,
@@ -275,7 +275,6 @@ SignUp.defaultProps = {
   classes: [],
   currentUser: {
     courses: [],
-    display_name: '',
     first_name: '',
     email: '',
     password: '',
@@ -283,6 +282,10 @@ SignUp.defaultProps = {
     contact_permission: false,
     terms_and_conditions: false,
   },
+};
+
+SignUp.contextTypes = {
+  router: PropTypes.object
 };
 
 const validationOptions = {

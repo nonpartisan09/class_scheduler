@@ -4,6 +4,8 @@ Rails.application.routes.draw do
 
   resources :availabilities
   resources :courses
+  resources :sessions
+  resource :users
 
   get 'search' => 'availabilities#search'
   get 'results' => 'availabilities#results'
@@ -12,8 +14,8 @@ Rails.application.routes.draw do
   # needed for devise
   devise_scope :user do
     get 'sign_in', to: 'sessions#new'
+    delete 'sign_out', to: 'sessions#destroy'
     post 'sign_in' => 'sessions#create'
-    delete 'sign_out' => 'sessions#destroy'
     get 'sign_up/:role', to:'registrations#new'
     post 'sign_up/:role' => 'registrations#create'
     get 'password' => 'passwords#new'

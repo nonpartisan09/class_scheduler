@@ -100,6 +100,12 @@ class SearchBar extends Component {
     const { teachers } = this.state;
     if (_.size(teachers) > 0) {
       return _.map(teachers, (teacher, index) => <div className='teacher' key={ index }>{ teacher.display_name }</div>);
+    } else {
+      return (
+        <div className='searchError' >
+          Oops. It seems like no teacher is available. Why not try a different search?
+        </div>
+      )
     }
   }
 
@@ -177,12 +183,20 @@ class SearchBar extends Component {
 
 SearchBar.propTypes = {
   courses: PropTypes.array,
-  currentUser: PropTypes.object,
+  days: PropTypes.array,
+  currentUser: PropTypes.shape({
+    first_name: PropTypes.string,
+    email: PropTypes.string,
+  })
 };
 
 SearchBar.defaultProps = {
+  days: [],
   courses: [],
-  currentUser: { }
+  currentUser: {
+    first_name: '',
+    email: '',
+  }
 };
 
 export default SearchBar;

@@ -5,6 +5,8 @@ module Contexts
         @availability = availability
         @current_user = current_user
 
+        ap @availability
+
         @day = @availability['day']
         @local_start_time = Time.parse(@availability['start_time'] + ' ' + @availability['timezone'])
         @local_end_time =  Time.parse(@availability['end_time'] + ' ' + @availability['timezone'])

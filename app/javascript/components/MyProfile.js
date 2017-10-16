@@ -37,15 +37,14 @@ class MyProfile extends Component {
           </ListItem>
 
           <ListItem>
-            Interested in studying:
+            <span>{ currentUser.student? 'Interested in studying: ' : 'Can teach: ' }</span>
+            { this.renderClasses() }
           </ListItem>
-
-          { this.renderClasses() }
 
           <ListItem>
-            Languages:
+            <span>Languages: </span>
+            <span>{ _.join(this.renderLanguages(),(', ')) }</span>
           </ListItem>
-          { this.renderLanguages() }
         </List>
 
       );
@@ -59,11 +58,7 @@ class MyProfile extends Component {
 
     if (_.size(languages) > 0) {
       return _.map(languages, (value, key) => {
-        return (
-          <ListItem key={ key }>
-            { _.upperFirst(key) }
-          </ListItem>
-        );
+        return _.upperFirst(key);
       })
     }
   }
@@ -72,19 +67,15 @@ class MyProfile extends Component {
     const { currentUser: { courses } } = this.props;
 
     if (_.size(courses) > 0) {
-      _.map(courses, (course, index) => {
+     return _.map(courses, ({ name }, index) => {
         return (
-          <ListItem key={ index }>
-            { courses}
-          </ListItem>
+          <span key={ index }>
+            { name }
+          </span>
         );
       })
     } else {
-      return (
-        <ListItem>
-          No class has been selected yet.
-        </ListItem>
-      );
+      return <span>No class has been selected yet.</span>;
     }
   }
 }

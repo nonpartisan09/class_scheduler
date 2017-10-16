@@ -1,9 +1,31 @@
 class SessionsController < Devise::SessionsController
+  prepend_before_action :require_no_authentication, :only => [:create ]
+
+  before_action :ensure_params_exist, :only => [:create]
+  after_action :check_if_logged_in, :only => [:destroy]
+  respond_to :json
+
+  def create
+    build_resource
+    resource = User.find_for_database_authentication(:email=>params[:email])
+    return invalid_login_attempt unless resource
+
+    if resource.valid_password?(params[:password])
+      sign_in("user", resource)
+      user = UserDecorator.new(current_user)
+      @data = { :success => true, :currentUser => user.decorate }
+
+      respond_to do |format|
+        format.html { redirect_to root_path }
+        format.json { render json: @data }
+      end
+      return
+    end
+    invalid_login_attempt
+  end
+
   def new
     self.resource = resource_class.new(sign_in_params)
-
-    @student_role = Role.find_by_url_slug('student').url_slug
-    @volunteer_role = Role.find_by_url_slug('volunteer').url_slug
 
     if self.resource.email.present?
       @message = "It seems you have entered the wrong credentials."
@@ -14,17 +36,36 @@ class SessionsController < Devise::SessionsController
     respond_with(resource, serialize_options(resource))
   end
 
-  def create
-    self.resource = warden.authenticate!(auth_options)
-    sign_in(resource_name, resource)
-    yield resource if block_given?
-    respond_with resource, location: after_sign_in_path_for(resource)
+  def destroy
+    super
   end
 
-  def destroy
-    Devise.sign_out_all_scopes ? sign_out : sign_out(resource_name)
-    yield if block_given?
+  def after_sign_in_path_for_user
+    root_path
+  end
 
-    respond_to_on_destroy
+  def resource_name
+    :user
+  end
+
+  def build_resource(hash=nil)
+    self.resource = resource_class.new_with_session(hash || {}, session)
+  end
+
+  protected
+  def ensure_params_exist
+    return unless params[:email].blank? && params[:password].blank?
+    render :json=> { :success=>false, :message=>"missing email and password" }, :status=> 422
+  end
+
+  def invalid_login_attempt
+    warden.custom_failure!
+    render :json=> { :success=>false, :message=>"Error with your login or password"}, :status=>401
+  end
+
+  def check_if_logged_in
+    if current_user.present?
+      redirect_to root_path
+    end
   end
 end

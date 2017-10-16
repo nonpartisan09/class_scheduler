@@ -11,6 +11,10 @@
     text-align: left;
 }
 
+.searchError {
+    text-align: center;
+}
+
 .teacher {
     margin: 12px 0;
 }

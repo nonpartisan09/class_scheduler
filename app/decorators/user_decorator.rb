@@ -14,7 +14,7 @@ class UserDecorator
   end
 
   def allowed_attributes
-    [ 'first_name', 'display_name' ]
+    [ 'first_name', 'display_name', 'id' ]
   end
 
   def student

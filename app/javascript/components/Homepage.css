@@ -45,6 +45,7 @@ a:hover {
   margin-right: 24px;
   text-decoration: none;
   color: inherit;
+  cursor: pointer;
 }
 
 .sliding-u-l-r-l:before {
@@ -56,6 +57,7 @@ a:hover {
   height: 1px;
   width: 0;
   transition: width 0s ease, background .15s ease;
+  cursor: pointer;
 }
 .sliding-u-l-r-l:after {
   content: '';
@@ -67,14 +69,17 @@ a:hover {
   width: 0;
   background: darkslategrey;
   transition: width .15s ease;
+  cursor: pointer;
 }
 .sliding-u-l-r-l:hover:before {
   width: 100%;
   background: darkslategrey;
   transition: width .15s ease;
+  cursor: pointer;
 }
 .sliding-u-l-r-l:hover:after {
   width: 100%;
   background: transparent;
   transition: all 0s ease;
+  cursor: pointer;
 }
