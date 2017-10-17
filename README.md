@@ -1,24 +1,75 @@
-# README
+# Class Scheduler Application
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+**Problem:** There is a strong demand from immigrants for naturalization classes
+in NYC. There is also a large supply of volunteers offering to teach such
+classes. The bottleneck is that connecting immigrants and volunteers is done
+manually by non-profit staff, who do not have the capacity to provide
+matching/scheduling services.
 
-Things you may want to cover:
+**Purpose:** Build a Rails app that lets students schedule naturalization classes with
+volunteers.
 
-* Ruby version
+## Minimum Viable Product
 
-* System dependencies
+- Multilingual pages
 
-* Configuration
+- Authentication
+	- Student / Volunteer Sign-up && Login
 
-* Database creation
+- Scheduling
+	- Volunteers can create class sessions
+	- Students can search for class sessions by location, date, and language
+	- Students and volunteers can communicate
 
-* Database initialization
+- Credibility/Safety
+	- Non-anonymous volunteer accounts
+	- Students and volunteers can review each other
+	- Legal Disclaimer
 
-* How to run the test suite
+- Mobile first design
 
-* Services (job queues, cache servers, search engines, etc.)
+- Cost
+	- Free to use
+	- Free/Cheap to maintain
 
-* Deployment instructions
+- Admin view
+	- view Student-Tutor connections
+	- view / delete accounts
 
-* ...
+## Views
+
+Meta:
+- `/`
+
+User Authentication:
+- `sign_up/student`
+- `sign_up/volunteer`
+- `sign_in`
+
+Scheduling:
+- `search`: index page for students to search for class sessions
+- `availabilities/new`: show/edit page for volunteers to create/edit schedules
+
+## Models
+
+- `User`
+- `Role`
+- `Availability`
+- `Course`
+
+## Libraries
+
+- `moment`
+- `react-joi-validation`
+- `joi-browser`
+- `material-ui`
+
+## Get started
+
+- `$ bundle install`
+- `$ yarn install`
+- `$ rake db:create RAILS_ENV=development`
+- `$ rake db:migrate RAILS_ENV=development`
+- `$ rake db:seed`
+- `$ rake assets:precompile`
+- `$ foreman start`
