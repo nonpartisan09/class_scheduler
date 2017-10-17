@@ -1,0 +1,58 @@
+.searchBarContainer {
+    text-align: center;
+}
+
+.errorField {
+   color: red;
+}
+
+.teacherContainer {
+    margin: 72px;
+    text-align: left;
+}
+
+.searchSubmitButton {
+    display: inline-block;
+    max-height: 36px;
+    overflow: hidden;
+    align-self: center;
+    margin-left: 2%;
+}
+
+.searchError {
+}
+
+.teacher {
+    margin: 12px 0;
+}
+
+.searchBarOptionContainer {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    margin: 72px 0;
+    padding: 0 12px;
+
+}
+
+.searchBarOption {
+    width: 12%;
+    margin: 0 1%;
+}
+
+@media(max-width: 1000px) {
+  .searchBarOption {
+      width: 50%;
+      margin: 5%;
+  }
+}
+
+@media(max-width: 500px) {
+    .searchBarOption {
+        width: 90%;
+        margin: 5%;
+    }
+    .searchBarOptionContainer {
+        justify-content: flex-start;
+    }
+}

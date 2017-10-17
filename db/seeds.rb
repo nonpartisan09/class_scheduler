@@ -6,4 +6,40 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-5.times { Tutor.seed.save }
+Role.create({
+    name: 'Admin',
+    url_slug: 'admin',
+    description: 'A volunteer with access to the admin panel',
+    displayable: false
+})
+
+Role.create({
+    name: 'Volunteer',
+    url_slug: 'volunteer',
+    description: 'A volunteer with no access to the admin panel',
+    displayable: true
+})
+
+Role.create({
+    name: 'Student',
+    url_slug: 'student',
+    description: 'A student',
+    displayable: true
+})
+
+TermsAndConditions.create({
+    description: 'some text',
+    version: 1
+})
+
+Course.create({
+    name: 'Test1'
+})
+
+Course.create({
+    name: 'Test2'
+})
+
+Course.create({
+    name: 'Test3'
+})

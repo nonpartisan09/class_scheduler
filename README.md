@@ -36,33 +36,40 @@ volunteers.
 	- view Student-Tutor connections
 	- view / delete accounts
 
-
 ## Views
 
-Meta: 
+Meta:
 - `/`
 
 User Authentication:
-- `students/signup`
-- `volunteers/signup`
-- `login`
+- `sign_up/student`
+- `sign_up/volunteer`
+- `sign_in`
 
-Scheduling: 
-- `classes`: index page for students to search for class sessions
-- `classes/:id`: detail / signup page for a class session
-- `schedule`: show/edit page for volunteers to create/edit schedules
+Scheduling:
+- `search`: index page for students to search for class sessions
+- `availabilities/new`: show/edit page for volunteers to create/edit schedules
 
 ## Models
 
-- `Student`
-- `Volunteer`
-- `ClassSession`
-- `Review`
-- `Message`
+- `User`
+- `Role`
+- `Availability`
+- `Course`
 
 ## Libraries
 
-- [Full Calendar](https://fullcalendar.io/)
+- `moment`
+- `react-joi-validation`
+- `joi-browser`
+- `material-ui`
 
+## Get started
 
-## Wireframes
+- `$ bundle install`
+- `$ yarn install`
+- `$ rake db:create RAILS_ENV=development`
+- `$ rake db:migrate RAILS_ENV=development`
+- `$ rake db:seed`
+- `$ rake assets:precompile`
+- `$ foreman start`

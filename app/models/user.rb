@@ -1,66 +1,49 @@
-class User < ApplicationRecord
-  
-  has_one :image,
-    as: :owner,
-    autosave: true,
-    dependent: :destroy,
-    inverse_of: :owner
+class User < ActiveRecord::Base
+  include HasUrlSlug
+  has_and_belongs_to_many :roles
+  has_many :enrollments
+  has_many :courses, through: :enrollments
 
-  accepts_nested_attributes_for :image
-  
-  attr_reader :password
-  attr_accessor :guest
+  has_many :timeables
+  has_many :availabilities, through: :timeables
 
-  validates :email, :password_digest, :session_token, presence: true
-  validates :email, uniqueness: true
-  validates :password, length: {minimum: 6}, allow_nil: :true
-  validates :password, confirmation: true 
-  
-  validates :first_name, :last_name, :language, :about, :image, presence: true
+  devise :rememberable,
+      :database_authenticatable,
+      :registerable,
+      :trackable,
+      :recoverable,
+      :validatable,
+      password_length: 8..30
 
-  after_initialize :ensure_session_token, :ensure_guest_status
-  before_validation :ensure_session_token_uniqueness
+  validates_confirmation_of :password
 
-  has_many :favorites
+  validates :email, :url_slug, presence: true, uniqueness: true
 
-  def password= password
-    self.password_digest = BCrypt::Password.create(password)
-    @password = password
+  def self.authentication_keys
+    [ :email ]
   end
 
-  def self.find_by_credentials email, password
-    user = User.find_by(email: email)
-    return nil unless user
-    user.password_is?(password) ? user : nil
+  def self.remember_for
+    12.months
   end
 
-  def password_is? password
-    BCrypt::Password.new(self.password_digest).is_password?(password)
+  def admin?
+    self.roles.where(:name => 'admin').present?
   end
 
-  def reset_session_token!
-    self.update!(session_token: new_session_token)
-    self.session_token
+  def volunteer?
+    self.roles.where(:name => 'volunteer').present?
   end
 
-  private
-
-  def ensure_session_token
-    self.session_token ||= new_session_token
+  def student?
+    self.roles.where(:name => 'student').present?
   end
 
-  def new_session_token
-    SecureRandom.base64
+  def remember_me
+    true
   end
 
-  def ensure_session_token_uniqueness
-    while User.find_by(session_token: self.session_token)
-      self.session_token = new_session_token
-    end
+  def field_used_for_url_slug
+    :email
   end
-
-  def ensure_guest_status
-    self.guest ||= false
-  end
-
 end

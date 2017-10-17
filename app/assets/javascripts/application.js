@@ -11,10 +11,5 @@
 // about supported directives.
 //
 //= require jquery
-//= require jquery_ujs
-//= require cable.js
-//= require jquery.ui.widget.js
-//= require jquery.iframe-transport.js
-//= require jquery.fileupload.js
-//= require jquery.cloudinary.js
-//= require bundle.js
+//= require turbolinks
+//= require_tree .

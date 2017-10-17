@@ -1,0 +1,13 @@
+<%= form_for(@course, url: courses_path) do |f| %>
+  <div>
+    Choose one or more courses you can teach:
+  </div>
+
+  <%- @courses.each do |course| %>
+    <div class="field">
+      <%= f.check_box :name %>
+      <%= f.label course.name %>
+    </div>
+    <br />
+  <% end %>
+<% end %>

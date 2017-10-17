@@ -1,0 +1,14 @@
+.signUpForm {
+    margin-left: 48px;
+}
+
+.signUpButtonContainer {
+    padding-left: 48px;
+}
+
+.signUpHeader {
+    padding-left: 48px;
+    margin: 25px 0;
+    text-transform: uppercase;
+    font-weight: bold;
+}

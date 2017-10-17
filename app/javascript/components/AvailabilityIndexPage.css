@@ -1,0 +1,11 @@
+.availabilityIndexContainer {
+    margin: 48px;
+}
+
+.availabilityIndexListContainer {
+    list-style: none;
+}
+
+.availabilityIndexItemContainer {
+    margin-bottom: 12px;
+}

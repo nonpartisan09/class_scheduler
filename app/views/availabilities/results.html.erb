@@ -1,0 +1,12 @@
+<%= render :partial=>'partials/page_header', :locals => { page_header: 'Results' } %>
+
+<div class="container">
+  <%- @existing_teachers.each do |teacher| %>
+    <div class="teacher display_name">
+      <%= teacher.display_name %>
+    </div>
+    <div class="teacher first_name">
+      <%= teacher.first_name %>
+    </div>
+  <% end %>
+</div>
