@@ -101,8 +101,7 @@ class NewAvailability extends Component {
         if (response.status < 400) {
 
           return response.json().then((json)=> {
-            const { router } = this.context;
-            router.history.replace('/availabilities');
+            location.assign('/availabilities');
           });
         } else if (response.status < 500) {
 
@@ -154,7 +153,7 @@ class NewAvailability extends Component {
           value={ availabilities[index]? availabilities[index].start_time: {} }
           errorText={ _.get(errors, `${availability}.start_time`) }
           onChange={ changeHandler(`${availability}.start_time`) }
-          onBlur={ validateHandler(`${availability}.start_time`) }
+          onDismiss={ validateHandler(`${availability}.start_time`) }
           fullWidth
         />
 
@@ -164,7 +163,7 @@ class NewAvailability extends Component {
           value={ availabilities[index]? availabilities[index].end_time: {} }
           errorText={ _.get(errors, `${availability}.end_time`) }
           onChange={ changeHandler(`${availability}.end_time`) }
-          onBlur={ validateHandler(`${availability}.end_time`) }
+          onDismiss={ validateHandler(`${availability}.end_time`) }
           fullWidth
         />
       </form>)
@@ -222,7 +221,9 @@ NewAvailability.propTypes = {
       timezone: PropTypes.string
     })
   }),
-  days: PropTypes.array
+  days: PropTypes.array,
+  changeHandler: PropTypes.func.isRequired,
+  validateHandler: PropTypes.func.isRequired,
 };
 
 NewAvailability.defaultProps = {

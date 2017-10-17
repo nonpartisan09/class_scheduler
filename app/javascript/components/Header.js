@@ -75,8 +75,7 @@ class Header extends Component {
       credentials: 'same-origin'
     }).then(response => {
       if (response.status < 400) {
-        const { router } = this.context;
-        router.history.push('/');
+        location. assign('/');
       } else if (response.status < 500) {
 
         if (response.status === 401) {

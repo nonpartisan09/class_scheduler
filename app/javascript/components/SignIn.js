@@ -106,8 +106,7 @@ class SignIn extends Component {
         if (response.status < 400) {
 
           return response.json().then((json)=> {
-            const { router } = this.context;
-            router.history.push('/');
+            location.assign('/');
           });
         } else if (response.status < 500) {
 
@@ -137,8 +136,9 @@ SignIn.propTypes = {
     email: PropTypes.string,
     password: PropTypes.string,
     remember_me: PropTypes.bool
-  })
-
+  }),
+  changeHandler: PropTypes.func.isRequired,
+  validateHandler: PropTypes.func.isRequired,
 };
 
 SignIn.defaultProps = {

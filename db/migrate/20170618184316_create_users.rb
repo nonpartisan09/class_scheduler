@@ -3,8 +3,7 @@ class CreateUsers < ActiveRecord::Migration[5.1]
     create_table :users do |t|
       t.string :first_name
       t.string :last_name
-      t.string :display_name
-      t.string :url_slug
+      t.string :url_slug,              null: false, default: ""
       t.integer :terms_and_conditions
       t.boolean :contact_permission
 

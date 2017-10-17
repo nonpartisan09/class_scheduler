@@ -19,7 +19,7 @@ class RegistrationsController < Devise::RegistrationsController
 
       build_resource(sign_up_params)
 
-      @registration = Contexts::Users::Creation.new(resource, resource_name)
+      @registration = Contexts::Users::Creation.new(resource, resource_name, @role_id)
 
       @registration.execute
 
@@ -63,7 +63,6 @@ class RegistrationsController < Devise::RegistrationsController
 
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_up, keys: [
-        :display_name,
         :first_name,
         :last_name,
         :email,
@@ -71,9 +70,8 @@ class RegistrationsController < Devise::RegistrationsController
         :password_confirmation,
         :contact_permission,
         :terms_and_conditions,
-        :remember_me,
         :role,
-        :role_ids
+        :role_ids => []
     ])
   end
 

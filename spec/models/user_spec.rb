@@ -12,10 +12,6 @@ RSpec.describe User, type: :model do
   it { is_expected.to validate_presence_of(:email) }
   it { is_expected.to validate_uniqueness_of(:email) }
 
-  it { is_expected.to validate_presence_of(:display_name) }
-  it { is_expected.to validate_uniqueness_of(:display_name) }
-
-  it { is_expected.to validate_presence_of(:url_slug) }
   it { is_expected.to validate_uniqueness_of(:url_slug) }
 
   it { is_expected.to have_db_column(:first_name).of_type(:string) }
@@ -24,7 +20,7 @@ RSpec.describe User, type: :model do
   it { is_expected.to have_db_column(:created_at).of_type(:datetime) }
   it { is_expected.to have_db_column(:updated_at).of_type(:datetime) }
 
-  it "is not valid without a password" do
+  it 'is not valid without a password' do
     subject.password = nil
     expect(subject).to_not be_valid
   end

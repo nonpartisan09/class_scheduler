@@ -42,6 +42,7 @@ const schema = {
     }
   }),
   contact_permission: Joi.boolean(),
+
   terms_and_conditions: Joi.boolean().valid(true).required().options({
     language: {
       any: {
@@ -57,13 +58,16 @@ class SignUp extends Component {
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.changeHandlerCourses = this.changeHandlerCourses.bind(this);
+
+    this.state = {
+      serverError: ''
+    }
   }
 
   render() {
     const {
      errors, changeHandler, validateHandler,
       currentUser: {
-        display_name,
         first_name,
         password,
         email,
@@ -87,7 +91,7 @@ class SignUp extends Component {
           <TextField
             name='email'
             value={ email }
-            className='signUpEmailInputField'
+            className='signUpEmailInputField email'
             hintText=''
             floatingLabelText='Email'
             floatingLabelFixed
@@ -103,6 +107,7 @@ class SignUp extends Component {
             name='first_name'
             value={ first_name }
             hintText=''
+            className='signUpEmailInputField firstName'
             floatingLabelText='First Name'
             floatingLabelFixed
             errorText={ errors.first_name }
@@ -118,6 +123,7 @@ class SignUp extends Component {
             name='password'
             value={ password }
             type='password'
+            className='signUpEmailInputField password'
             hintText=''
             floatingLabelText='Password'
             floatingLabelFixed
@@ -132,7 +138,8 @@ class SignUp extends Component {
           <TextField
             name='password_confirmation'
             value={ password_confirmation }
-            type='password_confirmation'
+            type='password'
+            className='signUpEmailInputField passwordConfirmation'
             hintText=''
             floatingLabelText='Password Confirmation'
             floatingLabelFixed
@@ -150,6 +157,7 @@ class SignUp extends Component {
 
           <Checkbox
             checked={ terms_and_conditions }
+            className='signUpEmailInputField termsAndConditions'
             onCheck={ changeHandler('terms_and_conditions') }
             label='I accept Tutoria’s terms and conditions'
 
@@ -158,6 +166,7 @@ class SignUp extends Component {
           <Checkbox
             label='I would like to be occasionally contacted about Tutoria’s updates'
             checked={ contact_permission }
+            className='signUpEmailInputField contactPermission'
             onCheck={ changeHandler('contact_permission') }
           />
 
@@ -174,7 +183,7 @@ class SignUp extends Component {
    const { classes } = this.props;
 
    if(_.size(classes) > 0) {
-     const { changeHandler, validateHandler, errors } = this.props;
+     const { validateHandler, errors } = this.props;
      const { currentUser: { courses } } = this.props;
 
      return (
@@ -190,7 +199,9 @@ class SignUp extends Component {
            multiple
            errorText={ errors.courses }
          >
-           { _.map(classes, ({ name, id }) => <MenuItem key={id} insetChildren checked={ _.indexOf(courses, name) } value={id} primaryText={ <span> { name } </span> }/>) }
+           { _.map(classes, ({ name, id }) => {
+             return <MenuItem key={ id } insetChildren checked={ _.indexOf(courses, name) > -1 } value={ name } primaryText={ <span> { name } </span> }/>;
+           })}
          </SelectField>
        </div>
      );
@@ -198,9 +209,9 @@ class SignUp extends Component {
   }
 
   changeHandlerCourses(event, index, value) {
-    const { changeValue, currentUser: { courses } } = this.props;
-    const newValue = courses.push(value);
-    changeValue('courses', { value: newValue });
+    const { changeValue } = this.props;
+
+    changeValue('courses', value);
   }
 
   renderClassLabel() {
@@ -225,19 +236,53 @@ class SignUp extends Component {
     const { errors } = this.props;
 
     if (_.size(errors) === 0) {
-      const { match: { params: { role } } } = this.props;
-      const { router } = this.context;
-
-      if (role === 'volunteer') {
-        const link = '/availabilities/new';
-
-        router.push(link);
-      } else if (role === 'student' ) {
-        const link = '/search/';
-        router.push(link);
-      }
-
+      this.handleUserSignUp();
     }
+  }
+
+  handleUserSignUp() {
+    const { currentUser } = this.props;
+    const { match: { params: { role } } } = this.props;
+
+    return fetch(`/sign_up/${role}`, {
+      method: 'POST',
+      body: JSON.stringify({ user: {...currentUser }}),
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'X-CSRF-Token': this.getCSRFToken(),
+      },
+      credentials: 'same-origin'
+    }).then(response => {
+      if (response.status < 400) {
+        return response.json().then((json) => {
+          let link = '';
+
+          if (role === 'volunteer') {
+            link = '/availabilities/new';
+          } else if (role === 'student' ) {
+            link = '/search/';
+          }
+          location.assign(link);
+        });
+      } else if (response.status < 500) {
+
+        if (response.status === 401) {
+
+          response.json().then(({ message }) => {
+            return this.setState({
+              serverError: message
+            });
+          });
+        }
+      }
+    })
+  }
+
+  getCSRFToken() {
+    return _.find(document.getElementsByTagName('meta'), (meta) => {
+      return meta.name === 'csrf-token'
+    }).content
   }
 }
 
@@ -263,7 +308,6 @@ SignUp.propTypes = {
 
   changeHandler: PropTypes.func.isRequired,
   validateHandler: PropTypes.func.isRequired,
-  clearValidationAndResetValues: PropTypes.func.isRequired,
 };
 
 SignUp.defaultProps = {
@@ -282,10 +326,6 @@ SignUp.defaultProps = {
     contact_permission: false,
     terms_and_conditions: false,
   },
-};
-
-SignUp.contextTypes = {
-  router: PropTypes.object
 };
 
 const validationOptions = {

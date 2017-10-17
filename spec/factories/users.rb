@@ -14,7 +14,6 @@ FactoryGirl.define do
   factory :user do
     email { generate :email }
     password 'password'
-    display_name
     url_slug
 
     terms_and_conditions true

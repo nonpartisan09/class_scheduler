@@ -1,7 +1,7 @@
 module Contexts
   module Users
     class Creation
-      def initialize(user, resource_name)
+      def initialize(user, resource_name, role_id)
         @user = user
         @resource_name = resource_name
 
@@ -22,6 +22,7 @@ module Contexts
       def execute
         #TODO make this value dynamic once active admin is up
         @user.terms_and_conditions = TermsAndConditions.last.id
+        @user.roles << Role.find(@role_id)
         @user.save
 
         yield @user if block_given?

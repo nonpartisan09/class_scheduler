@@ -12,8 +12,8 @@ import moment from 'moment';
 import './SearchBar.css';
 
 function restfulUrl({ day, course, start_time, end_time }) {
-  const start = start_time? moment(start_time).format("HH:MM") : '';
-  const end = end_time? moment(end_time).format("HH:MM"): '';
+  const start = start_time? moment(start_time).format('HH:MM') : '';
+  const end = end_time? moment(end_time).format('HH:MM'): '';
 
   return `/results?course=${course}&day=${day}&start_time=${start}&end_time=${end}`;
 }
@@ -34,11 +34,13 @@ class SearchBar extends Component {
       course: '',
       teachers: { },
       start_time: { },
-      end_time: { }
+      end_time: { },
+      showResults: false,
     };
   }
 
   render() {
+    const { days } = this.props;
     return (
       <div className='searchBarContainer'>
         <Header currentUser={ this.props.currentUser }/>
@@ -48,6 +50,7 @@ class SearchBar extends Component {
         </div>
         <div className='searchBarOptionContainer'>
           <SelectField
+            className='searchBarOption'
             hintText='Select Class'
             value={ this.state.course }
             onChange={ this.handleClassChange }
@@ -57,6 +60,7 @@ class SearchBar extends Component {
           </SelectField>
 
           <SelectField
+            className='searchBarOption'
             hintText='Select Day (optional)'
             value={ this.state.day }
             onChange={ this.handleDayChange }
@@ -73,21 +77,23 @@ class SearchBar extends Component {
           </SelectField>
 
           <TimePicker
-            format="24hr"
-            hintText="Start Time - 24Hr Format"
+            className='searchBarOption'
+            format='24hr'
+            hintText='Start Time - 24Hr Format'
             value={ this.state.start_time }
             onChange={ this.handleChangeStartTime }
           />
 
           <TimePicker
-            format="24hr"
-            hintText="End Time - 24Hr Format"
+            className='searchBarOption'
+            format='24hr'
+            hintText='End Time - 24Hr Format'
             value={ this.state.end_time }
             onChange={ this.handleChangeEndTime }
           />
-        </div>
 
-        <RaisedButton onClick={ this.handleSubmit } label='Search' primary />
+          <RaisedButton onClick={ this.handleSubmit } className='searchSubmitButton' label='Search' primary />
+        </div>
 
         <div className='teacherContainer'>
           { this.renderTeachers() }
@@ -97,24 +103,32 @@ class SearchBar extends Component {
   }
 
   renderTeachers() {
-    const { teachers } = this.state;
-    if (_.size(teachers) > 0) {
-      return _.map(teachers, (teacher, index) => <div className='teacher' key={ index }>{ teacher.display_name }</div>);
-    } else {
-      return (
-        <div className='searchError' >
-          Oops. It seems like no teacher is available. Why not try a different search?
-        </div>
-      )
+    const { showResults } = this.state;
+
+    if (showResults) {
+      const { teachers } = this.state;
+      if (_.size(teachers) > 0) {
+        return _.map(teachers, (teacher, index) => <div className='teacher' key={ index }>{ teacher.display_name }</div>);
+      } else {
+        return (
+          <div className='searchError' >
+            Oops. It seems like no teacher is available. Why not try a different search?
+          </div>
+        )
+      }
     }
   }
 
   handleSubmit() {
     if (this.state.course) {
       this.postSearch();
+      
+      this.setState({
+        showResults: true
+      });
     } else {
       this.setState({
-        error: 'Please select a class'
+        error: 'Please select a class.'
       });
     }
   }

@@ -5,7 +5,7 @@ feature 'When user navigates to new availability page' do
   let!(:volunteer_role) { create(:role, :name => 'Volunteer') }
   let! (:user) { create(:user, { :roles => [ student_role ]}) }
 
-  describe 'and is not signed in' do
+  pending describe 'and is not signed in' do
     it 'then they should be redirected to sign in page' do
       visit new_availability_path
 
@@ -14,7 +14,7 @@ feature 'When user navigates to new availability page' do
     end
   end
 
-  describe 'and is signed in' do
+  pending describe 'and is signed in' do
     describe 'as a student' do
       before (:each) {
         visit sign_in_path

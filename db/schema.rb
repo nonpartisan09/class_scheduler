@@ -30,17 +30,15 @@ ActiveRecord::Schema.define(version: 20171008174154) do
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "availabilities_id"
-    t.index ["availabilities_id"], name: "index_courses_on_availabilities_id"
   end
 
   create_table "enrollments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.bigint "user_id"
+    t.bigint "users_id"
     t.bigint "course_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["course_id"], name: "index_enrollments_on_course_id"
-    t.index ["user_id"], name: "index_enrollments_on_user_id"
+    t.index ["users_id"], name: "index_enrollments_on_users_id"
   end
 
   create_table "roles", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -67,19 +65,18 @@ ActiveRecord::Schema.define(version: 20171008174154) do
   end
 
   create_table "timeables", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.bigint "user_id"
+    t.bigint "users_id"
     t.bigint "availability_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["availability_id"], name: "index_timeables_on_availability_id"
-    t.index ["user_id"], name: "index_timeables_on_user_id"
+    t.index ["users_id"], name: "index_timeables_on_users_id"
   end
 
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "first_name"
     t.string "last_name"
-    t.string "display_name"
-    t.string "url_slug"
+    t.string "url_slug", default: "", null: false
     t.integer "terms_and_conditions"
     t.boolean "contact_permission"
     t.datetime "created_at", null: false

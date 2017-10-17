@@ -17,7 +17,7 @@ class User < ActiveRecord::Base
 
   validates_confirmation_of :password
 
-  validates :email, :display_name, :url_slug, presence: true, uniqueness: true
+  validates :email, :url_slug, presence: true, uniqueness: true
 
   def self.authentication_keys
     [ :email ]
@@ -43,9 +43,7 @@ class User < ActiveRecord::Base
     true
   end
 
-  private
-
-  def self.field_used_for_url_slug
-    :display_name
+  def field_used_for_url_slug
+    :email
   end
 end

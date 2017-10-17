@@ -9,7 +9,7 @@ module HasUrlSlug
     validates :url_slug,
         presence: true,
         uniqueness: true,
-        unless: ->{ self.send(self.class.field_used_for_url_slug).blank? },
+        unless: ->{ generate_label.blank? },
         format: { with: /\A[a-z0-9\-]+\z/}
 
     def generate_url_slug(force: false)
@@ -58,7 +58,12 @@ module HasUrlSlug
     protected
 
     def generate_label
-      self.send(self.class.field_used_for_url_slug)
+      field = if self.methods.include?(:field_used_for_url_slug)
+                self.field_used_for_url_slug
+              else
+                self.class.field_used_for_url_slug
+              end
+      self.send(field)
     end
   end
 
