@@ -75,17 +75,24 @@ class AvailabilitiesController < ApplicationController
   end
 
   def create
-    creation = Contexts::Availabilities::Creation.new(permitted_params, current_user)
+    if permitted_params.present?
+      message = []
+      status = []
+      permitted_params.each do |n|
+        creation = Contexts::Availabilities::Creation.new(permitted_nested(n), current_user)
 
-    begin
-      @availability = creation.execute
-    rescue Contexts::Availabilities::Errors::UnknownAvailabilityError,
-        Contexts::Availabilities::Errors::OverlappingAvailability,
-        Contexts::Availabilities::Errors::ShortAvailability => e
-      render :json=> { :message=> e.message }, :status=> 422
-    else
-
-      redirect_to availabilities_path
+        begin
+          @availability = creation.execute
+        rescue Contexts::Availabilities::Errors::UnknownAvailabilityError,
+            Contexts::Availabilities::Errors::OverlappingAvailability,
+            Contexts::Availabilities::Errors::ShortAvailability => e
+          message << e.message
+          status << :unprocessable_entity
+        else
+          message << 'all good'
+        end
+      end
+      render :json=> { :message=> message }, :status => :ok
     end
   end
 
@@ -129,11 +136,15 @@ class AvailabilitiesController < ApplicationController
   end
 
   def permitted_params
-    params.require(:availability).permit(
-          :day,
-          :start_time,
-          :end_time,
-          :timezone
-      )
-    end
+    params.require(:availabilities)
+  end
+
+  def permitted_nested(n)
+    n.permit(
+        :day,
+        :start_time,
+        :end_time,
+        :timezone
+    )
+  end
 end

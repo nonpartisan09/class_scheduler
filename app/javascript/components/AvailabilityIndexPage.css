@@ -4,8 +4,14 @@
 
 .availabilityIndexListContainer {
     list-style: none;
+    -webkit-padding-start: 0;
+    margin-top: 6px;
 }
 
 .availabilityIndexItemContainer {
     margin-bottom: 12px;
+}
+
+.availabilityListItem {
+    padding-left: 0;
 }

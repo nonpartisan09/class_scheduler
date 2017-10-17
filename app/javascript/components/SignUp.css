@@ -12,3 +12,7 @@
     text-transform: uppercase;
     font-weight: bold;
 }
+
+.termsAndConditionsLink {
+    margin: 24px 0;
+}

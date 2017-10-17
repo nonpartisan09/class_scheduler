@@ -18,9 +18,10 @@ class Header extends Component {
          { this.renderRoleLinks() }
 
          <a href={'/my_profile'} className='sliding-u-l-r-l' rel='nofollow'>
-           { this.props.currentUser.display_name }
+           { this.props.currentUser.first_name }
          </a>
-         <span onClick={ this.handleSignOut } className='sliding-u-l-r-l' rel='nofollow'>
+
+         <span role='navigation' tabIndex={ 0 } onClick={ this.handleSignOut } className='sliding-u-l-r-l' rel='nofollow'>
            Sign out
          </span>
        </nav>

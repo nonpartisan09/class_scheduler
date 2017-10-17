@@ -5,8 +5,6 @@ module Contexts
         @availability = availability
         @current_user = current_user
 
-        ap @availability
-
         @day = @availability['day']
         @local_start_time = Time.parse(@availability['start_time'] + ' ' + @availability['timezone'])
         @local_end_time =  Time.parse(@availability['end_time'] + ' ' + @availability['timezone'])
@@ -32,12 +30,12 @@ module Contexts
 
         new_availability = Availability.new(new_availability_params)
 
-        new_availability = new_availability.save!
+        @new_availability = @current_user.update_attributes(:availabilities => [ new_availability ])
 
-        unless new_availability
+        unless @new_availability
           raise Availabilities::Errors::UnknownAvailabilityError, 'Unknown error happened. Thanks for contacting us.'
         end
-
+        @new_availability
       end
 
       private

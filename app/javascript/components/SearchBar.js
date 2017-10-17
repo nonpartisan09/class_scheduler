@@ -1,13 +1,15 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
-import Header from './Header';
-
 import PropTypes from 'prop-types';
+
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import TimePicker from 'material-ui/TimePicker';
 import RaisedButton from 'material-ui/RaisedButton';
 import moment from 'moment';
+
+import Header from './Header';
+import ErrorField from './reusable/ErrorField';
 
 import './SearchBar.css';
 
@@ -41,13 +43,13 @@ class SearchBar extends Component {
 
   render() {
     const { days } = this.props;
+
     return (
       <div className='searchBarContainer'>
-        <Header currentUser={ this.props.currentUser }/>
+        <Header currentUser={ this.props.currentUser } />
 
-        <div className='errorField'>
-          { this.state.error }
-        </div>
+        <ErrorField error={ this.state.error } />
+
         <div className='searchBarOptionContainer'>
           <SelectField
             className='searchBarOption'
@@ -67,13 +69,7 @@ class SearchBar extends Component {
             autoWidth
             multiple
           >
-            <MenuItem value='Monday' primaryText='Monday' />
-            <MenuItem value='Tuesday' primaryText='Tuesday' />
-            <MenuItem value='Wednesday' primaryText='Wednesday' />
-            <MenuItem value='Thursday' primaryText='Thursday' />
-            <MenuItem value='Friday' primaryText='Friday' />
-            <MenuItem value='Saturday' primaryText='Saturday' />
-            <MenuItem value='Sunday' primaryText='Sunday' />
+            { _.map(days, ({ name }, index) => <MenuItem key={ index } value={ name } primaryText={ name } />)}
           </SelectField>
 
           <TimePicker
@@ -110,11 +106,7 @@ class SearchBar extends Component {
       if (_.size(teachers) > 0) {
         return _.map(teachers, (teacher, index) => <div className='teacher' key={ index }>{ teacher.display_name }</div>);
       } else {
-        return (
-          <div className='searchError' >
-            Oops. It seems like no teacher is available. Why not try a different search?
-          </div>
-        )
+        return <ErrorField error='Oops. It seems like no teacher is available. Why not try a different search?' />;
       }
     }
   }
@@ -122,7 +114,7 @@ class SearchBar extends Component {
   handleSubmit() {
     if (this.state.course) {
       this.postSearch();
-      
+
       this.setState({
         showResults: true
       });

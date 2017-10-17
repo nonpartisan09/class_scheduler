@@ -9,6 +9,9 @@ import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import Checkbox from 'material-ui/Checkbox';
 
+import Header from './Header';
+import ErrorField from './reusable/ErrorField';
+
 import './SignIn.css';
 
 const schema = {
@@ -30,8 +33,8 @@ class SignIn extends Component {
     this.handleSignIn = this.handleSignIn.bind(this);
 
     this.state = {
-      serverError: ''
-    }
+      error: ''
+    };
   }
   render() {
     const {
@@ -44,46 +47,47 @@ class SignIn extends Component {
     } = this.props;
 
     return (
-     <form className="signInContainer">
-       <div>
-         { this.state.serverError }
-       </div>
+      <div>
+        <Header  />
 
-       <TextField
-         name='email'
-         value={ email }
-         className='signUpEmailInputField'
-         hintText=''
-         floatingLabelText='Email'
-         floatingLabelFixed
-         errorText={ errors.email }
-         onChange={ changeHandler('email') }
-         onBlur={ validateHandler('email') }
-         fullWidth
-       />
+        <form className="signInContainer">
+          <ErrorField error={ this.state.error } />
 
-       <TextField
-         name='password'
-         value={ password }
-         type='password'
-         hintText=''
-         floatingLabelText='Password'
-         floatingLabelFixed
-         errorText={ errors.password }
-         onChange={ changeHandler('password') }
-         onBlur={ validateHandler('password') }
-         fullWidth
-       />
+          <TextField
+            name='email'
+            value={ email }
+            className='signUpEmailInputField'
+            hintText=''
+            floatingLabelText='Email'
+            floatingLabelFixed
+            errorText={ errors.email }
+            onChange={ changeHandler('email') }
+            onBlur={ validateHandler('email') }
+            fullWidth
+          />
 
-       <Checkbox
-         checked={ remember_me }
-         onCheck={ changeHandler('remember_me') }
-         label='Remember me'
+          <TextField
+            name='password'
+            value={ password }
+            type='password'
+            hintText=''
+            floatingLabelText='Password'
+            floatingLabelFixed
+            errorText={ errors.password }
+            onChange={ changeHandler('password') }
+            onBlur={ validateHandler('password') }
+            fullWidth
+          />
 
-       />
+          <Checkbox
+            checked={ remember_me }
+            onCheck={ changeHandler('remember_me') }
+            label='Remember me'
+          />
 
-       <RaisedButton primary label='Sign In' onClick={ this.handleSignIn }/>
-     </form>
+          <RaisedButton primary label='Sign In' onClick={ this.handleSignIn } />
+        </form>
+      </div>
     );
   }
   handleSignIn() {
@@ -105,7 +109,7 @@ class SignIn extends Component {
       }).then(response => {
         if (response.status < 400) {
 
-          return response.json().then((json)=> {
+          return response.json().then(()=> {
             location.assign('/');
           });
         } else if (response.status < 500) {
@@ -114,19 +118,19 @@ class SignIn extends Component {
 
             response.json().then(({ message }) => {
               return this.setState({
-                serverError: message
+                error: message
               });
             });
           }
         }
-      })
+      });
     }
   }
 
   getCSRFToken() {
     return _.find(document.getElementsByTagName('meta'), (meta) => {
-      return meta.name === 'csrf-token'
-    }).content
+      return meta.name === 'csrf-token';
+    }).content;
   }
 }
 
@@ -142,6 +146,7 @@ SignIn.propTypes = {
 };
 
 SignIn.defaultProps = {
+  errors: {},
   currentUser: {
     email: '',
     password: '',

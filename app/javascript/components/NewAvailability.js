@@ -1,7 +1,6 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Header from './Header';
 
 import Joi from 'joi-browser';
 import validate from 'react-joi-validation';
@@ -11,6 +10,9 @@ import RaisedButton from 'material-ui/RaisedButton';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import TimePicker from 'material-ui/TimePicker';
+
+import Header from './Header';
+import ErrorField from './reusable/ErrorField';
 
 import './NewAvailability.css';
 
@@ -60,7 +62,7 @@ class NewAvailability extends Component {
 
     this.state = {
       numberOfAvailabilities: 1,
-      serverError: ''
+      error: ''
     }
   }
 
@@ -71,9 +73,7 @@ class NewAvailability extends Component {
         <Header currentUser={ this.props.currentUser } />
 
         <div className='availabilityContainer'>
-          <div>
-            { this.state.serverError }
-          </div>
+          <ErrorField error={ this.state.error } />
 
           <RaisedButton label='Create All Availabilities' primary onClick={ validateAllHandler(this.handleSubmit) } />
           { this.renderAvailabilities() }
@@ -85,12 +85,11 @@ class NewAvailability extends Component {
   handleSubmit() {
     const { errors } = this.props;
 
-    if(_.size(errors) === 0) {
+    if(!_.some(errors)) {
       const { availabilities } = this.props;
-
       return fetch('/availabilities', {
         method: 'POST',
-        body: JSON.stringify({ availability: availabilities[0] }),
+        body: JSON.stringify({ availabilities: _.map(availabilities, (item) => item)} ),
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
@@ -100,18 +99,18 @@ class NewAvailability extends Component {
       }).then(response => {
         if (response.status < 400) {
 
-          return response.json().then((json)=> {
+          return response.json().then(()=> {
             location.assign('/availabilities');
           });
         } else if (response.status < 500) {
 
           return response.json().then(({ message }) => {
             return this.setState({
-              serverError: message
+              error: message
             });
           });
         }
-      })
+      });
     }
   }
 
@@ -124,49 +123,54 @@ class NewAvailability extends Component {
       const { availabilities } = this.props;
 
       return (
-       <form key={index} className='newAvailabilityFormContainer'>
-        <SelectField
-          hintText='Select Timezone'
-          value={ availabilities[index]? availabilities[index].timezone : 'UTC' }
-          errorText={ _.get(errors, `${availability}.timezone`) }
-          onChange={ this.changeTimezoneHandler(availability) }
-          onBlur={ validateHandler(`${availability}.timezone`) }
-          fullWidth
-        >
-          { _.map(timezones, ({ name, id }, index) => <MenuItem key={ name + id + index } insetChildren checked={ availabilities[index] && availabilities[index].timezone === name } value={ name } primaryText={ <span> { name } </span> }/>) }
-        </SelectField>
-        <br/>
-        <SelectField
-          hintText='Select Day'
-          value={ availabilities[index]? availabilities[index].day: {} }
-          errorText={ _.get(errors, `${availability}.day`) }
-          onChange={ this.changeDayHandler(availability) }
-          onBlur={ validateHandler(`${availability}.day`) }
-          fullWidth
-        >
-          { _.map(days, (value, key) => <MenuItem key={ value + key} insetChildren checked={ availabilities[index] && availabilities[index].day === value } value={ value } primaryText={ <span> { value } </span> } />) }
-        </SelectField>
+        <form key={ index } className='newAvailabilityFormContainer'>
+          <SelectField
+            hintText='Select Timezone'
+            value={ availabilities[index]? availabilities[index].timezone : 'UTC' }
+            errorText={ _.get(errors, `${availability}.timezone`) }
+            onChange={ this.changeTimezoneHandler(availability) }
+            onBlur={ validateHandler(`${availability}.timezone`) }
+            fullWidth
+          >
+            { _.map(timezones, ({ name, id }, index) => <MenuItem key={ name + id + index } insetChildren checked={ availabilities[index] && availabilities[index].timezone === name } value={ name } primaryText={ <span> { name } </span> } />) }
+          </SelectField>
 
-        <TimePicker
-          format="24hr"
-          hintText="Start Time - 24Hr Format"
-          value={ availabilities[index]? availabilities[index].start_time: {} }
-          errorText={ _.get(errors, `${availability}.start_time`) }
-          onChange={ changeHandler(`${availability}.start_time`) }
-          onDismiss={ validateHandler(`${availability}.start_time`) }
-          fullWidth
-        />
+          <br />
 
-        <TimePicker
-          format="24hr"
-          hintText="End Time - 24Hr Format"
-          value={ availabilities[index]? availabilities[index].end_time: {} }
-          errorText={ _.get(errors, `${availability}.end_time`) }
-          onChange={ changeHandler(`${availability}.end_time`) }
-          onDismiss={ validateHandler(`${availability}.end_time`) }
-          fullWidth
-        />
-      </form>)
+          <SelectField
+            hintText='Select Day'
+            value={ availabilities[index]? availabilities[index].day: {} }
+            errorText={ _.get(errors, `${availability}.day`) }
+            onChange={ this.changeDayHandler(availability) }
+            onBlur={ validateHandler(`${availability}.day`) }
+            fullWidth
+          >
+            { _.map(days, (value, key) => <MenuItem key={ value + key } insetChildren checked={ availabilities[index] && availabilities[index].day === value } value={ value } primaryText={ <span> { value } </span> } />) }
+          </SelectField>
+
+          <TimePicker
+            format="24hr"
+            hintText="Start Time - 24Hr Format"
+            value={ availabilities[index]? availabilities[index].start_time: {} }
+            errorText={ _.get(errors, `${availability}.start_time`) }
+            onChange={ changeHandler(`${availability}.start_time`) }
+            onDismiss={ validateHandler(`${availability}.start_time`) }
+            fullWidth
+          />
+
+          <TimePicker
+            format="24hr"
+            hintText="End Time - 24Hr Format"
+            value={ availabilities[index]? availabilities[index].end_time: {} }
+            errorText={ _.get(errors, `${availability}.end_time`) }
+            onChange={ changeHandler(`${availability}.end_time`) }
+            onDismiss={ validateHandler(`${availability}.end_time`) }
+            fullWidth
+          />
+          <FlatButton primary label='Add other availability' onClick={ this.handleAddAvailability } />
+          { index === 0 ? null : <FlatButton primary label='Remove availability' onClick={ this.handleRemoveAvailability } /> }
+        </form>
+      );
     });
   }
 
@@ -192,7 +196,7 @@ class NewAvailability extends Component {
       const { changeValue } = this.props;
 
       changeValue(`${path}.timezone`, value);
-    }
+    };
   }
 
   changeDayHandler(path) {
@@ -201,18 +205,24 @@ class NewAvailability extends Component {
       const { changeValue } = this.props;
 
       changeValue(`${path}.day`, value);
-    }
+    };
   }
 
   getCSRFToken() {
     return _.find(document.getElementsByTagName('meta'), (meta) => {
-      return meta.name === 'csrf-token'
-    }).content
+      return meta.name === 'csrf-token';
+    }).content;
   }
 }
 
 
 NewAvailability.propTypes = {
+  errors: PropTypes.object,
+
+  currentUser: PropTypes.shape({
+    email: PropTypes.string,
+  }),
+
   availabilities: PropTypes.shape({
     0: PropTypes.shape({
       start_time: PropTypes.object,
@@ -223,10 +233,15 @@ NewAvailability.propTypes = {
   }),
   days: PropTypes.array,
   changeHandler: PropTypes.func.isRequired,
+  changeValue: PropTypes.func.isRequired,
   validateHandler: PropTypes.func.isRequired,
 };
 
 NewAvailability.defaultProps = {
+  currentUser: {
+    email: '',
+  },
+  errors: {},
   days: [],
   availabilities: {
     0: {

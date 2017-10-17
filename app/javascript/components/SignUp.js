@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import _ from 'lodash';
+import PropTypes from 'prop-types';
+
+import Joi from 'joi-browser';
+import validate from 'react-joi-validation';
 
 import TextField from 'material-ui/TextField';
 import Checkbox from 'material-ui/Checkbox';
@@ -9,9 +12,7 @@ import MenuItem from 'material-ui/MenuItem';
 import SelectField from 'material-ui/SelectField';
 
 import Header from './Header';
-
-import Joi from 'joi-browser';
-import validate from 'react-joi-validation';
+import ErrorField from './reusable/ErrorField';
 
 import './SignUp.css';
 
@@ -60,8 +61,8 @@ class SignUp extends Component {
     this.changeHandlerCourses = this.changeHandlerCourses.bind(this);
 
     this.state = {
-      serverError: ''
-    }
+      error: '',
+    };
   }
 
   render() {
@@ -84,6 +85,8 @@ class SignUp extends Component {
         <div className='signUpHeader'>
           Join Tutoria community: Step 1/2
         </div>
+
+        <ErrorField error={ this.state.error } />
 
         <form className='signUpForm'>
           { this.renderClasses() }
@@ -149,9 +152,9 @@ class SignUp extends Component {
             fullWidth
           />
 
-          <div>
-            <a href={ '/terms_and_conditions'} className='navigationItem' target='_blank' rel='noreferrer noopener'>
-              Please read Tutoria's terms and conditions.
+          <div className='termsAndConditionsLink'>
+            <a href={ '/terms_and_conditions' } className='navigationItem' target='_blank' rel='noreferrer noopener'>
+              Please read Tutoria’s terms and conditions.
             </a>
           </div>
 
@@ -235,7 +238,7 @@ class SignUp extends Component {
   handleSubmit() {
     const { errors } = this.props;
 
-    if (_.size(errors) === 0) {
+    if ( !_.some(errors) ) {
       this.handleUserSignUp();
     }
   }
@@ -255,7 +258,7 @@ class SignUp extends Component {
       credentials: 'same-origin'
     }).then(response => {
       if (response.status < 400) {
-        return response.json().then((json) => {
+        return response.json().then(() => {
           let link = '';
 
           if (role === 'volunteer') {
@@ -267,22 +270,20 @@ class SignUp extends Component {
         });
       } else if (response.status < 500) {
 
-        if (response.status === 401) {
+        response.json().then(({ error: { message }}) => {
 
-          response.json().then(({ message }) => {
-            return this.setState({
-              serverError: message
-            });
+          this.setState({
+            error: message
           });
-        }
+        });
       }
-    })
+    });
   }
 
   getCSRFToken() {
     return _.find(document.getElementsByTagName('meta'), (meta) => {
-      return meta.name === 'csrf-token'
-    }).content
+      return meta.name === 'csrf-token';
+    }).content;
   }
 }
 
@@ -307,10 +308,12 @@ SignUp.propTypes = {
   classes: PropTypes.array,
 
   changeHandler: PropTypes.func.isRequired,
+  changeValue: PropTypes.func.isRequired,
   validateHandler: PropTypes.func.isRequired,
 };
 
 SignUp.defaultProps = {
+  errors: {},
   match: {
     params: {
       role: ' '

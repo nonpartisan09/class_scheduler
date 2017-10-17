@@ -16,7 +16,7 @@ class AvailabilityIndexPage extends Component {
         <div className='availabilityIndexContainer'>
           I can teach:
           <ul className='availabilityIndexListContainer'>
-            { _.map(this.props.courses, ({ name }) => <li key={name}>{ name }</li>) }
+            { _.map(this.props.courses, ({ name }) => <li className='availabilityListItem' key={name}>{ name }</li>) }
           </ul>
 
           <br/>

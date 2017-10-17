@@ -1,0 +1,53 @@
+{
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+
+  "globals": {
+    "__webpack_public_path__": true,
+    "describe": false,
+    "xdescribe": false,
+    "context": false,
+    "xcontext": false,
+    "it": false,
+    "before": false,
+    "beforeEach": false,
+    "after": false,
+    "afterEach": false
+  },
+
+  "env": {
+    // I write for browser
+    "browser": true,
+    // in CommonJS
+    "node": true
+  },
+
+  "plugins": [
+    "react"
+  ],
+
+  // To give you an idea how to override rule options:
+  "rules": {
+    "quotes": [2, "single"],
+    "eol-last": [0],
+    "no-mixed-requires": [0],
+    "no-underscore-dangle": [0],
+    "no-console": [0],
+    "semi": ["error", "always"],
+    "react/prop-types": 1,
+    "react/jsx-tag-spacing": 1,
+    "react/sort-comp": 0,
+    "react/jsx-filename-extension": 0,
+    "react/jsx-closing-bracket-location": 0,
+    "react/jsx-curly-spacing": [2, "always"],
+    "react/forbid-prop-types": 0,
+    "import/no-extraneous-dependencies": ["error", { "optionalDependencies": true, "peerDependencies": true }],
+    "react/prefer-stateless-function": 0
+  },
+
+  "extends": [ "airbnb", "eslint:recommended", "plugin:react/recommended"]
+}

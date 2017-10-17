@@ -1,5 +1,5 @@
 class RegistrationsController < Devise::RegistrationsController
-  before_action :configure_permitted_parameters
+  before_action :devise_sanitize
 
   def new
     build_resource({})
@@ -17,9 +17,10 @@ class RegistrationsController < Devise::RegistrationsController
     begin
       validate_role_params
 
+      courses = params[:user][:courses]
       build_resource(sign_up_params)
 
-      @registration = Contexts::Users::Creation.new(resource, resource_name, @role_id)
+      @registration = Contexts::Users::Creation.new(resource, resource_name, @role_id, courses)
 
       @registration.execute
 
@@ -44,7 +45,7 @@ class RegistrationsController < Devise::RegistrationsController
         Contexts::Users::Errors::AlreadyUsedEmail => e
       @message = e.message
 
-      render :new
+      render json: { error: { message: @message } }, status: 409
     end
   end
 
@@ -61,7 +62,7 @@ class RegistrationsController < Devise::RegistrationsController
     end
   end
 
-  def configure_permitted_parameters
+  def devise_sanitize
     devise_parameter_sanitizer.permit(:sign_up, keys: [
         :first_name,
         :last_name,
@@ -71,6 +72,7 @@ class RegistrationsController < Devise::RegistrationsController
         :contact_permission,
         :terms_and_conditions,
         :role,
+        :courses => '',
         :role_ids => []
     ])
   end
