@@ -191,7 +191,6 @@ class NewAvailability extends Component {
   }
 
   changeTimezoneHandler(path) {
-
     return (proxy, index, value) => {
       const { changeValue } = this.props;
 
@@ -218,7 +217,7 @@ class NewAvailability extends Component {
 
 NewAvailability.propTypes = {
   errors: PropTypes.object,
-
+  timezones: PropTypes.array,
   currentUser: PropTypes.shape({
     email: PropTypes.string,
   }),
@@ -243,6 +242,7 @@ NewAvailability.defaultProps = {
   },
   errors: {},
   days: [],
+  timezones: [],
   availabilities: {
     0: {
       start_time: {},

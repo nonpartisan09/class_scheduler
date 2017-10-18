@@ -14,10 +14,11 @@ import ErrorField from './reusable/ErrorField';
 import './SearchBar.css';
 
 function restfulUrl({ day, course, start_time, end_time }) {
-  const start = start_time? moment(start_time).format('HH:MM') : '';
-  const end = end_time? moment(end_time).format('HH:MM'): '';
+  const startParam = _.isEmpty(start_time)? `&start_time=${moment(start_time).format('HH:MM')}` : '';
+  const endParam = _.isEmpty(end_time)? `&end_time=${moment(end_time).format('HH:MM')}` : '';
+  const dayParam = day? `&day=${day}` : '';
 
-  return `/results?course=${course}&day=${day}&start_time=${start}&end_time=${end}`;
+  return `/results?course=${course}${dayParam}${startParam}${endParam}`;
 }
 
 class SearchBar extends Component {
@@ -148,7 +149,7 @@ class SearchBar extends Component {
           });
         });
       }
-    })
+    });
   }
 
   renderTimes() {
@@ -165,7 +166,7 @@ class SearchBar extends Component {
         return (
           <MenuItem key={ item.id } value={ item.id } primaryText={ item.name } />
         );
-      })
+      });
     }
   }
 
