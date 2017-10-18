@@ -104,7 +104,14 @@ class SearchBar extends Component {
     if (showResults) {
       const { teachers } = this.state;
       if (_.size(teachers) > 0) {
-        return _.map(teachers, (teacher, index) => <div className='teacher' key={ index }>{ teacher.display_name }</div>);
+        return (
+          <div>
+            Available teachers:
+            {
+              _.map(teachers, (teacher, index) => <div className='teacher' key={ index }>{ teacher.first_name }</div>)
+            }
+          </div>
+        );
       } else {
         return <ErrorField error='Oops. It seems like no teacher is available. Why not try a different search?' />;
       }
