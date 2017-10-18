@@ -59,9 +59,10 @@ class SignUp extends Component {
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.changeHandlerCourses = this.changeHandlerCourses.bind(this);
+    this.selectionRenderer = this.selectionRenderer.bind(this);
 
     this.state = {
-      error: '',
+      error: ''
     };
   }
 
@@ -201,6 +202,7 @@ class SignUp extends Component {
            onBlur={ validateHandler('courses') }
            multiple
            errorText={ errors.courses }
+           selectionRenderer={ this.selectionRenderer }
          >
            { _.map(classes, ({ name, id }) => {
              return <MenuItem key={ id } insetChildren checked={ _.indexOf(courses, name) > -1 } value={ name } primaryText={ <span> { name } </span> }/>;
@@ -209,6 +211,14 @@ class SignUp extends Component {
        </div>
      );
    }
+  }
+
+  selectionRenderer(values) {
+    if (_.size(values) > 1) {
+      return values.join(', ');
+    } else if (_.size(values) === 1) {
+      return values.toString();
+    }
   }
 
   changeHandlerCourses(event, index, value) {
