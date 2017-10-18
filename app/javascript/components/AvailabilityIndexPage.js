@@ -1,8 +1,8 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Header from './Header';
 import moment from 'moment';
+import Header from './Header';
 
 import './AvailabilityIndexPage.css';
 
@@ -19,7 +19,7 @@ class AvailabilityIndexPage extends Component {
             { _.map(this.props.courses, ({ name }) => <li className='availabilityListItem' key={name}>{ name }</li>) }
           </ul>
 
-          <br/>
+          <br />
           On the following days:
           <ul className='availabilityIndexListContainer'>
             { this.renderAvailabilities() }
@@ -36,14 +36,14 @@ class AvailabilityIndexPage extends Component {
       return (
         <div key={ name+day+timezone } className='availabilityIndexItemContainer'>
           <li>
-           <span>Day: </span>{ day }
+            <span>Day: </span>{ day }
           </li>
 
           <li>
-            <span>From: </span>{ moment(start_time).format("HH:MM") }
+            <span>From: </span>{ moment(start_time).format('HH:MM') }
           </li>
           <li>
-            <span>To:</span>{ moment(end_time).format("HH:MM") }
+            <span>To: </span>{ moment(end_time).format('HH:MM') }
           </li>
 
           <li>
@@ -51,13 +51,13 @@ class AvailabilityIndexPage extends Component {
           </li>
         </div>
       );
-    })
+    });
   }
 }
 
 AvailabilityIndexPage.propTypes = {
+  availabilities: PropTypes.array,
   courses: PropTypes.array,
-  days: PropTypes.array,
   currentUser: PropTypes.shape({
     first_name: PropTypes.string,
     email: PropTypes.string,
@@ -65,7 +65,7 @@ AvailabilityIndexPage.propTypes = {
 };
 
 AvailabilityIndexPage.defaultProps = {
-  days: [],
+  availabilities: [],
   courses: [],
   currentUser: {
     first_name: '',

@@ -69,7 +69,7 @@ class SearchBar extends Component {
             autoWidth
             multiple
           >
-            { _.map(days, ({ name }, index) => <MenuItem key={ index } value={ name } primaryText={ name } />)}
+            { _.map(days, (item, index) => <MenuItem key={ index } value={ item } primaryText={ item } />)}
           </SelectField>
 
           <TimePicker

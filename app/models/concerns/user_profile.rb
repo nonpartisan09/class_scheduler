@@ -7,17 +7,22 @@ class UserProfile
 
   def decorate
     {
-      :display_name => display_name,
       :courses => courses,
       :languages => { :english => english, :spanish => spanish },
       :location => location,
       :student => student,
-      :teacher => teacher
+      :teacher => teacher,
+      :email => email,
+      :first_name => first_name
     }
   end
 
-  def display_name
-    @display_name ||= user.display_name
+  def first_name
+    @first_name ||= user.first_name
+  end
+
+  def email
+    @email ||= user.email
   end
 
   def courses

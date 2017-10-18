@@ -6,6 +6,8 @@ import { List, ListItem } from 'material-ui/List';
 import './Header.css';
 import Header from './Header';
 
+import './MyProfile.css';
+
 class MyProfile extends Component {
   render() {
     return (
@@ -25,9 +27,9 @@ class MyProfile extends Component {
         <List>
           <ListItem >
             <div>
-              Username:
+              Email:
             </div>
-            { currentUser.display_name }
+            { currentUser.email }
           </ListItem>
           <ListItem>
             <div>
@@ -38,7 +40,7 @@ class MyProfile extends Component {
 
           <ListItem>
             <span>{ currentUser.student? 'Interested in studying: ' : 'Can teach: ' }</span>
-            { this.renderClasses() }
+            { _.join(this.renderClasses(),(', ')) }
           </ListItem>
 
           <ListItem>
@@ -59,7 +61,7 @@ class MyProfile extends Component {
     if (_.size(languages) > 0) {
       return _.map(languages, (value, key) => {
         return _.upperFirst(key);
-      })
+      });
     }
   }
 
@@ -67,13 +69,7 @@ class MyProfile extends Component {
     const { currentUser: { courses } } = this.props;
 
     if (_.size(courses) > 0) {
-     return _.map(courses, ({ name }, index) => {
-        return (
-          <span key={ index }>
-            { name }
-          </span>
-        );
-      })
+     return _.map(courses, ({ name }) => name);
     } else {
       return <span>No class has been selected yet.</span>;
     }
