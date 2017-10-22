@@ -11,6 +11,8 @@ import RaisedButton from 'material-ui/RaisedButton';
 import MenuItem from 'material-ui/MenuItem';
 import SelectField from 'material-ui/SelectField';
 
+
+import sendData from './sendData';
 import Header from './Header';
 import ErrorField from './reusable/ErrorField';
 
@@ -18,19 +20,31 @@ import './SignUp.css';
 
 const schema = {
   role: Joi.string(),
-  courses: Joi.array(),
+  courses: Joi.array().min(1).options({
+    language: {
+      array: {
+        min: 'Please select at least one class'
+      }
+    }
+  }),
 
   first_name: Joi.string().required().options({
     language: {
       any: {
-        allowOnly: 'Please enter your first name.'
+        required: 'Please enter your first name',
+        empty: 'Please enter your first name',
       }
     }
   }),
+
+  address: Joi.string().allow(''),
   email: Joi.string().email({ minDomainAtoms: 2 }).required().options({
     language: {
       any: {
-        allowOnly: 'Please enter a valid email.'
+        required: 'Please enter an email'
+      },
+      string: {
+        email: 'Please enter a valid email',
       }
     }
   }),
@@ -47,7 +61,7 @@ const schema = {
   terms_and_conditions: Joi.boolean().valid(true).required().options({
     language: {
       any: {
-        allowOnly: 'Please agree to our terms and conditions.'
+        allowOnly: 'Please agree to our terms and conditions'
       }
     }
   })

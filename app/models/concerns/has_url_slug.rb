@@ -4,7 +4,7 @@ module HasUrlSlug
   extend ActiveSupport::Concern
 
   included do
-    before_validation :generate_url_slug, if: ->{ self.new_record? || self.send(self.class.field_used_for_url_slug).present? && self.url_slug.blank? }
+    before_validation :generate_url_slug, if: ->{ self.new_record? || self.url_slug.blank? }
 
     validates :url_slug,
         presence: true,
