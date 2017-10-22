@@ -5,15 +5,19 @@ import PropTypes from 'prop-types';
 import Joi from 'joi-browser';
 import validate from 'react-joi-validation';
 
+import Badge from 'material-ui/Badge';
 import TextField from 'material-ui/TextField';
 import Checkbox from 'material-ui/Checkbox';
 import RaisedButton from 'material-ui/RaisedButton';
 import MenuItem from 'material-ui/MenuItem';
 import SelectField from 'material-ui/SelectField';
+import FlatButton from 'material-ui/FlatButton';
 
+import InfoIcon from 'material-ui/svg-icons/action/info';
 
 import sendData from './sendData';
 import Header from './Header';
+import DialogComponent from './DialogComponent';
 import ErrorField from './reusable/ErrorField';
 
 import './SignUp.css';
@@ -74,9 +78,11 @@ class SignUp extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.changeHandlerCourses = this.changeHandlerCourses.bind(this);
     this.selectionRenderer = this.selectionRenderer.bind(this);
+    this.handleShowDialog = this.handleShowDialog.bind(this);
 
     this.state = {
-      error: ''
+      error: '',
+      showAddressDialog: false
     };
   }
 
@@ -89,7 +95,8 @@ class SignUp extends Component {
         email,
         password_confirmation,
         terms_and_conditions,
-        contact_permission
+        contact_permission,
+        address
       },
     } = this.props;
 
@@ -100,6 +107,14 @@ class SignUp extends Component {
         <div className='signUpHeader'>
           Join Tutoria community: Step 1/2
         </div>
+
+        <DialogComponent
+          title='Why do you need my address?'
+          onRequestClose={ this.handleShowDialog }
+          open={ this.state.showAddressDialog }
+          actions={ [ <FlatButton key='close' label='Close' primary onClick={ this.handleShowDialog } /> ] }
+          text={ this.renderDialogText() }
+        />
 
         <ErrorField error={ this.state.error } />
 
@@ -135,6 +150,26 @@ class SignUp extends Component {
           />
 
           <br />
+
+          <Badge
+            badgeContent={ <span onClick={ this.handleShowDialog }> <InfoIcon /> </span>}
+            badgeStyle={ { fontSize: 14, transform: 'translateY(18px)' } }
+            style={ { padding: '0' } }
+          >
+            <TextField
+              name='address'
+              value={ address }
+              hintText=''
+              className='signUpEmailInputField address'
+              floatingLabelText='Address'
+              floatingLabelFixed
+              multiLine
+              errorText={ errors.address }
+              onChange={ changeHandler('address') }
+              onBlur={ validateHandler('address') }
+              fullWidth
+            />
+          </Badge>
 
           <br />
           <TextField
@@ -235,6 +270,14 @@ class SignUp extends Component {
     }
   }
 
+  handleShowDialog() {
+    const { showAddressDialog } = this.state;
+
+    this.setState({
+      showAddressDialog: !showAddressDialog
+    });
+  }
+
   changeHandlerCourses(event, index, value) {
     const { changeValue } = this.props;
 
@@ -262,8 +305,30 @@ class SignUp extends Component {
   handleSubmit() {
     const { errors } = this.props;
 
-    if ( !_.some(errors) ) {
+    if ( _.size(errors) === 0) {
       this.handleUserSignUp();
+    }
+  }
+
+  renderDialogText() {
+    const { match: { params: { role } } } = this.props;
+
+    if (role === 'volunteer') {
+      return (
+        <div>
+          Your address will only be used to help students locate teachers in their area.
+          <br />
+          It’s not required unless you would like to allow students to ask for face to face sessions.
+        </div>
+      );
+    } else if (role === 'student' ) {
+      return (
+        <div>
+          Your address will only be used to help locate teachers in your area.
+          <br />
+          It’s not required unless you would like to use the location feature.
+        </div>
+      );
     }
   }
 
@@ -271,43 +336,29 @@ class SignUp extends Component {
     const { currentUser } = this.props;
     const { match: { params: { role } } } = this.props;
 
-    return fetch(`/sign_up/${role}`, {
+    const requestParams = {
+      url: `/sign_up/${role}`,
+      jsonBody: { user: {...currentUser }},
       method: 'POST',
-      body: JSON.stringify({ user: {...currentUser }}),
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'X-CSRF-Token': this.getCSRFToken(),
+      successCallBack: () => {
+        let link = '';
+
+        if (role === 'volunteer') {
+          link = '/availabilities/new';
+        } else if (role === 'student' ) {
+          link = '/search/';
+        }
+        location.assign(link);
       },
-      credentials: 'same-origin'
-    }).then(response => {
-      if (response.status < 400) {
-        return response.json().then(() => {
-          let link = '';
 
-          if (role === 'volunteer') {
-            link = '/availabilities/new';
-          } else if (role === 'student' ) {
-            link = '/search/';
-          }
-          location.assign(link);
-        });
-      } else if (response.status < 500) {
-
-        response.json().then(({ error: { message }}) => {
-
-          this.setState({
-            error: message
-          });
+      errorCallBack: (message) => {
+        this.setState({
+          error: message
         });
       }
-    });
-  }
+    };
 
-  getCSRFToken() {
-    return _.find(document.getElementsByTagName('meta'), (meta) => {
-      return meta.name === 'csrf-token';
-    }).content;
+    return sendData(requestParams);
   }
 }
 
@@ -316,6 +367,7 @@ SignUp.propTypes = {
   currentUser: PropTypes.shape({
     courses: PropTypes.array,
     first_name: PropTypes.string,
+    address: PropTypes.string,
     email: PropTypes.string,
     password: PropTypes.string,
     password_confirmation: PropTypes.string,
@@ -344,6 +396,7 @@ SignUp.defaultProps = {
     }
   },
   classes: [],
+  address: '',
   currentUser: {
     courses: [],
     first_name: '',
