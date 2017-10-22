@@ -3,13 +3,14 @@ class UserProfile
 
   def initialize(user)
     @user = user
+    @address = 'No address provided'
   end
 
   def decorate
     {
       :courses => courses,
       :languages => { :english => english, :spanish => spanish },
-      :location => location,
+      :address => address,
       :student => student,
       :teacher => teacher,
       :email => email,
@@ -37,8 +38,8 @@ class UserProfile
     @spanish ||= true
   end
 
-  def location
-    @location ||= "somewhere over the rainbow"
+  def address
+    @address ||= user.address
   end
 
   def student

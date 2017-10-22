@@ -33,7 +33,7 @@ class MyProfile extends Component {
           </ListItem>
           <ListItem>
             <div>
-              Location:
+              Address:
             </div>
             { currentUser.location }
           </ListItem>

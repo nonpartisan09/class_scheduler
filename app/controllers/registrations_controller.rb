@@ -72,6 +72,7 @@ class RegistrationsController < Devise::RegistrationsController
         :contact_permission,
         :terms_and_conditions,
         :role,
+        :address,
         :courses => '',
         :role_ids => []
     ])

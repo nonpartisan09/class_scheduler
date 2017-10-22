@@ -42,10 +42,6 @@ module Contexts
         User.where(:email => @user.email).exists?
       end
 
-      def check_if_display_name_exists?
-        User.where(:display_name => @user.display_name).exists?
-      end
-
     end
   end
 end

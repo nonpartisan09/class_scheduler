@@ -7,6 +7,9 @@ class User < ActiveRecord::Base
   has_many :timeables
   has_many :availabilities, through: :timeables
 
+  geocoded_by :address
+  after_validation :geocode, :if => :address && :address_changed?
+
   devise :rememberable,
       :database_authenticatable,
       :registerable,

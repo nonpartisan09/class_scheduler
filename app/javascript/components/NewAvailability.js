@@ -13,6 +13,7 @@ import TimePicker from 'material-ui/TimePicker';
 
 import Header from './Header';
 import ErrorField from './reusable/ErrorField';
+import sendData from './sendData';
 
 import './NewAvailability.css';
 
@@ -85,32 +86,24 @@ class NewAvailability extends Component {
   handleSubmit() {
     const { errors } = this.props;
 
-    if(!_.some(errors)) {
+    if (_.size(errors) === 0) {
       const { availabilities } = this.props;
-      return fetch('/availabilities', {
+
+      const requestParams = {
+        url: '/availabilities',
+        jsonBody: { availabilities: _.map(availabilities, (item) => item)},
         method: 'POST',
-        body: JSON.stringify({ availabilities: _.map(availabilities, (item) => item)} ),
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'X-CSRF-Token': this.getCSRFToken(),
+        successCallBack: () => {
+          location.assign('/availabilities');
         },
-        credentials: 'same-origin'
-      }).then(response => {
-        if (response.status < 400) {
-
-          return response.json().then(()=> {
-            location.assign('/availabilities');
-          });
-        } else if (response.status < 500) {
-
-          return response.json().then(({ message }) => {
-            return this.setState({
-              error: message
-            });
+        errorCallBack: (message) => {
+          this.setState({
+            error: message
           });
         }
-      });
+      };
+
+      return sendData(requestParams);
     }
   }
 
@@ -206,12 +199,6 @@ class NewAvailability extends Component {
       changeValue(`${path}.day`, value);
     };
   }
-
-  getCSRFToken() {
-    return _.find(document.getElementsByTagName('meta'), (meta) => {
-      return meta.name === 'csrf-token';
-    }).content;
-  }
 }
 
 
@@ -234,6 +221,7 @@ NewAvailability.propTypes = {
   changeHandler: PropTypes.func.isRequired,
   changeValue: PropTypes.func.isRequired,
   validateHandler: PropTypes.func.isRequired,
+  validateAllHandler: PropTypes.func.isRequired,
 };
 
 NewAvailability.defaultProps = {
