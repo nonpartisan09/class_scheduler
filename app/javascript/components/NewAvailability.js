@@ -199,12 +199,6 @@ class NewAvailability extends Component {
       changeValue(`${path}.day`, value);
     };
   }
-
-  getCSRFToken() {
-    return _.find(document.getElementsByTagName('meta'), (meta) => {
-      return meta.name === 'csrf-token';
-    }).content;
-  }
 }
 
 
