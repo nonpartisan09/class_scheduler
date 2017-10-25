@@ -92,6 +92,7 @@ ActiveRecord::Schema.define(version: 20171020131545) do
     t.string "current_sign_in_ip"
     t.string "last_sign_in_ip"
     t.string "address"
+    t.string "city"
     t.float "latitude", limit: 24
     t.float "longitude", limit: 24
     t.index ["email"], name: "index_users_on_email", unique: true

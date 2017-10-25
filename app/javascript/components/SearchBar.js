@@ -2,6 +2,9 @@ import _ from 'lodash';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+import Joi from 'joi-browser';
+import validate from 'react-joi-validation';
+
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import TimePicker from 'material-ui/TimePicker';
@@ -14,36 +17,86 @@ import ErrorField from './reusable/ErrorField';
 import './SearchBar.css';
 
 function restfulUrl({ day, course, start_time, end_time }) {
-  const startParam = _.isEmpty(start_time)? `&start_time=${moment(start_time).format('HH:MM')}` : '';
-  const endParam = _.isEmpty(end_time)? `&end_time=${moment(end_time).format('HH:MM')}` : '';
-  const dayParam = day? `&day=${day}` : '';
+  const startParam = _.isDate(start_time)? `&start_time=${moment(start_time).format('HH:MM')}` : '';
+  const endParam = _.isDate(end_time)? `&end_time=${moment(end_time).format('HH:MM')}`: '';
+  const dayParam = _.size(day) > 0? `&day=${day}` : '';
+  const courseParam = _.size(course) > 0? `course=${course}` : '';
 
-  return `/results?course=${course}${dayParam}${startParam}${endParam}`;
+  return `/results?${courseParam}${dayParam}${startParam}${endParam}`;
 }
+
+const schema = {
+  search: Joi.object().keys({
+    day: Joi.string().required().options({
+      language: {
+        any: {
+          allowOnly: 'Please select a day'
+        }
+      }
+    }),
+    course: Joi.array().min(1).options({
+      language: {
+        array: {
+          min: 'Please select at least one course.'
+        }
+      }
+    }),
+    timezone: Joi.string().required().options({
+      language: {
+        any: {
+          allowOnly: 'Please select a timezone'
+        }
+      }
+    }),
+    start_time: Joi.date().timestamp().required().options({
+      language: {
+        any: {
+          allowOnly: 'Please select a start time'
+        }
+      }
+    }),
+    end_time: Joi.date().timestamp().required().options({
+      language: {
+        any: {
+          allowOnly: 'Please enter an end time'
+        }
+      }
+    })
+  })
+};
 
 class SearchBar extends Component {
   constructor(props) {
     super(props);
 
-    this.handleDayChange = this.handleDayChange.bind(this);
-    this.handleClassChange = this.handleClassChange.bind(this);
-    this.handleChangeStartTime = this.handleChangeStartTime.bind(this);
-    this.handleChangeEndTime = this.handleChangeEndTime.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.selectionRendererCourse = this.selectionRendererCourse.bind(this);
+    this.selectionRendererDay = this.selectionRendererDay.bind(this);
+    this.changeHandlerCourse = this.changeHandlerCourse.bind(this);
+    this.changeHandlerDay = this.changeHandlerDay.bind(this);
 
     this.state = {
       error: '',
-      day: '',
-      course: '',
       teachers: { },
-      start_time: { },
-      end_time: { },
       showResults: false,
     };
   }
 
   render() {
-    const { days } = this.props;
+    const {
+      days,
+      changeHandler,
+      courses,
+      validateHandler,
+      errors,
+      search: {
+        course,
+        day,
+        start_time,
+        end_time
+      }
+
+    } = this.props;
 
     return (
       <div className='searchBarContainer'>
@@ -54,39 +107,48 @@ class SearchBar extends Component {
         <div className='searchBarOptionContainer'>
           <SelectField
             className='searchBarOption'
-            hintText='Select Class'
-            value={ this.state.course }
-            onChange={ this.handleClassChange }
-            autoWidth
+            hintText='Select One or More Class'
+            value={ course }
+            onChange={ this.changeHandlerCourse }
+            onBlur={ validateHandler('course') }
+            multiple
+            errorText={ errors.course }
+            selectionRenderer={ this.selectionRendererCourse }
           >
-            { this.renderClasses() }
+            { _.map(courses, ({ name, id }) => {
+              return <MenuItem key={ id } insetChildren checked={ _.indexOf(course, id) > -1 } value={ id } primaryText={ <span> { name } </span> } />;
+            })}
           </SelectField>
 
           <SelectField
+            hintText='Select Day'
+            value={ day }
+            errorText={ errors.day }
+            onChange={ this.changeHandlerDay }
+            onBlur={ validateHandler('day') }
             className='searchBarOption'
-            hintText='Select Day (optional)'
-            value={ this.state.day }
-            onChange={ this.handleDayChange }
-            autoWidth
             multiple
+            selectionRenderer={ this.selectionRendererDay }
           >
-            { _.map(days, (item, index) => <MenuItem key={ index } value={ item } primaryText={ item } />)}
+            { _.map(days, (value, key) => <MenuItem key={ value + key } insetChildren checked={ _.indexOf(day, value) > -1 } value={ value } primaryText={ <span> { value } </span> } />) }
           </SelectField>
 
           <TimePicker
             className='searchBarOption'
             format='24hr'
             hintText='Start Time - 24Hr Format'
-            value={ this.state.start_time }
-            onChange={ this.handleChangeStartTime }
+            value={ start_time }
+            onChange={ changeHandler('start_time') }
+            onDismiss={ validateHandler('start_time') }
           />
 
           <TimePicker
             className='searchBarOption'
             format='24hr'
             hintText='End Time - 24Hr Format'
-            value={ this.state.end_time }
-            onChange={ this.handleChangeEndTime }
+            value={ end_time }
+            onChange={ changeHandler('end_time') }
+            onDismiss={ validateHandler('end_time') }
           />
 
           <RaisedButton onClick={ this.handleSubmit } className='searchSubmitButton' label='Search' primary />
@@ -119,22 +181,47 @@ class SearchBar extends Component {
     }
   }
 
+  changeHandlerCourse(event, index, value) {
+    const { changeValue } = this.props;
+    changeValue('course', value);
+  }
+
+  changeHandlerDay(event, index, value) {
+    const { changeValue } = this.props;
+    changeValue('day', value);
+  }
+
+  selectionRendererDay(values) {
+    if (_.size(values) > 1) {
+      return values.join(', ');
+    } else if (_.size(values) === 1) {
+      return values.toString();
+    }
+  }
+
+  selectionRendererCourse(values) {
+    const { courses } = this.props;
+    if (_.size(values) > 1) {
+      return _.map(courses, ({ name, id }, index) => { if (_.indexOf(values, id) > -1) { return index !== values.length-1? `${name}, `: name; } });
+    } else if (_.size(values) === 1) {
+      return _.map(courses, ({ name, id }) => { if (_.indexOf(values, id) > -1) { return name; } });
+    }
+  }
+
   handleSubmit() {
-    if (this.state.course) {
+    const { errors } = this.props;
+    if (_.size(errors) === 0) {
       this.postSearch();
 
       this.setState({
         showResults: true
       });
-    } else {
-      this.setState({
-        error: 'Please select a class.'
-      });
     }
   }
 
   postSearch() {
-    return fetch(restfulUrl(this.state), {
+    const { search } = this.props;
+    return fetch(restfulUrl(search), {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
@@ -157,60 +244,46 @@ class SearchBar extends Component {
     //Add morning/afternoon options
     return null;
   }
-
-  renderClasses() {
-    const { courses } = this.props;
-
-    if (_.size(courses)) {
-      return courses.map((item) => {
-        return (
-          <MenuItem key={ item.id } value={ item.id } primaryText={ item.name } />
-        );
-      });
-    }
-  }
-
-  handleChangeStartTime(event, date) {
-    this.setState({
-      start_time: date
-    });
-  }
-
-  handleChangeEndTime(event, date) {
-    this.setState({
-      end_time: date
-    });
-  }
-
-  handleClassChange(event, index, value) {
-    this.setState({
-      course: value
-    });
-  }
-
-  handleDayChange(event, index, value) {
-    this.setState({
-      day: value
-    });
-  }
 }
 
 SearchBar.propTypes = {
   courses: PropTypes.array,
+  errors: PropTypes.object,
   days: PropTypes.array,
   currentUser: PropTypes.shape({
     first_name: PropTypes.string,
     email: PropTypes.string,
-  })
+  }),
+  search: PropTypes.shape({
+    start_time: PropTypes.object,
+    end_time: PropTypes.object,
+    day: PropTypes.array,
+    course: PropTypes.array
+  }),
+  changeHandler: PropTypes.func.isRequired,
+  validateHandler: PropTypes.func.isRequired,
+  changeValue: PropTypes.func.isRequired,
 };
 
 SearchBar.defaultProps = {
   days: [],
+  errors: {},
   courses: [],
   currentUser: {
     first_name: '',
     email: '',
+  },
+  search: {
+    start_time: {},
+    end_time: {},
+    day: [],
+    course: []
   }
 };
 
-export default SearchBar;
+const validationOptions = {
+  joiSchema: schema,
+  only: 'search'
+};
+
+export default validate(SearchBar, validationOptions);

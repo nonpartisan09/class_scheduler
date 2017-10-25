@@ -6,11 +6,13 @@ import Joi from 'joi-browser';
 import validate from 'react-joi-validation';
 
 import RaisedButton from 'material-ui/RaisedButton';
+import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
 import Checkbox from 'material-ui/Checkbox';
 
 import Header from './Header';
 import ErrorField from './reusable/ErrorField';
+import sendData from './sendData';
 
 import './SignIn.css';
 
@@ -85,7 +87,14 @@ class SignIn extends Component {
             label='Remember me'
           />
 
-          <RaisedButton primary label='Sign In' onClick={ this.handleSignIn } />
+          <RaisedButton primary label='Sign In' onClick={ this.handleSignIn } className='signInLink' />
+          <a href={ '/sign_up/student' } rel='nofollow' className='signInLinkSecondary'>
+            <FlatButton primary label='Become a student' />
+          </a>
+
+          <a href={ '/sign_up/volunteer' } rel='nofollow' className='signInLinkSecondary'>
+            <FlatButton primary label='Volunteer as a teacher' />
+          </a>
         </form>
       </div>
     );
@@ -97,40 +106,21 @@ class SignIn extends Component {
 
       const { currentUser } = this.props;
 
-      return fetch('/sign_in', {
+      const requestParams = {
+        url: '/sign_in',
+        jsonBody: currentUser,
         method: 'POST',
-        body: JSON.stringify(currentUser),
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'X-CSRF-Token': this.getCSRFToken(),
+        successCallBack: () => {
+          location.assign('/');
         },
-        credentials: 'same-origin'
-      }).then(response => {
-        if (response.status < 400) {
-
-          return response.json().then(()=> {
-            location.assign('/');
+        errorCallBack: (message) => {
+          this.setState({
+            error: message
           });
-        } else if (response.status < 500) {
-
-          if (response.status === 401) {
-
-            response.json().then(({ message }) => {
-              return this.setState({
-                error: message
-              });
-            });
-          }
         }
-      });
+      };
+      return sendData(requestParams);
     }
-  }
-
-  getCSRFToken() {
-    return _.find(document.getElementsByTagName('meta'), (meta) => {
-      return meta.name === 'csrf-token';
-    }).content;
   }
 }
 

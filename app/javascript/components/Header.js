@@ -1,7 +1,6 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import './Header.css';
 
 class Header extends Component {
@@ -17,11 +16,11 @@ class Header extends Component {
 
          { this.renderRoleLinks() }
 
-         <a href={'/my_profile'} className='sliding-u-l-r-l' rel='nofollow'>
+         <a href={'/my_profile'} className='slidingLink' rel='nofollow'>
            { this.props.currentUser.first_name }
          </a>
 
-         <span role='navigation' tabIndex={ 0 } onClick={ this.handleSignOut } className='sliding-u-l-r-l' rel='nofollow'>
+         <span role='navigation' tabIndex={ 0 } onClick={ this.handleSignOut } className='slidingLink' rel='nofollow'>
            Sign out
          </span>
        </nav>
@@ -29,13 +28,13 @@ class Header extends Component {
    } else {
      return (
        <nav className='navigation' >
-         <a href={'/sign_up/student'} className='sliding-u-l-r-l' >
+         <a href={'/sign_up/student'} className='slidingLink' >
            Become a student
          </a>
-         <a href={'/sign_up/volunteer'} className='sliding-u-l-r-l'>
+         <a href={'/sign_up/volunteer'} className='slidingLink'>
            Volunteer as a teacher
          </a>
-         <a href={'/sign_in/'} className='sliding-u-l-r-l'>
+         <a href={'/sign_in/'} className='slidingLink'>
            Sign In
          </a>
        </nav>
@@ -46,18 +45,18 @@ class Header extends Component {
   renderRoleLinks() {
     if (this.props.currentUser.student) {
       return (
-        <a href={'/search'} className='sliding-u-l-r-l'>
+        <a href={'/search'} className='slidingLink'>
           Search
         </a>
       );
     } else if (this.props.currentUser.teacher) {
       return (
         <span>
-          <a href={'/availabilities/new'} className='sliding-u-l-r-l'>
+          <a href={'/availabilities/new'} className='slidingLink'>
             Create a new availability
           </a>
 
-          <a href={'/availabilities'} className='sliding-u-l-r-l'>
+          <a href={'/availabilities'} className='slidingLink'>
             My Availabilities
           </a>
         </span>

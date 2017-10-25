@@ -9,8 +9,8 @@ class UserProfile
   def decorate
     {
       :courses => courses,
-      :languages => { :english => english, :spanish => spanish },
       :address => address,
+      :city => city,
       :student => student,
       :teacher => teacher,
       :email => email,
@@ -30,16 +30,12 @@ class UserProfile
     @courses ||= user.courses
   end
 
-  def english
-    @english ||= true
-  end
-
-  def spanish
-    @spanish ||= true
-  end
-
   def address
-    @address ||= user.address
+    user.address ||= @address
+  end
+
+  def city
+    @city || user.city
   end
 
   def student

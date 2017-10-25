@@ -1,0 +1,24 @@
+.userForm {
+    margin-left: 48px;
+}
+
+.userFormHeader {
+    font-size: 16px;
+    font-weight: normal;
+}
+
+.userFormOuterButton {
+    padding-left: 48px;
+}
+
+.userFormInnerButton {
+  margin: 24px 0;
+}
+
+.userFormTermsAndConditionsLink {
+    margin: 24px 0;
+}
+
+.userFormInputField {
+    min-width: 500px;
+}

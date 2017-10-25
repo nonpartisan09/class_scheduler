@@ -7,8 +7,8 @@ class User < ActiveRecord::Base
   has_many :timeables
   has_many :availabilities, through: :timeables
 
-  geocoded_by :address
-  after_validation :geocode, :if => :address && :address_changed?
+  geocoded_by :full_address
+  after_validation :geocode, :if => (:address || :city) && (:address_changed? || :city_changed?)
 
   devise :rememberable,
       :database_authenticatable,
@@ -21,6 +21,9 @@ class User < ActiveRecord::Base
   validates_confirmation_of :password
 
   validates :email, :url_slug, presence: true, uniqueness: true
+
+  scope :teacher, -> { Role.find_by_name('volunteer').users }
+  scope :student, -> { Role.find_by_name('student').users }
 
   def self.authentication_keys
     [ :email ]
@@ -48,5 +51,9 @@ class User < ActiveRecord::Base
 
   def field_used_for_url_slug
     :email
+  end
+
+  def full_address
+    "#{address} #{city}"
   end
 end

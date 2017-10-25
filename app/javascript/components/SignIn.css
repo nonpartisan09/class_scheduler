@@ -3,3 +3,18 @@
     margin: 48px auto;
     padding: 0 24px
 }
+
+.signInLink, .signInLinkSecondary {
+    margin-top: 12px;
+}
+
+.signInLinkSecondary {
+    margin-left: 12px;
+}
+
+@media (max-width: 500px) {
+    .signInLink, .signInLinkSecondary {
+        margin: 12px 0;
+        display: block;
+    }
+}

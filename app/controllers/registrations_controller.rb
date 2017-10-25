@@ -1,5 +1,6 @@
 class RegistrationsController < Devise::RegistrationsController
-  before_action :devise_sanitize
+  before_action :sign_up_params, only: [ :create ]
+  before_action :account_update_params, :authenticate_user!, only: [ :update ]
 
   def new
     build_resource({})
@@ -49,6 +50,34 @@ class RegistrationsController < Devise::RegistrationsController
     end
   end
 
+  def update
+    self.resource = resource_class.to_adapter.get!(send(:"current_#{resource_name}").to_key)
+    prev_unconfirmed_email = resource.unconfirmed_email if resource.respond_to?(:unconfirmed_email)
+
+    if account_update_params[:password].present?
+      resource_updated = update_resource(resource, account_update_params)
+    else
+      resource_updated = resource.update_attributes(account_update_params.except(:password, :password_confirmation, :current_password))
+    end
+
+    ap resource_updated
+
+    yield resource if block_given?
+    if resource_updated
+      if is_flashing_format?
+        flash_key = update_needs_confirmation?(resource, prev_unconfirmed_email) ?
+                        :update_needs_confirmation : :updated
+        set_flash_message :notice, flash_key
+      end
+      bypass_sign_in resource, scope: resource_name
+      respond_with resource, location: after_update_path_for(resource)
+    else
+      clean_up_passwords resource
+      set_minimum_password_length
+      respond_with resource
+    end
+  end
+
   private
 
   def validate_role_params
@@ -62,10 +91,9 @@ class RegistrationsController < Devise::RegistrationsController
     end
   end
 
-  def devise_sanitize
-    devise_parameter_sanitizer.permit(:sign_up, keys: [
+  def sign_up_params
+    params.require(:user).permit(
         :first_name,
-        :last_name,
         :email,
         :password,
         :password_confirmation,
@@ -73,9 +101,24 @@ class RegistrationsController < Devise::RegistrationsController
         :terms_and_conditions,
         :role,
         :address,
+        :city,
         :courses => '',
         :role_ids => []
-    ])
+    )
+  end
+
+  def account_update_params
+    params.require(:user).permit(
+        :first_name,
+        :email,
+        :current_password,
+        :password,
+        :password_confirmation,
+        :role,
+        :address,
+        :city,
+        :courses => ''
+    )
   end
 
   def resource_name

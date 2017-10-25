@@ -3,7 +3,8 @@ import _ from 'lodash';
 const METHODS = {
   POST: 'POST',
   GET: 'GET',
-  DELETE: 'DELETE'
+  DELETE: 'DELETE',
+  PUT: 'PUT',
 };
 
 function sendData({ url, params, jsonBody, method='GET', successCallBack, errorCallBack }) {
@@ -22,16 +23,24 @@ function sendData({ url, params, jsonBody, method='GET', successCallBack, errorC
   }).then(response => {
     if (response.status < 400) {
 
-      return response.json().then(() => {
+      if (response.status === 204) {
         if (!_.isUndefined(successCallBack)) {
           return successCallBack();
         }
-      });
-
+      } else {
+        return response.json().then(() => {
+          if (!_.isUndefined(successCallBack)) {
+            return successCallBack();
+          }
+        });
+      }
     } else if (response.status < 500) {
 
-      response.json().then(({ error: { message }}) => {
-
+      response.json().then((item) => {
+        const { errors } = item;
+        const message = _.flatMap(Object.entries(errors), (item) => {
+          return _.capitalize(item.join(' ').replace('_', ' '));
+        }).join(',');
         return errorCallBack(message);
       });
     }

@@ -7,8 +7,12 @@ class UserProfilesController < ApplicationController
     end
     user = UserProfile.new(current_user)
     user = user.decorate
+    courses = Course.all
 
-    @data = { :currentUser => user }
+    @data = {
+        :courses => courses,
+        :currentUser => user
+    }
 
     render :show
   end

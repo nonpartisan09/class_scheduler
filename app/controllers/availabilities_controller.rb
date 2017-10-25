@@ -7,7 +7,7 @@ class AvailabilitiesController < ApplicationController
     if params[:course]
       @course = Course.find(params[:course])
 
-      @existing_teachers = @course.users
+      @existing_teachers = @course.users.teacher
 
       if @existing_teachers.present?
         if params[:day].present? || params[:start_time].present? || params[:end_time].present?
@@ -16,20 +16,20 @@ class AvailabilitiesController < ApplicationController
 
           if params[:day] && params[:start_time] && params[:end_time]
 
-            @existing_teachers = @existing_teachers.includes(:availabilities).where(Availability.where('day = ? AND start_time >= ? AND end_time <= ?', params[:day], params[:start_time], params[:end_time]).exists )
-
+            @existing_teachers = @existing_teachers.includes(:availabilities).where(Availability.where('day = ? AND start_time >= ? AND end_time <= ?', params[:day].split(/,/), params[:start_time], params[:end_time]).exists )
+            ap @existing_teachers
           elsif params[:start_time] && params[:end_time]
             @existing_teachers = @existing_teachers.includes(:availabilities).where(Availability.where('start_time >= ? AND end_time <= ?', params[:start_time], params[:end_time]).exists )
 
           elsif params[:day] && params[:start_time]
-            @existing_teachers = @existing_teachers.includes(:availabilities).where(Availability.where('day = ? AND start_time >= ?', params[:day], params[:start_time]).exists )
+            @existing_teachers = @existing_teachers.includes(:availabilities).where(Availability.where('day = ? AND start_time >= ?', params[:day].split(/,/), params[:start_time]).exists )
 
           elsif params[:day] && params[:end_time]
-            @existing_teachers = @existing_teachers.includes(:availabilities).where(Availability.where('day = ? AND end_time <= ?', params[:day], params[:end_time]).exists )
+            @existing_teachers = @existing_teachers.includes(:availabilities).where(Availability.where('day = ? AND end_time <= ?', params[:day].split(/,/), params[:end_time]).exists )
 
           elsif params[:day]
             ap @existing_teachers
-            @existing_teachers = @existing_teachers.where(Availability.where('day = ?', params[:day]).exists )
+            @existing_teachers = @existing_teachers.where(Availability.where(day: params[:day].split(/,/)).exists )
 
           elsif params[:start_time]
             @existing_teachers = @existing_teachers.where(Availability.where('start_time >= ?', params[:start_time]).exists )
@@ -150,6 +150,16 @@ class AvailabilitiesController < ApplicationController
         :start_time,
         :end_time,
         :timezone
+    )
+  end
+
+  def permit_search_params
+    params.require(:search).permit(
+        :day,
+        :start_time,
+        :end_time,
+        :timezone,
+        :course,
     )
   end
 end

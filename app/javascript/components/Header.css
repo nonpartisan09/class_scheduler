@@ -1,4 +1,14 @@
-.sliding-u-l-r-l:before {
+.slidingLink {
+    display: inline-block;
+    position: relative;
+    padding-bottom: 1px;
+    margin-right: 24px;
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+}
+
+.slidingLink:before {
     content: '';
     display: block;
     position: absolute;
@@ -9,7 +19,7 @@
     transition: width 0s ease, background .15s ease;
     outline: none;
 }
-.sliding-u-l-r-l:after {
+.slidingLink:after {
     content: '';
     display: block;
     position: absolute;
@@ -20,12 +30,12 @@
     background: darkslategrey;
     transition: width .15s ease;
 }
-.sliding-u-l-r-l:hover:before {
+.slidingLink:hover:before {
     width: 100%;
     background: darkslategrey;
     transition: width .15s ease;
 }
-.sliding-u-l-r-l:hover:after {
+.slidingLink:hover:after {
     width: 100%;
     background: transparent;
     transition: all 0s ease;
