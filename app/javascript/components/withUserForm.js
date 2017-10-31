@@ -483,7 +483,8 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
 
   const validationOptions = {
     joiSchema: schema,
-    only: 'currentUser'
+    only: 'currentUser',
+    allowUnknown: true
   };
 
   return validate(UserForm, validationOptions);

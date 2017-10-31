@@ -12,8 +12,8 @@ class SessionsController < Devise::SessionsController
 
     if resource.valid_password?(params[:password])
       sign_in('user', resource)
-      user = UserDecorator.new(current_user)
-      @data = { :success => true, :currentUser => user.decorate }
+      user = UserDecorator.decorate(current_user)
+      @data = { :success => true, :currentUser => user }
 
       respond_to do |format|
         format.html { redirect_to root_path }

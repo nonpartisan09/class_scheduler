@@ -4,18 +4,24 @@ class AvailabilitiesController < ApplicationController
   before_action :check_if_student?, only: [:search ]
 
   def results
-    search = Context::Availabilities::Search.new(permit_search_params)
-    search.execute
+    search = Contexts::Availabilities::Search.new(permit_search_params)
+    results = search.execute
+
+    if results.present?
+      render json: { teachers: UserDecorator.decorate_collection(results) }, status: :ok
+    else
+      head :no_content
+    end
   end
 
   def search
-    user = UserDecorator.new(current_user)
+    user = UserDecorator.decorate(current_user)
     courses = Course.all
     timezones = ActiveSupport::TimeZone.all.sort
     days =  Date::DAYNAMES
 
     @data = {
-        :currentUser => user.decorate,
+        :currentUser => user,
         :courses => courses,
         :timezones => timezones,
         :days => days
@@ -25,14 +31,14 @@ class AvailabilitiesController < ApplicationController
   end
 
   def new
-    user = UserDecorator.new(current_user)
+    user = UserDecorator.decorate(current_user)
     courses = Course.all
     timezones = ActiveSupport::TimeZone.all.sort
     days =  Date::DAYNAMES
 
     @data = {
         :availabilities => { },
-        :currentUser => user.decorate,
+        :currentUser => user,
         :courses => courses,
         :timezones => timezones,
         :days => days
@@ -56,7 +62,7 @@ class AvailabilitiesController < ApplicationController
           message << e.message
           status << :unprocessable_entity
         else
-          message << 'all good'
+          message << 'All availabilites have been created'
         end
       end
       render :json=> { :message=> message }, :status => :ok
@@ -64,7 +70,7 @@ class AvailabilitiesController < ApplicationController
   end
 
   def index
-    user = UserDecorator.new(current_user).decorate
+    user = UserDecorator.decorate(current_user)
     courses = current_user.courses
     availabilities = Availability.where(:user => current_user)
 
@@ -116,7 +122,7 @@ class AvailabilitiesController < ApplicationController
   end
 
   def permit_search_params
-    params.require(:search).permit(
+    params.permit(
         :day,
         :start_time,
         :end_time,

@@ -1,6 +1,5 @@
 class UsersController < ApplicationController
   def show
-    ap current_user
     unless current_user
        redirect_to sign_in_path
     end

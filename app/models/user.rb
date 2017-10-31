@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
   has_many :courses, through: :enrollments
 
   has_many :timeables
-  has_many :availabilities, through: :timeables
+  has_many :availabilities, through: :timeables, dependent: :destroy
 
   geocoded_by :full_address
   after_validation :geocode, :if => (:address || :city) && (:address_changed? || :city_changed?)
