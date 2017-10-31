@@ -60,8 +60,6 @@ class RegistrationsController < Devise::RegistrationsController
       resource_updated = resource.update_attributes(account_update_params.except(:password, :password_confirmation, :current_password))
     end
 
-    ap resource_updated
-
     yield resource if block_given?
     if resource_updated
       if is_flashing_format?

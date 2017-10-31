@@ -1,27 +1,23 @@
-class UserDecorator
-  attr_reader :user
+include ActionView::Helpers::DateHelper
 
-  def initialize(user)
-    @user = user
-  end
+class UserDecorator < ApplicationDecorator
+  delegate :first_name, :id, :student, :teacher, :city, :last_sign_in_at, :courses
 
-  def decorate
-    attributes.merge({ :student => student, :teacher => teacher })
-  end
+  decorates_association :courses
 
-  def attributes
-    @user.attributes.select { |key,v| allowed_attributes.include?(key) }
-  end
-
-  def allowed_attributes
-    [ 'first_name', 'display_name', 'id' ]
-  end
-
-  def student
-    @user.student?
+  def last_sign_in_at
+    time_ago_in_words(object.last_sign_in_at)
   end
 
   def teacher
-    @user.volunteer?
+    object.volunteer?
+  end
+
+  def student
+    object.student?
+  end
+
+  def courses
+    CourseDecorator.decorate_collection(object.courses)
   end
 end

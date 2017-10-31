@@ -31,7 +31,7 @@ const ProfileSchema = {
     }
   }),
   current_password: Joi.string().min(8),
-  password: Joi.string().min(8),
+  password: Joi.string().min(8).allow(''),
   password_confirmation: Joi.any().valid(Joi.ref('password')).options({
     language: {
       any: {

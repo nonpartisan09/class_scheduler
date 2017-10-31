@@ -6,12 +6,8 @@ import {
   BrowserRouter as Router,
   Route
 } from 'react-router-dom';
-
-import ReactDom from 'react-dom';
-const { render }  = ReactDom;
-
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-ReactJoiValidation.setJoi(Joi);
+import ReactDom from 'react-dom';
 
 import Homepage from '../components/Homepage';
 import SearchBar from '../components/SearchBar';
@@ -21,6 +17,10 @@ import SignIn from '../components/SignIn';
 import TermsAndConditions from '../components/TermsAndConditions';
 import NewAvailability from '../components/NewAvailability';
 import AvailabilityIndexPage from '../components/AvailabilityIndexPage';
+
+const { render }  = ReactDom;
+
+ReactJoiValidation.setJoi(Joi);
 
 document.addEventListener('DOMContentLoaded', () => {
   const container = document.getElementById('main');
@@ -33,14 +33,14 @@ document.addEventListener('DOMContentLoaded', () => {
     <MuiThemeProvider >
       <Router >
         <div>
-          <Route exact path='/' render={() => <Homepage {...data } /> } />
-          <Route exact path='/search' render={() => <SearchBar {...data } /> } />
-          <Route exact path='/my_profile' render={(props) => <MyProfile {...data } { ...props } /> } />
-          <Route exact path='/sign_up/:role' render={(props) => <SignUp {...data}  {...props } /> } />
+          <Route exact path='/' render={ () => <Homepage { ...data } /> } />
+          <Route exact path='/search' render={ () => <SearchBar { ...data } /> } />
+          <Route exact path='/my_profile' render={ (props) => <MyProfile { ...data } { ...props } /> } />
+          <Route exact path='/sign_up/:role' render={ (props) => <SignUp { ...data }  { ...props } /> } />
           <Route exact path='/sign_in' component={ SignIn } />
           <Route exact path='/terms_and_conditions' component={ TermsAndConditions } />
-          <Route exact path='/availabilities/new' render={(props) => <NewAvailability {...data } { ...props } /> } />
-          <Route exact path='/availabilities' render={(props) => <AvailabilityIndexPage {...data }  {...props } /> } />
+          <Route exact path='/availabilities/new' render={ (props) => <NewAvailability { ...data } { ...props } /> } />
+          <Route exact path='/availabilities' render={ (props) => <AvailabilityIndexPage { ...data }  { ...props } /> } />
         </div>
       </Router>
     </MuiThemeProvider>, container);
@@ -57,14 +57,14 @@ document.addEventListener('turbolinks:render', () => {
     <MuiThemeProvider >
       <Router >
         <div>
-          <Route exact path='/' render={() => <Homepage {...data } /> } />
-          <Route exact path='/search' render={() => <SearchBar {...data } /> } />
-          <Route exact path='/my_profile' render={(props) => <MyProfile {...data } { ...props } /> } />
-          <Route exact path='/sign_up/:role' render={(props) => <SignUp {...data}  {...props } /> } />
+          <Route exact path='/' render={ () => <Homepage { ...data } /> } />
+          <Route exact path='/search' render={ () => <SearchBar { ...data } /> } />
+          <Route exact path='/my_profile' render={ (props) => <MyProfile { ...data } { ...props } /> } />
+          <Route exact path='/sign_up/:role' render={ (props) => <SignUp { ...data }  { ...props } /> } />
           <Route exact path='/sign_in' component={ SignIn } />
           <Route exact path='/terms_and_conditions' component={ TermsAndConditions } />
-          <Route exact path='/availabilities/new' render={(props) => <NewAvailability {...data } { ...props } /> } />
-          <Route exact path='/availabilities' render={(props) => <AvailabilityIndexPage {...data }  {...props } /> } />
+          <Route exact path='/availabilities/new' render={ (props) => <NewAvailability { ...data } { ...props } /> } />
+          <Route exact path='/availabilities' render={ (props) => <AvailabilityIndexPage { ...data }  { ...props } /> } />
         </div>
       </Router>
     </MuiThemeProvider>, container);

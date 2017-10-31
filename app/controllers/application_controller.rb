@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
 
   def index
     if current_user
-      user = UserDecorator.new(current_user).decorate
+      user = UserDecorator.decorate(current_user)
     else
       user = { }
     end

@@ -8,11 +8,13 @@ import validate from 'react-joi-validation';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import TimePicker from 'material-ui/TimePicker';
+import Slider from 'material-ui/Slider';
 import RaisedButton from 'material-ui/RaisedButton';
 import moment from 'moment';
 
 import Header from './Header';
 import ErrorField from './reusable/ErrorField';
+import ReusableList from './TeachersList';
 
 import './SearchBar.css';
 
@@ -27,17 +29,17 @@ function restfulUrl({ day, course, start_time, end_time }) {
 
 const schema = {
   search: Joi.object().keys({
-    day: Joi.string().required().options({
+    day: Joi.array().min(1).required().options({
       language: {
-        any: {
-          allowOnly: 'Please select a day'
+        array: {
+          min: 'Please select at least one day'
         }
       }
     }),
     course: Joi.array().min(1).options({
       language: {
         array: {
-          min: 'Please select at least one course.'
+          min: 'Please select at least one course'
         }
       }
     }),
@@ -85,15 +87,12 @@ class SearchBar extends Component {
   render() {
     const {
       days,
-      changeHandler,
       courses,
       validateHandler,
       errors,
       search: {
         course,
         day,
-        start_time,
-        end_time
       }
 
     } = this.props;
@@ -133,26 +132,10 @@ class SearchBar extends Component {
             { _.map(days, (value, key) => <MenuItem key={ value + key } insetChildren checked={ _.indexOf(day, value) > -1 } value={ value } primaryText={ <span> { value } </span> } />) }
           </SelectField>
 
-          <TimePicker
-            className='searchBarOption'
-            format='24hr'
-            hintText='Start Time - 24Hr Format'
-            value={ start_time }
-            onChange={ changeHandler('start_time') }
-            onDismiss={ validateHandler('start_time') }
-          />
-
-          <TimePicker
-            className='searchBarOption'
-            format='24hr'
-            hintText='End Time - 24Hr Format'
-            value={ end_time }
-            onChange={ changeHandler('end_time') }
-            onDismiss={ validateHandler('end_time') }
-          />
-
           <RaisedButton onClick={ this.handleSubmit } className='searchSubmitButton' label='Search' primary />
         </div>
+
+        { this.renderTimes() }
 
         <div className='teacherContainer'>
           { this.renderTeachers() }
@@ -168,12 +151,7 @@ class SearchBar extends Component {
       const { teachers } = this.state;
       if (_.size(teachers) > 0) {
         return (
-          <div>
-            Available teachers:
-            {
-              _.map(teachers, (teacher, index) => <div className='teacher' key={ index }>{ teacher.first_name }</div>)
-            }
-          </div>
+          <ReusableList header='Available Teachers' items={ teachers } />
         );
       } else {
         return <ErrorField error='Oops. It seems like no teacher is available. Why not try a different search?' />;
@@ -193,7 +171,7 @@ class SearchBar extends Component {
 
   selectionRendererDay(values) {
     if (_.size(values) > 1) {
-      return values.join(', ');
+      return _.trimEnd(values.join(', '), ', ');
     } else if (_.size(values) === 1) {
       return values.toString();
     }
@@ -202,7 +180,14 @@ class SearchBar extends Component {
   selectionRendererCourse(values) {
     const { courses } = this.props;
     if (_.size(values) > 1) {
-      return _.map(courses, ({ name, id }, index) => { if (_.indexOf(values, id) > -1) { return index !== values.length-1? `${name}, `: name; } });
+      const newValues = _.map(courses, ({ name, id }) => {
+        if ( _.indexOf(values, id) > -1) {
+          return `${name}, `;
+        }
+      });
+
+      return _.trimEnd(newValues.join(''), ', ');
+
     } else if (_.size(values) === 1) {
       return _.map(courses, ({ name, id }) => { if (_.indexOf(values, id) > -1) { return name; } });
     }
@@ -240,9 +225,25 @@ class SearchBar extends Component {
   }
 
   renderTimes() {
-    //TODO render start and end time input fields
-    //Add morning/afternoon options
-    return null;
+   return (
+     <div className='sliderMin' >
+       <Slider
+         min={ 0 }
+         max={ 24 }
+         step={ 0.15 }
+         defaultValue={ 0 }
+       />
+
+       <div className='sliderMax'>
+         <Slider
+           min={ 0 }
+           max={ 24 }
+           step={ 0.15 }
+           defaultValue={ 24 }
+         />
+       </div>
+     </div>
+   );
   }
 }
 
@@ -283,7 +284,8 @@ SearchBar.defaultProps = {
 
 const validationOptions = {
   joiSchema: schema,
-  only: 'search'
+  only: 'search',
+  allowUnknown: true
 };
 
 export default validate(SearchBar, validationOptions);
