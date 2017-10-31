@@ -37,11 +37,11 @@ function sendData({ url, params, jsonBody, method='GET', successCallBack, errorC
     } else if (response.status < 500) {
 
       response.json().then((item) => {
-        const { errors } = item;
-        const message = _.flatMap(Object.entries(errors), (item) => {
+        const { errors, error } = item;
+        const errorMessage = error && error.message ? error.message : _.flatMap(Object.entries(errors), (item) => {
           return _.capitalize(item.join(' ').replace('_', ' '));
         }).join(',');
-        return errorCallBack(message);
+        return errorCallBack(errorMessage);
       });
     }
   }).catch((e) => {

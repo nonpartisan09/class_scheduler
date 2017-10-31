@@ -33,8 +33,13 @@ function handleUserSignUp() {
 
     errorCallBack: (message) => {
       this.setState({
-        error: message
+        showSnackBar: true,
+        message: message
       });
+
+      setTimeout(() => {
+        this.handleHideSnackBar();
+      }, 2000);
     }
   };
 

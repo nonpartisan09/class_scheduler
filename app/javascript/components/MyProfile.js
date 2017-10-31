@@ -27,8 +27,11 @@ function handleUpdateProfile() {
     successCallBack: () => {
       this.setState({
         showSnackBar: true,
+        showPassword: false,
         message: 'Success! Your profile has been updated'
       });
+
+      this.handleClearValues();
 
       setTimeout(() => {
         this.handleHideSnackBar();

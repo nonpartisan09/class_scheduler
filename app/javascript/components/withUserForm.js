@@ -14,7 +14,6 @@ import InfoIcon from 'material-ui/svg-icons/action/info';
 import validate from 'react-joi-validation';
 
 import DialogComponent from './DialogComponent';
-import ErrorField from './reusable/ErrorField';
 import SnackBarComponent from './reusable/SnackBarComponent';
 
 import UserFormConstants from './UserFormConstants';
@@ -35,6 +34,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
       this.handleShowDialog = this.handleShowDialog.bind(this);
       this.handleShowPassword = this.handleShowPassword.bind(this);
       this.handleHideSnackBar = this.handleHideSnackBar.bind(this);
+      this.handleClearValues = this.handleClearValues.bind(this);
       this.resetForm = this.resetForm.bind(this);
 
       this.state = {
@@ -61,14 +61,12 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
           <WrappedComponent { ...this.props } />
 
           <DialogComponent
-            title='Why do you need my address?'
+            title='Why do you need my address and city?'
             onRequestClose={ this.handleShowDialog }
             open={ this.state.showAddressDialog }
             actions={ [ <FlatButton key='close' label='Close' primary onClick={ this.handleShowDialog } /> ] }
             text={ this.renderDialogText() }
           />
-
-          <ErrorField error={ this.state.error } />
 
           <form className='userForm'>
             { this.renderClasses() }
@@ -150,7 +148,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
 
     renderSnackBar() {
       if (this.state.showSnackBar) {
-        return <SnackBarComponent open={ this.state.showSnackBar } message={ this.state.message } />
+        return <SnackBarComponent open={ this.state.showSnackBar } message={ this.state.message } />;
       }
     }
 
@@ -158,6 +156,12 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
       const { clearValidationAndResetValues } = this.props;
 
       clearValidationAndResetValues();
+    }
+
+    handleClearValues() {
+      const { changeValues } = this.props;
+
+      changeValues([ ['password_confirmation', ''], ['password', ''] ]);
     }
 
     renderPasswordFields() {
@@ -408,7 +412,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
       if (role === 'volunteer' || teacher ) {
         return (
           <div>
-            Your address will only be used to help students locate teachers in their area.
+            Your location will only be used to help students find teachers in their area.
             <br />
             It’s not required unless you would like to allow students to ask for face to face sessions.
           </div>
@@ -416,7 +420,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
       } else if (role === 'student' || student) {
         return (
           <div>
-            Your address will only be used to help locate teachers in your area.
+            Your location will only be used to help find teachers in your area.
             <br />
             It’s not required unless you would like to use the location feature.
           </div>

@@ -17,39 +17,74 @@ import sendData from './sendData';
 
 import './NewAvailability.css';
 
-const schema = {
-  availabilities: Joi.array().items(
-    Joi.object().keys({
-      day: Joi.string().required().options({
-        language: {
-          any: {
-            allowOnly: 'Please select a day'
+const nowDate = new Date();
+const DEFAULT_START = _.toString(new Date(nowDate.setHours(0, 0)));
+const DEFAULT_END = _.toString(new Date(nowDate.setHours(23, 59)));
+
+const schema = Joi.object().pattern(/[0-9]+/, Joi.object({
+  day: Joi.string().required().options({
+    language: {
+      any: {
+        required: 'Please select a day',
+        empty: 'Please select a day',
+      }
+    }
+  }),
+  timezone: Joi.string().required().options({
+    language: {
+      any: {
+        empty: 'Please select a timezone',
+      }
+    }
+  }),
+  start_time: Joi.date().default(DEFAULT_START).options({
+    language: {
+      date: {
+        timestamp: {
+          javascript: 'Please select a start time'
+        }
+      }
+    }
+  }),
+  end_time: Joi.date().default(DEFAULT_END).options({
+    language: {
+      date: {
+        timestamp: {
+          javascript: 'Please select an end time'
+        }
+      }
+    }
+  })
+}));
+
+function validateTimes({ values, validateAllValues, changingValues, errors }, callback){
+
+  if (validateAllValues || _.some(changingValues, (item) => _.endsWith(item, 'start_time')) || _.some(changingValues, (item) =>_.endsWith(item, 'end_time'))) {
+    _.each(changingValues, (item) => {
+      const index = _.split(item, '.')[0];
+
+      if (_.endsWith(item, 'start_time') || _.endsWith(item, 'end_time')) {
+        if (values[index]) {
+          if (values[index].start_time && values[index].end_time) {
+            const endTimeIsBeforeStartTime = values[index].end_time < values[index].start_time;
+            if (endTimeIsBeforeStartTime) {
+              if (_.endsWith(item, 'start_time')) { _.set(errors, `${index}.start_time`, 'Please select a start time chronologically before end time'); };
+              if (_.endsWith(item, 'end_time')) { _.set(errors, `${index}.end_time`, 'Please select an end time chronologically before end time'); };
+            }
+          }
+
+          if (values[index].start_time && !values[index].end_time) {
+            return values[index].end_time = new Date(nowDate.setHours(23, 59));
+          } else if (values[index].end_time && !values[index].start_time) {
+            return values[index].start_time = new Date(nowDate.setHours(0, 0));
           }
         }
-      }),
-      timezone: Joi.string().required().options({
-        language: {
-          any: {
-            allowOnly: 'Please select a timezone'
-          }
-        }
-      }),
-      start_time: Joi.date().timestamp().required().options({
-        language: {
-          any: {
-            allowOnly: 'Please select a start time'
-          }
-        }
-      }),
-      end_time: Joi.date().timestamp().required().options({
-        language: {
-          any: {
-            allowOnly: 'Please enter an end time'
-          }
-        }
-      })
-    }))
-};
+      }
+    });
+  }
+
+  callback({ values, errors });
+}
 
 class NewAvailability extends Component {
   constructor (props, context) {
@@ -64,7 +99,7 @@ class NewAvailability extends Component {
     this.state = {
       numberOfAvailabilities: 1,
       error: ''
-    }
+    };
   }
 
   render() {
@@ -84,7 +119,9 @@ class NewAvailability extends Component {
   }
 
   handleSubmit() {
-    const { errors } = this.props;
+    const { errors, validateAllHandler } = this.props;
+
+    validateAllHandler();
 
     if (_.size(errors) === 0) {
       const { availabilities } = this.props;
@@ -109,7 +146,7 @@ class NewAvailability extends Component {
 
   renderAvailabilities() {
     const { numberOfAvailabilities } = this.state;
-    const { errors, changeHandler, validateHandler, days, timezones } = this.props;
+    const { errors, changeHandler, validateHandler, validateAllHandler, days, timezones } = this.props;
 
     return _.times(numberOfAvailabilities, (index) => {
       const availability = index;
@@ -147,7 +184,9 @@ class NewAvailability extends Component {
             value={ availabilities[index]? availabilities[index].start_time: {} }
             errorText={ _.get(errors, `${availability}.start_time`) }
             onChange={ changeHandler(`${availability}.start_time`) }
-            onDismiss={ validateHandler(`${availability}.start_time`) }
+            onDismiss={ validateAllHandler }
+            minutesStep={ 15 }
+            autoOk
             fullWidth
           />
 
@@ -157,7 +196,9 @@ class NewAvailability extends Component {
             value={ availabilities[index]? availabilities[index].end_time: {} }
             errorText={ _.get(errors, `${availability}.end_time`) }
             onChange={ changeHandler(`${availability}.end_time`) }
-            onDismiss={ validateHandler(`${availability}.end_time`) }
+            onDismiss={ validateAllHandler }
+            minutesStep={ 15 }
+            autoOk
             fullWidth
           />
           <FlatButton primary label='Add other availability' onClick={ this.handleAddAvailability } />
@@ -168,11 +209,15 @@ class NewAvailability extends Component {
   }
 
   handleAddAvailability() {
-    const { numberOfAvailabilities } = this.state;
+    const { errors } = this.props;
 
-    this.setState({
-      numberOfAvailabilities: numberOfAvailabilities+1
-    });
+    if (_.size(errors) === 0) {
+      const { numberOfAvailabilities } = this.state;
+
+      this.setState({
+        numberOfAvailabilities: numberOfAvailabilities+1
+      });
+    }
   }
 
   handleRemoveAvailability() {
@@ -220,8 +265,8 @@ NewAvailability.propTypes = {
   days: PropTypes.array,
   changeHandler: PropTypes.func.isRequired,
   changeValue: PropTypes.func.isRequired,
-  validateHandler: PropTypes.func.isRequired,
   validateAllHandler: PropTypes.func.isRequired,
+  validateHandler: PropTypes.func.isRequired,
 };
 
 NewAvailability.defaultProps = {
@@ -248,7 +293,8 @@ NewAvailability.contextTypes = {
 const validationOptions = {
   joiSchema: schema,
   only: 'availabilities',
-  joiOptions: { allowUnknown: true },
+  allowUnknown: true,
+  validator: validateTimes
 };
 
 export default validate(NewAvailability, validationOptions);

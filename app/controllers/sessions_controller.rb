@@ -11,7 +11,7 @@ class SessionsController < Devise::SessionsController
     return invalid_login_attempt unless resource
 
     if resource.valid_password?(params[:password])
-      sign_in("user", resource)
+      sign_in('user', resource)
       user = UserDecorator.new(current_user)
       @data = { :success => true, :currentUser => user.decorate }
 
@@ -28,7 +28,7 @@ class SessionsController < Devise::SessionsController
     self.resource = resource_class.new(sign_in_params)
 
     if self.resource.email.present?
-      @message = "It seems you have entered the wrong credentials."
+      @message = 'It seems you have entered the wrong credentials.'
     end
 
     clean_up_passwords(resource)
@@ -55,12 +55,12 @@ class SessionsController < Devise::SessionsController
   protected
   def ensure_params_exist
     return unless params[:email].blank? && params[:password].blank?
-    render :json=> { :success=>false, :message=>"missing email and password" }, :status=> 422
+    render :json=> { :success=>false, :error => 'Missing email and password' }, :status=> 422
   end
 
   def invalid_login_attempt
     warden.custom_failure!
-    render :json=> { :success=>false, :message=>"Error with your login or password"}, :status=>401
+    render :json=> { :success=>false, :error => 'Error with your login or password'}, :status=>401
   end
 
   def check_if_logged_in

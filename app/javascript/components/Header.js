@@ -13,6 +13,9 @@ class Header extends Component {
    if ( _.size(this.props.currentUser) > 0 ) {
      return (
        <nav className='navigation' >
+         <a href={'/'} className='slidingLink' rel='nofollow'>
+           Home
+         </a>
 
          { this.renderRoleLinks() }
 

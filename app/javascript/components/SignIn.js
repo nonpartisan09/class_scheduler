@@ -11,7 +11,7 @@ import TextField from 'material-ui/TextField';
 import Checkbox from 'material-ui/Checkbox';
 
 import Header from './Header';
-import ErrorField from './reusable/ErrorField';
+import SnackBarComponent from './reusable/SnackBarComponent';
 import sendData from './sendData';
 
 import './SignIn.css';
@@ -33,9 +33,11 @@ class SignIn extends Component {
     super(props, context);
 
     this.handleSignIn = this.handleSignIn.bind(this);
+    this.handleHideSnackBar = this.handleHideSnackBar.bind(this);
 
     this.state = {
-      error: ''
+      showSnackBar: false,
+      message: ''
     };
   }
   render() {
@@ -53,8 +55,6 @@ class SignIn extends Component {
         <Header  />
 
         <form className="signInContainer">
-          <ErrorField error={ this.state.error } />
-
           <TextField
             name='email'
             value={ email }
@@ -95,9 +95,17 @@ class SignIn extends Component {
           <a href={ '/sign_up/volunteer' } rel='nofollow' className='signInLinkSecondary'>
             <FlatButton primary label='Volunteer as a teacher' />
           </a>
+
+          { this.renderSnackBar() }
         </form>
       </div>
     );
+  }
+
+  renderSnackBar() {
+    if (this.state.showSnackBar) {
+      return <SnackBarComponent open={ this.state.showSnackBar } message={ this.state.message } />;
+    }
   }
   handleSignIn() {
     const { errors } = this.props;
@@ -115,12 +123,23 @@ class SignIn extends Component {
         },
         errorCallBack: (message) => {
           this.setState({
-            error: message
+            showSnackBar: true,
+            message: message
           });
+
+          setTimeout(() => {
+            this.handleHideSnackBar();
+          }, 2000);
         }
       };
       return sendData(requestParams);
     }
+  }
+
+  handleHideSnackBar() {
+    this.setState({
+      showSnackBar: false
+    });
   }
 }
 
