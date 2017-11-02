@@ -69,7 +69,7 @@ function validateTimes({ values, validateAllValues, changingValues, errors }, ca
             const endTimeIsBeforeStartTime = values[index].end_time < values[index].start_time;
             if (endTimeIsBeforeStartTime) {
               if (_.endsWith(item, 'start_time')) { _.set(errors, `${index}.start_time`, 'Please select a start time chronologically before end time'); };
-              if (_.endsWith(item, 'end_time')) { _.set(errors, `${index}.end_time`, 'Please select an end time chronologically before end time'); };
+              if (_.endsWith(item, 'end_time')) { _.set(errors, `${index}.end_time`, 'Please select an end time chronologically after end time'); };
             }
           }
 

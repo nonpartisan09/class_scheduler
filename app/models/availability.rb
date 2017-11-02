@@ -1,8 +1,8 @@
 class Availability < ApplicationRecord
-  has_one :timeable
-  has_one :user, through: :timeable
+  belongs_to :user
 
   validates :start_time, :end_time, :day, :timezone, presence: true
+  validates :user_id, presence: true
 
   scope :in_range, -> range {
     where('(start_time BETWEEN ? AND ?)', range.first, range.last)

@@ -5,7 +5,7 @@ class UserProfilesController < ApplicationController
     unless current_user.present?
       redirect_to root_path
     end
-    user = UserProfile.new(current_user)
+    user = UserDecorator.new(current_user)
     user = user.decorate
     courses = Course.all
 
@@ -15,14 +15,5 @@ class UserProfilesController < ApplicationController
     }
 
     render :show
-  end
-
-  private
-
-  def permitted_params
-    params.permit(
-        :display_name,
-        :email
-    )
   end
 end

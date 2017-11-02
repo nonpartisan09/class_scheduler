@@ -15,9 +15,6 @@
     margin-left: 2%;
 }
 
-.searchError {
-}
-
 .teacher {
     margin: 12px 0;
 }
@@ -62,6 +59,6 @@
         margin: 5%;
     }
     .searchBarOptionContainer {
-        justify-content: flex-start;
+        margin: 12px 0;
     }
 }

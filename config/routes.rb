@@ -19,11 +19,11 @@ Rails.application.routes.draw do
     get 'sign_up/:role', to:'registrations#new'
     post 'sign_up/:role' => 'registrations#create'
     put 'update' => 'registrations#update'
+    get 'profiles/:url_slug' => 'users#show'
   end
 
   devise_for :users,
       only: [:sessions, :registrations, :passwords],
       singular: :user
 
-  get '*unmatched_route' => 'application#not_found'
 end

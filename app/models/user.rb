@@ -1,11 +1,10 @@
 class User < ActiveRecord::Base
   include HasUrlSlug
-  has_and_belongs_to_many :roles
+  has_and_belongs_to_many :roles, :join_table => :roles_users
   has_many :enrollments
   has_many :courses, through: :enrollments
 
-  has_many :timeables
-  has_many :availabilities, through: :timeables, dependent: :destroy
+  has_many :availabilities, dependent: :destroy
 
   geocoded_by :full_address
   after_validation :geocode, :if => (:address || :city) && (:address_changed? || :city_changed?)
@@ -22,8 +21,8 @@ class User < ActiveRecord::Base
 
   validates :email, :url_slug, presence: true, uniqueness: true
 
-  scope :teacher, -> { Role.find_by_name('volunteer').users }
-  scope :student, -> { Role.find_by_name('student').users }
+  scope :teacher, -> { includes(:roles).where({:roles => {:url_slug => 'volunteer'}})}
+  scope :student, -> { includes(:roles).where({:roles => {:url_slug => 'student'}})}
 
   def self.authentication_keys
     [ :email ]
@@ -34,15 +33,15 @@ class User < ActiveRecord::Base
   end
 
   def admin?
-    self.roles.where(:name => 'admin').present?
+    self.roles.where(:url_slug => 'admin').present?
   end
 
-  def volunteer?
-    self.roles.where(:name => 'volunteer').present?
+  def teacher?
+    self.roles.where(:url_slug => 'volunteer').present?
   end
 
   def student?
-    self.roles.where(:name => 'student').present?
+    self.roles.where(:url_slug => 'student').present?
   end
 
   def remember_me

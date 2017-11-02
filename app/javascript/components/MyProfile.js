@@ -28,7 +28,7 @@ function handleUpdateProfile() {
       this.setState({
         showSnackBar: true,
         showPassword: false,
-        message: 'Success! Your profile has been updated'
+        message: 'Success! Your profile has been updated.'
       });
 
       this.handleClearValues();

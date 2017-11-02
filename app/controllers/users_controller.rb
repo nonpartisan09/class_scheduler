@@ -1,19 +1,21 @@
 class UsersController < ApplicationController
+  before_action :authenticate_user!, :permitted_params
+
   def show
-    unless current_user
-       redirect_to sign_in_path
-    end
+    user = User.find_by_url_slug(params[:url_slug])
+
+    @data = {
+        :current_user => UserDecorator.new(current_user).simple_decorate,
+        :user => UserDecorator.new(user).decorate
+    }
+
+    render :show
   end
 
   private
 
   def permitted_params
-    params.permit(
-      :display_name,
-      :email,
-      :password,
-      :terms_and_conditions
-    )
+    params.permit(:url_slug)
   end
 end
 
