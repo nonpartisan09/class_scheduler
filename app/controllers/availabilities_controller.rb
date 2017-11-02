@@ -8,14 +8,16 @@ class AvailabilitiesController < ApplicationController
     results = search.execute
 
     if results.present?
-      render json: { teachers: UserDecorator.decorate_collection(results) }, status: :ok
+      teachers = results.collect { |teacher| UserDecorator.new(teacher) }
+      teachers = teachers.collect { |teacher| teacher.simple_decorate }
+      render json: { teachers: teachers }, status: :ok
     else
       head :no_content
     end
   end
 
   def search
-    user = UserDecorator.decorate(current_user)
+    user = UserDecorator.new(current_user).simple_decorate
     courses = Course.all
     timezones = ActiveSupport::TimeZone.all.sort
     days =  Date::DAYNAMES
@@ -31,7 +33,7 @@ class AvailabilitiesController < ApplicationController
   end
 
   def new
-    user = UserDecorator.decorate(current_user)
+    user = UserDecorator.new(current_user).simple_decorate
     courses = Course.all
     timezones = ActiveSupport::TimeZone.all.sort
     days =  Date::DAYNAMES
@@ -62,15 +64,15 @@ class AvailabilitiesController < ApplicationController
           message << e.message
           status << :unprocessable_entity
         else
-          message << 'All availabilites have been created'
+          message << { availability: `#{@availability.id} successfully created` }
         end
       end
-      render :json=> { :message=> message }, :status => :ok
+      render :json=> { :message => message }, :status => :ok
     end
   end
 
   def index
-    user = UserDecorator.decorate(current_user)
+    user = UserDecorator.new(current_user).simple_decorate
     courses = current_user.courses
     availabilities = Availability.where(:user => current_user)
 
@@ -93,7 +95,7 @@ class AvailabilitiesController < ApplicationController
   private
 
   def check_if_volunteer?
-    unless current_user.volunteer?
+    unless current_user.teacher?
       redirect_to root_path
     end
   end

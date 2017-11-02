@@ -32,9 +32,10 @@ gem 'jquery-rails'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 3.0'
 
-# decorate model with
-gem 'draper'
+# paginate results
+gem 'will_paginate'
 
+# geolocate users
 gem 'geocoder'
 
 gem 'pg'

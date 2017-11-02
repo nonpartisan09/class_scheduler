@@ -7,14 +7,11 @@ import validate from 'react-joi-validation';
 
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
-import TimePicker from 'material-ui/TimePicker';
-import Slider from 'material-ui/Slider';
 import RaisedButton from 'material-ui/RaisedButton';
 import moment from 'moment';
 
 import Header from './Header';
-import ErrorField from './reusable/ErrorField';
-import ReusableList from './TeachersList';
+import SearchResults from './SearchResults';
 
 import './SearchBar.css';
 
@@ -36,34 +33,14 @@ const schema = {
         }
       }
     }),
-    course: Joi.array().min(1).options({
+    course: Joi.array().min(1).required().options({
       language: {
         array: {
           min: 'Please select at least one course'
         }
       }
     }),
-    timezone: Joi.string().required().options({
-      language: {
-        any: {
-          allowOnly: 'Please select a timezone'
-        }
-      }
-    }),
-    start_time: Joi.date().timestamp().required().options({
-      language: {
-        any: {
-          allowOnly: 'Please select a start time'
-        }
-      }
-    }),
-    end_time: Joi.date().timestamp().required().options({
-      language: {
-        any: {
-          allowOnly: 'Please enter an end time'
-        }
-      }
-    })
+    distance: Joi.number()
   })
 };
 
@@ -78,9 +55,7 @@ class SearchBar extends Component {
     this.changeHandlerDay = this.changeHandlerDay.bind(this);
 
     this.state = {
-      error: '',
-      teachers: { },
-      showResults: false,
+      teachers: [],
     };
   }
 
@@ -93,15 +68,15 @@ class SearchBar extends Component {
       search: {
         course,
         day,
+      },
+      currentUser: {
+        city
       }
-
     } = this.props;
 
     return (
       <div className='searchBarContainer'>
         <Header currentUser={ this.props.currentUser } />
-
-        <ErrorField error={ this.state.error } />
 
         <div className='searchBarOptionContainer'>
           <SelectField
@@ -132,30 +107,43 @@ class SearchBar extends Component {
             { _.map(days, (value, key) => <MenuItem key={ value + key } insetChildren checked={ _.indexOf(day, value) > -1 } value={ value } primaryText={ <span> { value } </span> } />) }
           </SelectField>
 
+          { this.renderLocationSelect() }
+
           <RaisedButton onClick={ this.handleSubmit } className='searchSubmitButton' label='Search' primary />
         </div>
 
-        { this.renderTimes() }
-
-        <div className='teacherContainer'>
-          { this.renderTeachers() }
-        </div>
+        <SearchResults teachers={ this.state.teachers } currentUserCity={ city } />
       </div>
     );
   }
 
-  renderTeachers() {
-    const { showResults } = this.state;
+  renderLocationSelect() {
+    const { currentUser: { city } } = this.props;
 
-    if (showResults) {
-      const { teachers } = this.state;
-      if (_.size(teachers) > 0) {
-        return (
-          <ReusableList header='Available Teachers' items={ teachers } />
-        );
-      } else {
-        return <ErrorField error='Oops. It seems like no teacher is available. Why not try a different search?' />;
-      }
+    if (city) {
+      const {
+        changeHandler,
+        validateHandler,
+        errors,
+        search: {
+          distance
+        }
+      } = this.props;
+
+      return (
+        <SelectField
+          hintText='Near me'
+          value={ distance }
+          errorText={ errors.distance }
+          onChange={ changeHandler('distance') }
+          onBlur={ validateHandler('distance') }
+          className='searchBarOption'
+        >
+          <MenuItem insetChildren checked={ distance === 5 } key={ 0 } value={ 5 } primaryText='5 units' />
+          <MenuItem insetChildren checked={ distance === 10 } key={ 1 } value={ 10 } primaryText='10 units' />
+          <MenuItem insetChildren checked={ distance === 15 } key={ 2 } value={ 15 } primaryText='15 units' />
+        </SelectField>
+      );
     }
   }
 
@@ -197,10 +185,6 @@ class SearchBar extends Component {
     const { errors } = this.props;
     if (_.size(errors) === 0) {
       this.postSearch();
-
-      this.setState({
-        showResults: true
-      });
     }
   }
 
@@ -223,28 +207,6 @@ class SearchBar extends Component {
       }
     });
   }
-
-  renderTimes() {
-   return (
-     <div className='sliderMin' >
-       <Slider
-         min={ 0 }
-         max={ 24 }
-         step={ 0.15 }
-         defaultValue={ 0 }
-       />
-
-       <div className='sliderMax'>
-         <Slider
-           min={ 0 }
-           max={ 24 }
-           step={ 0.15 }
-           defaultValue={ 24 }
-         />
-       </div>
-     </div>
-   );
-  }
 }
 
 SearchBar.propTypes = {
@@ -254,16 +216,16 @@ SearchBar.propTypes = {
   currentUser: PropTypes.shape({
     first_name: PropTypes.string,
     email: PropTypes.string,
+    city: PropTypes.string
   }),
   search: PropTypes.shape({
-    start_time: PropTypes.object,
-    end_time: PropTypes.object,
     day: PropTypes.array,
-    course: PropTypes.array
+    course: PropTypes.array,
+    distance: PropTypes.number
   }),
-  changeHandler: PropTypes.func.isRequired,
   validateHandler: PropTypes.func.isRequired,
   changeValue: PropTypes.func.isRequired,
+  changeHandler: PropTypes.func.isRequired,
 };
 
 SearchBar.defaultProps = {
@@ -273,12 +235,12 @@ SearchBar.defaultProps = {
   currentUser: {
     first_name: '',
     email: '',
+    city: ''
   },
   search: {
-    start_time: {},
-    end_time: {},
     day: [],
-    course: []
+    course: [],
+    distance: 0
   }
 };
 

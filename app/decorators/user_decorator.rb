@@ -1,23 +1,84 @@
-include ActionView::Helpers::DateHelper
+class UserDecorator
+  include ActionView::Helpers::DateHelper
 
-class UserDecorator < ApplicationDecorator
-  delegate :first_name, :id, :student, :teacher, :city, :last_sign_in_at, :courses
+  attr_reader :user
 
-  decorates_association :courses
-
-  def last_sign_in_at
-    time_ago_in_words(object.last_sign_in_at)
+  def initialize(user)
+    @user = user
+    @address = 'No address provided'
   end
 
-  def teacher
-    object.volunteer?
+  def simple_decorate
+    {
+      :courses => courses,
+      :city => city,
+      :student => student,
+      :teacher => teacher,
+      :email => email,
+      :url_slug => url_slug,
+      :first_name => first_name,
+      :available_days => available_days,
+      :availabilities => availabilities,
+      :last_logged_in => last_logged_in
+    }
   end
 
-  def student
-    object.student?
+  def decorate
+    {
+        :courses => courses,
+        :availabilities => availabilities,
+        :address => address,
+        :city => city,
+        :url_slug => url_slug,
+        :student => student,
+        :teacher => teacher,
+        :email => email,
+        :first_name => first_name,
+        :last_logged_in => last_logged_in
+    }
+  end
+
+  def url_slug
+    user.url_slug
+  end
+
+  def first_name
+    user.first_name
+  end
+
+  def email
+    user.email
+  end
+
+  def availabilities
+    user.availabilities.collect{ |n| AvailabilityDecorator.new(n).decorate }
   end
 
   def courses
-    CourseDecorator.decorate_collection(object.courses)
+    user.courses.pluck(:name)
+  end
+
+  def address
+    user.address || @address
+  end
+
+  def city
+    user.city
+  end
+
+  def student
+    @user.student?
+  end
+
+  def teacher
+    @user.teacher?
+  end
+
+  def available_days
+    availabilities.pluck(:day)
+  end
+
+  def last_logged_in
+    time_ago_in_words(user.last_sign_in_at)
   end
 end

@@ -4,7 +4,8 @@ class ApplicationController < ActionController::Base
 
   def index
     if current_user
-      user = UserDecorator.decorate(current_user)
+      user = UserDecorator.new(current_user)
+      user = user.simple_decorate
     else
       user = { }
     end
@@ -22,7 +23,12 @@ class ApplicationController < ActionController::Base
     render :t_and_c
   end
 
-  def not_found
-    render :not_found
+  private
+  def authenticate_user!
+    if user_signed_in?
+      super
+    else
+      redirect_to sign_in_path
+    end
   end
 end

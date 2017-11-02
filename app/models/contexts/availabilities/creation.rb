@@ -28,9 +28,7 @@ module Contexts
             :user_id => @current_user.id
         })
 
-        new_availability = Availability.new(new_availability_params)
-
-        @new_availability = @current_user.update_attribute(:availabilities, [ new_availability ])
+        Availability.create!(new_availability_params)
 
         unless @new_availability
           raise Availabilities::Errors::UnknownAvailabilityError, 'Unknown error happened. Thanks for contacting us.'
