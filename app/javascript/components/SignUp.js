@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 
 import withUserForm from './withUserForm';
-import sendData from './sendData';
 import Header from './Header';
 
 import './SignUp.css';
@@ -9,6 +8,7 @@ import './SignUp.css';
 import UserFormConstants from './UserFormConstants';
 
 import SignUpSchema from './schema/SignUpSchema';
+import { getData } from './sendData';
 
 const { SIGN_UP } = UserFormConstants;
 

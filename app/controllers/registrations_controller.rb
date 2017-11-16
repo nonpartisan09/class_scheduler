@@ -95,11 +95,13 @@ class RegistrationsController < Devise::RegistrationsController
         :email,
         :password,
         :password_confirmation,
+        :description,
         :contact_permission,
         :terms_and_conditions,
         :role,
         :address,
         :city,
+        :thumbnail_image,
         :courses => '',
         :role_ids => []
     )
@@ -109,12 +111,14 @@ class RegistrationsController < Devise::RegistrationsController
     params.require(:user).permit(
         :first_name,
         :email,
+        :description,
         :current_password,
         :password,
         :password_confirmation,
         :role,
         :address,
         :city,
+        :thumbnail_image,
         :courses => ''
     )
   end

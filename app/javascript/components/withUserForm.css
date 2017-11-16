@@ -12,7 +12,13 @@
 }
 
 .userFormInnerButton {
-  margin: 24px 0;
+    margin: 24px 0;
+    display: inline-block;
+
+}
+
+.userFormSecondButton {
+    margin-left: 12px;
 }
 
 .userFormTermsAndConditionsLink {
@@ -21,4 +27,10 @@
 
 .userFormInputField {
     min-width: 500px;
+}
+
+.userFormImage {
+    width: 49%;
+    margin: 24px 0;
+    border-radius: 2px;
 }

@@ -34,8 +34,14 @@ class UserDecorator
         :teacher => teacher,
         :email => email,
         :first_name => first_name,
-        :last_logged_in => last_logged_in
+        :last_logged_in => last_logged_in,
+        :thumbnail_image => picture,
+        :description => description
     }
+  end
+
+  def description
+    user.description
   end
 
   def url_slug
@@ -48,6 +54,10 @@ class UserDecorator
 
   def email
     user.email
+  end
+
+  def picture
+    URI.join(Rails.configuration.static_base_url, user.thumbnail_image.url(:thumbnail)).to_s
   end
 
   def availabilities

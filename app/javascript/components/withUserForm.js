@@ -9,10 +9,12 @@ import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 import MenuItem from 'material-ui/MenuItem';
 import SelectField from 'material-ui/SelectField';
+import PhotoIcon from 'material-ui/svg-icons/image/photo';
 
 import InfoIcon from 'material-ui/svg-icons/action/info';
 import validate from 'react-joi-validation';
 
+import ImageInput from './ImageInput';
 import DialogComponent from './DialogComponent';
 import SnackBarComponent from './reusable/SnackBarComponent';
 
@@ -31,8 +33,10 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
       this.handleSubmit = this.handleSubmit.bind(this);
       this.changeHandlerCourses = this.changeHandlerCourses.bind(this);
       this.selectionRenderer = this.selectionRenderer.bind(this);
+      this.handleImageUpload = this.handleImageUpload.bind(this);
       this.handleShowDialog = this.handleShowDialog.bind(this);
       this.handleShowPassword = this.handleShowPassword.bind(this);
+      this.handleShowClasses = this.handleShowClasses.bind(this);
       this.handleHideSnackBar = this.handleHideSnackBar.bind(this);
       this.handleClearValues = this.handleClearValues.bind(this);
       this.resetForm = this.resetForm.bind(this);
@@ -41,7 +45,8 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
         message: '',
         showAddressDialog: false,
         showSnackBar: false,
-        showPassword: false
+        showPassword: false,
+        showClasses: false
       };
     }
 
@@ -52,7 +57,9 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
           first_name,
           email,
           address,
-          city
+          city,
+          thumbnail_image,
+          description
         },
       } = this.props;
 
@@ -69,7 +76,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
           />
 
           <form className='userForm'>
-            { this.renderClasses() }
+            { this.renderSignUpClasses() }
 
             <TextField
               name='email'
@@ -99,8 +106,16 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
 
             <br />
 
+            <div className='userFormImage' >
+              <ImageInput
+                icon={ <PhotoIcon /> }
+                value={ thumbnail_image }
+                onLoad={ this.handleImageUpload }
+              />
+            </div>
+
             <Badge
-              badgeContent={ <span onClick={ this.handleShowDialog }> <InfoIcon /> </span>}
+              badgeContent={ <span onClick={ this.handleShowDialog }> <InfoIcon /> </span> }
               badgeStyle={ { fontSize: 14, transform: 'translateY(18px)' } }
               style={ { padding: '0' } }
             >
@@ -132,7 +147,25 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
               />
             </Badge>
 
-            { this.renderPasswordFields() }
+            <br />
+
+            <TextField
+              name='description'
+              value={ description }
+              hintText=''
+              className='userFormInputField description'
+              floatingLabelText='About me (in 280 characters or less)'
+              floatingLabelFixed
+              multiLine
+              errorText={ errors.description }
+              onChange={ changeHandler('description') }
+              onBlur={ validateHandler('description') }
+            />
+
+            <div>
+              { this.renderPasswordFields() }
+              { this.renderUpdateClasses() }
+            </div>
 
             { this.renderSignUpCheckBoxes() }
           </form>
@@ -144,6 +177,12 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
           { this.renderSnackBar() }
         </div>
       );
+    }
+
+    handleImageUpload(image) {
+      const { changeValue } = this.props;
+
+      changeValue('thumbnail_image', image);
     }
 
     renderSnackBar() {
@@ -163,6 +202,25 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
 
       changeValues([ ['password_confirmation', ''], ['password', ''] ]);
     }
+
+    renderUpdateClasses() {
+      const { type } = wrappedProps;
+
+      if (type === UPDATE_PROFILE) {
+        const { showClasses } = this.state;
+
+        if (showClasses) {
+          return this.renderClasses();
+        } else {
+          return (
+            <div className='userFormInnerButton userFormSecondButton'>
+              <FlatButton primary label='Update my courses' onClick={ this.handleShowClasses } />
+            </div>
+          );
+        }
+      }
+    }
+
 
     renderPasswordFields() {
       const { type } = wrappedProps;
@@ -228,7 +286,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
         } else {
           return (
             <div className='userFormInnerButton'>
-              <FlatButton primary label='Update my password' onClick={ this.handleShowPassword }/>
+              <FlatButton primary label='Update my password' onClick={ this.handleShowPassword } />
             </div>
           );
         }
@@ -283,6 +341,12 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
       });
     }
 
+    handleShowClasses() {
+      this.setState({
+        showClasses: true
+      });
+    }
+
     renderSignUpCheckBoxes() {
       const { type } = wrappedProps;
 
@@ -322,35 +386,44 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
         );
       }
     }
-    renderClasses() {
+
+    renderSignUpClasses() {
       const { classes } = this.props;
 
-      if(_.size(classes) > 0) {
-        const { validateHandler, errors } = this.props;
-        const { currentUser: { courses } } = this.props;
+      if (_.size(classes) > 0) {
+        const { type } = wrappedProps;
 
-        return (
-          <div>
-            { this.renderClassLabel() }
-
-            <SelectField
-              floatingLabelFixed
-              floatingLabelText='Select One or More Class'
-              value={ courses }
-              className='userFormInputField courses'
-              onChange={ this.changeHandlerCourses }
-              onBlur={ validateHandler('courses') }
-              multiple
-              errorText={ errors.courses }
-              selectionRenderer={ this.selectionRenderer }
-            >
-              { _.map(classes, ({ name, id }) => {
-                return <MenuItem key={ id } insetChildren checked={ _.indexOf(courses, name) > -1 } value={ name } primaryText={ <span> { name } </span> } />;
-              })}
-            </SelectField>
-          </div>
-        );
+        if (type === SIGN_UP) {
+          this.renderClasses();
+        }
       }
+    }
+
+    renderClasses() {
+      const { validateHandler, errors, classes } = this.props;
+      const { currentUser: { courses } } = this.props;
+
+      return (
+        <div>
+          { this.renderClassLabel() }
+
+          <SelectField
+            floatingLabelFixed
+            floatingLabelText='Select One or More Class'
+            value={ courses }
+            className='userFormInputField courses'
+            onChange={ this.changeHandlerCourses }
+            onBlur={ validateHandler('courses') }
+            multiple
+            errorText={ errors.courses }
+            selectionRenderer={ this.selectionRenderer }
+          >
+            { _.map(classes, ({ name, id }) => {
+              return <MenuItem key={ id } insetChildren checked={ _.indexOf(courses, name) > -1 } value={ name } primaryText={ <span> { name } </span> } />;
+            })}
+          </SelectField>
+        </div>
+      );
     }
 
     selectionRenderer(values) {
@@ -443,7 +516,8 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
       password_confirmation: PropTypes.string,
       contact_permission: PropTypes.bool,
       terms_and_conditions: PropTypes.bool,
-      current_password: PropTypes.string
+      current_password: PropTypes.string,
+      thumbnail_image: PropTypes.oneOfType([ PropTypes.string, PropTypes.object ]),
     }),
 
     match: PropTypes.shape({
@@ -455,6 +529,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
     classes: PropTypes.array,
     changeHandler: PropTypes.func.isRequired,
     changeValue: PropTypes.func.isRequired,
+    changeValues: PropTypes.func.isRequired,
     validateHandler: PropTypes.func.isRequired,
     clearValidationAndResetValues: PropTypes.func.isRequired,
   };
@@ -476,6 +551,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
       password: '',
       password_confirmation: '',
       current_password: '',
+      thumbnail_image: '',
       contact_permission: false,
       terms_and_conditions: false,
     },

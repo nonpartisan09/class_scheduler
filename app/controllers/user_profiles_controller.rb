@@ -10,7 +10,7 @@ class UserProfilesController < ApplicationController
     courses = Course.all
 
     @data = {
-        :courses => courses,
+        :classes => courses,
         :currentUser => user
     }
 
