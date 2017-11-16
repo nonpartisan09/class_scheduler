@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
+import jasonForm from 'jason-form';
 
-import sendData from './sendData';
+import { postData } from './sendData';
 import Header from './Header';
 
 import UserFormConstants from './UserFormConstants';
@@ -14,16 +15,33 @@ import withUserForm from './withUserForm';
 
 const { UPDATE_PROFILE } = UserFormConstants;
 
-function handleUpdateProfile() {
-  const { currentUser, currentUser: { courses } } = this.props;
+const ignoredFields = [
+  'terms_and_conditions',
+  'contact_permission',
+  'student',
+  'teacher',
+  'last_logged_in',
+  'availabilities',
+  'url_slug'
+];
 
-  const newUser = _.omit(currentUser, [ 'courses', 'terms_and_conditions', 'contact_permission', 'student', 'teacher' ]);
-  const newCourses = _.map(courses, ({ id })=> { return id; });
+function handleUpdateProfile() {
+  const { currentUser } = this.props;
+
+  const updatedUser =  _.reduce(currentUser, (memo, value, key) => {
+    if (key === 'thumbnail_image' || (!_.includes(ignoredFields, key) && !_.isEmpty(value) )) {
+      memo[key] = value;
+    }
+
+    return memo;
+  }, {});
+
+  const attributes = jasonForm.FormData.from({ user: updatedUser });
 
   const requestParams = {
     url: '/update',
-    jsonBody: { user: { ...newUser, courses: newCourses } },
-    method: 'PUT',
+    attributes,
+    method: 'POST',
     successCallBack: () => {
       this.setState({
         showSnackBar: true,
@@ -51,7 +69,7 @@ function handleUpdateProfile() {
     }
   };
 
-  return sendData(requestParams);
+  return postData(requestParams);
 }
 
 class MyProfile extends Component {
@@ -73,6 +91,7 @@ MyProfile.propTypes = {
     email: PropTypes.string,
     password: PropTypes.string,
     password_confirmation: PropTypes.string,
+    thumbnail_image: PropTypes.oneOfType([ PropTypes.string, PropTypes.object ]),
   }),
 
 };
@@ -86,6 +105,7 @@ MyProfile.defaultProps = {
     email: '',
     password: '',
     password_confirmation: '',
+    thumbnail_image: '',
   },
 
 };

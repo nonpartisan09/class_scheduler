@@ -13,7 +13,7 @@ import TimePicker from 'material-ui/TimePicker';
 
 import Header from './Header';
 import ErrorField from './reusable/ErrorField';
-import sendData from './sendData';
+import { getData } from './sendData';
 
 import './NewAvailability.css';
 

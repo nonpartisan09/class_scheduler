@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171103001534) do
+ActiveRecord::Schema.define(version: 20171114100212) do
 
   create_table "availabilities", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "day"
@@ -86,6 +86,11 @@ ActiveRecord::Schema.define(version: 20171103001534) do
     t.string "city"
     t.float "latitude", limit: 24
     t.float "longitude", limit: 24
+    t.string "thumbnail_image_file_name"
+    t.string "thumbnail_image_content_type"
+    t.integer "thumbnail_image_file_size"
+    t.datetime "thumbnail_image_updated_at"
+    t.text "description"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

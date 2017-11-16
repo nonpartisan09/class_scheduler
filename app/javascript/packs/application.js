@@ -28,7 +28,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const node = document.getElementById('data');
 
   const data = node? JSON.parse(node.getAttribute('data')): {};
-  console.log('dom content');
 
   render(
     <MuiThemeProvider >
@@ -53,7 +52,6 @@ document.addEventListener('turbolinks:render', () => {
   const node = document.getElementById('data');
 
   const data = node? JSON.parse(node.getAttribute('data')): {};
-  console.log('dom content');
 
   render(
     <MuiThemeProvider >

@@ -12,7 +12,7 @@ import Checkbox from 'material-ui/Checkbox';
 
 import Header from './Header';
 import SnackBarComponent from './reusable/SnackBarComponent';
-import sendData from './sendData';
+import { getData } from './sendData';
 
 import './SignIn.css';
 
