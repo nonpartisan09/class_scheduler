@@ -1,4 +1,5 @@
 Rails.application.configure do
+  config.static_base_url =  'https://s3.amazonaws.com/tutoria/'
   # Settings specified here will take precedence over those in config/application.rb.
 
   # Code is not reloaded between requests.
