@@ -32,6 +32,10 @@ gem 'jquery-rails'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 3.0'
 
+gem 'aws-sdk', '~> 2.3'
+# image helper
+gem 'paperclip'
+
 # paginate results
 gem 'will_paginate'
 

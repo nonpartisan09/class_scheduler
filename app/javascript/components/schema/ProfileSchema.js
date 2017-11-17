@@ -18,6 +18,25 @@ const ProfileSchema = {
     }
   }),
 
+  description: Joi.string().allow('').max(280).options({
+    language: {
+      string: {
+        max: 'Just like a tweet, keep it short (less than 280 characters) and sweet',
+      }
+    }
+  }),
+
+  thumbnail_image: Joi.object().keys({
+    image: Joi.object(),
+    url: Joi.string()
+  }).or('image', 'url').options({
+    language: {
+      object: {
+        missing: 'Must provide a thumbnail'
+      }
+    }
+  }),
+
   address: Joi.string().allow(''),
   city: Joi.string().allow(''),
   email: Joi.string().email({ minDomainAtoms: 2 }).required().options({

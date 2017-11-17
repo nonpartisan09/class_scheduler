@@ -1,0 +1,17 @@
+input[type=file].fileInput {
+    display: none;
+}
+
+.imageInputImage {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.imageInputIcon {
+    transform: translateY(2px);
+}
+
+.imageInputImageCaption {
+    margin-left: 12px;
+}

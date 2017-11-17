@@ -3292,6 +3292,10 @@ isstream@~0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/isstream/-/isstream-0.1.2.tgz#47e63f7af55afa6f92e1500e690eb8b8529c099a"
 
+jason-form@^0.0.3:
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/jason-form/-/jason-form-0.0.3.tgz#d890bc9844895f8f209fd927828bf4601d4dbfae"
+
 javascript-natural-sort@0.7.1:
   version "0.7.1"
   resolved "https://registry.yarnpkg.com/javascript-natural-sort/-/javascript-natural-sort-0.7.1.tgz#f9e2303d4507f6d74355a73664d1440fb5a0ef59"
@@ -5168,6 +5172,12 @@ react-router@^4.2.0:
     path-to-regexp "^1.7.0"
     prop-types "^15.5.4"
     warning "^3.0.0"
+
+react-simple-file-input@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/react-simple-file-input/-/react-simple-file-input-2.0.1.tgz#15ad4ffc78feb1b882649ad6b01c033ef27571e6"
+  dependencies:
+    prop-types "^15.5.7"
 
 react-transition-group@^1.2.1:
   version "1.2.1"

@@ -9,6 +9,13 @@ class User < ActiveRecord::Base
   geocoded_by :full_address
   after_validation :geocode, :if => (:address || :city) && (:address_changed? || :city_changed?)
 
+  has_attached_file :thumbnail_image,
+        styles: { thumbnail: ["550x310", :jpg] },
+        path: ":rails_root/public/system/:class/:attachment/:id_partition/:style/:basename.:extension",
+        url: "#{ Rails.configuration.static_base_url }/:class/:attachment/:id_partition/:style/:basename.:extension"
+
+  validates_attachment :thumbnail_image, content_type: { content_type: ["image/jpg", "image/jpeg", "image/png", "image/gif"] }
+
   devise :rememberable,
       :database_authenticatable,
       :registerable,
