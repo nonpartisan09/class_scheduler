@@ -21,45 +21,16 @@ class ImageInput extends Component {
   constructor(props, context) {
     super(props, context);
 
-    this.updateProgress = this.updateProgress.bind(this);
     this.handleOnLoad = this.handleOnLoad.bind(this);
     this.handleShowDialog = this.handleShowDialog.bind(this);
 
     this.state = {
-      progress: props.url ? 100 : 0,
       dataUrl: '',
-      readingImage: false,
       invalidFileDialog: false
     };
   }
 
-  componentWillMount(){
-    const { url, image } = this.props;
-    const { dataUrl, readingImage } = this.state;
-
-    const dataUrlNeedsToBeReadFromImage = !(url || dataUrl || readingImage) && image;
-
-    if (dataUrlNeedsToBeReadFromImage) {
-
-      this.setState({
-        readingImage: true
-      });
-
-      const reader = new FileReader();
-
-      reader.onload = ({ target: { result: url } }) => {
-        this.setState({
-          dataUrl: url,
-          readingImage: false
-        });
-      };
-
-      reader.readAsDataURL(image);
-    }
-  }
-
   render() {
-    const { onChange, onBlur } = this.props;
     return (
       <div>
         <DialogComponent
@@ -76,8 +47,6 @@ class ImageInput extends Component {
             readAs='dataUrl'
             cancelIf={ fileIsIncorrectFiletype }
             onLoad={ this.handleOnLoad }
-            onLoadStart={ this.updateProgress }
-            onProgress={ this.updateProgress }
             onCancel={ this.handleShowDialog }
           />
           { this.renderContents() }
@@ -101,28 +70,19 @@ class ImageInput extends Component {
       );
 
     } else {
-      const { progress, dataUrl } = this.state;
+      const { icon } = this.props;
 
-      if (progress > 0 && progress < 100) {
-        return(
-          <CircularProgress mode='determinate' value={ progress } />
-        );
-
-      } else {
-        const { icon } = this.props;
-
-        if (icon && !(dataUrl || value)) {
-          return (
-            <div className='imageInputImage' >
-              <div className='imageInputIcon'>
-                { icon }
-              </div>
-              <div className='imageInputImageCaption'>
-                Add your profile picture
-              </div>
+      if (icon && !dataUrl) {
+        return (
+          <div className='imageInputImage' >
+            <div className='imageInputIcon'>
+              { icon }
             </div>
-          );
-        }
+            <div className='imageInputImageCaption'>
+              Add your profile picture
+            </div>
+          </div>
+        );
       }
     }
   }
@@ -135,12 +95,6 @@ class ImageInput extends Component {
     });
 
     onLoad(image);
-  }
-
-  updateProgress({ loaded = 1, total = 100}){
-    this.setState({
-      progress: (loaded / total) * 100
-    });
   }
 
   handleShowDialog() {
@@ -167,20 +121,15 @@ class ImageInput extends Component {
 }
 
 ImageInput.propTypes = {
-  value: PropTypes.string,
-  icon: PropTypes.object,
-  image: PropTypes.object,
+  value: PropTypes.oneOfType([ PropTypes.string, PropTypes.object ]),
+  icon: PropTypes.object.isRequired,
 
   onLoad: PropTypes.func,
-  onChange: PropTypes.func,
-  onBlur: PropTypes.func
 };
 
 ImageInput.defaultProps = {
   value: '',
   onLoad: ()=>{},
-  onChange: ()=>{},
-  onBlur: ()=>{}
 };
 
 export default ImageInput;

@@ -1,4 +1,11 @@
 Rails.application.configure do
+  config.static_base_url =  "http://localhost:5000/system"
+
+  config.paperclip_defaults = {
+      path: ":rails_root/public/system/:class/:attachment/:id_partition/:style/:basename.:extension",
+      url: "#{ Rails.configuration.static_base_url }/:class/:attachment/:id_partition/:style/:basename.:extension",
+  }
+
   # Settings specified here will take precedence over those in config/application.rb.
 
   # The test environment is used exclusively to run your application's

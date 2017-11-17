@@ -15,14 +15,17 @@ import SearchResults from './SearchResults';
 
 import './SearchBar.css';
 
-function restfulUrl({ day, course, start_time, end_time }) {
+function restfulUrl({ day, course, start_time, end_time, distance }) {
   const startParam = _.isDate(start_time)? `&start_time=${moment(start_time).format('HH:MM')}` : '';
   const endParam = _.isDate(end_time)? `&end_time=${moment(end_time).format('HH:MM')}`: '';
   const dayParam = _.size(day) > 0? `&day=${day}` : '';
   const courseParam = _.size(course) > 0? `course=${course}` : '';
+  const distanceParam = distance > 0? `&distance=${distance}` : '';
 
-  return `/results?${courseParam}${dayParam}${startParam}${endParam}`;
+  return `/results?${courseParam}${dayParam}${startParam}${endParam}${distanceParam}`;
 }
+
+const UNIT = 'miles';
 
 const schema = {
   search: Joi.object().keys({
@@ -40,7 +43,28 @@ const schema = {
         }
       }
     }),
-    distance: Joi.number()
+    distance: Joi.number(),
+    timezone: Joi.string().required().options({
+      language: {
+        any: {
+          allowOnly: 'Please select a timezone'
+        }
+      }
+    }),
+    start_time: Joi.date().timestamp().required().options({
+      language: {
+        any: {
+          allowOnly: 'Please select a start time'
+        }
+      }
+    }),
+    end_time: Joi.date().timestamp().required().options({
+      language: {
+        any: {
+          allowOnly: 'Please enter an end time'
+        }
+      }
+    })
   })
 };
 
@@ -53,6 +77,7 @@ class SearchBar extends Component {
     this.selectionRendererDay = this.selectionRendererDay.bind(this);
     this.changeHandlerCourse = this.changeHandlerCourse.bind(this);
     this.changeHandlerDay = this.changeHandlerDay.bind(this);
+    this.changeHandlerDistance = this.changeHandlerDistance.bind(this);
 
     this.state = {
       teachers: [],
@@ -122,7 +147,6 @@ class SearchBar extends Component {
 
     if (city) {
       const {
-        changeHandler,
         validateHandler,
         errors,
         search: {
@@ -135,16 +159,23 @@ class SearchBar extends Component {
           hintText='Near me'
           value={ distance }
           errorText={ errors.distance }
-          onChange={ changeHandler('distance') }
+          onChange={ this.changeHandlerDistance }
           onBlur={ validateHandler('distance') }
           className='searchBarOption'
         >
-          <MenuItem insetChildren checked={ distance === 5 } key={ 0 } value={ 5 } primaryText='5 units' />
-          <MenuItem insetChildren checked={ distance === 10 } key={ 1 } value={ 10 } primaryText='10 units' />
-          <MenuItem insetChildren checked={ distance === 15 } key={ 2 } value={ 15 } primaryText='15 units' />
+          <MenuItem insetChildren checked={ distance === 5 } key={ 0 } value={ 5 } primaryText={ `5 ${UNIT}` } />
+          <MenuItem insetChildren checked={ distance === 10 } key={ 1 } value={ 10 } primaryText={ `10 ${UNIT}` } />
+          <MenuItem insetChildren checked={ distance === 25 } key={ 2 } value={ 25 } primaryText={ `25 ${UNIT}` } />
+          <MenuItem insetChildren checked={ distance === 50 } key={ 3 } value={ 50 } primaryText={ `50 ${UNIT}` } />
+          <MenuItem insetChildren checked={ distance === 100 } key={ 4 } value={ 100 } primaryText={ `100 ${UNIT}` } />
         </SelectField>
       );
     }
+  }
+
+  changeHandlerDistance(event, index, value) {
+    const { changeValue } = this.props;
+    changeValue('distance', value);
   }
 
   changeHandlerCourse(event, index, value) {

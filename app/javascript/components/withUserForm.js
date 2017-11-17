@@ -110,6 +110,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
               <ImageInput
                 icon={ <PhotoIcon /> }
                 value={ thumbnail_image }
+
                 onLoad={ this.handleImageUpload }
               />
             </div>
@@ -394,14 +395,13 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
         const { type } = wrappedProps;
 
         if (type === SIGN_UP) {
-          this.renderClasses();
+          return this.renderClasses();
         }
       }
     }
 
     renderClasses() {
-      const { validateHandler, errors, classes } = this.props;
-      const { currentUser: { courses } } = this.props;
+      const { validateHandler, errors, classes, currentUser: { courses } } = this.props;
 
       return (
         <div>
@@ -455,7 +455,6 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
 
     renderClassLabel() {
       const { match: { params: { role } }, currentUser: { student, teacher } } = this.props;
-
       if (role === 'volunteer' || teacher ) {
         return (
           <h2 className='userFormHeader'>

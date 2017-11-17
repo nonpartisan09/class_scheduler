@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import _ from 'lodash';
+import jasonForm from 'jason-form';
 
 import withUserForm from './withUserForm';
 import Header from './Header';
@@ -8,17 +10,27 @@ import './SignUp.css';
 import UserFormConstants from './UserFormConstants';
 
 import SignUpSchema from './schema/SignUpSchema';
-import { getData } from './sendData';
+import { postData } from './sendData';
 
 const { SIGN_UP } = UserFormConstants;
 
 function handleUserSignUp() {
-  const { currentUser } = this.props;
   const { match: { params: { role } } } = this.props;
+  const { currentUser } = this.props;
+
+  const updatedUser =  _.reduce(currentUser, (memo, value, key) => {
+    if (key === 'thumbnail_image' || !_.isEmpty(value) ) {
+      memo[key] = value;
+    }
+
+    return memo;
+  }, {});
+
+  const attributes = jasonForm.FormData.from({ user: updatedUser });
 
   const requestParams = {
     url: `/sign_up/${role}`,
-    jsonBody: { user: {...currentUser }},
+    attributes,
     method: 'POST',
     successCallBack: () => {
       let link = '';
@@ -43,7 +55,7 @@ function handleUserSignUp() {
     }
   };
 
-  return sendData(requestParams);
+  return postData(requestParams);
 }
 
 class SignUp extends Component {

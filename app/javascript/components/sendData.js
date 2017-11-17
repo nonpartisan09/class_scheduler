@@ -7,7 +7,7 @@ const METHODS = {
   PUT: 'PUT',
 };
 
-function getData({ url, params, jsonBody, method='GET', successCallBack, errorCallBack }) {
+function sendData({ url, params, jsonBody, method='GET', successCallBack, errorCallBack }) {
   const body = jsonBody? JSON.stringify(jsonBody) : null;
   const restUrl = params? `${url}?${params}` : url;
 
@@ -81,6 +81,7 @@ function postData({ url, params, attributes, method='POST', successCallBack, err
 
       response.json().then((item) => {
         const { errors, error } = item;
+
         const errorMessage = error && error.message ? error.message : _.flatMap(Object.entries(errors), (item) => {
           return _.capitalize(item.join(' ').replace('_', ' '));
         }).join(',');
@@ -99,6 +100,6 @@ function getCSRFToken() {
 }
 
 export {
-  getData,
+  sendData,
   postData
 };

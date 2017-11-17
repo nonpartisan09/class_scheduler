@@ -57,7 +57,11 @@ class UserDecorator
   end
 
   def picture
-    URI.join(Rails.configuration.static_base_url, user.thumbnail_image.url(:thumbnail)).to_s
+    if Rails.env.production?
+      URI.join('https:' + user.thumbnail_image.url(:thumbnail)).to_s
+    else
+      URI.join(Rails.configuration.static_base_url, user.thumbnail_image.url(:thumbnail)).to_s
+    end
   end
 
   def availabilities

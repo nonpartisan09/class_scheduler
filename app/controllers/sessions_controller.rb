@@ -54,13 +54,13 @@ class SessionsController < Devise::SessionsController
 
   protected
   def ensure_params_exist
-    return unless params[:email].blank? && params[:password].blank?
-    render :json=> { :success=>false, :error => 'Missing email and password' }, :status=> 422
+    return unless params[:user].blank? && params[:user][:password].blank? && params[:user][:email].blank?
+    render :json=> { :success=>false, :error => { :message => 'Missing email and password' } }, :status=> 422
   end
 
   def invalid_login_attempt
     warden.custom_failure!
-    render :json=> { :success=>false, :error => 'Error with your login or password'}, :status=>401
+    render :json=> { :success=>false, :error => { :message => 'Error with your login or password' } }, :status=>401
   end
 
   def check_if_logged_in

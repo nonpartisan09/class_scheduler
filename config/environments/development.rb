@@ -2,6 +2,11 @@ Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
   config.static_base_url =  "http://localhost:5000/system"
 
+  config.paperclip_defaults = {
+      path: ":rails_root/public/system/:class/:attachment/:id_partition/:style/:basename.:extension",
+      url: "#{ Rails.configuration.static_base_url }/:class/:attachment/:id_partition/:style/:basename.:extension",
+  }
+
   # In the development environment your application's code is reloaded on
   # every request. This slows down response time but is perfect for development
   # since you don't have to restart the web server when you make code changes.

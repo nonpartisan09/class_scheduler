@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import jasonForm from 'jason-form';
 
 import Joi from 'joi-browser';
 import validate from 'react-joi-validation';
@@ -12,7 +13,7 @@ import Checkbox from 'material-ui/Checkbox';
 
 import Header from './Header';
 import SnackBarComponent from './reusable/SnackBarComponent';
-import { getData } from './sendData';
+import { postData } from './sendData';
 
 import './SignIn.css';
 
@@ -113,10 +114,11 @@ class SignIn extends Component {
     if(_.size(errors) === 0) {
 
       const { currentUser } = this.props;
+      const attributes = jasonForm.FormData.from({ user: currentUser });
 
       const requestParams = {
         url: '/sign_in',
-        jsonBody: currentUser,
+        attributes,
         method: 'POST',
         successCallBack: () => {
           location.assign('/');
@@ -132,7 +134,7 @@ class SignIn extends Component {
           }, 2000);
         }
       };
-      return sendData(requestParams);
+      return postData(requestParams);
     }
   }
 
