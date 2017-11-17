@@ -18,8 +18,8 @@ Rails.application.routes.draw do
     post 'sign_in' => 'sessions#create'
     get 'sign_up/:role', to:'registrations#new'
     post 'sign_up/:role' => 'registrations#create'
-    post 'update' => 'registrations#update'
-    get 'profiles/:url_slug' => 'users#show'
+    post 'update', to:'registrations#update'
+    get 'profiles/:url_slug', to:'users#show'
   end
 
   devise_for :users,
