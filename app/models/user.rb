@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  include HasUrlSlug
+  include HasUrlSlug, HasSearch
   has_and_belongs_to_many :roles, :join_table => :roles_users
   has_many :enrollments
   has_many :courses, through: :enrollments
@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
   has_many :availabilities, dependent: :destroy
 
   geocoded_by :full_address
-  after_validation :geocode, :if => (:address || :city) && (:address_changed? || :city_changed?)
+  after_validation :geocode
 
   has_attached_file :thumbnail_image,
         styles: { thumbnail: ["550x310", :jpg] }

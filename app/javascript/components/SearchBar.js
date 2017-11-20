@@ -10,8 +10,10 @@ import MenuItem from 'material-ui/MenuItem';
 import RaisedButton from 'material-ui/RaisedButton';
 import moment from 'moment';
 
+import { getData } from './sendData';
 import Header from './Header';
 import SearchResults from './SearchResults';
+import SearchOptionalFields from './SearchOptionalFields';
 
 import './SearchBar.css';
 
@@ -25,46 +27,36 @@ function restfulUrl({ day, course, start_time, end_time, distance }) {
   return `/results?${courseParam}${dayParam}${startParam}${endParam}${distanceParam}`;
 }
 
-const UNIT = 'miles';
-
 const schema = {
-  search: Joi.object().keys({
-    day: Joi.array().min(1).required().options({
-      language: {
-        array: {
-          min: 'Please select at least one day'
-        }
+  day: Joi.array().min(1).required().options({
+    language: {
+      array: {
+        min: 'Please select at least one day'
       }
-    }),
-    course: Joi.array().min(1).required().options({
-      language: {
-        array: {
-          min: 'Please select at least one course'
-        }
+    }
+  }),
+  course: Joi.array().min(1).required().options({
+    language: {
+      array: {
+        min: 'Please select at least one course'
       }
-    }),
-    distance: Joi.number(),
-    timezone: Joi.string().required().options({
-      language: {
-        any: {
-          allowOnly: 'Please select a timezone'
-        }
+    }
+  }),
+  distance: Joi.number(),
+
+  start_time: Joi.date().timestamp().options({
+    language: {
+      any: {
+        allowOnly: 'Please select a start time'
       }
-    }),
-    start_time: Joi.date().timestamp().required().options({
-      language: {
-        any: {
-          allowOnly: 'Please select a start time'
-        }
+    }
+  }),
+  end_time: Joi.date().timestamp().options({
+    language: {
+      any: {
+        allowOnly: 'Please enter an end time'
       }
-    }),
-    end_time: Joi.date().timestamp().required().options({
-      language: {
-        any: {
-          allowOnly: 'Please enter an end time'
-        }
-      }
-    })
+    }
   })
 };
 
@@ -77,10 +69,10 @@ class SearchBar extends Component {
     this.selectionRendererDay = this.selectionRendererDay.bind(this);
     this.changeHandlerCourse = this.changeHandlerCourse.bind(this);
     this.changeHandlerDay = this.changeHandlerDay.bind(this);
-    this.changeHandlerDistance = this.changeHandlerDistance.bind(this);
 
     this.state = {
-      teachers: [],
+      teachers: { },
+      error: ''
     };
   }
 
@@ -88,16 +80,24 @@ class SearchBar extends Component {
     const {
       days,
       courses,
-      validateHandler,
       errors,
+      changeHandler,
+      changeValue,
+      validateHandler,
       search: {
+        distance,
         course,
         day,
+        start_time,
+        end_time
       },
       currentUser: {
         city
-      }
+      } ,
+      validateAllHandler
     } = this.props;
+
+    const { teachers } = this.state;
 
     return (
       <div className='searchBarContainer'>
@@ -106,10 +106,9 @@ class SearchBar extends Component {
         <div className='searchBarOptionContainer'>
           <SelectField
             className='searchBarOption'
-            hintText='Select One or More Class'
+            hintText='Class(es)'
             value={ course }
             onChange={ this.changeHandlerCourse }
-            onBlur={ validateHandler('course') }
             multiple
             errorText={ errors.course }
             selectionRenderer={ this.selectionRendererCourse }
@@ -119,73 +118,45 @@ class SearchBar extends Component {
             })}
           </SelectField>
 
+
           <SelectField
-            hintText='Select Day'
+            hintText='Day(s)'
             value={ day }
             errorText={ errors.day }
             onChange={ this.changeHandlerDay }
-            onBlur={ validateHandler('day') }
             className='searchBarOption'
             multiple
             selectionRenderer={ this.selectionRendererDay }
           >
             { _.map(days, (value, key) => <MenuItem key={ value + key } insetChildren checked={ _.indexOf(day, value) > -1 } value={ value } primaryText={ <span> { value } </span> } />) }
           </SelectField>
-
-          { this.renderLocationSelect() }
-
-          <RaisedButton onClick={ this.handleSubmit } className='searchSubmitButton' label='Search' primary />
         </div>
 
-        <SearchResults teachers={ this.state.teachers } currentUserCity={ city } />
+        <SearchOptionalFields
+          onChange={ changeHandler }
+          changeValue={ changeValue }
+          onBlur={ validateHandler }
+          startTime={ start_time }
+          endTime={ end_time }
+          distance={ distance }
+          city={ city }
+          errors={ errors }
+        />
+
+        <RaisedButton onClick={ validateAllHandler(this.handleSubmit) } className='searchBarOption' label='Search' primary />
+
+        <SearchResults { ...teachers } currentUserCity={ city } />
       </div>
     );
   }
-
-  renderLocationSelect() {
-    const { currentUser: { city } } = this.props;
-
-    if (city) {
-      const {
-        validateHandler,
-        errors,
-        search: {
-          distance
-        }
-      } = this.props;
-
-      return (
-        <SelectField
-          hintText='Near me'
-          value={ distance }
-          errorText={ errors.distance }
-          onChange={ this.changeHandlerDistance }
-          onBlur={ validateHandler('distance') }
-          className='searchBarOption'
-        >
-          <MenuItem insetChildren checked={ distance === 5 } key={ 0 } value={ 5 } primaryText={ `5 ${UNIT}` } />
-          <MenuItem insetChildren checked={ distance === 10 } key={ 1 } value={ 10 } primaryText={ `10 ${UNIT}` } />
-          <MenuItem insetChildren checked={ distance === 25 } key={ 2 } value={ 25 } primaryText={ `25 ${UNIT}` } />
-          <MenuItem insetChildren checked={ distance === 50 } key={ 3 } value={ 50 } primaryText={ `50 ${UNIT}` } />
-          <MenuItem insetChildren checked={ distance === 100 } key={ 4 } value={ 100 } primaryText={ `100 ${UNIT}` } />
-        </SelectField>
-      );
-    }
-  }
-
-  changeHandlerDistance(event, index, value) {
-    const { changeValue } = this.props;
-    changeValue('distance', value);
-  }
-
   changeHandlerCourse(event, index, value) {
     const { changeValue } = this.props;
-    changeValue('course', value);
+    changeValue('course', value, { validate: true });
   }
 
   changeHandlerDay(event, index, value) {
     const { changeValue } = this.props;
-    changeValue('day', value);
+    changeValue('day', value, { validate: true });
   }
 
   selectionRendererDay(values) {
@@ -221,22 +192,24 @@ class SearchBar extends Component {
 
   postSearch() {
     const { search } = this.props;
-    return fetch(restfulUrl(search), {
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        credentials: 'include'
-      }
-    }).then(response => {
-      if (response.status < 400) {
 
-        return response.json().then(({ teachers })=> {
-          return this.setState({
-            teachers
-          });
+    const requestParams = {
+      url: restfulUrl(search),
+      jsonBody: null,
+      method: 'GET',
+      successCallBack: (response) => {
+        return this.setState({
+          teachers: response
+        });
+      },
+      errorCallBack: (message) => {
+        this.setState({
+          error: message
         });
       }
-    });
+    };
+
+    return getData(requestParams);
   }
 }
 
@@ -247,16 +220,21 @@ SearchBar.propTypes = {
   currentUser: PropTypes.shape({
     first_name: PropTypes.string,
     email: PropTypes.string,
-    city: PropTypes.string
+    city: PropTypes.string,
+    start_time: PropTypes.object,
+    end_time: PropTypes.object
   }),
   search: PropTypes.shape({
     day: PropTypes.array,
     course: PropTypes.array,
-    distance: PropTypes.number
+    distance: PropTypes.number,
+    start_time: PropTypes.instanceOf(Date),
+    end_time: PropTypes.instanceOf(Date),
   }),
+  validateAllHandler: PropTypes.func.isRequired,
   validateHandler: PropTypes.func.isRequired,
-  changeValue: PropTypes.func.isRequired,
   changeHandler: PropTypes.func.isRequired,
+  changeValue: PropTypes.func.isRequired,
 };
 
 SearchBar.defaultProps = {
@@ -271,7 +249,7 @@ SearchBar.defaultProps = {
   search: {
     day: [],
     course: [],
-    distance: 0
+    distance: 0,
   }
 };
 

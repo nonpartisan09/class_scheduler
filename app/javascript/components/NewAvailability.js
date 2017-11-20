@@ -10,10 +10,11 @@ import RaisedButton from 'material-ui/RaisedButton';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import TimePicker from 'material-ui/TimePicker';
+import FormData from './FormData';
 
 import Header from './Header';
 import ErrorField from './reusable/ErrorField';
-import { sendData } from './sendData';
+import { postData } from './sendData';
 
 import './NewAvailability.css';
 
@@ -126,9 +127,10 @@ class NewAvailability extends Component {
     if (_.size(errors) === 0) {
       const { availabilities } = this.props;
 
+      const attributes = FormData.from({ availabilities });
       const requestParams = {
         url: '/availabilities',
-        jsonBody: { availabilities: _.map(availabilities, (item) => item)},
+        attributes,
         method: 'POST',
         successCallBack: () => {
           location.assign('/availabilities');
@@ -140,7 +142,7 @@ class NewAvailability extends Component {
         }
       };
 
-      return sendData(requestParams);
+      return postData(requestParams);
     }
   }
 

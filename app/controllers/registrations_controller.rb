@@ -54,10 +54,18 @@ class RegistrationsController < Devise::RegistrationsController
     self.resource = resource_class.to_adapter.get!(send(:"current_#{resource_name}").to_key)
     prev_unconfirmed_email = resource.unconfirmed_email if resource.respond_to?(:unconfirmed_email)
 
-    if account_update_params[:password].present?
-      resource_updated = update_resource(resource, account_update_params)
+    if account_update_params[:courses].present?
+      courses = account_update_params[:courses].map { |n| Course.find_by_name(n) } if account_update_params[:courses].present?
+      params = account_update_params.merge!(:courses => courses)
     else
-      resource_updated = resource.update_attributes(account_update_params.except(:password, :password_confirmation, :current_password))
+      params = account_update_params
+    end
+
+    if account_update_params[:password].present?
+      resource_updated = update_resource(resource, params)
+    else
+      params = params.except(:password, :password_confirmation, :current_password)
+      resource_updated = resource.update_attributes(params)
     end
 
     yield resource if block_given?
@@ -91,6 +99,7 @@ class RegistrationsController < Devise::RegistrationsController
 
   def sign_up_params
     params.require(:user).permit(
+        :id,
         :first_name,
         :email,
         :password,
@@ -109,6 +118,7 @@ class RegistrationsController < Devise::RegistrationsController
 
   def account_update_params
     params.require(:user).permit(
+        :id,
         :first_name,
         :email,
         :description,
@@ -119,7 +129,7 @@ class RegistrationsController < Devise::RegistrationsController
         :address,
         :city,
         :thumbnail_image,
-        :courses => ''
+        :courses => []
     )
   end
 

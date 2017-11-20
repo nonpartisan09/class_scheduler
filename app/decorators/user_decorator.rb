@@ -5,7 +5,6 @@ class UserDecorator
 
   def initialize(user)
     @user = user
-    @address = 'No address provided'
   end
 
   def simple_decorate
@@ -19,7 +18,8 @@ class UserDecorator
       :first_name => first_name,
       :available_days => available_days,
       :availabilities => availabilities,
-      :last_logged_in => last_logged_in
+      :last_logged_in => last_logged_in,
+      :thumbnail_image => picture
     }
   end
 
@@ -73,7 +73,7 @@ class UserDecorator
   end
 
   def address
-    user.address || @address
+    user.address
   end
 
   def city

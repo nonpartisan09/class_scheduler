@@ -26,8 +26,8 @@ class Homepage extends Component {
             ${'/assets/community_4000.jpg'} 4000w` }
           />
           <div className='mask'>
-            <h1 className='title'>
-              Tutoria
+            <h1>
+              <img alt='tutoria logo' src={ '/assets/tutoria_logo_light_blue_and_white_web.png' } width={ 364 } height={ 72 } />
             </h1>
             <h2 className='subtitle'>
               Connect and share with our community of students and teachers

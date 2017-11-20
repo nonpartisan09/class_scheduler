@@ -8,11 +8,7 @@
 }
 
 .searchSubmitButton {
-    display: inline-block;
-    max-height: 36px;
     overflow: hidden;
-    align-self: center;
-    margin-left: 2%;
 }
 
 .teacher {
@@ -23,34 +19,20 @@
     display: flex;
     flex-flow: row wrap;
     justify-content: center;
-    margin: 72px 0;
-    padding: 0 12px;
+    width: 65%;
+    margin: 48px auto;
 }
 
-.sliderMin {
-    margin-left: 48px;
-    position: relative;
-    width: 300px;
-}
-
-.sliderMax {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    margin-top: -24px;
-}
-
-.searchBarOption {
-    width: 20%;
-    margin: 0 1%;
+.searchBarOptionContainer > div.searchBarOption {
+    max-width: 45%;
+    margin: 1% 5%;
 }
 
 @media(max-width: 1000px) {
-  .searchBarOption {
-      width: 50%;
-      margin: 5%;
-  }
+    .searchBarOptionContainer > div.searchBarOption {
+        max-width: 30%;
+        margin: 1% 5%;
+    }
 }
 
 @media(max-width: 500px) {
@@ -59,6 +41,7 @@
         margin: 5%;
     }
     .searchBarOptionContainer {
-        margin: 12px 0;
+        width: 100%;
+        margin: 48px 0;
     }
 }

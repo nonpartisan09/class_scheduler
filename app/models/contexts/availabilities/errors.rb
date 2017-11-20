@@ -3,11 +3,27 @@ module Contexts::Availabilities::Errors
 
   end
 
+  class StartTimeMissing < RuntimeError
+
+  end
+
+  class EndTimeMissing < RuntimeError
+
+  end
+
   class OverlappingAvailability < RuntimeError
 
   end
 
   class ShortAvailability < RuntimeError
+
+  end
+
+  class DayMissing < RuntimeError
+
+  end
+
+  class CourseMissing < RuntimeError
 
   end
 end

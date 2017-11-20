@@ -23,7 +23,7 @@ Rails.application.routes.draw do
   end
 
   devise_for :users,
-      only: [:sessions, :registrations, :passwords],
+      only: [:sessions, :registrations, :passwords, :availabilities],
       singular: :user
 
 end

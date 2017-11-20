@@ -1,17 +1,18 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
-import jasonForm from 'jason-form';
 
 import { postData } from './sendData';
 import Header from './Header';
 
 import UserFormConstants from './UserFormConstants';
 
-import './Header.css';
-import './MyProfile.css';
+import FormData from './FormData';
 import ProfileSchema from './schema/ProfileSchema';
 import withUserForm from './withUserForm';
+
+import './Header.css';
+import './MyProfile.css';
 
 const { UPDATE_PROFILE } = UserFormConstants;
 
@@ -36,7 +37,7 @@ function handleUpdateProfile() {
     return memo;
   }, {});
 
-  const attributes = jasonForm.FormData.from({ user: updatedUser });
+  const attributes = FormData.from({ user: updatedUser });
 
   const requestParams = {
     url: '/update',

@@ -1,7 +1,6 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import jasonForm from 'jason-form';
 
 import Joi from 'joi-browser';
 import validate from 'react-joi-validation';
@@ -11,6 +10,7 @@ import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
 import Checkbox from 'material-ui/Checkbox';
 
+import FormData from './FormData';
 import Header from './Header';
 import SnackBarComponent from './reusable/SnackBarComponent';
 import { postData } from './sendData';
@@ -114,7 +114,7 @@ class SignIn extends Component {
     if(_.size(errors) === 0) {
 
       const { currentUser } = this.props;
-      const attributes = jasonForm.FormData.from({ user: currentUser });
+      const attributes = FormData.from({ user: currentUser });
 
       const requestParams = {
         url: '/sign_in',

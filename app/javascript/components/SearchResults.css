@@ -7,6 +7,9 @@
     justify-content: center;
 }
 
+.searchResultsAvatar {
+    width: 36px;
+}
 @media(max-width: 500px) {
     .resultsListContainer {
         flex-flow: column;

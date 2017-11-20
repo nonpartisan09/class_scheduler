@@ -1,11 +1,18 @@
 class AvailabilitiesController < ApplicationController
-  before_action :authenticate_user!, except: [ :results ]
+  before_action :authenticate_user!
   before_action :check_if_volunteer?, except: [:search, :results]
   before_action :check_if_student?, only: [:search ]
 
   def results
-    search = Contexts::Availabilities::Search.new(permit_search_params)
-    results = search.execute
+
+    begin
+     search = Contexts::Availabilities::Search.new(permit_search_params, current_user)
+      results = search.execute
+    rescue Contexts::Availabilities::Errors::CourseMissing,
+      Contexts::Availabilities::Errors::DayMissing => e
+      @message = e.message
+      render json: { error: { message: @message } }, status: unprocessable_entity
+    end
 
     if results.present?
       teachers = results.collect { |teacher| UserDecorator.new(teacher) }
@@ -53,13 +60,15 @@ class AvailabilitiesController < ApplicationController
     if permitted_params.present?
       message = []
       status = []
-      permitted_params.each do |n|
-        creation = Contexts::Availabilities::Creation.new(permitted_nested(n), current_user)
+      permitted_params.each do |number|
+        creation = Contexts::Availabilities::Creation.new(permitted_nested(permitted_params[number]), current_user)
 
         begin
           @availability = creation.execute
         rescue Contexts::Availabilities::Errors::UnknownAvailabilityError,
             Contexts::Availabilities::Errors::OverlappingAvailability,
+            Contexts::Availabilities::Errors::StartTimeMissing,
+            Contexts::Availabilities::Errors::EndTimeMissing,
             Contexts::Availabilities::Errors::ShortAvailability => e
           message << e.message
           status << :unprocessable_entity
@@ -114,8 +123,8 @@ class AvailabilitiesController < ApplicationController
     params.require(:availabilities)
   end
 
-  def permitted_nested(n)
-    n.permit(
+  def permitted_nested(params)
+    params.permit(
         :day,
         :start_time,
         :end_time,
@@ -130,6 +139,7 @@ class AvailabilitiesController < ApplicationController
         :end_time,
         :timezone,
         :course,
+        :distance
     )
   end
 end

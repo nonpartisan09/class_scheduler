@@ -5,12 +5,18 @@ module Contexts
         @availability = availability
         @current_user = current_user
 
-        @day = @availability['day']
-        @local_start_time = Time.parse(@availability['start_time'] + ' ' + @availability['timezone'])
-        @local_end_time =  Time.parse(@availability['end_time'] + ' ' + @availability['timezone'])
+        @day = @availability[:day]
 
-        @utc_start_time = @local_start_time.utc.iso8601
-        @utc_end_time = @local_end_time.utc.iso8601
+        unless @availability[:start_time].present? && @availability[:timezone].present?
+          raise Availabilities::Errors::StartTimeMissing, 'Start time is missing.'
+        end
+
+        unless @availability[:end_time].present?  && @availability[:timezone].present?
+          raise Availabilities::Errors::EndTimeMissing, 'End time is missing.'
+        end
+
+        initialize_start_time
+        initialize_end_time
 
       end
 
@@ -63,6 +69,18 @@ You might want to delete them and try again.'
         if (@local_end_time - @local_start_time) < 0
           raise Availabilities::Errors::ShortAvailability, 'Please select an end time chronologically after start time.'
         end
+      end
+
+      private
+
+      def initialize_start_time
+        @local_start_time = Time.parse(@availability[:start_time] + ' ' + @availability[:timezone])
+        @utc_start_time = @local_start_time.utc.iso8601
+      end
+
+      def initialize_end_time
+        @local_end_time =  Time.parse(@availability[:end_time] + ' ' + @availability[:timezone])
+        @utc_end_time = @local_end_time.utc.iso8601
       end
     end
   end

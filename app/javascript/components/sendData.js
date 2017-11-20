@@ -7,7 +7,7 @@ const METHODS = {
   PUT: 'PUT',
 };
 
-function sendData({ url, params, jsonBody, method='GET', successCallBack, errorCallBack }) {
+function getData({ url, params, jsonBody, method='GET', successCallBack, errorCallBack }) {
   const body = jsonBody? JSON.stringify(jsonBody) : null;
   const restUrl = params? `${url}?${params}` : url;
 
@@ -23,12 +23,12 @@ function sendData({ url, params, jsonBody, method='GET', successCallBack, errorC
 
       if (response.status === 204) {
         if (!_.isUndefined(successCallBack)) {
-          return successCallBack();
+          return successCallBack({ });
         }
       } else {
-        return response.json().then(() => {
+        return response.json().then((json) => {
           if (!_.isUndefined(successCallBack)) {
-            return successCallBack();
+            return successCallBack(json);
           }
         });
       }
@@ -71,7 +71,7 @@ function postData({ url, params, attributes, method='POST', successCallBack, err
           return successCallBack();
         }
       } else {
-        return response.json().then(() => {
+        return response.text().then(() => {
           if (!_.isUndefined(successCallBack)) {
             return successCallBack();
           }
@@ -100,6 +100,6 @@ function getCSRFToken() {
 }
 
 export {
-  sendData,
+  getData,
   postData
 };

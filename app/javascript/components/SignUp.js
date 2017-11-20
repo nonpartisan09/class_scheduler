@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
-import jasonForm from 'jason-form';
 
+import FormData from './FormData';
 import withUserForm from './withUserForm';
 import Header from './Header';
 
@@ -26,7 +26,7 @@ function handleUserSignUp() {
     return memo;
   }, {});
 
-  const attributes = jasonForm.FormData.from({ user: updatedUser });
+  const attributes = FormData.from({ user: updatedUser });
 
   const requestParams = {
     url: `/sign_up/${role}`,
