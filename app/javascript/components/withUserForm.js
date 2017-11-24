@@ -68,7 +68,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
           <WrappedComponent { ...this.props } />
 
           <DialogComponent
-            title='Why do you need my address and city?'
+            title='Why do you need my street address and city?'
             onRequestClose={ this.handleShowDialog }
             open={ this.state.showAddressDialog }
             actions={ [ <FlatButton key='close' label='Close' primary onClick={ this.handleShowDialog } /> ] }
@@ -125,7 +125,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                 value={ address }
                 hintText=''
                 className='userFormInputField address'
-                floatingLabelText='Address'
+                floatingLabelText='Street Address'
                 floatingLabelFixed
                 multiLine
                 errorText={ errors.address }
