@@ -373,7 +373,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
         return (
           <div>
             <div className='userFormTermsAndConditionsLink'>
-              <a href={ '/terms_and_conditions' } className='navigationItem' target='_blank' rel='noreferrer noopener'>
+              <a href={ '/terms_and_conditions' } className='slidingLink' target='_blank' rel='noreferrer noopener'>
                 Please read Tutoria’s terms and conditions.
               </a>
             </div>

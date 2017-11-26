@@ -2,7 +2,18 @@
     margin: 50px 48px;
 }
 
+.addAvailabilitiesButton {
+  margin: 24px 0;
+}
+
 .newAvailabilityFormContainer {
     margin: 50px 48px;
     width: 50%;
+}
+
+@media(max-width: 500px) {
+    .newAvailabilityFormContainer {
+        margin: 48px 0;
+        width: 100%;
+    }
 }

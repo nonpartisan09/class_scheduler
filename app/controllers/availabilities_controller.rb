@@ -60,8 +60,9 @@ class AvailabilitiesController < ApplicationController
     if permitted_params.present?
       message = []
       status = []
-      permitted_params.each do |number|
-        creation = Contexts::Availabilities::Creation.new(permitted_nested(permitted_params[number]), current_user)
+
+      permitted_params.except(:timezone).each do |number|
+        creation = Contexts::Availabilities::Creation.new(permit_nested(permitted_params[number]), permitted_params[:timezone], current_user)
 
         begin
           @availability = creation.execute
@@ -123,7 +124,7 @@ class AvailabilitiesController < ApplicationController
     params.require(:availabilities)
   end
 
-  def permitted_nested(params)
+  def permit_nested(params)
     params.permit(
         :day,
         :start_time,

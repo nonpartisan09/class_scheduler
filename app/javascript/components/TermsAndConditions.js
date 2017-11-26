@@ -1,6 +1,6 @@
 import React from 'react';
 
-const TermsAndConditions = ({  })=> {
+const TermsAndConditions = ()=> {
   return (
     <div className="container">
       Website Terms of Use

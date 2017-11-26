@@ -1,17 +1,20 @@
 module Contexts
   module Availabilities
     class Creation
-      def initialize(availability, current_user)
+      def initialize(availability, timezone, current_user)
         @availability = availability
+        @timezone = timezone
         @current_user = current_user
 
+
+        ap @timezone
         @day = @availability[:day]
 
-        unless @availability[:start_time].present? && @availability[:timezone].present?
+        unless @availability[:start_time].present? && @timezone.present?
           raise Availabilities::Errors::StartTimeMissing, 'Start time is missing.'
         end
 
-        unless @availability[:end_time].present?  && @availability[:timezone].present?
+        unless @availability[:end_time].present?  && @timezone.present?
           raise Availabilities::Errors::EndTimeMissing, 'End time is missing.'
         end
 
@@ -74,12 +77,12 @@ You might want to delete them and try again.'
       private
 
       def initialize_start_time
-        @local_start_time = Time.parse(@availability[:start_time] + ' ' + @availability[:timezone])
+        @local_start_time = Time.parse(@availability[:start_time] + ' ' + @timezone)
         @utc_start_time = @local_start_time.utc.iso8601
       end
 
       def initialize_end_time
-        @local_end_time =  Time.parse(@availability[:end_time] + ' ' + @availability[:timezone])
+        @local_end_time =  Time.parse(@availability[:end_time] + ' ' + @timezone)
         @utc_end_time = @local_end_time.utc.iso8601
       end
     end
