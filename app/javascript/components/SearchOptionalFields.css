@@ -1,32 +1,60 @@
 .searchBarButtonContainer, .searchBarOptionalFieldContainer {
     display: block;
-    width: 60%;
+    width: 800px;
     margin: 12px auto;
 }
 
-.searchBarOptionalField, .searchBarDistanceOption {
-    display: inline-block;
-    max-width: 15%;
-    min-width: 15%;
-    margin: 0 8%;
+.searchBarOptionalFieldContainer {
     height: 60px;
 }
 
-.searchBarDistanceOption {
-    transform: translateY(27px);
+.searchBarOptionalField, .searchBarDistanceOption {
+    width: 28%;
+    display: inline-block;
+    padding: 0 12px;
+    vertical-align: middle;
 }
 
-@media (max-width: 500px) {
+.searchBarDistanceOption {
+    transform: translateY(7px);
+}
+
+.searchBarOptionalFieldDisplay {
+    display: inline-block;
+}
+
+.searchBarOptionalFieldDisplayNone, .searchBarOptionalFieldMobile {
+    display: none;
+}
+
+@media (max-width: 850px) {
     .searchBarButtonContainer, .searchBarOptionalFieldContainer {
         display: block;
         width: 100%;
+        text-align: center;
+        height: auto;
     }
-    .searchBarOptionalField, .searchBarDistanceOption {
+
+    .searchBarOptionalFieldMobile, .searchBarOptionalField {
         display: block;
-        max-width: none;
-        min-width: 0;
-        margin: 12px 0;
+        margin: 6px 0;
+        padding: 0;
         transform: none;
+        height: auto;
+        width: auto;
+        text-align: center;
+    }
+    .searchBarOptionalField {
+        width: 100%;
+    }
+
+    .searchBarOptionalFieldMobile {
+        max-width: 50%;
+        margin: 0 auto;
+    }
+
+    .searchBarOptionalFieldScreen {
+        display: none;
     }
 }
 

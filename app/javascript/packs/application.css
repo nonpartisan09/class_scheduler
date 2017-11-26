@@ -10,7 +10,7 @@
 
 @font-face {
     font-family: 'robotolight';
-    src: url('./Roboto-Light-webfont.woff') format('woff');
+    src: url('fonts/Roboto-Light-webfont.woff') format('woff');
     font-weight: normal;
     font-style: normal;
 }

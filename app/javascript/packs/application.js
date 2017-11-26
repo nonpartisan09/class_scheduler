@@ -18,7 +18,6 @@ import TermsAndConditions from '../components/TermsAndConditions';
 import NewAvailability from '../components/NewAvailability';
 import AvailabilityIndexPage from '../components/AvailabilityIndexPage';
 import UserProfile from '../components/UserProfile';
-
 import './application.css';
 
 const { render }  = ReactDom;

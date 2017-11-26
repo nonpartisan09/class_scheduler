@@ -2,19 +2,6 @@
     text-align: center;
 }
 
-.teacherContainer {
-    margin: 72px;
-    text-align: left;
-}
-
-.searchSubmitButton {
-    overflow: hidden;
-}
-
-.teacher {
-    margin: 12px 0;
-}
-
 .searchBarOptionContainer {
     display: flex;
     flex-flow: row wrap;
@@ -43,5 +30,9 @@
     .searchBarOptionContainer {
         width: 100%;
         margin: 48px 0;
+    }
+
+    .searchBarButton {
+        width: auto;
     }
 }

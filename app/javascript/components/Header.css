@@ -48,7 +48,6 @@
         margin-right: 12px;
         display: block;
     }
-
     .slidingLink:hover:before, .slidingLink:hover:after {
         width: 50%;
         right: 100%;

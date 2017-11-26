@@ -100,52 +100,54 @@ class SearchBar extends Component {
     const { teachers } = this.state;
 
     return (
-      <div className='searchBarContainer'>
+      <div>
         <Header currentUser={ this.props.currentUser } />
+        <div className='searchBarContainer'>
 
-        <div className='searchBarOptionContainer'>
-          <SelectField
-            className='searchBarOption'
-            hintText='Class(es)'
-            value={ course }
-            onChange={ this.changeHandlerCourse }
-            multiple
-            errorText={ errors.course }
-            selectionRenderer={ this.selectionRendererCourse }
-          >
-            { _.map(courses, ({ name, id }) => {
-              return <MenuItem key={ id } insetChildren checked={ _.indexOf(course, id) > -1 } value={ id } primaryText={ <span> { name } </span> } />;
-            })}
-          </SelectField>
+          <div className='searchBarOptionContainer'>
+            <SelectField
+              className='searchBarOption'
+              hintText='Class(es)'
+              value={ course }
+              onChange={ this.changeHandlerCourse }
+              multiple
+              errorText={ errors.course }
+              selectionRenderer={ this.selectionRendererCourse }
+            >
+              { _.map(courses, ({ name, id }) => {
+                return <MenuItem key={ id } insetChildren checked={ _.indexOf(course, id) > -1 } value={ id } primaryText={ <span> { name } </span> } />;
+              })}
+            </SelectField>
 
 
-          <SelectField
-            hintText='Day(s)'
-            value={ day }
-            errorText={ errors.day }
-            onChange={ this.changeHandlerDay }
-            className='searchBarOption'
-            multiple
-            selectionRenderer={ this.selectionRendererDay }
-          >
-            { _.map(days, (value, key) => <MenuItem key={ value + key } insetChildren checked={ _.indexOf(day, value) > -1 } value={ value } primaryText={ <span> { value } </span> } />) }
-          </SelectField>
+            <SelectField
+              hintText='Day(s)'
+              value={ day }
+              errorText={ errors.day }
+              onChange={ this.changeHandlerDay }
+              className='searchBarOption'
+              multiple
+              selectionRenderer={ this.selectionRendererDay }
+            >
+              { _.map(days, (value, key) => <MenuItem key={ value + key } insetChildren checked={ _.indexOf(day, value) > -1 } value={ value } primaryText={ <span> { value } </span> } />) }
+            </SelectField>
+          </div>
+
+          <SearchOptionalFields
+            onChange={ changeHandler }
+            changeValue={ changeValue }
+            onBlur={ validateHandler }
+            startTime={ start_time }
+            endTime={ end_time }
+            distance={ distance }
+            city={ city }
+            errors={ errors }
+          />
+
+          <RaisedButton onClick={ validateAllHandler(this.handleSubmit) } className='searchBarOption searchBarButton' label='Search' primary />
+
+          <SearchResults { ...teachers } currentUserCity={ city } />
         </div>
-
-        <SearchOptionalFields
-          onChange={ changeHandler }
-          changeValue={ changeValue }
-          onBlur={ validateHandler }
-          startTime={ start_time }
-          endTime={ end_time }
-          distance={ distance }
-          city={ city }
-          errors={ errors }
-        />
-
-        <RaisedButton onClick={ validateAllHandler(this.handleSubmit) } className='searchBarOption' label='Search' primary />
-
-        <SearchResults { ...teachers } currentUserCity={ city } />
       </div>
     );
   }

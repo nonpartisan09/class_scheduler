@@ -3,6 +3,7 @@ import _ from 'lodash';
 import PropTypes from 'prop-types';
 
 import Badge from 'material-ui/Badge';
+import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import Checkbox from 'material-ui/Checkbox';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -23,6 +24,13 @@ import UserFormConstants from './UserFormConstants';
 import './withUserForm.css';
 
 const { SIGN_UP, UPDATE_PROFILE } = UserFormConstants;
+
+const paperMarginOverride = {
+  padding: '12px 24px 24px 24px',
+
+  maxWidth: '950px',
+  margin: '24px auto'
+};
 
 const withUserForm = (WrappedComponent, schema, wrappedProps) => {
 
@@ -75,105 +83,107 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
             text={ this.renderDialogText() }
           />
 
-          <form className='userForm'>
-            { this.renderSignUpClasses() }
+          <Paper zDepth={ 1 } style={ paperMarginOverride } rounded={ false }>
+            <form className='userForm'>
+              { this.renderSignUpClasses() }
 
-            <TextField
-              name='email'
-              value={ email }
-              className='userFormInputField email'
-              hintText=''
-              floatingLabelText='Email'
-              floatingLabelFixed
-              errorText={ errors.email }
-              onChange={ changeHandler('email') }
-              onBlur={ validateHandler('email') }
-            />
-
-            <br />
-
-            <TextField
-              name='first_name'
-              value={ first_name }
-              hintText=''
-              className='userFormInputField firstName'
-              floatingLabelText='First Name'
-              floatingLabelFixed
-              errorText={ errors.first_name }
-              onChange={ changeHandler('first_name') }
-              onBlur={ validateHandler('first_name') }
-            />
-
-            <br />
-
-            <div className='userFormImage' >
-              <ImageInput
-                icon={ <PhotoIcon /> }
-                value={ thumbnail_image }
-
-                onLoad={ this.handleImageUpload }
-              />
-            </div>
-
-            <Badge
-              badgeContent={ <span onClick={ this.handleShowDialog }> <InfoIcon /> </span> }
-              badgeStyle={ { fontSize: 14, transform: 'translateY(18px)' } }
-              style={ { padding: '0' } }
-            >
               <TextField
-                name='address'
-                value={ address }
+                name='email'
+                value={ email }
+                className='userFormInputField email'
                 hintText=''
-                className='userFormInputField address'
-                floatingLabelText='Street Address'
+                floatingLabelText='Email'
                 floatingLabelFixed
-                multiLine
-                errorText={ errors.address }
-                onChange={ changeHandler('address') }
-                onBlur={ validateHandler('address') }
+                errorText={ errors.email }
+                onChange={ changeHandler('email') }
+                onBlur={ validateHandler('email') }
               />
 
               <br />
 
               <TextField
-                name='city'
-                value={ city }
+                name='first_name'
+                value={ first_name }
                 hintText=''
-                className='userFormInputField city'
-                floatingLabelText='City/Town'
+                className='userFormInputField firstName'
+                floatingLabelText='First Name'
                 floatingLabelFixed
-                errorText={ errors.city }
-                onChange={ changeHandler('city') }
-                onBlur={ validateHandler('city') }
+                errorText={ errors.first_name }
+                onChange={ changeHandler('first_name') }
+                onBlur={ validateHandler('first_name') }
               />
-            </Badge>
 
-            <br />
+              <br />
 
-            <TextField
-              name='description'
-              value={ description }
-              hintText=''
-              className='userFormInputField description'
-              floatingLabelText='About me (in 280 characters or less)'
-              floatingLabelFixed
-              multiLine
-              errorText={ errors.description }
-              onChange={ changeHandler('description') }
-              onBlur={ validateHandler('description') }
-            />
+              <div className='userFormImage' >
+                <ImageInput
+                  icon={ <PhotoIcon /> }
+                  value={ thumbnail_image }
 
-            <div>
-              { this.renderPasswordFields() }
-              { this.renderUpdateClasses() }
+                  onLoad={ this.handleImageUpload }
+                />
+              </div>
+
+              <Badge
+                badgeContent={ <span onClick={ this.handleShowDialog }> <InfoIcon /> </span> }
+                badgeStyle={ { fontSize: 14, transform: 'translateY(18px)' } }
+                style={ { padding: '0' } }
+              >
+                <TextField
+                  name='address'
+                  value={ address }
+                  hintText=''
+                  className='userFormInputField address'
+                  floatingLabelText='Street Address'
+                  floatingLabelFixed
+                  multiLine
+                  errorText={ errors.address }
+                  onChange={ changeHandler('address') }
+                  onBlur={ validateHandler('address') }
+                />
+
+                <br />
+
+                <TextField
+                  name='city'
+                  value={ city }
+                  hintText=''
+                  className='userFormInputField city'
+                  floatingLabelText='City/Town'
+                  floatingLabelFixed
+                  errorText={ errors.city }
+                  onChange={ changeHandler('city') }
+                  onBlur={ validateHandler('city') }
+                />
+              </Badge>
+
+              <br />
+
+              <TextField
+                name='description'
+                value={ description }
+                hintText=''
+                className='userFormInputField description'
+                floatingLabelText='About me (in 280 characters or less)'
+                floatingLabelFixed
+                multiLine
+                errorText={ errors.description }
+                onChange={ changeHandler('description') }
+                onBlur={ validateHandler('description') }
+              />
+
+              <div>
+                { this.renderPasswordFields() }
+                { this.renderUpdateClasses() }
+              </div>
+
+              { this.renderSignUpCheckBoxes() }
+            </form>
+
+            <div className='userFormOuterButton'>
+              <RaisedButton label={ wrappedProps.primaryButtonLabel } onClick={ this.handleSubmit } primary />
             </div>
-
-            { this.renderSignUpCheckBoxes() }
-          </form>
-
-          <div className='userFormOuterButton'>
-            <RaisedButton label={ wrappedProps.primaryButtonLabel } onClick={ this.handleSubmit } primary />
-          </div>
+          </Paper>
 
           { this.renderSnackBar() }
         </div>

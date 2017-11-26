@@ -6,7 +6,6 @@ import './Header.css';
 
 import { getData } from './sendData';
 
-
 class Header extends Component {
   constructor(props, context) {
     super(props, context);
@@ -22,61 +21,68 @@ class Header extends Component {
     };
   }
   render() {
-    const deviceWidth = window.innerWidth;
+    const mobile = true;
 
-    if (deviceWidth >= 500) {
-      const force = true;
-
-      return this.renderLinks(force);
-
-    } else {
-      return(
+    return(
+      <div>
         <div className={ 'navMenuButton '} role='button' onKeyDown={ this.handleKeyDown } tabIndex={ 0 } onClick={ this.handleClickMenu }>
           <MenuIcon />
-          { this.renderLinks() }
+          { this.renderLinks(mobile) }
         </div>
-      );
-    }
+
+        { this.renderLinks() }
+      </div>
+    );
   }
 
-  renderLinks(force) {
+  renderLinks(mobile) {
     const { showLinks } = this.state;
 
-    if (showLinks || force) {
-      if ( _.size(this.props.currentUser) > 0 ) {
-        return (
-          <nav className='navigation' >
-            <a href={ '/' } className='slidingLink' rel='nofollow'>
-              Home
-            </a>
-
-            { this.renderRoleLinks() }
-
-            <a href={ '/my_profile' } className='slidingLink' rel='nofollow'>
-              { this.props.currentUser.first_name }
-            </a>
-
-            <span role='navigation' tabIndex={ 0 } onClick={ this.handleSignOut } className='slidingLink' rel='nofollow'>
-              Sign out
-            </span>
-          </nav>
-        );
+    const navigationClassName = function(){
+      if (mobile) {
+        if (showLinks) {
+          return 'navigation navDisplay';
+        } else {
+          return 'navigation navDisplayNone';
+        }
+      } else {
+        return 'navigation';
       }
-      else {
-        return (
-          <nav className='navigation' >
-            <a href={ '/sign_up/student' } className='slidingLink' >
-              Become a student
-            </a>
-            <a href={ '/sign_up/volunteer' } className='slidingLink'>
-              Volunteer as a teacher
-            </a>
-            <a href={ '/sign_in/' } className='slidingLink'>
-              Sign In
-            </a>
-          </nav>
-        );
-      }
+    }();
+
+    if ( _.size(this.props.currentUser) > 0 ) {
+      return (
+        <nav className={ navigationClassName } >
+          <a href={ '/' } className='slidingLink' rel='nofollow'>
+            Home
+          </a>
+
+          { this.renderRoleLinks() }
+
+          <a href={ '/my_profile' } className='slidingLink' rel='nofollow'>
+            { this.props.currentUser.first_name }
+          </a>
+
+          <span role='navigation' tabIndex={ 0 } onClick={ this.handleSignOut } className='slidingLink' rel='nofollow'>
+            Sign out
+          </span>
+        </nav>
+      );
+    }
+    else {
+      return (
+        <nav className={ navigationClassName } >
+          <a href={ '/sign_up/student' } className='slidingLink' >
+            Become a student
+          </a>
+          <a href={ '/sign_up/volunteer' } className='slidingLink'>
+            Volunteer as a teacher
+          </a>
+          <a href={ '/sign_in/' } className='slidingLink'>
+            Sign In
+          </a>
+        </nav>
+      );
     }
   }
 
