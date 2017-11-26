@@ -36,9 +36,9 @@ function handleUserSignUp() {
       let link = '';
 
       if (role === 'volunteer') {
-        link = '/availabilities/new';
+        link = '/availabilities/new/sign_up';
       } else if (role === 'student' ) {
-        link = '/search/';
+        link = '/search/sign_up';
       }
       location.assign(link);
     },

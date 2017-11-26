@@ -110,6 +110,7 @@ class NewAvailability extends Component {
         <Header currentUser={ this.props.currentUser } />
 
         <div className='availabilityContainer'>
+          { this.renderTitle() }
           <ErrorField error={ this.state.error } />
 
           <RaisedButton label='Create All Availabilities' primary onClick={ validateAllHandler(this.handleSubmit) } />
@@ -117,6 +118,18 @@ class NewAvailability extends Component {
         </div>
       </div>
     );
+  }
+
+  renderTitle() {
+    const { match: { params: { sign_up } } } = this.props;
+
+    if (sign_up) {
+      return (
+        <h1 className='signUpHeader'>
+          Join Tutoria community: Step 2/2
+        </h1>
+      );
+    }
   }
 
   handleSubmit() {
@@ -269,9 +282,11 @@ NewAvailability.propTypes = {
   changeValue: PropTypes.func.isRequired,
   validateAllHandler: PropTypes.func.isRequired,
   validateHandler: PropTypes.func.isRequired,
+  displayTitle: PropTypes.bool
 };
 
 NewAvailability.defaultProps = {
+  displayTitle: false,
   currentUser: {
     email: '',
   },

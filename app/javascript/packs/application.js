@@ -4,7 +4,8 @@ import ReactJoiValidation from 'react-joi-validation';
 
 import {
   BrowserRouter as Router,
-  Route
+  Route,
+  Switch
 } from 'react-router-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import ReactDom from 'react-dom';
@@ -36,12 +37,19 @@ document.addEventListener('DOMContentLoaded', () => {
         <div>
           <Route exact path='/' render={ () => <Homepage { ...data } /> } />
           <Route exact path='/search' render={ () => <SearchBar { ...data } /> } />
+          <Switch>
+            <Route exact path='/search/:sign_up' render={ (props) => <SearchBar { ...data } { ...props } /> } />
+            <Route exact path='/search' render={ (props) => <SearchBar { ...data } { ...props } /> } />
+          </Switch>
           <Route exact path='/my_profile' render={ (props) => <MyProfile { ...data } { ...props } /> } />
           <Route exact path='/profiles/:url_slug' render={ (props) => <UserProfile { ...data } { ...props } /> } />
           <Route exact path='/sign_up/:role' render={ (props) => <SignUp { ...data }  { ...props } /> } />
           <Route exact path='/sign_in' component={ SignIn } />
           <Route exact path='/terms_and_conditions' component={ TermsAndConditions } />
-          <Route exact path='/availabilities/new' render={ (props) => <NewAvailability { ...data } { ...props } /> } />
+          <Switch>
+            <Route exact path='/availabilities/new/:sign_up' render={ (props) => <NewAvailability { ...data } { ...props } /> } />
+            <Route exact path='/availabilities/new' render={ (props) => <NewAvailability { ...data } { ...props } /> } />
+          </Switch>
           <Route exact path='/availabilities' render={ (props) => <AvailabilityIndexPage { ...data }  { ...props } /> } />
         </div>
       </Router>
@@ -59,13 +67,13 @@ document.addEventListener('turbolinks:render', () => {
       <Router >
         <div>
           <Route exact path='/' render={ () => <Homepage { ...data } /> } />
-          <Route exact path='/search' render={ () => <SearchBar { ...data } /> } />
+          <Route exact path='/search/:sign_up' render={ (props) => <SearchBar { ...data } { ...props } /> } />
           <Route exact path='/my_profile' render={ (props) => <MyProfile { ...data } { ...props } /> } />
           <Route exact path='/profiles/:url_slug' render={ (props) => <UserProfile { ...data } { ...props } /> } />
           <Route exact path='/sign_up/:role' render={ (props) => <SignUp { ...data }  { ...props } /> } />
           <Route exact path='/sign_in' component={ SignIn } />
           <Route exact path='/terms_and_conditions' component={ TermsAndConditions } />
-          <Route exact path='/availabilities/new' render={ (props) => <NewAvailability { ...data } { ...props } /> } />
+          <Route exact path='/availabilities/new/:sign_up' render={ (props) => <NewAvailability { ...data } { ...props } /> } />
           <Route exact path='/availabilities' render={ (props) => <AvailabilityIndexPage { ...data }  { ...props } /> } />
         </div>
       </Router>

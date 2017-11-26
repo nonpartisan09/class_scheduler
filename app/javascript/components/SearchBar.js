@@ -102,6 +102,8 @@ class SearchBar extends Component {
     return (
       <div>
         <Header currentUser={ this.props.currentUser } />
+        { this.renderTitle() }
+
         <div className='searchBarContainer'>
 
           <div className='searchBarOptionContainer'>
@@ -151,6 +153,19 @@ class SearchBar extends Component {
       </div>
     );
   }
+
+  renderTitle() {
+    const { match: { params: { sign_up } } } = this.props;
+
+    if (sign_up) {
+      return (
+        <h1 className='signUpHeader'>
+          Join Tutoria community: Step 2/2
+        </h1>
+      );
+    }
+  }
+
   changeHandlerCourse(event, index, value) {
     const { changeValue } = this.props;
     changeValue('course', value, { validate: true });
@@ -216,6 +231,7 @@ class SearchBar extends Component {
 }
 
 SearchBar.propTypes = {
+  match: PropTypes.object,
   courses: PropTypes.array,
   errors: PropTypes.object,
   days: PropTypes.array,
@@ -240,6 +256,9 @@ SearchBar.propTypes = {
 };
 
 SearchBar.defaultProps = {
+  match: {
+    params: { }
+  },
   days: [],
   errors: {},
   courses: [],
