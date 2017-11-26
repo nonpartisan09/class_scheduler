@@ -28,13 +28,13 @@ class Courses extends Component {
     if (_.size(courses) > 0) {
       return courses.map((item) => {
         return (
-          <div key={item.id} className='course' style={ { background: `url(/assets/${item.url_slug}.jpg) no-repeat center` } }>
-            <div className='courseLabel'>
+          <div key={ item.id } className='course courseWidth' style={ { background: `url(/assets/${item.url_slug}.jpg) no-repeat center` } }>
+            <div className='courseLabel courseLabelWidth'>
               { item.name }
             </div>
           </div>
         );
-      })
+      });
     }
   }
 

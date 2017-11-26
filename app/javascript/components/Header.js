@@ -1,48 +1,83 @@
 import _ from 'lodash';
+import MenuIcon from 'material-ui/svg-icons/navigation/menu';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import './Header.css';
+
+import { getData } from './sendData';
+
 
 class Header extends Component {
   constructor(props, context) {
     super(props, context);
 
     this.handleSignOut = this.handleSignOut.bind(this);
+    this.handleClickMenu = this.handleClickMenu.bind(this);
+    this.handleKeyDown = this.handleKeyDown.bind(this);
+
+    this.state = {
+      showSnackBar: false,
+      message: '',
+      showLinks: false
+    };
   }
   render() {
-   if ( _.size(this.props.currentUser) > 0 ) {
-     return (
-       <nav className='navigation' >
-         <a href={'/'} className='slidingLink' rel='nofollow'>
-           Home
-         </a>
+    const deviceWidth = window.innerWidth;
 
-         { this.renderRoleLinks() }
+    if (deviceWidth >= 500) {
+      const force = true;
 
-         <a href={'/my_profile'} className='slidingLink' rel='nofollow'>
-           { this.props.currentUser.first_name }
-         </a>
+      return this.renderLinks(force);
 
-         <span role='navigation' tabIndex={ 0 } onClick={ this.handleSignOut } className='slidingLink' rel='nofollow'>
-           Sign out
-         </span>
-       </nav>
-     );
-   } else {
-     return (
-       <nav className='navigation' >
-         <a href={'/sign_up/student'} className='slidingLink' >
-           Become a student
-         </a>
-         <a href={'/sign_up/volunteer'} className='slidingLink'>
-           Volunteer as a teacher
-         </a>
-         <a href={'/sign_in/'} className='slidingLink'>
-           Sign In
-         </a>
-       </nav>
-     );
-   }
+    } else {
+      return(
+        <div className={ 'navMenuButton '} role='button' onKeyDown={ this.handleKeyDown } tabIndex={ 0 } onClick={ this.handleClickMenu }>
+          <MenuIcon />
+          { this.renderLinks() }
+        </div>
+      );
+    }
+  }
+
+  renderLinks(force) {
+    const { showLinks } = this.state;
+
+    if (showLinks || force) {
+      if ( _.size(this.props.currentUser) > 0 ) {
+        return (
+          <nav className='navigation' >
+            <a href={ '/' } className='slidingLink' rel='nofollow'>
+              Home
+            </a>
+
+            { this.renderRoleLinks() }
+
+            <a href={ '/my_profile' } className='slidingLink' rel='nofollow'>
+              { this.props.currentUser.first_name }
+            </a>
+
+            <span role='navigation' tabIndex={ 0 } onClick={ this.handleSignOut } className='slidingLink' rel='nofollow'>
+              Sign out
+            </span>
+          </nav>
+        );
+      }
+      else {
+        return (
+          <nav className='navigation' >
+            <a href={ '/sign_up/student' } className='slidingLink' >
+              Become a student
+            </a>
+            <a href={ '/sign_up/volunteer' } className='slidingLink'>
+              Volunteer as a teacher
+            </a>
+            <a href={ '/sign_in/' } className='slidingLink'>
+              Sign In
+            </a>
+          </nav>
+        );
+      }
+    }
   }
 
   renderRoleLinks() {
@@ -67,36 +102,46 @@ class Header extends Component {
     }
   }
 
-  handleSignOut() {
-    return fetch(`/sign_out?${this.props.currentUser.id}`, {
-      method: 'DELETE',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'X-CSRF-Token': this.getCSRFToken(),
-      },
-      credentials: 'same-origin'
-    }).then(response => {
-      if (response.status < 400) {
-        location. assign('/');
-      } else if (response.status < 500) {
+  setLinkState() {
+    const { showLinks } = this.state;
 
-        if (response.status === 401) {
-
-          response.json().then(({ message }) => {
-            return this.setState({
-              serverError: message
-            });
-          });
-        }
-      }
-    })
+    this.setState({
+      showLinks: !showLinks
+    });
   }
 
-  getCSRFToken() {
-    return _.find(document.getElementsByTagName('meta'), (meta) => {
-      return meta.name === 'csrf-token'
-    }).content
+  handleKeyDown(event) {
+    if (event.keycode === 13) {
+     this.setLinkState();
+    }
+  }
+
+  handleClickMenu() {
+    this.setLinkState();
+  }
+
+  handleSignOut() {
+    const requestParams = {
+      url: '/sign_out',
+      jsonBody: {},
+      method: 'DELETE',
+      successCallBack: () => {
+        location.assign('/');
+      },
+
+      errorCallBack: (message) => {
+        this.setState({
+          showSnackBar: true,
+          message: message
+        });
+
+        setTimeout(() => {
+          this.handleHideSnackBar();
+        }, 2000);
+      }
+    };
+
+    return getData(requestParams);
   }
 }
 

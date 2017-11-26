@@ -19,6 +19,8 @@ import NewAvailability from '../components/NewAvailability';
 import AvailabilityIndexPage from '../components/AvailabilityIndexPage';
 import UserProfile from '../components/UserProfile';
 
+import './application.css';
+
 const { render }  = ReactDom;
 
 ReactJoiValidation.setJoi(Joi);

@@ -1,3 +1,11 @@
+.courseWidth {
+    --width: 300px;
+}
+
+.courseLabelWidth {
+    --width: 204px;
+}
+
 .courseHeader {
     width: 100%;
     text-align: center;
@@ -14,14 +22,13 @@
     border-radius: 2px;
     position: relative;
     margin: 0 50px 50px;
-    width: 300px;
+    width: var(--width);
     height: 200px;
     text-align: center;
-    background-size: 50%;
 }
 
 .courseLabel {
-    width: 100%;
+    width: var(--width);
     background-color: rgba(79, 79, 79, 0.8);
     padding: 12px 48px;
     text-align: left;
@@ -29,4 +36,18 @@
     position: absolute;
     left: 0;
     bottom: 0;
+}
+
+@media(max-width: 500px) {
+    .navMenuButton {
+        outline: none;
+        margin: 24px 0 0 24px;
+    }
+    .courseContainer {
+      display: block;
+    }
+
+    .courseLabel {
+        text-align: center;
+    }
 }

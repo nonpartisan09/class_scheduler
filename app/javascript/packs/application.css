@@ -1,10 +1,46 @@
-body {
+:root {
+    --primary-color-1: #004664;
+    --primary-color-2: #29aae2;
+
+    --secondary-color-1: #ade1f4;
+    --secondary-color-2: #a7a9ac;
+    --secondary-color-3: #f1592a;
+    --secondary-color-4: #d7df21;
+}
+
+@font-face {
+    font-family: 'robotolight';
+    src: url('./Roboto-Light-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+html {
     font-family: 'robotolight', sans-serif;
     height: 100%;
 }
 
-.content {
-    height: 100%;
+body {
+    margin: 0;
+}
 
-    overflow: auto;
+a:hover {
+    text-decoration: none;
+}
+
+.navigation {
+    width: 100%;
+    margin-top: 24px;
+    text-align: right;
+}
+
+@media(max-width: 500px) {
+    html {
+       font-size: 1.2em;
+    }
+
+    .navigation {
+        text-align: center;
+    }
+
 }

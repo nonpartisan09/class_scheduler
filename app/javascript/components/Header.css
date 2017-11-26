@@ -1,7 +1,7 @@
 .slidingLink {
     display: inline-block;
     position: relative;
-    padding-bottom: 1px;
+    padding-bottom: 3px;
     margin-right: 24px;
     text-decoration: none;
     color: inherit;
@@ -19,6 +19,7 @@
     transition: width 0s ease, background .15s ease;
     outline: none;
 }
+
 .slidingLink:after {
     content: '';
     display: block;
@@ -27,12 +28,13 @@
     bottom: 0;
     height: 1px;
     width: 0;
-    background: darkslategrey;
+    background: #f1592a;
     transition: width .15s ease;
 }
+
 .slidingLink:hover:before {
     width: 100%;
-    background: darkslategrey;
+    background: #f1592a;
     transition: width .15s ease;
 }
 .slidingLink:hover:after {
@@ -41,8 +43,15 @@
     transition: all 0s ease;
 }
 
-.courseContainer {
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: center;
+@media(max-width: 500px) {
+    .slidingLink {
+        margin-right: 12px;
+        display: block;
+    }
+
+    .slidingLink:hover:before, .slidingLink:hover:after {
+        width: 50%;
+        right: 100%;
+        transform: translateX(50%);
+    }
 }
