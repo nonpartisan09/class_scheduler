@@ -1,10 +1,18 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import moment from 'moment';
+import Paper from 'material-ui/Paper';
 import Header from './Header';
+import AvailabilitiesTable from './AvailabilitiesTable';
 
 import './AvailabilityIndexPage.css';
+
+const paperMarginOverride = {
+  padding: '12px 24px 24px 24px',
+  maxWidth: '950px',
+  margin: '24px auto'
+};
+
 
 class AvailabilityIndexPage extends Component {
 
@@ -12,19 +20,19 @@ class AvailabilityIndexPage extends Component {
     return (
       <div>
         <Header currentUser={ this.props.currentUser } />
+        <Paper zDepth={ 1 } style={ paperMarginOverride } rounded={ false }>
+          <div className='availabilityIndexContainer'>
+            I can teach:
+            <ul className='availabilityIndexListContainer'>
+              { _.map(this.props.courses, ({ name }) => <li className='availabilityListItem' key={name}>{ name }</li>) }
+            </ul>
 
-        <div className='availabilityIndexContainer'>
-          I can teach:
-          <ul className='availabilityIndexListContainer'>
-            { _.map(this.props.courses, ({ name }) => <li className='availabilityListItem' key={name}>{ name }</li>) }
-          </ul>
-
-          <br />
-          On the following days:
-          <ul className='availabilityIndexListContainer'>
-            { this.renderAvailabilities() }
-          </ul>
-        </div>
+            <br />
+            <ul className='availabilityIndexListContainer'>
+              { this.renderAvailabilities() }
+            </ul>
+          </div>
+        </Paper>
       </div>
     );
   }
@@ -32,26 +40,13 @@ class AvailabilityIndexPage extends Component {
   renderAvailabilities() {
     const { availabilities } = this.props;
 
-    return _.map(availabilities, ({ day , start_time, end_time, timezone }) => {
+    if ( _.size(availabilities) > 0 ) {
       return (
-        <div key={ name+day+timezone } className='availabilityIndexItemContainer'>
-          <li>
-            <span>Day: </span>{ day }
-          </li>
-
-          <li>
-            <span>From: </span>{ moment(start_time).format('HH:MM') }
-          </li>
-          <li>
-            <span>To: </span>{ moment(end_time).format('HH:MM') }
-          </li>
-
-          <li>
-            <span>Timezone: </span>{ timezone }
-          </li>
-        </div>
+        <AvailabilitiesTable
+          availabilities={ availabilities }
+        />
       );
-    });
+    }
   }
 }
 

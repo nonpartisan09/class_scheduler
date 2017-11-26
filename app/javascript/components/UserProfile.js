@@ -3,21 +3,12 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 import Paper from 'material-ui/Paper';
 
-import {
-  Table,
-  TableBody,
-  TableHeader,
-  TableHeaderColumn,
-  TableRow,
-  TableRowColumn,
-} from 'material-ui/Table';
-
+import AvailabilitiesTable from './AvailabilitiesTable';
 import Header from './Header';
 import './UserProfile.css';
 
 const paperMarginOverride = {
   padding: '12px 24px 24px 24px',
-
   maxWidth: '950px',
   margin: '24px auto'
 };
@@ -71,33 +62,12 @@ class UserProfile extends Component {
 
   renderAvailabilities() {
     const { user: { availabilities } } = this.props;
+
     if ( _.size(availabilities) > 0 ) {
-      const tableContent =  _.map(availabilities, ({ day, start_time, end_time, timezone }) => {
-        return(
-          <TableRow  style={ { textAlign: 'right' } } key={ 'body' + day }>
-            <TableRowColumn>{ day }</TableRowColumn>
-            <TableRowColumn>From: { start_time }</TableRowColumn>
-            <TableRowColumn>To: { end_time }</TableRowColumn>
-            <TableRowColumn >Timezone: { timezone }</TableRowColumn>
-          </TableRow>
-        );
-      });
-
       return (
-        <Table selectable={ false } >
-          <TableHeader displaySelectAll={ false }>
-            <TableRow>
-              <TableHeaderColumn key='day' >Day</TableHeaderColumn>
-              <TableHeaderColumn key='start_time'>Start time</TableHeaderColumn>
-              <TableHeaderColumn key='end_time'>End Time</TableHeaderColumn>
-              <TableHeaderColumn key='timezone'>Timezone</TableHeaderColumn>
-            </TableRow>
-          </TableHeader>
-
-          <TableBody displayRowCheckbox={ false }>
-            { tableContent}
-          </TableBody>
-        </Table>
+        <AvailabilitiesTable
+          availabilities={ availabilities }
+        />
       );
     }
   }

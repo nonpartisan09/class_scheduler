@@ -43,7 +43,7 @@
     transition: all 0s ease;
 }
 
-@media(max-width: 500px) {
+@media(max-width: 650px) {
     .slidingLink {
         margin-right: 12px;
         display: block;
@@ -52,5 +52,22 @@
         width: 50%;
         right: 100%;
         transform: translateX(50%);
+    }
+
+    .navMenuButton, .navDisplayNone {
+        display: none;
+    }
+
+    .navigation {
+        display: none
+    }
+
+    .navDisplay, .navMenuButton {
+        display: block;
+    }
+
+    .navMenuButton {
+        outline: none;
+        margin: 24px 0 0 24px;
     }
 }

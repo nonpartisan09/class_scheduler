@@ -35,19 +35,9 @@
 }
 
 @media(max-width: 500px) {
-    .navigation {
-        display: none
-    }
-
-    .navDisplay, .courseContainer, .navMenuButton {
+    .courseContainer {
         display: block;
     }
-
-    .navMenuButton {
-        outline: none;
-        margin: 24px 0 0 24px;
-    }
-
     .courseLabel {
         text-align: center;
     }

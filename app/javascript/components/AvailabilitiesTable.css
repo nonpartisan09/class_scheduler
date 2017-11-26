@@ -1,0 +1,21 @@
+.availabilitiesTableRow {
+    text-align: right;
+}
+
+.tableHideSmallScreen {
+    display: block;
+}
+
+.tableHideMediumScreen {
+    display: none;
+}
+
+@media(max-width: 650px) {
+   .tableHideSmallScreen {
+       display: none;
+   }
+
+    .tableHideMediumScreen {
+        display: block;
+    }
+}

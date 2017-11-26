@@ -8,7 +8,11 @@ import {
   Switch
 } from 'react-router-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+
 import ReactDom from 'react-dom';
+
+import MuiTheme from '../components/MuiTheme';
 
 import Homepage from '../components/Homepage';
 import SearchBar from '../components/SearchBar';
@@ -32,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const data = node? JSON.parse(node.getAttribute('data')): {};
 
   render(
-    <MuiThemeProvider >
+    <MuiThemeProvider muiTheme={ getMuiTheme(MuiTheme) }>
       <Router >
         <div>
           <Route exact path='/' render={ () => <Homepage { ...data } /> } />
@@ -63,7 +67,7 @@ document.addEventListener('turbolinks:render', () => {
   const data = node? JSON.parse(node.getAttribute('data')): {};
 
   render(
-    <MuiThemeProvider >
+    <MuiThemeProvider muiTheme={ getMuiTheme(MuiTheme) }>
       <Router >
         <div>
           <Route exact path='/' render={ () => <Homepage { ...data } /> } />
