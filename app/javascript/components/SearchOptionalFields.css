@@ -58,3 +58,34 @@
     }
 }
 
+
+@media only screen and (min-device-width: 0) and (max-device-width: 850px) {
+    .searchBarButtonContainer, .searchBarOptionalFieldContainer {
+        display: block;
+        width: 100%;
+        text-align: center;
+        height: auto;
+    }
+
+    .searchBarOptionalFieldMobile, .searchBarOptionalField {
+        display: block;
+        margin: 6px 0;
+        padding: 0;
+        transform: none;
+        height: auto;
+        width: auto;
+        text-align: center;
+    }
+    .searchBarOptionalField {
+        width: 100%;
+    }
+
+    .searchBarOptionalFieldMobile {
+        max-width: 50%;
+        margin: 0 auto;
+    }
+
+    .searchBarOptionalFieldScreen {
+        display: none;
+    }
+}

@@ -45,3 +45,14 @@ a:hover {
     }
 
 }
+
+@media (max-width: 650px) {
+    html {
+        font-size: 2vmax;
+    }
+
+    .navigation {
+        text-align: center;
+    }
+
+}

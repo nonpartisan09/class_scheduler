@@ -49,3 +49,19 @@
         min-width: 100%;
     }
 }
+
+@media (max-width: 500px) {
+    .userFormInnerButton, .userFormSecondButton, .userFormOuterButton {
+        display: block;
+        margin: 12px 0;
+        padding: 0;
+    }
+
+    .userForm {
+        margin-left: 0;
+    }
+
+    .userFormInputField {
+        min-width: 100%;
+    }
+}

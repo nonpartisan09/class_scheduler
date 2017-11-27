@@ -45,3 +45,16 @@
         margin: 24px auto;
     }
 }
+
+@media (max-width: 500px) {
+    .courseContainer {
+        display: block;
+    }
+    .courseLabel {
+        text-align: center;
+    }
+    .course {
+        margin: 24px auto;
+
+    }
+}

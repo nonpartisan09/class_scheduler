@@ -22,3 +22,16 @@
         width: 100%;
     }
 }
+
+@media (max-width: 500px) {
+    .resultsListContainer {
+        flex-flow: column;
+        text-align: left;
+        height: auto;
+    }
+
+    .resultsFirstName, .resultsLastLogin, .resultsCity, .resultsAvailableDays, .resultsCourses {
+        margin-bottom: 12px;
+        width: 100%;
+    }
+}
