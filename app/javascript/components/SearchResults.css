@@ -10,7 +10,7 @@
 .searchResultsAvatar {
     width: 36px;
 }
-@media(max-width: 500px) {
+@media only screen and (min-device-width: 0) and (max-device-width: 500px) {
     .resultsListContainer {
         flex-flow: column;
         text-align: left;

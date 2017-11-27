@@ -35,9 +35,9 @@ a:hover {
     text-align: right;
 }
 
-@media(max-width: 650px) {
+@media only screen and (min-device-width: 0) and (max-device-width: 650px) {
     html {
-       font-size: 1.2em;
+       font-size: 2vmax;
     }
 
     .navigation {

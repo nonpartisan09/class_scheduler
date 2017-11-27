@@ -34,11 +34,14 @@
     display: none;
 }
 
-@media(max-width: 500px) {
+@media only screen and (min-device-width: 0)  and (max-device-width: 500px) {
     .courseContainer {
         display: block;
     }
     .courseLabel {
         text-align: center;
+    }
+    .course {
+        margin: 24px auto;
     }
 }

@@ -15,14 +15,14 @@
     margin: 1% 5%;
 }
 
-@media(max-width: 1000px) {
+@media only screen and (min-device-width: 0)  and (max-device-width: 1000px) {
     .searchBarOptionContainer > div.searchBarOption {
         max-width: 30%;
         margin: 1% 5%;
     }
 }
 
-@media(max-width: 500px) {
+@media only screen and (min-device-width: 0)  and (max-device-width: 500px) {
     .searchBarOption {
         width: 90%;
         margin: 5%;

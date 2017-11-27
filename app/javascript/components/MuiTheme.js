@@ -10,7 +10,6 @@ const secondaryColor4= '#d7df21';
 
 export default {
   fontFamily: 'Robotolight, sans-serif',
-
   palette: {
     primary1Color: primaryColor2,
     primary2Color: primaryColor1,
@@ -39,6 +38,7 @@ export default {
   },
 
   textField: {
+    fontSize: '2vmax',
     textColor: primaryColor1,
     hintColor: disabledTextColor,
     floatingLabelColor: secondaryColor1,

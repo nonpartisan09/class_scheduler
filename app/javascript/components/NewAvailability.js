@@ -217,7 +217,6 @@ class NewAvailability extends Component {
             errorText={ _.get(errors, `${availability}.start_time`) }
             onChange={ changeHandler(`${availability}.start_time`) }
             onDismiss={ validateAllHandler }
-            minutesStep={ 15 }
             autoOk
             fullWidth
           />
@@ -229,7 +228,6 @@ class NewAvailability extends Component {
             errorText={ _.get(errors, `${availability}.end_time`) }
             onChange={ changeHandler(`${availability}.end_time`) }
             onDismiss={ validateAllHandler }
-            minutesStep={ 15 }
             autoOk
             fullWidth
           />
