@@ -19,6 +19,9 @@ gem 'uglifier', '>= 1.3.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 
+# needed for Heroku
+gem 'delayed_job_active_record'
+
 # Use React for views
 gem 'webpacker', '~> 3.0'
 
