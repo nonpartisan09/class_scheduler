@@ -72,7 +72,8 @@ class SearchBar extends Component {
 
     this.state = {
       teachers: { },
-      error: ''
+      error: '',
+      status
     };
   }
 
@@ -97,8 +98,6 @@ class SearchBar extends Component {
       validateAllHandler
     } = this.props;
 
-    const { teachers } = this.state;
-
     return (
       <div>
         <Header currentUser={ this.props.currentUser } />
@@ -120,7 +119,6 @@ class SearchBar extends Component {
                 return <MenuItem key={ id } insetChildren checked={ _.indexOf(course, id) > -1 } value={ id } primaryText={ <span> { name } </span> } />;
               })}
             </SelectField>
-
 
             <SelectField
               hintText='Day(s)'
@@ -148,7 +146,7 @@ class SearchBar extends Component {
 
           <RaisedButton onClick={ validateAllHandler(this.handleSubmit) } className='searchBarOption searchBarButton' label='Search' primary />
 
-          <SearchResults { ...teachers } currentUserCity={ city } />
+          { this.renderResults() }
         </div>
       </div>
     );
@@ -162,6 +160,28 @@ class SearchBar extends Component {
         <h1 className='signUpHeader'>
           Join Tutoria community: Step 2/2
         </h1>
+      );
+    }
+  }
+
+  renderResults() {
+    const { status } = this.state;
+
+    if (status === 204) {
+      return (
+        <div className='emptyTeacherResults'>
+          Sorry, it seems no teachers match these filters.
+        </div>
+      );
+    } else {
+      const { teachers } = this.state;
+      const { currentUser: { city } } = this.props;
+
+      return (
+        <SearchResults
+          { ...teachers }
+          currentUserCity={ city }
+        />
       );
     }
   }
@@ -214,9 +234,10 @@ class SearchBar extends Component {
       url: restfulUrl(search),
       jsonBody: null,
       method: 'GET',
-      successCallBack: (response) => {
+      successCallBack: (response, status) => {
         return this.setState({
-          teachers: response
+          teachers: response,
+          status
         });
       },
       errorCallBack: (message) => {

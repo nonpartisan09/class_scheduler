@@ -4,6 +4,7 @@ Rails.application.configure do
   config.paperclip_defaults = {
       path: ":rails_root/public/system/:class/:attachment/:id_partition/:style/:basename.:extension",
       url: "#{ Rails.configuration.static_base_url }/:class/:attachment/:id_partition/:style/:basename.:extension",
+      default_url: nil
   }
 
   # Settings specified here will take precedence over those in config/application.rb.

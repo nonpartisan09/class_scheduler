@@ -1,5 +1,17 @@
 .resultsFirstName, .resultsLastLogin, .resultsCity, .resultsAvailableDays, .resultsCourses  {
+    width: 10%;
+    text-align: left;
+}
+
+.resultsLastLogin {
+    width: 15%;
+}
+
+.resultsCourses, .resultsCity {
     width: 20%;
+}
+.resultsAvailableDays {
+    width: 30%;
 }
 .resultsListContainer {
     display: flex;

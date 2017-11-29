@@ -79,7 +79,7 @@ class ImageInput extends Component {
               { icon }
             </div>
             <div className='imageInputImageCaption'>
-              Add your profile picture
+              Add your picture
             </div>
           </div>
         );

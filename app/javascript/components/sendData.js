@@ -23,12 +23,12 @@ function getData({ url, params, jsonBody, method='GET', successCallBack, errorCa
 
       if (response.status === 204) {
         if (!_.isUndefined(successCallBack)) {
-          return successCallBack({ });
+          return successCallBack({ }, response.status);
         }
       } else {
         return response.json().then((json) => {
           if (!_.isUndefined(successCallBack)) {
-            return successCallBack(json);
+            return successCallBack(json, response.status);
           }
         });
       }

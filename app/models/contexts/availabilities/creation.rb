@@ -5,9 +5,6 @@ module Contexts
         @availability = availability
         @timezone = timezone
         @current_user = current_user
-
-
-        ap @timezone
         @day = @availability[:day]
 
         unless @availability[:start_time].present? && @timezone.present?
@@ -34,7 +31,8 @@ module Contexts
         new_availability_params = @availability.merge({
             :start_time => @utc_start_time,
             :end_time => @utc_end_time,
-            :user_id => @current_user.id
+            :user_id => @current_user.id,
+            :timezone => @timezone
         })
 
         Availability.create!(new_availability_params)

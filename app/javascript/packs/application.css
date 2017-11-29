@@ -37,7 +37,7 @@ a:hover {
 
 @media only screen and (min-device-width: 0) and (max-device-width: 650px) {
     html {
-       font-size: 2vmax;
+       font-size: 3vmax;
     }
 
     .navigation {
@@ -48,7 +48,7 @@ a:hover {
 
 @media (max-width: 650px) {
     html {
-        font-size: 2vmax;
+        font-size: 3vmax;
     }
 
     .navigation {

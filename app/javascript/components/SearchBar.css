@@ -15,6 +15,10 @@
     margin: 1% 5%;
 }
 
+.emptyTeacherResults {
+    margin: 24px 0;
+}
+
 @media only screen and (min-device-width: 501px) and (max-device-width: 1000px) {
     .searchBarOptionContainer > div.searchBarOption {
         max-width: 30%;
@@ -22,13 +26,16 @@
     }
 }
 
-@media only screen and (min-device-width: 0) and (max-device-width: 500px) {
+@media only screen and (max-device-width: 500px) {
     .searchBarOption {
-        width: 90%;
-        margin: 5%;
+        min-width: 90%;
+        display: block;
+        margin: 12px 0;
     }
+
     .searchBarOptionContainer {
         width: 100%;
+        display: block;
         margin: 48px 0;
     }
 
@@ -46,10 +53,12 @@
 
 @media (max-width: 500px) {
     .searchBarOption {
-        width: 90%;
-        margin: 5%;
+        min-width: 90%;
+        display: block;
+        margin: 12px 0;
     }
     .searchBarOptionContainer {
+        display: block;
         width: 100%;
         margin: 48px 0;
     }

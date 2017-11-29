@@ -25,7 +25,7 @@ class Header extends Component {
 
     return(
       <div>
-        <div className={ 'navMenuButton '} role='button' onKeyDown={ this.handleKeyDown } tabIndex={ 0 } onClick={ this.handleClickMenu }>
+        <div className='navMenuButton' role='button' onKeyDown={ this.handleKeyDown } tabIndex={ 0 } onClick={ this.handleClickMenu }>
           <MenuIcon />
           { this.renderLinks(mobile) }
         </div>
