@@ -73,10 +73,10 @@ class Header extends Component {
       return (
         <nav className={ navigationClassName } >
           <a href={ '/sign_up/client' } className='slidingLink' >
-            Become a client
+            Sign up as a client
           </a>
           <a href={ '/sign_up/volunteer' } className='slidingLink'>
-            Volunteer as a teacher
+            Sign up as a volunteer
           </a>
           <a href={ '/sign_in/' } className='slidingLink'>
             Sign In
@@ -93,7 +93,7 @@ class Header extends Component {
           Search
         </a>
       );
-    } else if (this.props.currentUser.teacher) {
+    } else if (this.props.currentUser.volunteer) {
       return (
         <span>
           <a href={'/availabilities/new'} className='slidingLink'>

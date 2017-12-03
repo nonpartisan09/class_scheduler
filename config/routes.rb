@@ -7,8 +7,8 @@ Rails.application.routes.draw do
   resources :sessions
   resource :users
 
-  get '/availabilities/new/:sign_up' => 'availabilities#new'
-  get 'search/:sign_up' => 'availabilities#search'
+  get 'availabilities/new(/:sign_up)' => 'availabilities#new'
+  get 'search(/:sign_up)' => 'availabilities#search'
   get 'results' => 'availabilities#results'
   get 'my_profile', to: 'user_profiles#show'
 

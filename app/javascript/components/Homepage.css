@@ -1,24 +1,37 @@
 .homepageContainer {
   position: relative;
-  width: 100%;
-  margin-top: 36px;
-  height: 350px;
-  overflow: hidden;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
 }
 
 .homepageImage {
-  width: 100vw;
-  height: calc((100vw * 9)/16);
+  width: 53vw;
+  object-fit: cover;
+  height: 100vh;
 }
 
-.mask {
-  position: absolute;
+.homepageCaption {
+  width: 42vw;
+  max-height: 100vh;
+  padding: 48px 0 48px 36px;
+  display: flex;
+  flex-flow: row wrap;
+  align-content: space-around;
+}
+
+.homepageCaptionItem {
   width: 100%;
-  height: calc((100vw * 9)/16);
-  top: 0;
-  bottom: 0;
-  padding: 48px 0 0 48px;
-  background-color: rgba( 79, 79, 79, 0.4);
+  margin-bottom: 0;
+}
+
+.homepageDesktopNavigation {
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.homepageButton:not(:last-of-type)  {
+  margin-right: 24px;
 }
 
 .logo {
@@ -26,47 +39,37 @@
   height: 72px;
 }
 
-.subtitle {
-  color: #fff;
-  font-size: 24px;
+.homepageSubtitle {
+  font-size: 1.5em;
 }
 
-@media (max-width: 715px) {
-  .subtitle {
+.homepageMobileNavigation {
+  display: none;
+}
+
+@media only screen and (min-device-width: 0) and (max-device-width: 500px), (max-width: 500px) {
+  .homepageDesktopNavigation {
     display: none;
   }
-}
 
-@media (max-width: 620px) {
-  .homepageContainer {
-    height: calc((100vw * 9)/16);
-  }
-}
-
-@media only screen and (min-device-width: 0) and (max-device-width: 500px) {
    .homepageContainer {
      margin: 0;
-     height: calc((100vw * 9)/16);
    }
 
-  .mask {
-    padding: 48px 0;
+  .homepageCaption {
     text-align: center;
-    background-color: rgba( 79,79,79, 0.6);
+    order: 1;
   }
 
   .homepageMobileNavigation {
-    margin: 24px auto;
+    order: 2;
+    display: block;
+    margin: 0 auto 24px;
     width: 90%;
   }
 
-  .mobileSubtitle {
-    margin: 0;
-    text-align: center;
-    background: rgba(100,100,100, 0.6);
-    padding: 12px 0;
-    font-size: 24px;
-    color: #fff;
+  .homepageImage {
+    order: 3;
   }
 
   .logo {
@@ -74,14 +77,23 @@
     height: 50px;
   }
 }
-@media (max-width: 500px) {
 
-  .subtitle {
-    display: none;
+@media (max-width: 1200px) {
+  .homepageCaption, .homepageImage {
+    width: 100%;
   }
 
-  .logo {
-    width: 250px;
-    height: 50px;
+  .homepageImage {
+    height: 50vh;
+  }
+
+  .homepageCaption {
+    padding: 24px 0 24px 2vw;
+    max-height: 45vh;
+  }
+
+  .homepageCaptionItem {
+    width: 90%;
+    margin: 24px auto;
   }
 }

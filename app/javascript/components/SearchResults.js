@@ -10,12 +10,12 @@ import './SearchResults.css';
 
 class SearchResults extends Component {
   render() {
-    const { teachers } = this.props;
-    if (_.size(teachers) > 0) {
+    const { volunteers } = this.props;
+    if (_.size(volunteers) > 0) {
       return (
         <List>
-          <Subheader>Available Teachers</Subheader>
-          { this.renderTeachers() }
+          <Subheader>Available Volunteers</Subheader>
+          { this.renderVolunteers() }
         </List>
       );
     } else {
@@ -23,10 +23,10 @@ class SearchResults extends Component {
     }
   }
 
-  renderTeachers() {
-    const { teachers } = this.props;
+  renderVolunteers() {
+    const { volunteers } = this.props;
 
-    return _.map(_.values(teachers), ({ thumbnail_image,  first_name, city, last_logged_in, courses, url_slug, available_days }, key) => {
+    return _.map(_.values(volunteers), ({ thumbnail_image,  first_name, city, last_logged_in, courses, url_slug, available_days }, key) => {
       const handleClick = () => {
         location.assign(`/profiles/${url_slug}`);
       };
@@ -83,12 +83,12 @@ class SearchResults extends Component {
 }
 
 SearchResults.propTypes = {
-  teachers: PropTypes.array,
+  volunteers: PropTypes.array,
   currentUserCity: PropTypes.string
 };
 
 SearchResults.defaultProps = {
-  teachers: [],
+  volunteers: [],
   currentUserCity: ''
 };
 

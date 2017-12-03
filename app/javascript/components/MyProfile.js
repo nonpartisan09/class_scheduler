@@ -20,7 +20,7 @@ const ignoredFields = [
   'terms_and_conditions',
   'contact_permission',
   'client',
-  'teacher',
+  'volunteer',
   'last_logged_in',
   'availabilities',
   'url_slug'

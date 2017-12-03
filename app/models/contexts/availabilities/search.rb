@@ -16,12 +16,12 @@ module Contexts
         end
 
         if @params[:distance].present?
-          @existing_teachers = User.search(@params)
+          @existing_volunteers = User.search(@params)
                                    .near(@user.full_address, @params[:distance], :order => false)
                                    .order(last_sign_in_at: :desc)
 
         else
-          @existing_teachers = User.search(@params)
+          @existing_volunteers = User.search(@params)
                                    .order(last_sign_in_at: :desc)
         end
 

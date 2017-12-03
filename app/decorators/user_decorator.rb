@@ -13,7 +13,7 @@ class UserDecorator
       :courses => courses,
       :city => city,
       :client => client,
-      :teacher => teacher,
+      :volunteer => volunteer,
       :email => email,
       :url_slug => url_slug,
       :first_name => first_name,
@@ -32,7 +32,7 @@ class UserDecorator
         :city => city,
         :url_slug => url_slug,
         :client => client,
-        :teacher => teacher,
+        :volunteer => volunteer,
         :email => email,
         :first_name => first_name,
         :last_logged_in => last_logged_in,
@@ -87,8 +87,8 @@ class UserDecorator
     @user.client?
   end
 
-  def teacher
-    @user.teacher?
+  def volunteer
+    @user.volunteer?
   end
 
   def available_days

@@ -71,7 +71,7 @@ class SearchBar extends Component {
     this.changeHandlerDay = this.changeHandlerDay.bind(this);
 
     this.state = {
-      teachers: { },
+      volunteers: { },
       error: '',
       status
     };
@@ -169,17 +169,17 @@ class SearchBar extends Component {
 
     if (status === 204) {
       return (
-        <div className='emptyTeacherResults'>
-          Sorry, it seems no teachers match these filters.
+        <div className='emptyVolunteerResults'>
+          Sorry, it seems no volunteers match these filters.
         </div>
       );
     } else {
-      const { teachers } = this.state;
+      const { volunteers } = this.state;
       const { currentUser: { city } } = this.props;
 
       return (
         <SearchResults
-          { ...teachers }
+          { ...volunteers }
           currentUserCity={ city }
         />
       );
@@ -236,7 +236,7 @@ class SearchBar extends Component {
       method: 'GET',
       successCallBack: (response, status) => {
         return this.setState({
-          teachers: response,
+          volunteers: response,
           status
         });
       },

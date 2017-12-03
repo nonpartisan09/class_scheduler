@@ -5,7 +5,6 @@ import _ from 'lodash';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
 
-import Courses from './Courses';
 import Header from './Header';
 import './utils/CheckMobile';
 
@@ -23,8 +22,21 @@ class Homepage extends Component {
   render() {
     return (
       <div>
-        { this.renderDesktopNavigation() }
+        { this.renderDesktopHeader() }
         <div className='homepageContainer'>
+          <div className='homepageCaption'>
+            <h1 className='homepageCaptionItem'>
+              <img
+                className='logo'
+                alt='tutoria logo'
+                src={ '/assets/tutoria_logo_full color_web.png' }
+              />
+            </h1>
+            <h2 className='homepageCaptionItem homepageSubtitle'>
+              Connect and share with our community of clients and volunteers
+            </h2>
+            { this.renderDesktopNavigation() }
+          </div>
           <img
             className='homepageImage'
             src={ '/assets/community_2000.jpg' }
@@ -36,40 +48,44 @@ class Homepage extends Component {
             ${'/assets/community_1000.jpg'} 1000w,
             ${'/assets/community_1500.jpg'} 1500w,
             ${'/assets/community_2000.jpg'} 2000w,
-            ${'/assets/community_2000.jpg'} 2000w,
-            ${'/assets/community_4000.jpg'} 4000w` }
+            ${'/assets/community_2000.jpg'} 2000w` }
           />
-          <div className='mask'>
-            <h1>
-              <img className='logo' alt='tutoria logo' src={ '/assets/tutoria_logo_light_blue_and_white_web.png' } />
-            </h1>
-            <h2 className='subtitle'>
-              Connect and share with our community of clients and teachers
-            </h2>
-          </div>
+
+          { this.renderMobileNavigation() }
         </div>
-
-        { this.renderMobileNavigation() }
-
-        <Courses courses={ this.props.courses } />
       </div>
     );
   }
 
-  renderDesktopNavigation() {
-      if (!window.mobilecheck()) {
+  renderDesktopHeader() {
+    if (!_.isEmpty(this.props.currentUser)) {
       return (
         <Header currentUser={ this.props.currentUser } />
       );
     }
   }
 
-  renderMobileNavigation() {
-    if (window.mobilecheck() && _.isEmpty(this.props.currentUser)) {
+  renderDesktopNavigation() {
+    if (!window.mobilecheck() && _.isEmpty(this.props.currentUser)) {
       return [
-        <h2 key={ 0 } className='mobileSubtitle'>
-          Connect and share
-        </h2>,
+        <div key={ 1 } className='homepageCaptionItem homepageDesktopNavigation' >
+          <div className='homepageButton'>
+            <RaisedButton primary label='Sign in' onClick={ this.handleSignIn } />
+          </div>
+          <div className='homepageButton'>
+            <FlatButton className='homepageButton' primary label='Sign up as a volunteer' onClick={ this.handleSignUpVolunteer } />
+          </div>
+          <div className='homepageButton'>
+            <FlatButton className='homepageButton' primary label='Sign up as a client' onClick={ this.handleSignUpClient } />
+          </div>
+        </div>
+      ];
+    }
+  }
+
+  renderMobileNavigation() {
+    if (_.isEmpty(this.props.currentUser)) {
+      return [
         <div key={ 1 } className='homepageMobileNavigation' >
           <RaisedButton primary fullWidth label='Sign in' onClick={ this.handleSignIn } />
           <FlatButton primary fullWidth label='Sign up as a volunteer' onClick={ this.handleSignUpVolunteer } />

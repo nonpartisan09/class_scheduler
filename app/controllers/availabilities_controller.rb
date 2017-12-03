@@ -15,9 +15,9 @@ class AvailabilitiesController < ApplicationController
     end
 
     if results.present?
-      teachers = results.collect { |teacher| UserDecorator.new(teacher) }
-      teachers = teachers.collect { |teacher| teacher.simple_decorate }
-      render json: { teachers: teachers }, status: :ok
+      volunteers = results.collect { |volunteer| UserDecorator.new(volunteer) }
+      volunteers = volunteers.collect { |volunteer| volunteer.simple_decorate }
+      render json: { volunteers: volunteers }, status: :ok
     else
       head :no_content
     end
@@ -105,7 +105,7 @@ class AvailabilitiesController < ApplicationController
   private
 
   def check_if_volunteer?
-    unless current_user.teacher?
+    unless current_user.volunteer?
       redirect_to root_path
     end
   end

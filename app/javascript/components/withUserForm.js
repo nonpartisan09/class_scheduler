@@ -464,8 +464,8 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
     }
 
     renderClassLabel() {
-      const { match: { params: { role } }, currentUser: { client, teacher } } = this.props;
-      if (role === 'volunteer' || teacher ) {
+      const { match: { params: { role } }, currentUser: { client, volunteer } } = this.props;
+      if (role === 'volunteer' || volunteer ) {
         return (
           <h2 className='userFormHeader'>
             I am interested in teaching:
@@ -489,12 +489,12 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
     }
 
     renderDialogText() {
-      const { match: { params: { role } }, currentUser: { client, teacher } } = this.props;
+      const { match: { params: { role } }, currentUser: { client, volunteer } } = this.props;
 
-      if (role === 'volunteer' || teacher ) {
+      if (role === 'volunteer' || volunteer ) {
         return (
           <div>
-            Your location will only be used to help clients find teachers in their area.
+            Your location will only be used to help clients find volunteers in their area.
             <br />
             It’s not required unless you would like to allow clients to ask for face to face sessions.
           </div>
@@ -502,7 +502,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
       } else if (role === 'client' || client) {
         return (
           <div>
-            Your location will only be used to help find teachers in your area.
+            Your location will only be used to help find volunteers in your area.
             <br />
             It’s not required unless you would like to use the location feature.
           </div>
