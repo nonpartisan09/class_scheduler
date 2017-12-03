@@ -1,3 +1,4 @@
+
 class UserDecorator
   include ActionView::Helpers::DateHelper
 
@@ -58,8 +59,10 @@ class UserDecorator
 
   def picture
     if Rails.env.production?
-      URI.join('https:' + user.thumbnail_image.url(:thumbnail)).to_s
-    else
+      if user.thumbnail_image.present?
+        URI.join('https:' + user.thumbnail_image.url(:thumbnail)).to_s
+      end
+    elsif user.thumbnail_image.present?
       URI.join(Rails.configuration.static_base_url, user.thumbnail_image.url(:thumbnail)).to_s
     end
   end

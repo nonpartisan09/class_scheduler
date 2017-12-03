@@ -31,6 +31,18 @@
   font-size: 24px;
 }
 
+@media (max-width: 715px) {
+  .subtitle {
+    display: none;
+  }
+}
+
+@media (max-width: 620px) {
+  .homepageContainer {
+    height: calc((100vw * 9)/16);
+  }
+}
+
 @media only screen and (min-device-width: 0) and (max-device-width: 500px) {
    .homepageContainer {
      margin: 0;
@@ -57,19 +69,12 @@
     color: #fff;
   }
 
-  .subtitle {
-    display: none;
-  }
-
   .logo {
     width: 250px;
     height: 50px;
   }
 }
 @media (max-width: 500px) {
-  .homepageContainer {
-    height: calc((100vw * 9)/16);
-  }
 
   .subtitle {
     display: none;
