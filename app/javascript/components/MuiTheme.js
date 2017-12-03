@@ -21,7 +21,7 @@ export default {
   },
 
   flatButton: {
-    textColor: primaryColor2,
+    textColor: '#fff',
     primaryColor: primaryColor1,
     primaryColor1: primaryColor1,
     secondaryTextColor: secondaryColor1,
@@ -30,7 +30,7 @@ export default {
   },
 
   raisedButton: {
-    textColor: primaryColor1,
+    textColor: '#fff',
     primaryColor: primaryColor2,
     primaryColor1: accentColor,
     secondaryTextColor: secondaryColor4,

@@ -19,7 +19,7 @@ const { UPDATE_PROFILE } = UserFormConstants;
 const ignoredFields = [
   'terms_and_conditions',
   'contact_permission',
-  'student',
+  'client',
   'teacher',
   'last_logged_in',
   'availabilities',

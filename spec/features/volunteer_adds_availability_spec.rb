@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 feature 'When user navigates to new availability page' do
-  let!(:student_role) { create(:role) }
+  let!(:client_role) { create(:role) }
   let!(:volunteer_role) { create(:role, :name => 'Volunteer') }
-  let! (:user) { create(:user, { :roles => [ student_role ]}) }
+  let! (:user) { create(:user, { :roles => [ client_role ]}) }
 
   pending describe 'and is not signed in' do
     it 'then they should be redirected to sign in page' do
@@ -15,7 +15,7 @@ feature 'When user navigates to new availability page' do
   end
 
   pending describe 'and is signed in' do
-    describe 'as a student' do
+    describe 'as a client' do
       before (:each) {
         visit sign_in_path
         fill_in 'user_email', with: user.email

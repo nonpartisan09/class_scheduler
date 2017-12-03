@@ -11,7 +11,7 @@ class UserDecorator
     {
       :courses => courses,
       :city => city,
-      :student => student,
+      :client => client,
       :teacher => teacher,
       :email => email,
       :url_slug => url_slug,
@@ -30,7 +30,7 @@ class UserDecorator
         :address => address,
         :city => city,
         :url_slug => url_slug,
-        :student => student,
+        :client => client,
         :teacher => teacher,
         :email => email,
         :first_name => first_name,
@@ -80,8 +80,8 @@ class UserDecorator
     user.city
   end
 
-  def student
-    @user.student?
+  def client
+    @user.client?
   end
 
   def teacher

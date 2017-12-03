@@ -6,7 +6,7 @@ FactoryGirl.define do
       if proxy.name.present?
         role.name = proxy.name
       else
-        role.name = 'Student'
+        role.name = 'Client'
       end
     end
   end

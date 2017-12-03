@@ -21,9 +21,9 @@ Role.create({
 })
 
 Role.create({
-    name: 'Student',
-    url_slug: 'student',
-    description: 'A student',
+    name: 'Client',
+    url_slug: 'client',
+    description: 'A client',
     displayable: true
 })
 

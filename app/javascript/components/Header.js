@@ -72,8 +72,8 @@ class Header extends Component {
     else {
       return (
         <nav className={ navigationClassName } >
-          <a href={ '/sign_up/student' } className='slidingLink' >
-            Become a student
+          <a href={ '/sign_up/client' } className='slidingLink' >
+            Become a client
           </a>
           <a href={ '/sign_up/volunteer' } className='slidingLink'>
             Volunteer as a teacher
@@ -87,7 +87,7 @@ class Header extends Component {
   }
 
   renderRoleLinks() {
-    if (this.props.currentUser.student) {
+    if (this.props.currentUser.client) {
       return (
         <a href={'/search'} className='slidingLink'>
           Search

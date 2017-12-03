@@ -1,13 +1,13 @@
 require 'rails_helper'
 
 feature 'User signs up' do
-  let!(:student_role) { create(:role) }
+  let!(:client_role) { create(:role) }
   let!(:volunteer_role) { create(:role, :name => 'Volunteer') }
   let!(:t_and_c) { create(:terms_and_conditions) }
 
-  pending describe 'as a student' do
+  pending describe 'as a client' do
     it 'all fields should be present and required' do
-      visit "/sign_up/#{student_role.url_slug}"
+      visit "/sign_up/#{client_role.url_slug}"
 
       expect(find('.email')[:required]).to_not be_nil
       expect(find_field('user_first_name')[:required]).to_not be_nil
@@ -19,7 +19,7 @@ feature 'User signs up' do
 
     describe 'and fill in all their details' do
       it 'they see their username on the homepage' do
-        visit sign_up_path(student_role.url_slug)
+        visit sign_up_path(client_role.url_slug)
 
         fill_in 'user_display_name', with: 'Username'
         fill_in 'user_first_name', with: 'FirstName'

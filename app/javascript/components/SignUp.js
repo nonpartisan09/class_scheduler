@@ -37,7 +37,7 @@ function handleUserSignUp() {
 
       if (role === 'volunteer') {
         link = '/availabilities/new/sign_up';
-      } else if (role === 'student' ) {
+      } else if (role === 'client' ) {
         link = '/search/sign_up';
       }
       location.assign(link);

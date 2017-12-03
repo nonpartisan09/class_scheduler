@@ -6,7 +6,7 @@ classes. The bottleneck is that connecting immigrants and volunteers is done
 manually by non-profit staff, who do not have the capacity to provide
 matching/scheduling services.
 
-**Purpose:** Build a Rails app that lets students schedule naturalization classes with
+**Purpose:** Build a Rails app that lets clients schedule naturalization classes with
 volunteers.
 
 ## Minimum Viable Product
@@ -14,16 +14,16 @@ volunteers.
 - Multilingual pages
 
 - Authentication
-	- Student / Volunteer Sign-up && Login
+	- Client / Volunteer Sign-up && Login
 
 - Scheduling
 	- Volunteers can create class sessions
-	- Students can search for class sessions by location, date, and language
-	- Students and volunteers can communicate
+	- Clients can search for class sessions by location, date, and language
+	- Clients and volunteers can communicate
 
 - Credibility/Safety
 	- Non-anonymous volunteer accounts
-	- Students and volunteers can review each other
+	- Clients and volunteers can review each other
 	- Legal Disclaimer
 
 - Mobile first design
@@ -33,7 +33,7 @@ volunteers.
 	- Free/Cheap to maintain
 
 - Admin view
-	- view Student-Tutor connections
+	- view Client-Tutor connections
 	- view / delete accounts
 
 ## Views
@@ -42,12 +42,12 @@ Meta:
 - `/`
 
 User Authentication:
-- `sign_up/student`
+- `sign_up/client`
 - `sign_up/volunteer`
 - `sign_in`
 
 Scheduling:
-- `search`: index page for students to search for class sessions
+- `search`: index page for clients to search for class sessions
 - `availabilities/new`: show/edit page for volunteers to create/edit schedules
 
 ## Models

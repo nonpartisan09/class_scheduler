@@ -34,7 +34,7 @@ class User < ActiveRecord::Base
   validates :email, :url_slug, presence: true, uniqueness: true
 
   scope :teacher, -> { includes(:roles).where({:roles => {:url_slug => 'volunteer'}})}
-  scope :student, -> { includes(:roles).where({:roles => {:url_slug => 'student'}})}
+  scope :client, -> { includes(:roles).where({:roles => {:url_slug => 'client'}})}
 
   def self.authentication_keys
     [ :email ]
@@ -52,8 +52,8 @@ class User < ActiveRecord::Base
     self.roles.where(:url_slug => 'volunteer').present?
   end
 
-  def student?
-    self.roles.where(:url_slug => 'student').present?
+  def client?
+    self.roles.where(:url_slug => 'client').present?
   end
 
   def remember_me

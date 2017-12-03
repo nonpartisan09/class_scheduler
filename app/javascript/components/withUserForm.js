@@ -464,17 +464,17 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
     }
 
     renderClassLabel() {
-      const { match: { params: { role } }, currentUser: { student, teacher } } = this.props;
+      const { match: { params: { role } }, currentUser: { client, teacher } } = this.props;
       if (role === 'volunteer' || teacher ) {
         return (
           <h2 className='userFormHeader'>
             I am interested in teaching:
           </h2>
         );
-      } else if (role === 'student' || student ) {
+      } else if (role === 'client' || client ) {
         return (
           <h2 className='userFormHeader'>
-            I am interested in studying:
+            I am interested in:
           </h2>
         );
       }
@@ -489,17 +489,17 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
     }
 
     renderDialogText() {
-      const { match: { params: { role } }, currentUser: { student, teacher } } = this.props;
+      const { match: { params: { role } }, currentUser: { client, teacher } } = this.props;
 
       if (role === 'volunteer' || teacher ) {
         return (
           <div>
-            Your location will only be used to help students find teachers in their area.
+            Your location will only be used to help clients find teachers in their area.
             <br />
-            It’s not required unless you would like to allow students to ask for face to face sessions.
+            It’s not required unless you would like to allow clients to ask for face to face sessions.
           </div>
         );
-      } else if (role === 'student' || student) {
+      } else if (role === 'client' || client) {
         return (
           <div>
             Your location will only be used to help find teachers in your area.

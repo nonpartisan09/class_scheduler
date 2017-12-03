@@ -1,7 +1,7 @@
 class AvailabilitiesController < ApplicationController
   before_action :authenticate_user!
   before_action :check_if_volunteer?, except: [:search, :results]
-  before_action :check_if_student?, only: [:search ]
+  before_action :check_if_client?, only: [:search ]
 
   def results
 
@@ -110,8 +110,8 @@ class AvailabilitiesController < ApplicationController
     end
   end
 
-  def check_if_student?
-    unless current_user.student?
+  def check_if_client?
+    unless current_user.client?
       redirect_to root_path
     end
   end
