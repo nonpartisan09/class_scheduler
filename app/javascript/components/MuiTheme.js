@@ -33,6 +33,7 @@ export default {
     textColor: '#fff',
     primaryColor: primaryColor2,
     primaryColor1: accentColor,
+    primaryTextColor: '#fff',
     secondaryTextColor: secondaryColor4,
     disabledTextColor: disabledTextColor
   },

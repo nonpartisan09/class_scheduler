@@ -29,31 +29,8 @@ a:hover {
     text-decoration: none;
 }
 
-.navigation {
-    width: 100%;
-    margin-top: 24px;
-    padding-left: 24px;
-    text-align: left;
-}
-
-@media only screen and (min-device-width: 0) and (max-device-width: 650px) {
+@media only screen and (min-device-width: 0) and (max-device-width: 650px), (max-width: 650px)  {
     html {
        font-size: 3vmax;
     }
-
-    .navigation {
-        text-align: center;
-    }
-
-}
-
-@media (max-width: 650px) {
-    html {
-        font-size: 3vmax;
-    }
-
-    .navigation {
-        text-align: center;
-    }
-
 }

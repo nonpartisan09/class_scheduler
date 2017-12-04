@@ -36,7 +36,7 @@
 
 .logo {
   width: 364px;
-  height: 72px;
+  height: 77px;
 }
 
 .homepageSubtitle {
@@ -48,6 +48,10 @@
 }
 
 @media only screen and (min-device-width: 0) and (max-device-width: 500px), (max-width: 500px) {
+  .homepageSubtitle {
+    font-size: 18px;
+  }
+
   .homepageDesktopNavigation {
     display: none;
   }
@@ -57,7 +61,6 @@
    }
 
   .homepageCaption {
-    text-align: center;
     order: 1;
   }
 
@@ -73,8 +76,8 @@
   }
 
   .logo {
-    width: 250px;
-    height: 50px;
+    width: 260px;
+    height: 55px;
   }
 }
 
