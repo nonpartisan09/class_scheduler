@@ -1,9 +1,9 @@
 module Contexts
   module Availabilities
     class Creation
-      def initialize(availability, timezone, current_user)
+      def initialize(availability, current_user)
         @availability = availability
-        @timezone = timezone
+        @timezone = current_user[:timezone]
         @current_user = current_user
         @day = @availability[:day]
 
@@ -32,7 +32,6 @@ module Contexts
             :start_time => @utc_start_time,
             :end_time => @utc_end_time,
             :user_id => @current_user.id,
-            :timezone => @timezone
         })
 
         Availability.create!(new_availability_params)
@@ -60,14 +59,14 @@ You might want to delete them and try again.'
       end
 
       def check_if_less_than_30_minutes?
-        minutes = ((@local_end_time - @local_start_time) / 1.minute).round
+        minutes = ((@parsed_end_time - @parsed_start_time) / 1.minute).round
         if minutes < 30
           raise Availabilities::Errors::ShortAvailability, 'The minimum required for a class is 30 minutes.'
         end
       end
 
       def check_if_starts_before_ends?
-        if (@local_end_time - @local_start_time) < 0
+        if (@parsed_end_time - @parsed_start_time) < 0
           raise Availabilities::Errors::ShortAvailability, 'Please select an end time chronologically after start time.'
         end
       end
@@ -75,13 +74,15 @@ You might want to delete them and try again.'
       private
 
       def initialize_start_time
-        @local_start_time = Time.parse(@availability[:start_time] + ' ' + @timezone)
-        @utc_start_time = @local_start_time.utc.iso8601
+        @parsed_start_time = Time.parse(@availability[:start_time])
+        Time.zone = @timezone
+        @utc_start_time = Time.zone.local_to_utc(@parsed_start_time)
       end
 
       def initialize_end_time
-        @local_end_time =  Time.parse(@availability[:end_time] + ' ' + @timezone)
-        @utc_end_time = @local_end_time.utc.iso8601
+        @parsed_end_time =  Time.parse(@availability[:end_time])
+        Time.zone = @timezone
+        @utc_end_time = Time.zone.local_to_utc(@parsed_end_time)
       end
     end
   end

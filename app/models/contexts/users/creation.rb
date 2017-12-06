@@ -1,11 +1,11 @@
 module Contexts
   module Users
     class Creation
-      def initialize(user, resource_name, role_id, courses)
+      def initialize(user, resource_name, role_id, programs)
         @user = user
         @resource_name = resource_name
         @role_id = role_id
-        @courses = courses
+        @programs = programs
 
         if check_if_email_exists?
           raise Users::Errors::AlreadyUsedEmail,'This email is already in use. Have you forgotten your password?'
@@ -22,8 +22,8 @@ module Contexts
         @user.terms_and_conditions = TermsAndConditions.last.id
         @user.roles << Role.find(@role_id)
 
-        @courses.each do |n|
-          @user.courses << Course.find_by_name(n)
+        @programs.each do |n|
+          @user.programs << Program.find_by_name(n)
         end
 
         @user.save

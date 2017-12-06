@@ -32,7 +32,7 @@ class UserProfile extends Component {
           </div>
 
           <div className='userProfileField'>
-            Can teach: { user && user.courses? user && user.courses.join(', ') : '' }
+            Can teach: { user && user.programs? user && user.programs.join(', ') : '' }
           </div>
 
           <div className='userProfileField'>
@@ -77,7 +77,7 @@ UserProfile.propTypes = {
   current_user: PropTypes.object.isRequired,
   user: PropTypes.shape({
     availabilities: PropTypes.array.isRequired,
-    courses: PropTypes.array.isRequired,
+    programs: PropTypes.array.isRequired,
     first_name: PropTypes.string.isRequired,
     thumbnail_url: PropTypes.string
   }).isRequired

@@ -89,11 +89,11 @@ class SignIn extends Component {
           />
 
           <RaisedButton primary label='Sign In' onClick={ this.handleSignIn } className='signInLink' />
-          <a href={ '/sign_up/client' } rel='nofollow' className='signInLinkSecondary'>
+          <a href={ '/sign_up/client' }  className='signInLinkSecondary'>
             <FlatButton primary label='Sign up as a client' />
           </a>
 
-          <a href={ '/sign_up/volunteer' } rel='nofollow' className='signInLinkSecondary'>
+          <a href={ '/sign_up/volunteer' }  className='signInLinkSecondary'>
             <FlatButton primary label='Sign up as a volunteer' />
           </a>
 

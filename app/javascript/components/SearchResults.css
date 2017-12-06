@@ -1,4 +1,4 @@
-.resultsFirstName, .resultsLastLogin, .resultsCity, .resultsAvailableDays, .resultsCourses  {
+.resultsFirstName, .resultsLastLogin, .resultsCity, .resultsAvailableDays, .resultsPrograms  {
     width: 10%;
     text-align: left;
 }
@@ -7,7 +7,7 @@
     width: 15%;
 }
 
-.resultsCourses, .resultsCity {
+.resultsPrograms, .resultsCity {
     width: 20%;
 }
 .resultsAvailableDays {
@@ -29,7 +29,7 @@
         height: auto;
     }
 
-    .resultsFirstName, .resultsLastLogin, .resultsCity, .resultsAvailableDays, .resultsCourses {
+    .resultsFirstName, .resultsLastLogin, .resultsCity, .resultsAvailableDays, .resultsPrograms {
         margin-bottom: 12px;
         width: 100%;
     }
@@ -42,7 +42,7 @@
         height: auto;
     }
 
-    .resultsFirstName, .resultsLastLogin, .resultsCity, .resultsAvailableDays, .resultsCourses {
+    .resultsFirstName, .resultsLastLogin, .resultsCity, .resultsAvailableDays, .resultsPrograms {
         margin-bottom: 12px;
         width: 100%;
     }

@@ -7,11 +7,13 @@ class UserProfilesController < ApplicationController
     end
     user = UserDecorator.new(current_user)
     user = user.decorate
-    courses = Course.all
+    programs = Program.all
+    timezones = ActiveSupport::TimeZone.all.sort
 
     @data = {
-        :classes => courses,
-        :currentUser => user
+        :programs => programs,
+        :currentUser => user,
+        :timezones => timezones
     }
 
     render :show

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
-import moment from 'moment';
 
 import {
   Table,
@@ -17,14 +16,14 @@ import './AvailabilitiesTable.css';
 class AvailabilitiesTable extends Component {
 
   render() {
-    const { availabilities } = this.props;
+    const { availabilities, timezone } = this.props;
 
-    const tableContent =  _.map(availabilities, ({ day, start_time, end_time, timezone }) => {
+    const tableContent =  _.map(availabilities, ({ day, start_time, end_time }) => {
       return(
         <TableRow className='availabilitiesTableRow' key={ 'body' + day }>
           <TableRowColumn>{ day }</TableRowColumn>
-          <TableRowColumn>From: { moment(start_time).format('HH:MM') }</TableRowColumn>
-          <TableRowColumn>To: { moment(end_time).format('HH:MM') }</TableRowColumn>
+          <TableRowColumn>From: { start_time }</TableRowColumn>
+          <TableRowColumn>To: { end_time }</TableRowColumn>
           <TableRowColumn >Timezone: { timezone }</TableRowColumn>
         </TableRow>
       );
@@ -38,10 +37,10 @@ class AvailabilitiesTable extends Component {
           </li>
 
           <li>
-            <span>From: </span>{ moment(start_time).format('HH:MM') }
+            <span>From: </span>{ start_time }
           </li>
           <li>
-            <span>To: </span>{ moment(end_time).format('HH:MM') }
+            <span>To: </span>{ end_time }
           </li>
 
           <li>
@@ -81,11 +80,13 @@ class AvailabilitiesTable extends Component {
 }
 
 AvailabilitiesTable.propTypes = {
- availabilities: PropTypes.object
+  availabilities: PropTypes.oneOfType([ PropTypes.array, PropTypes.object ]),
+  timezone: PropTypes.string
 };
 
 AvailabilitiesTable.defaultProps = {
- availabilities: {}
+  availabilities: {},
+  timezone: ''
 };
 
 export default AvailabilitiesTable;

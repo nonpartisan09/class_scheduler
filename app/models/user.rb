@@ -2,7 +2,7 @@ class User < ActiveRecord::Base
   include HasUrlSlug, HasSearch
   has_and_belongs_to_many :roles, :join_table => :roles_users
   has_many :enrollments
-  has_many :courses, through: :enrollments
+  has_many :programs, through: :enrollments
 
   has_many :availabilities, dependent: :destroy
 
@@ -31,6 +31,7 @@ class User < ActiveRecord::Base
 
   validates_confirmation_of :password
 
+  validates :timezone, presence: true
   validates :email, :url_slug, presence: true, uniqueness: true
 
   scope :volunteer, -> { includes(:roles).where({:roles => {:url_slug => 'volunteer'}})}

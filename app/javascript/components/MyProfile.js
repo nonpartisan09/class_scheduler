@@ -12,7 +12,6 @@ import ProfileSchema from './schema/ProfileSchema';
 import withUserForm from './withUserForm';
 
 import './Header.css';
-import './MyProfile.css';
 
 const { UPDATE_PROFILE } = UserFormConstants;
 
@@ -85,7 +84,7 @@ class MyProfile extends Component {
 
 MyProfile.propTypes = {
   currentUser: PropTypes.shape({
-    courses: PropTypes.array,
+    programs: PropTypes.array,
     first_name: PropTypes.string,
     address: PropTypes.string,
     city: PropTypes.string,
@@ -99,7 +98,7 @@ MyProfile.propTypes = {
 
 MyProfile.defaultProps = {
   currentUser: {
-    courses: [],
+    programs: [],
     address: '',
     city: '',
     first_name: '',

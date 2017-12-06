@@ -10,7 +10,7 @@ class UserDecorator
 
   def simple_decorate
     {
-      :courses => courses,
+      :programs => programs,
       :city => city,
       :client => client,
       :volunteer => volunteer,
@@ -20,13 +20,14 @@ class UserDecorator
       :available_days => available_days,
       :availabilities => availabilities,
       :last_logged_in => last_logged_in,
-      :thumbnail_image => picture
+      :thumbnail_image => picture,
+      :timezone => timezone
     }
   end
 
   def decorate
     {
-        :courses => courses,
+        :programs => programs,
         :availabilities => availabilities,
         :address => address,
         :city => city,
@@ -37,8 +38,13 @@ class UserDecorator
         :first_name => first_name,
         :last_logged_in => last_logged_in,
         :thumbnail_image => picture,
-        :description => description
+        :description => description,
+        :timezone => timezone
     }
+  end
+
+  def timezone
+    user.timezone
   end
 
   def description
@@ -71,8 +77,8 @@ class UserDecorator
     user.availabilities.collect{ |n| AvailabilityDecorator.new(n).decorate }
   end
 
-  def courses
-    user.courses.pluck(:name)
+  def programs
+    user.programs.pluck(:name)
   end
 
   def address

@@ -10,6 +10,8 @@ import RaisedButton from 'material-ui/RaisedButton';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import TimePicker from 'material-ui/TimePicker';
+import TextField from 'material-ui/TextField';
+
 import FormData from './FormData';
 
 import Header from './Header';
@@ -22,14 +24,7 @@ const nowDate = new Date();
 const DEFAULT_START = _.toString(new Date(nowDate.setHours(0, 0)));
 const DEFAULT_END = _.toString(new Date(nowDate.setHours(23, 59)));
 
-const schema = Joi.object({ timezone: Joi.string().required().options({
-                language: {
-                  any: {
-                    empty: 'Please select a timezone',
-                  }
-                }
-              })
-}).pattern(/[0-9]+/, Joi.object({
+const schema = Joi.object({}).pattern(/[0-9]+/, Joi.object({
     day: Joi.string().required().options({
       language: {
         any: {
@@ -69,8 +64,8 @@ function validateTimes({ values, validateAllValues, changingValues, errors }, ca
           if (values[index].start_time && values[index].end_time) {
             const endTimeIsBeforeStartTime = values[index].end_time < values[index].start_time;
             if (endTimeIsBeforeStartTime) {
-              if (_.endsWith(item, 'start_time')) { _.set(errors, `${index}.start_time`, 'Please select a start time chronologically before end time'); };
-              if (_.endsWith(item, 'end_time')) { _.set(errors, `${index}.end_time`, 'Please select an end time chronologically after end time'); };
+              if (_.endsWith(item, 'start_time')) { _.set(errors, `${index}.start_time`, 'Please select a start time chronologically before end time'); }
+              if (_.endsWith(item, 'end_time')) { _.set(errors, `${index}.end_time`, 'Please select an end time chronologically after end time'); }
             }
           }
 
@@ -91,11 +86,9 @@ class NewAvailability extends Component {
   constructor (props, context) {
     super(props, context);
 
-    this.changeTimezoneHandler = this.changeTimezoneHandler.bind(this);
     this.changeDayHandler = this.changeDayHandler.bind(this);
     this.handleAddAvailability = this.handleAddAvailability.bind(this);
     this.handleRemoveAvailability = this.handleRemoveAvailability.bind(this);
-    this.changeTimezoneHandler = this.changeTimezoneHandler.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
 
     this.state = {
@@ -107,41 +100,39 @@ class NewAvailability extends Component {
   render() {
     const {
       validateAllHandler,
-      availabilities: {
-        timezone
-      },
-      validateHandler,
-      timezones,
-      errors,
-      availabilities
+      currentUser,
+      availabilities,
+      currentUser: { timezone }
     } = this.props;
 
     return (
       <div>
-        <Header currentUser={ this.props.currentUser } />
+        <Header currentUser={ currentUser } />
 
         <div className='availabilityContainer'>
           { this.renderTitle() }
           <ErrorField error={ this.state.error } />
 
           <form className='newAvailabilityFormContainer'>
+            <div>
+              <TextField
+                value={ timezone }
+                className='newAvailabilityTimezone'
+                name='timezoneAvailability'
+                disabled
+              />
+
+              <a href="/my_profile" className='slidingLink' >
+                Not your timezone?
+              </a>
+            </div>
+
             <RaisedButton
               className='addAvailabilitiesButton'
               label='Create All Availabilities'
               primary
               onClick={ validateAllHandler(this.handleSubmit) }
             />
-
-            <SelectField
-              hintText='Select Timezone'
-              value={ timezone }
-              errorText={ errors.timezone }
-              onChange={ this.changeTimezoneHandler }
-              onBlur={ validateHandler('timezone') }
-              fullWidth
-            >
-              { _.map(timezones, ({ name, id }, index) => <MenuItem key={ name + id + index } insetChildren checked={ availabilities && availabilities.timezone === name } value={ name } primaryText={ <span> { name } </span> } />) }
-            </SelectField>
 
             { this.renderAvailabilities() }
           </form>
@@ -258,12 +249,6 @@ class NewAvailability extends Component {
     });
   }
 
-  changeTimezoneHandler(proxy, index, value) {
-    const { changeValue } = this.props;
-
-    changeValue('timezone', value);
-  }
-
   changeDayHandler(path) {
 
     return (proxy, index, value) => {
@@ -278,13 +263,12 @@ class NewAvailability extends Component {
 NewAvailability.propTypes = {
   match: PropTypes.object,
   errors: PropTypes.object,
-  timezones: PropTypes.array,
   currentUser: PropTypes.shape({
     email: PropTypes.string,
+    timezone: PropTypes.string,
   }),
 
   availabilities: PropTypes.shape({
-    timezone: '',
     0: PropTypes.shape({
       start_time: PropTypes.object,
       end_time: PropTypes.object,
@@ -306,12 +290,11 @@ NewAvailability.defaultProps = {
   },
   currentUser: {
     email: '',
+    timezone: 'UTC',
   },
   errors: {},
   days: [],
-  timezones: [],
   availabilities: {
-    timezone: 'UTC',
     0: {
       start_time: {},
       end_time: {},

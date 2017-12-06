@@ -55,7 +55,7 @@ Scheduling:
 - `User`
 - `Role`
 - `Availability`
-- `Course`
+- `Program`
 
 ## Libraries
 

@@ -1,7 +1,7 @@
 class Availability < ApplicationRecord
   belongs_to :user
 
-  validates :start_time, :end_time, :day, :timezone, presence: true
+  validates :start_time, :end_time, :day, presence: true
   validates :user_id, presence: true
 
   scope :in_range, -> range {
@@ -14,5 +14,9 @@ class Availability < ApplicationRecord
 
   def end_in_time_zone
     self.end_time.in_time_zone(self.timezone).strftime("%R")
+  end
+
+  def timezone
+    user.timezone
   end
 end

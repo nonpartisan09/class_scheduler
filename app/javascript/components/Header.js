@@ -53,17 +53,17 @@ class Header extends Component {
     if ( _.size(this.props.currentUser) > 0 ) {
       return (
         <nav className={ navigationClassName } >
-          <a href={ '/' } className='slidingLink' rel='nofollow'>
+          <a href={ '/' } className='slidingLink' >
             Home
           </a>
 
           { this.renderRoleLinks() }
 
-          <a href={ '/my_profile' } className='slidingLink' rel='nofollow'>
+          <a href={ '/my_profile' } className='slidingLink' >
             { this.props.currentUser.first_name }
           </a>
 
-          <span role='navigation' tabIndex={ 0 } onClick={ this.handleSignOut } className='slidingLink' rel='nofollow'>
+          <span role='navigation' tabIndex={ 0 } onClick={ this.handleSignOut } className='slidingLink' >
             Sign out
           </span>
         </nav>

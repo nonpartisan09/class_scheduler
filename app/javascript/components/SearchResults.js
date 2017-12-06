@@ -26,7 +26,7 @@ class SearchResults extends Component {
   renderVolunteers() {
     const { volunteers } = this.props;
 
-    return _.map(_.values(volunteers), ({ thumbnail_image,  first_name, city, last_logged_in, courses, url_slug, available_days }, key) => {
+    return _.map(_.values(volunteers), ({ thumbnail_image,  first_name, city, last_logged_in, programs, url_slug, available_days }, key) => {
       const handleClick = () => {
         location.assign(`/profiles/${url_slug}`);
       };
@@ -49,8 +49,8 @@ class SearchResults extends Component {
               { this.renderCity(city) }
 
               { this.renderAvailableDays(available_days) }
-              <div className='resultsCourses'>
-                Can teach: { _.trimEnd(courses.join(', '), ', ')}
+              <div className='resultsPrograms'>
+                Can teach: { _.trimEnd(programs.join(', '), ', ')}
               </div>
             </div>
           }

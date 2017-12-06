@@ -10,11 +10,11 @@ class ApplicationController < ActionController::Base
     else
       user = { }
     end
-    courses = Course.all
+    programs = Program.all
 
     @data = {
         :currentUser => user,
-        :courses => courses
+        :programs => programs
     }
 
     render :index

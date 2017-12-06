@@ -7,8 +7,9 @@ class RegistrationsController < Devise::RegistrationsController
 
     yield resource if block_given?
 
-    courses = Course.all
-    @data = { :classes => courses }
+    programs = Program.all
+    timezones = ActiveSupport::TimeZone.all.sort
+    @data = { :programs => programs, :timezones => timezones }
 
     validate_role_params
     respond_with(resource, render: :new)
@@ -18,10 +19,10 @@ class RegistrationsController < Devise::RegistrationsController
     begin
       validate_role_params
 
-      courses = params[:user][:courses]
+      programs = params[:user][:programs]
       build_resource(sign_up_params)
 
-      @registration = Contexts::Users::Creation.new(resource, resource_name, @role_id, courses)
+      @registration = Contexts::Users::Creation.new(resource, resource_name, @role_id, programs)
 
       @registration.execute
 
@@ -54,9 +55,9 @@ class RegistrationsController < Devise::RegistrationsController
     self.resource = resource_class.to_adapter.get!(send(:"current_#{resource_name}").to_key)
     prev_unconfirmed_email = resource.unconfirmed_email if resource.respond_to?(:unconfirmed_email)
 
-    if account_update_params[:courses].present?
-      courses = account_update_params[:courses].map { |n| Course.find_by_name(n) } if account_update_params[:courses].present?
-      params = account_update_params.merge!(:courses => courses)
+    if account_update_params[:programs].present?
+      programs = account_update_params[:programs].map { |n| Program.find_by_name(n) } if account_update_params[:programs].present?
+      params = account_update_params.merge!(:programs => programs)
     else
       params = account_update_params
     end
@@ -111,7 +112,8 @@ class RegistrationsController < Devise::RegistrationsController
         :address,
         :city,
         :thumbnail_image,
-        :courses => '',
+        :timezone,
+        :programs => '',
         :role_ids => []
     )
   end
@@ -129,7 +131,8 @@ class RegistrationsController < Devise::RegistrationsController
         :address,
         :city,
         :thumbnail_image,
-        :courses => []
+        :timezone,
+        :programs => []
     )
   end
 

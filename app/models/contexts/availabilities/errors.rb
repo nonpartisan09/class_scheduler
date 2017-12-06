@@ -23,7 +23,7 @@ module Contexts::Availabilities::Errors
 
   end
 
-  class CourseMissing < RuntimeError
+  class ProgramMissing < RuntimeError
 
   end
 end

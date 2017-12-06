@@ -10,34 +10,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171126172926) do
+ActiveRecord::Schema.define(version: 20171206100550) do
 
   create_table "availabilities", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "day"
     t.boolean "vacation"
     t.time "start_time"
     t.time "end_time"
-    t.string "timezone", default: "UTC"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id"
     t.index ["user_id"], name: "index_availabilities_on_user_id"
   end
 
-  create_table "courses", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.string "name"
-    t.string "url_slug"
-    t.text "description"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "enrollments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "user_id"
-    t.bigint "course_id"
+    t.bigint "program_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["course_id"], name: "index_enrollments_on_course_id"
+    t.index ["program_id"], name: "index_enrollments_on_program_id"
     t.index ["user_id"], name: "index_enrollments_on_user_id"
   end
 
@@ -95,6 +86,14 @@ ActiveRecord::Schema.define(version: 20171126172926) do
     t.index ["receiver_id", "receiver_type"], name: "index_mailboxer_receipts_on_receiver_id_and_receiver_type"
   end
 
+  create_table "programs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "name"
+    t.string "url_slug"
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "roles", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name"
     t.string "url_slug"
@@ -145,6 +144,7 @@ ActiveRecord::Schema.define(version: 20171126172926) do
     t.integer "thumbnail_image_file_size"
     t.datetime "thumbnail_image_updated_at"
     t.text "description"
+    t.string "timezone", default: "UTC"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

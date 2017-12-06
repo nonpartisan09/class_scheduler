@@ -49,7 +49,6 @@ export default {
   },
 
   snackbar: {
-    textColor: primaryColor1,
-    backgroundColor: disabledTextColor,
+    textColor: accentColor,
   }
 };

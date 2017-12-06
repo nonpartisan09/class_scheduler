@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   get 'terms_and_conditions' => 'application#t_and_c'
 
   resources :availabilities
-  resources :courses
+  resources :programs
   resources :sessions
   resource :users
 
