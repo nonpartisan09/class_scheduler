@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import Joi from 'joi-browser';
 import validate from 'react-joi-validation';
 
+import TextField from 'material-ui/TextField';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -17,14 +18,14 @@ import SearchOptionalFields from './SearchOptionalFields';
 
 import './SearchBar.css';
 
-function restfulUrl({ day, course, start_time, end_time, distance }) {
+function restfulUrl({ day, program, start_time, end_time, distance }) {
   const startParam = _.isDate(start_time)? `&start_time=${moment(start_time).format('HH:MM')}` : '';
   const endParam = _.isDate(end_time)? `&end_time=${moment(end_time).format('HH:MM')}`: '';
   const dayParam = _.size(day) > 0? `&day=${day}` : '';
-  const courseParam = _.size(course) > 0? `course=${course}` : '';
+  const programParam = _.size(program) > 0? `program=${program}` : '';
   const distanceParam = distance > 0? `&distance=${distance}` : '';
 
-  return `/results?${courseParam}${dayParam}${startParam}${endParam}${distanceParam}`;
+  return `/results?${programParam}${dayParam}${startParam}${endParam}${distanceParam}`;
 }
 
 const schema = {
@@ -35,10 +36,10 @@ const schema = {
       }
     }
   }),
-  course: Joi.array().min(1).required().options({
+  program: Joi.array().min(1).required().options({
     language: {
       array: {
-        min: 'Please select at least one course'
+        min: 'Please select at least one program'
       }
     }
   }),
@@ -65,9 +66,9 @@ class SearchBar extends Component {
     super(props);
 
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.selectionRendererCourse = this.selectionRendererCourse.bind(this);
+    this.selectionRendererProgram = this.selectionRendererProgram.bind(this);
     this.selectionRendererDay = this.selectionRendererDay.bind(this);
-    this.changeHandlerCourse = this.changeHandlerCourse.bind(this);
+    this.changeHandlerProgram = this.changeHandlerProgram.bind(this);
     this.changeHandlerDay = this.changeHandlerDay.bind(this);
 
     this.state = {
@@ -80,20 +81,21 @@ class SearchBar extends Component {
   render() {
     const {
       days,
-      courses,
+      programs,
       errors,
       changeHandler,
       changeValue,
       validateHandler,
       search: {
         distance,
-        course,
+        program,
         day,
         start_time,
         end_time
       },
       currentUser: {
-        city
+        city,
+        timezone
       } ,
       validateAllHandler
     } = this.props;
@@ -103,20 +105,32 @@ class SearchBar extends Component {
         <Header currentUser={ this.props.currentUser } />
         { this.renderTitle() }
 
-        <div className='searchBarContainer'>
+        <div className='searchBarTimezoneContainer'>
+          <TextField
+            value={ timezone }
+            className='searchBarTimezone'
+            name='searchBarTimezone'
+            disabled
+          />
 
+          <a href="/my_profile" className='slidingLink' >
+            Not your timezone?
+          </a>
+        </div>
+
+        <div className='searchBarContainer'>
           <div className='searchBarOptionContainer'>
             <SelectField
               className='searchBarOption'
-              hintText='Class(es)'
-              value={ course }
-              onChange={ this.changeHandlerCourse }
+              hintText='Program(s)'
+              value={ program }
+              onChange={ this.changeHandlerProgram }
               multiple
-              errorText={ errors.course }
-              selectionRenderer={ this.selectionRendererCourse }
+              errorText={ errors.program }
+              selectionRenderer={ this.selectionRendererProgram }
             >
-              { _.map(courses, ({ name, id }) => {
-                return <MenuItem key={ id } insetChildren checked={ _.indexOf(course, id) > -1 } value={ id } primaryText={ <span> { name } </span> } />;
+              { _.map(programs, ({ name, id }) => {
+                return <MenuItem key={ id } insetChildren checked={ _.indexOf(program, id) > -1 } value={ id } primaryText={ <span> { name } </span> } />;
               })}
             </SelectField>
 
@@ -186,9 +200,9 @@ class SearchBar extends Component {
     }
   }
 
-  changeHandlerCourse(event, index, value) {
+  changeHandlerProgram(event, index, value) {
     const { changeValue } = this.props;
-    changeValue('course', value, { validate: true });
+    changeValue('program', value, { validate: true });
   }
 
   changeHandlerDay(event, index, value) {
@@ -204,10 +218,10 @@ class SearchBar extends Component {
     }
   }
 
-  selectionRendererCourse(values) {
-    const { courses } = this.props;
+  selectionRendererProgram(values) {
+    const { programs } = this.props;
     if (_.size(values) > 1) {
-      const newValues = _.map(courses, ({ name, id }) => {
+      const newValues = _.map(programs, ({ name, id }) => {
         if ( _.indexOf(values, id) > -1) {
           return `${name}, `;
         }
@@ -216,7 +230,7 @@ class SearchBar extends Component {
       return _.trimEnd(newValues.join(''), ', ');
 
     } else if (_.size(values) === 1) {
-      return _.map(courses, ({ name, id }) => { if (_.indexOf(values, id) > -1) { return name; } });
+      return _.map(programs, ({ name, id }) => { if (_.indexOf(values, id) > -1) { return name; } });
     }
   }
 
@@ -253,7 +267,7 @@ class SearchBar extends Component {
 
 SearchBar.propTypes = {
   match: PropTypes.object,
-  courses: PropTypes.array,
+  programs: PropTypes.array,
   errors: PropTypes.object,
   days: PropTypes.array,
   currentUser: PropTypes.shape({
@@ -265,7 +279,7 @@ SearchBar.propTypes = {
   }),
   search: PropTypes.shape({
     day: PropTypes.array,
-    course: PropTypes.array,
+    program: PropTypes.array,
     distance: PropTypes.number,
     start_time: PropTypes.instanceOf(Date),
     end_time: PropTypes.instanceOf(Date),
@@ -282,7 +296,7 @@ SearchBar.defaultProps = {
   },
   days: [],
   errors: {},
-  courses: [],
+  programs: [],
   currentUser: {
     first_name: '',
     email: '',
@@ -290,7 +304,7 @@ SearchBar.defaultProps = {
   },
   search: {
     day: [],
-    course: [],
+    program: [],
     distance: 0,
   }
 };

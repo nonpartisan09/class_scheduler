@@ -1,4 +1,4 @@
-class Course < ApplicationRecord
+class Program < ApplicationRecord
   include HasUrlSlug
 
   has_many :enrollments

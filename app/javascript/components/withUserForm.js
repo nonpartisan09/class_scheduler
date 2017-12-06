@@ -39,12 +39,13 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
       super(props, context);
 
       this.handleSubmit = this.handleSubmit.bind(this);
-      this.changeHandlerCourses = this.changeHandlerCourses.bind(this);
+      this.changeHandlerPrograms = this.changeHandlerPrograms.bind(this);
       this.selectionRenderer = this.selectionRenderer.bind(this);
+      this.changeTimezoneHandler = this.changeTimezoneHandler.bind(this);
       this.handleImageUpload = this.handleImageUpload.bind(this);
       this.handleShowDialog = this.handleShowDialog.bind(this);
       this.handleShowPassword = this.handleShowPassword.bind(this);
-      this.handleShowClasses = this.handleShowClasses.bind(this);
+      this.handleShowPrograms = this.handleShowPrograms.bind(this);
       this.handleHideSnackBar = this.handleHideSnackBar.bind(this);
       this.handleClearValues = this.handleClearValues.bind(this);
       this.resetForm = this.resetForm.bind(this);
@@ -54,7 +55,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
         showAddressDialog: false,
         showSnackBar: false,
         showPassword: false,
-        showClasses: false
+        showPrograms: false
       };
     }
 
@@ -67,8 +68,10 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
           address,
           city,
           thumbnail_image,
-          description
+          description,
+          timezone
         },
+        timezones
       } = this.props;
 
       return (
@@ -85,7 +88,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
 
           <Paper zDepth={ 1 } style={ paperMarginOverride } rounded={ false }>
             <form className='userForm'>
-              { this.renderSignUpClasses() }
+              { this.renderSignUpPrograms() }
 
               <TextField
                 name='email'
@@ -159,6 +162,20 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
 
               <br />
 
+              <SelectField
+                floatingLabelFixed
+                floatingLabelText='Select Timezone'
+                value={ timezone }
+                className='userFormInputField timezones'
+                errorText={ errors.timezone }
+                onChange={ this.changeTimezoneHandler }
+                onBlur={ validateHandler('timezone') }
+              >
+                { _.map(timezones, ({ name, id }, index) => <MenuItem key={ name + id + index } insetChildren checked={ timezone === name } value={ name } primaryText={ <span> { name } </span> } />) }
+              </SelectField>
+
+              <br />
+
               <TextField
                 name='description'
                 value={ description }
@@ -174,14 +191,14 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
 
               <div>
                 { this.renderPasswordFields() }
-                { this.renderUpdateClasses() }
+                { this.renderUpdatePrograms() }
               </div>
 
               { this.renderSignUpCheckBoxes() }
             </form>
 
             <div className='userFormOuterButton'>
-              <RaisedButton label={ wrappedProps.primaryButtonLabel } onClick={ this.handleSubmit } primary />
+              <RaisedButton className='userFormSaveButton' label={ wrappedProps.primaryButtonLabel } onClick={ this.handleSubmit } primary />
             </div>
           </Paper>
 
@@ -214,18 +231,18 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
       changeValues([ ['password_confirmation', ''], ['password', ''] ]);
     }
 
-    renderUpdateClasses() {
+    renderUpdatePrograms() {
       const { type } = wrappedProps;
 
       if (type === UPDATE_PROFILE) {
-        const { showClasses } = this.state;
+        const { showPrograms } = this.state;
 
-        if (showClasses) {
-          return this.renderClasses();
+        if (showPrograms) {
+          return this.renderPrograms();
         } else {
           return (
             <div className='userFormInnerButton userFormSecondButton'>
-              <FlatButton primary label='Update my courses' onClick={ this.handleShowClasses } />
+              <FlatButton className='userFormProgramButton' primary label='Update my programs' onClick={ this.handleShowPrograms } />
             </div>
           );
         }
@@ -265,6 +282,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
               />
 
               <br />
+
               <TextField
                 name='password'
                 value={ password }
@@ -297,7 +315,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
         } else {
           return (
             <div className='userFormInnerButton'>
-              <FlatButton primary label='Update my password' onClick={ this.handleShowPassword } />
+              <FlatButton className='userFormPasswordButton' primary label='Update my password' onClick={ this.handleShowPassword } />
             </div>
           );
         }
@@ -352,9 +370,9 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
       });
     }
 
-    handleShowClasses() {
+    handleShowPrograms() {
       this.setState({
-        showClasses: true
+        showPrograms: true
       });
     }
 
@@ -398,38 +416,38 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
       }
     }
 
-    renderSignUpClasses() {
-      const { classes } = this.props;
+    renderSignUpPrograms() {
+      const { programs } = this.props;
 
-      if (_.size(classes) > 0) {
+      if (_.size(programs) > 0) {
         const { type } = wrappedProps;
 
         if (type === SIGN_UP) {
-          return this.renderClasses();
+          return this.renderPrograms();
         }
       }
     }
 
-    renderClasses() {
-      const { validateHandler, errors, classes, currentUser: { courses } } = this.props;
+    renderPrograms() {
+      const { validateHandler, errors, programs, currentUser: { programs: userPrograms } } = this.props;
 
       return (
         <div>
-          { this.renderClassLabel() }
+          { this.renderProgramLabel() }
 
           <SelectField
             floatingLabelFixed
-            floatingLabelText='Select One or More Class'
-            value={ courses }
-            className='userFormInputField courses'
-            onChange={ this.changeHandlerCourses }
-            onBlur={ validateHandler('courses') }
+            floatingLabelText='Select One or More Program'
+            value={ userPrograms }
+            className='userFormInputField programs'
+            onChange={ this.changeHandlerPrograms }
+            onBlur={ validateHandler('programs') }
             multiple
-            errorText={ errors.courses }
+            errorText={ errors.programs }
             selectionRenderer={ this.selectionRenderer }
           >
-            { _.map(classes, ({ name, id }) => {
-              return <MenuItem key={ id } insetChildren checked={ _.indexOf(courses, name) > -1 } value={ name } primaryText={ <span> { name } </span> } />;
+            { _.map(programs, ({ name, id }) => {
+              return <MenuItem key={ id } insetChildren checked={ _.indexOf(userPrograms, name) > -1 } value={ name } primaryText={ <span> { name } </span> } />;
             })}
           </SelectField>
         </div>
@@ -458,12 +476,18 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
       });
     }
 
-    changeHandlerCourses(event, index, value) {
+    changeHandlerPrograms(event, index, value) {
       const { changeValue } = this.props;
-      changeValue('courses', value);
+      changeValue('programs', value);
     }
 
-    renderClassLabel() {
+    changeTimezoneHandler(proxy, index, value) {
+      const { changeValue } = this.props;
+
+      changeValue('timezone', value);
+    }
+
+    renderProgramLabel() {
       const { match: { params: { role } }, currentUser: { client, volunteer } } = this.props;
       if (role === 'volunteer' || volunteer ) {
         return (
@@ -516,7 +540,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
   UserForm.propTypes = {
     errors: PropTypes.object,
     currentUser: PropTypes.shape({
-      courses: PropTypes.array,
+      programs: PropTypes.array,
       first_name: PropTypes.string,
       address: PropTypes.string,
       city: PropTypes.string,
@@ -527,6 +551,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
       terms_and_conditions: PropTypes.bool,
       current_password: PropTypes.string,
       thumbnail_image: PropTypes.oneOfType([ PropTypes.string, PropTypes.object ]),
+      timezone: PropTypes.string
     }),
 
     match: PropTypes.shape({
@@ -535,7 +560,8 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
       })
     }),
 
-    classes: PropTypes.array,
+    programs: PropTypes.array,
+    timezones: PropTypes.array,
     changeHandler: PropTypes.func.isRequired,
     changeValue: PropTypes.func.isRequired,
     changeValues: PropTypes.func.isRequired,
@@ -550,9 +576,11 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
         role: ' '
       }
     },
-    classes: [],
+    programs: [],
+    timezones: [],
     currentUser: {
-      courses: [],
+      timezone: '',
+      programs: [],
       address: '',
       city: '',
       first_name: '',

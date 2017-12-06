@@ -8,7 +8,7 @@ class AvailabilitiesController < ApplicationController
     begin
      search = Contexts::Availabilities::Search.new(permit_search_params, current_user)
       results = search.execute
-    rescue Contexts::Availabilities::Errors::CourseMissing,
+    rescue Contexts::Availabilities::Errors::ProgramMissing,
       Contexts::Availabilities::Errors::DayMissing => e
       @message = e.message
       render json: { error: { message: @message } }, status: unprocessable_entity
@@ -25,14 +25,12 @@ class AvailabilitiesController < ApplicationController
 
   def search
     user = UserDecorator.new(current_user).simple_decorate
-    courses = Course.all
-    timezones = ActiveSupport::TimeZone.all.sort
+    programs = Program.all
     days =  Date::DAYNAMES
 
     @data = {
         :currentUser => user,
-        :courses => courses,
-        :timezones => timezones,
+        :programs => programs,
         :days => days
     }
 
@@ -41,14 +39,14 @@ class AvailabilitiesController < ApplicationController
 
   def new
     user = UserDecorator.new(current_user).simple_decorate
-    courses = Course.all
+    programs = Program.all
     timezones = ActiveSupport::TimeZone.all.sort
     days =  Date::DAYNAMES
 
     @data = {
         :availabilities => { },
         :currentUser => user,
-        :courses => courses,
+        :programs => programs,
         :timezones => timezones,
         :days => days
     }
@@ -61,8 +59,8 @@ class AvailabilitiesController < ApplicationController
       message = []
       status = []
 
-      permitted_params.except(:timezone).each do |number|
-        creation = Contexts::Availabilities::Creation.new(permit_nested(permitted_params[number]), permitted_params[:timezone], current_user)
+      permitted_params.each do |number|
+        creation = Contexts::Availabilities::Creation.new(permit_nested(permitted_params[number]), current_user)
 
         begin
           @availability = creation.execute
@@ -83,12 +81,12 @@ class AvailabilitiesController < ApplicationController
 
   def index
     user = UserDecorator.new(current_user).simple_decorate
-    courses = current_user.courses
-    availabilities = Availability.where(:user => current_user)
+    programs = current_user.programs
+    availabilities = Availability.where(:user => current_user).collect{ |n| AvailabilityDecorator.new(n).decorate }
 
     @data = {
         :currentUser => user,
-        :courses => courses,
+        :programs => programs,
         :availabilities => availabilities
     }
 
@@ -129,7 +127,6 @@ class AvailabilitiesController < ApplicationController
         :day,
         :start_time,
         :end_time,
-        :timezone
     )
   end
 
@@ -138,8 +135,7 @@ class AvailabilitiesController < ApplicationController
         :day,
         :start_time,
         :end_time,
-        :timezone,
-        :course,
+        :program,
         :distance
     )
   end

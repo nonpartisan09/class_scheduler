@@ -2,7 +2,6 @@ class AvailabilityDecorator
   include ActionView::Helpers::DateHelper
   attr_reader :availability
 
-
   def initialize(availability)
     @availability = availability
   end
@@ -25,10 +24,10 @@ class AvailabilityDecorator
   end
 
   def start_time
-    availability.start_time.strftime("%H:%M")
+    availability.start_time.in_time_zone(timezone).strftime("%H:%M")
   end
 
   def end_time
-    availability.end_time.strftime("%H:%M")
+    availability.end_time.in_time_zone(timezone).strftime("%H:%M")
   end
 end

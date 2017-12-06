@@ -1,6 +1,6 @@
-class CreateCourses < ActiveRecord::Migration[5.1]
+class CreatePrograms < ActiveRecord::Migration[5.1]
   def change
-    create_table :courses do |t|
+    create_table :programs do |t|
       t.string :name
       t.string :url_slug
       t.text :description

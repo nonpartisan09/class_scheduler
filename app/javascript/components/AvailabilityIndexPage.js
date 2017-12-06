@@ -15,16 +15,17 @@ const paperMarginOverride = {
 
 
 class AvailabilityIndexPage extends Component {
-
   render() {
+    const { currentUser } = this.props;
+
     return (
       <div>
-        <Header currentUser={ this.props.currentUser } />
+        <Header currentUser={ currentUser } />
         <Paper zDepth={ 1 } style={ paperMarginOverride } rounded={ false }>
           <div className='availabilityIndexContainer'>
             I can teach:
             <ul className='availabilityIndexListContainer'>
-              { _.map(this.props.courses, ({ name }) => <li className='availabilityListItem' key={name}>{ name }</li>) }
+              { _.map(this.props.programs, ({ name }) => <li className='availabilityListItem' key={name}>{ name }</li>) }
             </ul>
 
             <br />
@@ -38,12 +39,13 @@ class AvailabilityIndexPage extends Component {
   }
 
   renderAvailabilities() {
-    const { availabilities } = this.props;
+    const { availabilities, currentUser: { timezone } } = this.props;
 
     if ( _.size(availabilities) > 0 ) {
       return (
         <AvailabilitiesTable
           availabilities={ availabilities }
+          timezone={ timezone }
         />
       );
     }
@@ -52,19 +54,21 @@ class AvailabilityIndexPage extends Component {
 
 AvailabilityIndexPage.propTypes = {
   availabilities: PropTypes.array,
-  courses: PropTypes.array,
+  programs: PropTypes.array,
   currentUser: PropTypes.shape({
     first_name: PropTypes.string,
     email: PropTypes.string,
+    timezone: PropTypes.string
   })
 };
 
 AvailabilityIndexPage.defaultProps = {
   availabilities: [],
-  courses: [],
+  programs: [],
   currentUser: {
     first_name: '',
     email: '',
+    timezone: ''
   }
 };
 

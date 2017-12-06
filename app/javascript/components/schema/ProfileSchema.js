@@ -1,7 +1,14 @@
 import Joi from 'joi-browser';
 
 const ProfileSchema = {
-  courses: Joi.array().min(1).options({
+  timezone: Joi.string().required().options({
+    language: {
+      any: {
+        empty: 'Please select a timezone',
+      }
+    }
+  }),
+  programs: Joi.array().min(1).options({
     language: {
       array: {
         min: 'Please select at least one class'

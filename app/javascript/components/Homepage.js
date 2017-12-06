@@ -109,12 +109,12 @@ class Homepage extends Component {
 }
 
 Homepage.propTypes = {
-  courses: PropTypes.array,
+  programs: PropTypes.array,
   currentUser: PropTypes.object,
 };
 
 Homepage.defaultProps = {
-  courses: [],
+  programs: [],
   currentUser: { }
 };
 

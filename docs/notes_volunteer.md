@@ -2,7 +2,7 @@ Context?
 
 NY cares
 
-School open Saturdays, classes for Adults: English and Citizenship
+School open Saturdays, programs for Adults: English and Citizenship
 
 10-15 clients every Saturday for Citizensihp
 	- English
@@ -16,7 +16,7 @@ He wants public portal to get people to sign up as clients and volunteers withou
 
 Let volunteers kind of set own limits.
 
-Remote classes: Skype, Whatsapp.
+Remote programs: Skype, Whatsapp.
 
 Bottleneck is scheduling intermediaries.
 

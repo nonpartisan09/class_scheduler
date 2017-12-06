@@ -32,14 +32,14 @@ TermsAndConditions.create({
     version: 1
 })
 
-Course.create({
+Program.create({
     name: 'Test1'
 })
 
-Course.create({
+Program.create({
     name: 'Test2'
 })
 
-Course.create({
+Program.create({
     name: 'Test3'
 })

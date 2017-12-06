@@ -4,7 +4,7 @@ RSpec.describe User, type: :model do
   subject { described_class.new(password: "some_password", email: "john@doe.com") }
 
   it { is_expected.to have_and_belong_to_many(:roles) }
-  it { is_expected.to have_many(:courses).through(:enrollments) }
+  it { is_expected.to have_many(:programs).through(:enrollments) }
   it { is_expected.to have_many(:availabilities) }
 
   it { is_expected.to have_db_column(:contact_permission).of_type(:boolean) }

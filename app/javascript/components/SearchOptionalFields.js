@@ -30,13 +30,13 @@ class SearchOptionalFields extends Component {
       <div>
         <div className='searchBarButtonContainer'>
           <div className='searchBarOptionalField'>
-            <FlatButton primary label='Start Time' onClick={ this.handleToggleStartTime } />
+            <FlatButton primary className='searchBarOptionalFieldMobile' label='Start Time' onClick={ this.handleToggleStartTime } />
             <div className='searchBarOptionalFieldMobile'>
               { this.renderStartTime() }
             </div>
           </div>
           <div className='searchBarOptionalField'>
-            <FlatButton primary label='End Time' onClick={ this.handleToggleEndTime } />
+            <FlatButton primary className='searchBarOptionalFieldMobile' label='End Time' onClick={ this.handleToggleEndTime } />
             <div className='searchBarOptionalFieldMobile'>
               { this.renderEndTime() }
             </div>

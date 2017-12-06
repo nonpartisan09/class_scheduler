@@ -1,8 +1,15 @@
 import Joi from 'joi-browser';
 
 const SignUpSchema = {
+  timezone: Joi.string().required().options({
+    language: {
+      any: {
+        empty: 'Please select a timezone',
+      }
+    }
+  }),
   role: Joi.string(),
-  courses: Joi.array().min(1).options({
+  programs: Joi.array().min(1).options({
     language: {
       array: {
         min: 'Please select at least one class'

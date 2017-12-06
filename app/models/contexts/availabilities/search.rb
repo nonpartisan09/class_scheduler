@@ -3,12 +3,12 @@ module Contexts
     class Search
 
       def initialize(search_params, current_user)
-        @params, @user = search_params, current_user
+        @params, @user, @timezone = search_params, current_user, current_user[:timezone]
       end
 
       def execute
-        unless @params[:course].present?
-          raise Contexts::Availabilities::Errors::CourseMissing, 'Course field is required.'
+        unless @params[:program].present?
+          raise Contexts::Availabilities::Errors::ProgramMissing, 'Program field is required.'
         end
 
         unless @params[:day].present?
@@ -16,12 +16,12 @@ module Contexts
         end
 
         if @params[:distance].present?
-          @existing_volunteers = User.search(@params)
+          @existing_volunteers = User.search(@params, @timezone)
                                    .near(@user.full_address, @params[:distance], :order => false)
                                    .order(last_sign_in_at: :desc)
 
         else
-          @existing_volunteers = User.search(@params)
+          @existing_volunteers = User.search(@params, @timezone)
                                    .order(last_sign_in_at: :desc)
         end
 
