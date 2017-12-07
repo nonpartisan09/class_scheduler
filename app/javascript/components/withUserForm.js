@@ -492,13 +492,13 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
       if (role === 'volunteer' || volunteer ) {
         return (
           <h2 className='userFormHeader'>
-            I am interested in teaching:
+            I am interested in helping with:
           </h2>
         );
       } else if (role === 'client' || client ) {
         return (
           <h2 className='userFormHeader'>
-            I am interested in:
+            I am interested in help with:
           </h2>
         );
       }

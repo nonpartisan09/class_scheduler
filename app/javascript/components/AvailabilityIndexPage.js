@@ -2,6 +2,8 @@ import _ from 'lodash';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Paper from 'material-ui/Paper';
+import RaisedButton from 'material-ui/RaisedButton';
+
 import Header from './Header';
 import AvailabilitiesTable from './AvailabilitiesTable';
 
@@ -12,7 +14,6 @@ const paperMarginOverride = {
   maxWidth: '950px',
   margin: '24px auto'
 };
-
 
 class AvailabilityIndexPage extends Component {
   render() {
@@ -28,10 +29,7 @@ class AvailabilityIndexPage extends Component {
               { _.map(this.props.programs, ({ name }) => <li className='availabilityListItem' key={name}>{ name }</li>) }
             </ul>
 
-            <br />
-            <ul className='availabilityIndexListContainer'>
-              { this.renderAvailabilities() }
-            </ul>
+            { this.renderAvailabilities() }
           </div>
         </Paper>
       </div>
@@ -43,10 +41,19 @@ class AvailabilityIndexPage extends Component {
 
     if ( _.size(availabilities) > 0 ) {
       return (
-        <AvailabilitiesTable
-          availabilities={ availabilities }
-          timezone={ timezone }
-        />
+        <ul className='availabilityIndexListContainer'>
+          <AvailabilitiesTable
+            availabilities={ availabilities }
+            timezone={ timezone }
+            deletable
+          />
+        </ul>
+      );
+    } else {
+      return (
+        <a href='/availabilities/new' >
+          <RaisedButton primary label='Create new availabilities' className='conversationButton' />
+        </a>
       );
     }
   }

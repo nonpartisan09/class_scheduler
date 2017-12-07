@@ -2,6 +2,11 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import Paper from 'material-ui/Paper';
+import RaisedButton from 'material-ui/RaisedButton';
+
+import { Link } from 'react-router-dom';
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import EditIcon from 'material-ui/svg-icons/image/edit';
 
 import AvailabilitiesTable from './AvailabilitiesTable';
 import Header from './Header';
@@ -10,18 +15,23 @@ import './UserProfile.css';
 const paperMarginOverride = {
   padding: '12px 24px 24px 24px',
   maxWidth: '950px',
-  margin: '24px auto'
+  margin: '24px auto',
+  position: 'relative'
 };
 
 class UserProfile extends Component {
   render() {
-    const { user, current_user } = this.props;
+    const { user, currentUser, user: { url_slug, first_name } } = this.props;
     return (
       <div>
-        <Header currentUser={ current_user } />
+        <Header currentUser={ currentUser } />
 
         <Paper zDepth={ 1 } style={ paperMarginOverride } rounded={ false }>
           { this.renderProfilePicture() }
+
+          <Link to={ { pathname: '/messages/new', query: { recipient: url_slug, userName: first_name } } } className='userProfileLink' >
+            <RaisedButton label='Message user' primary />
+          </Link>
 
           <div className='userProfileField'>
             First name: { user.first_name }
@@ -45,6 +55,11 @@ class UserProfile extends Component {
 
           { this.renderAvailabilities() }
 
+          <Link className='userProfileSendEmail' to={ { pathname: '/messages/new', query: { recipient: url_slug, userName: first_name } } } >
+            <FloatingActionButton>
+              <EditIcon />
+            </FloatingActionButton>
+          </Link>
         </Paper>
       </div>
     );
@@ -61,12 +76,13 @@ class UserProfile extends Component {
   }
 
   renderAvailabilities() {
-    const { user: { availabilities } } = this.props;
+    const { user: { availabilities, timezone } } = this.props;
 
     if ( _.size(availabilities) > 0 ) {
       return (
         <AvailabilitiesTable
           availabilities={ availabilities }
+          timezone={ timezone }
         />
       );
     }
@@ -74,17 +90,17 @@ class UserProfile extends Component {
 }
 
 UserProfile.propTypes = {
-  current_user: PropTypes.object.isRequired,
+  currentUser: PropTypes.object.isRequired,
   user: PropTypes.shape({
     availabilities: PropTypes.array.isRequired,
     programs: PropTypes.array.isRequired,
     first_name: PropTypes.string.isRequired,
-    thumbnail_url: PropTypes.string
-  }).isRequired
+    thumbnail_url: PropTypes.string,
+    url_slug: PropTypes.string,
+  }).isRequired,
 };
 
 UserProfile.defaultProps = {
-
 };
 
 export default UserProfile;

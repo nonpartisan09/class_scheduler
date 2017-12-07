@@ -5,7 +5,7 @@ class UsersController < ApplicationController
     user = User.find_by_url_slug(params[:url_slug])
 
     @data = {
-        :current_user => UserDecorator.new(current_user).simple_decorate,
+        :currentUser => UserDecorator.new(current_user).simple_decorate,
         :user => UserDecorator.new(user).decorate
     }
 

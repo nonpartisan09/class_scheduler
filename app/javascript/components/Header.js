@@ -53,17 +53,21 @@ class Header extends Component {
     if ( _.size(this.props.currentUser) > 0 ) {
       return (
         <nav className={ navigationClassName } >
-          <a href={ '/' } className='slidingLink' >
+          <a href='/' className='slidingLink' >
             Home
           </a>
 
           { this.renderRoleLinks() }
 
-          <a href={ '/my_profile' } className='slidingLink' >
-            { this.props.currentUser.first_name }
+          <a href='/my_profile' className='slidingLink' >
+            Profile
           </a>
 
-          <span role='navigation' tabIndex={ 0 } onClick={ this.handleSignOut } className='slidingLink' >
+          <a href='/conversations' className='slidingLink' >
+            Inbox
+          </a>
+
+          <span role='button' tabIndex={ 0 } onClick={ this.handleSignOut } className='slidingLink' >
             Sign out
           </span>
         </nav>
@@ -72,13 +76,13 @@ class Header extends Component {
     else {
       return (
         <nav className={ navigationClassName } >
-          <a href={ '/sign_up/client' } className='slidingLink' >
-            Sign up as a client
-          </a>
-          <a href={ '/sign_up/volunteer' } className='slidingLink'>
+          <a href='/sign_up/volunteer' className='slidingLink'>
             Sign up as a volunteer
           </a>
-          <a href={ '/sign_in/' } className='slidingLink'>
+          <a href='/sign_up/client' className='slidingLink' >
+            Sign up as a client
+          </a>
+          <a href='/sign_in/' className='slidingLink'>
             Sign In
           </a>
         </nav>
@@ -89,19 +93,19 @@ class Header extends Component {
   renderRoleLinks() {
     if (this.props.currentUser.client) {
       return (
-        <a href={'/search'} className='slidingLink'>
+        <a href='/search' className='slidingLink'>
           Search
         </a>
       );
     } else if (this.props.currentUser.volunteer) {
       return (
         <span>
-          <a href={'/availabilities/new'} className='slidingLink'>
+          <a href='/availabilities/new' className='slidingLink'>
             Create a new availability
           </a>
 
-          <a href={'/availabilities'} className='slidingLink'>
-            My Availabilities
+          <a href='/availabilities' className='slidingLink'>
+            Availabilities
           </a>
         </span>
       );

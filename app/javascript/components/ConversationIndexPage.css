@@ -1,0 +1,12 @@
+.conversationBox {
+    padding: 24px;
+}
+
+.conversationButton {
+    margin: 24px 0;
+}
+
+.conversationIndexPageLink, .conversationIndexPageLink:visited  {
+    text-decoration: none;
+    color: inherit;
+}

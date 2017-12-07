@@ -6,7 +6,10 @@ Rails.application.routes.draw do
   resources :programs
   resources :sessions
   resource :users
+  resource :conversations, only: [:new, :create]
+  resources :messages, only: [ :new, :create ]
 
+  get 'conversations', to: 'conversations#index'
   get 'availabilities/new(/:sign_up)' => 'availabilities#new'
   get 'search(/:sign_up)' => 'availabilities#search'
   get 'results' => 'availabilities#results'

@@ -57,7 +57,7 @@ const SignUpSchema = {
       }
     }
   }),
-  password: Joi.string().min(8).required(),
+  password: Joi.string().min(8).max(30).required(),
   password_confirmation: Joi.any().valid(Joi.ref('password')).required().options({
     language: {
       any: {

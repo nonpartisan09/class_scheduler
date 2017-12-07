@@ -29,7 +29,7 @@ class Homepage extends Component {
               <img
                 className='logo'
                 alt='tutoria logo'
-                src={ '/assets/tutoria_logo_full color_web.png' }
+                src={ '/assets/tutoria_logo_white_web.png' }
               />
             </h1>
             <h2 className='homepageCaptionItem homepageSubtitle'>
@@ -87,9 +87,9 @@ class Homepage extends Component {
     if (_.isEmpty(this.props.currentUser)) {
       return [
         <div key={ 1 } className='homepageMobileNavigation' >
-          <RaisedButton primary fullWidth label='Sign in' onClick={ this.handleSignIn } />
-          <FlatButton primary fullWidth label='Sign up as a volunteer' onClick={ this.handleSignUpVolunteer } />
-          <FlatButton primary fullWidth label='Sign up as a client' onClick={ this.handleSignUpClient } />
+          <RaisedButton fullWidth label='Sign in' onClick={ this.handleSignIn } />
+          <FlatButton fullWidth label='Sign up as a volunteer' onClick={ this.handleSignUpVolunteer } />
+          <FlatButton fullWidth label='Sign up as a client' onClick={ this.handleSignUpClient } />
         </div>
       ];
     }

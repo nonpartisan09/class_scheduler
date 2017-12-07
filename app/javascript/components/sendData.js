@@ -50,12 +50,22 @@ function getData({ url, params, jsonBody, method='GET', successCallBack, errorCa
 function postData({ url, params, attributes, method='POST', successCallBack, errorCallBack }) {
   const restUrl = params? `${url}?${params}` : url;
 
-  const body = new FormData();
+  const body = function(){
+    if (_.size(attributes) > 0) {
+      const body = new FormData();
 
-  _.each(attributes, ([name, value]) => {
-    body.append(name, value);
-  });
+      _.each(attributes, ([name, value]) => {
+        body.append(name, value);
+      });
 
+      return body;
+    } else {
+      return null;
+    }
+  }();
+
+  console.warn('body:');
+  console.warn(body);
   return fetch(restUrl, {
     method: METHODS[method],
     body,
@@ -65,8 +75,7 @@ function postData({ url, params, attributes, method='POST', successCallBack, err
     credentials: 'same-origin'
   }).then(response => {
     if (response.status < 400) {
-
-      if (response.status === 204) {
+      if (response.status === 204 || response.status === 302) {
         if (!_.isUndefined(successCallBack)) {
           return successCallBack();
         }
