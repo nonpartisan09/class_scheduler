@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+
+  if Rails.env.development?
+    mount LetterOpenerWeb::Engine, at: "/letter_opener"
+  end
+
   root 'application#index'
   get 'terms_and_conditions' => 'application#t_and_c'
 

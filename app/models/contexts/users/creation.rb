@@ -26,9 +26,11 @@ module Contexts
           @user.programs << Program.find_by_name(n)
         end
 
-        @user.save
+        @user.save!
 
         yield @user if block_given?
+        UserMailer.welcome_email(@user).deliver_now
+
         @user
       end
 
