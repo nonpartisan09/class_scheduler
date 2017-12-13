@@ -89,9 +89,9 @@ class Homepage extends Component {
     if (_.isEmpty(this.props.currentUser)) {
       return [
         <div key={ 1 } className='homepageMobileNavigation' >
-          <RaisedButton fullWidth label='Sign in' onClick={ this.handleSignIn } />
-          <FlatButton fullWidth label='Sign up as a volunteer' onClick={ this.handleSignUpVolunteer } />
-          <FlatButton fullWidth label='Sign up as a client' onClick={ this.handleSignUpClient } />
+          <RaisedButton primary fullWidth label='Sign in' onClick={ this.handleSignIn } />
+          <FlatButton primary fullWidth label='Sign up as a volunteer' onClick={ this.handleSignUpVolunteer } />
+          <FlatButton primary fullWidth label='Sign up as a client' onClick={ this.handleSignUpClient } />
         </div>
       ];
     }
