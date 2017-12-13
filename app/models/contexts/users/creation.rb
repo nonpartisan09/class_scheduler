@@ -38,7 +38,7 @@ module Contexts
       private
 
       def send_welcome_email
-        UserMailer.welcome_email(@user).deliver_now
+        UserMailer.welcome_email(@user).deliver_later
       end
 
       def check_t_and_c_unticked?

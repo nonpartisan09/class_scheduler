@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171207100705) do
+ActiveRecord::Schema.define(version: 20171213143638) do
 
   create_table "availabilities", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "day"
@@ -29,6 +29,21 @@ ActiveRecord::Schema.define(version: 20171207100705) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["author_id", "recipient_id"], name: "index_conversations_on_author_id_and_recipient_id", unique: true
+  end
+
+  create_table "delayed_jobs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer "priority", default: 0, null: false
+    t.integer "attempts", default: 0, null: false
+    t.text "handler", null: false
+    t.text "last_error"
+    t.datetime "run_at"
+    t.datetime "locked_at"
+    t.datetime "failed_at"
+    t.string "locked_by"
+    t.string "queue"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.index ["priority", "run_at"], name: "delayed_jobs_priority"
   end
 
   create_table "enrollments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|

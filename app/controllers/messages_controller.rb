@@ -28,7 +28,7 @@ class MessagesController < ApplicationController
   private
 
   def send_message_to_recipient
-    UserMailer.new_message(@recipient, @current_user, @message).deliver_now
+    UserMailer.new_message(@recipient, @current_user, @message).deliver_later
   end
 
   def find_conversation!
