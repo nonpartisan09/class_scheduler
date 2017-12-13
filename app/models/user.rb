@@ -10,11 +10,6 @@ class User < ActiveRecord::Base
   after_validation :geocode, :if => :address_changed? || :city_changed?
 
   has_attached_file :thumbnail_image,
-        styles: { thumbnail: ["550x310", :jpg] }
-
-  validates_attachment :thumbnail_image, content_type: { content_type: ["image/jpg", "image/jpeg", "image/png", "image/gif"] }
-
-  has_attached_file :thumbnail_image,
         styles: { thumbnail: ["550x310", :jpg] },
         path: ":rails_root/public/system/:class/:attachment/:id_partition/:style/:basename.:extension",
         url: "#{ Rails.configuration.static_base_url }/:class/:attachment/:id_partition/:style/:basename.:extension"

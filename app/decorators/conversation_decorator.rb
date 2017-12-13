@@ -13,8 +13,8 @@ class ConversationDecorator
         :messages => messages,
         :recipient_avatar => recipient_avatar,
         :sender_avatar => sender_avatar,
-        :sender_url_slug => sender_url_slug,
-        :recipient_url_slug => recipient_url_slug
+        :senderUrlSlug => sender_url_slug,
+        :recipientUrlSlug => recipient_url_slug
     }
   end
 
@@ -23,7 +23,7 @@ class ConversationDecorator
   end
 
   def recipient
-    @recipient ||= User.find(@conversation.author_id)
+    @recipient ||= User.find(@conversation.recipient_id)
   end
 
   def sender_url_slug

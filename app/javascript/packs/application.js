@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
       <Router >
         <div>
           <Route exact path='/' render={ () => <Homepage { ...data } /> } />
-          <Route exact path='/conversations' render={ (props) => <ConversationIndexPage { ...data } { ...props } /> } />
+          <Route exact path='/inbox' render={ (props) => <ConversationIndexPage { ...data } { ...props } /> } />
           <Route exact path='/messages/new' render={ (props) => <NewMessagePage { ...data } { ...props } /> } />
           <Switch>
             <Route path='/search/:sign_up' render={ (props) => <SearchBar { ...data } { ...props } /> } />
@@ -74,7 +74,7 @@ document.addEventListener('turbolinks:render', () => {
       <Router >
         <div>
           <Route exact path='/' render={ () => <Homepage { ...data } /> } />
-          <Route exact path='/conversations' render={ (props) => <ConversationIndexPage { ...data } { ...props } /> } />
+          <Route exact path='/inbox' render={ (props) => <ConversationIndexPage { ...data } { ...props } /> } />
           <Route exact path='/messages/new' render={ (props) => <NewMessagePage { ...data } { ...props } /> } />
           <Switch>
             <Route path='/search/:sign_up' render={ (props) => <SearchBar { ...data } { ...props } /> } />

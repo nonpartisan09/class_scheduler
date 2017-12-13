@@ -29,12 +29,17 @@ module Contexts
         @user.save!
 
         yield @user if block_given?
-        UserMailer.welcome_email(@user).deliver_now
+
+        send_welcome_email
 
         @user
       end
 
       private
+
+      def send_welcome_email
+        UserMailer.welcome_email(@user).deliver_now
+      end
 
       def check_t_and_c_unticked?
         @user.terms_and_conditions == 0

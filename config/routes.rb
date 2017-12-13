@@ -1,9 +1,4 @@
 Rails.application.routes.draw do
-
-  if Rails.env.development?
-    mount LetterOpenerWeb::Engine, at: "/letter_opener"
-  end
-
   root 'application#index'
   get 'terms_and_conditions' => 'application#t_and_c'
 
@@ -14,7 +9,7 @@ Rails.application.routes.draw do
   resource :conversations, only: [:new, :create]
   resources :messages, only: [ :new, :create ]
 
-  get 'conversations', to: 'conversations#index'
+  get 'inbox', to: 'conversations#index'
   get 'availabilities/new(/:sign_up)' => 'availabilities#new'
   get 'search(/:sign_up)' => 'availabilities#search'
   get 'results' => 'availabilities#results'

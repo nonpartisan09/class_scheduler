@@ -92,9 +92,11 @@ class ConversationIndexPage extends Component {
     const { conversations } = this.props;
 
     return _.map(conversations, (conversation, index) => {
-      const { recipient, sender } = conversation;
+      const { recipient, sender, recipientUrlSlug } = conversation;
+      const { currentUser: { url_slug } } = this.props;
+      const conversee = url_slug !== recipientUrlSlug? recipient : sender;
 
-      const title = `Conversation with ${ recipient }`;
+      const title = `Conversation with ${ conversee }`;
 
       return (
         <List key={ index + sender }>
@@ -108,10 +110,10 @@ class ConversationIndexPage extends Component {
     });
   }
 
-  renderMessages({ messages, sender_avatar, sender_url_slug, recipient_url_slug, sender, recipient }) {
+  renderMessages({ messages, sender_avatar, senderUrlSlug, recipientUrlSlug, sender, recipient }) {
     const { currentUser: { url_slug } } = this.props;
-    const newMessageRecipient = url_slug === recipient_url_slug? sender_url_slug : recipient_url_slug;
-    const newMessageFirstName = url_slug === recipient_url_slug? sender : recipient;
+    const newMessageRecipient = url_slug === recipientUrlSlug? senderUrlSlug : recipientUrlSlug;
+    const newMessageFirstName = url_slug === recipientUrlSlug? sender : recipient;
 
     return _.map(messages, ({ body, subject, sent_on }, index ) => {
       const rightIconMenu = (
@@ -144,10 +146,7 @@ class ConversationIndexPage extends Component {
 }
 
 ConversationIndexPage.propTypes = {
-  conversations: PropTypes.shape({
-    sender_avatar: PropTypes.string,
-    recipient_avatar: PropTypes.string
-  }),
+  conversations: PropTypes.oneOfType([ PropTypes.array, PropTypes.object ]),
   currentUser: PropTypes.shape({
     courses: PropTypes.array,
     first_name: PropTypes.string,

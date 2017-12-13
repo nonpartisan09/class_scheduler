@@ -14,8 +14,9 @@ class MessagesController < ApplicationController
     @message.conversation_id = @conversation.id
     @message.save!
 
-    flash[:success] = "Your message was sent!"
-    redirect_to conversations_path
+    send_message_to_recipient
+
+    redirect_to inbox_path
   end
 
   private
@@ -26,12 +27,15 @@ class MessagesController < ApplicationController
 
   private
 
+  def send_message_to_recipient
+    UserMailer.new_message(@recipient, @current_user, @message).deliver_now
+  end
+
   def find_conversation!
     if params[:recipient_id]
       @recipient = User.find_by(url_slug: params[:recipient_id])
       redirect_to(root_path) and return unless @recipient
       @conversation = Conversation.between(current_user.id, @recipient.id)[0]
-      ap @conversation
     else
       @conversation = Conversation.find_by(id: params[:conversation_id])
       redirect_to(root_path) and return unless @conversation && @conversation.participates?(current_user)

@@ -2,9 +2,12 @@ import React, { Component } from 'react';
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 
+import { Link } from 'react-router-dom';
 import { List, ListItem } from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
 import AccountCircleIcon from 'material-ui/svg-icons/action/account-circle';
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import EditIcon from 'material-ui/svg-icons/image/edit';
 
 import './SearchResults.css';
 
@@ -31,32 +34,45 @@ class SearchResults extends Component {
         location.assign(`/profiles/${url_slug}`);
       };
 
-      return (
+      return [
         <ListItem
           key={ key }
           value={ key }
-          onClick={ handleClick }
           leftAvatar={ thumbnail_image ? <img className='searchResultsAvatar' src={ thumbnail_image } alt='Profile Picture' /> : null  }
           leftIcon={ thumbnail_image? null : <AccountCircleIcon /> }
           primaryText={
-            <div className='resultsListContainer'>
-              <div className='resultsFirstName'>
-                { first_name }
-              </div>
-              <div className='resultsLastLogin'>
-                { last_logged_in? `Last active: ${ last_logged_in } ago` : '' }
-              </div>
-              { this.renderCity(city) }
+            <div >
+              <div className='resultsListContainer' onClick={ handleClick }>
+                <div className='resultsFirstName'>
+                  { first_name }
+                </div>
+                <div className='resultsLastLogin'>
+                  { last_logged_in? `Last active: ${ last_logged_in } ago` : '' }
+                </div>
+                { this.renderCity(city) }
 
-              { this.renderAvailableDays(available_days) }
-              <div className='resultsPrograms'>
-                Can teach: { _.trimEnd(programs.join(', '), ', ')}
+                { this.renderAvailableDays(available_days) }
+                <div className='resultsPrograms'>
+                  Can teach: { _.trimEnd(programs.join(', '), ', ')}
+                </div>
               </div>
+              <Link key={ key + 'link' } onClick={ this.handleClick } className='userProfileSendEmail' to={ { pathname: '/messages/new', query: { recipient: url_slug, userName: first_name } } } >
+                <FloatingActionButton>
+                  <EditIcon />
+                </FloatingActionButton>
+              </Link>
             </div>
           }
-        />
-       );
+        />,
+
+       ];
     });
+  }
+
+  handleClick() {
+    return (event) => {
+      event.stopPropagation();
+    };
   }
 
   renderAvailableDays(days) {

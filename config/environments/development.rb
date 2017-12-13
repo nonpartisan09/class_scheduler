@@ -5,7 +5,6 @@ Rails.application.configure do
   config.paperclip_defaults = {
       path: ":rails_root/public/system/:class/:attachment/:id_partition/:style/:basename.:extension",
       url: "#{ Rails.configuration.static_base_url }/:class/:attachment/:id_partition/:style/:basename.:extension",
-      default_url: nil
   }
 
   # In the development environment your application's code is reloaded on

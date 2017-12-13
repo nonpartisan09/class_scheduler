@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import CircularProgress from 'material-ui/CircularProgress';
+import _ from 'lodash';
 import FlatButton from 'material-ui/FlatButton';
 
 import FileInput from 'react-simple-file-input';
@@ -60,7 +60,7 @@ class ImageInput extends Component {
     const { dataUrl } = this.state;
     const { value } = this.props;
 
-    const effectiveUrl = dataUrl || value;
+    const effectiveUrl = dataUrl || value && !_.endsWith(value, 'missing.png');
 
     if (effectiveUrl) {
       return(

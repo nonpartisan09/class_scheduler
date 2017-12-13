@@ -64,8 +64,6 @@ function postData({ url, params, attributes, method='POST', successCallBack, err
     }
   }();
 
-  console.warn('body:');
-  console.warn(body);
   return fetch(restUrl, {
     method: METHODS[method],
     body,

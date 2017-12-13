@@ -151,7 +151,7 @@ class NewMessagePage extends Component {
   }
 
   handleRedirect() {
-    location.assign('/conversations');
+    location.assign('/inbox');
   }
 
   handleHideSnackBar() {

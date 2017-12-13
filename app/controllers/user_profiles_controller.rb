@@ -6,13 +6,13 @@ class UserProfilesController < ApplicationController
       redirect_to root_path
     end
     user = UserDecorator.new(current_user)
-    user = user.decorate
+    current_user = user.decorate
     programs = Program.all
     timezones = ActiveSupport::TimeZone.all.sort
 
     @data = {
         :programs => programs,
-        :currentUser => user,
+        :currentUser => current_user,
         :timezones => timezones
     }
 

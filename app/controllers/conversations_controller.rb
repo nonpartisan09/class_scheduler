@@ -27,6 +27,6 @@ class ConversationsController < ApplicationController
   end
 
   def check_participating!
-    redirect_to '/conversations' unless @conversation.present? && @conversation.participates?(current_user)
+    redirect_to '/inbox' unless @conversation.present? && @conversation.participates?(current_user)
   end
 end

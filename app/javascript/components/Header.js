@@ -63,7 +63,7 @@ class Header extends Component {
             Profile
           </a>
 
-          <a href='/conversations' className='slidingLink' >
+          <a href='/inbox' className='slidingLink' >
             Inbox
           </a>
 

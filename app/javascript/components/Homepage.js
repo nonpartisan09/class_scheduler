@@ -29,7 +29,7 @@ class Homepage extends Component {
               <img
                 className='logo'
                 alt='tutoria logo'
-                src={ '/assets/tutoria_logo_white_web.png' }
+                src={ '/assets/tutoria_logo_full color_web.png' }
               />
             </h1>
             <h2 className='homepageCaptionItem homepageSubtitle'>
@@ -60,7 +60,9 @@ class Homepage extends Component {
   renderDesktopHeader() {
     if (!_.isEmpty(this.props.currentUser)) {
       return (
-        <Header currentUser={ this.props.currentUser } />
+        <div className='homepageMobileHeader'>
+          <Header currentUser={ this.props.currentUser } />
+        </div>
       );
     }
   }
