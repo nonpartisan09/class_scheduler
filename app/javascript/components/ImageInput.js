@@ -60,7 +60,13 @@ class ImageInput extends Component {
     const { dataUrl } = this.state;
     const { value } = this.props;
 
-    const effectiveUrl = dataUrl || value && !_.endsWith(value, 'missing.png');
+    const effectiveUrl  = function(){
+      if (dataUrl) {
+        return dataUrl;
+      } else if (!_.isEmpty(value) && !_.endsWith(value, 'missing.png')) {
+        return value;
+      }
+    }();
 
     if (effectiveUrl) {
       return(
