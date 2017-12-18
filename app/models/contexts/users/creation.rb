@@ -26,13 +26,20 @@ module Contexts
           @user.programs << Program.find_by_name(n)
         end
 
-        @user.save
+        @user.save!
 
         yield @user if block_given?
+
+        send_welcome_email
+
         @user
       end
 
       private
+
+      def send_welcome_email
+        UserMailer.welcome_email(@user).deliver_later
+      end
 
       def check_t_and_c_unticked?
         @user.terms_and_conditions == 0

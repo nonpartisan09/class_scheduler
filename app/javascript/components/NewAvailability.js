@@ -101,7 +101,6 @@ class NewAvailability extends Component {
     const {
       validateAllHandler,
       currentUser,
-      availabilities,
       currentUser: { timezone }
     } = this.props;
 

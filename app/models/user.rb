@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  include HasUrlSlug, HasSearch
+  include HasUrlSlug, HasSearch, ActsAsMessageable
   has_and_belongs_to_many :roles, :join_table => :roles_users
   has_many :enrollments
   has_many :programs, through: :enrollments
@@ -7,12 +7,7 @@ class User < ActiveRecord::Base
   has_many :availabilities, dependent: :destroy
 
   geocoded_by :full_address
-  after_validation :geocode
-
-  has_attached_file :thumbnail_image,
-        styles: { thumbnail: ["550x310", :jpg] }
-
-  validates_attachment :thumbnail_image, content_type: { content_type: ["image/jpg", "image/jpeg", "image/png", "image/gif"] }
+  after_validation :geocode, :if => :address_changed? || :city_changed?
 
   has_attached_file :thumbnail_image,
         styles: { thumbnail: ["550x310", :jpg] },

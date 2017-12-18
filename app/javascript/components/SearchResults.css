@@ -22,24 +22,9 @@
 .searchResultsAvatar {
     width: 36px;
 }
-@media only screen and (min-device-width: 0) and (max-device-width: 500px) {
+@media only screen and (min-device-width: 0) and (max-device-width: 500px), (max-width: 500px) {
     .resultsListContainer {
-        flex-flow: column;
-        text-align: left;
-        height: auto;
-    }
-
-    .resultsFirstName, .resultsLastLogin, .resultsCity, .resultsAvailableDays, .resultsPrograms {
-        margin-bottom: 12px;
-        width: 100%;
-    }
-}
-
-@media (max-width: 500px) {
-    .resultsListContainer {
-        flex-flow: column;
-        text-align: left;
-        height: auto;
+        display: block;
     }
 
     .resultsFirstName, .resultsLastLogin, .resultsCity, .resultsAvailableDays, .resultsPrograms {

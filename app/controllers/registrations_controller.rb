@@ -56,7 +56,7 @@ class RegistrationsController < Devise::RegistrationsController
     prev_unconfirmed_email = resource.unconfirmed_email if resource.respond_to?(:unconfirmed_email)
 
     if account_update_params[:programs].present?
-      programs = account_update_params[:programs].map { |n| Program.find_by_name(n) } if account_update_params[:programs].present?
+      programs = account_update_params[:programs].map { |n| Program.find_by_name(n) }
       params = account_update_params.merge!(:programs => programs)
     else
       params = account_update_params

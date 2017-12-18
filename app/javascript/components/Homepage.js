@@ -60,7 +60,9 @@ class Homepage extends Component {
   renderDesktopHeader() {
     if (!_.isEmpty(this.props.currentUser)) {
       return (
-        <Header currentUser={ this.props.currentUser } />
+        <div className='homepageMobileHeader'>
+          <Header currentUser={ this.props.currentUser } />
+        </div>
       );
     }
   }

@@ -10,14 +10,13 @@ import UserFormConstants from './UserFormConstants';
 import FormData from './FormData';
 import ProfileSchema from './schema/ProfileSchema';
 import withUserForm from './withUserForm';
+import newUser from './utils/CheckUpdatedFields';
 
 import './Header.css';
 
 const { UPDATE_PROFILE } = UserFormConstants;
 
 const ignoredFields = [
-  'terms_and_conditions',
-  'contact_permission',
   'client',
   'volunteer',
   'last_logged_in',
@@ -27,52 +26,67 @@ const ignoredFields = [
 
 function handleUpdateProfile() {
   const { currentUser } = this.props;
+  const { user } = this.state;
 
-  const updatedUser =  _.reduce(currentUser, (memo, value, key) => {
-    if (key === 'thumbnail_image' || (!_.includes(ignoredFields, key) && !_.isEmpty(value) )) {
-      memo[key] = value;
-    }
+  const updatedUser = newUser(currentUser, user, ignoredFields);
 
-    return memo;
-  }, {});
+  if(_.size(updatedUser) > 0) {
+    const attributes = FormData.from({ user: updatedUser });
 
-  const attributes = FormData.from({ user: updatedUser });
+    const requestParams = {
+      url: '/update',
+      attributes,
+      method: 'POST',
+      successCallBack: () => {
+        this.setState({
+          showSnackBar: true,
+          showPassword: false,
+          message: 'Success! Your profile has been updated.'
+        });
 
-  const requestParams = {
-    url: '/update',
-    attributes,
-    method: 'POST',
-    successCallBack: () => {
-      this.setState({
-        showSnackBar: true,
-        showPassword: false,
-        message: 'Success! Your profile has been updated.'
-      });
+        this.handleClearValues();
 
-      this.handleClearValues();
+        setTimeout(() => {
+          this.handleHideSnackBar();
+        }, 2000);
+      },
 
-      setTimeout(() => {
-        this.handleHideSnackBar();
-      }, 2000);
-    },
+      errorCallBack: (message) => {
+        this.setState({
+          showSnackBar: true,
+          message: message
+        });
+        this.resetForm();
 
-    errorCallBack: (message) => {
-      this.setState({
-        showSnackBar: true,
-        message: message
-      });
-      this.resetForm();
+        setTimeout(() => {
+          this.handleHideSnackBar();
+        }, 2000);
+      }
+    };
 
-      setTimeout(() => {
-        this.handleHideSnackBar();
-      }, 2000);
-    }
-  };
+    return postData(requestParams);
+  } else {
+    this.setState({
+      showSnackBar: true,
+      showPassword: false,
+      message: 'Please make a change to your profile first'
+    });
 
-  return postData(requestParams);
+    setTimeout(() => {
+      this.handleHideSnackBar();
+    }, 2000);
+  }
 }
 
 class MyProfile extends Component {
+  constructor(props, context) {
+    super(props, context);
+
+    this.state = {
+      user: props.currentUser
+    };
+  }
+
   render() {
     return (
       <div>

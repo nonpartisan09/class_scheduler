@@ -16,6 +16,8 @@ import MuiTheme from '../components/MuiTheme';
 
 import Homepage from '../components/Homepage';
 import SearchBar from '../components/SearchBar';
+import ConversationIndexPage from '../components/ConversationIndexPage';
+import NewMessagePage from '../components/NewMessagePage';
 import MyProfile from '../components/MyProfile';
 import SignUp from '../components/SignUp';
 import SignIn from '../components/SignIn';
@@ -40,7 +42,8 @@ document.addEventListener('DOMContentLoaded', () => {
       <Router >
         <div>
           <Route exact path='/' render={ () => <Homepage { ...data } /> } />
-          <Route exact path='/search' render={ () => <SearchBar { ...data } /> } />
+          <Route exact path='/inbox' render={ (props) => <ConversationIndexPage { ...data } { ...props } /> } />
+          <Route exact path='/messages/new' render={ (props) => <NewMessagePage { ...data } { ...props } /> } />
           <Switch>
             <Route path='/search/:sign_up' render={ (props) => <SearchBar { ...data } { ...props } /> } />
             <Route exact path='/search' render={ (props) => <SearchBar { ...data } { ...props } /> } />
@@ -71,6 +74,8 @@ document.addEventListener('turbolinks:render', () => {
       <Router >
         <div>
           <Route exact path='/' render={ () => <Homepage { ...data } /> } />
+          <Route exact path='/inbox' render={ (props) => <ConversationIndexPage { ...data } { ...props } /> } />
+          <Route exact path='/messages/new' render={ (props) => <NewMessagePage { ...data } { ...props } /> } />
           <Switch>
             <Route path='/search/:sign_up' render={ (props) => <SearchBar { ...data } { ...props } /> } />
             <Route exact path='/search' render={ (props) => <SearchBar { ...data } { ...props } /> } />

@@ -18,6 +18,10 @@
     .tableHideMediumScreen {
         display: block;
     }
+
+    .availabilitiesTableButton {
+        margin: 12px 0;
+    }
 }
 
 @media (max-width: 650px) {

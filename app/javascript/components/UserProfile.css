@@ -5,3 +5,13 @@
 .userProfileImage {
     text-align: center;
 }
+
+.userProfileSendEmail {
+    position: absolute;
+    bottom: -24px;
+    right: 0;
+}
+
+.userProfileLink {
+    margin: 12px 0;
+}

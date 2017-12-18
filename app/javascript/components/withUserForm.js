@@ -19,6 +19,7 @@ import ImageInput from './ImageInput';
 import DialogComponent from './DialogComponent';
 import SnackBarComponent from './reusable/SnackBarComponent';
 
+import newUser from './utils/CheckUpdatedFields';
 import UserFormConstants from './UserFormConstants';
 
 import './withUserForm.css';
@@ -55,7 +56,8 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
         showAddressDialog: false,
         showSnackBar: false,
         showPassword: false,
-        showPrograms: false
+        showPrograms: false,
+        user: props.currentUser
       };
     }
 
@@ -73,10 +75,9 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
         },
         timezones
       } = this.props;
-
       return (
         <div>
-          <WrappedComponent { ...this.props } />
+          <WrappedComponent />
 
           <DialogComponent
             title='Why do you need my street address and city?'
@@ -129,7 +130,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
 
               <Badge
                 badgeContent={ <span onClick={ this.handleShowDialog }> <InfoIcon /> </span> }
-                badgeStyle={ { fontSize: 14, transform: 'translateY(18px)' } }
+                badgeStyle={ { transform: 'translateY(18px)' } }
                 style={ { padding: '0' } }
               >
                 <TextField
@@ -197,14 +198,27 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
               { this.renderSignUpCheckBoxes() }
             </form>
 
-            <div className='userFormOuterButton'>
-              <RaisedButton className='userFormSaveButton' label={ wrappedProps.primaryButtonLabel } onClick={ this.handleSubmit } primary />
-            </div>
+            { this.renderSubmit() }
           </Paper>
 
           { this.renderSnackBar() }
         </div>
       );
+    }
+
+    renderSubmit() {
+      const { currentUser, errors } = this.props;
+      const { user } = this.state;
+
+      const updatedUser = newUser(currentUser, user);
+
+      if (_.size(updatedUser) > 0 && _.size(errors) === 0) {
+        return (
+          <div className='userFormOuterButton'>
+            <RaisedButton className='userFormSaveButton' label={ wrappedProps.primaryButtonLabel } onClick={ this.handleSubmit } primary />
+          </div>
+        );
+      }
     }
 
     handleImageUpload(image) {
@@ -418,13 +432,10 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
 
     renderSignUpPrograms() {
       const { programs } = this.props;
+      const { type } = wrappedProps;
 
-      if (_.size(programs) > 0) {
-        const { type } = wrappedProps;
-
-        if (type === SIGN_UP) {
-          return this.renderPrograms();
-        }
+      if (_.size(programs) > 0 && type === SIGN_UP) {
+        return this.renderPrograms();
       }
     }
 
@@ -492,13 +503,13 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
       if (role === 'volunteer' || volunteer ) {
         return (
           <h2 className='userFormHeader'>
-            I am interested in teaching:
+            I am interested in helping with:
           </h2>
         );
       } else if (role === 'client' || client ) {
         return (
           <h2 className='userFormHeader'>
-            I am interested in:
+            I am interested in help with:
           </h2>
         );
       }
@@ -533,8 +544,6 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
         );
       }
     }
-
-
   }
 
   UserForm.propTypes = {
@@ -588,7 +597,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
       password: '',
       password_confirmation: '',
       current_password: '',
-      thumbnail_image: '',
+      thumbnail_image: {},
       contact_permission: false,
       terms_and_conditions: false,
     },

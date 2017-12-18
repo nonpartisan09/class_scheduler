@@ -17,18 +17,26 @@ class UserDecorator
       :email => email,
       :url_slug => url_slug,
       :first_name => first_name,
-      :available_days => available_days,
-      :availabilities => availabilities,
       :last_logged_in => last_logged_in,
       :thumbnail_image => picture,
       :timezone => timezone
-    }
+    }.merge(availabilities_hash)
+  end
+
+  def availabilities_hash
+    unless volunteer
+      {
+          :available_days => available_days,
+          :availabilities => availabilities
+      }
+    end
+
+    { }
   end
 
   def decorate
     {
         :programs => programs,
-        :availabilities => availabilities,
         :address => address,
         :city => city,
         :url_slug => url_slug,
@@ -40,7 +48,7 @@ class UserDecorator
         :thumbnail_image => picture,
         :description => description,
         :timezone => timezone
-    }
+    }.merge(availabilities_hash)
   end
 
   def timezone
@@ -48,7 +56,7 @@ class UserDecorator
   end
 
   def description
-    user.description
+    user.description ||= ''
   end
 
   def url_slug
@@ -65,10 +73,8 @@ class UserDecorator
 
   def picture
     if Rails.env.production?
-      if user.thumbnail_image.present?
-        URI.join('https:' + user.thumbnail_image.url(:thumbnail)).to_s
-      end
-    elsif user.thumbnail_image.present?
+      URI.join('https:' + user.thumbnail_image.url(:thumbnail)).to_s
+    else
       URI.join(Rails.configuration.static_base_url, user.thumbnail_image.url(:thumbnail)).to_s
     end
   end
@@ -82,11 +88,11 @@ class UserDecorator
   end
 
   def address
-    user.address
+    user.address ||= ''
   end
 
   def city
-    user.city
+    user.city ||= ''
   end
 
   def client

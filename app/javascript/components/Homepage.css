@@ -47,7 +47,7 @@
   display: none;
 }
 
-@media only screen and (min-device-width: 0) and (max-device-width: 500px), (max-width: 500px) {
+@media only screen and (min-device-width: 0) and (max-device-width: 800px), (max-width: 500px) {
   .homepageSubtitle {
     font-size: 18px;
   }
@@ -58,6 +58,7 @@
 
    .homepageContainer {
      margin: 0;
+     height: 100vh;
    }
 
   .homepageCaption {

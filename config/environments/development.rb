@@ -5,7 +5,6 @@ Rails.application.configure do
   config.paperclip_defaults = {
       path: ":rails_root/public/system/:class/:attachment/:id_partition/:style/:basename.:extension",
       url: "#{ Rails.configuration.static_base_url }/:class/:attachment/:id_partition/:style/:basename.:extension",
-      default_url: nil
   }
 
   # In the development environment your application's code is reloaded on
@@ -33,8 +32,9 @@ Rails.application.configure do
     config.cache_store = :null_store
   end
 
-  # Don't care if the mailer can't send.
-  config.action_mailer.raise_delivery_errors = false
+  # Care if the mailer can't send.
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.delivery_method = :letter_opener
 
   config.action_mailer.perform_caching = false
 

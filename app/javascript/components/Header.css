@@ -1,5 +1,5 @@
 .navigation {
-    margin-bottom: 36px;
+    margin: 0 0 0 36px;
 }
 
 .slidingLink {
@@ -60,9 +60,10 @@
 
 @media only screen and (min-device-width: 0) and (max-device-width: 650px), (max-width: 650px) {
     .slidingLink {
-        margin-right: 12px;
         display: block;
+        margin: 0;
     }
+
     .slidingLink:hover:before, .slidingLink:hover:after {
         width: 50%;
         right: 100%;
@@ -73,6 +74,7 @@
         display: none;
         padding: 0;
         text-align: center;
+        margin: 0;
     }
 
     .navMenuButton, .navDisplayNone {
@@ -80,6 +82,7 @@
     }
     .navDisplay, .navMenuButton {
         display: block;
+        margin: 0;
     }
 
     .navMenuButton {

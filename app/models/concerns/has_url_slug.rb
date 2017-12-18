@@ -1,4 +1,5 @@
 require 'active_support/concern'
+require 'digest'
 
 module HasUrlSlug
   extend ActiveSupport::Concern
@@ -28,24 +29,18 @@ module HasUrlSlug
           base_slug = label
         end
 
-        base_slug = I18n.transliterate(base_slug)
-                        .strip
-                        .gsub(/\//, 'and')
-                        .gsub('_','-')
-                        .gsub(/[^a-zA-Z0-9\-\s]/,'')
-                        .gsub(/\W-\W/, '-')
-                        .gsub(/[\W]/, '-')
-                        .downcase
-
+        base_slug = Digest::SHA1.hexdigest base_slug
         counter = 1
-        slug = base_slug
+        salt = rand(0..9)
+        slug = base_slug + salt.to_s
 
         while self.class.where(url_slug: slug).where.not(id: self.id).exists?
           counter += 1
+
           slug = base_slug + counter.to_s
         end
 
-        self.url_slug = slug
+        self.update(:url_slug => slug)
       end
     end
 
@@ -69,7 +64,7 @@ module HasUrlSlug
 
   module ClassMethods
     def field_used_for_url_slug
-      :name
+      :name || :email
     end
 
     def find_by_identifier!(identifier)

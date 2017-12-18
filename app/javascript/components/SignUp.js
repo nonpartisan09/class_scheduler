@@ -59,6 +59,7 @@ function handleUserSignUp() {
 }
 
 class SignUp extends Component {
+
   render() {
     return (
       <div>
