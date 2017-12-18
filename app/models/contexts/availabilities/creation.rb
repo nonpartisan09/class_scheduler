@@ -48,7 +48,7 @@ module Contexts
         existing_availabilities = Availability.where('day = ?', @day)
 
         if existing_availabilities.present?
-          range = Range.new @availability['start_time'], @availability['end_time']
+          range = Range.new @utc_start_time, @utc_end_time
 
           overlaps = existing_availabilities.in_range(range)
            if overlaps.present?
