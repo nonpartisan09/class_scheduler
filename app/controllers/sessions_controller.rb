@@ -2,7 +2,9 @@ class SessionsController < Devise::SessionsController
   prepend_before_action :require_no_authentication, :only => [:create ]
 
   before_action :ensure_params_exist, :only => [:create]
-  before_action :check_if_logged_in, :only => [:destroy, :new]
+  before_action :check_if_logged_in, :only => [:new]
+  after_action :check_if_logged_in, :only => [:destroy]
+
   respond_to :json
 
   def create
