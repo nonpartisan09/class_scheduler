@@ -73,11 +73,12 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
           description,
           timezone
         },
+        currentUser,
         timezones
       } = this.props;
       return (
         <div>
-          <WrappedComponent />
+          <WrappedComponent currentUser={ currentUser } />
 
           <DialogComponent
             title='Why do you need my street address and city?'

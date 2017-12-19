@@ -1,5 +1,7 @@
 .navigation {
-    margin: 0 0 0 36px;
+    width: 100%;
+    margin: 24px 0 24px 36px;
+    text-align: left;
 }
 
 .slidingLink {
@@ -49,13 +51,6 @@
 
 .navMenuButton, .navDisplayNone {
     display: none;
-}
-
-.navigation {
-    width: 100%;
-    margin-top: 24px;
-    padding-left: 24px;
-    text-align: left;
 }
 
 @media only screen and (min-device-width: 0) and (max-device-width: 650px), (max-width: 650px) {

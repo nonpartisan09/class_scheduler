@@ -6,23 +6,46 @@
 }
 
 .homepageImage {
-  width: 53vw;
-  object-fit: cover;
-  height: 100vh;
+    width: 100%;
+    object-fit: cover;
+    height: 50vh;
 }
 
 .homepageCaption {
-  width: 42vw;
-  max-height: 100vh;
-  padding: 48px 0 48px 36px;
-  display: flex;
-  flex-flow: row wrap;
-  align-content: space-around;
+    margin: 12px 0;
+    max-height: none;
+    width: 100%;
+    padding: 48px 0 48px 36px;
+    display: flex;
+    flex-flow: column wrap;
+    align-content: space-around;
+    justify-content: center;
 }
 
 .homepageCaptionItem {
-  width: 100%;
-  margin-bottom: 0;
+    width: 90%;
+    margin: 24px 0;
+}
+
+.homepageMainContainer {
+  padding: 24px 0 48px 36px;
+  background-color: #004664;
+  color: #fff;
+}
+
+.homepageMainList {
+  padding: 12px;
+  counter-reset: section;
+  list-style-type: none;
+}
+
+.homepageMainListItem::before {
+  counter-increment: section;
+  content: counters(section, ".") ". ";
+}
+
+.homepageMailToLink, .homepageMailToLink:visited {
+    color: #fff;
 }
 
 .homepageDesktopNavigation {
@@ -47,9 +70,14 @@
   display: none;
 }
 
-@media only screen and (min-device-width: 0) and (max-device-width: 800px), (max-width: 500px) {
+@media only screen and (min-device-width: 0) and (max-device-width: 900px), (max-width: 500px) {
   .homepageSubtitle {
     font-size: 18px;
+  }
+
+  .homepageCaptionItem {
+    width: 100%;
+    margin: 6px 0;
   }
 
   .homepageDesktopNavigation {
@@ -58,11 +86,18 @@
 
    .homepageContainer {
      margin: 0;
-     height: 100vh;
+     display: block;
    }
+
+  .homepageMainContainer {
+    margin: 0;
+    padding: 12px 0 24px 12px;
+    font-size: 20px;
+  }
 
   .homepageCaption {
     order: 1;
+    padding: 0 0 0 24px;
   }
 
   .homepageMobileNavigation {
@@ -82,22 +117,23 @@
   }
 }
 
-@media (max-width: 1200px) {
-  .homepageCaption, .homepageImage {
-    width: 100%;
+@media (min-width: 801px) and (max-width: 1200px) {
+  .homepageCaption {
+    padding: 0 0 0 36px;
+  }
+}
+
+@media (min-width: 1201px) {
+  .homepageCaption {
+    width: 42vw;
   }
 
   .homepageImage {
-    height: 50vh;
+    width: 53vw;
+    height: 85vh;
   }
 
   .homepageCaption {
-    padding: 24px 0 24px 2vw;
-    max-height: 45vh;
-  }
-
-  .homepageCaptionItem {
-    width: 90%;
-    margin: 24px auto;
+    max-height: 85vh;
   }
 }
