@@ -2,7 +2,7 @@ class SessionsController < Devise::SessionsController
   prepend_before_action :require_no_authentication, :only => [:create ]
 
   before_action :ensure_params_exist, :only => [:create]
-  after_action :check_if_logged_in, :only => [:destroy]
+  before_action :check_if_logged_in, :only => [:destroy, :new]
   respond_to :json
 
   def create
@@ -64,8 +64,6 @@ class SessionsController < Devise::SessionsController
   end
 
   def check_if_logged_in
-    if current_user.present?
-      redirect_to root_path
-    end
+    redirect_to root_path and return if current_user.present?
   end
 end
