@@ -40,7 +40,7 @@ class AvailabilitiesController < ApplicationController
   def new
     user = UserDecorator.new(current_user).simple_decorate
     programs = Program.all
-    timezones = ActiveSupport::TimeZone.all.sort
+    timezones = ActiveSupport::TimeZone.all
     days =  Date::DAYNAMES
 
     @data = {

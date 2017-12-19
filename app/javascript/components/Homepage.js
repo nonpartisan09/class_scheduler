@@ -47,12 +47,29 @@ class Homepage extends Component {
             ${'/assets/community_800.jpg'} 800w,
             ${'/assets/community_1000.jpg'} 1000w,
             ${'/assets/community_1500.jpg'} 1500w,
-            ${'/assets/community_2000.jpg'} 2000w,
             ${'/assets/community_2000.jpg'} 2000w` }
           />
 
           { this.renderMobileNavigation() }
         </div>
+        <main className='homepageMainContainer'>
+          <h3>How this free service works:</h3>
+          <ul className='homepageMainList'>
+            <li className='homepageMainListItem'>
+              Clients post what they need help with, such as English language tutoring.
+            </li>
+            <li className='homepageMainListItem'>
+              Volunteers post what they can help with.
+            </li>
+            <li className='homepageMainListItem'>
+            Clients contact volunteers matching their needs and availability.
+            </li>
+            <li className='homepageMainListItem'>
+              After working together, volunteers and clients review each other.
+            </li>
+          </ul>
+          Questions? Email us at <a className="homepageMailToLink" href="mailto:admin@tutoria.io?Subject=Question" target="_blank" rel='noopener noreferrer'>admin@tutoria.io</a>
+        </main>
       </div>
     );
   }

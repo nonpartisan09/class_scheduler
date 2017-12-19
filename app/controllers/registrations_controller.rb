@@ -8,7 +8,7 @@ class RegistrationsController < Devise::RegistrationsController
     yield resource if block_given?
 
     programs = Program.all
-    timezones = ActiveSupport::TimeZone.all.sort
+    timezones = ActiveSupport::TimeZone.all
     @data = { :programs => programs, :timezones => timezones }
 
     validate_role_params
