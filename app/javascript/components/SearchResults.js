@@ -53,7 +53,7 @@ class SearchResults extends Component {
 
                 { this.renderAvailableDays(available_days) }
                 <div className='resultsPrograms'>
-                  Can teach: { _.trimEnd(programs.join(', '), ', ')}
+                  Programs offered: { _.trimEnd(programs.join(', '), ', ')}
                 </div>
               </div>
               <Link key={ key + 'link' } onClick={ this.handleClick } className='userProfileSendEmail' to={ { pathname: '/messages/new', query: { recipient: url_slug, userName: first_name } } } >
