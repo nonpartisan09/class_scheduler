@@ -532,15 +532,26 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
           <div>
             Your location will only be used to help clients find volunteers in their area.
             <br />
-            It’s not required unless you would like to allow clients to ask for face to face sessions.
+            <p>
+              Your street address will not be shown to other users. Only your town/city.
+            </p>
+            <p>
+              This info is not required unless you would like to allow clients to ask for face to face sessions.
+            </p>
           </div>
         );
       } else if (role === 'client' || client) {
         return (
           <div>
-            Your location will only be used to help find volunteers in your area.
-            <br />
-            It’s not required unless you would like to use the location feature.
+            <p>
+              Your location will only be used to help find volunteers in your area.
+            </p>
+            <p>
+              Your street address will not be shown to other users. Only your town/city.
+            </p>
+            <p>
+             This info is not required unless you would like to use the location feature.
+            </p>
           </div>
         );
       }

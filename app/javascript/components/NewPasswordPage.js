@@ -8,32 +8,27 @@ import validate from 'react-joi-validation';
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
-import Checkbox from 'material-ui/Checkbox';
 
 import FormData from './FormData';
 import Header from './Header';
 import SnackBarComponent from './reusable/SnackBarComponent';
 import { postData } from './sendData';
 
-import './SignIn.css';
-
 const schema = {
   email: Joi.string().email({ minDomainAtoms: 2 }).required().options({
-  language: {
-    any: {
-      allowOnly: 'Please enter a valid email.'
+    language: {
+      any: {
+        allowOnly: 'Please enter a valid email.'
+      }
     }
-  }
-}),
-  password: Joi.string().min(8).required(),
-  remember_me: Joi.boolean()
+  })
 };
 
-class SignIn extends Component {
+class NewPasswordPage extends Component {
   constructor(props, context) {
     super(props, context);
 
-    this.handleSignIn = this.handleSignIn.bind(this);
+    this.handleForgotClick = this.handleForgotClick.bind(this);
     this.handleHideSnackBar = this.handleHideSnackBar.bind(this);
 
     this.state = {
@@ -42,14 +37,7 @@ class SignIn extends Component {
     };
   }
   render() {
-    const {
-      errors, changeHandler, validateHandler,
-      currentUser: {
-        password,
-        email,
-        remember_me
-      },
-    } = this.props;
+    const { errors, changeHandler, validateHandler, currentUser: { email } } = this.props;
 
     return (
       <div>
@@ -61,7 +49,7 @@ class SignIn extends Component {
             value={ email }
             className='signUpEmailInputField'
             hintText=''
-            floatingLabelText='Email'
+            floatingLabelText='Please enter your email to recover your password'
             floatingLabelFixed
             errorText={ errors.email }
             onChange={ changeHandler('email') }
@@ -69,37 +57,14 @@ class SignIn extends Component {
             fullWidth
           />
 
-          <TextField
-            name='password'
-            value={ password }
-            type='password'
-            hintText=''
-            floatingLabelText='Password'
-            floatingLabelFixed
-            errorText={ errors.password }
-            onChange={ changeHandler('password') }
-            onBlur={ validateHandler('password') }
-            fullWidth
-          />
-
-          <Checkbox
-            checked={ remember_me }
-            onCheck={ changeHandler('remember_me') }
-            label='Remember me'
-          />
-
-          <RaisedButton primary label='Sign In' onClick={ this.handleSignIn } className='signInLink' />
+          { this.renderSubmitButton() }
 
           <div className='signInLinkSecondaryContainer'>
-            <a href='/password/new' className='signInLinkSecondary'>
-              <FlatButton primary label='Forgot your password?' onClick={ this.handleForgotClick } />
-            </a>
-
-            <a href='/sign_up/client' className='signInLinkSecondary'>
+            <a href={ '/sign_up/client' } className='signInLinkSecondary'>
               <FlatButton primary label='Sign up as a client' />
             </a>
 
-            <a href='/sign_up/volunteer' className='signInLinkSecondary'>
+            <a href={ '/sign_up/volunteer' } className='signInLinkSecondary'>
               <FlatButton primary label='Sign up as a volunteer' />
             </a>
           </div>
@@ -110,26 +75,38 @@ class SignIn extends Component {
     );
   }
 
+  renderSubmitButton() {
+    return <RaisedButton primary label='Reset password' onClick={ this.handleForgotClick } className='signInLink' />
+  }
+
+
   renderSnackBar() {
     if (this.state.showSnackBar) {
       return <SnackBarComponent open={ this.state.showSnackBar } message={ this.state.message } />;
     }
   }
 
-  handleSignIn() {
+  handleForgotClick() {
     const { errors } = this.props;
 
     if(_.size(errors) === 0) {
 
-      const { currentUser } = this.props;
-      const attributes = FormData.from({ user: currentUser });
+      const { currentUser: { email } } = this.props;
+      const attributes = FormData.from({ email });
 
       const requestParams = {
-        url: '/sign_in',
+        url: '/password',
         attributes,
         method: 'POST',
         successCallBack: () => {
-          location.assign('/');
+          this.setState({
+            showSnackBar: true,
+            message: 'An email has been sent to your email address.'
+          });
+
+          setTimeout(() => {
+            this.handleHideSnackBar();
+          }, 2000);
         },
         errorCallBack: (message) => {
           this.setState({
@@ -153,27 +130,23 @@ class SignIn extends Component {
   }
 }
 
-SignIn.propTypes = {
+NewPasswordPage.propTypes = {
   errors: PropTypes.object,
   currentUser: PropTypes.shape({
     email: PropTypes.string,
-    password: PropTypes.string,
-    remember_me: PropTypes.bool
   }),
   changeHandler: PropTypes.func.isRequired,
   validateHandler: PropTypes.func.isRequired,
 };
 
-SignIn.defaultProps = {
+NewPasswordPage.defaultProps = {
   errors: {},
   currentUser: {
     email: '',
-    password: '',
-    remember_me: false
   },
 };
 
-SignIn.contextTypes = {
+NewPasswordPage.contextTypes = {
   router: PropTypes.object
 };
 
@@ -182,4 +155,4 @@ const validationOptions = {
   only: 'currentUser'
 };
 
-export default validate(SignIn, validationOptions);
+export default validate(NewPasswordPage, validationOptions);

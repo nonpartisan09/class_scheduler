@@ -37,7 +37,7 @@ function getData({ url, params, jsonBody, method='GET', successCallBack, errorCa
       response.json().then((item) => {
         const { errors, error } = item;
         const errorMessage = error && error.message ? error.message : _.flatMap(Object.entries(errors), (item) => {
-          return _.capitalize(item.join(' ').replace('_', ' '));
+          return _.capitalize(item.join(' ').replace(/_/g, ' '));
         }).join(',');
         return errorCallBack(errorMessage);
       });
