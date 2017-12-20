@@ -24,7 +24,7 @@ class AvailabilityIndexPage extends Component {
         <Header currentUser={ currentUser } />
         <Paper zDepth={ 1 } style={ paperMarginOverride } rounded={ false }>
           <div className='availabilityIndexContainer'>
-            I can teach:
+            I can help with:
             <ul className='availabilityIndexListContainer'>
               { _.map(this.props.programs, ({ name }) => <li className='availabilityListItem' key={name}>{ name }</li>) }
             </ul>

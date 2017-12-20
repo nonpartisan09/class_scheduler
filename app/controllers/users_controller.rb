@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
-  before_action :authenticate_user!, :permitted_params
+  before_action :authenticate_user!, only: [ :show ]
+  before_action :permitted_params
 
   def show
     user = User.find_by_url_slug(params[:url_slug])

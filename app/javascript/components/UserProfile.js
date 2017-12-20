@@ -42,7 +42,7 @@ class UserProfile extends Component {
           </div>
 
           <div className='userProfileField'>
-            Can teach: { user && user.programs? user && user.programs.join(', ') : '' }
+            Programs offered: { user && user.programs? user && user.programs.join(', ') : '' }
           </div>
 
           <div className='userProfileField'>

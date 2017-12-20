@@ -21,6 +21,9 @@ import NewMessagePage from '../components/NewMessagePage';
 import MyProfile from '../components/MyProfile';
 import SignUp from '../components/SignUp';
 import SignIn from '../components/SignIn';
+import NewPasswordPage from '../components/NewPasswordPage';
+import ResetPasswordPage from '../components/ResetPasswordPage';
+
 import TermsAndConditions from '../components/TermsAndConditions';
 import NewAvailability from '../components/NewAvailability';
 import AvailabilityIndexPage from '../components/AvailabilityIndexPage';
@@ -52,6 +55,8 @@ document.addEventListener('DOMContentLoaded', () => {
           <Route exact path='/profiles/:url_slug' render={ (props) => <UserProfile { ...data } { ...props } /> } />
           <Route exact path='/sign_up/:role' render={ (props) => <SignUp { ...data }  { ...props } /> } />
           <Route exact path='/sign_in' component={ SignIn } />
+          <Route exact path='/password/new' component={ NewPasswordPage } />
+          <Route path='/password/edit' render={ (props) => <ResetPasswordPage { ...props } /> } />
           <Route exact path='/terms_and_conditions' component={ TermsAndConditions } />
           <Switch>
             <Route exact path='/availabilities/new/:sign_up' render={ (props) => <NewAvailability { ...data } { ...props } /> } />
@@ -84,12 +89,14 @@ document.addEventListener('turbolinks:render', () => {
           <Route exact path='/profiles/:url_slug' render={ (props) => <UserProfile { ...data } { ...props } /> } />
           <Route exact path='/sign_up/:role' render={ (props) => <SignUp { ...data }  { ...props } /> } />
           <Route exact path='/sign_in' component={ SignIn } />
+          <Route exact path='/password/new' component={ NewPasswordPage } />
+          <Route path='/password/edit' render={ (props) => <ResetPasswordPage { ...props } /> } />
           <Route exact path='/terms_and_conditions' component={ TermsAndConditions } />
           <Switch>
             <Route exact path='/availabilities/new/:sign_up' render={ (props) => <NewAvailability { ...data } { ...props } /> } />
             <Route exact path='/availabilities/new' render={ (props) => <NewAvailability { ...data } { ...props } /> } />
           </Switch>
-          <Route exact path='/availabilities' render={ (props) => <AvailabilityIndexPage { ...data }  { ...props } /> } />
+          <Route exact path='/availabilities' render={ (props) => <AvailabilityIndexPage { ...data } { ...props } /> } />
         </div>
       </Router>
     </MuiThemeProvider>, container);

@@ -17,6 +17,10 @@ Rails.application.routes.draw do
 
   # needed for devise
   devise_scope :user do
+    get 'password/edit' => 'passwords#edit'
+    get 'password/new' => 'passwords#new'
+    post 'password' => 'passwords#create'
+    put 'password' => 'passwords#update'
     get 'sign_in', to: 'sessions#new'
     delete 'sign_out', to: 'sessions#destroy'
     post 'sign_in' => 'sessions#create'
@@ -29,5 +33,4 @@ Rails.application.routes.draw do
   devise_for :users,
       only: [:sessions, :registrations, :passwords, :availabilities],
       singular: :user
-
 end

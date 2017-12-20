@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
   has_many :availabilities, dependent: :destroy
 
   geocoded_by :full_address
-  after_validation :geocode, :if => :address_changed? || :city_changed?
+  after_validation :geocode, if: ->(obj) { obj.full_address.present? }
 
   has_attached_file :thumbnail_image,
         styles: { thumbnail: ["550x310", :jpg] },

@@ -1,5 +1,7 @@
 Rails.application.configure do
   config.static_base_url =  'https://s3.amazonaws.com/tutoria/'
+  config.mailer_sender = 'test@test.com'
+
   # Settings specified here will take precedence over those in config/application.rb.
 
   # Code is not reloaded between requests.
@@ -20,6 +22,7 @@ Rails.application.configure do
       :enable_starttls_auto => true
   }
 
+  config.action_mailer.default_url_options = { :host => 'http://tutoria-staging.herokuapp.com' }
   config.action_mailer.perform_caching = false
 
   # Eager load code on boot. This eager loads most of Rails and

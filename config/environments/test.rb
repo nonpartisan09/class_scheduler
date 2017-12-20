@@ -1,5 +1,7 @@
 Rails.application.configure do
   config.static_base_url =  "http://localhost:5000/system"
+  config.action_mailer.default_url_options = { :host => 'http://localhost:5000' }
+  config.mailer_sender = 'test@test.com'
 
   config.paperclip_defaults = {
       path: ":rails_root/public/system/:class/:attachment/:id_partition/:style/:basename.:extension",
