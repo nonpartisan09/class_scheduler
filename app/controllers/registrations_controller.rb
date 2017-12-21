@@ -8,8 +8,9 @@ class RegistrationsController < Devise::RegistrationsController
     yield resource if block_given?
 
     programs = Program.all
+    languages = Language.all
     timezones = ActiveSupport::TimeZone.all
-    @data = { :programs => programs, :timezones => timezones }
+    @data = { :programs => programs, :timezones => timezones, :languages => languages}
 
     validate_role_params
     respond_with(resource, render: :new)
@@ -20,9 +21,11 @@ class RegistrationsController < Devise::RegistrationsController
       validate_role_params
 
       programs = params[:user][:programs]
+      languages = params[:user][:languages]
+
       build_resource(sign_up_params)
 
-      @registration = Contexts::Users::Creation.new(resource, resource_name, @role_id, programs)
+      @registration = Contexts::Users::Creation.new(resource, resource_name, @role_id, programs, languages)
 
       @registration.execute
 
@@ -114,6 +117,7 @@ class RegistrationsController < Devise::RegistrationsController
         :thumbnail_image,
         :timezone,
         :programs => '',
+        :languages => '',
         :role_ids => []
     )
   end
@@ -132,6 +136,7 @@ class RegistrationsController < Devise::RegistrationsController
         :city,
         :thumbnail_image,
         :timezone,
+        :languages => '',
         :programs => []
     )
   end

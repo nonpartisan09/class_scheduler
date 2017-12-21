@@ -1,11 +1,12 @@
 module Contexts
   module Users
     class Creation
-      def initialize(user, resource_name, role_id, programs)
+      def initialize(user, resource_name, role_id, programs, languages)
         @user = user
         @resource_name = resource_name
         @role_id = role_id
         @programs = programs
+        @languages = languages
 
         if check_if_email_exists?
           raise Users::Errors::AlreadyUsedEmail,'This email is already in use. Have you forgotten your password?'
@@ -18,13 +19,12 @@ module Contexts
       end
 
       def execute
-        #TODO make this value dynamic once active admin is up
         @user.terms_and_conditions = TermsAndConditions.last.id
         @user.roles << Role.find(@role_id)
 
-        @programs.each do |n|
-          @user.programs << Program.find_by_name(n)
-        end
+        build_programs
+
+        build_languages
 
         @user.save!
 
@@ -36,6 +36,18 @@ module Contexts
       end
 
       private
+
+      def build_programs
+        @programs.each do |program|
+          @user.programs << Program.find_by_name(program)
+        end
+      end
+
+      def build_languages
+        @languages.each do |language|
+          @user.languages << Language.find_by_name(language)
+        end
+      end
 
       def send_welcome_email
         UserMailer.welcome_email(@user).deliver_later

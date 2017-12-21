@@ -1,0 +1,42 @@
+[
+  {
+    "id": "Availabilities.tableFrom",
+    "defaultMessage": "From"
+  },
+  {
+    "id": "Availabilities.tableTo",
+    "defaultMessage": "To"
+  },
+  {
+    "id": "Availabilities.tableTimezone",
+    "defaultMessage": "Timezone"
+  },
+  {
+    "id": "Availabilities.day",
+    "defaultMessage": "Day"
+  },
+  {
+    "id": "Availabilities.from",
+    "defaultMessage": "From:"
+  },
+  {
+    "id": "Availabilities.to",
+    "defaultMessage": "To:"
+  },
+  {
+    "id": "Availabilities.timezone",
+    "defaultMessage": "Timezone:"
+  },
+  {
+    "id": "Availabilities.startTime",
+    "defaultMessage": "Start Time"
+  },
+  {
+    "id": "Availabilities.endTime",
+    "defaultMessage": "End Time"
+  },
+  {
+    "id": "Delete",
+    "defaultMessage": "Delete"
+  }
+]

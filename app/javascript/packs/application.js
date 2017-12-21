@@ -1,7 +1,7 @@
 import React from 'react';
 import Joi from 'joi-browser';
 import ReactJoiValidation from 'react-joi-validation';
-
+import _ from 'lodash';
 import {
   BrowserRouter as Router,
   Route,
@@ -9,6 +9,12 @@ import {
 } from 'react-router-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
+
+/* localization */
+
+import { IntlProvider, addLocaleData } from 'react-intl';
+import en from 'react-intl/locale-data/en';
+import es from 'react-intl/locale-data/es';
 
 import ReactDom from 'react-dom';
 
@@ -30,6 +36,14 @@ import AvailabilityIndexPage from '../components/AvailabilityIndexPage';
 import UserProfile from '../components/UserProfile';
 import './application.css';
 
+import localeData from '../../../build/locales/data.json';
+
+addLocaleData([...en, ...es ]);
+
+const language = _.last(_.split(window.location.href, '=')) || 'en';
+
+const messages = localeData[language];
+
 const { render }  = ReactDom;
 
 ReactJoiValidation.setJoi(Joi);
@@ -41,31 +55,33 @@ document.addEventListener('DOMContentLoaded', () => {
   const data = node? JSON.parse(node.getAttribute('data')): {};
 
   render(
-    <MuiThemeProvider muiTheme={ getMuiTheme(MuiTheme) }>
-      <Router >
-        <div>
-          <Route exact path='/' render={ () => <Homepage { ...data } /> } />
-          <Route exact path='/inbox' render={ (props) => <ConversationIndexPage { ...data } { ...props } /> } />
-          <Route exact path='/messages/new' render={ (props) => <NewMessagePage { ...data } { ...props } /> } />
-          <Switch>
-            <Route path='/search/:sign_up' render={ (props) => <SearchBar { ...data } { ...props } /> } />
-            <Route exact path='/search' render={ (props) => <SearchBar { ...data } { ...props } /> } />
-          </Switch>
-          <Route exact path='/my_profile' render={ (props) => <MyProfile { ...data } { ...props } /> } />
-          <Route exact path='/profiles/:url_slug' render={ (props) => <UserProfile { ...data } { ...props } /> } />
-          <Route exact path='/sign_up/:role' render={ (props) => <SignUp { ...data }  { ...props } /> } />
-          <Route exact path='/sign_in' component={ SignIn } />
-          <Route exact path='/password/new' component={ NewPasswordPage } />
-          <Route path='/password/edit' render={ (props) => <ResetPasswordPage { ...props } /> } />
-          <Route exact path='/terms_and_conditions' component={ TermsAndConditions } />
-          <Switch>
-            <Route exact path='/availabilities/new/:sign_up' render={ (props) => <NewAvailability { ...data } { ...props } /> } />
-            <Route exact path='/availabilities/new' render={ (props) => <NewAvailability { ...data } { ...props } /> } />
-          </Switch>
-          <Route exact path='/availabilities' render={ (props) => <AvailabilityIndexPage { ...data }  { ...props } /> } />
-        </div>
-      </Router>
-    </MuiThemeProvider>, container);
+    <IntlProvider locale={ language } messages={ messages }>
+      <MuiThemeProvider muiTheme={ getMuiTheme(MuiTheme) }>
+        <Router >
+          <div>
+            <Route exact path='/' render={ () => <Homepage { ...data } /> } />
+            <Route exact path='/inbox' render={ (props) => <ConversationIndexPage { ...data } { ...props } /> } />
+            <Route exact path='/messages/new' render={ (props) => <NewMessagePage { ...data } { ...props } /> } />
+            <Switch>
+              <Route path='/search/:sign_up' render={ (props) => <SearchBar { ...data } { ...props } /> } />
+              <Route exact path='/search' render={ (props) => <SearchBar { ...data } { ...props } /> } />
+            </Switch>
+            <Route exact path='/my_profile' render={ (props) => <MyProfile { ...data } { ...props } /> } />
+            <Route exact path='/profiles/:url_slug' render={ (props) => <UserProfile { ...data } { ...props } /> } />
+            <Route exact path='/sign_up/:role' render={ (props) => <SignUp { ...data }  { ...props } /> } />
+            <Route exact path='/sign_in' component={ SignIn } />
+            <Route exact path='/password/new' component={ NewPasswordPage } />
+            <Route path='/password/edit' render={ (props) => <ResetPasswordPage { ...props } /> } />
+            <Route exact path='/terms_and_conditions' component={ TermsAndConditions } />
+            <Switch>
+              <Route exact path='/availabilities/new/:sign_up' render={ (props) => <NewAvailability { ...data } { ...props } /> } />
+              <Route exact path='/availabilities/new' render={ (props) => <NewAvailability { ...data } { ...props } /> } />
+            </Switch>
+            <Route exact path='/availabilities' render={ (props) => <AvailabilityIndexPage { ...data }  { ...props } /> } />
+          </div>
+        </Router>
+      </MuiThemeProvider>
+    </IntlProvider>, container);
 });
 
 document.addEventListener('turbolinks:render', () => {
@@ -75,29 +91,31 @@ document.addEventListener('turbolinks:render', () => {
   const data = node? JSON.parse(node.getAttribute('data')): {};
 
   render(
-    <MuiThemeProvider muiTheme={ getMuiTheme(MuiTheme) }>
-      <Router >
-        <div>
-          <Route exact path='/' render={ () => <Homepage { ...data } /> } />
-          <Route exact path='/inbox' render={ (props) => <ConversationIndexPage { ...data } { ...props } /> } />
-          <Route exact path='/messages/new' render={ (props) => <NewMessagePage { ...data } { ...props } /> } />
-          <Switch>
-            <Route path='/search/:sign_up' render={ (props) => <SearchBar { ...data } { ...props } /> } />
-            <Route exact path='/search' render={ (props) => <SearchBar { ...data } { ...props } /> } />
-          </Switch>
-          <Route exact path='/my_profile' render={ (props) => <MyProfile { ...data } { ...props } /> } />
-          <Route exact path='/profiles/:url_slug' render={ (props) => <UserProfile { ...data } { ...props } /> } />
-          <Route exact path='/sign_up/:role' render={ (props) => <SignUp { ...data }  { ...props } /> } />
-          <Route exact path='/sign_in' component={ SignIn } />
-          <Route exact path='/password/new' component={ NewPasswordPage } />
-          <Route path='/password/edit' render={ (props) => <ResetPasswordPage { ...props } /> } />
-          <Route exact path='/terms_and_conditions' component={ TermsAndConditions } />
-          <Switch>
-            <Route exact path='/availabilities/new/:sign_up' render={ (props) => <NewAvailability { ...data } { ...props } /> } />
-            <Route exact path='/availabilities/new' render={ (props) => <NewAvailability { ...data } { ...props } /> } />
-          </Switch>
-          <Route exact path='/availabilities' render={ (props) => <AvailabilityIndexPage { ...data } { ...props } /> } />
-        </div>
-      </Router>
-    </MuiThemeProvider>, container);
+    <IntlProvider locale={ language } messages={ messages }>
+      <MuiThemeProvider muiTheme={ getMuiTheme(MuiTheme) }>
+        <Router >
+          <div>
+            <Route exact path='/' render={ () => <Homepage { ...data } /> } />
+            <Route exact path='/inbox' render={ (props) => <ConversationIndexPage { ...data } { ...props } /> } />
+            <Route exact path='/messages/new' render={ (props) => <NewMessagePage { ...data } { ...props } /> } />
+            <Switch>
+              <Route path='/search/:sign_up' render={ (props) => <SearchBar { ...data } { ...props } /> } />
+              <Route exact path='/search' render={ (props) => <SearchBar { ...data } { ...props } /> } />
+            </Switch>
+            <Route exact path='/my_profile' render={ (props) => <MyProfile { ...data } { ...props } /> } />
+            <Route exact path='/profiles/:url_slug' render={ (props) => <UserProfile { ...data } { ...props } /> } />
+            <Route exact path='/sign_up/:role' render={ (props) => <SignUp { ...data }  { ...props } /> } />
+            <Route exact path='/sign_in' component={ SignIn } />
+            <Route exact path='/password/new' component={ NewPasswordPage } />
+            <Route path='/password/edit' render={ (props) => <ResetPasswordPage { ...props } /> } />
+            <Route exact path='/terms_and_conditions' component={ TermsAndConditions } />
+            <Switch>
+              <Route exact path='/availabilities/new/:sign_up' render={ (props) => <NewAvailability { ...data } { ...props } /> } />
+              <Route exact path='/availabilities/new' render={ (props) => <NewAvailability { ...data } { ...props } /> } />
+            </Switch>
+            <Route exact path='/availabilities' render={ (props) => <AvailabilityIndexPage { ...data }  { ...props } /> } />
+          </div>
+        </Router>
+      </MuiThemeProvider>
+    </IntlProvider>, container);
 });

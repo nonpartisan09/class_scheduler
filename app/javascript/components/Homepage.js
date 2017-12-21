@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 
+import { FormattedMessage } from 'react-intl';
+
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
 
@@ -33,7 +35,10 @@ class Homepage extends Component {
               />
             </h1>
             <h2 className='homepageCaptionItem homepageSubtitle'>
-              Connect and share with our community of clients and volunteers
+              <FormattedMessage
+                id='Homepage.subtitle'
+                defaultMessage='Connect and share with our community of clients and volunteers'
+              />
             </h2>
             { this.renderDesktopNavigation() }
           </div>
@@ -53,22 +58,47 @@ class Homepage extends Component {
           { this.renderMobileNavigation() }
         </div>
         <main className='homepageMainContainer'>
-          <h3>How this free service works:</h3>
+
+          <h3>
+            <FormattedMessage
+              id='Homepage.list'
+              defaultMessage='How this free service works:'
+            />
+          </h3>
+
           <ul className='homepageMainList'>
             <li className='homepageMainListItem'>
-              Clients post what they need help with, such as English language tutoring.
+              <FormattedMessage
+                id='Homepage.listItem1'
+                defaultMessage='Clients post what they need help with, such as English language tutoring.'
+              />
             </li>
             <li className='homepageMainListItem'>
-              Volunteers post what they can help with.
+              <FormattedMessage
+                id='Homepage.listItem2'
+                defaultMessage='Volunteers post what they can help with.'
+              />
             </li>
             <li className='homepageMainListItem'>
-            Clients contact volunteers matching their needs and availability.
+              <FormattedMessage
+                id='Homepage.listItem3'
+                defaultMessage='Clients contact volunteers matching their needs and availability.'
+              />
             </li>
             <li className='homepageMainListItem'>
-              After working together, volunteers and clients review each other.
+              <FormattedMessage
+                id='Homepage.listItem4'
+                defaultMessage='After working together, volunteers and clients review each other.'
+              />
             </li>
           </ul>
-          Questions? Email us at <a className="homepageMailToLink" href="mailto:admin@tutoria.io?Subject=Question" target="_blank" rel='noopener noreferrer'>admin@tutoria.io</a>
+          <FormattedMessage
+            id='Homepage.question'
+            defaultMessage='Questions? Email us at '
+          />
+          <a className="homepageMailToLink" href="mailto:admin@tutoria.io" target="_blank" rel='noopener noreferrer'>
+            admin@tutoria.io
+          </a>
         </main>
       </div>
     );
@@ -92,10 +122,20 @@ class Homepage extends Component {
             <RaisedButton primary label='Sign in' onClick={ this.handleSignIn } />
           </div>
           <div className='homepageButton'>
-            <FlatButton className='homepageButton' primary label='Sign up as a volunteer' onClick={ this.handleSignUpVolunteer } />
+            <FlatButton className='homepageButton' primary onClick={ this.handleSignUpVolunteer } >
+              <FormattedMessage
+                id='signUpVolunteer'
+                defaultMessage='Sign up as a volunteer'
+              />
+            </FlatButton>
           </div>
           <div className='homepageButton'>
-            <FlatButton className='homepageButton' primary label='Sign up as a client' onClick={ this.handleSignUpClient } />
+            <FlatButton className='homepageButton' primary label='Sign up as a client' onClick={ this.handleSignUpClient } >
+              <FormattedMessage
+                id='signUpClient'
+                defaultMessage='Sign up as a client'
+              />
+            </FlatButton>
           </div>
         </div>
       ];
@@ -107,8 +147,18 @@ class Homepage extends Component {
       return [
         <div key={ 1 } className='homepageMobileNavigation' >
           <RaisedButton primary fullWidth label='Sign in' onClick={ this.handleSignIn } />
-          <FlatButton primary fullWidth label='Sign up as a volunteer' onClick={ this.handleSignUpVolunteer } />
-          <FlatButton primary fullWidth label='Sign up as a client' onClick={ this.handleSignUpClient } />
+          <FlatButton primary fullWidth onClick={ this.handleSignUpVolunteer } >
+            <FormattedMessage
+              id='signUpVolunteer'
+              defaultMessage='Sign up as a volunteer'
+            />
+          </FlatButton>
+          <FlatButton primary fullWidth onClick={ this.handleSignUpClient } >
+            <FormattedMessage
+              id='signUpClient'
+              defaultMessage='Sign up as a client'
+            />
+          </FlatButton>
         </div>
       ];
     }

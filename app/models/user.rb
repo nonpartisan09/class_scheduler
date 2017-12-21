@@ -1,6 +1,8 @@
 class User < ActiveRecord::Base
   include HasUrlSlug, HasSearch, ActsAsMessageable
   has_and_belongs_to_many :roles, :join_table => :roles_users
+  has_and_belongs_to_many :languages
+
   has_many :enrollments
   has_many :programs, through: :enrollments
 

@@ -1,0 +1,14 @@
+{ "en": {},
+
+  "es": {
+    "Homepage.subtitle": "Conéctate y comparte con nuestra communidad de clientes y voluntario(a)s",
+    "Homepage.list": "Eso es como este servicio gratuito funciona:",
+    "Homepage.listItem1": "Los clientes colocan en lo que necesitan ayuda, como tutoría en inglés",
+    "Homepage.listItem2": "Voluntario(a)s colocan en lo que pueden ayudar",
+    "Homepage.listItem3": "Clients contact volunteers matching their needs and availability.",
+    "Homepage.listItem4": "After working together, volunteers and clients review each other.",
+    "Homepage.question": "Questions? Email us at",
+    "signUpVolunteer": "Sign up as a volunteer",
+    "signUpClient": "Sign up as a client"
+  }
+}

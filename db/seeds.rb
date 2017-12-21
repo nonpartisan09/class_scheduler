@@ -29,17 +29,31 @@ Role.create({
 
 TermsAndConditions.create({
     description: 'some text',
-    version: 1
+    version: 1,
+    id: 1
 })
 
 Program.create({
-    name: 'Test1'
+    name: 'Test1',
+    url_slug: '99ea7bf70f6e69ad71659995677b43f8a83120252'
 })
 
 Program.create({
-    name: 'Test2'
+    name: 'Test2',
+    url_slug: '2b84f621c0fd4ba8bd514c5c43ab9a897c8c014e4'
 })
 
 Program.create({
-    name: 'Test3'
+    name: 'Test3',
+    url_slug: '5e595222cbfbfb16faea2f3a75daea5986605b178'
+})
+
+Language.create({
+    name: 'English',
+    url_slug: 'english'
+})
+
+Language.create({
+    name: 'Español',
+    url_slug: 'espanol'
 })
