@@ -47,8 +47,13 @@ class UserDecorator
         :last_logged_in => last_logged_in,
         :thumbnail_image => picture,
         :description => description,
-        :timezone => timezone
+        :timezone => timezone,
+        :languages => languages
     }.merge(availabilities_hash)
+  end
+
+  def languages
+    user.languages.pluck(:name)
   end
 
   def timezone

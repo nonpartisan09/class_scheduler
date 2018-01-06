@@ -1,0 +1,10 @@
+[
+  {
+    "id": "UserForm.helpingWith",
+    "defaultMessage": "I am interested in helping with:"
+  },
+  {
+    "id": "UserForm.helpedWith",
+    "defaultMessage": "I am interested in help with:"
+  }
+]

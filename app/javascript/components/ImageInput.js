@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import FlatButton from 'material-ui/FlatButton';
+import { FormattedMessage } from 'react-intl';
 
 import FileInput from 'react-simple-file-input';
 import DialogComponent from './DialogComponent';
@@ -37,7 +38,14 @@ class ImageInput extends Component {
           title='Invalid Image'
           onRequestClose={ this.handleShowDialog }
           open={ this.state.invalidFileDialog }
-          actions={ [ <FlatButton key='close' label='Close' primary onClick={ this.handleShowDialog } /> ] }
+          actions={ [
+            <FlatButton key='close' primary onClick={ this.handleShowDialog } >
+              <FormattedMessage
+                id='close'
+                defaultMessage='Close'
+              />
+            </FlatButton> ]
+          }
           text={ this.renderDialogText() }
         />
 
@@ -85,7 +93,10 @@ class ImageInput extends Component {
               { icon }
             </div>
             <div className='imageInputImageCaption'>
-              Add your picture
+              <FormattedMessage
+                id='ImageInput.pictureNew'
+                defaultMessage='Add your picture'
+              />
             </div>
           </div>
         );
@@ -115,10 +126,16 @@ class ImageInput extends Component {
     return (
       <div>
         <p>
-          Please provide a jpeg, jpg, png or gif image.
+          <FormattedMessage
+            id='ImageInput.pictureFormat'
+            defaultMessage='Please provide a jpeg, jpg, png or gif image.'
+          />
         </p>
         <p>
-          Image size must be comprised between 40kb and 80kb - the number of pixels depends on the resolution of the image.
+          <FormattedMessage
+            id='ImageInput.pictureSize'
+            defaultMessage='Image size must be comprised between 40kb and 80kb - the number of pixels depends on the resolution of the image.'
+          />
         </p>
       </div>
 

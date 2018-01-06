@@ -1,0 +1,10 @@
+[
+  {
+    "id": "SignIn.passwordRecovery",
+    "defaultMessage": "Forgot your password?"
+  },
+  {
+    "id": "signUpVolunteer",
+    "defaultMessage": "Sign up as a volunteer"
+  }
+]

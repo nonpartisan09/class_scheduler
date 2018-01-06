@@ -11,9 +11,10 @@ import FlatButton from 'material-ui/FlatButton';
 import MenuItem from 'material-ui/MenuItem';
 import SelectField from 'material-ui/SelectField';
 import PhotoIcon from 'material-ui/svg-icons/image/photo';
-
 import InfoIcon from 'material-ui/svg-icons/action/info';
 import validate from 'react-joi-validation';
+
+import { FormattedMessage } from 'react-intl';
 
 import ImageInput from './ImageInput';
 import DialogComponent from './DialogComponent';
@@ -41,12 +42,14 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
 
       this.handleSubmit = this.handleSubmit.bind(this);
       this.changeHandlerPrograms = this.changeHandlerPrograms.bind(this);
+      this.changeHandlerLanguages = this.changeHandlerLanguages.bind(this);
       this.selectionRenderer = this.selectionRenderer.bind(this);
       this.changeTimezoneHandler = this.changeTimezoneHandler.bind(this);
       this.handleImageUpload = this.handleImageUpload.bind(this);
       this.handleShowDialog = this.handleShowDialog.bind(this);
       this.handleShowPassword = this.handleShowPassword.bind(this);
       this.handleShowPrograms = this.handleShowPrograms.bind(this);
+      this.handleShowLanguages = this.handleShowLanguages.bind(this);
       this.handleHideSnackBar = this.handleHideSnackBar.bind(this);
       this.handleClearValues = this.handleClearValues.bind(this);
       this.resetForm = this.resetForm.bind(this);
@@ -57,6 +60,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
         showSnackBar: false,
         showPassword: false,
         showPrograms: false,
+        showLanguages: false,
         user: props.currentUser
       };
     }
@@ -71,11 +75,12 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
           city,
           thumbnail_image,
           description,
-          timezone
+          timezone,
         },
         currentUser,
         timezones
       } = this.props;
+
       return (
         <div>
           <WrappedComponent currentUser={ currentUser } />
@@ -91,6 +96,8 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
           <Paper zDepth={ 1 } style={ paperMarginOverride } rounded={ false }>
             <form className='userForm'>
               { this.renderSignUpPrograms() }
+
+              { this.renderSignUpLanguages() }
 
               <TextField
                 name='email'
@@ -194,6 +201,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
               <div>
                 { this.renderPasswordFields() }
                 { this.renderUpdatePrograms() }
+                { this.renderUpdateLanguages() }
               </div>
 
               { this.renderSignUpCheckBoxes() }
@@ -261,6 +269,52 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
             </div>
           );
         }
+      }
+    }
+
+    renderUpdateLanguages() {
+      const { type } = wrappedProps;
+
+      if (type === UPDATE_PROFILE) {
+        const { showLanguages } = this.state;
+
+        if (showLanguages) {
+          return this.renderLanguages();
+        } else {
+          return (
+            <div className='userFormInnerButton userFormSecondButton'>
+              <FlatButton className='userFormLanguageButton' primary label='Update my languages' onClick={ this.handleShowLanguages } />
+            </div>
+          );
+        }
+      }
+    }
+
+    renderLanguages() {
+      const { languages } = this.props;
+
+      if (_.size(languages) > 0) {
+        const { errors, validateHandler, currentUser: { languages: userLanguages } } = this.props;
+
+        return (
+          <div>
+            <SelectField
+              floatingLabelFixed
+              floatingLabelText='Select One or More Language(s)'
+              value={ userLanguages }
+              className='userFormInputField languages'
+              onChange={ this.changeHandlerLanguages }
+              onBlur={ validateHandler('languages') }
+              multiple
+              errorText={ errors.languages }
+              selectionRenderer={ this.selectionRenderer }
+            >
+              { _.map(languages, ({ name, id }) => {
+                return <MenuItem key={ id } insetChildren checked={ _.indexOf(userLanguages, name) > -1 } value={ name } primaryText={ <span> { name } </span> } />;
+              })}
+            </SelectField>
+          </div>
+        );
       }
     }
 
@@ -391,6 +445,12 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
       });
     }
 
+    handleShowLanguages() {
+      this.setState({
+        showLanguages: true
+      });
+    }
+
     renderSignUpCheckBoxes() {
       const { type } = wrappedProps;
 
@@ -428,6 +488,15 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
             <br />
           </div>
         );
+      }
+    }
+
+    renderSignUpLanguages() {
+      const { languages } = this.props;
+      const { type } = wrappedProps;
+
+      if (_.size(languages) > 0 && type === SIGN_UP) {
+        return this.renderLanguages();
       }
     }
 
@@ -488,6 +557,11 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
       });
     }
 
+    changeHandlerLanguages(event, index, value) {
+      const { changeValue } = this.props;
+      changeValue('languages', value);
+    }
+
     changeHandlerPrograms(event, index, value) {
       const { changeValue } = this.props;
       changeValue('programs', value);
@@ -504,13 +578,19 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
       if (role === 'volunteer' || volunteer ) {
         return (
           <h2 className='userFormHeader'>
-            I am interested in helping with:
+            <FormattedMessage
+              id='UserForm.helpingWith'
+              defaultMessage='I am interested in helping with:'
+            />
           </h2>
         );
       } else if (role === 'client' || client ) {
         return (
           <h2 className='userFormHeader'>
-            I am interested in help with:
+            <FormattedMessage
+              id='UserForm.helpedWith'
+              defaultMessage='I am interested in help with:'
+            />
           </h2>
         );
       }
@@ -566,6 +646,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
       address: PropTypes.string,
       city: PropTypes.string,
       email: PropTypes.string,
+      languages: PropTypes.array,
       password: PropTypes.string,
       password_confirmation: PropTypes.string,
       contact_permission: PropTypes.bool,
@@ -580,7 +661,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
         role: PropTypes.string
       })
     }),
-
+    languages: PropTypes.array,
     programs: PropTypes.array,
     timezones: PropTypes.array,
     changeHandler: PropTypes.func.isRequired,
@@ -597,10 +678,12 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
         role: ' '
       }
     },
+    languages: [],
     programs: [],
     timezones: [],
     currentUser: {
       timezone: '',
+      languages: [],
       programs: [],
       address: '',
       city: '',

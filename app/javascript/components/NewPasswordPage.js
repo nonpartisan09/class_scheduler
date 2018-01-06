@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
 
 import Joi from 'joi-browser';
 import validate from 'react-joi-validation';
@@ -9,7 +10,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
 
-import FormData from './FormData';
+import FormData from './utils/FormData';
 import Header from './Header';
 import SnackBarComponent from './reusable/SnackBarComponent';
 import { postData } from './sendData';
@@ -18,10 +19,13 @@ const schema = {
   email: Joi.string().email({ minDomainAtoms: 2 }).required().options({
     language: {
       any: {
-        allowOnly: 'Please enter a valid email.'
+        required: <FormattedMessage id='NewPasswordPage.invalidEmail' defaultMessage='Please enter a valid email.' />
+      },
+      string: {
+        email: <FormattedMessage id='NewPasswordPage.invalidEmail' />
       }
     }
-  })
+  }),
 };
 
 class NewPasswordPage extends Component {
@@ -49,7 +53,7 @@ class NewPasswordPage extends Component {
             value={ email }
             className='signUpEmailInputField'
             hintText=''
-            floatingLabelText='Please enter your email to recover your password'
+            floatingLabelText={ <FormattedMessage id='NewPasswordPage.enterEmail' defaultMessage='Please enter your email to recover your password' /> }
             floatingLabelFixed
             errorText={ errors.email }
             onChange={ changeHandler('email') }
@@ -60,12 +64,12 @@ class NewPasswordPage extends Component {
           { this.renderSubmitButton() }
 
           <div className='signInLinkSecondaryContainer'>
-            <a href={ '/sign_up/client' } className='signInLinkSecondary'>
-              <FlatButton primary label='Sign up as a client' />
+            <a href='/sign_up/client' className='signInLinkSecondary'>
+              <FlatButton primary label={ <FormattedMessage id='signUpClient' /> } />
             </a>
 
-            <a href={ '/sign_up/volunteer' } className='signInLinkSecondary'>
-              <FlatButton primary label='Sign up as a volunteer' />
+            <a href='/sign_up/volunteer' className='signInLinkSecondary'>
+              <FlatButton primary label={ <FormattedMessage id='signUpVolunteer' /> } />
             </a>
           </div>
 
@@ -76,7 +80,18 @@ class NewPasswordPage extends Component {
   }
 
   renderSubmitButton() {
-    return <RaisedButton primary label='Reset password' onClick={ this.handleForgotClick } className='signInLink' />
+    return (
+      <RaisedButton
+        primary
+        label={
+          <FormattedMessage
+            id='resetPassword'
+          />
+        }
+        onClick={ this.handleForgotClick }
+        className='signInLink'
+      />
+    );
   }
 
 
@@ -101,7 +116,7 @@ class NewPasswordPage extends Component {
         successCallBack: () => {
           this.setState({
             showSnackBar: true,
-            message: 'An email has been sent to your email address.'
+            message: <FormattedMessage id='NewPasswordPage.success' defaultMessage='A message has been sent to your email address.' />
           });
 
           setTimeout(() => {

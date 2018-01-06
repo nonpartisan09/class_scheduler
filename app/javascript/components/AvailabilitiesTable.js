@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
+import { FormattedMessage } from 'react-intl';
 
 import {
   Table,
@@ -36,10 +37,31 @@ class AvailabilitiesTable extends Component {
     const tableContent =  _.map(availabilities, ({ day, start_time, end_time, id }) => {
       return(
         <TableRow className='availabilitiesTableRow' key={ 'body' + day + start_time + end_time }>
-          <TableRowColumn>{ day }</TableRowColumn>
-          <TableRowColumn>From: { start_time }</TableRowColumn>
-          <TableRowColumn>To: { end_time }</TableRowColumn>
-          <TableRowColumn >Timezone: { timezone }</TableRowColumn>
+          <TableRowColumn>
+            <FormattedMessage
+              id='Availabilities.day'
+              values={ { day } }
+            />
+          </TableRowColumn>
+          <TableRowColumn>
+            <FormattedMessage
+              id='from'
+              defaultMessage='From'
+            />
+          </TableRowColumn>
+          <TableRowColumn>
+            <FormattedMessage
+              id='to'
+              defaultMessage='To'
+            />
+          </TableRowColumn>
+          <TableRowColumn >
+            <FormattedMessage
+              id='Availabilities.tableTimezone'
+              defaultMessage='Timezone'
+              values={ { timezone } }
+            />
+          </TableRowColumn>
           { this.renderDeleteRow(id) }
         </TableRow>
       );
@@ -49,18 +71,54 @@ class AvailabilitiesTable extends Component {
       return(
         <div key={ 'list' + day + start_time + end_time + timezone } className='availabilityIndexItemContainer'>
           <li>
-            <span>Day: </span>{ day }
+            <span>
+              <FormattedMessage
+                id='Availabilities.day'
+                defaultMessage='Day'
+              />
+            </span>
+            <FormattedMessage
+              id='Availabilities.day'
+              values={ { day } }
+            />
           </li>
 
           <li>
-            <span>From: </span>{ start_time }
+            <span>
+              <FormattedMessage
+                id='Availabilities.from'
+                defaultMessage='From:'
+              />
+            </span>
+            <FormattedMessage
+              id='Availabilities.from'
+              values={ { start_time } }
+            />
           </li>
           <li>
-            <span>To: </span>{ end_time }
+            <span>
+              <FormattedMessage
+                id='Availabilities.to'
+                defaultMessage='To:'
+              />
+            </span>
+            <FormattedMessage
+              id='Availabilities.to'
+              values={ { end_time } }
+            />
           </li>
 
           <li>
-            <span>Timezone: </span>{ timezone }
+            <span>
+              <FormattedMessage
+                id='Availabilities.timezone'
+                defaultMessage='Timezone:'
+              />
+            </span>
+            <FormattedMessage
+              id='Availabilities.timezone'
+              values={ { timezone } }
+            />
           </li>
 
           { this.renderDeleteListContent(id) }
@@ -75,16 +133,36 @@ class AvailabilitiesTable extends Component {
           <Table selectable={ false } >
             <TableHeader displaySelectAll={ false }>
               <TableRow>
-                <TableHeaderColumn key='day' >Day</TableHeaderColumn>
-                <TableHeaderColumn key='start_time'>Start time</TableHeaderColumn>
-                <TableHeaderColumn key='end_time'>End Time</TableHeaderColumn>
-                <TableHeaderColumn key='timezone'>Timezone</TableHeaderColumn>
+                <TableHeaderColumn key='day' >
+                  <FormattedMessage
+                    id='Availabilities.day'
+                    defaultMessage='Day'
+                  />
+                </TableHeaderColumn>
+                <TableHeaderColumn key='start_time'>
+                  <FormattedMessage
+                    id='startTime'
+                    defaultMessage='Start Time'
+                  />
+                </TableHeaderColumn>
+                <TableHeaderColumn key='end_time'>
+                  <FormattedMessage
+                    id='endTime'
+                    defaultMessage='End Time'
+                  />
+                </TableHeaderColumn>
+                <TableHeaderColumn key='timezone'>
+                  <FormattedMessage
+                    id='Availabilities.timezone'
+                    defaultMessage='Timezone:'
+                  />
+                </TableHeaderColumn>
                 { this.renderDeleteColumn() }
               </TableRow>
             </TableHeader>
 
             <TableBody displayRowCheckbox={ false }>
-              { tableContent}
+              { tableContent }
             </TableBody>
           </Table>
           { this.renderSnackBar() }
@@ -101,7 +179,12 @@ class AvailabilitiesTable extends Component {
     if (this.props.deletable) {
       return (
         <li className='availabilitiesTableButton'>
-          <RaisedButton primary fullWidth label='Delete' onClick={ this.handleDelete(id) } />
+          <RaisedButton primary fullWidth onClick={ this.handleDelete(id) } >
+            <FormattedMessage
+              id='Delete'
+              defaultMessage='Delete'
+            />
+          </RaisedButton>
         </li>
       );
     }
@@ -112,7 +195,12 @@ class AvailabilitiesTable extends Component {
     if (this.props.deletable) {
       return (
         <TableRowColumn >
-          <FlatButton label='Delete' primary onClick={ this.handleDelete(id) } />
+          <FlatButton primary onClick={ this.handleDelete(id) } >
+            <FormattedMessage
+              id='Delete'
+              defaultMessage='Delete'
+            />
+          </FlatButton>
         </TableRowColumn>
       );
     }
@@ -121,7 +209,12 @@ class AvailabilitiesTable extends Component {
   renderDeleteColumn() {
     if (this.props.deletable) {
       return (
-        <TableHeaderColumn key='delete'>Delete</TableHeaderColumn>
+        <TableHeaderColumn key='delete'>
+          <FormattedMessage
+            id='Delete'
+            defaultMessage='Delete'
+          />
+        </TableHeaderColumn>
       );
     }
   }

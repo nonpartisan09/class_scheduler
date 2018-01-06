@@ -9,6 +9,7 @@ import MenuItem from 'material-ui/MenuItem';
 import Subheader from 'material-ui/Subheader';
 import Avatar from 'material-ui/Avatar';
 import { Link } from 'react-router-dom';
+import { FormattedMessage } from 'react-intl';
 
 import { List, ListItem } from 'material-ui/List';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -66,13 +67,22 @@ class ConversationIndexPage extends Component {
         if (client) {
           return (
             <a href='/search' >
-              <RaisedButton primary label='Search for volunteers' className='conversationButton' />
+              <RaisedButton primary label='' className='conversationButton' >
+                <FormattedMessage
+                  id='ConversationIndexPage.Search'
+                  defaultMessage='Search for volunteers'
+                />
+              </RaisedButton>
             </a>
           );
         } else if (volunteer) {
           return (
             <a href='/availabilities/new' >
-              <RaisedButton primary label='Create new availabilities' className='conversationButton' />
+              <RaisedButton primary className='conversationButton' >
+                <FormattedMessage
+                  id='availabilityCreateNew'
+                />
+              </RaisedButton>
             </a>
           );
         }
@@ -80,7 +90,10 @@ class ConversationIndexPage extends Component {
       return (
         <List >
           <Subheader >
-            No Message Available
+            <FormattedMessage
+              id='ConversationIndexPage.NoMessage'
+              defaultMessage=' No Message Available'
+            />
           </Subheader>
           { button }
         </List>
@@ -120,7 +133,10 @@ class ConversationIndexPage extends Component {
         <IconMenu iconButtonElement={ iconButtonElement } >
           <MenuItem>
             <Link className='conversationIndexPageLink' to={ { pathname: '/messages/new', query: { recipient: newMessageRecipient, userName: newMessageFirstName } } } >
-              Reply
+              <FormattedMessage
+                id='messageReply'
+                defaultMessage='Reply'
+              />
             </Link>
           </MenuItem>
         </IconMenu>

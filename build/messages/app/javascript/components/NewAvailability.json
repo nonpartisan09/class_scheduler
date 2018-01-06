@@ -1,0 +1,54 @@
+[
+  {
+    "id": "NewAvailability.selectDayError",
+    "defaultMessage": "Please select a day"
+  },
+  {
+    "id": "NewAvailability.startTimeBlank",
+    "defaultMessage": "Please select a start time"
+  },
+  {
+    "id": "NewAvailability.endTimeBlank",
+    "defaultMessage": "Please select an end time"
+  },
+  {
+    "id": "NewAvailability.startTimeError",
+    "defaultMessage": "Please select a start time chronologically before end time"
+  },
+  {
+    "id": "NewAvailability.endTimeError",
+    "defaultMessage": "Please select an end time chronologically after end time"
+  },
+  {
+    "id": "NewAvailability.updateTimezone",
+    "defaultMessage": "Not your timezone?"
+  },
+  {
+    "id": "NewAvailability.addAvailabilities",
+    "defaultMessage": "Create All Availabilities"
+  },
+  {
+    "id": "signUpHeader",
+    "defaultMessage": "Join Tutoria community: Step 2/2"
+  },
+  {
+    "id": "NewAvailability.selectDay",
+    "defaultMessage": "Select Day"
+  },
+  {
+    "id": "NewAvailability.selectStartTime",
+    "defaultMessage": "Start Time - 24Hr Format"
+  },
+  {
+    "id": "NewAvailability.selectEndTime",
+    "defaultMessage": "End Time - 24Hr Format"
+  },
+  {
+    "id": "NewAvailability.addAvailability",
+    "defaultMessage": "Add other availability"
+  },
+  {
+    "id": "NewAvailability.removeAvailability",
+    "defaultMessage": "Remove availability"
+  }
+]

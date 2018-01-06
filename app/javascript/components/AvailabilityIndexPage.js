@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
+import { FormattedMessage } from 'react-intl';
 
 import Header from './Header';
 import AvailabilitiesTable from './AvailabilitiesTable';
@@ -24,9 +25,12 @@ class AvailabilityIndexPage extends Component {
         <Header currentUser={ currentUser } />
         <Paper zDepth={ 1 } style={ paperMarginOverride } rounded={ false }>
           <div className='availabilityIndexContainer'>
-            I can help with:
+            <FormattedMessage
+              id='AvailabilityIndexPage.Help'
+              defaultMessage='I can help with'
+            />
             <ul className='availabilityIndexListContainer'>
-              { _.map(this.props.programs, ({ name }) => <li className='availabilityListItem' key={name}>{ name }</li>) }
+              { _.map(this.props.programs, ({ name }) => <li className='availabilityListItem' key={ name }>{ name }</li>) }
             </ul>
 
             { this.renderAvailabilities() }
@@ -52,7 +56,12 @@ class AvailabilityIndexPage extends Component {
     } else {
       return (
         <a href='/availabilities/new' >
-          <RaisedButton primary label='Create new availabilities' className='conversationButton' />
+          <RaisedButton primary className='conversationButton' >
+            <FormattedMessage
+              id='availabilityCreateNew'
+              defaultMessage='Create new availabilities'
+            />
+          </RaisedButton>
         </a>
       );
     }

@@ -1,0 +1,14 @@
+[
+  {
+    "id": "UserProfile.messageUser",
+    "defaultMessage": "Message User"
+  },
+  {
+    "id": "UserProfile.firstName",
+    "defaultMessage": "First Name:"
+  },
+  {
+    "id": "UserProfile.location",
+    "defaultMessage": "Location:"
+  }
+]

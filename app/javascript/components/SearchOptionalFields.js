@@ -4,6 +4,7 @@ import TimePicker from 'material-ui/TimePicker';
 import MenuItem from 'material-ui/MenuItem';
 import SelectField from 'material-ui/SelectField';
 import FlatButton from 'material-ui/FlatButton';
+import { FormattedMessage } from 'react-intl';
 
 import './SearchOptionalFields.css';
 
@@ -30,13 +31,27 @@ class SearchOptionalFields extends Component {
       <div>
         <div className='searchBarButtonContainer'>
           <div className='searchBarOptionalField'>
-            <FlatButton primary className='searchBarOptionalFieldMobile' label='Start Time' onClick={ this.handleToggleStartTime } />
+            <FlatButton
+              primary
+              className='searchBarOptionalFieldMobile'
+              label={ <FormattedMessage
+                id='startTime'
+            /> }
+              onClick={ this.handleToggleStartTime }
+            />
             <div className='searchBarOptionalFieldMobile'>
               { this.renderStartTime() }
             </div>
           </div>
           <div className='searchBarOptionalField'>
-            <FlatButton primary className='searchBarOptionalFieldMobile' label='End Time' onClick={ this.handleToggleEndTime } />
+            <FlatButton
+              primary
+              className='searchBarOptionalFieldMobile'
+              label={ <FormattedMessage
+                id='endTime'
+            /> }
+              onClick={ this.handleToggleEndTime }
+            />
             <div className='searchBarOptionalFieldMobile'>
               { this.renderEndTime() }
             </div>
@@ -65,7 +80,16 @@ class SearchOptionalFields extends Component {
     if (city) {
       return (
         <div className='searchBarOptionalField'>
-          <FlatButton primary label='Distance' onClick={ this.handleToggleDistance } />
+          <FlatButton
+            primary
+            label={
+              <FormattedMessage
+                id='searchOptionalFields.distance'
+                defaultMessage='Distance'
+              />
+            }
+            onClick={ this.handleToggleDistance }
+          />
           <div className='searchBarOptionalFieldMobile'>
             { this.renderDistance() }
           </div>
@@ -88,7 +112,11 @@ class SearchOptionalFields extends Component {
         <TimePicker
           textFieldStyle={ { width: '80%' } }
           format='24hr'
-          hintText='From'
+          hintText={
+            <FormattedMessage
+              id='from'
+            />
+          }
           value={ start_time }
           onChange={ onChange('start_time') }
           onBlur={ onBlur('start_time') }
@@ -111,7 +139,11 @@ class SearchOptionalFields extends Component {
         <TimePicker
           textFieldStyle={ { width: '80%' } }
           format='24hr'
-          hintText='To'
+          hintText={
+            <FormattedMessage
+              id='to'
+            />
+          }
           value={ end_time }
           onChange={ onChange('end_time') }
           onBlur={ onBlur('end_time') }
@@ -159,7 +191,18 @@ class SearchOptionalFields extends Component {
           errorText={ errors.distance }
           onChange={ this.changeHandlerDistance }
         >
-          <MenuItem insetChildren checked={ distance === 0 } key={ 0 } value={ 0 } primaryText='Any distance' />
+          <MenuItem
+            insetChildren
+            checked={ distance === 0 }
+            key={ 0 }
+            value={ 0 }
+            primaryText={
+              <FormattedMessage
+                id='SearchOptionalFields.any'
+                defaultMessage='Any'
+              />
+            }
+          />
           <MenuItem insetChildren checked={ distance === 5 } key={ 1 } value={ 5 } primaryText={ `5 ${UNIT}` } />
           <MenuItem insetChildren checked={ distance === 10 } key={ 2 } value={ 10 } primaryText={ `10 ${UNIT}` } />
           <MenuItem insetChildren checked={ distance === 25 } key={ 3 } value={ 25 } primaryText={ `25 ${UNIT}` } />

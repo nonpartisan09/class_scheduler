@@ -1,0 +1,18 @@
+[
+  {
+    "id": "NewMessagePage.recipient",
+    "defaultMessage": "Recipient"
+  },
+  {
+    "id": "NewMessagePage.subject",
+    "defaultMessage": "Subject"
+  },
+  {
+    "id": "NewMessagePage.messageBody",
+    "defaultMessage": "Body"
+  },
+  {
+    "id": "NewMessagePage.messageSent",
+    "defaultMessage": "Success! Your message was sent."
+  }
+]

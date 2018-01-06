@@ -9,6 +9,7 @@ require 'spec_helper'
 require 'factory_girl_rails'
 require 'support/factory_girl'
 require 'awesome_print'
+require "paperclip/matchers"
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
@@ -31,6 +32,7 @@ ActiveRecord::Migration.maintain_test_schema!
 
 RSpec.configure do |config|
 
+  config.include Paperclip::Shoulda::Matchers
   config.include(Shoulda::Matchers::ActiveModel, type: :model)
   config.include(Shoulda::Matchers::ActiveRecord, type: :model)
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures

@@ -1,45 +1,47 @@
+.homepageMainContainer {
+  display: flex;
+  flex-flow: column;
+  height: 100vh;
+}
+
 .homepageContainer {
   position: relative;
   display: flex;
   flex-flow: row wrap;
   justify-content: space-between;
+  overflow: no-display;
+  flex: 1 1 auto;
 }
 
 .homepageImage {
-    width: 100%;
-    object-fit: cover;
-    height: 50vh;
+  width: 100%;
+  object-fit: cover;
+}
+
+.homepageTextContainer {
+  overflow: hidden;
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: space-between;
 }
 
 .homepageCaption {
-    margin: 12px 0;
-    max-height: none;
-    width: 100%;
-    padding: 48px 0 48px 36px;
-    display: flex;
-    flex-flow: column wrap;
-    align-content: space-around;
-    justify-content: center;
+  padding: 24px;
 }
 
-.homepageCaptionItem {
-    width: 90%;
-    margin: 24px 0;
-}
-
-.homepageMainContainer {
+.homepageListContainer {
   padding: 24px 0 48px 36px;
   background-color: #004664;
   color: #fff;
 }
 
-.homepageMainList {
+.homepageList {
   padding: 12px;
   counter-reset: section;
   list-style-type: none;
 }
 
-.homepageMainListItem::before {
+.homepageListItem::before {
   counter-increment: section;
   content: counters(section, ".") ". ";
 }
@@ -70,9 +72,13 @@
   display: none;
 }
 
-@media only screen and (min-device-width: 0) and (max-device-width: 900px), (max-width: 500px) {
+@media only screen and (min-device-width: 0) and (max-device-width: 900px), (max-width: 900px) {
   .homepageSubtitle {
     font-size: 18px;
+  }
+
+  .homepageCaption {
+    flex: 1 1 auto;
   }
 
   .homepageCaptionItem {
@@ -88,15 +94,23 @@
      margin: 0;
    }
 
-  .homepageMainContainer {
+  .homepageTextContainer {
+    width: 100%;
+  }
+
+  .homepageListContainer {
     margin: 0;
     padding: 12px 0 24px 12px;
     font-size: 20px;
+    flex: 1 1 auto;
   }
 
   .homepageCaption {
     order: 1;
-    padding: 0 0 0 24px;
+  }
+
+  .homepageListContainer {
+    order: 3;
   }
 
   .homepageMobileNavigation {
@@ -107,7 +121,7 @@
   }
 
   .homepageImage {
-    order: 3;
+    display: none;
   }
 
   .logo {
@@ -116,23 +130,18 @@
   }
 }
 
-@media (min-width: 801px) and (max-width: 1200px) {
-  .homepageCaption {
-    padding: 0 0 0 36px;
-  }
-}
-
-@media (min-width: 1201px) {
-  .homepageCaption {
-    width: 42vw;
+@media (min-width: 901px) {
+  .homepageTextContainer {
+    width: 47vw;
   }
 
   .homepageImage {
     width: 53vw;
-    height: 85vh;
   }
+}
 
+@media (min-width: 1150px) {
   .homepageCaption {
-    max-height: 85vh;
+    padding: 48px 48px 48px 36px;
   }
 }

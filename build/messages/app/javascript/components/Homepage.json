@@ -1,0 +1,38 @@
+[
+  {
+    "id": "Homepage.subtitle",
+    "defaultMessage": "Connect and share with our community of clients and volunteers"
+  },
+  {
+    "id": "Homepage.list",
+    "defaultMessage": "How this free service works:"
+  },
+  {
+    "id": "Homepage.listItem1",
+    "defaultMessage": "Clients post what they need help with, such as English language tutoring."
+  },
+  {
+    "id": "Homepage.listItem2",
+    "defaultMessage": "Volunteers post what they can help with."
+  },
+  {
+    "id": "Homepage.listItem3",
+    "defaultMessage": "Clients contact volunteers matching their needs and availability."
+  },
+  {
+    "id": "Homepage.listItem4",
+    "defaultMessage": "After working together, volunteers and clients review each other."
+  },
+  {
+    "id": "Homepage.question",
+    "defaultMessage": "Questions? Email us at"
+  },
+  {
+    "id": "signIn",
+    "defaultMessage": "Sign in"
+  },
+  {
+    "id": "signUpClient",
+    "defaultMessage": "Sign up as a client"
+  }
+]

@@ -1,0 +1,14 @@
+[
+  {
+    "id": "NotFoundPage.title",
+    "defaultMessage": "Oops!"
+  },
+  {
+    "id": "NotFoundPage.notFoundPage",
+    "defaultMessage": "The page doesn’t exist or some other error occurred"
+  },
+  {
+    "id": "NotFoundPage.linkToHome",
+    "defaultMessage": "Go to our"
+  }
+]
