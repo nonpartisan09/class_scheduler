@@ -1,10 +1,58 @@
 [
   {
+    "id": "UserForm.aboutMe",
+    "defaultMessage": "About me (in 280 characters or less)"
+  },
+  {
+    "id": "UserForm.updatePrograms",
+    "defaultMessage": "Update my programs"
+  },
+  {
+    "id": "UserForm.updatePassword",
+    "defaultMessage": "Update my password"
+  },
+  {
+    "id": "UserForm.termsRead",
+    "defaultMessage": "Please read tutoría’s terms of use."
+  },
+  {
+    "id": "UserForm.termsAccept",
+    "defaultMessage": "I accept tutoría’s terms of use"
+  },
+  {
+    "id": "UserForm.newsletterOptin",
+    "defaultMessage": "I would like to be occasionally contacted about tutoría’s updates"
+  },
+  {
     "id": "UserForm.helpingWith",
     "defaultMessage": "I am interested in helping with:"
   },
   {
     "id": "UserForm.helpedWith",
     "defaultMessage": "I am interested in help with:"
+  },
+  {
+    "id": "UserForm.addressVolunteerDialog1",
+    "defaultMessage": "Your location will only be used to help clients find volunteers in their area."
+  },
+  {
+    "id": "UserForm.addressVolunteerDialog2",
+    "defaultMessage": "Your street address will not be shown to other users. Only your town/city."
+  },
+  {
+    "id": "UserForm.addressVolunteerDialog3",
+    "defaultMessage": "This info is not required unless you would like to allow clients to ask for face to face sessions."
+  },
+  {
+    "id": "UserForm.addressClientDialog1",
+    "defaultMessage": "Your location will only be used to help find volunteers in your area."
+  },
+  {
+    "id": "UserForm.addressClientDialog2",
+    "defaultMessage": "Your street address will not be shown to other users. Only your town/city."
+  },
+  {
+    "id": "UserForm.addressClientDialog3",
+    "defaultMessage": "This info is not required unless you would like to use the location feature."
   }
 ]

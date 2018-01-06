@@ -14,6 +14,7 @@
   "ConversationIndexPage.Search": "Search for volunteers",
   "ConversationIndexPage.NoMessage": "No Message Available",
   "messageReply": "Reply",
+  "Footer.termsLink": "Terms of Use",
   "homeLink": "Home",
   "profileLink": "Profile",
   "inboxLink": "Inbox",
@@ -73,6 +74,18 @@
   "UserProfile.messageUser": "Message User",
   "UserProfile.firstName": "First Name:",
   "UserProfile.location": "Location:",
+  "UserForm.aboutMe": "About me (in 280 characters or less)",
+  "UserForm.updatePrograms": "Update my programs",
+  "UserForm.updatePassword": "Update my password",
+  "UserForm.termsRead": "Please read tutoría’s terms of use.",
+  "UserForm.termsAccept": "I accept tutoría’s terms of use",
+  "UserForm.newsletterOptin": "I would like to be occasionally contacted about tutoría’s updates",
   "UserForm.helpingWith": "I am interested in helping with:",
-  "UserForm.helpedWith": "I am interested in help with:"
+  "UserForm.helpedWith": "I am interested in help with:",
+  "UserForm.addressVolunteerDialog1": "Your location will only be used to help clients find volunteers in their area.",
+  "UserForm.addressVolunteerDialog2": "Your street address will not be shown to other users. Only your town/city.",
+  "UserForm.addressVolunteerDialog3": "This info is not required unless you would like to allow clients to ask for face to face sessions.",
+  "UserForm.addressClientDialog1": "Your location will only be used to help find volunteers in your area.",
+  "UserForm.addressClientDialog2": "Your street address will not be shown to other users. Only your town/city.",
+  "UserForm.addressClientDialog3": "This info is not required unless you would like to use the location feature."
 } }

@@ -14,6 +14,7 @@ import FormData from './utils/FormData';
 import Header from './Header';
 import SnackBarComponent from './reusable/SnackBarComponent';
 import { postData } from './sendData';
+import Footer from './Footer';
 
 const schema = {
   email: Joi.string().email({ minDomainAtoms: 2 }).required().options({
@@ -75,6 +76,7 @@ class NewPasswordPage extends Component {
 
           { this.renderSnackBar() }
         </form>
+        <Footer />
       </div>
     );
   }

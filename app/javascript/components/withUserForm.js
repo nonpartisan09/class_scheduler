@@ -19,6 +19,7 @@ import { FormattedMessage } from 'react-intl';
 import ImageInput from './ImageInput';
 import DialogComponent from './DialogComponent';
 import SnackBarComponent from './reusable/SnackBarComponent';
+import Footer from './Footer';
 
 import newUser from './utils/CheckUpdatedFields';
 import UserFormConstants from './UserFormConstants';
@@ -190,7 +191,12 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                 value={ description }
                 hintText=''
                 className='userFormInputField description'
-                floatingLabelText='About me (in 280 characters or less)'
+                floatingLabelText={
+                  <FormattedMessage
+                    id='UserForm.aboutMe'
+                    defaultMessage='About me (in 280 characters or less)'
+                  />
+                }
                 floatingLabelFixed
                 multiLine
                 errorText={ errors.description }
@@ -211,6 +217,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
           </Paper>
 
           { this.renderSnackBar() }
+          <Footer />
         </div>
       );
     }
@@ -265,7 +272,17 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
         } else {
           return (
             <div className='userFormInnerButton userFormSecondButton'>
-              <FlatButton className='userFormProgramButton' primary label='Update my programs' onClick={ this.handleShowPrograms } />
+              <FlatButton
+                className='userFormProgramButton'
+                primary
+                label={
+                  <FormattedMessage
+                    id='UserForm.updatePrograms'
+                    defaultMessage='Update my programs'
+                  />
+                }
+                onClick={ this.handleShowPrograms }
+              />
             </div>
           );
         }
@@ -384,7 +401,17 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
         } else {
           return (
             <div className='userFormInnerButton'>
-              <FlatButton className='userFormPasswordButton' primary label='Update my password' onClick={ this.handleShowPassword } />
+              <FlatButton
+                className='userFormPasswordButton'
+                primary
+                label={
+                  <FormattedMessage
+                    id='UserForm.updatePassword'
+                    defaultMessage='Update my password'
+                  />
+                }
+                onClick={ this.handleShowPassword }
+              />
             </div>
           );
         }
@@ -466,8 +493,11 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
         return (
           <div>
             <div className='userFormTermsAndConditionsLink'>
-              <a href={ '/terms_and_conditions' } className='slidingLink' target='_blank' rel='noreferrer noopener'>
-                Please read Tutoria’s terms and conditions.
+              <a href={ '/terms_of_use' } className='slidingLink' target='_blank' rel='noreferrer noopener'>
+                <FormattedMessage
+                  id='UserForm.termsRead'
+                  defaultMessage=' Please read tutoría’s terms of use.'
+                />
               </a>
             </div>
 
@@ -475,11 +505,21 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
               checked={ terms_and_conditions }
               className='userFormInputField termsAndConditions'
               onCheck={ changeHandler('terms_and_conditions') }
-              label='I accept Tutoria’s terms and conditions'
+              label={
+                <FormattedMessage
+                  id='UserForm.termsAccept'
+                  defaultMessage='I accept tutoría’s terms of use'
+                />
+              }
             />
 
             <Checkbox
-              label='I would like to be occasionally contacted about Tutoria’s updates'
+              label={
+                <FormattedMessage
+                  id='UserForm.newsletterOptin'
+                  defaultMessage='I would like to be occasionally contacted about tutoría’s updates'
+                />
+              }
               checked={ contact_permission }
               className='userFormInputField contactPermission'
               onCheck={ changeHandler('contact_permission') }
@@ -610,13 +650,24 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
       if (role === 'volunteer' || volunteer ) {
         return (
           <div>
-            Your location will only be used to help clients find volunteers in their area.
+            <p>
+              <FormattedMessage
+                id='UserForm.addressVolunteerDialog1'
+                defaultMessage=' Your location will only be used to help clients find volunteers in their area.'
+              />
+            </p>
             <br />
             <p>
-              Your street address will not be shown to other users. Only your town/city.
+              <FormattedMessage
+                id='UserForm.addressVolunteerDialog2'
+                defaultMessage='Your street address will not be shown to other users. Only your town/city.'
+              />
             </p>
             <p>
-              This info is not required unless you would like to allow clients to ask for face to face sessions.
+              <FormattedMessage
+                id='UserForm.addressVolunteerDialog3'
+                defaultMessage='This info is not required unless you would like to allow clients to ask for face to face sessions.'
+              />
             </p>
           </div>
         );
@@ -624,13 +675,22 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
         return (
           <div>
             <p>
-              Your location will only be used to help find volunteers in your area.
+              <FormattedMessage
+                id='UserForm.addressClientDialog1'
+                defaultMessage='Your location will only be used to help find volunteers in your area.'
+              />
             </p>
             <p>
-              Your street address will not be shown to other users. Only your town/city.
+              <FormattedMessage
+                id='UserForm.addressClientDialog2'
+                defaultMessage='Your street address will not be shown to other users. Only your town/city.'
+              />
             </p>
             <p>
-             This info is not required unless you would like to use the location feature.
+              <FormattedMessage
+                id='UserForm.addressClientDialog3'
+                defaultMessage='This info is not required unless you would like to use the location feature.'
+              />
             </p>
           </div>
         );

@@ -75,7 +75,7 @@ const SignUpSchema = {
   terms_and_conditions: Joi.boolean().valid(true).options({
     language: {
       any: {
-        allowOnly: 'Please agree to our terms and conditions'
+        allowOnly: 'Please agree to our terms of use'
       }
     }
   })

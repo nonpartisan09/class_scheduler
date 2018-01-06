@@ -18,6 +18,7 @@ import SearchResults from './SearchResults';
 import SearchOptionalFields from './SearchOptionalFields';
 
 import './SearchBar.css';
+import Footer from './Footer';
 
 function restfulUrl({ day, program, start_time, end_time, distance }) {
   const startParam = _.isDate(start_time)? `&start_time=${moment(start_time).format('HH:MM')}` : '';
@@ -168,6 +169,7 @@ class SearchBar extends Component {
 
           { this.renderResults() }
         </div>
+        <Footer />
       </div>
     );
   }

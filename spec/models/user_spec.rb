@@ -21,7 +21,7 @@ RSpec.describe User, type: :model do
 
   it { is_expected.to have_attached_file(:thumbnail_image) }
   it { is_expected.to validate_attachment_content_type(:thumbnail_image).
-      allowing('image/png', 'image/gif').
+      allowing('image/png', 'image/gif', 'image/jpeg').
       rejecting('text/plain', 'text/xml') }
   it { is_expected.to validate_attachment_size(:thumbnail_image).
       less_than(2.megabytes) }

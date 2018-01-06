@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   root 'application#index'
-  get 'terms_and_conditions' => 'application#t_and_c'
+  get 'terms_of_use' => 'application#t_and_c'
 
   resources :availabilities
   resources :programs

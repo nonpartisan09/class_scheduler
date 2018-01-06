@@ -21,6 +21,17 @@ class ApplicationController < ActionController::Base
   end
 
   def t_and_c
+    if current_user
+      user = UserDecorator.new(current_user)
+      user = user.simple_decorate
+    else
+      user = { }
+    end
+
+    @data = {
+        :currentUser => user,
+    }
+
     render :t_and_c
   end
 

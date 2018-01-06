@@ -18,6 +18,7 @@ import Divider from 'material-ui/Divider';
 
 import Header from './Header';
 import './ConversationIndexPage.css';
+import Footer from './Footer';
 
 const paperMarginOverride = {
   padding: '0',
@@ -52,6 +53,7 @@ class ConversationIndexPage extends Component {
             { this.renderInbox() }
           </div>
         </Paper>
+        <Footer />
       </div>
     );
   }
@@ -67,22 +69,30 @@ class ConversationIndexPage extends Component {
         if (client) {
           return (
             <a href='/search' >
-              <RaisedButton primary label='' className='conversationButton' >
-                <FormattedMessage
-                  id='ConversationIndexPage.Search'
-                  defaultMessage='Search for volunteers'
-                />
-              </RaisedButton>
+              <RaisedButton
+                primary
+                label={
+                  <FormattedMessage
+                    id='ConversationIndexPage.Search'
+                    defaultMessage='Search for volunteers'
+                  />
+                }
+                className='conversationButton'
+              />
             </a>
           );
         } else if (volunteer) {
           return (
             <a href='/availabilities/new' >
-              <RaisedButton primary className='conversationButton' >
-                <FormattedMessage
-                  id='availabilityCreateNew'
-                />
-              </RaisedButton>
+              <RaisedButton
+                primary
+                className='conversationButton'
+                label={
+                  <FormattedMessage
+                    id='availabilityCreateNew'
+                  />
+                }
+              />
             </a>
           );
         }

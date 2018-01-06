@@ -17,6 +17,7 @@ import { postData } from './sendData';
 import SnackBarComponent from './reusable/SnackBarComponent';
 
 import './NewMessagePage.css';
+import Footer from './Footer';
 
 const paperMarginOverride = {
   padding: '0',
@@ -114,6 +115,7 @@ class NewMessagePage extends Component {
 
           { this.renderSnackBar() }
         </Paper>
+        <Footer />
       </div>
     );
   }
