@@ -29,6 +29,7 @@ import SignUp from '../components/SignUp';
 import SignIn from '../components/SignIn';
 import NewPasswordPage from '../components/NewPasswordPage';
 import ResetPasswordPage from '../components/ResetPasswordPage';
+import NotFoundPage from '../components/NotFoundPage';
 
 import TermsAndConditions from '../components/TermsAndConditions';
 import NewAvailability from '../components/NewAvailability';
@@ -40,7 +41,7 @@ import localeData from '../../../build/locales/data.json';
 
 addLocaleData([...en, ...es ]);
 
-const language = _.last(_.split(window.location.href, '=')) || 'en';
+const language = _.includes(_.split(window.location.href), '=')? _.last(_.split(window.location.href, '=')) : 'en';
 
 const messages = localeData[language];
 
@@ -78,6 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
               <Route exact path='/availabilities/new' render={ (props) => <NewAvailability { ...data } { ...props } /> } />
             </Switch>
             <Route exact path='/availabilities' render={ (props) => <AvailabilityIndexPage { ...data }  { ...props } /> } />
+            <Route path='/page_not_found' component={ NotFoundPage } />
           </div>
         </Router>
       </MuiThemeProvider>
@@ -114,6 +116,7 @@ document.addEventListener('turbolinks:render', () => {
               <Route exact path='/availabilities/new' render={ (props) => <NewAvailability { ...data } { ...props } /> } />
             </Switch>
             <Route exact path='/availabilities' render={ (props) => <AvailabilityIndexPage { ...data }  { ...props } /> } />
+            <Route path='/page_not_found' component={ NotFoundPage } />
           </div>
         </Router>
       </MuiThemeProvider>

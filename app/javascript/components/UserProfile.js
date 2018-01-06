@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
+import { FormattedMessage } from 'react-intl';
 
 import { Link } from 'react-router-dom';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
@@ -30,15 +31,31 @@ class UserProfile extends Component {
           { this.renderProfilePicture() }
 
           <Link to={ { pathname: '/messages/new', query: { recipient: url_slug, userName: first_name } } } className='userProfileLink' >
-            <RaisedButton label='Message user' primary />
+            <RaisedButton
+              label={
+                <FormattedMessage
+                  id='UserProfile.messageUser'
+                  defaultMessage='Message User'
+                />
+              }
+              primary
+            />
           </Link>
 
           <div className='userProfileField'>
-            First name: { user.first_name }
+            <FormattedMessage
+              id='UserProfile.firstName'
+              defaultMessage='First Name:'
+            />
+            <span> { user.first_name }</span>
           </div>
 
           <div className='userProfileField'>
-            Location: { user.city }
+            <FormattedMessage
+              id='UserProfile.location'
+              defaultMessage='Location:'
+            />
+            <span> { user.city }</span>
           </div>
 
           <div className='userProfileField'>

@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
 
 import Joi from 'joi-browser';
 import validate from 'react-joi-validation';
@@ -12,7 +13,7 @@ import MenuItem from 'material-ui/MenuItem';
 import TimePicker from 'material-ui/TimePicker';
 import TextField from 'material-ui/TextField';
 
-import FormData from './FormData';
+import FormData from './utils/FormData';
 
 import Header from './Header';
 import ErrorField from './reusable/ErrorField';
@@ -28,8 +29,16 @@ const schema = Joi.object({}).pattern(/[0-9]+/, Joi.object({
     day: Joi.string().required().options({
       language: {
         any: {
-          required: 'Please select a day',
-          empty: 'Please select a day',
+          required:
+  <FormattedMessage
+    id='NewAvailability.selectDayError'
+    defaultMessage='Please select a day'
+          />,
+          empty:
+  <FormattedMessage
+    id='NewAvailability.selectDayError'
+    defaultMessage='Please select a day'
+          />
         }
       }
     }),
@@ -37,7 +46,11 @@ const schema = Joi.object({}).pattern(/[0-9]+/, Joi.object({
       language: {
         date: {
           timestamp: {
-            javascript: 'Please select a start time'
+            javascript:
+  <FormattedMessage
+    id='NewAvailability.startTimeBlank'
+    defaultMessage='Please select a start time'
+              />
           }
         }
       }
@@ -46,7 +59,11 @@ const schema = Joi.object({}).pattern(/[0-9]+/, Joi.object({
       language: {
         date: {
           timestamp: {
-            javascript: 'Please select an end time'
+            javascript:
+  <FormattedMessage
+    id='NewAvailability.endTimeBlank'
+    defaultMessage='Please select an end time'
+            />
           }
         }
       }
@@ -63,9 +80,21 @@ function validateTimes({ values, validateAllValues, changingValues, errors }, ca
         if (values[index]) {
           if (values[index].start_time && values[index].end_time) {
             const endTimeIsBeforeStartTime = values[index].end_time < values[index].start_time;
+            const startTimeError =
+              (<FormattedMessage
+                id='NewAvailability.startTimeError'
+                defaultMessage='Please select a start time chronologically before end time'
+              />);
+
+              const endTimeError =
+                (<FormattedMessage
+                  id='NewAvailability.endTimeError'
+                  defaultMessage='Please select an end time chronologically after end time'
+              />);
+
             if (endTimeIsBeforeStartTime) {
-              if (_.endsWith(item, 'start_time')) { _.set(errors, `${index}.start_time`, 'Please select a start time chronologically before end time'); }
-              if (_.endsWith(item, 'end_time')) { _.set(errors, `${index}.end_time`, 'Please select an end time chronologically after end time'); }
+              if (_.endsWith(item, 'start_time')) { _.set(errors, `${index}.start_time`, startTimeError); }
+              if (_.endsWith(item, 'end_time')) { _.set(errors, `${index}.end_time`, endTimeError); }
             }
           }
 
@@ -122,13 +151,21 @@ class NewAvailability extends Component {
               />
 
               <a href="/my_profile" className='slidingLink' >
-                Not your timezone?
+                <FormattedMessage
+                  id='NewAvailability.updateTimezone'
+                  defaultMessage='Not your timezone?'
+                />
               </a>
             </div>
 
             <RaisedButton
               className='addAvailabilitiesButton'
-              label='Create All Availabilities'
+              label={
+                <FormattedMessage
+                  id='NewAvailability.addAvailabilities'
+                  defaultMessage='Create All Availabilities'
+                />
+              }
               primary
               onClick={ validateAllHandler(this.handleSubmit) }
             />
@@ -146,7 +183,10 @@ class NewAvailability extends Component {
     if (sign_up) {
       return (
         <h1 className='signUpHeader'>
-          Join Tutoria community: Step 2/2
+          <FormattedMessage
+            id='signUpHeader'
+            defaultMessage='Join Tutoria community: Step 2/2'
+          />
         </h1>
       );
     }
@@ -190,7 +230,12 @@ class NewAvailability extends Component {
       return (
         <div key={ index } className='availabilitiesContainer' >
           <SelectField
-            hintText='Select Day'
+            hintText={
+              <FormattedMessage
+                id='NewAvailability.selectDay'
+                defaultMessage='Select Day'
+              />
+            }
             value={ availabilities[index]? availabilities[index].day: {} }
             errorText={ _.get(errors, `${availability}.day`) }
             onChange={ this.changeDayHandler(availability) }
@@ -202,7 +247,12 @@ class NewAvailability extends Component {
 
           <TimePicker
             format="24hr"
-            hintText="Start Time - 24Hr Format"
+            hintText={
+              <FormattedMessage
+                id='NewAvailability.selectStartTime'
+                defaultMessage='Start Time - 24Hr Format'
+              />
+            }
             value={ availabilities[index]? availabilities[index].start_time: {} }
             errorText={ _.get(errors, `${availability}.start_time`) }
             onChange={ changeHandler(`${availability}.start_time`) }
@@ -213,7 +263,12 @@ class NewAvailability extends Component {
 
           <TimePicker
             format="24hr"
-            hintText="End Time - 24Hr Format"
+            hintText={
+              <FormattedMessage
+                id='NewAvailability.selectEndTime'
+                defaultMessage='End Time - 24Hr Format'
+              />
+            }
             value={ availabilities[index]? availabilities[index].end_time: {} }
             errorText={ _.get(errors, `${availability}.end_time`) }
             onChange={ changeHandler(`${availability}.end_time`) }
@@ -221,8 +276,17 @@ class NewAvailability extends Component {
             autoOk
             fullWidth
           />
-          <FlatButton primary label='Add other availability' onClick={ this.handleAddAvailability } />
-          { index === 0 ? null : <FlatButton primary label='Remove availability' onClick={ this.handleRemoveAvailability } /> }
+          <FlatButton
+            primary
+            label={
+              <FormattedMessage
+                id='NewAvailability.addAvailability'
+                defaultMessage='Add other availability'
+              />
+            }
+            onClick={ this.handleAddAvailability }
+          />
+          { index === 0 ? null : <FlatButton primary label={ <FormattedMessage id='NewAvailability.removeAvailability' defaultMessage='Remove availability' /> } onClick={ this.handleRemoveAvailability } /> }
         </div>
       );
     });

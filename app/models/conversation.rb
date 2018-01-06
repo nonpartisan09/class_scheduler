@@ -2,7 +2,9 @@ class Conversation < ApplicationRecord
   belongs_to :author, class_name: 'User'
   belongs_to :recipient, class_name: 'User'
 
-  validates :author, uniqueness: { scope: :recipient }
+  validates :author, presence: true
+  validates_uniqueness_of :author, scope: :recipient
+
   has_many :messages, -> { order(created_at: :asc) }, dependent: :destroy
 
   scope :participating, -> (user) do

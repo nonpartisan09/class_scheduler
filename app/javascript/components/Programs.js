@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
 
 import './Programs.css';
 
@@ -10,7 +11,10 @@ class Programs extends Component {
       return (
         <div>
           <h3 className='programHeader'>
-            Available Programs
+            <FormattedMessage
+              id='Programs.availablePrograms'
+              defaultMessage='Available Programs'
+            />
           </h3>
           <div className='programContainer'>
             { this.renderPrograms() }

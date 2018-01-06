@@ -2,6 +2,9 @@ import _ from 'lodash';
 import MenuIcon from 'material-ui/svg-icons/navigation/menu';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+
+import { FormattedMessage } from 'react-intl';
+
 import './Header.css';
 
 import { getData } from './sendData';
@@ -54,21 +57,33 @@ class Header extends Component {
       return (
         <nav className={ navigationClassName } >
           <a href='/' className='slidingLink' >
-            Home
+            <FormattedMessage
+              id='homeLink'
+              defaultMessage='Home'
+            />
           </a>
 
           { this.renderRoleLinks() }
 
           <a href='/my_profile' className='slidingLink' >
-            Profile
+            <FormattedMessage
+              id='profileLink'
+              defaultMessage='Profile'
+            />
           </a>
 
           <a href='/inbox' className='slidingLink' >
-            Inbox
+            <FormattedMessage
+              id='inboxLink'
+              defaultMessage='Inbox'
+            />
           </a>
 
           <span role='button' tabIndex={ 0 } onClick={ this.handleSignOut } className='slidingLink' >
-            Sign out
+            <FormattedMessage
+              id='signOutLink'
+              defaultMessage='Sign out'
+             />
           </span>
         </nav>
       );
@@ -77,13 +92,19 @@ class Header extends Component {
       return (
         <nav className={ navigationClassName } >
           <a href='/sign_up/volunteer' className='slidingLink'>
-            Sign up as a volunteer
+            <FormattedMessage
+              id='signUpVolunteer'
+            />
           </a>
           <a href='/sign_up/client' className='slidingLink' >
-            Sign up as a client
+            <FormattedMessage
+              id='signUpClient'
+            />
           </a>
           <a href='/sign_in/' className='slidingLink'>
-            Sign In
+            <FormattedMessage
+              id='signIn'
+            />
           </a>
         </nav>
       );
@@ -94,18 +115,26 @@ class Header extends Component {
     if (this.props.currentUser.client) {
       return (
         <a href='/search' className='slidingLink'>
-          Search
+          <FormattedMessage
+            id='search'
+            defaultMessage='Search'
+          />
         </a>
       );
     } else if (this.props.currentUser.volunteer) {
       return (
         <span>
           <a href='/availabilities/new' className='slidingLink'>
-            Create a new availability
+            <FormattedMessage
+              id='availabilityCreateNew'
+            />
           </a>
 
           <a href='/availabilities' className='slidingLink'>
-            Availabilities
+            <FormattedMessage
+              id='availabilitiesLink'
+              defaultMessage='Availabilities'
+            />
           </a>
         </span>
       );

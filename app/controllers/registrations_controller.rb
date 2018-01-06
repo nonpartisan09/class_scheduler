@@ -58,19 +58,8 @@ class RegistrationsController < Devise::RegistrationsController
     self.resource = resource_class.to_adapter.get!(send(:"current_#{resource_name}").to_key)
     prev_unconfirmed_email = resource.unconfirmed_email if resource.respond_to?(:unconfirmed_email)
 
-    if account_update_params[:programs].present?
-      programs = account_update_params[:programs].map { |n| Program.find_by_name(n) }
-      params = account_update_params.merge!(:programs => programs)
-    else
-      params = account_update_params
-    end
-
-    if account_update_params[:password].present?
-      resource_updated = update_resource(resource, params)
-    else
-      params = params.except(:password, :password_confirmation, :current_password)
-      resource_updated = resource.update_attributes(params)
-    end
+    proxy_update_resource = Proc.new { |resource, params| update_resource(resource, params) }
+    resource_updated = User.update(account_update_params, resource, proxy_update_resource)
 
     yield resource if block_given?
     if resource_updated
@@ -136,7 +125,7 @@ class RegistrationsController < Devise::RegistrationsController
         :city,
         :thumbnail_image,
         :timezone,
-        :languages => '',
+        :languages => [],
         :programs => []
     )
   end

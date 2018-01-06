@@ -1,0 +1,10 @@
+[
+  {
+    "id": "searchOptionalFields.distance",
+    "defaultMessage": "Distance"
+  },
+  {
+    "id": "SearchOptionalFields.any",
+    "defaultMessage": "Any"
+  }
+]

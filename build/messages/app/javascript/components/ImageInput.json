@@ -1,0 +1,18 @@
+[
+  {
+    "id": "close",
+    "defaultMessage": "Close"
+  },
+  {
+    "id": "ImageInput.pictureNew",
+    "defaultMessage": "Add your picture"
+  },
+  {
+    "id": "ImageInput.pictureFormat",
+    "defaultMessage": "Please provide a jpeg, jpg, png or gif image."
+  },
+  {
+    "id": "ImageInput.pictureSize",
+    "defaultMessage": "Image size must be comprised between 40kb and 80kb - the number of pixels depends on the resolution of the image."
+  }
+]

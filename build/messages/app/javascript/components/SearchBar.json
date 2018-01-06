@@ -1,0 +1,18 @@
+[
+  {
+    "id": "SearchBar.timezoneLink",
+    "defaultMessage": "Not your timezone?"
+  },
+  {
+    "id": "SearchBar.programs",
+    "defaultMessage": "Program(s)"
+  },
+  {
+    "id": "SearchBar.days",
+    "defaultMessage": "Day(s)"
+  },
+  {
+    "id": "NewAvailability.noResultMessage",
+    "defaultMessage": "Sorry, it seems no volunteers match these filters."
+  }
+]

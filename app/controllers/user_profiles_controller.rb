@@ -13,7 +13,7 @@ class UserProfilesController < ApplicationController
 
     @data = {
         :programs => programs,
-        :currentUser => user,
+        :currentUser => current_user,
         :timezones => timezones,
         :languages => languages
     }

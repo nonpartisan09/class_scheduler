@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 
 import Joi from 'joi-browser';
 import validate from 'react-joi-validation';
+import { FormattedMessage } from 'react-intl';
 
 import TextField from 'material-ui/TextField';
 import SelectField from 'material-ui/SelectField';
@@ -114,7 +115,7 @@ class SearchBar extends Component {
           />
 
           <a href="/my_profile" className='slidingLink' >
-            Not your timezone?
+            <FormattedMessage id='SearchBar.timezoneLink' defaultMessage='Not your timezone?' />
           </a>
         </div>
 
@@ -122,7 +123,7 @@ class SearchBar extends Component {
           <div className='searchBarOptionContainer'>
             <SelectField
               className='searchBarOption'
-              hintText='Program(s)'
+              hintText={ <FormattedMessage id='SearchBar.programs' defaultMessage='Program(s)' /> }
               value={ program }
               onChange={ this.changeHandlerProgram }
               multiple
@@ -135,7 +136,7 @@ class SearchBar extends Component {
             </SelectField>
 
             <SelectField
-              hintText='Day(s)'
+              hintText={ <FormattedMessage id='SearchBar.days' defaultMessage='Day(s)' /> }
               value={ day }
               errorText={ errors.day }
               onChange={ this.changeHandlerDay }
@@ -158,7 +159,12 @@ class SearchBar extends Component {
             errors={ errors }
           />
 
-          <RaisedButton onClick={ validateAllHandler(this.handleSubmit) } className='searchBarOption searchBarButton' label='Search' primary />
+          <RaisedButton
+            onClick={ validateAllHandler(this.handleSubmit) }
+            className='searchBarOption searchBarButton'
+            label={ <FormattedMessage id='search' /> }
+            primary
+          />
 
           { this.renderResults() }
         </div>
@@ -172,7 +178,9 @@ class SearchBar extends Component {
     if (sign_up) {
       return (
         <h1 className='signUpHeader'>
-          Join Tutoria community: Step 2/2
+          <FormattedMessage
+            id='signUpHeader'
+          />
         </h1>
       );
     }
@@ -184,7 +192,10 @@ class SearchBar extends Component {
     if (status === 204) {
       return (
         <div className='emptyVolunteerResults'>
-          Sorry, it seems no volunteers match these filters.
+          <FormattedMessage
+            id='NewAvailability.noResultMessage'
+            defaultMessage=' Sorry, it seems no volunteers match these filters.'
+          />
         </div>
       );
     } else {

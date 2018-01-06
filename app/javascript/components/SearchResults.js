@@ -3,6 +3,7 @@ import _ from 'lodash';
 import PropTypes from 'prop-types';
 
 import { Link } from 'react-router-dom';
+
 import { List, ListItem } from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
 import AccountCircleIcon from 'material-ui/svg-icons/action/account-circle';
@@ -30,6 +31,7 @@ class SearchResults extends Component {
     const { volunteers } = this.props;
 
     return _.map(_.values(volunteers), ({ thumbnail_image,  first_name, city, last_logged_in, programs, url_slug, available_days }, key) => {
+
       const handleClick = () => {
         location.assign(`/profiles/${url_slug}`);
       };

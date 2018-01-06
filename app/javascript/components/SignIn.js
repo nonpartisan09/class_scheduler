@@ -4,13 +4,14 @@ import PropTypes from 'prop-types';
 
 import Joi from 'joi-browser';
 import validate from 'react-joi-validation';
+import { FormattedMessage } from 'react-intl';
 
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
 import Checkbox from 'material-ui/Checkbox';
 
-import FormData from './FormData';
+import FormData from './utils/FormData';
 import Header from './Header';
 import SnackBarComponent from './reusable/SnackBarComponent';
 import { postData } from './sendData';
@@ -92,15 +93,39 @@ class SignIn extends Component {
 
           <div className='signInLinkSecondaryContainer'>
             <a href='/password/new' className='signInLinkSecondary'>
-              <FlatButton primary label='Forgot your password?' onClick={ this.handleForgotClick } />
+              <FlatButton
+                primary
+                label={
+                  <FormattedMessage
+                    id='SignIn.passwordRecovery'
+                    defaultMessage='Forgot your password?'
+                  />
+                }
+                onClick={ this.handleForgotClick }
+              />
             </a>
 
             <a href='/sign_up/client' className='signInLinkSecondary'>
-              <FlatButton primary label='Sign up as a client' />
+              <FlatButton
+                primary
+                label={
+                  <FormattedMessage
+                    id='signUpClient'
+                  />
+                }
+              />
             </a>
 
             <a href='/sign_up/volunteer' className='signInLinkSecondary'>
-              <FlatButton primary label='Sign up as a volunteer' />
+              <FlatButton
+                primary
+                label={
+                  <FormattedMessage
+                    id='signUpVolunteer'
+                    defaultMessage='Sign up as a volunteer'
+                  />
+                }
+              />
             </a>
           </div>
 

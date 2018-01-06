@@ -11,9 +11,10 @@ import FlatButton from 'material-ui/FlatButton';
 import MenuItem from 'material-ui/MenuItem';
 import SelectField from 'material-ui/SelectField';
 import PhotoIcon from 'material-ui/svg-icons/image/photo';
-
 import InfoIcon from 'material-ui/svg-icons/action/info';
 import validate from 'react-joi-validation';
+
+import { FormattedMessage } from 'react-intl';
 
 import ImageInput from './ImageInput';
 import DialogComponent from './DialogComponent';
@@ -296,21 +297,23 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
         const { errors, validateHandler, currentUser: { languages: userLanguages } } = this.props;
 
         return (
-          <SelectField
-            floatingLabelFixed
-            floatingLabelText='Select One or More Language(s)'
-            value={ userLanguages }
-            className='userFormInputField languages'
-            onChange={ this.changeHandlerLanguages }
-            onBlur={ validateHandler('languages') }
-            multiple
-            errorText={ errors.languages }
-            selectionRenderer={ this.selectionRenderer }
-          >
-            { _.map(languages, ({ name, id }) => {
-              return <MenuItem key={ id } insetChildren checked={ _.indexOf(userLanguages, name) > -1 } value={ name } primaryText={ <span> { name } </span> } />;
-            })}
-          </SelectField>
+          <div>
+            <SelectField
+              floatingLabelFixed
+              floatingLabelText='Select One or More Language(s)'
+              value={ userLanguages }
+              className='userFormInputField languages'
+              onChange={ this.changeHandlerLanguages }
+              onBlur={ validateHandler('languages') }
+              multiple
+              errorText={ errors.languages }
+              selectionRenderer={ this.selectionRenderer }
+            >
+              { _.map(languages, ({ name, id }) => {
+                return <MenuItem key={ id } insetChildren checked={ _.indexOf(userLanguages, name) > -1 } value={ name } primaryText={ <span> { name } </span> } />;
+              })}
+            </SelectField>
+          </div>
         );
       }
     }
@@ -575,13 +578,19 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
       if (role === 'volunteer' || volunteer ) {
         return (
           <h2 className='userFormHeader'>
-            I am interested in helping with:
+            <FormattedMessage
+              id='UserForm.helpingWith'
+              defaultMessage='I am interested in helping with:'
+            />
           </h2>
         );
       } else if (role === 'client' || client ) {
         return (
           <h2 className='userFormHeader'>
-            I am interested in help with:
+            <FormattedMessage
+              id='UserForm.helpedWith'
+              defaultMessage='I am interested in help with:'
+            />
           </h2>
         );
       }

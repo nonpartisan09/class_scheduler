@@ -15,10 +15,10 @@ class SnackBarComponent extends Component {
 }
 
 SnackBarComponent.propTypes = {
-  message: PropTypes.string,
+  message: PropTypes.object,
 };
 
 SnackBarComponent.defaultProps = {
-  message: ''
+  message: {}
 };
 export default SnackBarComponent;

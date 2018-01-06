@@ -1,0 +1,14 @@
+[
+  {
+    "id": "ConversationIndexPage.Search",
+    "defaultMessage": "Search for volunteers"
+  },
+  {
+    "id": "ConversationIndexPage.NoMessage",
+    "defaultMessage": "No Message Available"
+  },
+  {
+    "id": "messageReply",
+    "defaultMessage": "Reply"
+  }
+]

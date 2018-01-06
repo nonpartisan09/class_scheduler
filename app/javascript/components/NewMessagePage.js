@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
+import { FormattedMessage } from 'react-intl';
 
 import validate from 'react-joi-validation';
 
@@ -11,7 +12,7 @@ import SendIcon from 'material-ui/svg-icons/content/send';
 
 import MessageSchema from './schema/MessageSchema';
 import Header from './Header';
-import FormData from './FormData';
+import FormData from './utils/FormData';
 import { postData } from './sendData';
 import SnackBarComponent from './reusable/SnackBarComponent';
 
@@ -64,7 +65,12 @@ class NewMessagePage extends Component {
               value={ userName }
               className='userFormInputField recipient'
               hintText=''
-              floatingLabelText='Recipient'
+              floatingLabelText={
+                <FormattedMessage
+                  id='NewMessagePage.recipient'
+                  defaultMessage='Recipient'
+                />
+              }
               floatingLabelFixed
             />
 
@@ -73,7 +79,12 @@ class NewMessagePage extends Component {
               value={ subject }
               className='userFormInputField subject'
               hintText=''
-              floatingLabelText='Subject'
+              floatingLabelText={
+                <FormattedMessage
+                  id='NewMessagePage.subject'
+                  defaultMessage='Subject'
+                />
+              }
               floatingLabelFixed
               errorText={ errors.subject }
               onChange={ changeHandler('subject') }
@@ -84,7 +95,12 @@ class NewMessagePage extends Component {
               value={ body }
               className='userFormInputField body'
               hintText=''
-              floatingLabelText='Body'
+              floatingLabelText={
+                <FormattedMessage
+                  id='NewMessagePage.messageBody'
+                  defaultMessage='Body'
+                />
+              }
               floatingLabelFixed
               errorText={ errors.body }
               onChange={ changeHandler('body') }
@@ -123,7 +139,7 @@ class NewMessagePage extends Component {
         successCallBack: () => {
           this.setState({
             showSnackBar: true,
-            message: 'Success! Your message was sent.'
+            message: <FormattedMessage id='NewMessagePage.messageSent' defaultMessage='Success! Your message was sent.' />
           });
 
           setTimeout(() => {
@@ -163,6 +179,7 @@ class NewMessagePage extends Component {
 }
 
 NewMessagePage.propTypes = {
+  errors: PropTypes.object,
   message: PropTypes.shape({
     body: PropTypes.string,
     subject: PropTypes.string,
@@ -184,9 +201,12 @@ NewMessagePage.propTypes = {
     password_confirmation: PropTypes.string,
     thumbnail_image: PropTypes.oneOfType([ PropTypes.string, PropTypes.object ]),
   }),
+  changeHandler: PropTypes.func.isRequired,
+  validateHandler: PropTypes.func.isRequired
 };
 
 NewMessagePage.defaultProps = {
+  errors: {},
   message: {
     body: '',
     subject: '',

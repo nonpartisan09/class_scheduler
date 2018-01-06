@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 
 import Joi from 'joi-browser';
 import validate from 'react-joi-validation';
+import { FormattedMessage } from 'react-intl';
 
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
@@ -17,7 +18,7 @@ const schema = {
   password_confirmation: Joi.any().valid(Joi.ref('password')).required().options({
     language: {
       any: {
-        allowOnly: 'Passwords don\'t match'
+        allowOnly: <FormattedMessage id='passwordNoMatch' defaultMessage='Passwords don’t match' />
       }
     }
   }),
@@ -49,7 +50,12 @@ class ResetPasswordPage extends Component {
             type='password'
             className='userFormInputField password'
             hintText=''
-            floatingLabelText='Password'
+            floatingLabelText={
+              <FormattedMessage
+                id='password'
+                defaultMessage='Password'
+              />
+            }
             floatingLabelFixed
             errorText={ errors.password }
             onChange={ changeHandler('password') }
@@ -64,7 +70,12 @@ class ResetPasswordPage extends Component {
             type='password'
             className='userFormInputField passwordConfirmation'
             hintText=''
-            floatingLabelText='Password Confirmation'
+            floatingLabelText={
+              <FormattedMessage
+                id='passwordConfirmation'
+                defaultMessage='Password Confirmation'
+              />
+            }
             floatingLabelFixed
             errorText={ errors.password_confirmation }
             onChange={ changeHandler('password_confirmation') }
@@ -82,7 +93,19 @@ class ResetPasswordPage extends Component {
   }
 
   renderSubmitButton() {
-    return <RaisedButton primary label='Reset password' onClick={ this.handleForgotClick } className='signInLink' />
+    return (
+      <RaisedButton
+        primary
+        label={
+          <FormattedMessage
+            id='resetPassword'
+            defaultMessage='Reset password'
+          />
+        }
+        onClick={ this.handleForgotClick }
+        className='signInLink'
+      />
+    );
   }
 
 

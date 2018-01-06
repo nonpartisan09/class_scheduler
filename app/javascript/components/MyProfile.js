@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
+import { FormattedMessage } from 'react-intl';
 
 import { postData } from './sendData';
 import Header from './Header';
 
 import UserFormConstants from './UserFormConstants';
 
-import FormData from './FormData';
+import FormData from './utils/FormData';
 import ProfileSchema from './schema/ProfileSchema';
 import withUserForm from './withUserForm';
 import newUser from './utils/CheckUpdatedFields';
@@ -41,7 +42,7 @@ function handleUpdateProfile() {
         this.setState({
           showSnackBar: true,
           showPassword: false,
-          message: 'Success! Your profile has been updated.'
+          message: <FormattedMessage id='Profile.success' defaultMessage='Success! Your profile has been updated' />
         });
 
         this.handleClearValues();
@@ -69,7 +70,7 @@ function handleUpdateProfile() {
     this.setState({
       showSnackBar: true,
       showPassword: false,
-      message: 'Please make a change to your profile first'
+      message: <FormattedMessage id='Profile.noChangeDetected' defaultMessage='Please make a change to your profile first' />
     });
 
     setTimeout(() => {
@@ -124,6 +125,6 @@ MyProfile.defaultProps = {
 
 };
 
-const extraProps = { type: UPDATE_PROFILE, primaryButtonAction: handleUpdateProfile, primaryButtonLabel: 'Save changes' };
+const extraProps = { type: UPDATE_PROFILE, primaryButtonAction: handleUpdateProfile, primaryButtonLabel: <FormattedMessage id='saveChanges' defaultMessage='Save changes' /> };
 
 export default withUserForm(MyProfile, ProfileSchema, extraProps);

@@ -7,11 +7,8 @@ module HasUrlSlug
   included do
     before_validation :generate_url_slug, if: ->{ self.new_record? || self.url_slug.blank? }
 
-    validates :url_slug,
-        presence: true,
-        uniqueness: true,
-        unless: ->{ generate_label.blank? },
-        format: { with: /\A[a-z0-9\-]+\z/}
+    validates :url_slug, presence: true, format: { with: /\A[a-z0-9\-]+\z/}
+    validates_uniqueness_of :url_slug
 
     def generate_url_slug(force: false)
       return unless self.url_slug.blank? || force

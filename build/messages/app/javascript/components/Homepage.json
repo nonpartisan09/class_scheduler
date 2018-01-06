@@ -28,8 +28,8 @@
     "defaultMessage": "Questions? Email us at"
   },
   {
-    "id": "signUpVolunteer",
-    "defaultMessage": "Sign up as a volunteer"
+    "id": "signIn",
+    "defaultMessage": "Sign in"
   },
   {
     "id": "signUpClient",

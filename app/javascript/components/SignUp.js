@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
+import { FormattedMessage } from 'react-intl';
 
-import FormData from './FormData';
+import FormData from './utils/FormData';
 import withUserForm from './withUserForm';
 import Header from './Header';
 
@@ -66,7 +67,10 @@ class SignUp extends Component {
         <Header />
 
         <h1 className='signUpHeader'>
-          Join Tutoria community: Step 1/2
+          <FormattedMessage
+            id='NewAvailability.signUpHeader'
+            defaultMessage='Join Tutoria community: Step 2/2'
+          />
         </h1>
       </div>
     );

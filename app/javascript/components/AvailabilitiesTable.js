@@ -45,16 +45,14 @@ class AvailabilitiesTable extends Component {
           </TableRowColumn>
           <TableRowColumn>
             <FormattedMessage
-              id='Availabilities.tableFrom'
+              id='from'
               defaultMessage='From'
-              values={ { start_time } }
             />
           </TableRowColumn>
           <TableRowColumn>
             <FormattedMessage
-              id='Availabilities.tableTo'
+              id='to'
               defaultMessage='To'
-              values={ { end_time } }
             />
           </TableRowColumn>
           <TableRowColumn >
@@ -143,13 +141,13 @@ class AvailabilitiesTable extends Component {
                 </TableHeaderColumn>
                 <TableHeaderColumn key='start_time'>
                   <FormattedMessage
-                    id='Availabilities.startTime'
+                    id='startTime'
                     defaultMessage='Start Time'
                   />
                 </TableHeaderColumn>
                 <TableHeaderColumn key='end_time'>
                   <FormattedMessage
-                    id='Availabilities.endTime'
+                    id='endTime'
                     defaultMessage='End Time'
                   />
                 </TableHeaderColumn>
