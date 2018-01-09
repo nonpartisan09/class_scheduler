@@ -149,6 +149,12 @@ class ConversationIndexPage extends Component {
               />
             </Link>
           </MenuItem>
+          <MenuItem onClick={ this.handleReview(newMessageRecipient) }>
+            <FormattedMessage
+              id='conversationIndexPageReviewLink'
+              defaultMessage='Review'
+            />
+          </MenuItem>
         </IconMenu>
       );
 
@@ -168,6 +174,12 @@ class ConversationIndexPage extends Component {
         <Divider key={ index + sent_on } inset />
       ];
     });
+  }
+
+  handleReview(urlSlug) {
+    return () => {
+      location.assign(`/profiles/${urlSlug}`);
+    };
   }
 }
 

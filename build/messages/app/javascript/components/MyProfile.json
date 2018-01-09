@@ -1,5 +1,13 @@
 [
   {
+    "id": "Profile.success",
+    "defaultMessage": "Success! Your profile has been updated"
+  },
+  {
+    "id": "Profile.noChangeDetected",
+    "defaultMessage": "Please make a change to your profile first"
+  },
+  {
     "id": "saveChanges",
     "defaultMessage": "Save changes"
   }

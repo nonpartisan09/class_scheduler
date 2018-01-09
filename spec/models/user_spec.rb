@@ -24,7 +24,7 @@ RSpec.describe User, type: :model do
       allowing('image/png', 'image/gif', 'image/jpeg').
       rejecting('text/plain', 'text/xml') }
   it { is_expected.to validate_attachment_size(:thumbnail_image).
-      less_than(2.megabytes) }
+      less_than(200.megabytes) }
 
   it { is_expected.to have_db_column(:first_name).of_type(:string) }
   it { is_expected.to have_db_column(:last_name).of_type(:string) }

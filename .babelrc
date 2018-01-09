@@ -15,13 +15,14 @@
     "airbnb"
   ],
   "plugins": [
+    "inline-react-svg",
     "syntax-dynamic-import",
     "transform-object-rest-spread",
     [
       "react-intl", {
       "messagesDir": "./build/messages",
       "enforceDescriptions": false
-    }
+      }
     ],
     [
       "transform-class-properties",

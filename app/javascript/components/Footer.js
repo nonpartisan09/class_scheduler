@@ -11,18 +11,14 @@ class Footer extends Component {
         <Divider />
         <div className='footer'>
           <p>
-            <a href='/terms_of_use' className='slidingLink' target='_blank' rel='noreferrer noopener nofollow'>
+            <a href='/terms_of_use' className='slidingLink footerLink' target='_blank' rel='noreferrer noopener nofollow'>
               <FormattedMessage
                 id='Footer.termsLink'
-                defaultMessage='Terms of Use'
+                defaultMessage='Terms of Use and Privacy Policy'
               />
             </a>
-
-            Privacy Policy
-          </p>
-
-          <p>
             Copyright © 2017 Tutoria, Inc. All rights reserved.
+
           </p>
           <p>
             495A Henry St #1020, Brooklyn, NY, 11231, United States of America

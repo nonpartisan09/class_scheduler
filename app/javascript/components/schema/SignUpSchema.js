@@ -12,7 +12,15 @@ const SignUpSchema = {
   programs: Joi.array().min(1).options({
     language: {
       array: {
-        min: 'Please select at least one class'
+        min: 'Please select at least one program'
+      }
+    }
+  }),
+
+  languages: Joi.array().min(1).options({
+    language: {
+      array: {
+        min: 'Please select at least one language'
       }
     }
   }),

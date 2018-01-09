@@ -1,7 +1,10 @@
-.homepageMainContainer {
+.homepageWithoutFooter {
   display: flex;
   flex-flow: column;
-  height: 100vh;
+}
+
+.homepageMainContainer .footerContainer {
+  margin-top: 0;
 }
 
 .homepageContainer {
@@ -9,8 +12,18 @@
   display: flex;
   flex-flow: row wrap;
   justify-content: space-between;
-  overflow: no-display;
   flex: 1 1 auto;
+}
+
+.homepageCaption {
+  display: flex;
+  flex-flow: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.homepageCaptionItem {
+  margin-left: 24px;
 }
 
 .homepageImage {
@@ -18,15 +31,15 @@
   object-fit: cover;
 }
 
+.homepageTextContainer, .homepageImage {
+  height: 550px;
+}
+
 .homepageTextContainer {
   overflow: hidden;
   display: flex;
   flex-flow: column wrap;
   justify-content: space-between;
-}
-
-.homepageCaption {
-  padding: 24px;
 }
 
 .homepageListContainer {
@@ -47,7 +60,7 @@
 }
 
 .homepageMailToLink, .homepageMailToLink:visited {
-    color: #fff;
+  color: #fff;
 }
 
 .homepageDesktopNavigation {
@@ -66,24 +79,36 @@
 
 .homepageSubtitle {
   font-size: 1.5em;
+  margin-left: 24px;
 }
 
 .homepageMobileNavigation {
   display: none;
 }
 
-@media only screen and (min-device-width: 0) and (max-device-width: 900px), (max-width: 900px) {
+@media (min-device-width: 901px), (min-width: 901px) {
+  .homepageTextContainer {
+    width: 47%;
+  }
+
+  .homepageImage {
+    width: 53%;
+  }
+}
+
+@media (min-device-width: 0) and (max-device-width: 900px), (min-width: 0) and (max-width: 900px) {
   .homepageSubtitle {
     font-size: 18px;
   }
 
   .homepageCaption {
     flex: 1 1 auto;
+    display: block;
   }
 
   .homepageCaptionItem {
     width: 100%;
-    margin: 6px 0;
+    margin: 6px 0 0 24px;
   }
 
   .homepageDesktopNavigation {
@@ -94,7 +119,7 @@
      margin: 0;
    }
 
-  .homepageTextContainer {
+  .homepageTextContainer, .homepageImage {
     width: 100%;
   }
 
@@ -103,14 +128,6 @@
     padding: 12px 0 24px 12px;
     font-size: 20px;
     flex: 1 1 auto;
-  }
-
-  .homepageCaption {
-    order: 1;
-  }
-
-  .homepageListContainer {
-    order: 3;
   }
 
   .homepageMobileNavigation {
@@ -127,21 +144,5 @@
   .logo {
     width: 260px;
     height: 55px;
-  }
-}
-
-@media (min-width: 901px) {
-  .homepageTextContainer {
-    width: 47vw;
-  }
-
-  .homepageImage {
-    width: 53vw;
-  }
-}
-
-@media (min-width: 1150px) {
-  .homepageCaption {
-    padding: 48px 48px 48px 36px;
   }
 }

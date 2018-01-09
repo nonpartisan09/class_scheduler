@@ -27,7 +27,7 @@ class AvailabilityIndexPage extends Component {
           <div className='availabilityIndexContainer'>
             <FormattedMessage
               id='AvailabilityIndexPage.Help'
-              defaultMessage='I can help with'
+              defaultMessage='I can help with:'
             />
             <ul className='availabilityIndexListContainer'>
               { _.map(this.props.programs, ({ name }) => <li className='availabilityListItem' key={ name }>{ name }</li>) }

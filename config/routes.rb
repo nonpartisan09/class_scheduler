@@ -8,11 +8,13 @@ Rails.application.routes.draw do
   resource :users
   resource :conversations, only: [:new, :create]
   resources :messages, only: [ :new, :create ]
+  resources :reviews, only: [ :create, :show ]
 
   get 'inbox', to: 'conversations#index'
   get 'availabilities/new(/:sign_up)' => 'availabilities#new'
   get 'search(/:sign_up)' => 'availabilities#search'
-  get 'results' => 'availabilities#results'
+  get 'results' => 'results#index'
+  get 'available_volunteers', to: 'results#show'
   get 'my_profile', to: 'user_profiles#show'
 
   # needed for devise

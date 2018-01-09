@@ -1,4 +1,3 @@
-
 class UserDecorator
   include ActionView::Helpers::DateHelper
 
@@ -19,7 +18,8 @@ class UserDecorator
       :first_name => first_name,
       :last_logged_in => last_logged_in,
       :thumbnail_image => picture,
-      :timezone => timezone
+      :timezone => timezone,
+      :languages => languages
     }.merge(availabilities_hash)
   end
 

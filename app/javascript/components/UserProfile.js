@@ -1,37 +1,62 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
+import { Link } from 'react-router-dom';
+
 import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
 import { FormattedMessage } from 'react-intl';
-
-import { Link } from 'react-router-dom';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import EditIcon from 'material-ui/svg-icons/image/edit';
 
+import { postData } from './sendData';
 import AvailabilitiesTable from './AvailabilitiesTable';
 import Header from './Header';
-import './UserProfile.css';
 
-const paperMarginOverride = {
-  padding: '12px 24px 24px 24px',
-  maxWidth: '950px',
-  margin: '24px auto',
-  position: 'relative'
-};
+import './UserProfile.css';
+import Footer from './Footer';
+import FormData from './utils/FormData';
+import SnackBarComponent from './reusable/SnackBarComponent';
 
 class UserProfile extends Component {
+  constructor(props, context) {
+    super(props, context);
+
+    this.handleOnClick = this.handleOnClick.bind(this);
+    this.updateStars = this.updateStars.bind(this);
+
+    this.state = {
+      stars: props.review,
+      showSnackBar: false,
+      message: ''
+    };
+  }
+
+  componentWillUpdate({ review }){
+    if (this.props.review !== review) {
+      this.updateStars();
+    }
+  }
+
+  updateStars() {
+    this.setState({
+      stars: this.props.review
+    });
+  }
+
   render() {
     const { user, currentUser, user: { url_slug, first_name } } = this.props;
+
     return (
       <div>
         <Header currentUser={ currentUser } />
 
-        <Paper zDepth={ 1 } style={ paperMarginOverride } rounded={ false }>
+        <Paper zDepth={ 1 } className='userProfilePaper' rounded={ false }>
           { this.renderProfilePicture() }
 
           <Link to={ { pathname: '/messages/new', query: { recipient: url_slug, userName: first_name } } } className='userProfileLink' >
             <RaisedButton
+              className='userProfileMessageButton'
               label={
                 <FormattedMessage
                   id='UserProfile.messageUser'
@@ -41,6 +66,10 @@ class UserProfile extends Component {
               primary
             />
           </Link>
+
+          <div className='userProfileReview' >
+            { this.renderReview() }
+          </div>
 
           <div className='userProfileField'>
             <FormattedMessage
@@ -78,6 +107,9 @@ class UserProfile extends Component {
             </FloatingActionButton>
           </Link>
         </Paper>
+
+        { this.renderSnackBar() }
+        <Footer />
       </div>
     );
   }
@@ -86,10 +118,76 @@ class UserProfile extends Component {
     const { user: { thumbnail_image } } = this.props;
 
     return (
-      <div className='userProfileImage'  >
-        <img src={ thumbnail_image } alt='User Profile' />
+      <div className='userProfileImageContainer'  >
+        <img src={ thumbnail_image } alt='User Profile' className='userProfileImage' />
       </div>
     );
+  }
+
+  renderReview() {
+    const { stars } = this.state;
+
+    return [
+      _.times(5, (index) => {
+        const className = function(){
+          if (index < stars) {
+            return 'userProfileStar userProfileStarSelected';
+          } else {
+            return 'userProfileStar';
+          }
+        }();
+
+        return (
+          <div onClick={ this.handleOnClick } key={ index } className={ className }>
+            <label htmlFor={ `starRating${index}` } />
+            <option
+              value={ index + 1 }
+              id={ `starRating${index}` }
+            />
+          </div>
+        );
+      })
+    ];
+  }
+
+  renderSnackBar() {
+    if (this.state.showSnackBar) {
+      return <SnackBarComponent open={ this.state.showSnackBar } message={ this.state.message } />;
+    }
+  }
+
+  handleOnClick({ target }) {
+
+    if (target.value && target.value >= 0) {
+
+      const { user: { url_slug } } = this.props;
+      const attributes = FormData.from({ review: _.toNumber(target.value), user_id: url_slug });
+
+      const requestParams = {
+        url: '/reviews',
+        attributes,
+        method: 'POST',
+        successCallBack: () => {
+          this.setState({
+            stars: _.toNumber(target.value),
+          });
+        },
+
+        errorCallBack: (message) => {
+          this.setState({
+            showSnackBar: true,
+            message
+          });
+          this.resetForm();
+
+          setTimeout(() => {
+            this.handleHideSnackBar();
+          }, 2000);
+        }
+      };
+
+      return postData(requestParams);
+    }
   }
 
   renderAvailabilities() {
@@ -107,9 +205,10 @@ class UserProfile extends Component {
 }
 
 UserProfile.propTypes = {
+  review: PropTypes.number.isRequired,
   currentUser: PropTypes.object.isRequired,
   user: PropTypes.shape({
-    availabilities: PropTypes.array.isRequired,
+    availabilities: PropTypes.array,
     programs: PropTypes.array.isRequired,
     first_name: PropTypes.string.isRequired,
     thumbnail_url: PropTypes.string,
@@ -118,6 +217,9 @@ UserProfile.propTypes = {
 };
 
 UserProfile.defaultProps = {
+  user: {
+    availabilities: []
+  }
 };
 
 export default UserProfile;

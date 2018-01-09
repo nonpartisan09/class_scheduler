@@ -10,11 +10,10 @@ import DialogComponent from './DialogComponent';
 import './ImageInput.css';
 
 const allowedFileTypes = [ 'image/png', 'image/jpeg', 'image/gif', 'image/jpg' ];
-const maxImageSize = 80000;
 const minImageSize = 40000;
 
 function fileIsIncorrectFiletype(file){
-  return allowedFileTypes.indexOf(file.type) === -1 || file.size > maxImageSize || file.size <= minImageSize;
+  return allowedFileTypes.indexOf(file.type) === -1 || file.size <= minImageSize;
 }
 
 class ImageInput extends Component {
@@ -78,8 +77,8 @@ class ImageInput extends Component {
 
     if (effectiveUrl) {
       return(
-        <div className='imageInputImage'  >
-          <img src={ effectiveUrl } alt='User Profile' />
+        <div className='imageInputImageContainer'  >
+          <img src={ effectiveUrl } alt='User Profile' className='imageInputImage' />
         </div>
       );
 
@@ -134,7 +133,7 @@ class ImageInput extends Component {
         <p>
           <FormattedMessage
             id='ImageInput.pictureSize'
-            defaultMessage='Image size must be comprised between 40kb and 80kb - the number of pixels depends on the resolution of the image.'
+            defaultMessage='Image size must be at least 40kb.'
           />
         </p>
       </div>

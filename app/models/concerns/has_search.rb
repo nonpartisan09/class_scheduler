@@ -5,8 +5,7 @@ module HasSearch
 
   included do
     def self.search(params, timezone)
-      paginate(page: 1, per_page: 10)
-          .join_tables
+      join_tables
           .teaching_program(params[:program])
           .is_available(params, timezone)
     end
