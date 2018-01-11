@@ -37,16 +37,8 @@ class SearchResultItem extends Component {
               <p>
                 { this.renderCity(city) }
               </p>
-              <div >
-                {
-                  _.times(5, (index) => {
-                    return (
-                      <div key={ index } className='userProfileStar' >
-                        <StarIcon style={ { color: '#f1592a' } } />
-                      </div>
-                    );
-                  })
-                }
+              <div className='searchResultItemReview' >
+                { this.renderReviews() }
               </div>
             </div>
           }
@@ -86,6 +78,32 @@ class SearchResultItem extends Component {
         </CardActions>
       </Card>
     );
+  }
+
+  renderReviews() {
+    const { averageRating } = this.props;
+
+    return [
+      _.times(5, (index) => {
+        const className = function(){
+          if (index < averageRating) {
+            return 'searchResultItemStar searchResultItemStarSelected';
+          } else {
+            return 'searchResultItemStar';
+          }
+        }();
+
+        return (
+          <div key={ index } className={ className }>
+            <label htmlFor={ `starRating${index}` } />
+            <option
+              value={ index + 1 }
+              id={ `starRating${index}` }
+            />
+          </div>
+        );
+      })
+    ];
   }
 
   renderAvatar() {
@@ -133,10 +151,12 @@ SearchResultItem.propTypes = {
   lastLoggedin: PropTypes.string,
   programs: PropTypes.array,
   urlSlug: PropTypes.string,
-  languages: PropTypes.array
+  languages: PropTypes.array,
+  averageRating: PropTypes.number
 };
 
 SearchResultItem.defaultProps = {
+  averageRating: 0,
   currentUserCity: '',
   firstName: '',
   city: '',

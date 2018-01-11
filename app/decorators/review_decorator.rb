@@ -6,6 +6,17 @@ class ReviewDecorator
   end
 
   def decorate
-    @review && @review[:review] ||= 0
+    {
+        :review => review,
+        :id => id
+    }
+  end
+
+  def review
+    @review && @review[:review]
+  end
+
+  def id
+    @review && @review[:id]
   end
 end

@@ -38,7 +38,7 @@ class SearchResults extends Component {
     const { location: { state }, currentUser: { city: currentUserCity }  } = this.props;
 
     if (state && state.volunteers) {
-      return _.map(_.values(state.volunteers), ({ languages, thumbnail_image,  first_name, city, last_logged_in, programs, url_slug, available_days }, key) => {
+      return _.map(_.values(state.volunteers), ({ languages, average_rating, thumbnail_image,  first_name, city, last_logged_in, programs, url_slug, available_days }, key) => {
         return [
           <SearchResultItem
             key={ key }
@@ -50,6 +50,7 @@ class SearchResults extends Component {
             programs={ programs }
             urlSlug={ url_slug }
             languages={ languages }
+            averageRating={ average_rating }
           />
         ];
       });

@@ -1,11 +1,5 @@
 import _ from 'lodash';
-
-const METHODS = {
-  POST: 'POST',
-  GET: 'GET',
-  DELETE: 'DELETE',
-  PUT: 'PUT',
-};
+import METHODS from './RestConstants';
 
 function getData({ url, params, jsonBody, method='GET', successCallBack, errorCallBack }) {
   const body = jsonBody? JSON.stringify(jsonBody) : null;

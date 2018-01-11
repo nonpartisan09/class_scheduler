@@ -1,5 +1,9 @@
 [
   {
+    "id": "withUserForm.locationDialog",
+    "defaultMessage": "Why do you need my street address and city?"
+  },
+  {
     "id": "UserForm.aboutMe",
     "defaultMessage": "About me (in 280 characters or less)"
   },

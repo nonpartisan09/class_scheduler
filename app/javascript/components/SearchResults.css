@@ -8,6 +8,7 @@
     text-align: left;
     display: flex;
     flex-flow: row wrap;
+    justify-content: space-evenly;
 }
 
 @media (min-device-width: 0) and (min-width: 0) {

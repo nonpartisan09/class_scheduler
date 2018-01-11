@@ -12,6 +12,7 @@ import MenuItem from 'material-ui/MenuItem';
 import SelectField from 'material-ui/SelectField';
 import PhotoIcon from 'material-ui/svg-icons/image/photo';
 import InfoIcon from 'material-ui/svg-icons/action/info';
+import Toggle from 'material-ui/Toggle';
 import validate from 'react-joi-validation';
 
 import { FormattedMessage } from 'react-intl';
@@ -80,7 +81,12 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
           <WrappedComponent currentUser={ currentUser } />
 
           <DialogComponent
-            title='Why do you need my street address and city?'
+            title={
+              <FormattedMessage
+                id='withUserForm.locationDialog'
+                defaultMessage='Why do you need my street address and city?'
+              />
+            }
             onRequestClose={ this.handleShowDialog }
             open={ this.state.showAddressDialog }
             actions={ [ <FlatButton key='close' label='Close' primary onClick={ this.handleShowDialog } /> ] }
@@ -129,6 +135,11 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                   onLoad={ this.handleImageUpload }
                 />
               </div>
+
+              <div>
+                Willing to meet:
+              </div>
+              { this.renderMeetUpToggle() }
 
               <Badge
                 badgeContent={ <span onClick={ this.handleShowDialog }> <InfoIcon /> </span> }
@@ -213,6 +224,22 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
           <Footer />
         </div>
       );
+    }
+
+    renderMeetUpToggle() {
+      const { city, address } = this.props;
+
+      if (city || address) {
+        <Toggle
+          label='Face to face / Online'
+          disabled={ true }
+        />
+      } else {
+        <Toggle
+          label='Exclusively Online'
+          disabled={ true }
+        />
+      }
     }
 
     renderSubmit() {

@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import { Link } from 'react-router-dom';
-
 import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
 import { FormattedMessage } from 'react-intl';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import EditIcon from 'material-ui/svg-icons/image/edit';
+
+import METHODS from './RestConstants';
 
 import { postData } from './sendData';
 import AvailabilitiesTable from './AvailabilitiesTable';
@@ -25,22 +26,28 @@ class UserProfile extends Component {
     this.handleOnClick = this.handleOnClick.bind(this);
     this.updateStars = this.updateStars.bind(this);
 
+    const { review : { review } } = props;
+
     this.state = {
-      stars: props.review,
+      stars: review,
       showSnackBar: false,
       message: ''
     };
   }
 
-  componentWillUpdate({ review }){
-    if (this.props.review !== review) {
+  componentWillUpdate({ review: { review } }) {
+    const { review:  { review: currentReview } } = this.props;
+
+    if (currentReview !== review) {
       this.updateStars();
     }
   }
 
   updateStars() {
+    const { review:  { review } } = this.props;
+
     this.setState({
-      stars: this.props.review
+      stars: review
     });
   }
 
@@ -157,16 +164,18 @@ class UserProfile extends Component {
   }
 
   handleOnClick({ target }) {
-
     if (target.value && target.value >= 0) {
 
-      const { user: { url_slug } } = this.props;
-      const attributes = FormData.from({ review: _.toNumber(target.value), user_id: url_slug });
+      const { user: { url_slug }, review: { id } } = this.props;
+
+      const attributes = FormData.from({ review: _.toNumber(target.value), user_id: url_slug, id });
+      const method = id? METHODS.PUT : METHODS.POST;
+      const restUrl = id? `/reviews/${id}` : '/reviews';
 
       const requestParams = {
-        url: '/reviews',
+        url: restUrl,
         attributes,
-        method: 'POST',
+        method,
         successCallBack: () => {
           this.setState({
             stars: _.toNumber(target.value),
@@ -205,7 +214,10 @@ class UserProfile extends Component {
 }
 
 UserProfile.propTypes = {
-  review: PropTypes.number.isRequired,
+  review: PropTypes.shape({
+    review: PropTypes.number.isRequired,
+    id: PropTypes.any
+  }).isRequired,
   currentUser: PropTypes.object.isRequired,
   user: PropTypes.shape({
     availabilities: PropTypes.array,
@@ -217,9 +229,6 @@ UserProfile.propTypes = {
 };
 
 UserProfile.defaultProps = {
-  user: {
-    availabilities: []
-  }
 };
 
 export default UserProfile;

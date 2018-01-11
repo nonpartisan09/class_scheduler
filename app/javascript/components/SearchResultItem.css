@@ -2,11 +2,36 @@
     width: 45%;
 }
 
+.searchResultItemStar {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    background-position: center;
+    background-size: 80%;
+    background-image: url('/assets/white_star.svg');
+    background-repeat: no-repeat;
+    cursor: pointer;
+    background-color: rgb(41, 170, 226);
+    padding: 4px;
+}
+
+.searchResultItemReview {
+    margin: 12px auto 24px;
+    display: block;
+    background-color: rgb(41, 170, 226);
+    padding: 4px;
+    border-radius: 2px;
+    width: 160px;
+}
+
+.searchResultItemStarSelected {
+    background-image: url('/assets/orange_star.svg');
+}
+
 @media (min-device-width: 0) and (min-width: 0) {
     .searchResultItemCard {
         width: 100%;
         max-width: none;
-        height: 40vh;
     }
 
     .searchResultItemAvatar {
@@ -25,12 +50,29 @@
         transform: translateY(5px);
         margin-right: 12px;
     }
+
+    .searchResultItemAvatar, .searchResultItemDetails {
+        display: block;
+    }
+
+    .searchResultItemAvatar {
+        text-align: center;
+        margin-top: 12px;
+    }
+
+    .searchResultItemDetails {
+        white-space: unset;
+    }
 }
 
-@media (min-device-width: 800px) and (min-width: 800px) {
+@media (min-device-width: 950px) and (min-width: 950px) {
     .searchResultItemCard {
         max-width: 48%;
-        margin-right: 12px;
+        margin: 0 6px 12px 0;
+    }
+
+    .searchResultItemAvatar, .searchResultItemDetails {
+        display: inline-block;
     }
 
     .searchResultItemRequest {
@@ -45,7 +87,7 @@
 
 @media (min-device-width: 1100px) and (min-width: 1100px) {
     .searchResultItemCard {
-        max-width: 33%;
+        max-width: 32%;
         margin-right: 12px;
     }
 }

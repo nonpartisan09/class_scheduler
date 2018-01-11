@@ -19,7 +19,8 @@ class UserDecorator
       :last_logged_in => last_logged_in,
       :thumbnail_image => picture,
       :timezone => timezone,
-      :languages => languages
+      :languages => languages,
+      :average_rating => average_rating
     }.merge(availabilities_hash)
   end
 
@@ -48,8 +49,13 @@ class UserDecorator
         :thumbnail_image => picture,
         :description => description,
         :timezone => timezone,
-        :languages => languages
+        :languages => languages,
+        :average_rating => average_rating
     }.merge(availabilities_hash)
+  end
+
+  def average_rating
+    user.average_rating || 0
   end
 
   def languages
