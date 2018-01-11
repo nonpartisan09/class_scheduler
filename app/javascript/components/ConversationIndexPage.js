@@ -20,13 +20,6 @@ import Header from './Header';
 import './ConversationIndexPage.css';
 import Footer from './Footer';
 
-const paperMarginOverride = {
-  padding: '0',
-  maxWidth: '950px',
-  margin: '24px auto',
-  minHeight: '150px'
-};
-
 const iconButtonElement = (
   <IconButton
     touch
@@ -48,7 +41,7 @@ class ConversationIndexPage extends Component {
     return (
       <div>
         <Header currentUser={ this.props.currentUser } />
-        <Paper zDepth={ 1 } style={ paperMarginOverride } rounded={ false }>
+        <Paper zDepth={ 1 } className='paperOverride' rounded={ false }>
           <div className='conversationBox'>
             { this.renderInbox() }
           </div>

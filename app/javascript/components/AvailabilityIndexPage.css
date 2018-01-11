@@ -2,14 +2,15 @@
     margin: 48px;
 }
 
-.availabilityIndexListContainer {
+.availabilityIndexListContainer, .availabilityIndexProgramsContainer {
     list-style: none;
     -webkit-padding-start: 0;
+    display: inline-flex;
     margin-top: 6px;
 }
 
-.availabilityIndexItemContainer {
-    margin-bottom: 12px;
+.availabilityIndexProgramsContainer {
+    margin: 6px 0 0 12px;
 }
 
 .availabilityListItem {

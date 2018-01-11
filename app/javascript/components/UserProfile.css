@@ -111,13 +111,6 @@
         height: 30%;
     }
 
-    .userProfilePaper {
-        max-width: 950px;
-        padding: 12px 24px 24px 24px;
-        margin: 24px auto;
-        position: relative;
-    }
-
     .userProfileImageContainer {
         margin-bottom: 24px;
     }

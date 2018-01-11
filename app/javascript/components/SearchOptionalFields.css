@@ -27,7 +27,7 @@
     display: none;
 }
 
-@media only screen and (min-device-width: 0) and (max-device-width: 850px), (max-width: 850px) {
+@media (min-device-width: 0) and (max-device-width: 850px), (max-width: 850px) {
     .searchBarButtonContainer, .searchBarOptionalFieldContainer {
         display: block;
         width: 100%;
@@ -58,7 +58,7 @@
     }
 }
 
-@media only screen and (min-device-width: 0) and (max-device-width: 500px), (max-width: 500px) {
+@media (min-device-width: 0) and (max-device-width: 500px), (max-width: 500px) {
     .searchBarOptionalFieldMobile {
         width: 100%;
         min-width: 100%;

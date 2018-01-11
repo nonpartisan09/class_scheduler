@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
 import { FormattedMessage } from 'react-intl';
 
-import Divider from 'material-ui/Divider';
 import './Footer.css';
 
 class Footer extends Component {
   render() {
     return (
       <div className='footerContainer' >
-        <Divider />
         <div className='footer'>
           <p>
             <a href='/terms_of_use' className='slidingLink footerLink' target='_blank' rel='noreferrer noopener nofollow'>

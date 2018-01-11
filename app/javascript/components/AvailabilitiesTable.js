@@ -38,29 +38,16 @@ class AvailabilitiesTable extends Component {
       return(
         <TableRow className='availabilitiesTableRow' key={ 'body' + day + start_time + end_time }>
           <TableRowColumn>
-            <FormattedMessage
-              id='Availabilities.day'
-              values={ { day } }
-            />
+            { day }
           </TableRowColumn>
           <TableRowColumn>
-            <FormattedMessage
-              id='from'
-              defaultMessage='From'
-            />
+            { start_time }
           </TableRowColumn>
           <TableRowColumn>
-            <FormattedMessage
-              id='to'
-              defaultMessage='To'
-            />
+            { end_time }
           </TableRowColumn>
           <TableRowColumn >
-            <FormattedMessage
-              id='Availabilities.tableTimezone'
-              defaultMessage='Timezone'
-              values={ { timezone } }
-            />
+            { timezone }
           </TableRowColumn>
           { this.renderDeleteRow(id) }
         </TableRow>
@@ -69,7 +56,7 @@ class AvailabilitiesTable extends Component {
 
     const listContent =  _.map(availabilities, ({ day, start_time, end_time, id }) => {
       return(
-        <div key={ 'list' + day + start_time + end_time + timezone } className='availabilityIndexItemContainer'>
+        <div key={ 'list' + day + start_time + end_time + timezone } className='availabilityTableItemContainer'>
           <li>
             <span>
               <FormattedMessage
@@ -77,10 +64,7 @@ class AvailabilitiesTable extends Component {
                 defaultMessage='Day'
               />
             </span>
-            <FormattedMessage
-              id='Availabilities.day'
-              values={ { day } }
-            />
+            { day }
           </li>
 
           <li>
@@ -90,10 +74,7 @@ class AvailabilitiesTable extends Component {
                 defaultMessage='From:'
               />
             </span>
-            <FormattedMessage
-              id='Availabilities.from'
-              values={ { start_time } }
-            />
+            { start_time }
           </li>
           <li>
             <span>
@@ -102,10 +83,7 @@ class AvailabilitiesTable extends Component {
                 defaultMessage='To:'
               />
             </span>
-            <FormattedMessage
-              id='Availabilities.to'
-              values={ { end_time } }
-            />
+            { end_time }
           </li>
 
           <li>
@@ -115,10 +93,7 @@ class AvailabilitiesTable extends Component {
                 defaultMessage='Timezone:'
               />
             </span>
-            <FormattedMessage
-              id='Availabilities.timezone'
-              values={ { timezone } }
-            />
+            { timezone }
           </li>
 
           { this.renderDeleteListContent(id) }

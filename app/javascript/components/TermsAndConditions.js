@@ -5,18 +5,11 @@ import Paper from 'material-ui/Paper';
 import Footer from './Footer';
 import Header from './Header';
 
-const paperMarginOverride = {
-  padding: '12px 24px 24px 24px',
-
-  maxWidth: '950px',
-  margin: '24px auto'
-};
-
 const TermsAndConditions = ({ currentUser })=> {
   return (
     <div>
       <Header currentUser={ currentUser } />
-      <Paper zDepth={ 1 } style={ paperMarginOverride } rounded={ false }>
+      <Paper zDepth={ 1 } className='paperOverride' rounded={ false }>
         Website Terms of Use
         Last Modified: [DATE]
         Acceptance of the Terms of Use

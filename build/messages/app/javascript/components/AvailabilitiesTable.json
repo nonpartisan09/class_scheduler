@@ -1,17 +1,5 @@
 [
   {
-    "id": "from",
-    "defaultMessage": "From"
-  },
-  {
-    "id": "to",
-    "defaultMessage": "To"
-  },
-  {
-    "id": "Availabilities.tableTimezone",
-    "defaultMessage": "Timezone"
-  },
-  {
     "id": "Availabilities.day",
     "defaultMessage": "Day"
   },

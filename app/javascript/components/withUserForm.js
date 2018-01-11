@@ -28,13 +28,6 @@ import './withUserForm.css';
 
 const { SIGN_UP, UPDATE_PROFILE } = UserFormConstants;
 
-const paperMarginOverride = {
-  padding: '12px 24px 24px 24px',
-
-  maxWidth: '950px',
-  margin: '24px auto'
-};
-
 const withUserForm = (WrappedComponent, schema, wrappedProps) => {
 
   class UserForm extends Component {
@@ -94,7 +87,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
             text={ this.renderDialogText() }
           />
 
-          <Paper zDepth={ 1 } style={ paperMarginOverride } rounded={ false }>
+          <Paper zDepth={ 1 } className='paperOverride' rounded={ false }>
             <form className='userForm'>
               { this.renderSignUpPrograms() }
 

@@ -51,7 +51,7 @@ class UserProfile extends Component {
       <div>
         <Header currentUser={ currentUser } />
 
-        <Paper zDepth={ 1 } className='userProfilePaper' rounded={ false }>
+        <Paper zDepth={ 1 } className='paperOverride' rounded={ false }>
           { this.renderProfilePicture() }
 
           <Link to={ { pathname: '/messages/new', query: { recipient: url_slug, userName: first_name } } } className='userProfileLink' >

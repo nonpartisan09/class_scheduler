@@ -10,14 +10,14 @@
     flex-flow: row wrap;
 }
 
-@media only screen and (min-device-width: 0) and (min-width: 0) {
+@media (min-device-width: 0) and (min-width: 0) {
     .searchResultsContainer {
         text-align: center;
         margin: 24px 0 0 24px;
     }
 }
 
-@media only screen and (min-device-width: 500px) and (min-width: 500px) {
+@media (min-device-width: 500px) and (min-width: 500px) {
     .searchResultsContainer {
         max-width: 90%;
         text-align: center;
