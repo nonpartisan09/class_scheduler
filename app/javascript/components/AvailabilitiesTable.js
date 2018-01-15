@@ -60,11 +60,10 @@ class AvailabilitiesTable extends Component {
           <li>
             <span>
               <FormattedMessage
-                id='Availabilities.day'
-                defaultMessage='Day'
-              />
+                id='Availabilities.listDay'
+                defaultMessage='Day:'
+              /> { day }
             </span>
-            { day }
           </li>
 
           <li>
@@ -72,18 +71,16 @@ class AvailabilitiesTable extends Component {
               <FormattedMessage
                 id='Availabilities.from'
                 defaultMessage='From:'
-              />
+              /> { start_time }
             </span>
-            { start_time }
           </li>
           <li>
             <span>
               <FormattedMessage
                 id='Availabilities.to'
                 defaultMessage='To:'
-              />
+              /> { end_time }
             </span>
-            { end_time }
           </li>
 
           <li>
@@ -91,9 +88,8 @@ class AvailabilitiesTable extends Component {
               <FormattedMessage
                 id='Availabilities.timezone'
                 defaultMessage='Timezone:'
-              />
+              /> { timezone }
             </span>
-            { timezone }
           </li>
 
           { this.renderDeleteListContent(id) }

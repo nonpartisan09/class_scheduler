@@ -72,6 +72,7 @@ ActiveRecord::Schema.define(version: 20180111172440) do
   create_table "messages", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.text "body"
     t.text "subject"
+    t.boolean "unread", default: true
     t.bigint "conversation_id"
     t.bigint "user_id"
     t.datetime "created_at", null: false
@@ -92,6 +93,7 @@ ActiveRecord::Schema.define(version: 20180111172440) do
     t.integer "author_id"
     t.integer "user_id"
     t.integer "review"
+    t.string "comment"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["author_id", "user_id"], name: "index_reviews_on_author_id_and_user_id", unique: true
@@ -149,7 +151,9 @@ ActiveRecord::Schema.define(version: 20180111172440) do
     t.text "description"
     t.string "timezone", default: "UTC"
     t.integer "average_rating"
+    t.integer "rating_count"
     t.string "state"
+    t.string "country"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

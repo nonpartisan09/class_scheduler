@@ -2,35 +2,6 @@
     margin: 12px 0;
 }
 
-.userProfileStar {
-    display: inline-block;
-    width: 24px;
-    height: 24px;
-    background-position: center;
-    background-size: 80%;
-    background-image: url('/assets/white_star.svg');
-    background-repeat: no-repeat;
-    cursor: pointer;
-    background-color: rgb(41, 170, 226);
-    padding: 4px;
-}
-
-.userProfileReview .userProfileStar.userProfileStarSelected {
-    background-image: url('/assets/orange_star.svg');
-}
-
-.userProfileReview .userProfileStar {
-    background-image: url('/assets/white_star.svg');
-}
-
-.userProfileReview:hover .userProfileStar {
-    background-image: url('/assets/orange_star.svg');
-}
-
-.userProfileReview .userProfileStar:hover ~ .userProfileStar {
-    background-image: url('/assets/white_star.svg');
-}
-
 .userProfileImage {
     object-fit: contain;
     width: 100%;
@@ -43,58 +14,34 @@
     right: 0;
 }
 
-.userProfileLink {
-    margin: 12px 0;
+.userProfileCommentContainer {
+    min-height: 100px;
 }
 
-@media (min-device-width: 0px) and (min-width: 0px) {
-    .userProfilePaper {
-        max-width: 100%;
-        position: relative;
-        margin: 12px 6px;
-        padding: 24px;
-    }
-
-    .userProfileImage {
-        object-fit: contain;
-        width: 80%;
-        height: 80%;
-    }
-
-    .userProfileImageContainer {
-        text-align: center;
-        margin-bottom: 12px;
-    }
-
-    .userProfileMessageButton, .userProfileReview {
-        width: 170px;
+@media (min-device-width: 901px), (min-width: 901px) {
+    .userProfileReviewAndComment {
+        display: inline-block;
+        width: auto;
     }
 
     .userProfileLink {
-        text-align: center;
-        display: block;
-    }
-
-    .userProfileReview {
-        margin: 12px auto 24px;
-        display: block;
-        background-color: rgb(41, 170, 226);
-        padding: 4px;
-        border-radius: 2px;
-        width: 160px;
-    }
-}
-
-@media (min-device-width: 600px) and (min-width: 600px) {
-    .userProfileReview, .userProfileLink {
         display: inline-block;
         text-align: left;
     }
 
-    .userProfileReview {
-        display: inline-block;
-        margin: 0 24px;
-        vertical-align: middle;
+    .userProfileDetailsContainer {
+        margin-top: 24px;
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: space-between;
+    }
+
+    .userProfileCommentContainer {
+        width: 60%;
+    }
+
+    .userProfileLeftDetails {
+        width: 40%
     }
 
     .userProfileImage {
@@ -105,5 +52,46 @@
 
     .userProfileImageContainer {
         margin-bottom: 24px;
+    }
+}
+
+@media (min-device-width: 0px) and (max-device-width: 900px), (min-width: 0px) and (max-width: 900px) {
+    .userProfilePaper {
+        max-width: 100%;
+        position: relative;
+        margin: 12px 6px;
+        padding: 24px;
+    }
+
+    .userProfileCommentContainer, .userProfileLeftDetails {
+        width: 100%;
+    }
+
+    .userProfileImageContainer {
+        text-align: center;
+        margin-bottom: 12px;
+    }
+
+    .userProfileImage {
+        object-fit: contain;
+        width: 80%;
+        height: 80%;
+    }
+
+    .userProfileMessageButton, .userProfileReviewAndComment {
+        margin: 12px 0;
+    }
+
+    .userProfileMessageButton {
+        width: 170px;
+    }
+
+    .userProfileLink, .userProfileReviewAndComment {
+        display: block;
+    }
+
+    .userProfileReviewAndComment {
+        padding: 4px;
+        width: 160px;
     }
 }

@@ -5,6 +5,8 @@ import PropTypes from 'prop-types';
 
 import { FormattedMessage } from 'react-intl';
 
+import PaypalButton from './PaypalButton';
+
 import './Header.css';
 
 import { getData } from './sendData';
@@ -39,6 +41,7 @@ class Header extends Component {
   }
 
   renderLinks(mobile) {
+    const { currentUser } = this.props;
     const { showLinks } = this.state;
 
     const navigationClassName = function(){
@@ -53,7 +56,7 @@ class Header extends Component {
       }
     }();
 
-    if ( _.size(this.props.currentUser) > 0 ) {
+    if ( _.size(currentUser) > 0 ) {
       return (
         <nav className={ navigationClassName } >
           <a href='/' className='slidingLink' >
@@ -85,6 +88,8 @@ class Header extends Component {
               defaultMessage='Sign out'
              />
           </span>
+
+          <PaypalButton />
         </nav>
       );
     }
@@ -106,6 +111,8 @@ class Header extends Component {
               id='signIn'
             />
           </a>
+
+          <PaypalButton />
         </nav>
       );
     }

@@ -8,6 +8,7 @@ RSpec.describe Message, type: :model do
 
   it { is_expected.to have_db_column(:subject).of_type(:text) }
   it { is_expected.to have_db_column(:body).of_type(:text) }
+  it { is_expected.to have_db_column(:unread).of_type(:boolean) }
 
   it { is_expected.to have_db_column(:conversation_id).of_type(:integer) }
   it { is_expected.to have_db_column(:user_id).of_type(:integer) }

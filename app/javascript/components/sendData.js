@@ -72,11 +72,21 @@ function postData({ url, params, attributes, method='POST', successCallBack, err
           return successCallBack();
         }
       } else {
-        return response.text().then(() => {
-          if (!_.isUndefined(successCallBack)) {
-            return successCallBack();
-          }
-        });
+        const contentType = response.headers.get('content-type');
+
+        if (contentType && contentType.indexOf('application/json') !== -1) {
+          return response.json().then((json) => {
+            if (!_.isUndefined(successCallBack)) {
+              return successCallBack(json);
+            }
+          });
+        } else {
+          return response.text().then((text) => {
+            if (!_.isUndefined(successCallBack)) {
+              return successCallBack(text);
+            }
+          });
+        }
       }
     } else if (response.status < 500) {
 

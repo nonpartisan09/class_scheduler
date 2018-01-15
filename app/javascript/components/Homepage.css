@@ -7,14 +7,6 @@
   margin-top: 0;
 }
 
-.homepageContainer {
-  position: relative;
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: space-between;
-  flex: 1 1 auto;
-}
-
 .homepageCaption {
   display: flex;
   flex-flow: column;
@@ -29,17 +21,6 @@
 .homepageImage {
   width: 100%;
   object-fit: cover;
-}
-
-.homepageTextContainer, .homepageImage {
-  height: 550px;
-}
-
-.homepageTextContainer {
-  overflow: hidden;
-  display: flex;
-  flex-flow: column wrap;
-  justify-content: space-between;
 }
 
 .homepageListContainer {
@@ -63,11 +44,6 @@
   color: #fff;
 }
 
-.homepageDesktopNavigation {
-  display: flex;
-  flex-flow: row wrap;
-}
-
 .homepageButton:not(:last-of-type)  {
   margin-right: 24px;
 }
@@ -82,62 +58,91 @@
   margin-left: 24px;
 }
 
-.homepageMobileNavigation {
-  display: none;
-}
-
 @media (min-device-width: 901px), (min-width: 901px) {
+  .homepageContainer {
+    position: relative;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    flex: 1 1 auto;
+  }
+
   .homepageTextContainer {
     width: 47%;
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: space-between;
+  }
+
+  .homepageDesktopNavigation {
+    display: flex;
+    flex-flow: row wrap;
+    margin-bottom: 24px;
+  }
+
+  .homepageCaption {
+    flex: 1 1 auto;
   }
 
   .homepageImage {
     width: 53%;
   }
+
+  .homepageMobileNavigation {
+    display: none;
+  }
+
+  .homepageTextContainer, .homepageImage {
+    height: 550px;
+  }
 }
 
+
 @media (min-device-width: 0) and (max-device-width: 900px), (min-width: 0) and (max-width: 900px) {
+  .homepageContainer {
+    margin: 0;
+  }
+
   .homepageSubtitle {
     font-size: 18px;
   }
 
   .homepageCaption {
     flex: 1 1 auto;
-    display: block;
-  }
-
-  .homepageCaptionItem {
+    display: flex;
     width: 100%;
-    margin: 6px 0 0 24px;
+    flex-flow: column nowrap;
   }
 
-  .homepageDesktopNavigation {
-    display: none;
-  }
-
-   .homepageContainer {
-     margin: 0;
-   }
-
-  .homepageTextContainer, .homepageImage {
+  .homepageTextContainer, .homepageImage, .homepageCaptionItem {
     width: 100%;
+    height: auto;
+  }
+
+  .homepageCaptionTitle {
+    margin: 0 auto;
+    max-width: 525px;
+  }
+
+  .homepageTextContainer {
+    overflow: hidden;
   }
 
   .homepageListContainer {
     margin: 0;
     padding: 12px 0 24px 12px;
     font-size: 20px;
-    flex: 1 1 auto;
+    order: 3;
   }
 
   .homepageMobileNavigation {
+    margin: 0 auto 24px;
+    max-width: 90%;
     order: 2;
     display: block;
-    margin: 0 auto 24px;
-    width: 90%;
   }
 
-  .homepageImage {
+  .homepageImage, .homepageDesktopNavigation {
     display: none;
   }
 

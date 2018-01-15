@@ -89,8 +89,8 @@ class Homepage extends Component {
                     admin@tutoria.io
                   </a>
                 </div>
+                { this.renderMobileNavigation() }
               </div>
-              { this.renderMobileNavigation() }
             </div>
             <img
               className='homepageImage'

@@ -2,8 +2,9 @@ input[type=file].fileInput {
     display: none;
 }
 
-.imageInputImageContainer, .imageInputImageCaption {
+.imageInputIcon, .imageInputImageCaption {
     display: inline-block;
+    vertical-align: middle;
 }
 
 .imageInputImageContainer {
@@ -14,10 +15,6 @@ input[type=file].fileInput {
     width: 100%;
     height: 100%;
     object-fit: contain;
-}
-
-.imageInputIcon {
-    transform: translateY(-4px);
 }
 
 .imageInputImageCaption {

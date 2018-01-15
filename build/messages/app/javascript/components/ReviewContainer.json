@@ -1,0 +1,10 @@
+[
+  {
+    "id": "ReviewContainer.comment",
+    "defaultMessage": "Leave a comment"
+  },
+  {
+    "id": "ReviewContainer.SubmitButton",
+    "defaultMessage": "Submit Review"
+  }
+]

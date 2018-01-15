@@ -1,0 +1,76 @@
+.reviewContainerStar {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    background-position: center;
+    background-size: 80%;
+    background-image: url('/assets/white_star.svg');
+    background-repeat: no-repeat;
+    cursor: pointer;
+    background-color: rgb(41, 170, 226);
+    padding: 4px;
+}
+
+.reviewContainerStar:first-of-type {
+    border-radius: 2px 0 0 2px;
+}
+
+
+.reviewContainerStar:last-of-type {
+    border-radius: 0 2px 2px 0;
+}
+
+.reviewContainerReview .reviewContainerStar.reviewContainerStarSelected {
+    background-image: url('/assets/orange_star.svg');
+}
+
+.reviewContainerReview .reviewContainerStar {
+    background-image: url('/assets/white_star.svg');
+}
+
+.reviewContainerReview:hover .reviewContainerStar {
+    background-image: url('/assets/orange_star.svg');
+}
+
+.reviewContainerReview .reviewContainerStar:hover ~ .userProfileStar {
+    background-image: url('/assets/white_star.svg');
+}
+
+@media (min-device-width: 901px), (min-width: 901px) {
+    .reviewContainerComment, .reviewContainerReview {
+        display: inline-block;
+        text-align: left;
+    }
+
+    .reviewContainerComment {
+        transform: translateY(6px);
+    }
+
+    .reviewContainerReview {
+        display: inline-block;
+        margin: 0 24px;
+        vertical-align: middle;
+    }
+
+    .reviewContainerSubmitButton {
+        margin-left: 24px;
+    }
+}
+
+@media (min-device-width: 0px) and (max-device-width: 900px), (min-width: 0px) and (max-width: 900px) {
+    .reviewContainerComment, .reviewContainerReview {
+        width: 160px;
+        display: block;
+        margin: 0 0 12px;
+    }
+
+    .reviewContainerSubmitButton {
+        margin-left: 0;
+    }
+
+    .reviewContainerReview {
+        display: block;
+        background-color: rgb(41, 170, 226);
+        border-radius: 2px;
+    }
+}

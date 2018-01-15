@@ -128,10 +128,12 @@ class ConversationIndexPage extends Component {
 
   renderMessages({ messages, sender_avatar, senderUrlSlug, recipientUrlSlug, sender, recipient }) {
     const { currentUser: { url_slug } } = this.props;
-    const newMessageRecipient = url_slug === recipientUrlSlug? senderUrlSlug : recipientUrlSlug;
-    const newMessageFirstName = url_slug === recipientUrlSlug? sender : recipient;
+    const currentUserIsRecipient = url_slug === recipientUrlSlug;
 
-    return _.map(messages, ({ body, subject, sent_on }, index ) => {
+    const newMessageRecipient = currentUserIsRecipient? senderUrlSlug : recipientUrlSlug;
+    const newMessageFirstName = currentUserIsRecipient? sender : recipient;
+
+    return _.map(messages, ({ body, subject, sent_on, unread }, index ) => {
       const rightIconMenu = (
         <IconMenu iconButtonElement={ iconButtonElement } >
           <MenuItem>
@@ -156,7 +158,7 @@ class ConversationIndexPage extends Component {
           key={ sent_on + index }
           leftAvatar={ <Avatar src={ sender_avatar } /> }
           rightIconButton={ rightIconMenu }
-          primaryText={ subject }
+          primaryText={ this.renderSubject(currentUserIsRecipient && unread, subject) }
           secondaryText={
             <p>
               { body }
@@ -167,6 +169,24 @@ class ConversationIndexPage extends Component {
         <Divider key={ index + sent_on } inset />
       ];
     });
+  }
+
+  renderSubject(messageIsUnreadByRecipient, subject='') {
+    if(messageIsUnreadByRecipient && subject) {
+      return (
+        <span className='conversationIndexPageUnread'>
+          { subject }
+        </span>
+      );
+    } else if (subject) {
+      return (
+        <span>
+          { subject }
+        </span>
+      );
+    } else {
+      return '';
+    }
   }
 
   handleReview(urlSlug) {

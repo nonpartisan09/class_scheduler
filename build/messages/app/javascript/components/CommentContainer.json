@@ -1,0 +1,10 @@
+[
+  {
+    "id": "CommentContainer.noCommentAvailable",
+    "defaultMessage": "No comment available"
+  },
+  {
+    "id": "CommentContainer.unavailable",
+    "defaultMessage": "Not available"
+  }
+]

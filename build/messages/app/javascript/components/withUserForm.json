@@ -1,7 +1,31 @@
 [
   {
-    "id": "withUserForm.locationDialog",
-    "defaultMessage": "Why do you need my street address and city?"
+    "id": "UserForm.email",
+    "defaultMessage": "Email"
+  },
+  {
+    "id": "UserForm.firstName",
+    "defaultMessage": "First Name"
+  },
+  {
+    "id": "UserForm.address",
+    "defaultMessage": "Street Address"
+  },
+  {
+    "id": "UserForm.city",
+    "defaultMessage": "City/Town"
+  },
+  {
+    "id": "UserForm.state",
+    "defaultMessage": "State"
+  },
+  {
+    "id": "UserForm.country",
+    "defaultMessage": "Country"
+  },
+  {
+    "id": "UserForm.timezone",
+    "defaultMessage": "Select Timezone"
   },
   {
     "id": "UserForm.aboutMe",
@@ -12,8 +36,32 @@
     "defaultMessage": "Update my programs"
   },
   {
+    "id": "UserForm.languages",
+    "defaultMessage": "Select One or More Language(s)"
+  },
+  {
+    "id": "UserForm.currentPassword",
+    "defaultMessage": "Current Password"
+  },
+  {
+    "id": "UserForm.newPassword",
+    "defaultMessage": "New Password"
+  },
+  {
+    "id": "UserForm.newPasswordConfirmation",
+    "defaultMessage": "New Password Confirmation"
+  },
+  {
     "id": "UserForm.updatePassword",
     "defaultMessage": "Update my password"
+  },
+  {
+    "id": "UserForm.password",
+    "defaultMessage": "Password"
+  },
+  {
+    "id": "UserForm.passwordConfirmation",
+    "defaultMessage": "Password Confirmation"
   },
   {
     "id": "UserForm.termsRead",
@@ -26,6 +74,10 @@
   {
     "id": "UserForm.newsletterOptin",
     "defaultMessage": "I would like to be occasionally contacted about tutoría’s updates"
+  },
+  {
+    "id": "UserForm.programs",
+    "defaultMessage": "Select program(s)"
   },
   {
     "id": "UserForm.helpingWith",
@@ -41,7 +93,7 @@
   },
   {
     "id": "UserForm.addressVolunteerDialog2",
-    "defaultMessage": "Your street address will not be shown to other users. Only your town/city."
+    "defaultMessage": "Your street address will not be shown to other users. Only your town/city and country."
   },
   {
     "id": "UserForm.addressVolunteerDialog3",
@@ -53,7 +105,7 @@
   },
   {
     "id": "UserForm.addressClientDialog2",
-    "defaultMessage": "Your street address will not be shown to other users. Only your town/city."
+    "defaultMessage": "Your street address will not be shown to other users. Only your town/city and country."
   },
   {
     "id": "UserForm.addressClientDialog3",

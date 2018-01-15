@@ -15,11 +15,7 @@ class UsersController < ApplicationController
 
     review = Review.where(:author_id =>  current_user.id, :user_id => user.id).first
 
-    review = if review.present?
-       ReviewDecorator.new(review).decorate
-             else
-               { review: 0, id: nil }
-             end
+    review = ReviewDecorator.new(review).decorate
 
     @data = {
         :currentUser => UserDecorator.new(current_user).simple_decorate,

@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  include HasUrlSlug, HasSearch, ActsAsMessageable, IsUpdateable
+  include HasUrlSlug, HasUserSearch, ActsAsMessageable, IsUpdateable
   has_and_belongs_to_many :roles, :join_table => :roles_users
   has_and_belongs_to_many :languages
 
@@ -67,6 +67,6 @@ class User < ActiveRecord::Base
   end
 
   def full_address
-    "#{address} #{city}"
+    "#{address} #{city} #{state} #{country}"
   end
 end

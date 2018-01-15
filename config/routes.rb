@@ -7,9 +7,10 @@ Rails.application.routes.draw do
   resources :sessions
   resource :users
   resource :conversations, only: [ :new, :create ]
-  resources :messages, only: [ :new, :create ]
-  resources :reviews, only: [ :create, :show , :update ]
+  resources :messages, only: [ :new, :create, :update ]
+  resources :reviews, only: [ :create, :update, :destroy ]
 
+  get 'reviews/(:user_id/:order)', to: 'reviews#index'
   get 'inbox', to: 'conversations#index'
   get 'availabilities/new(/:sign_up)' => 'availabilities#new'
   get 'search(/:sign_up)' => 'availabilities#search'

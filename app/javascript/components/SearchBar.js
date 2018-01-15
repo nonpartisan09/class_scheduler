@@ -108,16 +108,18 @@ class SearchBar extends Component {
         { this.renderTitle() }
 
         <div className='searchBarTimezoneContainer'>
-          <TextField
-            value={ timezone }
-            className='searchBarTimezone'
-            name='searchBarTimezone'
-            disabled
-          />
+          <div className='searchBarTimezoneAndLink'>
+            <TextField
+              value={ timezone }
+              className='searchBarTimezone'
+              name='searchBarTimezone'
+              disabled
+            />
 
-          <a href="/my_profile" className='slidingLink' >
-            <FormattedMessage id='SearchBar.timezoneLink' defaultMessage='Not your timezone?' />
-          </a>
+            <a href="/my_profile" className='slidingLink' >
+              <FormattedMessage id='SearchBar.timezoneLink' defaultMessage='Not your timezone?' />
+            </a>
+          </div>
         </div>
 
         <div className='searchBarContainer'>

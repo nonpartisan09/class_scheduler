@@ -7,6 +7,10 @@
     font-weight: normal;
 }
 
+.userFormToggle {
+    width: 200px;
+}
+
 .userFormOuterButton {
     padding-left: 48px;
 }

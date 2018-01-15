@@ -54,15 +54,24 @@
 }
 
 @media (min-device-width: 0) and (max-device-width: 650px), (max-width: 650px) {
+    .navigation a {
+        margin-bottom: 6px;
+        outline: none;
+    }
+
     .slidingLink {
+        width: fit-content;
         display: block;
-        margin: 0;
+        right: 0;
+        left: 0;
+        margin: 0 auto;
     }
 
     .slidingLink:hover:before, .slidingLink:hover:after {
-        width: 50%;
-        right: 100%;
-        transform: translateX(50%);
+        width: 100%;
+        right: 0;
+        left: 0;
+        margin: 0 auto;
     }
 
     .navigation {
@@ -75,6 +84,7 @@
     .navMenuButton, .navDisplayNone {
         display: none;
     }
+
     .navDisplay, .navMenuButton {
         display: block;
         margin: 0;

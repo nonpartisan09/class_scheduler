@@ -19,6 +19,19 @@ class MessagesController < ApplicationController
     redirect_to inbox_path
   end
 
+  def update
+    begin
+      @message = Message.find!(permitted_update_params[:id])
+      @message.unread = true
+      @message.save!
+    rescue Exception => e
+      message = e.message
+      status = :unprocessable_entity
+
+      render json: { message: message }, status: status
+    end
+  end
+
   private
 
   def message_params
@@ -47,6 +60,12 @@ class MessagesController < ApplicationController
         :body,
         :subject,
         :recipient_id,
+    )
+  end
+
+  def permitted_update_params
+    params.permit(
+        :id
     )
   end
 end

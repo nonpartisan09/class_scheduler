@@ -1,8 +1,5 @@
 .footerContainer {
     margin-top: 36px;
-    position: fixed;
-    bottom: 0;
-    right: 0;
 }
 
 .footer {
@@ -26,4 +23,10 @@
 
 .footerLink {
     margin-right: 24px;
+}
+
+@media (max-device-width: 600px), (max-width: 600px) {
+    .footerLink {
+        margin: 0;
+    }
 }

@@ -7,52 +7,54 @@ import RaisedButton from 'material-ui/RaisedButton';
 import { FormattedMessage } from 'react-intl';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import EditIcon from 'material-ui/svg-icons/image/edit';
-
 import METHODS from './RestConstants';
 
 import { postData } from './sendData';
 import AvailabilitiesTable from './AvailabilitiesTable';
 import Header from './Header';
+import CommentContainer from './CommentContainer';
 
-import './UserProfile.css';
+import ReviewContainer from './ReviewContainer';
 import Footer from './Footer';
 import FormData from './utils/FormData';
 import SnackBarComponent from './reusable/SnackBarComponent';
+
+import './UserProfile.css';
 
 class UserProfile extends Component {
   constructor(props, context) {
     super(props, context);
 
-    this.handleOnClick = this.handleOnClick.bind(this);
+    this.handleReviewSubmit = this.handleReviewSubmit.bind(this);
     this.updateStars = this.updateStars.bind(this);
 
-    const { review : { review } } = props;
+    const { review : { review, id } } = props;
 
     this.state = {
       stars: review,
       showSnackBar: false,
-      message: ''
+      message: '',
+      id: id
     };
   }
 
-  componentWillUpdate({ review: { review } }) {
-    const { review:  { review: currentReview } } = this.props;
+  componentWillUpdate({ review: { review, id } }) {
+    const { review:  { review: currentReview, id: currentId } } = this.props;
 
-    if (currentReview !== review) {
-      this.updateStars();
+    if (currentReview !== review || currentId !== id) {
+      this.updateStars(review, id);
     }
   }
 
-  updateStars() {
-    const { review:  { review } } = this.props;
-
+  updateStars(review, id) {
     this.setState({
-      stars: review
+      stars: review,
+      id: id
     });
   }
 
   render() {
-    const { user, currentUser, user: { url_slug, first_name } } = this.props;
+    const { user, currentUser, user: { url_slug, first_name, ten_last_comments }, review } = this.props;
 
     return (
       <div>
@@ -74,36 +76,59 @@ class UserProfile extends Component {
             />
           </Link>
 
-          <div className='userProfileReview' >
-            { this.renderReview() }
+          <div className='userProfileReviewAndComment' >
+            <ReviewContainer review={ review } onClick={ this.handleReviewSubmit } />
           </div>
 
-          <div className='userProfileField'>
-            <FormattedMessage
-              id='UserProfile.firstName'
-              defaultMessage='First Name:'
-            />
-            <span> { user.first_name }</span>
-          </div>
+          <div className='userProfileDetailsContainer'>
+            <div className='userProfileLeftDetails'>
+              <div className='userProfileField'>
+                <FormattedMessage
+                  id='UserProfile.firstName'
+                  defaultMessage='First Name:'
+                />
+                <span> { user.first_name }</span>
+              </div>
 
-          <div className='userProfileField'>
-            <FormattedMessage
-              id='UserProfile.location'
-              defaultMessage='Location:'
-            />
-            <span> { user.city }</span>
-          </div>
+              <div className='userProfileField'>
+                <FormattedMessage
+                  id='UserProfile.location'
+                  defaultMessage='Location:'
+                />
+                <span> { this.renderUserLocation() }</span>
+              </div>
 
-          <div className='userProfileField'>
-            Programs offered: { user && user.programs? user && user.programs.join(', ') : '' }
-          </div>
+              <div className='userProfileField'>
+                <FormattedMessage
+                  id='UserProfile.programsOffered'
+                  defaultMessage='Programs:'
+                /> { user && user.programs? user && user.programs.join(', ') : '' }
+              </div>
 
-          <div className='userProfileField'>
-            Last active: { user.last_logged_in} ago
-          </div>
+              <div className='userProfileField'>
+                <FormattedMessage
+                  id='UserProfile.lastLogIn'
+                  defaultMessage='Last logged in:'
+                />
+                <span> { user.last_logged_in} <FormattedMessage
+                  id='ago'
+                  defaultMessage='ago'
+                />
+                </span>
+              </div>
 
-          <div className='userProfileField'>
-            A bit more about { user.first_name }: { user.description }
+              <div className='userProfileField'>
+                <FormattedMessage
+                  id='UserProfile.moreInformation'
+                  defaultMessage='A bit more information:'
+                />
+                <span> { this.renderUserDescription() } </span>
+              </div>
+            </div>
+
+            <div className='userProfileCommentContainer'>
+              <CommentContainer userId={ url_slug } comments={ ten_last_comments } />
+            </div>
           </div>
 
           { this.renderAvailabilities() }
@@ -121,41 +146,48 @@ class UserProfile extends Component {
     );
   }
 
-  renderProfilePicture() {
-    const { user: { thumbnail_image } } = this.props;
+  renderUserLocation() {
+    const { user: { city } } = this.props;
 
-    return (
-      <div className='userProfileImageContainer'  >
-        <img src={ thumbnail_image } alt='User Profile' className='userProfileImage' />
-      </div>
+    if (city) {
+      return city;
+    } else {
+      return this.renderNotAvailable();
+    }
+  }
+
+  renderUserDescription() {
+    const { user: { description } } = this.props;
+
+    if (description) {
+      return description;
+    } else {
+      return this.renderNotAvailable();
+    }
+  }
+
+  renderNotAvailable() {
+    return(
+      <FormattedMessage
+        id='UserProfile.NotAvailable'
+        defaultMessage='Not available'
+      />
     );
   }
 
-  renderReview() {
-    const { stars } = this.state;
+  renderProfilePicture() {
+    const { user: { thumbnail_image } } = this.props;
 
-    return [
-      _.times(5, (index) => {
-        const className = function(){
-          if (index < stars) {
-            return 'userProfileStar userProfileStarSelected';
-          } else {
-            return 'userProfileStar';
-          }
-        }();
-
-        return (
-          <div onClick={ this.handleOnClick } key={ index } className={ className }>
-            <label htmlFor={ `starRating${index}` } />
-            <option
-              value={ index + 1 }
-              id={ `starRating${index}` }
-            />
-          </div>
-        );
-      })
-    ];
+    if (!_.isEmpty(thumbnail_image) && !_.endsWith(thumbnail_image, 'missing.png')) {
+      return (
+        <div className='userProfileImageContainer'  >
+          <img src={ thumbnail_image } alt='User Profile' className='userProfileImage' />
+        </div>
+      );
+    }
   }
+
+
 
   renderSnackBar() {
     if (this.state.showSnackBar) {
@@ -163,40 +195,40 @@ class UserProfile extends Component {
     }
   }
 
-  handleOnClick({ target }) {
-    if (target.value && target.value >= 0) {
+  handleReviewSubmit(value, comment) {
+    const { user: { url_slug }, review: { id } } = this.props;
 
-      const { user: { url_slug }, review: { id } } = this.props;
+    const attributes = FormData.from({ review: _.toNumber(value), comment, user_id: url_slug, id });
+    const method = id || this.state.id ? METHODS.PUT : METHODS.POST;
+    const restUrl = id || this.state.id ? `/reviews/${id||this.state.id}` : '/reviews';
 
-      const attributes = FormData.from({ review: _.toNumber(target.value), user_id: url_slug, id });
-      const method = id? METHODS.PUT : METHODS.POST;
-      const restUrl = id? `/reviews/${id}` : '/reviews';
+    const requestParams = {
+      url: restUrl,
+      attributes,
+      method,
+      successCallBack: (response) => {
+        const { review: { review, id } } = response;
 
-      const requestParams = {
-        url: restUrl,
-        attributes,
-        method,
-        successCallBack: () => {
-          this.setState({
-            stars: _.toNumber(target.value),
-          });
-        },
+        this.setState({
+          stars: _.toNumber(review),
+          id: id
+        });
+      },
 
-        errorCallBack: (message) => {
-          this.setState({
-            showSnackBar: true,
-            message
-          });
-          this.resetForm();
+      errorCallBack: (message) => {
+        this.setState({
+          showSnackBar: true,
+          message
+        });
+        this.resetForm();
 
-          setTimeout(() => {
-            this.handleHideSnackBar();
-          }, 2000);
-        }
-      };
+        setTimeout(() => {
+          this.handleHideSnackBar();
+        }, 2000);
+      }
+    };
 
-      return postData(requestParams);
-    }
+    return postData(requestParams);
   }
 
   renderAvailabilities() {
@@ -215,8 +247,9 @@ class UserProfile extends Component {
 
 UserProfile.propTypes = {
   review: PropTypes.shape({
-    review: PropTypes.number.isRequired,
-    id: PropTypes.any
+    review: PropTypes.number,
+    id: PropTypes.any,
+    comment: PropTypes.string
   }).isRequired,
   currentUser: PropTypes.object.isRequired,
   user: PropTypes.shape({
@@ -229,6 +262,13 @@ UserProfile.propTypes = {
 };
 
 UserProfile.defaultProps = {
+  user: {
+    city: '',
+    description: '',
+  },
+  review: {
+    comment: ''
+  }
 };
 
 export default UserProfile;

@@ -1,6 +1,6 @@
 require 'active_support/concern'
 
-module HasSearch
+module HasUserSearch
   extend ActiveSupport::Concern
 
   included do

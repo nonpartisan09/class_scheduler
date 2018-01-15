@@ -1,0 +1,9 @@
+.paypalButtonContainer {
+    display: inline-block;
+    cursor: pointer;
+}
+
+.paypalButtonContainer input {
+    cursor: pointer;
+    outline: none;
+}

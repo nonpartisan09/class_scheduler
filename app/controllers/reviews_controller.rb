@@ -1,7 +1,7 @@
 class ReviewsController < ApplicationController
   before_action :authenticate_user!
   before_action :permitted_params
-  after_action :update_average_rating, except: [:show]
+  after_action :update_average_rating, except: [:index]
 
   def create
     check_if_redirect
@@ -12,7 +12,8 @@ class ReviewsController < ApplicationController
      @review = Review.new(
          user_id: @user.id.to_i,
          author_id: current_user.id.to_i,
-         review: permitted_params[:review].to_i
+         review: permitted_params[:review].to_i,
+         comment: permitted_params[:comment]
      )
 
      @review.save!
@@ -35,6 +36,7 @@ class ReviewsController < ApplicationController
       @review = Review.find(permitted_params[:id])
 
       @review.review = permitted_params[:review].to_i
+      @review.comment = permitted_params[:comment]
 
       @review.save!
     rescue Exception => e
@@ -47,20 +49,49 @@ class ReviewsController < ApplicationController
     end
   end
 
-  def show
-    user = UserDecorator.new(current_user).simple_decorate
+  def index
+    redirect_if_unauthorized
 
-    @data = { :currentUser => user }
+    begin
+      reviews = Review.search(permitted_params[:user_id], permitted_params[:order])
+      comments = reviews.collect{ |review| ReviewDecorator.new(review).comment_decorate }
+    rescue Exception => e
+      message = e.message
+      status = :unprocessable_entity
 
-    render :show
+      render json: { message: message }, status: status
+    else
+      render json: { comments: comments }, status: :ok
+    end
+
+  end
+
+  def destroy
+    redirect_if_unauthorized
+
+    begin
+      review = Review.find(permitted_params[:id])
+
+      review.destroy!
+    rescue Exception => e
+      message = e.message
+      status = :unprocessable_entity
+
+      render json: { message: message }, status: status
+    end
+
   end
 
   private
 
   def update_average_rating
     begin
-      @average_rating = Review.where(:user_id => @user.id).average(:review)
-      @user.average_rating = @average_rating
+      ratings = Review.where(:user_id => @user.id)
+      rating_count = ratings.count
+      average_rating = ratings.average(:review)
+
+      @user.average_rating = average_rating
+      @user.rating_count = rating_count
 
       @user.save!
     rescue Exception => e
@@ -68,6 +99,12 @@ class ReviewsController < ApplicationController
       status = :unprocessable_entity
 
       render json: { message: message }, status: status
+    end
+  end
+
+  def redirect_if_unauthorized
+    unless current_user.present?
+      redirect_to root_path and return
     end
   end
 
@@ -81,7 +118,9 @@ class ReviewsController < ApplicationController
     params.permit(
         :user_id,
         :review,
-        :id
+        :id,
+        :comment,
+        :order
     )
   end
 end

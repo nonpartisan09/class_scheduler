@@ -10,3 +10,7 @@
     text-decoration: none;
     color: inherit;
 }
+
+.conversationIndexPageUnread {
+    font-weight: bold;
+}

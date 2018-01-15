@@ -48,6 +48,9 @@ const ProfileSchema = {
 
   address: Joi.string().allow(''),
   city: Joi.string().allow(''),
+  state: Joi.string().allow(''),
+  country: Joi.string().allow(''),
+
   email: Joi.string().email({ minDomainAtoms: 2 }).required().options({
     language: {
       any: {

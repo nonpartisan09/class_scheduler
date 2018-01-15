@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 import MoodIcon from 'material-ui/svg-icons/social/mood';
 import EmailIcon from 'material-ui/svg-icons/communication/email';
-import StarIcon from 'material-ui/svg-icons/toggle/star';
 
 import { FormattedMessage } from 'react-intl';
 import { Link } from 'react-router-dom';
@@ -17,7 +16,7 @@ import './SearchResultItem.css';
 
 class SearchResultItem extends Component {
   render() {
-    const { firstName, city, lastLoggedin, urlSlug } = this.props;
+    const { firstName, city, lastLoggedin, urlSlug, ratingCount } = this.props;
 
     return (
       <Card className='searchResultItemCard' >
@@ -40,6 +39,9 @@ class SearchResultItem extends Component {
               <div className='searchResultItemReview' >
                 { this.renderReviews() }
               </div>
+              <span>
+                { `${ratingCount} rating(s)`}
+              </span>
             </div>
           }
           avatar={ this.renderAvatar() }
@@ -112,7 +114,7 @@ class SearchResultItem extends Component {
     if (_.isEmpty(avatar) || _.endsWith(avatar, 'missing.png')) {
       return(
         <div className='searchResultItemAvatar'>
-          <MoodIcon />
+          <MoodIcon style={ { width: '80%', height: '80%' } } />
         </div>
       );
     } else {
@@ -152,7 +154,8 @@ SearchResultItem.propTypes = {
   programs: PropTypes.array,
   urlSlug: PropTypes.string,
   languages: PropTypes.array,
-  averageRating: PropTypes.number
+  averageRating: PropTypes.number,
+  ratingCount: PropTypes.number
 };
 
 SearchResultItem.defaultProps = {
@@ -163,7 +166,8 @@ SearchResultItem.defaultProps = {
   lastLoggedin: '',
   programs: [],
   urlSlug: '',
-  languages: []
+  languages: [],
+  ratingCount: 0
 };
 
 export default SearchResultItem;
