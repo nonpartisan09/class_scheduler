@@ -17,6 +17,7 @@ import SnackBarComponent from './reusable/SnackBarComponent';
 import { postData } from './sendData';
 
 import './SignIn.css';
+import Footer from './Footer';
 
 const schema = {
   email: Joi.string().email({ minDomainAtoms: 2 }).required().options({
@@ -131,6 +132,7 @@ class SignIn extends Component {
 
           { this.renderSnackBar() }
         </form>
+        <Footer />
       </div>
     );
   }

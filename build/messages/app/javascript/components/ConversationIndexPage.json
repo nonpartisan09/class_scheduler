@@ -10,5 +10,9 @@
   {
     "id": "messageReply",
     "defaultMessage": "Reply"
+  },
+  {
+    "id": "conversationIndexPageReviewLink",
+    "defaultMessage": "Review"
   }
 ]

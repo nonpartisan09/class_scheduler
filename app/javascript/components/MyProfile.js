@@ -55,7 +55,7 @@ function handleUpdateProfile() {
       errorCallBack: (message) => {
         this.setState({
           showSnackBar: true,
-          message: message
+          message
         });
         this.resetForm();
 

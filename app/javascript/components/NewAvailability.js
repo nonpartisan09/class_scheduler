@@ -20,6 +20,7 @@ import ErrorField from './reusable/ErrorField';
 import { postData } from './sendData';
 
 import './NewAvailability.css';
+import Footer from './Footer';
 
 const nowDate = new Date();
 const DEFAULT_START = _.toString(new Date(nowDate.setHours(0, 0)));
@@ -173,6 +174,7 @@ class NewAvailability extends Component {
             { this.renderAvailabilities() }
           </form>
         </div>
+        <Footer />
       </div>
     );
   }

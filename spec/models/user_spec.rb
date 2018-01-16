@@ -21,10 +21,10 @@ RSpec.describe User, type: :model do
 
   it { is_expected.to have_attached_file(:thumbnail_image) }
   it { is_expected.to validate_attachment_content_type(:thumbnail_image).
-      allowing('image/png', 'image/gif').
+      allowing('image/png', 'image/gif', 'image/jpeg').
       rejecting('text/plain', 'text/xml') }
   it { is_expected.to validate_attachment_size(:thumbnail_image).
-      less_than(2.megabytes) }
+      less_than(200.megabytes) }
 
   it { is_expected.to have_db_column(:first_name).of_type(:string) }
   it { is_expected.to have_db_column(:last_name).of_type(:string) }
@@ -34,10 +34,16 @@ RSpec.describe User, type: :model do
 
   it { is_expected.to have_db_column(:address).of_type(:string) }
   it { is_expected.to have_db_column(:city).of_type(:string) }
+  it { is_expected.to have_db_column(:state).of_type(:string) }
+  it { is_expected.to have_db_column(:country).of_type(:string) }
+
   it { is_expected.to have_db_column(:description).of_type(:text) }
 
   it { is_expected.to have_db_column(:latitude).of_type(:float) }
   it { is_expected.to have_db_column(:longitude).of_type(:float) }
+
+  it { is_expected.to have_db_column(:average_rating).of_type(:integer) }
+  it { is_expected.to have_db_column(:rating_count).of_type(:integer) }
 
   it { is_expected.to have_db_column(:terms_and_conditions).of_type(:integer) }
   it { is_expected.to have_db_column(:contact_permission).of_type(:boolean) }

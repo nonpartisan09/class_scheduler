@@ -2,6 +2,10 @@
     text-align: right;
 }
 
+.availabilityTableItemContainer {
+    margin-bottom: 12px;
+}
+
 .tableHideSmallScreen {
     display: block;
 }
@@ -10,7 +14,17 @@
     display: none;
 }
 
-@media only screen and (min-device-width: 0) and (max-device-width: 650px) {
+.tableHideSmallScreen th:first-of-type {
+    display: none;
+}
+
+.tableHideSmallScreen th:last-of-type span {
+    display: block;
+    padding-right: 24px;
+    text-align: center;
+}
+
+@media (min-device-width: 0) and (max-device-width: 650px) {
    .tableHideSmallScreen {
        display: none;
    }

@@ -1,0 +1,26 @@
+.commentContainerMainContainer {
+  margin-top: -32px;
+}
+
+.commentContainerList {
+  list-style: none;
+  padding: 0;
+  font-size: 12px;
+}
+
+.commentContainerListItem {
+  padding: 0;
+}
+
+.commentContainerTitle {
+  margin: 8px 0 0;
+}
+
+.commentContainerDropdown, .commentContainerTitle {
+  display: inline-block;
+  margin-bottom: 12px;
+}
+
+.commentContainerDropdown {
+  transform: translateY(20px);
+}

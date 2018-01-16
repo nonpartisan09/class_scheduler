@@ -18,13 +18,7 @@ import Divider from 'material-ui/Divider';
 
 import Header from './Header';
 import './ConversationIndexPage.css';
-
-const paperMarginOverride = {
-  padding: '0',
-  maxWidth: '950px',
-  margin: '24px auto',
-  minHeight: '150px'
-};
+import Footer from './Footer';
 
 const iconButtonElement = (
   <IconButton
@@ -47,11 +41,12 @@ class ConversationIndexPage extends Component {
     return (
       <div>
         <Header currentUser={ this.props.currentUser } />
-        <Paper zDepth={ 1 } style={ paperMarginOverride } rounded={ false }>
+        <Paper zDepth={ 1 } className='paperOverride' rounded={ false }>
           <div className='conversationBox'>
             { this.renderInbox() }
           </div>
         </Paper>
+        <Footer />
       </div>
     );
   }
@@ -67,22 +62,30 @@ class ConversationIndexPage extends Component {
         if (client) {
           return (
             <a href='/search' >
-              <RaisedButton primary label='' className='conversationButton' >
-                <FormattedMessage
-                  id='ConversationIndexPage.Search'
-                  defaultMessage='Search for volunteers'
-                />
-              </RaisedButton>
+              <RaisedButton
+                primary
+                label={
+                  <FormattedMessage
+                    id='ConversationIndexPage.Search'
+                    defaultMessage='Search for volunteers'
+                  />
+                }
+                className='conversationButton'
+              />
             </a>
           );
         } else if (volunteer) {
           return (
             <a href='/availabilities/new' >
-              <RaisedButton primary className='conversationButton' >
-                <FormattedMessage
-                  id='availabilityCreateNew'
-                />
-              </RaisedButton>
+              <RaisedButton
+                primary
+                className='conversationButton'
+                label={
+                  <FormattedMessage
+                    id='availabilityCreateNew'
+                  />
+                }
+              />
             </a>
           );
         }
@@ -125,10 +128,12 @@ class ConversationIndexPage extends Component {
 
   renderMessages({ messages, sender_avatar, senderUrlSlug, recipientUrlSlug, sender, recipient }) {
     const { currentUser: { url_slug } } = this.props;
-    const newMessageRecipient = url_slug === recipientUrlSlug? senderUrlSlug : recipientUrlSlug;
-    const newMessageFirstName = url_slug === recipientUrlSlug? sender : recipient;
+    const currentUserIsRecipient = url_slug === recipientUrlSlug;
 
-    return _.map(messages, ({ body, subject, sent_on }, index ) => {
+    const newMessageRecipient = currentUserIsRecipient? senderUrlSlug : recipientUrlSlug;
+    const newMessageFirstName = currentUserIsRecipient? sender : recipient;
+
+    return _.map(messages, ({ body, subject, sent_on, unread }, index ) => {
       const rightIconMenu = (
         <IconMenu iconButtonElement={ iconButtonElement } >
           <MenuItem>
@@ -139,6 +144,12 @@ class ConversationIndexPage extends Component {
               />
             </Link>
           </MenuItem>
+          <MenuItem onClick={ this.handleReview(newMessageRecipient) }>
+            <FormattedMessage
+              id='conversationIndexPageReviewLink'
+              defaultMessage='Review'
+            />
+          </MenuItem>
         </IconMenu>
       );
 
@@ -147,7 +158,7 @@ class ConversationIndexPage extends Component {
           key={ sent_on + index }
           leftAvatar={ <Avatar src={ sender_avatar } /> }
           rightIconButton={ rightIconMenu }
-          primaryText={ subject }
+          primaryText={ this.renderSubject(currentUserIsRecipient && unread, subject) }
           secondaryText={
             <p>
               { body }
@@ -158,6 +169,30 @@ class ConversationIndexPage extends Component {
         <Divider key={ index + sent_on } inset />
       ];
     });
+  }
+
+  renderSubject(messageIsUnreadByRecipient, subject='') {
+    if(messageIsUnreadByRecipient && subject) {
+      return (
+        <span className='conversationIndexPageUnread'>
+          { subject }
+        </span>
+      );
+    } else if (subject) {
+      return (
+        <span>
+          { subject }
+        </span>
+      );
+    } else {
+      return '';
+    }
+  }
+
+  handleReview(urlSlug) {
+    return () => {
+      location.assign(`/profiles/${urlSlug}`);
+    };
   }
 }
 

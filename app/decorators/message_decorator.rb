@@ -11,6 +11,7 @@ class MessageDecorator
         :subject => subject,
         :body => body,
         :sent_on => sent_on,
+        :unread => unread,
     }
   end
 
@@ -24,6 +25,10 @@ class MessageDecorator
 
   def subject
     @message.subject
+  end
+
+  def unread
+    @message.unread
   end
 
   def sent_on

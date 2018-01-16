@@ -10,5 +10,25 @@
   {
     "id": "UserProfile.location",
     "defaultMessage": "Location:"
+  },
+  {
+    "id": "UserProfile.programsOffered",
+    "defaultMessage": "Programs:"
+  },
+  {
+    "id": "UserProfile.lastLogIn",
+    "defaultMessage": "Last logged in:"
+  },
+  {
+    "id": "ago",
+    "defaultMessage": "ago"
+  },
+  {
+    "id": "UserProfile.moreInformation",
+    "defaultMessage": "A bit more information:"
+  },
+  {
+    "id": "UserProfile.NotAvailable",
+    "defaultMessage": "Not available"
   }
 ]

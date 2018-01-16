@@ -13,6 +13,6 @@
   },
   {
     "id": "ImageInput.pictureSize",
-    "defaultMessage": "Image size must be comprised between 40kb and 80kb - the number of pixels depends on the resolution of the image."
+    "defaultMessage": "Image size must be at least 40kb."
   }
 ]

@@ -1,27 +1,7 @@
 class AvailabilitiesController < ApplicationController
   before_action :authenticate_user!
-  before_action :check_if_volunteer?, except: [:search, :results]
+  before_action :check_if_volunteer?, except: [:search]
   before_action :check_if_client?, only: [:search ]
-
-  def results
-
-    begin
-     search = Contexts::Availabilities::Search.new(permit_search_params, current_user)
-      results = search.execute
-    rescue Contexts::Availabilities::Errors::ProgramMissing,
-      Contexts::Availabilities::Errors::DayMissing => e
-      @message = e.message
-      render json: { error: { message: @message } }, status: unprocessable_entity
-    end
-
-    if results.present?
-      volunteers = results.collect { |volunteer| UserDecorator.new(volunteer) }
-      volunteers = volunteers.collect { |volunteer| volunteer.simple_decorate }
-      render json: { volunteers: volunteers }, status: :ok
-    else
-      head :no_content
-    end
-  end
 
   def search
     user = UserDecorator.new(current_user).simple_decorate
@@ -125,16 +105,6 @@ class AvailabilitiesController < ApplicationController
         :day,
         :start_time,
         :end_time,
-    )
-  end
-
-  def permit_search_params
-    params.permit(
-        :day,
-        :start_time,
-        :end_time,
-        :program,
-        :distance
     )
   end
 end

@@ -3,7 +3,9 @@
 }
 
 .userProfileImage {
-    text-align: center;
+    object-fit: contain;
+    width: 100%;
+    height: 100%;
 }
 
 .userProfileSendEmail {
@@ -12,6 +14,84 @@
     right: 0;
 }
 
-.userProfileLink {
-    margin: 12px 0;
+.userProfileCommentContainer {
+    min-height: 100px;
+}
+
+@media (min-device-width: 901px), (min-width: 901px) {
+    .userProfileReviewAndComment {
+        display: inline-block;
+        width: auto;
+    }
+
+    .userProfileLink {
+        display: inline-block;
+        text-align: left;
+    }
+
+    .userProfileDetailsContainer {
+        margin-top: 24px;
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: space-between;
+    }
+
+    .userProfileCommentContainer {
+        width: 60%;
+    }
+
+    .userProfileLeftDetails {
+        width: 40%
+    }
+
+    .userProfileImage {
+        object-fit: contain;
+        width: 30%;
+        height: 30%;
+    }
+
+    .userProfileImageContainer {
+        margin-bottom: 24px;
+    }
+}
+
+@media (min-device-width: 0px) and (max-device-width: 900px), (min-width: 0px) and (max-width: 900px) {
+    .userProfilePaper {
+        max-width: 100%;
+        position: relative;
+        margin: 12px 6px;
+        padding: 24px;
+    }
+
+    .userProfileCommentContainer, .userProfileLeftDetails {
+        width: 100%;
+    }
+
+    .userProfileImageContainer {
+        text-align: center;
+        margin-bottom: 12px;
+    }
+
+    .userProfileImage {
+        object-fit: contain;
+        width: 80%;
+        height: 80%;
+    }
+
+    .userProfileMessageButton, .userProfileReviewAndComment {
+        margin: 12px 0;
+    }
+
+    .userProfileMessageButton {
+        width: 170px;
+    }
+
+    .userProfileLink, .userProfileReviewAndComment {
+        display: block;
+    }
+
+    .userProfileReviewAndComment {
+        padding: 4px;
+        width: 160px;
+    }
 }

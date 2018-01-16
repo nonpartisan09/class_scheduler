@@ -17,14 +17,8 @@ import { postData } from './sendData';
 import SnackBarComponent from './reusable/SnackBarComponent';
 
 import './NewMessagePage.css';
+import Footer from './Footer';
 
-const paperMarginOverride = {
-  padding: '0',
-  maxWidth: '950px',
-  margin: '24px auto',
-  position: 'relative',
-  minHeight: '100px'
-};
 
 class NewMessagePage extends Component {
   constructor(props, context) {
@@ -57,7 +51,7 @@ class NewMessagePage extends Component {
     return (
       <div>
         <Header currentUser={ currentUser } />
-        <Paper zDepth={ 1 } style={ paperMarginOverride } rounded={ false }>
+        <Paper zDepth={ 1 } className='paperOverride' rounded={ false }>
           <form className='newMessageForm'>
             <TextField
               disabled
@@ -114,6 +108,7 @@ class NewMessagePage extends Component {
 
           { this.renderSnackBar() }
         </Paper>
+        <Footer />
       </div>
     );
   }

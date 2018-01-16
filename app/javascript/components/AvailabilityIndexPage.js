@@ -3,18 +3,13 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
+import Chip from 'material-ui/Chip';
 import { FormattedMessage } from 'react-intl';
 
 import Header from './Header';
 import AvailabilitiesTable from './AvailabilitiesTable';
 
 import './AvailabilityIndexPage.css';
-
-const paperMarginOverride = {
-  padding: '12px 24px 24px 24px',
-  maxWidth: '950px',
-  margin: '24px auto'
-};
 
 class AvailabilityIndexPage extends Component {
   render() {
@@ -23,14 +18,14 @@ class AvailabilityIndexPage extends Component {
     return (
       <div>
         <Header currentUser={ currentUser } />
-        <Paper zDepth={ 1 } style={ paperMarginOverride } rounded={ false }>
+        <Paper zDepth={ 1 } className='paperOverride' rounded={ false }>
           <div className='availabilityIndexContainer'>
             <FormattedMessage
               id='AvailabilityIndexPage.Help'
-              defaultMessage='I can help with'
+              defaultMessage='I can help with:'
             />
-            <ul className='availabilityIndexListContainer'>
-              { _.map(this.props.programs, ({ name }) => <li className='availabilityListItem' key={ name }>{ name }</li>) }
+            <ul className='availabilityIndexProgramsContainer'>
+              { _.map(this.props.programs, ({ name }) => <Chip className='availabilityListItem' key={ name }>{ name }</Chip>) }
             </ul>
 
             { this.renderAvailabilities() }

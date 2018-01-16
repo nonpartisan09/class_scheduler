@@ -2,39 +2,79 @@
     text-align: center;
 }
 
-.searchBarOptionContainer {
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: center;
-    width: 65%;
-    margin: 48px auto;
-}
-
-.searchBarOptionContainer > div.searchBarOption {
-    max-width: 45%;
-    margin: 1% 5%;
-}
-
 .emptyVolunteerResults {
     margin: 24px 0;
 }
 
-.searchBarTimezoneContainer {
-    text-align: center;
-}
+@media (min-device-width: 1001px) and (min-width: 1001px) {
+    .searchBarOptionContainer, .searchBarTimezoneAndLink {
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: center;
+        align-content: flex-end;
+        width: 65%;
+        margin: 48px auto;
+    }
 
-.searchBarTimezone {
-    margin-right: 12px;
-}
-
-@media only screen and (min-device-width: 501px) and (max-device-width: 1000px) {
     .searchBarOptionContainer > div.searchBarOption {
-        max-width: 30%;
+        max-width: 45%;
         margin: 1% 5%;
+    }
+
+    .searchBarTimezoneAndLink {
+        align-items: baseline;
+    }
+
+    .searchBarTimezoneAndLink .slidingLink {
+        padding-bottom: 8px;
+        margin-left: 10%;
+        margin-right: 13%;
     }
 }
 
-@media only screen and (max-device-width: 500px), (max-width: 500px) {
+@media (min-device-width: 501px) and (max-device-width: 1000px), (min-width: 501px) and (max-width: 1000px){
+    .searchBarOptionContainer > div.searchBarOption {
+        max-width: 210px;
+        margin: 1% 5%;
+    }
+
+    .searchBarOptionContainer, .searchBarTimezoneAndLink {
+        width: 100%;
+        text-align: center;
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: center;
+        align-content: flex-end;
+    }
+
+    .searchBarTimezone, .searchBarTimezoneAndLink .slidingLink {
+        margin-right: 5%;
+    }
+
+    .searchBarTimezoneAndLink .slidingLink {
+        padding-bottom: 8px;
+        margin-left: 7%;
+        margin-right: 12%;
+    }
+
+    .searchBarTimezone {
+        width: 210px;
+    }
+
+    .searchBarTimezone, .searchBarTimezoneAndLink .slidingLink {
+        max-width: 210px;
+    }
+}
+
+@media (max-device-width: 600px), (max-width: 600px) {
+    .searchBarTimezoneAndLink {
+        text-align: center;
+    }
+    .searchBarTimezone, .searchBarTimezoneAndLink .slidingLink {
+        max-width: none;
+        display: block;
+        margin: 12px auto;
+    }
 
     .searchBarOption {
         min-width: 90%;
@@ -45,30 +85,6 @@
     .searchBarOptionContainer {
         width: 100%;
         display: block;
-        margin: 48px 0;
-    }
-
-    .searchBarButton {
-        width: auto;
-    }
-}
-
-@media (max-width: 1000px) {
-    .searchBarOptionContainer > div.searchBarOption {
-        max-width: 30%;
-        margin: 1% 5%;
-    }
-}
-
-@media (max-width: 500px) {
-    .searchBarOption {
-        min-width: 90%;
-        display: block;
-        margin: 12px 0;
-    }
-    .searchBarOptionContainer {
-        display: block;
-        width: 100%;
         margin: 48px 0;
     }
 

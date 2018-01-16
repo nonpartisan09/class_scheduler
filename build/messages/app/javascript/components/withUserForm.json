@@ -1,10 +1,114 @@
 [
   {
+    "id": "UserForm.email",
+    "defaultMessage": "Email"
+  },
+  {
+    "id": "UserForm.firstName",
+    "defaultMessage": "First Name"
+  },
+  {
+    "id": "UserForm.address",
+    "defaultMessage": "Street Address"
+  },
+  {
+    "id": "UserForm.city",
+    "defaultMessage": "City/Town"
+  },
+  {
+    "id": "UserForm.state",
+    "defaultMessage": "State"
+  },
+  {
+    "id": "UserForm.country",
+    "defaultMessage": "Country"
+  },
+  {
+    "id": "UserForm.timezone",
+    "defaultMessage": "Select Timezone"
+  },
+  {
+    "id": "UserForm.aboutMe",
+    "defaultMessage": "About me (in 280 characters or less)"
+  },
+  {
+    "id": "UserForm.updatePrograms",
+    "defaultMessage": "Update my programs"
+  },
+  {
+    "id": "UserForm.languages",
+    "defaultMessage": "Select One or More Language(s)"
+  },
+  {
+    "id": "UserForm.currentPassword",
+    "defaultMessage": "Current Password"
+  },
+  {
+    "id": "UserForm.newPassword",
+    "defaultMessage": "New Password"
+  },
+  {
+    "id": "UserForm.newPasswordConfirmation",
+    "defaultMessage": "New Password Confirmation"
+  },
+  {
+    "id": "UserForm.updatePassword",
+    "defaultMessage": "Update my password"
+  },
+  {
+    "id": "UserForm.password",
+    "defaultMessage": "Password"
+  },
+  {
+    "id": "UserForm.passwordConfirmation",
+    "defaultMessage": "Password Confirmation"
+  },
+  {
+    "id": "UserForm.termsRead",
+    "defaultMessage": "Please read tutoría’s terms of use."
+  },
+  {
+    "id": "UserForm.termsAccept",
+    "defaultMessage": "I accept tutoría’s terms of use"
+  },
+  {
+    "id": "UserForm.newsletterOptin",
+    "defaultMessage": "I would like to be occasionally contacted about tutoría’s updates"
+  },
+  {
+    "id": "UserForm.programs",
+    "defaultMessage": "Select program(s)"
+  },
+  {
     "id": "UserForm.helpingWith",
     "defaultMessage": "I am interested in helping with:"
   },
   {
     "id": "UserForm.helpedWith",
     "defaultMessage": "I am interested in help with:"
+  },
+  {
+    "id": "UserForm.addressVolunteerDialog1",
+    "defaultMessage": "Your location will only be used to help clients find volunteers in their area."
+  },
+  {
+    "id": "UserForm.addressVolunteerDialog2",
+    "defaultMessage": "Your street address will not be shown to other users. Only your town/city and country."
+  },
+  {
+    "id": "UserForm.addressVolunteerDialog3",
+    "defaultMessage": "This info is not required unless you would like to allow clients to ask for face to face sessions."
+  },
+  {
+    "id": "UserForm.addressClientDialog1",
+    "defaultMessage": "Your location will only be used to help find volunteers in your area."
+  },
+  {
+    "id": "UserForm.addressClientDialog2",
+    "defaultMessage": "Your street address will not be shown to other users. Only your town/city and country."
+  },
+  {
+    "id": "UserForm.addressClientDialog3",
+    "defaultMessage": "This info is not required unless you would like to use the location feature."
   }
 ]

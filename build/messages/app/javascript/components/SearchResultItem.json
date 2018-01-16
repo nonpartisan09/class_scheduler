@@ -1,0 +1,10 @@
+[
+  {
+    "id": "SearchResultItem.request",
+    "defaultMessage": "Request"
+  },
+  {
+    "id": "SearchResultItem.viewProfile",
+    "defaultMessage": "View Profile"
+  }
+]

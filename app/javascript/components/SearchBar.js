@@ -14,10 +14,11 @@ import moment from 'moment';
 
 import { getData } from './sendData';
 import Header from './Header';
-import SearchResults from './SearchResults';
 import SearchOptionalFields from './SearchOptionalFields';
 
 import './SearchBar.css';
+import Footer from './Footer';
+import SnackBarComponent from './reusable/SnackBarComponent';
 
 function restfulUrl({ day, program, start_time, end_time, distance }) {
   const startParam = _.isDate(start_time)? `&start_time=${moment(start_time).format('HH:MM')}` : '';
@@ -73,9 +74,9 @@ class SearchBar extends Component {
     this.changeHandlerDay = this.changeHandlerDay.bind(this);
 
     this.state = {
-      volunteers: { },
       error: '',
-      status
+      status: 0,
+      showSnackBar: false
     };
   }
 
@@ -107,16 +108,18 @@ class SearchBar extends Component {
         { this.renderTitle() }
 
         <div className='searchBarTimezoneContainer'>
-          <TextField
-            value={ timezone }
-            className='searchBarTimezone'
-            name='searchBarTimezone'
-            disabled
-          />
+          <div className='searchBarTimezoneAndLink'>
+            <TextField
+              value={ timezone }
+              className='searchBarTimezone'
+              name='searchBarTimezone'
+              disabled
+            />
 
-          <a href="/my_profile" className='slidingLink' >
-            <FormattedMessage id='SearchBar.timezoneLink' defaultMessage='Not your timezone?' />
-          </a>
+            <a href="/my_profile" className='slidingLink' >
+              <FormattedMessage id='SearchBar.timezoneLink' defaultMessage='Not your timezone?' />
+            </a>
+          </div>
         </div>
 
         <div className='searchBarContainer'>
@@ -168,8 +171,18 @@ class SearchBar extends Component {
 
           { this.renderResults() }
         </div>
+
+        { this.renderSnackBar() }
+
+        <Footer />
       </div>
     );
+  }
+
+  renderSnackBar() {
+    if (this.state.showSnackBar) {
+      return <SnackBarComponent open={ this.state.showSnackBar } message={ this.state.error } />;
+    }
   }
 
   renderTitle() {
@@ -197,16 +210,6 @@ class SearchBar extends Component {
             defaultMessage=' Sorry, it seems no volunteers match these filters.'
           />
         </div>
-      );
-    } else {
-      const { volunteers } = this.state;
-      const { currentUser: { city } } = this.props;
-
-      return (
-        <SearchResults
-          { ...volunteers }
-          currentUserCity={ city }
-        />
       );
     }
   }
@@ -253,22 +256,30 @@ class SearchBar extends Component {
   }
 
   postSearch() {
-    const { search } = this.props;
+    const { search, history } = this.props;
 
     const requestParams = {
       url: restfulUrl(search),
       jsonBody: null,
       method: 'GET',
       successCallBack: (response, status) => {
-        return this.setState({
-          volunteers: response,
-          status
-        });
+        if (status === 204) {
+          return this.setState({
+            status
+          });
+        } else {
+         return history.push('/available_volunteers', { ...response });
+        }
       },
       errorCallBack: (message) => {
         this.setState({
+          showSnackBar: true,
           error: message
         });
+
+        setTimeout(() => {
+          this.handleHideSnackBar();
+        }, 2000);
       }
     };
 
@@ -299,6 +310,9 @@ SearchBar.propTypes = {
   validateHandler: PropTypes.func.isRequired,
   changeHandler: PropTypes.func.isRequired,
   changeValue: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
 };
 
 SearchBar.defaultProps = {

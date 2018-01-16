@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171217201045) do
+ActiveRecord::Schema.define(version: 20180111172440) do
 
   create_table "availabilities", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "day"
@@ -72,6 +72,7 @@ ActiveRecord::Schema.define(version: 20171217201045) do
   create_table "messages", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.text "body"
     t.text "subject"
+    t.boolean "unread", default: true
     t.bigint "conversation_id"
     t.bigint "user_id"
     t.datetime "created_at", null: false
@@ -86,6 +87,16 @@ ActiveRecord::Schema.define(version: 20171217201045) do
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "reviews", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer "author_id"
+    t.integer "user_id"
+    t.integer "review"
+    t.string "comment"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["author_id", "user_id"], name: "index_reviews_on_author_id_and_user_id", unique: true
   end
 
   create_table "roles", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -139,6 +150,10 @@ ActiveRecord::Schema.define(version: 20171217201045) do
     t.datetime "thumbnail_image_updated_at"
     t.text "description"
     t.string "timezone", default: "UTC"
+    t.integer "average_rating"
+    t.integer "rating_count"
+    t.string "state"
+    t.string "country"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

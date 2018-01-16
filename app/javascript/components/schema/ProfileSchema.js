@@ -11,10 +11,12 @@ const ProfileSchema = {
   programs: Joi.array().min(1).options({
     language: {
       array: {
-        min: 'Please select at least one class'
+        min: 'Please select at least one program'
       }
     }
   }),
+
+  languages: Joi.array(),
 
   first_name: Joi.string().required().regex(/^[a-zA-Z\u00C0-\u017F]+$/).options({
     language: {
@@ -46,6 +48,9 @@ const ProfileSchema = {
 
   address: Joi.string().allow(''),
   city: Joi.string().allow(''),
+  state: Joi.string().allow(''),
+  country: Joi.string().allow(''),
+
   email: Joi.string().email({ minDomainAtoms: 2 }).required().options({
     language: {
       any: {

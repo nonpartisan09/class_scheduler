@@ -1,32 +1,26 @@
-.homepageMainContainer {
+.homepageWithoutFooter {
   display: flex;
   flex-flow: column;
-  height: 100vh;
 }
 
-.homepageContainer {
-  position: relative;
+.homepageMainContainer .footerContainer {
+  margin-top: 0;
+}
+
+.homepageCaption {
   display: flex;
-  flex-flow: row wrap;
+  flex-flow: column;
   justify-content: space-between;
-  overflow: no-display;
-  flex: 1 1 auto;
+  height: 100%;
+}
+
+.homepageCaptionItem {
+  margin-left: 24px;
 }
 
 .homepageImage {
   width: 100%;
   object-fit: cover;
-}
-
-.homepageTextContainer {
-  overflow: hidden;
-  display: flex;
-  flex-flow: column wrap;
-  justify-content: space-between;
-}
-
-.homepageCaption {
-  padding: 24px;
 }
 
 .homepageListContainer {
@@ -47,12 +41,7 @@
 }
 
 .homepageMailToLink, .homepageMailToLink:visited {
-    color: #fff;
-}
-
-.homepageDesktopNavigation {
-  display: flex;
-  flex-flow: row wrap;
+  color: #fff;
 }
 
 .homepageButton:not(:last-of-type)  {
@@ -66,82 +55,99 @@
 
 .homepageSubtitle {
   font-size: 1.5em;
+  margin-left: 24px;
 }
 
-.homepageMobileNavigation {
-  display: none;
+@media (min-device-width: 901px), (min-width: 901px) {
+  .homepageContainer {
+    position: relative;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    flex: 1 1 auto;
+  }
+
+  .homepageTextContainer {
+    width: 47%;
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: space-between;
+  }
+
+  .homepageDesktopNavigation {
+    display: flex;
+    flex-flow: row wrap;
+    margin-bottom: 24px;
+  }
+
+  .homepageCaption {
+    flex: 1 1 auto;
+  }
+
+  .homepageImage {
+    width: 53%;
+  }
+
+  .homepageMobileNavigation {
+    display: none;
+  }
+
+  .homepageTextContainer, .homepageImage {
+    height: 550px;
+  }
 }
 
-@media only screen and (min-device-width: 0) and (max-device-width: 900px), (max-width: 900px) {
+
+@media (min-device-width: 0) and (max-device-width: 900px), (min-width: 0) and (max-width: 900px) {
+  .homepageContainer {
+    margin: 0;
+  }
+
   .homepageSubtitle {
     font-size: 18px;
   }
 
   .homepageCaption {
     flex: 1 1 auto;
-  }
-
-  .homepageCaptionItem {
+    display: flex;
     width: 100%;
-    margin: 6px 0;
+    flex-flow: column nowrap;
   }
 
-  .homepageDesktopNavigation {
-    display: none;
+  .homepageTextContainer, .homepageImage, .homepageCaptionItem {
+    width: 100%;
+    height: auto;
   }
 
-   .homepageContainer {
-     margin: 0;
-   }
+  .homepageCaptionTitle {
+    margin: 0 auto;
+    max-width: 525px;
+  }
 
   .homepageTextContainer {
-    width: 100%;
+    overflow: hidden;
   }
 
   .homepageListContainer {
     margin: 0;
     padding: 12px 0 24px 12px;
     font-size: 20px;
-    flex: 1 1 auto;
-  }
-
-  .homepageCaption {
-    order: 1;
-  }
-
-  .homepageListContainer {
     order: 3;
   }
 
   .homepageMobileNavigation {
+    margin: 0 auto 24px;
+    max-width: 90%;
     order: 2;
     display: block;
-    margin: 0 auto 24px;
-    width: 90%;
   }
 
-  .homepageImage {
+  .homepageImage, .homepageDesktopNavigation {
     display: none;
   }
 
   .logo {
     width: 260px;
     height: 55px;
-  }
-}
-
-@media (min-width: 901px) {
-  .homepageTextContainer {
-    width: 47vw;
-  }
-
-  .homepageImage {
-    width: 53vw;
-  }
-}
-
-@media (min-width: 1150px) {
-  .homepageCaption {
-    padding: 48px 48px 48px 36px;
   }
 }

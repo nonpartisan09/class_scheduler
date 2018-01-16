@@ -1,34 +1,27 @@
-.resultsFirstName, .resultsLastLogin, .resultsCity, .resultsAvailableDays, .resultsPrograms  {
-    width: 10%;
+.searchResultsContainer {
+    max-width: 90%;
+    text-align: center;
+    margin: 24px 0 0 36px;
+}
+
+.searchResults {
     text-align: left;
-}
-
-.resultsLastLogin {
-    width: 15%;
-}
-
-.resultsPrograms, .resultsCity {
-    width: 20%;
-}
-.resultsAvailableDays {
-    width: 30%;
-}
-.resultsListContainer {
     display: flex;
     flex-flow: row wrap;
-    justify-content: center;
+    justify-content: space-evenly;
 }
 
-.searchResultsAvatar {
-    width: 36px;
-}
-@media only screen and (min-device-width: 0) and (max-device-width: 500px), (max-width: 500px) {
-    .resultsListContainer {
-        display: block;
+@media (min-device-width: 0) and (min-width: 0) {
+    .searchResultsContainer {
+        text-align: center;
+        margin: 24px 0 0 24px;
     }
+}
 
-    .resultsFirstName, .resultsLastLogin, .resultsCity, .resultsAvailableDays, .resultsPrograms {
-        margin-bottom: 12px;
-        width: 100%;
+@media (min-device-width: 500px) and (min-width: 500px) {
+    .searchResultsContainer {
+        max-width: 90%;
+        text-align: center;
+        margin: 24px 0 0 36px;
     }
 }

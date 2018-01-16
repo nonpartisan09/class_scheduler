@@ -1,10 +1,12 @@
 class User < ActiveRecord::Base
-  include HasUrlSlug, HasSearch, ActsAsMessageable, IsUpdateable
+  include HasUrlSlug, HasUserSearch, ActsAsMessageable, IsUpdateable
   has_and_belongs_to_many :roles, :join_table => :roles_users
   has_and_belongs_to_many :languages
 
   has_many :enrollments
   has_many :programs, through: :enrollments
+
+  has_many :reviews, dependent: :destroy
 
   has_many :availabilities, dependent: :destroy
 
@@ -16,7 +18,7 @@ class User < ActiveRecord::Base
         path: ":rails_root/public/system/:class/:attachment/:id_partition/:style/:basename.:extension",
         url: "#{ Rails.configuration.static_base_url }/:class/:attachment/:id_partition/:style/:basename.:extension"
 
-  validates_attachment :thumbnail_image, size: { in: 0..2.megabytes },
+  validates_attachment :thumbnail_image, size: { in: 0..200.megabytes },
   content_type: { content_type: ["image/jpg", "image/jpeg", "image/png", "image/gif"] }
 
   devise :rememberable,
@@ -65,6 +67,6 @@ class User < ActiveRecord::Base
   end
 
   def full_address
-    "#{address} #{city}"
+    "#{address} #{city} #{state} #{country}"
   end
 end

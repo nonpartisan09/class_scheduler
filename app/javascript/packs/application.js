@@ -22,6 +22,7 @@ import MuiTheme from '../components/MuiTheme';
 
 import Homepage from '../components/Homepage';
 import SearchBar from '../components/SearchBar';
+
 import ConversationIndexPage from '../components/ConversationIndexPage';
 import NewMessagePage from '../components/NewMessagePage';
 import MyProfile from '../components/MyProfile';
@@ -38,6 +39,7 @@ import UserProfile from '../components/UserProfile';
 import './application.css';
 
 import localeData from '../../../build/locales/data.json';
+import SearchResults from '../components/SearchResults';
 
 addLocaleData([...en, ...es ]);
 
@@ -49,7 +51,7 @@ const { render }  = ReactDom;
 
 ReactJoiValidation.setJoi(Joi);
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('turbolinks:load', () => {
   const container = document.getElementById('main');
   const node = document.getElementById('data');
 
@@ -67,13 +69,14 @@ document.addEventListener('DOMContentLoaded', () => {
               <Route path='/search/:sign_up' render={ (props) => <SearchBar { ...data } { ...props } /> } />
               <Route exact path='/search' render={ (props) => <SearchBar { ...data } { ...props } /> } />
             </Switch>
+            <Route exact path='/available_volunteers' render={ (props) => <SearchResults { ...data } { ...props } /> } />
             <Route exact path='/my_profile' render={ (props) => <MyProfile { ...data } { ...props } /> } />
             <Route exact path='/profiles/:url_slug' render={ (props) => <UserProfile { ...data } { ...props } /> } />
             <Route exact path='/sign_up/:role' render={ (props) => <SignUp { ...data }  { ...props } /> } />
             <Route exact path='/sign_in' component={ SignIn } />
             <Route exact path='/password/new' component={ NewPasswordPage } />
             <Route path='/password/edit' render={ (props) => <ResetPasswordPage { ...props } /> } />
-            <Route exact path='/terms_and_conditions' component={ TermsAndConditions } />
+            <Route exact path='/terms_of_use' component={ TermsAndConditions } />
             <Switch>
               <Route exact path='/availabilities/new/:sign_up' render={ (props) => <NewAvailability { ...data } { ...props } /> } />
               <Route exact path='/availabilities/new' render={ (props) => <NewAvailability { ...data } { ...props } /> } />
@@ -82,43 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <Route path='/page_not_found' component={ NotFoundPage } />
           </div>
         </Router>
-      </MuiThemeProvider>
-    </IntlProvider>, container);
-});
 
-document.addEventListener('turbolinks:render', () => {
-  const container = document.getElementById('main');
-  const node = document.getElementById('data');
-
-  const data = node? JSON.parse(node.getAttribute('data')): {};
-
-  render(
-    <IntlProvider locale={ language } messages={ messages }>
-      <MuiThemeProvider muiTheme={ getMuiTheme(MuiTheme) }>
-        <Router >
-          <div>
-            <Route exact path='/' render={ () => <Homepage { ...data } /> } />
-            <Route exact path='/inbox' render={ (props) => <ConversationIndexPage { ...data } { ...props } /> } />
-            <Route exact path='/messages/new' render={ (props) => <NewMessagePage { ...data } { ...props } /> } />
-            <Switch>
-              <Route path='/search/:sign_up' render={ (props) => <SearchBar { ...data } { ...props } /> } />
-              <Route exact path='/search' render={ (props) => <SearchBar { ...data } { ...props } /> } />
-            </Switch>
-            <Route exact path='/my_profile' render={ (props) => <MyProfile { ...data } { ...props } /> } />
-            <Route exact path='/profiles/:url_slug' render={ (props) => <UserProfile { ...data } { ...props } /> } />
-            <Route exact path='/sign_up/:role' render={ (props) => <SignUp { ...data }  { ...props } /> } />
-            <Route exact path='/sign_in' component={ SignIn } />
-            <Route exact path='/password/new' component={ NewPasswordPage } />
-            <Route path='/password/edit' render={ (props) => <ResetPasswordPage { ...props } /> } />
-            <Route exact path='/terms_and_conditions' component={ TermsAndConditions } />
-            <Switch>
-              <Route exact path='/availabilities/new/:sign_up' render={ (props) => <NewAvailability { ...data } { ...props } /> } />
-              <Route exact path='/availabilities/new' render={ (props) => <NewAvailability { ...data } { ...props } /> } />
-            </Switch>
-            <Route exact path='/availabilities' render={ (props) => <AvailabilityIndexPage { ...data }  { ...props } /> } />
-            <Route path='/page_not_found' component={ NotFoundPage } />
-          </div>
-        </Router>
       </MuiThemeProvider>
     </IntlProvider>, container);
 });

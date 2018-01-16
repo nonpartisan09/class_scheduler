@@ -28,7 +28,15 @@ a:hover {
     text-decoration: none;
 }
 
-@media only screen and (min-device-width: 0) and (max-device-width: 650px), (max-width: 650px)  {
+.paperOverride {
+    max-width: 950px;
+    padding: 12px 24px 24px 24px;
+    margin: 24px auto;
+    position: relative;
+    min-height: 100px;
+}
+
+@media (min-device-width: 0) and (max-device-width: 650px), (max-width: 650px)  {
     html {
        font-size: 3vmax;
     }

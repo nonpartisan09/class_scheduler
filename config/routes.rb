@@ -1,18 +1,21 @@
 Rails.application.routes.draw do
   root 'application#index'
-  get 'terms_and_conditions' => 'application#t_and_c'
+  get 'terms_of_use' => 'application#t_and_c'
 
   resources :availabilities
   resources :programs
   resources :sessions
   resource :users
-  resource :conversations, only: [:new, :create]
-  resources :messages, only: [ :new, :create ]
+  resource :conversations, only: [ :new, :create ]
+  resources :messages, only: [ :new, :create, :update ]
+  resources :reviews, only: [ :create, :update, :destroy ]
 
+  get 'reviews/(:user_id/:order)', to: 'reviews#index'
   get 'inbox', to: 'conversations#index'
   get 'availabilities/new(/:sign_up)' => 'availabilities#new'
   get 'search(/:sign_up)' => 'availabilities#search'
-  get 'results' => 'availabilities#results'
+  get 'results' => 'results#index'
+  get 'available_volunteers', to: 'results#show'
   get 'my_profile', to: 'user_profiles#show'
 
   # needed for devise

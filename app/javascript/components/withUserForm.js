@@ -12,6 +12,7 @@ import MenuItem from 'material-ui/MenuItem';
 import SelectField from 'material-ui/SelectField';
 import PhotoIcon from 'material-ui/svg-icons/image/photo';
 import InfoIcon from 'material-ui/svg-icons/action/info';
+import Toggle from 'material-ui/Toggle';
 import validate from 'react-joi-validation';
 
 import { FormattedMessage } from 'react-intl';
@@ -19,6 +20,7 @@ import { FormattedMessage } from 'react-intl';
 import ImageInput from './ImageInput';
 import DialogComponent from './DialogComponent';
 import SnackBarComponent from './reusable/SnackBarComponent';
+import Footer from './Footer';
 
 import newUser from './utils/CheckUpdatedFields';
 import UserFormConstants from './UserFormConstants';
@@ -26,13 +28,6 @@ import UserFormConstants from './UserFormConstants';
 import './withUserForm.css';
 
 const { SIGN_UP, UPDATE_PROFILE } = UserFormConstants;
-
-const paperMarginOverride = {
-  padding: '12px 24px 24px 24px',
-
-  maxWidth: '950px',
-  margin: '24px auto'
-};
 
 const withUserForm = (WrappedComponent, schema, wrappedProps) => {
 
@@ -73,6 +68,8 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
           email,
           address,
           city,
+          state,
+          country,
           thumbnail_image,
           description,
           timezone,
@@ -93,7 +90,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
             text={ this.renderDialogText() }
           />
 
-          <Paper zDepth={ 1 } style={ paperMarginOverride } rounded={ false }>
+          <Paper zDepth={ 1 } className='paperOverride' rounded={ false }>
             <form className='userForm'>
               { this.renderSignUpPrograms() }
 
@@ -104,7 +101,12 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                 value={ email }
                 className='userFormInputField email'
                 hintText=''
-                floatingLabelText='Email'
+                floatingLabelText={
+                  <FormattedMessage
+                    id='UserForm.email'
+                    defaultMessage='Email'
+                  />
+                }
                 floatingLabelFixed
                 errorText={ errors.email }
                 onChange={ changeHandler('email') }
@@ -118,7 +120,12 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                 value={ first_name }
                 hintText=''
                 className='userFormInputField firstName'
-                floatingLabelText='First Name'
+                floatingLabelText={
+                  <FormattedMessage
+                    id='UserForm.firstName'
+                    defaultMessage='First Name'
+                  />
+                }
                 floatingLabelFixed
                 errorText={ errors.first_name }
                 onChange={ changeHandler('first_name') }
@@ -136,6 +143,8 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                 />
               </div>
 
+              { this.renderMeetUpToggle() }
+
               <Badge
                 badgeContent={ <span onClick={ this.handleShowDialog }> <InfoIcon /> </span> }
                 badgeStyle={ { transform: 'translateY(18px)' } }
@@ -146,7 +155,12 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                   value={ address }
                   hintText=''
                   className='userFormInputField address'
-                  floatingLabelText='Street Address'
+                  floatingLabelText={
+                    <FormattedMessage
+                      id='UserForm.address'
+                      defaultMessage='Street Address'
+                    />
+                  }
                   floatingLabelFixed
                   multiLine
                   errorText={ errors.address }
@@ -161,11 +175,50 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                   value={ city }
                   hintText=''
                   className='userFormInputField city'
-                  floatingLabelText='City/Town'
+                  floatingLabelText={
+                    <FormattedMessage
+                      id='UserForm.city'
+                      defaultMessage='City/Town'
+                    />
+                  }
                   floatingLabelFixed
                   errorText={ errors.city }
                   onChange={ changeHandler('city') }
                   onBlur={ validateHandler('city') }
+                />
+
+                <TextField
+                  name='state'
+                  value={ state }
+                  hintText=''
+                  className='userFormInputField state'
+                  floatingLabelText={
+                    <FormattedMessage
+                      id='UserForm.state'
+                      defaultMessage='State'
+                    />
+                  }
+                  floatingLabelFixed
+                  errorText={ errors.state }
+                  onChange={ changeHandler('state') }
+                  onBlur={ validateHandler('state') }
+                />
+
+                <TextField
+                  name='country'
+                  value={ country }
+                  hintText=''
+                  className='userFormInputField country'
+                  floatingLabelText={
+                    <FormattedMessage
+                      id='UserForm.country'
+                      defaultMessage='Country'
+                    />
+                  }
+                  floatingLabelFixed
+                  errorText={ errors.country }
+                  onChange={ changeHandler('country') }
+                  onBlur={ validateHandler('country') }
                 />
               </Badge>
 
@@ -173,7 +226,12 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
 
               <SelectField
                 floatingLabelFixed
-                floatingLabelText='Select Timezone'
+                floatingLabelText={
+                  <FormattedMessage
+                    id='UserForm.timezone'
+                    defaultMessage='Select Timezone'
+                  />
+                }
                 value={ timezone }
                 className='userFormInputField timezones'
                 errorText={ errors.timezone }
@@ -190,7 +248,12 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                 value={ description }
                 hintText=''
                 className='userFormInputField description'
-                floatingLabelText='About me (in 280 characters or less)'
+                floatingLabelText={
+                  <FormattedMessage
+                    id='UserForm.aboutMe'
+                    defaultMessage='About me (in 280 characters or less)'
+                  />
+                }
                 floatingLabelFixed
                 multiLine
                 errorText={ errors.description }
@@ -211,8 +274,36 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
           </Paper>
 
           { this.renderSnackBar() }
+          <Footer />
         </div>
       );
+    }
+
+    renderMeetUpToggle() {
+      const { currentUser: { city, address, state } } = this.props;
+
+      if (city || address || state) {
+        return (
+          <div className='userFormToggle'>
+            Willing to meet:
+            <Toggle
+              label='Face to face & Online'
+              disabled
+              style={ { color: 'green' } }
+            />
+          </div>
+        );
+      } else {
+        return (
+          <div className='userFormToggle'>
+            Willing to meet:
+            <Toggle
+              label='Exclusively Online'
+              disabled
+            />
+          </div>
+        );
+      }
     }
 
     renderSubmit() {
@@ -265,7 +356,17 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
         } else {
           return (
             <div className='userFormInnerButton userFormSecondButton'>
-              <FlatButton className='userFormProgramButton' primary label='Update my programs' onClick={ this.handleShowPrograms } />
+              <FlatButton
+                className='userFormProgramButton'
+                primary
+                label={
+                  <FormattedMessage
+                    id='UserForm.updatePrograms'
+                    defaultMessage='Update my programs'
+                  />
+                }
+                onClick={ this.handleShowPrograms }
+              />
             </div>
           );
         }
@@ -300,7 +401,12 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
           <div>
             <SelectField
               floatingLabelFixed
-              floatingLabelText='Select One or More Language(s)'
+              floatingLabelText={
+                <FormattedMessage
+                  id='UserForm.languages'
+                  defaultMessage='Select One or More Language(s)'
+                />
+              }
               value={ userLanguages }
               className='userFormInputField languages'
               onChange={ this.changeHandlerLanguages }
@@ -343,7 +449,12 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                 type='password'
                 className='userFormInputField current_password'
                 hintText=''
-                floatingLabelText='Current Password'
+                floatingLabelText={
+                  <FormattedMessage
+                    id='UserForm.currentPassword'
+                    defaultMessage='Current Password'
+                  />
+                }
                 floatingLabelFixed
                 errorText={ errors.password }
                 onChange={ changeHandler('current_password') }
@@ -358,7 +469,12 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                 type='password'
                 className='userFormInputField password'
                 hintText=''
-                floatingLabelText='Password'
+                floatingLabelText={
+                  <FormattedMessage
+                    id='UserForm.newPassword'
+                    defaultMessage='New Password'
+                  />
+                }
                 floatingLabelFixed
                 errorText={ errors.password }
                 onChange={ changeHandler('password') }
@@ -373,7 +489,12 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                 type='password'
                 className='userFormInputField passwordConfirmation'
                 hintText=''
-                floatingLabelText='Password Confirmation'
+                floatingLabelText={
+                  <FormattedMessage
+                    id='UserForm.newPasswordConfirmation'
+                    defaultMessage='New Password Confirmation'
+                  />
+                }
                 floatingLabelFixed
                 errorText={ errors.password_confirmation }
                 onChange={ changeHandler('password_confirmation') }
@@ -384,7 +505,17 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
         } else {
           return (
             <div className='userFormInnerButton'>
-              <FlatButton className='userFormPasswordButton' primary label='Update my password' onClick={ this.handleShowPassword } />
+              <FlatButton
+                className='userFormPasswordButton'
+                primary
+                label={
+                  <FormattedMessage
+                    id='UserForm.updatePassword'
+                    defaultMessage='Update my password'
+                  />
+                }
+                onClick={ this.handleShowPassword }
+              />
             </div>
           );
         }
@@ -407,7 +538,12 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
               type='password'
               className='userFormInputField password'
               hintText=''
-              floatingLabelText='Password'
+              floatingLabelText={
+                <FormattedMessage
+                  id='UserForm.password'
+                  defaultMessage='Password'
+                />
+              }
               floatingLabelFixed
               errorText={ errors.password }
               onChange={ changeHandler('password') }
@@ -422,7 +558,12 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
               type='password'
               className='userFormInputField passwordConfirmation'
               hintText=''
-              floatingLabelText='Password Confirmation'
+              floatingLabelText={
+                <FormattedMessage
+                  id='UserForm.passwordConfirmation'
+                  defaultMessage='Password Confirmation'
+                />
+              }
               floatingLabelFixed
               errorText={ errors.password_confirmation }
               onChange={ changeHandler('password_confirmation') }
@@ -466,8 +607,11 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
         return (
           <div>
             <div className='userFormTermsAndConditionsLink'>
-              <a href={ '/terms_and_conditions' } className='slidingLink' target='_blank' rel='noreferrer noopener'>
-                Please read Tutoria’s terms and conditions.
+              <a href={ '/terms_of_use' } className='slidingLink' target='_blank' rel='noreferrer noopener'>
+                <FormattedMessage
+                  id='UserForm.termsRead'
+                  defaultMessage=' Please read tutoría’s terms of use.'
+                />
               </a>
             </div>
 
@@ -475,11 +619,21 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
               checked={ terms_and_conditions }
               className='userFormInputField termsAndConditions'
               onCheck={ changeHandler('terms_and_conditions') }
-              label='I accept Tutoria’s terms and conditions'
+              label={
+                <FormattedMessage
+                  id='UserForm.termsAccept'
+                  defaultMessage='I accept tutoría’s terms of use'
+                />
+              }
             />
 
             <Checkbox
-              label='I would like to be occasionally contacted about Tutoria’s updates'
+              label={
+                <FormattedMessage
+                  id='UserForm.newsletterOptin'
+                  defaultMessage='I would like to be occasionally contacted about tutoría’s updates'
+                />
+              }
               checked={ contact_permission }
               className='userFormInputField contactPermission'
               onCheck={ changeHandler('contact_permission') }
@@ -518,7 +672,12 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
 
           <SelectField
             floatingLabelFixed
-            floatingLabelText='Select One or More Program'
+            floatingLabelText={
+              <FormattedMessage
+                id='UserForm.programs'
+                defaultMessage='Select program(s)'
+              />
+            }
             value={ userPrograms }
             className='userFormInputField programs'
             onChange={ this.changeHandlerPrograms }
@@ -610,13 +769,24 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
       if (role === 'volunteer' || volunteer ) {
         return (
           <div>
-            Your location will only be used to help clients find volunteers in their area.
+            <p>
+              <FormattedMessage
+                id='UserForm.addressVolunteerDialog1'
+                defaultMessage=' Your location will only be used to help clients find volunteers in their area.'
+              />
+            </p>
             <br />
             <p>
-              Your street address will not be shown to other users. Only your town/city.
+              <FormattedMessage
+                id='UserForm.addressVolunteerDialog2'
+                defaultMessage='Your street address will not be shown to other users. Only your town/city and country.'
+              />
             </p>
             <p>
-              This info is not required unless you would like to allow clients to ask for face to face sessions.
+              <FormattedMessage
+                id='UserForm.addressVolunteerDialog3'
+                defaultMessage='This info is not required unless you would like to allow clients to ask for face to face sessions.'
+              />
             </p>
           </div>
         );
@@ -624,13 +794,22 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
         return (
           <div>
             <p>
-              Your location will only be used to help find volunteers in your area.
+              <FormattedMessage
+                id='UserForm.addressClientDialog1'
+                defaultMessage='Your location will only be used to help find volunteers in your area.'
+              />
             </p>
             <p>
-              Your street address will not be shown to other users. Only your town/city.
+              <FormattedMessage
+                id='UserForm.addressClientDialog2'
+                defaultMessage='Your street address will not be shown to other users. Only your town/city and country.'
+              />
             </p>
             <p>
-             This info is not required unless you would like to use the location feature.
+              <FormattedMessage
+                id='UserForm.addressClientDialog3'
+                defaultMessage='This info is not required unless you would like to use the location feature.'
+              />
             </p>
           </div>
         );
@@ -645,6 +824,8 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
       first_name: PropTypes.string,
       address: PropTypes.string,
       city: PropTypes.string,
+      state: PropTypes.string,
+      country: PropTypes.string,
       email: PropTypes.string,
       languages: PropTypes.array,
       password: PropTypes.string,
@@ -687,6 +868,8 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
       programs: [],
       address: '',
       city: '',
+      state: '',
+      country: '',
       first_name: '',
       email: '',
       password: '',

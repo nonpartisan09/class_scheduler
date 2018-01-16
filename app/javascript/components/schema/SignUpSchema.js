@@ -12,7 +12,15 @@ const SignUpSchema = {
   programs: Joi.array().min(1).options({
     language: {
       array: {
-        min: 'Please select at least one class'
+        min: 'Please select at least one program'
+      }
+    }
+  }),
+
+  languages: Joi.array().min(1).options({
+    language: {
+      array: {
+        min: 'Please select at least one language'
       }
     }
   }),
@@ -52,6 +60,9 @@ const SignUpSchema = {
 
   address: Joi.string().allow(''),
   city: Joi.string().allow(''),
+  state: Joi.string().allow(''),
+  country: Joi.string().allow(''),
+
   email: Joi.string().email({ minDomainAtoms: 2 }).required().options({
     language: {
       any: {
@@ -75,7 +86,7 @@ const SignUpSchema = {
   terms_and_conditions: Joi.boolean().valid(true).options({
     language: {
       any: {
-        allowOnly: 'Please agree to our terms and conditions'
+        allowOnly: 'Please agree to our terms of use'
       }
     }
   })
