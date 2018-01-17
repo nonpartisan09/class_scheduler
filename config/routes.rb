@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  devise_for :users, ActiveAdmin::Devise.config
+  ActiveAdmin.routes(self)
   root 'application#index'
   get 'terms_of_use' => 'application#t_and_c'
 
@@ -34,6 +36,6 @@ Rails.application.routes.draw do
   end
 
   devise_for :users,
-      only: [:sessions, :registrations, :passwords, :availabilities],
+      only: [ :registrations, :passwords, :availabilities],
       singular: :user
 end
