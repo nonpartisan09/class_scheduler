@@ -68,8 +68,8 @@ class SignUp extends Component {
 
         <h1 className='signUpHeader'>
           <FormattedMessage
-            id='NewAvailability.signUpHeader'
-            defaultMessage='Join Tutoria community: Step 2/2'
+            id='SignUp.signUpHeader'
+            defaultMessage='Join Tutoria community: Step 1/2'
           />
         </h1>
       </div>
