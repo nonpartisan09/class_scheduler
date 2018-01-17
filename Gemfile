@@ -13,6 +13,8 @@ gem 'rails', '~> 5.1', require: false
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 
+gem 'activeadmin'
+
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '~> 3.2', require: false
 
@@ -55,6 +57,8 @@ group :development, :test do
 
   # Use mysql as the database for Active Record
   gem 'mysql2', '>= 0.3.18', '< 0.5', require: false
+
+  gem 'awesome_print'
 end
 
 group :development do
@@ -83,7 +87,6 @@ group :test do
 
 ## =========== TESTING TOOLS ==============
 
-  gem 'awesome_print'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
