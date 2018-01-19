@@ -15,12 +15,16 @@ import { postData } from './sendData';
 
 const { SIGN_UP } = UserFormConstants;
 
+const ignoredFields = [
+  'current_password',
+];
+
 function handleUserSignUp() {
   const { match: { params: { role } } } = this.props;
   const { currentUser } = this.props;
 
   const updatedUser =  _.reduce(currentUser, (memo, value, key) => {
-    if (key === 'thumbnail_image' || !_.isEmpty(value) ) {
+    if (key === 'thumbnail_image' || !_.isEmpty(value) || !_.includes(ignoredFields, key)) {
       memo[key] = value;
     }
 

@@ -76,7 +76,7 @@ document.addEventListener('turbolinks:load', () => {
             <Route exact path='/sign_in' component={ SignIn } />
             <Route exact path='/password/new' component={ NewPasswordPage } />
             <Route path='/password/edit' render={ (props) => <ResetPasswordPage { ...props } /> } />
-            <Route exact path='/terms_of_use' component={ TermsAndConditions } />
+            <Route exact path='/terms_of_use' render={ (props) => <TermsAndConditions { ...data } { ...props } /> }/>
             <Switch>
               <Route exact path='/availabilities/new/:sign_up' render={ (props) => <NewAvailability { ...data } { ...props } /> } />
               <Route exact path='/availabilities/new' render={ (props) => <NewAvailability { ...data } { ...props } /> } />

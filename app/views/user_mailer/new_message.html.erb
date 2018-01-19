@@ -6,15 +6,16 @@
 <body>
 <h1><%= @user.first_name %>, you've got mail!</h1>
 <p>
- <%= @sender.first_name %> has sent you a message<br>
+ <%= @sender.first_name %> has sent you a message:<br>
 </p>
 
-<p>Message:</p>
+<p><%= @message.subject %></p>
 <p>
-  "<%= @message.body %>"
+  <%= @message.body %>
 </p>
 <p>
-  To access it on tutoría.com just follow this link: <%= @url %>.
+  To view the full message, please sign in: https://tutoria-staging.herokuapp.com/sign_in.
+  Have you worked with <%= @sender.first_name %>? Leave this person a review at (URL).
 </p>
 <p>Thanks and have a great day!</p>
 </body>

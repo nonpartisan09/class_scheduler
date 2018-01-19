@@ -5,12 +5,12 @@ Rails.application.routes.draw do
   get 'terms_of_use' => 'application#t_and_c'
 
   resources :availabilities
-  resources :programs
-  resources :sessions
-  resource :users
   resource :conversations, only: [ :new, :create ]
   resources :messages, only: [ :new, :create, :update ]
+  resources :programs
   resources :reviews, only: [ :create, :update, :destroy ]
+  resources :sessions
+  resource :users
 
   get 'reviews/(:user_id/:order)', to: 'reviews#index'
   get 'inbox', to: 'conversations#index'

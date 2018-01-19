@@ -35,7 +35,7 @@ const ProfileSchema = {
     }
   }),
 
-  thumbnail_image: Joi.object().keys({
+  thumbnail_image: Joi.object().allow({}).keys({
     image: Joi.object(),
     url: Joi.string()
   }).or('image', 'url').options({

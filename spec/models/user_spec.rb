@@ -32,6 +32,9 @@ RSpec.describe User, type: :model do
   it { is_expected.to have_db_column(:email).of_type(:string) }
   it { is_expected.to have_db_column(:url_slug).of_type(:string) }
 
+  it { is_expected.to have_db_column(:active).of_type(:boolean) }
+  it { is_expected.to have_db_column(:generated_password).of_type(:boolean) }
+
   it { is_expected.to have_db_column(:address).of_type(:string) }
   it { is_expected.to have_db_column(:city).of_type(:string) }
   it { is_expected.to have_db_column(:state).of_type(:string) }

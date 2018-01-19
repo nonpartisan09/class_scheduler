@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
     else
       user = { }
     end
-    programs = Program.all
+    programs = Program.featured
 
     @data = {
         :currentUser => user,
@@ -28,8 +28,12 @@ class ApplicationController < ActionController::Base
       user = { }
     end
 
+    terms_and_conditions = TermsAndConditions.last
+    terms_and_conditions = terms_and_conditions[:description]
+
     @data = {
         :currentUser => user,
+        :terms_and_conditions => terms_and_conditions
     }
 
     render :t_and_c

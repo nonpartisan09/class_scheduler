@@ -12,7 +12,7 @@ class SessionsController < Devise::SessionsController
     resource = User.find_for_database_authentication(:email=>params[:user][:email])
     return invalid_login_attempt unless resource
 
-    if resource.valid_password?(params[:user][:password])
+    if resource.valid_password?(params[:user][:password]) && resource.active?
       sign_in('user', resource)
       user = UserDecorator.new(current_user).simple_decorate
       @data = { :success => true, :currentUser => user }
@@ -22,8 +22,11 @@ class SessionsController < Devise::SessionsController
         format.json { render json: @data }
       end
       return
+    elsif resource.valid_password?(params[:user][:password]) && !resource.active?
+      account_block_login_attempt
+    else
+      invalid_login_attempt
     end
-    invalid_login_attempt
   end
 
   def new
@@ -55,6 +58,7 @@ class SessionsController < Devise::SessionsController
   end
 
   protected
+
   def ensure_params_exist
     return unless params[:user].blank? && params[:user][:password].blank? && params[:user][:email].blank?
     render :json=> { :success=>false, :error => { :message => 'Missing email and password' } }, :status=> 422
@@ -62,7 +66,12 @@ class SessionsController < Devise::SessionsController
 
   def invalid_login_attempt
     warden.custom_failure!
-    render :json=> { :success=>false, :error => { :message => 'Error with your login or password' } }, :status=>401
+    render :json=> { :success=> false, :error => { :message => 'Error with your login or password' } }, :status=> :unauthorized
+  end
+
+  def account_block_login_attempt
+    warden.custom_failure!
+    render :json=> { :success=> false, :error => { :message => 'Your account is deactivated' } }, :status=> :unauthorized
   end
 
   def check_if_logged_in

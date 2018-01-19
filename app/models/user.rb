@@ -1,12 +1,18 @@
 class User < ActiveRecord::Base
   include HasUrlSlug, HasUserSearch, ActsAsMessageable, IsUpdateable
-  has_and_belongs_to_many :roles, :join_table => :roles_users
+  include Warden
+
+  has_and_belongs_to_many :roles
+  accepts_nested_attributes_for :roles
+
   has_and_belongs_to_many :languages
+  accepts_nested_attributes_for :languages
 
   has_many :enrollments
   has_many :programs, through: :enrollments
 
   has_many :reviews, dependent: :destroy
+  accepts_nested_attributes_for :reviews
 
   has_many :availabilities, dependent: :destroy
 
@@ -35,8 +41,10 @@ class User < ActiveRecord::Base
   validates :email, presence: true
   validates_uniqueness_of :email
 
-  scope :volunteer, -> { includes(:roles).where({:roles => {:url_slug => 'volunteer'}})}
-  scope :client, -> { includes(:roles).where({:roles => {:url_slug => 'client'}})}
+  scope :volunteers, -> { includes(:roles).where({:roles => {:url_slug => 'volunteer'}}) }
+  scope :clients, -> { includes(:roles).where({:roles => {:url_slug => 'client'}}) }
+  scope :admins, -> { includes(:roles).where({:roles => {:url_slug => 'admin'}}) }
+  scope :active, -> { where({:active => true }) }
 
   def self.authentication_keys
     [ :email ]
@@ -68,5 +76,19 @@ class User < ActiveRecord::Base
 
   def full_address
     "#{address} #{city} #{state} #{country}"
+  end
+
+  def deactivate_account!
+    self.active = false
+    self.save!
+
+    UserMailer.account_deactivated(self).deliver_later
+  end
+
+  def activate_account!
+    self.active = true
+    self.save!
+
+    UserMailer.account_reactivated(self).deliver_later
   end
 end

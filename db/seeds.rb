@@ -60,7 +60,7 @@ Language.create({
 
 user = User.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?
 
-unless user.present?
+if user.present?
   user.roles = Role.find_by_url_slug('admin')
   user.save!
 end

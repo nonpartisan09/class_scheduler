@@ -5,4 +5,6 @@ class Program < ApplicationRecord
   has_many :users, through: :enrollments
 
   validates :name, presence: true
+
+  scope :featured, -> { where({:featured => true}) }
 end

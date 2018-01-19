@@ -9,9 +9,12 @@ class ReviewsController < ApplicationController
    begin
      @user = User.find_by_url_slug!(permitted_params[:user_id])
 
+     @user_id = @user.id.to_i
+     @current_user_id = current_user.id.to_i
+
      @review = Review.new(
-         user_id: @user.id.to_i,
-         author_id: current_user.id.to_i,
+         user_id: @user_id,
+         author_id: @current_user_id,
          review: permitted_params[:review].to_i,
          comment: permitted_params[:comment]
      )
