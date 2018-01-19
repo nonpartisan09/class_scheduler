@@ -40,6 +40,7 @@ import './application.css';
 
 import localeData from '../../../build/locales/data.json';
 import SearchResults from '../components/SearchResults';
+import AboutPage from '../components/AboutPage';
 
 addLocaleData([...en, ...es ]);
 
@@ -64,6 +65,7 @@ document.addEventListener('turbolinks:load', () => {
           <div>
             <Route exact path='/' render={ () => <Homepage { ...data } /> } />
             <Route exact path='/inbox' render={ (props) => <ConversationIndexPage { ...data } { ...props } /> } />
+            <Route exact path='/about' render={ (props) => <AboutPage { ...data } { ...props } /> } />
             <Route exact path='/messages/new' render={ (props) => <NewMessagePage { ...data } { ...props } /> } />
             <Switch>
               <Route path='/search/:sign_up' render={ (props) => <SearchBar { ...data } { ...props } /> } />

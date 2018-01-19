@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   ActiveAdmin.routes(self)
   root 'application#index'
   get 'terms_of_use' => 'application#t_and_c'
+  get 'about' => 'application#about_page'
 
   resources :availabilities
   resource :conversations, only: [ :new, :create ]

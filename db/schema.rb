@@ -10,7 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180119122017) do
+ActiveRecord::Schema.define(version: 20180119173403) do
+
+  create_table "about_pages", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "active_admin_comments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "namespace"
@@ -131,7 +137,6 @@ ActiveRecord::Schema.define(version: 20180119122017) do
   end
 
   create_table "terms_and_conditions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.integer "version"
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

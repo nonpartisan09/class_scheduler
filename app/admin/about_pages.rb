@@ -1,4 +1,4 @@
-ActiveAdmin.register TermsAndConditions do
+ActiveAdmin.register AboutPages do
   permit_params :description,
       :created_at,
       :updated_at,

@@ -20,6 +20,25 @@ class ApplicationController < ActionController::Base
     render :index
   end
 
+  def about_page
+    if current_user
+      user = UserDecorator.new(current_user)
+      user = user.simple_decorate
+    else
+      user = { }
+    end
+
+    about_page_content = AboutPages.last
+    about_page_content = about_page_content[:description]
+
+    @data = {
+        :currentUser => user,
+        :about_page_content => about_page_content
+    }
+
+    render :about_page
+  end
+
   def t_and_c
     if current_user
       user = UserDecorator.new(current_user)
