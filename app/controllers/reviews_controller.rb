@@ -57,7 +57,7 @@ class ReviewsController < ApplicationController
 
     begin
       reviews = Review.search(permitted_params[:user_id], permitted_params[:order])
-      comments = reviews.collect{ |review| ReviewDecorator.new(review).comment_decorate }
+      comments = reviews.collect{ |review| ReviewDecorator.new(review).simple_decorate }
     rescue Exception => e
       message = e.message
       status = :unprocessable_entity

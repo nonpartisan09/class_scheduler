@@ -25,7 +25,7 @@ const SignUpSchema = {
     }
   }),
 
-  first_name: Joi.string().required().regex(/^[a-zA-Z\u00C0-\u017F]+$/).options({
+  first_name: Joi.string().required().regex(/^[ a-zA-Z\u00C0-\u017F]+$/).options({
     language: {
       any: {
         required: 'Please enter your first name',
@@ -33,7 +33,8 @@ const SignUpSchema = {
       },
       string: {
         regex: {
-          base: 'Please enter a first name without invalid characters'
+          base: 'Please enter a first name without invalid characters',
+          name: 'Please enter a first name without invalid characters',
         }
       }
     }

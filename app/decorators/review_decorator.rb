@@ -15,14 +15,14 @@ class ReviewDecorator
     }
   end
 
-  def comment_decorate
+  def simple_decorate
     {
         :comment => comment,
         :created_at => created_at,
         :reviewer => reviewer
     }
   end
-
+                                              
   def comment
     @review && @review[:comment] || ''
   end

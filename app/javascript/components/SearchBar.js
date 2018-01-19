@@ -2,7 +2,6 @@ import _ from 'lodash';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import Joi from 'joi-browser';
 import validate from 'react-joi-validation';
 import { FormattedMessage } from 'react-intl';
 
@@ -12,6 +11,7 @@ import MenuItem from 'material-ui/MenuItem';
 import RaisedButton from 'material-ui/RaisedButton';
 import moment from 'moment';
 
+import SearchValidationSchema from './schema/SearchValidationSchema';
 import { getData } from './sendData';
 import Header from './Header';
 import SearchOptionalFields from './SearchOptionalFields';
@@ -29,39 +29,6 @@ function restfulUrl({ day, program, start_time, end_time, distance }) {
 
   return `/results?${programParam}${dayParam}${startParam}${endParam}${distanceParam}`;
 }
-
-const schema = {
-  day: Joi.array().min(1).required().options({
-    language: {
-      array: {
-        min: 'Please select at least one day'
-      }
-    }
-  }),
-  program: Joi.array().min(1).required().options({
-    language: {
-      array: {
-        min: 'Please select at least one program'
-      }
-    }
-  }),
-  distance: Joi.number(),
-
-  start_time: Joi.date().timestamp().options({
-    language: {
-      any: {
-        allowOnly: 'Please select a start time'
-      }
-    }
-  }),
-  end_time: Joi.date().timestamp().options({
-    language: {
-      any: {
-        allowOnly: 'Please enter an end time'
-      }
-    }
-  })
-};
 
 class SearchBar extends Component {
   constructor(props) {
@@ -268,7 +235,7 @@ class SearchBar extends Component {
             status
           });
         } else {
-         return history.push('/available_volunteers', { ...response });
+         return history.push('/available_volunteers', { ...response, ...{ search } });
         }
       },
       errorCallBack: (message) => {
@@ -335,7 +302,7 @@ SearchBar.defaultProps = {
 };
 
 const validationOptions = {
-  joiSchema: schema,
+  joiSchema: SearchValidationSchema,
   only: 'search',
   allowUnknown: true
 };

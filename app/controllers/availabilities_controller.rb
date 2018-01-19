@@ -62,7 +62,7 @@ class AvailabilitiesController < ApplicationController
   def index
     user = UserDecorator.new(current_user).simple_decorate
     programs = current_user.programs
-    availabilities = Availability.where(:user => current_user).collect{ |n| AvailabilityDecorator.new(n).decorate }
+    availabilities = Availability.where(:user => current_user).collect{ |n| AvailabilityDecorator.new(n, current_user_timezone).decorate }
 
     @data = {
         :currentUser => user,
@@ -79,6 +79,11 @@ class AvailabilitiesController < ApplicationController
   end
 
   private
+
+  def current_user_timezone
+    return current_user[:timezone] if current_user[:timezone].present?
+    ''
+  end
 
   def check_if_volunteer?
     unless current_user.volunteer?

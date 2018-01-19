@@ -100,7 +100,7 @@ class UserDecorator
   end
 
   def availabilities
-    user.availabilities.collect{ |n| AvailabilityDecorator.new(n).decorate }
+    user.availabilities.collect{ |n| AvailabilityDecorator.new(n, timezone).decorate }
   end
 
   def programs
@@ -140,6 +140,6 @@ class UserDecorator
   end
 
   def ten_last_comments
-    user.reviews.last(10).collect{ |review| ReviewDecorator.new(review).comment_decorate }
+    user.reviews.last(10).collect{ |review| ReviewDecorator.new(review).simple_decorate }
   end
 end
