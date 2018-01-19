@@ -29,4 +29,8 @@
     .footerLink {
         margin: 0;
     }
+
+    .footer {
+        margin-left: 24px;
+    }
 }

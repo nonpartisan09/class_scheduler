@@ -1,7 +1,7 @@
 .reviewContainerStar {
     display: inline-block;
     width: 24px;
-    height: 24px;
+    height: 28px;
     background-position: center;
     background-size: 80%;
     background-image: url('/assets/white_star.svg');
@@ -14,7 +14,6 @@
 .reviewContainerStar:first-of-type {
     border-radius: 2px 0 0 2px;
 }
-
 
 .reviewContainerStar:last-of-type {
     border-radius: 0 2px 2px 0;
@@ -32,9 +31,10 @@
     background-image: url('/assets/orange_star.svg');
 }
 
-.reviewContainerReview .reviewContainerStar:hover ~ .userProfileStar {
+.reviewContainerReview .reviewContainerStar:hover ~ .reviewContainerStar {
     background-image: url('/assets/white_star.svg');
 }
+
 
 @media (min-device-width: 901px), (min-width: 901px) {
     .reviewContainerComment, .reviewContainerReview {

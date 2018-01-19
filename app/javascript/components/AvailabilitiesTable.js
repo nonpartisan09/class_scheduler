@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
+import Divider from 'material-ui/Divider';
+
 import { FormattedMessage } from 'react-intl';
 
 import {
@@ -93,6 +95,10 @@ class AvailabilitiesTable extends Component {
           </li>
 
           { this.renderDeleteListContent(id) }
+
+         <div className='smallScreenAvailabilityTableDivider'>
+           <Divider />
+         </div>
         </div>
       );
     });
@@ -124,8 +130,8 @@ class AvailabilitiesTable extends Component {
                 </TableHeaderColumn>
                 <TableHeaderColumn key='timezone'>
                   <FormattedMessage
-                    id='Availabilities.timezone'
-                    defaultMessage='Timezone:'
+                    id='timezone'
+                    defaultMessage='Timezone'
                   />
                 </TableHeaderColumn>
                 { this.renderDeleteColumn() }

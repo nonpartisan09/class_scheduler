@@ -28,6 +28,10 @@
     "defaultMessage": "End Time"
   },
   {
+    "id": "timezone",
+    "defaultMessage": "Timezone"
+  },
+  {
     "id": "Delete",
     "defaultMessage": "Delete"
   }

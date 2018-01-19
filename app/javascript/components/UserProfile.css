@@ -63,8 +63,16 @@
         padding: 24px;
     }
 
+   .userProfileDetailsContainer {
+       margin-bottom: 24px;
+   }
+
     .userProfileCommentContainer, .userProfileLeftDetails {
         width: 100%;
+    }
+
+    .userProfileLeftDetails {
+        margin-bottom: 24px;
     }
 
     .userProfileImageContainer {
