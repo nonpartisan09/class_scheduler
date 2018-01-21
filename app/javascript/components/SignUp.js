@@ -31,6 +31,8 @@ function handleUserSignUp() {
     return memo;
   }, {});
 
+  console.warn('updatedUser:');
+  console.warn(updatedUser);
   const attributes = FormData.from({ user: updatedUser });
 
   const requestParams = {

@@ -105,6 +105,8 @@ class RegistrationsController < Devise::RegistrationsController
         :city,
         :thumbnail_image,
         :timezone,
+        :state,
+        :country,
         :programs => '',
         :languages => '',
         :role_ids => []
@@ -125,6 +127,8 @@ class RegistrationsController < Devise::RegistrationsController
         :city,
         :thumbnail_image,
         :timezone,
+        :state,
+        :country,
         :languages => [],
         :programs => []
     )

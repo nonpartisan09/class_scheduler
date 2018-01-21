@@ -48,9 +48,9 @@ const SignUpSchema = {
     }
   }),
 
-  thumbnail_image: Joi.object().allow({}).keys({
-    image: Joi.object(),
-    url: Joi.string()
+  thumbnail_image: Joi.object().keys({
+    image: Joi.object().allow({}),
+    url: Joi.string().allow('')
   }).or('image', 'url').options({
     language: {
       object: {

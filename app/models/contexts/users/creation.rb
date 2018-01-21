@@ -54,7 +54,7 @@ module Contexts
       end
 
       def check_t_and_c_unticked?
-        @user.terms_and_conditions == 0
+        !@user.terms_and_conditions
       end
 
       def check_if_email_exists?

@@ -36,16 +36,16 @@ import TermsAndConditions from '../components/TermsAndConditions';
 import NewAvailability from '../components/NewAvailability';
 import AvailabilityIndexPage from '../components/AvailabilityIndexPage';
 import UserProfile from '../components/UserProfile';
+import ChooseLanguage from '../components/utils/ChooseLanguage';
+
 import './application.css';
 
 import localeData from '../../../build/locales/data.json';
 import SearchResults from '../components/SearchResults';
 import AboutPage from '../components/AboutPage';
 
-addLocaleData([...en, ...es ]);
-
-const language = _.includes(_.split(window.location.href), '=')? _.last(_.split(window.location.href, '=')) : 'en';
-
+addLocaleData([ ...en, ...es ]);
+const language = ChooseLanguage();
 const messages = localeData[language];
 
 const { render }  = ReactDom;
@@ -57,6 +57,7 @@ document.addEventListener('turbolinks:load', () => {
   const node = document.getElementById('data');
 
   const data = node? JSON.parse(node.getAttribute('data')): {};
+
 
   render(
     <IntlProvider locale={ language } messages={ messages }>
@@ -78,7 +79,7 @@ document.addEventListener('turbolinks:load', () => {
             <Route exact path='/sign_in' component={ SignIn } />
             <Route exact path='/password/new' component={ NewPasswordPage } />
             <Route path='/password/edit' render={ (props) => <ResetPasswordPage { ...props } /> } />
-            <Route exact path='/terms_of_use' render={ (props) => <TermsAndConditions { ...data } { ...props } /> }/>
+            <Route exact path='/terms_of_use' render={ (props) => <TermsAndConditions { ...data } { ...props } /> } />
             <Switch>
               <Route exact path='/availabilities/new/:sign_up' render={ (props) => <NewAvailability { ...data } { ...props } /> } />
               <Route exact path='/availabilities/new' render={ (props) => <NewAvailability { ...data } { ...props } /> } />
