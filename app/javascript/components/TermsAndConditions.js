@@ -20,11 +20,11 @@ const TermsAndConditions = ({ currentUser, terms_and_conditions })=> {
   return (
     <div>
       <Header currentUser={ currentUser } />
-        <Paper zDepth={ 1 } className='paperOverride' rounded={ false }>
-          <div className='termsAndConditionsContainer'>
-            { content }
-          </div>
-        </Paper>
+      <Paper zDepth={ 1 } className='paperOverride' rounded={ false }>
+        <div className='termsAndConditionsContainer'>
+          { content }
+        </div>
+      </Paper>
       <Footer />
     </div>
   );

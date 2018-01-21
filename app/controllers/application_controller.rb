@@ -29,7 +29,10 @@ class ApplicationController < ActionController::Base
     end
 
     about_page_content = AboutPages.last
-    about_page_content = about_page_content[:description]
+    about_page_content = {
+        :en => about_page_content[:description],
+        :es => about_page_content[:spanish_description],
+    }
 
     @data = {
         :currentUser => user,

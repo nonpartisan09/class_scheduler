@@ -1,5 +1,6 @@
 ActiveAdmin.register AboutPages do
   permit_params :description,
+      :spanish_description,
       :created_at,
       :updated_at,
       :id
@@ -19,6 +20,7 @@ ActiveAdmin.register AboutPages do
   form do |f|
     f.inputs do
       f.input :description
+      f.input :spanish_description
     end
     f.actions
   end
