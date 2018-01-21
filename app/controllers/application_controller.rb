@@ -31,7 +31,7 @@ class ApplicationController < ActionController::Base
     about_page_content = AboutPages.last
     about_page_content = {
         :en => about_page_content[:description],
-        :es => about_page_content[:spanish_description],
+        :es => about_page_content[:spanish_description]
     }
 
     @data = {

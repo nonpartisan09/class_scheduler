@@ -12,7 +12,6 @@ import './AboutPage.css';
 class AboutPage extends Component {
   render() {
     const { about_page_content, currentUser } = this.props;
-
     const content = function(){
       if (ChooseLanguage() === 'es' && about_page_content['es']) {
         return Parser(about_page_content['es']);
@@ -40,7 +39,11 @@ class AboutPage extends Component {
 
 AboutPage.propTypes = {
   currentUser: PropTypes.object.isRequired,
-  about_page_content: PropTypes.node
+  about_page_content: PropTypes.shape({
+    description: PropTypes.node,
+    spanish_description: PropTypes.node
+  })
+
 };
 
 AboutPage.defaultProps = {

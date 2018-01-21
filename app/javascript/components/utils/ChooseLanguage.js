@@ -1,7 +1,7 @@
 import _ from 'lodash';
 
 function ChooseLanguage() {
-  if (_.includes(_.split(window.location.href), '=')) {
+  if (window.location.href.match(/=.*$/)) {
     return _.last(_.split(window.location.href, '='));
   } else {
     return 'en';
