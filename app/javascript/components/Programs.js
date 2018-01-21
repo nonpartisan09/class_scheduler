@@ -12,8 +12,8 @@ class Programs extends Component {
         <div>
           <h3 className='programHeader'>
             <FormattedMessage
-              id='Programs.availablePrograms'
-              defaultMessage='Available Programs'
+              id='Programs.featuredPrograms'
+              defaultMessage='Featured Programs'
             />
           </h3>
           <div className='programContainer'>

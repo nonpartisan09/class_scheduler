@@ -8,6 +8,7 @@ import './utils/CheckMobile';
 
 import './Homepage.css';
 import Footer from './Footer';
+import Programs from './Programs';
 
 class Homepage extends Component {
   constructor(props, context) {
@@ -40,6 +41,7 @@ class Homepage extends Component {
                       defaultMessage='Connect and share with our community of clients and volunteers'
                     />
                   </h2>
+                  <Programs />
                 </div>
                 <div className='homepageListContainer'>
                   <h3>
