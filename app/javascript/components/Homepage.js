@@ -1,11 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import _ from 'lodash';
 
 import { FormattedMessage } from 'react-intl';
-
-import FlatButton from 'material-ui/FlatButton';
-import RaisedButton from 'material-ui/RaisedButton';
 
 import Header from './Header';
 import './utils/CheckMobile';
@@ -44,7 +40,6 @@ class Homepage extends Component {
                       defaultMessage='Connect and share with our community of clients and volunteers'
                     />
                   </h2>
-                  { this.renderDesktopNavigation() }
                 </div>
                 <div className='homepageListContainer'>
                   <h3>
@@ -89,7 +84,6 @@ class Homepage extends Component {
                     admin@tutoria.io
                   </a>
                 </div>
-                { this.renderMobileNavigation() }
               </div>
             </div>
             <img
@@ -111,100 +105,11 @@ class Homepage extends Component {
   }
 
   renderDesktopHeader() {
-    if (!_.isEmpty(this.props.currentUser)) {
-      return (
-        <div className='homepageMobileHeader'>
-          <Header currentUser={ this.props.currentUser } />
-        </div>
-      );
-    }
-  }
-
-  renderDesktopNavigation() {
-    if (!window.mobilecheck() && _.isEmpty(this.props.currentUser)) {
-      return [
-        <div key={ 1 } className='homepageCaptionItem homepageDesktopNavigation' >
-          <div className='homepageButton'>
-            <RaisedButton
-              primary
-              label={
-                <FormattedMessage
-                  id='signIn'
-                  defaultMessage='Sign in'
-                />
-              }
-              onClick={ this.handleSignIn }
-            />
-          </div>
-          <div className='homepageButton'>
-            <FlatButton
-              className='homepageButton'
-              primary
-              onClick={ this.handleSignUpVolunteer }
-              label={
-                <FormattedMessage
-                  id='signUpVolunteer'
-                />
-              }
-            />
-          </div>
-          <div className='homepageButton'>
-            <FlatButton
-              className='homepageButton'
-              primary
-              onClick={ this.handleSignUpClient }
-              label={
-                <FormattedMessage
-                  id='signUpClient'
-                  defaultMessage='Sign up as a client'
-                />
-              }
-            />
-          </div>
-        </div>
-      ];
-    }
-  }
-
-  renderMobileNavigation() {
-    if (_.isEmpty(this.props.currentUser)) {
-      return [
-        <div key={ 1 } className='homepageMobileNavigation' >
-          <RaisedButton
-            primary
-            fullWidth
-            onClick={ this.handleSignIn }
-            label={
-              <FormattedMessage
-                id='signIn'
-              />
-            }
-          />
-
-          <FlatButton
-            primary
-            fullWidth
-            onClick={ this.handleSignUpVolunteer }
-            label={
-              <FormattedMessage
-                id='signUpVolunteer'
-              />
-            }
-          />
-
-          <FlatButton
-            primary
-            fullWidth
-            onClick={ this.handleSignUpClient }
-            label={
-              <FormattedMessage
-                id='signUpClient'
-              />
-            }
-          />
-        </div>
-      ];
-    }
+    return (
+      <div className='homepageMobileHeader'>
+        <Header currentUser={ this.props.currentUser } />
+      </div>
+    );
   }
 
   handleSignIn() {

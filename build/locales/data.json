@@ -1,4 +1,5 @@
 { "en": {
+  "aboutPage": "About",
   "Availabilities.listDay": "Day:",
   "Availabilities.from": "From:",
   "Availabilities.to": "To:",
@@ -115,6 +116,7 @@
   "UserForm.addressClientDialog3": "This info is not required unless you would like to use the location feature."
 },
   "es": {
+  "aboutPage": "Acerca",
   "Availabilities.listDay": "Día",
   "Availabilities.from": "Desde",
   "Availabilities.to": "Hasta",

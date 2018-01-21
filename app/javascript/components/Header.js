@@ -89,7 +89,7 @@ class Header extends Component {
              />
           </span>
 
-          <PaypalButton />
+          { this.renderStaticButtons() }
         </nav>
       );
     }
@@ -111,11 +111,21 @@ class Header extends Component {
               id='signIn'
             />
           </a>
-
-          <PaypalButton />
+          { this.renderStaticButtons() }
         </nav>
       );
     }
+  }
+
+  renderStaticButtons() {
+    return [
+      <a key='about' href='/about' className='slidingLink'>
+        <FormattedMessage
+          id='aboutPage'
+        />
+      </a>,
+      <PaypalButton key='paypal' />
+    ];
   }
 
   renderRoleLinks() {

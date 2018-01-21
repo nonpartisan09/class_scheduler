@@ -26,13 +26,5 @@
   {
     "id": "Homepage.question",
     "defaultMessage": "Questions? Email us at"
-  },
-  {
-    "id": "signIn",
-    "defaultMessage": "Sign in"
-  },
-  {
-    "id": "signUpClient",
-    "defaultMessage": "Sign up as a client"
   }
 ]
