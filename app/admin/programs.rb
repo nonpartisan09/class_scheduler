@@ -1,5 +1,6 @@
 ActiveAdmin.register Program do
   permit_params :name,
+      :id,
       :url_slug,
       :description,
       :created_at,
