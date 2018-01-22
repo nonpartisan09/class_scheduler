@@ -41,8 +41,8 @@ class Homepage extends Component {
                       defaultMessage='Connect and share with our community of clients and volunteers'
                     />
                   </h2>
-                  <Programs />
                 </div>
+                <Programs programs={ this.props.programs } />
                 <div className='homepageListContainer'>
                   <h3>
                     <FormattedMessage
@@ -129,10 +129,12 @@ class Homepage extends Component {
 
 Homepage.propTypes = {
   currentUser: PropTypes.object,
+  programs: PropTypes.array
 };
 
 Homepage.defaultProps = {
-  currentUser: { }
+  currentUser: { },
+  programs: []
 };
 
 export default Homepage;
