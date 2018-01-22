@@ -4,7 +4,8 @@ ActiveAdmin.register Program do
       :url_slug,
       :description,
       :created_at,
-      :updated_at
+      :updated_at,
+      :featured
 
   index do
     selectable_column
