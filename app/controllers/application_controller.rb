@@ -4,16 +4,11 @@ class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
 
   def index
-    if current_user
-      user = UserDecorator.new(current_user)
-      user = user.simple_decorate
-    else
-      user = { }
-    end
+    decorate_user_if_present
     programs = Program.featured
 
     @data = {
-        :currentUser => user,
+        :currentUser => @user,
         :programs => programs
     }
 
@@ -21,12 +16,7 @@ class ApplicationController < ActionController::Base
   end
 
   def about_page
-    if current_user
-      user = UserDecorator.new(current_user)
-      user = user.simple_decorate
-    else
-      user = { }
-    end
+    decorate_user_if_present
 
     about_page_content = AboutPages.last
     about_page_content = {
@@ -35,7 +25,7 @@ class ApplicationController < ActionController::Base
     }
 
     @data = {
-        :currentUser => user,
+        :currentUser => @user,
         :about_page_content => about_page_content
     }
 
@@ -91,6 +81,17 @@ class ApplicationController < ActionController::Base
     attributes = [ :thumbnail_image ]
     devise_parameter_sanitizer.permit(:sign_up, keys: attributes)
     devise_parameter_sanitizer.permit(:account_update, keys: attributes)
+  end
+
+  private
+
+  def decorate_user_if_present
+    if current_user
+      user = UserDecorator.new(current_user)
+      @user = user.simple_decorate
+    else
+      @user = { }
+    end
   end
 
 end

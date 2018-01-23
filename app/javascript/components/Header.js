@@ -59,12 +59,7 @@ class Header extends Component {
     if ( _.size(currentUser) > 0 ) {
       return (
         <nav className={ navigationClassName } >
-          <a href='/' className='slidingLink' >
-            <FormattedMessage
-              id='homeLink'
-              defaultMessage='Home'
-            />
-          </a>
+          { this.renderHomeLink() }
 
           { this.renderRoleLinks() }
 
@@ -96,6 +91,7 @@ class Header extends Component {
     else {
       return (
         <nav className={ navigationClassName } >
+          { this.renderHomeLink() }
           <a href='/sign_up/volunteer' className='slidingLink'>
             <FormattedMessage
               id='signUpVolunteer'
@@ -115,6 +111,17 @@ class Header extends Component {
         </nav>
       );
     }
+  }
+
+  renderHomeLink() {
+    return (
+      <a href='/' className='slidingLink' >
+        <FormattedMessage
+          id='homeLink'
+          defaultMessage='Home'
+        />
+      </a>
+    );
   }
 
   renderStaticButtons() {

@@ -1,9 +1,5 @@
 [
   {
-    "id": "homeLink",
-    "defaultMessage": "Home"
-  },
-  {
     "id": "profileLink",
     "defaultMessage": "Profile"
   },
@@ -14,6 +10,10 @@
   {
     "id": "signOutLink",
     "defaultMessage": "Sign out"
+  },
+  {
+    "id": "homeLink",
+    "defaultMessage": "Home"
   },
   {
     "id": "search",

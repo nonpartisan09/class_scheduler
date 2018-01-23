@@ -18,7 +18,7 @@ class UserMailer < ApplicationMailer
   def new_message(user, sender, message)
     @user, @sender, @message = user, sender, message
     @url = url
-    mail(to: @user.email, subject: `New message from #{sender} - tutoría`)
+    mail(to: @user.email, subject: "New message from #{sender.first_name} - tutoría")
   end
 
   def account_deactivated(user)

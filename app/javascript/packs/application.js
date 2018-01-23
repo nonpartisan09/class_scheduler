@@ -1,7 +1,6 @@
 import React from 'react';
 import Joi from 'joi-browser';
 import ReactJoiValidation from 'react-joi-validation';
-import _ from 'lodash';
 import {
   BrowserRouter as Router,
   Route,
@@ -58,15 +57,12 @@ document.addEventListener('turbolinks:load', () => {
 
   const data = node? JSON.parse(node.getAttribute('data')): {};
 
-
   render(
     <IntlProvider locale={ language } messages={ messages }>
       <MuiThemeProvider muiTheme={ getMuiTheme(MuiTheme) }>
         <Router >
           <div>
-            <Route exact path='/' render={ () => <Homepage { ...data } /> } />
             <Route exact path='/inbox' render={ (props) => <ConversationIndexPage { ...data } { ...props } /> } />
-            <Route exact path='/about' render={ (props) => <AboutPage { ...data } { ...props } /> } />
             <Route exact path='/messages/new' render={ (props) => <NewMessagePage { ...data } { ...props } /> } />
             <Switch>
               <Route path='/search/:sign_up' render={ (props) => <SearchBar { ...data } { ...props } /> } />
@@ -75,16 +71,19 @@ document.addEventListener('turbolinks:load', () => {
             <Route exact path='/available_volunteers' render={ (props) => <SearchResults { ...data } { ...props } /> } />
             <Route exact path='/my_profile' render={ (props) => <MyProfile { ...data } { ...props } /> } />
             <Route exact path='/profiles/:url_slug' render={ (props) => <UserProfile { ...data } { ...props } /> } />
-            <Route exact path='/sign_up/:role' render={ (props) => <SignUp { ...data }  { ...props } /> } />
-            <Route exact path='/sign_in' component={ SignIn } />
             <Route exact path='/password/new' component={ NewPasswordPage } />
             <Route path='/password/edit' render={ (props) => <ResetPasswordPage { ...props } /> } />
-            <Route exact path='/terms_of_use' render={ (props) => <TermsAndConditions { ...data } { ...props } /> } />
             <Switch>
               <Route exact path='/availabilities/new/:sign_up' render={ (props) => <NewAvailability { ...data } { ...props } /> } />
               <Route exact path='/availabilities/new' render={ (props) => <NewAvailability { ...data } { ...props } /> } />
             </Switch>
             <Route exact path='/availabilities' render={ (props) => <AvailabilityIndexPage { ...data }  { ...props } /> } />
+
+            <Route exact path='/' render={ () => <Homepage { ...data } /> } />
+            <Route exact path='/about' render={ (props) => <AboutPage { ...data } { ...props } /> } />
+            <Route exact path='/sign_in' component={ SignIn } />
+            <Route exact path='/sign_up/:role' render={ (props) => <SignUp { ...data }  { ...props } /> } />
+            <Route exact path='/terms_of_use' render={ (props) => <TermsAndConditions { ...data } { ...props } /> } />
             <Route path='/page_not_found' component={ NotFoundPage } />
           </div>
         </Router>
