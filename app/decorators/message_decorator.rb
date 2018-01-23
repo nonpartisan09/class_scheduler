@@ -11,7 +11,7 @@ class MessageDecorator
         :subject => subject,
         :body => body,
         :sent_on => sent_on,
-        :unread => unread,
+        :unread => unread
     }
   end
 

@@ -2,6 +2,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   respond_to :json, :xml, :html
   before_action :configure_permitted_parameters, if: :devise_controller?
+  rescue_from ActionController::RoutingError, :with => :render_not_found
 
   def index
     decorate_user_if_present
@@ -33,22 +34,27 @@ class ApplicationController < ActionController::Base
   end
 
   def t_and_c
-    if current_user
-      user = UserDecorator.new(current_user)
-      user = user.simple_decorate
-    else
-      user = { }
-    end
+    decorate_user_if_present
 
     terms_and_conditions = TermsAndConditions.last
     terms_and_conditions = terms_and_conditions[:description]
 
     @data = {
-        :currentUser => user,
+        :currentUser => @user,
         :terms_and_conditions => terms_and_conditions
     }
 
     render :t_and_c
+  end
+
+  def not_found
+    decorate_user_if_present
+
+    @data = {
+        :currentUser => @user
+    }
+
+    render :not_found, :status => 404
   end
 
   protected

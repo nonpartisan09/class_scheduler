@@ -38,4 +38,6 @@ Rails.application.routes.draw do
   devise_for :users,
       only: [ :registrations, :passwords, :availabilities],
       singular: :user
+
+  match "*path", to: "application#not_found", via: :all
 end

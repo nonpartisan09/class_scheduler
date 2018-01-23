@@ -101,7 +101,7 @@ document.addEventListener('turbolinks:load', () => {
             <Route exact path='/sign_in' component={ SignIn } />
             <Route exact path='/sign_up/:role' render={ (props) => <SignUp { ...data }  { ...props } /> } />
             <Route exact path='/terms_of_use' render={ (props) => <TermsAndConditions { ...data } { ...props } /> } />
-            <Route path='/page_not_found' component={ NotFoundPage } />
+            <Route path='*' component={ NotFoundPage } />
           </div>
         </Router>
 
