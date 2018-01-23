@@ -4,7 +4,8 @@ import ReactJoiValidation from 'react-joi-validation';
 import {
   BrowserRouter as Router,
   Route,
-  Switch
+  Switch,
+  Redirect
 } from 'react-router-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
@@ -57,6 +58,12 @@ document.addEventListener('turbolinks:load', () => {
 
   const data = node? JSON.parse(node.getAttribute('data')): {};
 
+  const isUserSame = function(){
+    if (data && data.currentUser && data && data.user && data.user) {
+      return data.user.url_slug === data.currentUser.url_slug;
+    }
+  }();
+
   render(
     <IntlProvider locale={ language } messages={ messages }>
       <MuiThemeProvider muiTheme={ getMuiTheme(MuiTheme) }>
@@ -70,7 +77,17 @@ document.addEventListener('turbolinks:load', () => {
             </Switch>
             <Route exact path='/available_volunteers' render={ (props) => <SearchResults { ...data } { ...props } /> } />
             <Route exact path='/my_profile' render={ (props) => <MyProfile { ...data } { ...props } /> } />
-            <Route exact path='/profiles/:url_slug' render={ (props) => <UserProfile { ...data } { ...props } /> } />
+            <Route
+              exact
+              path='/profiles/:url_slug'
+              render={ (props) => (
+                isUserSame? (
+                  <Redirect to='/' />
+                ) : (
+                  <UserProfile { ...data } { ...props } />
+                )
+              ) }
+            />
             <Route exact path='/password/new' component={ NewPasswordPage } />
             <Route path='/password/edit' render={ (props) => <ResetPasswordPage { ...props } /> } />
             <Switch>

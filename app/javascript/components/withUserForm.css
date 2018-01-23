@@ -20,6 +20,16 @@
     display: inline-block;
 }
 
+.userFormAverageRating {
+    margin: 12px 0;
+}
+
+.userFormAverageRatingLabel {
+    color: rgb(173, 225, 244);
+    font-size: 12px;
+    margin-bottom: 6px;
+}
+
 .userFormSecondButton {
     margin-left: 12px;
 }

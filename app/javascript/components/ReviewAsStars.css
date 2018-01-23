@@ -1,0 +1,28 @@
+.reviewAsStarsStarContainer {
+    margin-top: 12px;
+    display: block;
+    background-color: rgb(41, 170, 226);
+    padding: 4px;
+    border-radius: 2px;
+    width: 160px;
+}
+
+.reviewAsStarsStarItem {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    background-position: center;
+    background-size: 80%;
+    background-image: url('/assets/white_star.svg');
+    background-repeat: no-repeat;
+    background-color: rgb(41, 170, 226);
+    padding: 4px;
+}
+
+.reviewAsStarsStarItemSelected {
+    background-image: url('/assets/orange_star.svg');
+}
+
+.reviewAsStarsLabel {
+    font-size: 12px;
+}

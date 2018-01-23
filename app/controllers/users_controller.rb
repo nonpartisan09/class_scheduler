@@ -1,13 +1,12 @@
 class UsersController < ApplicationController
-  before_action :authenticate_user!, only: [ :show ]
-  before_action :permitted_params
+  before_action :authenticate_user!, :permitted_params
 
   def show
-    unless current_user.present?
-      redirect_to root_path
+    unless current_user
+      redirect_to root_path && return
     end
 
-    user = User.find_by_url_slug(params[:url_slug])
+    user = User.find_by_url_slug(permitted_params[:url_slug])
 
     unless user.present?
       redirect_to root_path

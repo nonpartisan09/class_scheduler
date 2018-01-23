@@ -12,11 +12,12 @@ import { Card, CardActions, CardHeader } from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 
+import ReviewAsStars from './ReviewAsStars';
 import './SearchResultItem.css';
 
 class SearchResultItem extends Component {
   render() {
-    const { firstName, city, lastLoggedin, urlSlug, ratingCount } = this.props;
+    const { firstName, lastLoggedin, urlSlug, ratingCount, averageRating } = this.props;
 
     return (
       <Card className='searchResultItemCard' >
@@ -34,14 +35,13 @@ class SearchResultItem extends Component {
                 { this.renderPrograms() }
               </p>
               <p>
-                { this.renderCity(city) }
+                { this.renderUserLocation() }
               </p>
-              <div className='searchResultItemReview' >
-                { this.renderReviews() }
-              </div>
-              <span>
-                { `${ratingCount} rating(s)`}
-              </span>
+
+              <ReviewAsStars
+                ratingCount={ ratingCount }
+                averageRating={ averageRating }
+              />
             </div>
           }
           avatar={ this.renderAvatar() }
@@ -82,32 +82,6 @@ class SearchResultItem extends Component {
     );
   }
 
-  renderReviews() {
-    const { averageRating } = this.props;
-
-    return [
-      _.times(5, (index) => {
-        const className = function(){
-          if (index < averageRating) {
-            return 'searchResultItemStar searchResultItemStarSelected';
-          } else {
-            return 'searchResultItemStar';
-          }
-        }();
-
-        return (
-          <div key={ index } className={ className }>
-            <label htmlFor={ `starRating${index}` } />
-            <option
-              value={ index + 1 }
-              id={ `starRating${index}` }
-            />
-          </div>
-        );
-      })
-    ];
-  }
-
   renderAvatar() {
     const { avatar } = this.props;
 
@@ -134,11 +108,11 @@ class SearchResultItem extends Component {
     }
   }
 
-  renderCity(city) {
-    const { currentUserCity } = this.props;
+  renderUserLocation() {
+    const { currentUserCity, city, state, country } = this.props;
 
-    if (city && currentUserCity) {
-      return city;
+    if (currentUserCity) {
+      return _.compact([ city, state, country ]).join(', ');
     } else {
       return null;
     }
@@ -150,6 +124,8 @@ SearchResultItem.propTypes = {
   avatar: PropTypes.node.isRequired,
   firstName: PropTypes.string,
   city: PropTypes.string,
+  country: PropTypes.string,
+  state: PropTypes.string,
   lastLoggedin: PropTypes.string,
   programs: PropTypes.array,
   urlSlug: PropTypes.string,
@@ -163,6 +139,8 @@ SearchResultItem.defaultProps = {
   currentUserCity: '',
   firstName: '',
   city: '',
+  country: '',
+  state: '',
   lastLoggedin: '',
   programs: [],
   urlSlug: '',

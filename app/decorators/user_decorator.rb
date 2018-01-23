@@ -10,6 +10,8 @@ class UserDecorator
   def simple_decorate
     {
       :city => city,
+      :state => state,
+      :country => country,
       :programs => programs,
       :client => client,
       :volunteer => volunteer,

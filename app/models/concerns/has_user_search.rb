@@ -18,7 +18,8 @@ module HasUserSearch
       if program.present?
         where({
             :programs => { id: program.split(/,/) },
-            :roles => {:url_slug => 'volunteer' }
+            :roles => {:url_slug => 'volunteer' },
+            :active => true
         })
       end
     }

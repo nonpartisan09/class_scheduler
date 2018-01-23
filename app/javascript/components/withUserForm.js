@@ -24,6 +24,7 @@ import Footer from './Footer';
 
 import newUser from './utils/CheckUpdatedFields';
 import UserFormConstants from './UserFormConstants';
+import ReviewAsStars from './ReviewAsStars';
 
 import './withUserForm.css';
 
@@ -95,6 +96,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
               { this.renderSignUpPrograms() }
 
               { this.renderSignUpLanguages() }
+              { this.renderAverageRating() }
 
               <TextField
                 name='email'
@@ -343,6 +345,28 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
       const { changeValues } = this.props;
 
       changeValues([ ['password_confirmation', ''], ['password', ''] ]);
+    }
+
+    renderAverageRating() {
+      const { type } = wrappedProps;
+
+      if (type === UPDATE_PROFILE) {
+       const { currentUser: { average_rating, rating_count } } = this.props;
+
+       if (rating_count > 0) {
+         return (
+           <div className='userFormAverageRating'>
+             <div className='userFormAverageRatingLabel'>
+               <FormattedMessage
+                 id='UserForm.averageRating'
+                 defaultMessage='Average Rating'
+               />
+             </div>
+             <ReviewAsStars averageRating={ average_rating } ratingCount={ rating_count } />
+           </div>
+         );
+       }
+      }
     }
 
     renderUpdatePrograms() {

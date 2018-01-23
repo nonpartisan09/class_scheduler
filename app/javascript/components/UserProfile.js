@@ -38,6 +38,7 @@ class UserProfile extends Component {
     };
   }
 
+
   componentWillUpdate({ review: { review, id } }) {
     const { review:  { review: currentReview, id: currentId } } = this.props;
 
@@ -90,13 +91,7 @@ class UserProfile extends Component {
                 <span> { user.first_name }</span>
               </div>
 
-              <div className='userProfileField'>
-                <FormattedMessage
-                  id='UserProfile.location'
-                  defaultMessage='Location:'
-                />
-                <span> { this.renderUserLocation() }</span>
-              </div>
+              { this.renderLocation() }
 
               <div className='userProfileField'>
                 <FormattedMessage
@@ -146,11 +141,27 @@ class UserProfile extends Component {
     );
   }
 
-  renderUserLocation() {
-    const { user: { city } } = this.props;
+  renderLocation() {
+    const { currentUser: { city } } = this.props;
 
     if (city) {
-      return city;
+      return (
+        <div className='userProfileField'>
+          <FormattedMessage
+            id='UserProfile.location'
+            defaultMessage='Location:'
+          />
+          <span> { this.renderUserLocation() }</span>
+        </div>
+      );
+    }
+  }
+
+  renderUserLocation() {
+    const { user: { city, country, state } } = this.props;
+
+    if (city || country || state) {
+      return _.compact([ city, state, country ]).join(', ');
     } else {
       return this.renderNotAvailable();
     }

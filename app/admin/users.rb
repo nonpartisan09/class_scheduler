@@ -4,6 +4,7 @@ ActiveAdmin.register User do
       :first_name,
       :last_name,
       :url_slug,
+      :average_rating,
       :terms_and_conditions,
       :contact_permission,
       :address,
@@ -68,6 +69,7 @@ ActiveAdmin.register User do
     column :current_sign_in_at
     column :sign_in_count
     column :created_at
+    column :average_rating
     actions
   end
 
@@ -78,6 +80,7 @@ ActiveAdmin.register User do
   filter :updated_at
   filter :last_sign_in_at
   filter :contact_permission
+  filter :average_rating
 
   show do
     tabs do
