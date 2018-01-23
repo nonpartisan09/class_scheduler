@@ -12,10 +12,6 @@
     "defaultMessage": "Sign out"
   },
   {
-    "id": "homeLink",
-    "defaultMessage": "Home"
-  },
-  {
     "id": "search",
     "defaultMessage": "Search"
   },

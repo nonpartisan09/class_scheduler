@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   respond_to :json, :xml, :html
   before_action :configure_permitted_parameters, if: :devise_controller?
-  rescue_from ActionController::RoutingError, :with => :render_not_found
+  rescue_from ActionController::RoutingError, :with => :not_found
 
   def index
     decorate_user_if_present

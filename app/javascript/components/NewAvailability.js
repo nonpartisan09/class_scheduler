@@ -180,9 +180,9 @@ class NewAvailability extends Component {
   }
 
   renderTitle() {
-    const { match: { params: { sign_up } } } = this.props;
+    const { location: { state }  } = this.props;
 
-    if (sign_up) {
+    if (state && state.signUp) {
       return (
         <h1 className='signUpHeader'>
           <FormattedMessage
@@ -326,7 +326,6 @@ class NewAvailability extends Component {
 
 
 NewAvailability.propTypes = {
-  match: PropTypes.object,
   errors: PropTypes.object,
   currentUser: PropTypes.shape({
     email: PropTypes.string,
@@ -345,17 +344,18 @@ NewAvailability.propTypes = {
   changeValue: PropTypes.func.isRequired,
   validateAllHandler: PropTypes.func.isRequired,
   validateHandler: PropTypes.func.isRequired,
+  location: PropTypes.shape({
+    state: PropTypes.object
+  })
 };
 
 NewAvailability.defaultProps = {
-  match: {
-    params: {
-
-    }
-  },
   currentUser: {
     email: '',
     timezone: 'UTC',
+  },
+  location: {
+    state: {}
   },
   errors: {},
   days: [],

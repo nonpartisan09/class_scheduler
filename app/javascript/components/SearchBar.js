@@ -153,9 +153,9 @@ class SearchBar extends Component {
   }
 
   renderTitle() {
-    const { match: { params: { sign_up } } } = this.props;
+    const { location: { state }  } = this.props;
 
-    if (sign_up) {
+    if (state && state.signUp) {
       return (
         <h1 className='signUpHeader'>
           <FormattedMessage
@@ -255,7 +255,6 @@ class SearchBar extends Component {
 }
 
 SearchBar.propTypes = {
-  match: PropTypes.object,
   programs: PropTypes.array,
   errors: PropTypes.object,
   days: PropTypes.array,
@@ -280,11 +279,14 @@ SearchBar.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
+  location: PropTypes.shape({
+    state: PropTypes.object
+  })
 };
 
 SearchBar.defaultProps = {
-  match: {
-    params: { }
+  location: {
+    state: {}
   },
   days: [],
   errors: {},
@@ -298,7 +300,7 @@ SearchBar.defaultProps = {
     day: [],
     program: [],
     distance: 0,
-  }
+  },
 };
 
 const validationOptions = {

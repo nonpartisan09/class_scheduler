@@ -68,13 +68,11 @@ document.addEventListener('turbolinks:load', () => {
     <IntlProvider locale={ language } messages={ messages }>
       <MuiThemeProvider muiTheme={ getMuiTheme(MuiTheme) }>
         <Router >
-          <div>
+          <Switch>
+            <Route exact path='/' render={ () => <Homepage { ...data } /> } />
             <Route exact path='/inbox' render={ (props) => <ConversationIndexPage { ...data } { ...props } /> } />
             <Route exact path='/messages/new' render={ (props) => <NewMessagePage { ...data } { ...props } /> } />
-            <Switch>
-              <Route path='/search/:sign_up' render={ (props) => <SearchBar { ...data } { ...props } /> } />
-              <Route exact path='/search' render={ (props) => <SearchBar { ...data } { ...props } /> } />
-            </Switch>
+            <Route exact path='/search' render={ (props) => <SearchBar { ...data } { ...props } /> } />
             <Route exact path='/available_volunteers' render={ (props) => <SearchResults { ...data } { ...props } /> } />
             <Route exact path='/my_profile' render={ (props) => <MyProfile { ...data } { ...props } /> } />
             <Route
@@ -89,20 +87,17 @@ document.addEventListener('turbolinks:load', () => {
               ) }
             />
             <Route exact path='/password/new' component={ NewPasswordPage } />
-            <Route path='/password/edit' render={ (props) => <ResetPasswordPage { ...props } /> } />
-            <Switch>
-              <Route exact path='/availabilities/new/:sign_up' render={ (props) => <NewAvailability { ...data } { ...props } /> } />
-              <Route exact path='/availabilities/new' render={ (props) => <NewAvailability { ...data } { ...props } /> } />
-            </Switch>
+            <Route exact path='/password/edit' render={ (props) => <ResetPasswordPage { ...props } /> } />
+            <Route exact path='/availabilities/new' render={ (props) => <NewAvailability { ...data } { ...props } /> } />
             <Route exact path='/availabilities' render={ (props) => <AvailabilityIndexPage { ...data }  { ...props } /> } />
 
-            <Route exact path='/' render={ () => <Homepage { ...data } /> } />
             <Route exact path='/about' render={ (props) => <AboutPage { ...data } { ...props } /> } />
             <Route exact path='/sign_in' component={ SignIn } />
             <Route exact path='/sign_up/:role' render={ (props) => <SignUp { ...data }  { ...props } /> } />
             <Route exact path='/terms_of_use' render={ (props) => <TermsAndConditions { ...data } { ...props } /> } />
-            <Route path='*' component={ NotFoundPage } />
-          </div>
+
+            <Route path='/*' render={ () => <NotFoundPage { ...data } /> } />
+          </Switch>
         </Router>
 
       </MuiThemeProvider>

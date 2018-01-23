@@ -14,10 +14,6 @@
   height: 100%;
 }
 
-.homepageCaptionItem {
-  margin-left: 24px;
-}
-
 .homepageImage {
   width: 100%;
   object-fit: cover;
@@ -45,11 +41,6 @@
 
 .homepageButton:not(:last-of-type)  {
   margin-right: 24px;
-}
-
-.logo {
-  width: 364px;
-  height: 77px;
 }
 
 .homepageSubtitle {
@@ -144,10 +135,5 @@
 
   .homepageImage, .homepageDesktopNavigation {
     display: none;
-  }
-
-  .logo {
-    width: 260px;
-    height: 55px;
   }
 }

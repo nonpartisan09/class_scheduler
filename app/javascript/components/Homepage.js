@@ -9,6 +9,7 @@ import './utils/CheckMobile';
 import './Homepage.css';
 import Footer from './Footer';
 import Programs from './Programs';
+import Logo from './Logo';
 
 class Homepage extends Component {
   constructor(props, context) {
@@ -28,13 +29,7 @@ class Homepage extends Component {
             <div className='homepageTextContainer'>
               <div className='homepageCaption'>
                 <div className='homepageCaptionTitle'>
-                  <h1 className='homepageCaptionItem'>
-                    <img
-                      className='logo'
-                      alt='tutoria logo'
-                      src='/assets/tutoria_logo_full color_web.png'
-                    />
-                  </h1>
+                  <Logo />
                   <h2 className='homepageSubtitle'>
                     <FormattedMessage
                       id='Homepage.subtitle'

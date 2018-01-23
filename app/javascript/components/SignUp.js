@@ -20,7 +20,7 @@ const ignoredFields = [
 ];
 
 function handleUserSignUp() {
-  const { match: { params: { role } } } = this.props;
+  const { match: { params: { role } }, history } = this.props;
   const { currentUser } = this.props;
 
   const updatedUser =  _.reduce(currentUser, (memo, value, key) => {
@@ -31,8 +31,6 @@ function handleUserSignUp() {
     return memo;
   }, {});
 
-  console.warn('updatedUser:');
-  console.warn(updatedUser);
   const attributes = FormData.from({ user: updatedUser });
 
   const requestParams = {
@@ -43,11 +41,12 @@ function handleUserSignUp() {
       let link = '';
 
       if (role === 'volunteer') {
-        link = '/availabilities/new/sign_up';
+        link = '/availabilities/new';
       } else if (role === 'client' ) {
-        link = '/search/sign_up';
+        link = '/search';
       }
-      location.assign(link);
+
+      history.push(link, { signUp: true });
     },
 
     errorCallBack: (message) => {

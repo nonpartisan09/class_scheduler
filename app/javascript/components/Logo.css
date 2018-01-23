@@ -1,0 +1,18 @@
+@media (min-device-width: 901px), (min-width: 901px) {
+    .logo {
+        width: 364px;
+        height: 77px;
+    }
+}
+
+@media (min-device-width: 0) and (max-device-width: 900px), (min-width: 0) and (max-width: 900px) {
+    .logoItem {
+        width: 100%;
+        height: auto;
+    }
+
+    .logo {
+        width: 260px;
+        height: 55px;
+    }
+}

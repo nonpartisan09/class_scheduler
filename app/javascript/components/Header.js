@@ -10,6 +10,7 @@ import PaypalButton from './PaypalButton';
 import './Header.css';
 
 import { getData } from './sendData';
+import HomeLink from './HomeLink';
 
 class Header extends Component {
   constructor(props, context) {
@@ -59,7 +60,7 @@ class Header extends Component {
     if ( _.size(currentUser) > 0 ) {
       return (
         <nav className={ navigationClassName } >
-          { this.renderHomeLink() }
+          <HomeLink />
 
           { this.renderRoleLinks() }
 
@@ -91,7 +92,8 @@ class Header extends Component {
     else {
       return (
         <nav className={ navigationClassName } >
-          { this.renderHomeLink() }
+          <HomeLink />
+
           <a href='/sign_up/volunteer' className='slidingLink'>
             <FormattedMessage
               id='signUpVolunteer'
@@ -111,17 +113,6 @@ class Header extends Component {
         </nav>
       );
     }
-  }
-
-  renderHomeLink() {
-    return (
-      <a href='/' className='slidingLink' >
-        <FormattedMessage
-          id='homeLink'
-          defaultMessage='Home'
-        />
-      </a>
-    );
   }
 
   renderStaticButtons() {

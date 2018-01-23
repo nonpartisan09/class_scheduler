@@ -3,13 +3,14 @@ import PropTypes from 'prop-types';
 import Paper from 'material-ui/Paper';
 
 import { FormattedMessage } from 'react-intl';
-import ErrorIcon from 'material-ui/svg-icons/alert/error';
-
+import RaisedButton from 'material-ui/RaisedButton';
 import Header from './Header';
+import Footer from './Footer';
 import './utils/CheckMobile';
+import Logo from './Logo';
 
 import './NotFoundPage.css';
-import Footer from './Footer';
+import HomeLink from './HomeLink';
 
 class NotFoundPage extends Component {
   render() {
@@ -17,19 +18,30 @@ class NotFoundPage extends Component {
       <div className='notFoundPageContainer'>
         <Header currentUser={ this.props.currentUser } />
         <Paper zDepth={ 1 } className='paperOverride' rounded={ false }>
+          <Logo />
           <h1>
             <FormattedMessage
               id='NotFoundPage.title'
               defaultMessage='Oops!'
             />
           </h1>
-          <ErrorIcon style={ { width: '150px', height: '150px' } } />
           <div className='notFoundPageSection'>
             <FormattedMessage
               id='NotFoundPage.notFoundPage'
-              defaultMessage='Page doesn’t exist or some other error occurred.'
+              defaultMessage='The page doesn’t exist or some other error occurred.'
             />
           </div>
+          <a href='/'>
+            <RaisedButton
+              primary
+              label={
+                <FormattedMessage
+                  id='homeLink'
+                  defaultMessage='Home'
+                />
+              }
+            />
+          </a>
         </Paper>
         <Footer />
       </div>
