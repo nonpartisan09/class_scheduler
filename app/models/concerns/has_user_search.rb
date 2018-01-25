@@ -4,23 +4,59 @@ module HasUserSearch
   extend ActiveSupport::Concern
 
   included do
-    def self.search(params, timezone)
+    def self.search(params, timezone, current_full_address)
       join_tables
-          .teaching_program(params[:program])
-          .is_available(params, timezone)
+        .who_can_help_with(params[:program])
+        .is_available(params, timezone)
+        .paginate_results(params[:page])
+        .based_on_distance(params, current_full_address)
+        .by_order(params, current_full_address)
     end
 
     scope :join_tables, proc {
       includes(:programs, :roles, :availabilities)
     }
 
-    scope :teaching_program, proc { |program|
+    scope :who_can_help_with, proc { |program|
       if program.present?
         where({
             :programs => { id: program.split(/,/) },
             :roles => {:url_slug => 'volunteer' },
             :active => true
         })
+      end
+    }
+
+    scope :paginate_results, proc { |page|
+      if page.present?
+        paginate(:page => page, :per_page => 6)
+      else
+        paginate(:page => 1, :per_page => 6)
+      end
+    }
+
+    scope :based_on_distance, proc { |params, current_full_address|
+      if params[:distance].present? && current_full_address.present?
+        near(current_full_address, params[:distance], :order => :false)
+      end
+    }
+
+    scope :by_order, proc { |params, current_full_address|
+      if params[:order].present?
+        case params[:order]
+        when "highest"
+          order(average_rating: :desc)
+        when "newest"
+          order(created_at: :desc)
+        when "closest"
+          near(current_full_address, 10000, :order => "")
+        when 'last'
+          order(last_sign_in_at: :desc)
+        else
+          raise Contexts::Availabilities::Errors::IncorrectOrder, 'Selected order is not allowed.'
+        end
+      else
+        order(last_sign_in_at: :desc)
       end
     }
 

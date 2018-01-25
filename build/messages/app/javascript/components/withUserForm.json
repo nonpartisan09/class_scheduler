@@ -97,7 +97,7 @@
   },
   {
     "id": "UserForm.addressVolunteerDialog2",
-    "defaultMessage": "Your street address will not be shown to other users. Only your town/city and country."
+    "defaultMessage": "Your street address will not be shown to other users. Only your town/city/state/country."
   },
   {
     "id": "UserForm.addressVolunteerDialog3",
@@ -109,7 +109,7 @@
   },
   {
     "id": "UserForm.addressClientDialog2",
-    "defaultMessage": "Your street address will not be shown to other users. Only your town/city and country."
+    "defaultMessage": "Your street address will not be shown to other users. Only your town/city/state/country."
   },
   {
     "id": "UserForm.addressClientDialog3",

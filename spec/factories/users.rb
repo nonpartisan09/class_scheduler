@@ -36,6 +36,8 @@ FactoryGirl.define do
     languages Language.all
     average_rating { generate :average_rating }
     rating_count { generate :rating_count }
+    country "USA"
+    city "Boston"
   end
 
   trait :client do
