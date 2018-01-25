@@ -21,6 +21,7 @@
 
 .program {
     flex: 1 1 auto;
+    margin-bottom: 0;
 }
 
 @media (min-device-width: 0)  and (max-device-width: 900px), (max-width: 900px) {
@@ -35,5 +36,6 @@
 
     .program {
         width: 100%;
+        margin-bottom: 6px;
     }
 }
