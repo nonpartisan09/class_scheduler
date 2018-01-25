@@ -37,13 +37,13 @@ module Contexts
         if @params[:distance].present? && @user.full_address.present?
           @existing_volunteers = User.search(@params, @timezone)
                                    .near(@user.full_address, @params[:distance], :order => false)
-                                   .order(order)
                                    .paginate(:page => @page_number, :per_page => 6)
+                                   .order(order)
 
         else
           @existing_volunteers = User.search(@params, @timezone)
-                                   .order(order)
                                    .paginate(:page => @page_number, :per_page => 6)
+                                   .order(order)
         end
 
       end

@@ -63,9 +63,9 @@ class SearchResults extends Component {
   }
 
   renderSortDropDown() {
-    console.warn('this.props.currentUser:');
-    console.warn(this.props.currentUser);
-    if (isCurrentUserLocated) {
+    const { currentUser } = this.props;
+
+    if (isCurrentUserLocated(currentUser)) {
       return (
         <div className='searchResultDropdown' >
           <DropDownMenu value={ this.state.sortBy } onClose={ this.handleBlur } onChange={ this.handleChange } >

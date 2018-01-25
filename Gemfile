@@ -42,6 +42,8 @@ gem 'geocoder', '~> 1.4'
 # image helper
 gem 'paperclip', '5.1'
 
+gem 'factory_girl_rails', '~> 4.9'
+
 group :production do
   gem 'unicorn', '~> 5.4.0'
 end
@@ -55,7 +57,6 @@ group :development, :test do
   gem 'capybara', '~> 2.13', require: false
   gem 'selenium-webdriver', '~> 3.7', require: false
   gem 'rspec-rails', '~> 3.6'
-  gem 'factory_girl_rails', '~> 4.9'
 
   # Use mysql as the database for Active Record
   gem 'mysql2', '>= 0.3.18', '< 0.5', require: false

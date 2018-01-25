@@ -281,8 +281,6 @@ class UserProfile extends Component {
       url: `/profiles/${url_slug}`,
 
       successCallBack: ({ user, currentUser }) => {
-        console.warn('currentUser:');
-        console.warn(currentUser, user);
         this.setState({
           user,
           currentUser

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 
 import './Logo.css';
 
@@ -18,13 +17,5 @@ class Logo extends Component {
   }
 
 }
-
-Logo.propTypes = {
-
-};
-
-Logo.defaultProps = {
-
-};
 
 export default Logo;
