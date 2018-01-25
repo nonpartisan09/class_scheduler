@@ -13,7 +13,7 @@ gem 'rails', '~> 5.1', require: false
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 
-gem 'activeadmin'
+gem 'activeadmin', '~> 1.2.1'
 
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '~> 3.2', require: false
@@ -25,11 +25,13 @@ gem 'delayed_job_active_record'
 gem 'webpacker', '~> 3.0'
 
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
-gem 'turbolinks', '~> 5'
+#gem 'turbolinks', '~> 5'
 
 gem 'aws-sdk', '~> 2.10', require: false
 
 gem 'pg', '~> 0.21.0'
+
+gem 'will_paginate'
 
 gem 'delayed_job', '~> 4.1'
 gem 'devise', '~> 4.3'
@@ -38,13 +40,13 @@ gem 'devise', '~> 4.3'
 gem 'geocoder', '~> 1.4'
 
 # image helper
-gem 'paperclip', '~> 5.1'
+gem 'paperclip', '5.1'
 
 group :production do
-  gem 'unicorn'
+  gem 'unicorn', '~> 5.4.0'
 end
 
-gem 'jquery-rails', '~>4.3.1'
+gem 'jquery-rails', '~> 4.3.1'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

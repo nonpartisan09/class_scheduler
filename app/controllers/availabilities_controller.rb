@@ -97,10 +97,6 @@ class AvailabilitiesController < ApplicationController
     end
   end
 
-  def build_search
-    { :start_time => '', :end_time => '', :day => '' }
-  end
-
   def permitted_params
     params.require(:availabilities)
   end
@@ -109,7 +105,7 @@ class AvailabilitiesController < ApplicationController
     params.permit(
         :day,
         :start_time,
-        :end_time,
+        :end_time
     )
   end
 end

@@ -17,14 +17,14 @@ import validate from 'react-joi-validation';
 
 import { FormattedMessage } from 'react-intl';
 
-import ImageInput from './ImageInput';
-import DialogComponent from './DialogComponent';
-import SnackBarComponent from './reusable/SnackBarComponent';
-import Footer from './Footer';
+import ImageInput from '../ImageInput';
+import DialogComponent from '../DialogComponent';
+import SnackBarComponent from '../reusable/SnackBarComponent';
+import Footer from '../reusable/Footer';
 
-import newUser from './utils/CheckUpdatedFields';
+import newUser from './CheckUpdatedFields';
 import UserFormConstants from './UserFormConstants';
-import ReviewAsStars from './ReviewAsStars';
+import ReviewAsStars from '../ReviewAsStars';
 
 import './withUserForm.css';
 

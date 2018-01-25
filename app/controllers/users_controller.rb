@@ -5,14 +5,13 @@ class UsersController < ApplicationController
     unless current_user
       redirect_to root_path && return
     end
-
     user = User.find_by_url_slug(permitted_params[:url_slug])
 
     unless user.present?
-      redirect_to root_path
+      redirect_to root_path && return
     end
 
-    review = Review.where(:author_id =>  current_user.id, :user_id => user.id).first
+    review = Review.where(:author_id => current_user.id, :user_id => user.id).first
 
     review = ReviewDecorator.new(review).decorate
 

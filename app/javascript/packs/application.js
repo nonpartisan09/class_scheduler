@@ -52,17 +52,31 @@ const { render }  = ReactDom;
 
 ReactJoiValidation.setJoi(Joi);
 
-document.addEventListener('turbolinks:load', () => {
-  const container = document.getElementById('main');
-  const node = document.getElementById('data');
-
-  const data = node? JSON.parse(node.getAttribute('data')): {};
-
+function test(data, props) {
   const isUserSame = function(){
     if (data && data.currentUser && data && data.user && data.user) {
       return data.user.url_slug === data.currentUser.url_slug;
     }
   }();
+
+  if (isUserSame) {
+    return <Redirect to='/' />;
+  } else {
+    if (props.location && props.location.state) {
+      return <UserProfile { ...data } { ...props } { ...props.location.state } />;
+    } else {
+      return <UserProfile { ...data } { ...props } />;
+    }
+  }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const container = document.getElementById('main');
+  const node = document.getElementById('data');
+
+  const data = node? JSON.parse(node.getAttribute('data')): {};
+
+
 
   render(
     <IntlProvider locale={ language } messages={ messages }>
@@ -78,13 +92,7 @@ document.addEventListener('turbolinks:load', () => {
             <Route
               exact
               path='/profiles/:url_slug'
-              render={ (props) => (
-                isUserSame? (
-                  <Redirect to='/' />
-                ) : (
-                  <UserProfile { ...data } { ...props } />
-                )
-              ) }
+              render={ (props) => (test (data, props)) }
             />
             <Route exact path='/password/new' component={ NewPasswordPage } />
             <Route exact path='/password/edit' render={ (props) => <ResetPasswordPage { ...props } /> } />

@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import METHODS from './RestConstants';
 
-function getData({ url, params, jsonBody, method='GET', successCallBack, errorCallBack }) {
+function getData({ url, params='', jsonBody, method='GET', successCallBack, errorCallBack }) {
   const body = jsonBody? JSON.stringify(jsonBody) : null;
   const restUrl = params? `${url}?${params}` : url;
 

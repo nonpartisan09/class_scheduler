@@ -11,10 +11,10 @@ import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
 
 import FormData from './utils/FormData';
-import Header from './Header';
+import Header from './reusable/Header';
 import SnackBarComponent from './reusable/SnackBarComponent';
-import { postData } from './sendData';
-import Footer from './Footer';
+import { postData } from './utils/sendData';
+import Footer from './reusable/Footer';
 
 const schema = {
   email: Joi.string().email({ minDomainAtoms: 2 }).required().options({

@@ -24,6 +24,10 @@
     "defaultMessage": "A bit more information:"
   },
   {
+    "id": "UserProfile.Back",
+    "defaultMessage": "Back to search results"
+  },
+  {
     "id": "UserProfile.location",
     "defaultMessage": "Location:"
   },

@@ -4,8 +4,8 @@ import Paper from 'material-ui/Paper';
 import Parser from 'html-react-parser';
 
 import ChooseLanguage from './utils/ChooseLanguage';
-import Footer from './Footer';
-import Header from './Header';
+import Footer from './reusable/Footer';
+import Header from './reusable/Header';
 
 import './AboutPage.css';
 

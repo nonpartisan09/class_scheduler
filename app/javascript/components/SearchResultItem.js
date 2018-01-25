@@ -5,7 +5,7 @@ import MoodIcon from 'material-ui/svg-icons/social/mood';
 import EmailIcon from 'material-ui/svg-icons/communication/email';
 
 import { FormattedMessage } from 'react-intl';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 
 import { Card, CardActions, CardHeader } from 'material-ui/Card';
 
@@ -16,12 +16,19 @@ import ReviewAsStars from './ReviewAsStars';
 import './SearchResultItem.css';
 
 class SearchResultItem extends Component {
+  constructor(props) {
+    super(props);
+
+    this.handleViewProfileClick = this.handleViewProfileClick.bind(this);
+  }
+
   render() {
-    const { firstName, lastLoggedin, urlSlug, ratingCount, averageRating } = this.props;
+    const { firstName, lastLoggedin, urlSlug, ratingCount, averageRating, volunteers, search } = this.props;
 
     return (
       <Card className='searchResultItemCard' >
         <CardHeader
+          style={ { height: '245px' } }
           title={ firstName }
           subtitle={
             <div className='searchResultItemDetails' >
@@ -75,11 +82,18 @@ class SearchResultItem extends Component {
                 />
               }
               primary
+              onClick={ this.handleViewProfileClick }
             />
           </a>
         </CardActions>
       </Card>
     );
+  }
+
+  handleViewProfileClick() {
+    const { urlSlug: url_slug, search, history, volunteers } = this.props;
+
+    history.push(`/profiles/${url_slug}`, { ...{ search }, volunteers });
   }
 
   renderAvatar() {
@@ -131,10 +145,13 @@ SearchResultItem.propTypes = {
   urlSlug: PropTypes.string,
   languages: PropTypes.array,
   averageRating: PropTypes.number,
-  ratingCount: PropTypes.number
+  ratingCount: PropTypes.number,
+  search: PropTypes.object,
+  history: PropTypes.object
 };
 
 SearchResultItem.defaultProps = {
+  search: {},
   averageRating: 0,
   currentUserCity: '',
   firstName: '',
@@ -145,7 +162,8 @@ SearchResultItem.defaultProps = {
   programs: [],
   urlSlug: '',
   languages: [],
-  ratingCount: 0
+  ratingCount: 0,
+  history: {}
 };
 
 export default SearchResultItem;

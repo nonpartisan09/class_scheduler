@@ -20,6 +20,8 @@ class ReviewAsStars extends Component {
           </span>
         </div>
       );
+    } else {
+      return null;
     }
   }
 

@@ -9,26 +9,16 @@ import TextField from 'material-ui/TextField';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import RaisedButton from 'material-ui/RaisedButton';
-import moment from 'moment';
 
 import SearchValidationSchema from './schema/SearchValidationSchema';
-import { getData } from './sendData';
-import Header from './Header';
+import { getData } from './utils/sendData';
+import Header from './reusable/Header';
 import SearchOptionalFields from './SearchOptionalFields';
 
 import './SearchBar.css';
-import Footer from './Footer';
+import Footer from './reusable/Footer';
 import SnackBarComponent from './reusable/SnackBarComponent';
-
-function restfulUrl({ day, program, start_time, end_time, distance }) {
-  const startParam = _.isDate(start_time)? `&start_time=${moment(start_time).format('HH:MM')}` : '';
-  const endParam = _.isDate(end_time)? `&end_time=${moment(end_time).format('HH:MM')}`: '';
-  const dayParam = _.size(day) > 0? `&day=${day}` : '';
-  const programParam = _.size(program) > 0? `program=${program}` : '';
-  const distanceParam = distance > 0? `&distance=${distance}` : '';
-
-  return `/results?${programParam}${dayParam}${startParam}${endParam}${distanceParam}`;
-}
+import SearchUrl from './utils/SearchUrl';
 
 class SearchBar extends Component {
   constructor(props) {
@@ -226,16 +216,19 @@ class SearchBar extends Component {
     const { search, history } = this.props;
 
     const requestParams = {
-      url: restfulUrl(search),
+      url: SearchUrl(search),
       jsonBody: null,
       method: 'GET',
       successCallBack: (response, status) => {
         if (status === 204) {
-          return this.setState({
+          this.setState({
             status
           });
         } else {
-         return history.push('/available_volunteers', { ...response, ...{ search } });
+         history.push('/available_volunteers',
+           { ...response,
+             ...{ search }
+           });
         }
       },
       errorCallBack: (message) => {

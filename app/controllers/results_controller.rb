@@ -7,16 +7,18 @@ class ResultsController < ApplicationController
       search = Contexts::Availabilities::Search.new(permit_search_params, current_user)
       results = search.execute
     rescue Contexts::Availabilities::Errors::ProgramMissing,
-        Contexts::Availabilities::Errors::DayMissing => e
+        Contexts::Availabilities::Errors::DayMissing,
+        Contexts::Availabilities::Errors::IncorrectOrder => e
       @message = e.message
-      render json: { error: { message: @message } }, status: unprocessable_entity
+      render json: { error: { message: @message } }, status: :unprocessable_entity
     end
 
     if results.present?
       volunteers = results.collect { |volunteer| UserDecorator.new(volunteer) }
       volunteers = volunteers.collect { |volunteer| volunteer.simple_decorate }
+      page_count = (results.total_entries/6.to_f).ceil
 
-      render json: { volunteers: volunteers }, status: :ok
+      render json: { volunteers: volunteers, page_count: page_count, current_page: results.current_page }, status: :ok
     else
       head :no_content
     end
@@ -36,7 +38,9 @@ class ResultsController < ApplicationController
         :start_time,
         :end_time,
         :program,
-        :distance
+        :distance,
+        :order,
+        :page
     )
   end
 end

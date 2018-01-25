@@ -3,15 +3,15 @@ import _ from 'lodash';
 import { FormattedMessage } from 'react-intl';
 
 import FormData from './utils/FormData';
-import withUserForm from './withUserForm';
-import Header from './Header';
+import withUserForm from './utils/withUserForm';
+import Header from './reusable/Header';
 
 import './SignUp.css';
 
-import UserFormConstants from './UserFormConstants';
+import UserFormConstants from './utils/UserFormConstants';
 
 import SignUpSchema from './schema/SignUpSchema';
-import { postData } from './sendData';
+import { postData } from './utils/sendData';
 
 const { SIGN_UP } = UserFormConstants;
 

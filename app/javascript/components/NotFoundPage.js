@@ -4,13 +4,13 @@ import Paper from 'material-ui/Paper';
 
 import { FormattedMessage } from 'react-intl';
 import RaisedButton from 'material-ui/RaisedButton';
-import Header from './Header';
-import Footer from './Footer';
+import Header from './reusable/Header';
+import Footer from './reusable/Footer';
 import './utils/CheckMobile';
-import Logo from './Logo';
+import Logo from './reusable/Logo';
 
 import './NotFoundPage.css';
-import HomeLink from './HomeLink';
+import HomeLink from './reusable/HomeLink';
 
 class NotFoundPage extends Component {
   render() {

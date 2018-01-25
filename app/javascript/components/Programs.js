@@ -32,7 +32,7 @@ class Programs extends Component {
     if (_.size(programs) > 0) {
       return programs.map((item) => {
         return (
-          <div key={ name } className='program'>
+          <div key={ item.name } className='program'>
             { item.name }
           </div>
         );

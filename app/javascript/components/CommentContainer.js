@@ -7,7 +7,7 @@ import { FormattedMessage } from 'react-intl';
 
 import { LOWEST, HIGHEST, OLDEST, RECENT } from './SortFilter';
 
-import { getData } from './sendData';
+import { getData } from './utils/sendData';
 import './CommentContainer.css';
 
 class CommentContainer extends Component {

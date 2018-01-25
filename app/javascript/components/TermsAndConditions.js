@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import Paper from 'material-ui/Paper';
 import Parser from 'html-react-parser';
 
-import Footer from './Footer';
-import Header from './Header';
+import Footer from './reusable/Footer';
+import Header from './reusable/Header';
 
 import './TermsAndConditions.css';
 

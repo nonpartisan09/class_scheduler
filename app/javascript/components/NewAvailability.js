@@ -15,12 +15,12 @@ import TextField from 'material-ui/TextField';
 
 import FormData from './utils/FormData';
 
-import Header from './Header';
+import Header from './reusable/Header';
 import ErrorField from './reusable/ErrorField';
-import { postData } from './sendData';
+import { postData } from './utils/sendData';
 
 import './NewAvailability.css';
-import Footer from './Footer';
+import Footer from './reusable/Footer';
 
 const nowDate = new Date();
 const DEFAULT_START = _.toString(new Date(nowDate.setHours(0, 0)));

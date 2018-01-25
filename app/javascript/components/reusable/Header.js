@@ -5,11 +5,11 @@ import PropTypes from 'prop-types';
 
 import { FormattedMessage } from 'react-intl';
 
-import PaypalButton from './PaypalButton';
+import PaypalButton from '../PaypalButton';
 
 import './Header.css';
 
-import { getData } from './sendData';
+import { getData } from '../utils/sendData';
 import HomeLink from './HomeLink';
 
 class Header extends Component {

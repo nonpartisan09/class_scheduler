@@ -15,7 +15,7 @@ Rails.application.routes.draw do
   get 'reviews/(:user_id/:order)', to: 'reviews#index'
   get 'inbox', to: 'conversations#index'
   get 'availabilities/new' => 'availabilities#new'
-  get 'search(/:sign_up)' => 'availabilities#search'
+  get 'search' => 'availabilities#search'
   get 'results' => 'results#index'
   get 'available_volunteers', to: 'results#show'
   get 'my_profile', to: 'user_profiles#show'

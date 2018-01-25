@@ -16,9 +16,9 @@ import RaisedButton from 'material-ui/RaisedButton';
 
 import Divider from 'material-ui/Divider';
 
-import Header from './Header';
+import Header from './reusable/Header';
 import './ConversationIndexPage.css';
-import Footer from './Footer';
+import Footer from './reusable/Footer';
 
 const iconButtonElement = (
   <IconButton

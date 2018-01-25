@@ -1,9 +1,3 @@
-.searchResultsContainer {
-    max-width: 90%;
-    text-align: center;
-    margin: 24px 0 0 36px;
-}
-
 .searchResults {
     text-align: left;
     display: flex;
@@ -11,17 +5,75 @@
     justify-content: space-evenly;
 }
 
-@media (min-device-width: 0) and (min-width: 0) {
-    .searchResultsContainer {
-        text-align: center;
-        margin: 24px 0 0 24px;
+.pagination {
+  list-style: none;
+}
+
+@media (max-width: 500px) {
+    .searchResultsHeader {
+        margin: 0;
+        font-size: 24px;
     }
 }
 
-@media (min-device-width: 500px) and (min-width: 500px) {
+@media (min-device-width: 0) and (min-width: 0) {
+    .searchResultsContainer {
+        text-align: center;
+        margin: 24px 0 0 0;
+    }
+
+    .pagination {
+        margin: 3px 0;
+        width: 100%;
+        padding: 0 0 6px;
+    }
+
+    .pagination li {
+        display: inline-block;
+        background-color: #29aae2;
+        padding: 12px;
+        cursor: pointer;
+        margin: 0 6px;
+        border-radius: 5px;
+    }
+
+    .pagination li a {
+        width: 100%;
+        height: 100%;
+        font-size: 20px;
+        font-weight: bold;
+        outline: none;
+    }
+}
+
+@media (min-device-width: 501px) and (min-width: 501px) {
     .searchResultsContainer {
         max-width: 90%;
         text-align: center;
-        margin: 24px 0 0 36px;
+        margin: -24px 0 0 36px;
     }
+
+    .searchResultsHeader {
+        margin: 0 0 24px;
+    }
+
+    .searchResultDropdown, .searchResultsHeader {
+        display: inline-block;
+    }
+
+    .searchResultDropdown {
+        width: 200px;
+        transform: translateY(20px);
+    }
+
+    .pagination {
+        margin: 0 auto;
+        width: auto;
+    }
+
+    .pagination li {
+        padding: 10px 18px;
+        margin: 0 12px;
+    }
+
 }

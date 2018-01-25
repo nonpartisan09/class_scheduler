@@ -2,16 +2,33 @@
     margin: 12px 0;
 }
 
+.userProfileButtonAndDetailsContainer {
+    clear: both;
+    display: block;
+}
+
 .userProfileImage {
     object-fit: contain;
     width: 100%;
     height: 100%;
 }
 
+.userProfileRefreshIndicator {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto;
+    position: relative;
+}
+
 .userProfileSendEmail {
     position: absolute;
     bottom: -24px;
     right: 0;
+}
+
+.userProfileBackButton {
+    float: left;
+    margin-right: 24px;
 }
 
 .userProfileCommentContainer {
@@ -51,7 +68,7 @@
     }
 
     .userProfileImageContainer {
-        margin-bottom: 24px;
+        margin: 12px 0;
     }
 }
 

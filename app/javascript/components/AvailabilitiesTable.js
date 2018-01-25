@@ -16,7 +16,7 @@ import {
   TableRowColumn,
 } from 'material-ui/Table';
 
-import { postData } from './sendData';
+import { postData } from './utils/sendData';
 import SnackBarComponent from './reusable/SnackBarComponent';
 
 import './AvailabilitiesTable.css';

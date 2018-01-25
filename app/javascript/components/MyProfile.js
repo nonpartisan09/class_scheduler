@@ -3,17 +3,17 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 import { FormattedMessage } from 'react-intl';
 
-import { postData } from './sendData';
-import Header from './Header';
+import { postData } from './utils/sendData';
+import Header from './reusable/Header';
 
-import UserFormConstants from './UserFormConstants';
+import UserFormConstants from './utils/UserFormConstants';
 
 import FormData from './utils/FormData';
 import ProfileSchema from './schema/ProfileSchema';
-import withUserForm from './withUserForm';
+import withUserForm from './utils/withUserForm';
 import newUser from './utils/CheckUpdatedFields';
 
-import './Header.css';
+import './reusable/Header.css';
 
 const { UPDATE_PROFILE } = UserFormConstants;
 

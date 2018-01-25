@@ -6,7 +6,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import Chip from 'material-ui/Chip';
 import { FormattedMessage } from 'react-intl';
 
-import Header from './Header';
+import Header from './reusable/Header';
 import AvailabilitiesTable from './AvailabilitiesTable';
 
 import './AvailabilityIndexPage.css';
