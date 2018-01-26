@@ -3,7 +3,7 @@
 }
 
 .footer {
-    width: 400px;
+    width: 425px;
     margin-top: 0;
     margin-right: 0;
     margin-left: auto;
@@ -22,7 +22,7 @@
 }
 
 .footerLink {
-    margin-right: 24px;
+    margin-right: 12px;
 }
 
 @media (max-device-width: 600px), (max-width: 600px) {

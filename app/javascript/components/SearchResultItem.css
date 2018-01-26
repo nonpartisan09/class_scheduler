@@ -6,6 +6,13 @@
     min-height: 14px;
 }
 
+.searchResultItemTruncate {
+    width: 250px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 @media (min-device-width: 0) and (min-width: 0) {
     .searchResultItemCard {
         width: 100%;

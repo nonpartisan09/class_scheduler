@@ -91,4 +91,16 @@ class User < ActiveRecord::Base
 
     UserMailer.account_reactivated(self).deliver_later
   end
+
+  def admin_user_creation!
+    generated_password = Devise.friendly_token.first(8)
+    self.password = generated_password
+    self.password_confirmation = generated_password
+    self.terms_and_conditions = TermsAndConditions.last.id
+    self.save!
+
+    UserMailer.welcome_email(self, generated_password).deliver_later
+
+    self
+  end
 end

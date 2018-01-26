@@ -12,6 +12,10 @@
     "defaultMessage": "Sign out"
   },
   {
+    "id": "aboutPage",
+    "defaultMessage": "About"
+  },
+  {
     "id": "search",
     "defaultMessage": "Search"
   },

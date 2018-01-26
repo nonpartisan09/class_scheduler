@@ -1,6 +1,7 @@
 class UserMailer < ApplicationMailer
-  def welcome_email(user)
+  def welcome_email(user, password)
     @user = user
+    @password = password
 
     if @user.volunteer?
       @role = "volunteer"
@@ -38,6 +39,13 @@ class UserMailer < ApplicationMailer
     @user = user
 
     mail(to: @user.email, subject: 'Tutoría Account Deleted')
+  end
+
+  def password_updated(user)
+    @user = user
+    @admin_email = admin_email
+
+    mail(to: @user.email, subject: 'Tutoría Password Updated')
   end
 
   private

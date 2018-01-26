@@ -172,7 +172,7 @@ class ConversationIndexPage extends Component {
   }
 
   renderSubject(messageIsUnreadByRecipient, subject='') {
-    if(messageIsUnreadByRecipient && subject) {
+    if (messageIsUnreadByRecipient && subject) {
       return (
         <span className='conversationIndexPageUnread'>
           { subject }

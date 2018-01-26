@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180120230615) do
+ActiveRecord::Schema.define(version: 20180126105331) do
 
   create_table "about_pages", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.text "description"
@@ -171,12 +171,13 @@ ActiveRecord::Schema.define(version: 20180120230615) do
     t.datetime "thumbnail_image_updated_at"
     t.text "description"
     t.string "timezone", default: "UTC"
-    t.integer "average_rating"
-    t.integer "rating_count"
-    t.string "state"
-    t.string "country"
     t.boolean "active", default: true
     t.boolean "generated_password", default: false
+    t.integer "average_rating", default: 0
+    t.integer "rating_count", default: 0
+    t.string "state"
+    t.string "country"
+    t.string "locale", default: "en"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

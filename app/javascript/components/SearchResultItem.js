@@ -23,7 +23,7 @@ class SearchResultItem extends Component {
   }
 
   render() {
-    const { firstName, lastLoggedin, urlSlug, ratingCount, averageRating, volunteers, search } = this.props;
+    const { firstName, lastLoggedin, urlSlug, ratingCount, averageRating } = this.props;
 
     return (
       <Card className='searchResultItemCard' >
@@ -35,13 +35,13 @@ class SearchResultItem extends Component {
               <p>
                 Last login: {lastLoggedin} ago
               </p>
-              <p>
+              <p className='searchResultItemTruncate'>
                 { this.renderLanguages() }
               </p>
-              <p>
+              <p className='searchResultItemTruncate'>
                 { this.renderPrograms() }
               </p>
-              <p>
+              <p className='searchResultItemTruncate'>
                 { this.renderUserLocation() }
               </p>
 
@@ -147,10 +147,12 @@ SearchResultItem.propTypes = {
   averageRating: PropTypes.number,
   ratingCount: PropTypes.number,
   search: PropTypes.object,
+  volunteers: PropTypes.array,
   history: PropTypes.object
 };
 
 SearchResultItem.defaultProps = {
+  volunteers: [],
   search: {},
   averageRating: 0,
   currentUserCity: '',

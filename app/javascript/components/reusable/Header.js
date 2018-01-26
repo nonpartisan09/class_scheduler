@@ -120,6 +120,7 @@ class Header extends Component {
       <a key='about' href='/about' className='slidingLink'>
         <FormattedMessage
           id='aboutPage'
+          defaultMessage='About'
         />
       </a>,
       <PaypalButton key='paypal' />

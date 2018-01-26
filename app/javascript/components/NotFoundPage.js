@@ -10,7 +10,6 @@ import './utils/CheckMobile';
 import Logo from './reusable/Logo';
 
 import './NotFoundPage.css';
-import HomeLink from './reusable/HomeLink';
 
 class NotFoundPage extends Component {
   render() {
@@ -37,7 +36,6 @@ class NotFoundPage extends Component {
               label={
                 <FormattedMessage
                   id='homeLink'
-                  defaultMessage='Home'
                 />
               }
             />

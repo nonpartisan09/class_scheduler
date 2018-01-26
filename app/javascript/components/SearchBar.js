@@ -225,7 +225,7 @@ class SearchBar extends Component {
             status
           });
         } else {
-         history.push('/available_volunteers',
+         history.push('/volunteers',
            { ...response,
              ...{ search }
            });

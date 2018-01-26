@@ -9,6 +9,7 @@ const SignUpSchema = {
     }
   }),
   role: Joi.string(),
+  locale: Joi.string(),
   programs: Joi.array().min(1).options({
     language: {
       array: {

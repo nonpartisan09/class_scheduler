@@ -46,13 +46,15 @@ import AboutPage from '../components/AboutPage';
 
 addLocaleData([ ...en, ...es ]);
 const language = ChooseLanguage();
+console.warn('language:');
+console.warn(language);
 const messages = localeData[language];
 
 const { render }  = ReactDom;
 
 ReactJoiValidation.setJoi(Joi);
 
-function test(data, props) {
+function renderUserProfile(data, props) {
   const isUserSame = function(){
     if (data && data.currentUser && data && data.user && data.user) {
       return data.user.url_slug === data.currentUser.url_slug;
@@ -62,11 +64,7 @@ function test(data, props) {
   if (isUserSame) {
     return <Redirect to='/' />;
   } else {
-    if (props.location && props.location.state) {
-      return <UserProfile { ...data } { ...props } { ...props.location.state } />;
-    } else {
-      return <UserProfile { ...data } { ...props } />;
-    }
+    return <UserProfile { ...data } { ...props } />;
   }
 }
 
@@ -75,24 +73,41 @@ document.addEventListener('DOMContentLoaded', () => {
   const node = document.getElementById('data');
 
   const data = node? JSON.parse(node.getAttribute('data')): {};
-
-
-
   render(
     <IntlProvider locale={ language } messages={ messages }>
       <MuiThemeProvider muiTheme={ getMuiTheme(MuiTheme) }>
         <Router >
           <Switch>
             <Route exact path='/' render={ () => <Homepage { ...data } /> } />
+            <Route exact path='/:locale/inbox' render={ (props) => <ConversationIndexPage { ...data } { ...props } /> } />
+            <Route exact path='/:locale/messages/new' render={ (props) => <NewMessagePage { ...data } { ...props } /> } />
+            <Route exact path='/:locale/search' render={ (props) => <SearchBar { ...data } { ...props } /> } />
+            <Route exact path='/:locale/volunteers' render={ (props) => <SearchResults { ...data } { ...props } /> } />
+            <Route exact path='/:locale/my_profile' render={ (props) => <MyProfile { ...data } { ...props } /> } />
+            <Route
+              exact
+              path='/:locale/profiles/:url_slug'
+              render={ (props) => (renderUserProfile (data, props)) }
+            />
+            <Route exact path='/:locale/password/new' component={ NewPasswordPage } />
+            <Route exact path='/:locale/password/edit' render={ (props) => <ResetPasswordPage { ...props } /> } />
+            <Route exact path='/:locale/availabilities/new' render={ (props) => <NewAvailability { ...data } { ...props } /> } />
+            <Route exact path='/:locale/availabilities' render={ (props) => <AvailabilityIndexPage { ...data }  { ...props } /> } />
+
+            <Route exact path='/:locale/about' render={ (props) => <AboutPage { ...data } { ...props } /> } />
+            <Route exact path='/:locale/sign_in' component={ SignIn } />
+            <Route exact path='/:locale/sign_up/:role' render={ (props) => <SignUp { ...data }  { ...props } /> } />
+            <Route exact path='/:locale/terms_of_use' render={ (props) => <TermsAndConditions { ...data } { ...props } /> } />
+
             <Route exact path='/inbox' render={ (props) => <ConversationIndexPage { ...data } { ...props } /> } />
             <Route exact path='/messages/new' render={ (props) => <NewMessagePage { ...data } { ...props } /> } />
             <Route exact path='/search' render={ (props) => <SearchBar { ...data } { ...props } /> } />
-            <Route exact path='/available_volunteers' render={ (props) => <SearchResults { ...data } { ...props } /> } />
+            <Route exact path='/volunteers' render={ (props) => <SearchResults { ...data } { ...props } /> } />
             <Route exact path='/my_profile' render={ (props) => <MyProfile { ...data } { ...props } /> } />
             <Route
               exact
               path='/profiles/:url_slug'
-              render={ (props) => (test (data, props)) }
+              render={ (props) => (renderUserProfile (data, props)) }
             />
             <Route exact path='/password/new' component={ NewPasswordPage } />
             <Route exact path='/password/edit' render={ (props) => <ResetPasswordPage { ...props } /> } />

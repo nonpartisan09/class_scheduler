@@ -10,7 +10,7 @@ import UserFormConstants from './utils/UserFormConstants';
 
 import FormData from './utils/FormData';
 import ProfileSchema from './schema/ProfileSchema';
-import withUserForm from './utils/withUserForm';
+import withUserForm from './reusable/withUserForm';
 import newUser from './utils/CheckUpdatedFields';
 
 import './reusable/Header.css';

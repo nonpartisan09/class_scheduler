@@ -1,10 +1,12 @@
 import _ from 'lodash';
+import { ENGLISH, SPANISH } from './available_locales';
 
 function ChooseLanguage() {
-  if (window.location.href.match(/=.*$/)) {
-    return _.last(_.split(window.location.href, '='));
+  const currentUrl = _.split(window.location.href, '/');
+  if (currentUrl[3] === ENGLISH || currentUrl[3] === SPANISH) {
+    return currentUrl[3];
   } else {
-    return 'en';
+    return ENGLISH;
   }
 }
 

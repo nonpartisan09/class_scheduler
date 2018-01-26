@@ -1,4 +1,12 @@
 ActiveAdmin.register User do
+  controller do
+    def create
+      user = build_resource
+      user.admin_user_creation!
+      redirect_to(admin_user_path(user))
+    end
+  end
+
   permit_params :email,
       :id,
       :first_name,
@@ -153,14 +161,13 @@ ActiveAdmin.register User do
       f.input :first_name
       f.input :last_name
       f.input :description
-      f.input :terms_and_conditions, :as => :number
       f.input :contact_permission
       f.input :address
       f.input :city
       f.input :state
       f.input :active
       f.input :country, :as => :string
-      f.input :timezone, collection: ActiveSupport::TimeZone.all, selected: resource.timezone
+      f.input :timezone, collection: ActiveSupport::TimeZone.all.map(&:name), selected: resource.timezone
       roles_collection = Role.all.collect{|role| [role.name, role.id, { checked: resource.roles.include?(role) } ]}
       f.input :roles, as: :check_boxes, collection: roles_collection
       languages_collection = Language.all.collect{|language| [language.name, language.id, { checked: resource.languages.include?(language) } ]}

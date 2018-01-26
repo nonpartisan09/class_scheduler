@@ -6,9 +6,5 @@
   {
     "id": "NotFoundPage.notFoundPage",
     "defaultMessage": "The page doesn’t exist or some other error occurred."
-  },
-  {
-    "id": "homeLink",
-    "defaultMessage": "Home"
   }
 ]

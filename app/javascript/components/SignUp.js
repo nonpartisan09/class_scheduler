@@ -3,7 +3,7 @@ import _ from 'lodash';
 import { FormattedMessage } from 'react-intl';
 
 import FormData from './utils/FormData';
-import withUserForm from './utils/withUserForm';
+import withUserForm from './reusable/withUserForm';
 import Header from './reusable/Header';
 
 import './SignUp.css';

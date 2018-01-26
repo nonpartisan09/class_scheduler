@@ -205,7 +205,7 @@ class UserProfile extends Component {
     if (state && state.search) {
       const { search, volunteers } = state;
 
-      history.replace('/available_volunteers', { ...{ search }, volunteers });
+      history.replace('/volunteers', { ...{ search }, volunteers });
     }
   }
 

@@ -27,7 +27,7 @@ module HasReviewSearch
       when 'lowest'
         order(review: :asc)
       else
-        raise Exception, "Cannot sort by #{order}"
+        raise Exception, 'Selected order is not allowed.'
       end
     }
   end

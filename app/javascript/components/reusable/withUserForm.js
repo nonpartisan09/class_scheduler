@@ -14,17 +14,19 @@ import PhotoIcon from 'material-ui/svg-icons/image/photo';
 import InfoIcon from 'material-ui/svg-icons/action/info';
 import Toggle from 'material-ui/Toggle';
 import validate from 'react-joi-validation';
+import { useSecondArgument } from 'react-joi-validation';
 
 import { FormattedMessage } from 'react-intl';
 
 import ImageInput from '../ImageInput';
 import DialogComponent from '../DialogComponent';
-import SnackBarComponent from '../reusable/SnackBarComponent';
-import Footer from '../reusable/Footer';
+import SnackBarComponent from './SnackBarComponent';
+import Footer from './Footer';
 
-import newUser from './CheckUpdatedFields';
-import UserFormConstants from './UserFormConstants';
+import newUser from '../utils/CheckUpdatedFields';
+import UserFormConstants from '../utils/UserFormConstants';
 import ReviewAsStars from '../ReviewAsStars';
+import { ENGLISH, SPANISH } from '../utils/available_locales';
 
 import './withUserForm.css';
 
@@ -41,6 +43,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
       this.changeHandlerLanguages = this.changeHandlerLanguages.bind(this);
       this.selectionRenderer = this.selectionRenderer.bind(this);
       this.changeTimezoneHandler = this.changeTimezoneHandler.bind(this);
+      this.changeLocaleHandler = this.changeLocaleHandler.bind(this);
       this.handleImageUpload = this.handleImageUpload.bind(this);
       this.handleShowDialog = this.handleShowDialog.bind(this);
       this.handleShowPassword = this.handleShowPassword.bind(this);
@@ -97,6 +100,8 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
 
               { this.renderSignUpLanguages() }
               { this.renderAverageRating() }
+
+              { this.renderPreferredLocale() }
 
               <TextField
                 name='email'
@@ -287,9 +292,17 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
       if (city || address || state) {
         return (
           <div className='userFormToggle'>
-            Willing to meet:
+           <FormattedMessage
+             id='UserForm.meetToggle'
+             defaultMessage='Willing to meet'
+           />:
             <Toggle
-              label='Face to face & Online'
+              label={
+                <FormattedMessage
+                  id='UserForm.meetingModeOne'
+                  defaultMessage='Face to face & Online'
+                />
+              }
               disabled
               style={ { color: 'green' } }
             />
@@ -298,9 +311,16 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
       } else {
         return (
           <div className='userFormToggle'>
-            Willing to meet:
+            <FormattedMessage
+              id='UserForm.meetToggle'
+            />
             <Toggle
-              label='Exclusively Online'
+              label={
+              <FormattedMessage
+                id='UserForm.meetingModeTwo'
+                defaultMessage='Exclusively Online'
+              />
+            }
               disabled
             />
           </div>
@@ -408,7 +428,17 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
         } else {
           return (
             <div className='userFormInnerButton userFormSecondButton'>
-              <FlatButton className='userFormLanguageButton' primary label='Update my languages' onClick={ this.handleShowLanguages } />
+              <FlatButton
+                className='userFormLanguageButton'
+                primary
+                label={
+                  <FormattedMessage
+                    id='UserForm.myLanguages'
+                    defaultMessage='Update My Languages'
+                  />
+                }
+                onClick={ this.handleShowLanguages }
+              />
             </div>
           );
         }
@@ -428,7 +458,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
               floatingLabelText={
                 <FormattedMessage
                   id='UserForm.languages'
-                  defaultMessage='Select One or More Language(s)'
+                  defaultMessage='Language(s) I can speak'
                 />
               }
               value={ userLanguages }
@@ -634,7 +664,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
               <a href={ '/terms_of_use' } className='slidingLink' target='_blank' rel='noreferrer noopener'>
                 <FormattedMessage
                   id='UserForm.termsRead'
-                  defaultMessage=' Please read tutoría’s terms of use.'
+                  defaultMessage='Please read Tutoría’s terms of use.'
                 />
               </a>
             </div>
@@ -642,7 +672,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
             <Checkbox
               checked={ terms_and_conditions }
               className='userFormInputField termsAndConditions'
-              onCheck={ changeHandler('terms_and_conditions') }
+              onCheck={ changeHandler('terms_and_conditions', { validate: true, strategy: useSecondArgument }) }
               label={
                 <FormattedMessage
                   id='UserForm.termsAccept'
@@ -660,13 +690,39 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
               }
               checked={ contact_permission }
               className='userFormInputField contactPermission'
-              onCheck={ changeHandler('contact_permission') }
+              onCheck={ changeHandler('contact_permission', { validate: true, strategy: useSecondArgument }) }
             />
 
             <br />
           </div>
         );
       }
+    }
+
+    renderPreferredLocale() {
+      const { errors, validateHandler, currentUser: { locale } } = this.props;
+
+      return (
+        <div>
+          <SelectField
+            floatingLabelFixed
+            floatingLabelText={
+              <FormattedMessage
+                id='UserForm.locale'
+                defaultMessage='Preferred Website & Notification Language'
+              />
+            }
+            value={ locale }
+            className='userFormInputField locale'
+            errorText={ errors.locale }
+            onChange={ this.changeLocaleHandler }
+            onBlur={ validateHandler('locale') }
+          >
+            <MenuItem key={ ENGLISH } insetChildren checked={ ENGLISH === locale } value={ ENGLISH } primaryText={ <span>English</span> } />
+            <MenuItem key={ SPANISH } insetChildren checked={ SPANISH === locale } value={ SPANISH } primaryText={ <span>Español</span> } />
+          </SelectField>
+        </div>
+      );
     }
 
     renderSignUpLanguages() {
@@ -748,6 +804,12 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
     changeHandlerPrograms(event, index, value) {
       const { changeValue } = this.props;
       changeValue('programs', value);
+    }
+
+    changeLocaleHandler(proxy, index, value) {
+      const { changeValue } = this.props;
+
+      changeValue('locale', value);
     }
 
     changeTimezoneHandler(proxy, index, value) {
@@ -858,7 +920,8 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
       terms_and_conditions: PropTypes.bool,
       current_password: PropTypes.string,
       thumbnail_image: PropTypes.oneOfType([ PropTypes.string, PropTypes.object ]),
-      timezone: PropTypes.string
+      timezone: PropTypes.string,
+      locale: PropTypes.string
     }),
 
     match: PropTypes.shape({
@@ -887,6 +950,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
     programs: [],
     timezones: [],
     currentUser: {
+      locale: 'en',
       timezone: '',
       languages: [],
       programs: [],

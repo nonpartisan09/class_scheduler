@@ -32,12 +32,28 @@
     "defaultMessage": "About me (in 280 characters or less)"
   },
   {
+    "id": "UserForm.meetToggle",
+    "defaultMessage": "Willing to meet"
+  },
+  {
+    "id": "UserForm.meetingModeOne",
+    "defaultMessage": "Face to face & Online"
+  },
+  {
+    "id": "UserForm.meetingModeTwo",
+    "defaultMessage": "Exclusively Online"
+  },
+  {
     "id": "UserForm.averageRating",
     "defaultMessage": "Average Rating"
   },
   {
     "id": "UserForm.updatePrograms",
     "defaultMessage": "Update my programs"
+  },
+  {
+    "id": "UserForm.myLanguages",
+    "defaultMessage": "Update My Languages"
   },
   {
     "id": "UserForm.languages",
@@ -69,7 +85,7 @@
   },
   {
     "id": "UserForm.termsRead",
-    "defaultMessage": "Please read tutoría’s terms of use."
+    "defaultMessage": "Please read Tutoría’s terms of use."
   },
   {
     "id": "UserForm.termsAccept",

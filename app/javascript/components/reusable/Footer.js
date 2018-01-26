@@ -14,7 +14,6 @@ class Footer extends Component {
             <a href='/terms_of_use' className='slidingLink footerLink' target='_blank' rel='noreferrer noopener nofollow'>
               <FormattedMessage
                 id='Footer.termsLink'
-                defaultMessage='Terms of Use and Privacy Policy'
               />
             </a>
             Copyright © 2017 Tutoria, Inc. All rights reserved.

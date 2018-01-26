@@ -9,6 +9,15 @@
   You have successfully signed up to tutoría.com as a <%= @role %>.
   Your username is: <%= @user.email %>.<br>
 </p>
+<%- if @password.present? %>
+<p>
+  Your password has been auto-generated: <%=@password%>.
+</p>
+<p>
+  You can change it by signing in and going to 'My profile'.
+</p>
+<%- end %>
+
 <p>
   To sign in to the site, just follow this link: <%= @url %>.
 </p>
