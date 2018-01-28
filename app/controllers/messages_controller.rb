@@ -1,6 +1,6 @@
 class MessagesController < ApplicationController
-  before_action :find_conversation!, :authenticate_user!
-
+  before_action :authenticate_user!
+  before_action :find_conversation!, except: [ :update ]
   def new
     @message = current_user.messages.build
     @user = UserDecorator.new(current_user).simple_decorate
@@ -21,8 +21,9 @@ class MessagesController < ApplicationController
 
   def update
     begin
-      @message = Message.find!(permitted_update_params[:id])
-      @message.unread = true
+      @conversation = Conversation.find(permitted_update_params[:id])
+      @message = @conversation.messages.last
+      @message.unread = false
       @message.save!
     rescue Exception => e
       message = e.message
@@ -64,8 +65,6 @@ class MessagesController < ApplicationController
   end
 
   def permitted_update_params
-    params.permit(
-        :id
-    )
+    params.permit(:id)
   end
 end

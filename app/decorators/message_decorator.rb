@@ -15,6 +15,20 @@ class MessageDecorator
     }
   end
 
+  def sender
+    user = User.where(:id => @message.user_id).first
+
+    if user.present?
+      user.first_name
+    else
+     "Deleted User"
+    end
+  end
+
+  def recipient
+
+  end
+
   def id
     @message.id
   end

@@ -15,6 +15,7 @@ import FormData from './utils/FormData';
 import Header from './reusable/Header';
 import SnackBarComponent from './reusable/SnackBarComponent';
 import { postData } from './utils/sendData';
+import formatLink from './utils/Link';
 
 import './SignIn.css';
 import Footer from './reusable/Footer';
@@ -37,6 +38,7 @@ class SignIn extends Component {
 
     this.handleSignIn = this.handleSignIn.bind(this);
     this.handleHideSnackBar = this.handleHideSnackBar.bind(this);
+    this.handleKeyDown = this.handleKeyDown.bind(this);
 
     this.state = {
       showSnackBar: false,
@@ -49,7 +51,8 @@ class SignIn extends Component {
       currentUser: {
         password,
         email,
-        remember_me
+        remember_me,
+        locale
       },
     } = this.props;
 
@@ -57,7 +60,7 @@ class SignIn extends Component {
       <div>
         <Header  />
 
-        <form className="signInContainer">
+        <form className="signInContainer" onSubmit={ this.handleKeyDown }>
           <TextField
             name='email'
             value={ email }
@@ -90,10 +93,20 @@ class SignIn extends Component {
             label='Remember me'
           />
 
-          <RaisedButton primary label='Sign In' onClick={ this.handleSignIn } className='signInLink' />
+          <RaisedButton
+            primary
+            label={
+              <FormattedMessage
+                id='signIn'
+                defaultMessage='Sign In'
+              />
+            }
+            onClick={ this.handleSignIn }
+            className='signInLink'
+          />
 
           <div className='signInLinkSecondaryContainer'>
-            <a href='/password/new' className='signInLinkSecondary'>
+            <a href={ formatLink('/password/new', locale) } className='signInLinkSecondary'>
               <FlatButton
                 primary
                 label={
@@ -106,7 +119,7 @@ class SignIn extends Component {
               />
             </a>
 
-            <a href='/sign_up/client' className='signInLinkSecondary'>
+            <a href={ formatLink('/sign_up/client', locale) } className='signInLinkSecondary'>
               <FlatButton
                 primary
                 label={
@@ -117,7 +130,7 @@ class SignIn extends Component {
               />
             </a>
 
-            <a href='/sign_up/volunteer' className='signInLinkSecondary'>
+            <a href={ formatLink('/sign_up/volunteer', locale) } className='signInLinkSecondary'>
               <FlatButton
                 primary
                 label={
@@ -135,6 +148,14 @@ class SignIn extends Component {
         <Footer />
       </div>
     );
+  }
+
+  handleKeyDown(event) {
+    console.warn('event.keycode:');
+    console.warn(event.keycode);
+    if (event.keycode === 13) {
+      this.handleSignIn();
+    }
   }
 
   renderSnackBar() {

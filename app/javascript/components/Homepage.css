@@ -48,17 +48,22 @@
   margin-left: 24px;
 }
 
+@media (min-device-width: 1301px), (min-width: 1301px) {
+  .homepageImage {
+    height: 100%;
+  }
+
+  .homepageTextContainer {
+    height: auto;
+  }
+}
+
 @media (min-device-width: 901px), (min-width: 901px) {
   .homepageContainer {
     position: relative;
     display: flex;
     flex-flow: row wrap;
     justify-content: space-between;
-    flex: 1 1 auto;
-  }
-
-  .homepageListContainer {
-    padding: 24px;
     flex: 1 1 auto;
   }
 
@@ -69,14 +74,18 @@
     justify-content: space-between;
   }
 
+  .homepageListContainer, .homepageCaption, .homepageCaptionTitle {
+    flex: 1 1 auto;
+  }
+
+  .homepageListContainer {
+    padding: 24px;
+  }
+
   .homepageDesktopNavigation {
     display: flex;
     flex-flow: row wrap;
     margin-bottom: 24px;
-  }
-
-  .homepageCaption {
-    flex: 1 1 auto;
   }
 
   .homepageImage {
@@ -86,20 +95,24 @@
   .homepageMobileNavigation {
     display: none;
   }
-
-  .homepageTextContainer, .homepageImage {
-    height: 550px;
-  }
 }
 
+@media (min-device-width: 901px) and (max-device-width: 1300px), (min-width: 901px) and (max-width: 1300px) {
+  .homepageImage, .homepageTextContainer {
+    height: auto;
+  }
+}
 
 @media (min-device-width: 0) and (max-device-width: 900px), (min-width: 0) and (max-width: 900px) {
   .homepageContainer {
     margin: 0;
   }
 
-  .homepageCaption {
+  .homepageListContainer, .homepageCaption, .homepageCaptionTitle {
     flex: 1 1 auto;
+  }
+
+  .homepageCaption {
     display: flex;
     width: 100%;
     flex-flow: column nowrap;

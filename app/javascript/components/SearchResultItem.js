@@ -5,7 +5,7 @@ import MoodIcon from 'material-ui/svg-icons/social/mood';
 import EmailIcon from 'material-ui/svg-icons/communication/email';
 
 import { FormattedMessage } from 'react-intl';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import { Card, CardActions, CardHeader } from 'material-ui/Card';
 
@@ -14,6 +14,7 @@ import FlatButton from 'material-ui/FlatButton';
 
 import ReviewAsStars from './ReviewAsStars';
 import './SearchResultItem.css';
+import formatLink from './utils/Link';
 
 class SearchResultItem extends Component {
   constructor(props) {
@@ -23,7 +24,7 @@ class SearchResultItem extends Component {
   }
 
   render() {
-    const { firstName, lastLoggedin, urlSlug, ratingCount, averageRating } = this.props;
+    const { firstName, lastLoggedin, urlSlug, ratingCount, averageRating, locale } = this.props;
 
     return (
       <Card className='searchResultItemCard' >
@@ -54,7 +55,7 @@ class SearchResultItem extends Component {
           avatar={ this.renderAvatar() }
         />
         <CardActions>
-          <Link to={ { pathname: '/messages/new', query: { recipient: urlSlug, userName: firstName } } } >
+          <Link to={ { pathname: formatLink('/messages/new', locale), query: { recipient: urlSlug, userName: firstName } } } >
             <RaisedButton
               className='searchResultItemRequest'
               label={
@@ -72,7 +73,7 @@ class SearchResultItem extends Component {
             />
           </Link>
 
-          <a href={ `/profiles/${urlSlug}` }>
+          <a href={ formatLink(`/profiles/${urlSlug}`, locale) } >
             <FlatButton
               className='searchResultItemVisitProfile'
               label={
@@ -91,9 +92,9 @@ class SearchResultItem extends Component {
   }
 
   handleViewProfileClick() {
-    const { urlSlug: url_slug, search, history, volunteers } = this.props;
+    const { urlSlug: url_slug, search, history, volunteers, locale } = this.props;
 
-    history.push(`/profiles/${url_slug}`, { ...{ search }, volunteers });
+    history.push(formatLink(`/profiles/${url_slug}`, locale), { ...{ search }, volunteers });
   }
 
   renderAvatar() {
@@ -123,9 +124,9 @@ class SearchResultItem extends Component {
   }
 
   renderUserLocation() {
-    const { currentUserCity, city, state, country } = this.props;
+    const { isCurrentUserLocated, city, state, country } = this.props;
 
-    if (currentUserCity) {
+    if (isCurrentUserLocated) {
       return _.compact([ city, state, country ]).join(', ');
     } else {
       return null;
@@ -134,7 +135,7 @@ class SearchResultItem extends Component {
 }
 
 SearchResultItem.propTypes = {
-  currentUserCity: PropTypes.string,
+  isCurrentUserLocated: PropTypes.bool,
   avatar: PropTypes.node.isRequired,
   firstName: PropTypes.string,
   city: PropTypes.string,
@@ -148,14 +149,16 @@ SearchResultItem.propTypes = {
   ratingCount: PropTypes.number,
   search: PropTypes.object,
   volunteers: PropTypes.array,
-  history: PropTypes.object
+  history: PropTypes.object,
+  locale: PropTypes.string
 };
 
 SearchResultItem.defaultProps = {
+  locale: '',
   volunteers: [],
   search: {},
   averageRating: 0,
-  currentUserCity: '',
+  isCurrentUserLocated: false,
   firstName: '',
   city: '',
   country: '',

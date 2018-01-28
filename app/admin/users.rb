@@ -18,6 +18,7 @@ ActiveAdmin.register User do
       :address,
       :city,
       :description,
+      :locale,
       :state,
       :active,
       :country,
@@ -66,6 +67,46 @@ ActiveAdmin.register User do
       link_to 'Deactivate User', deactivate_user_admin_user_path(resource), method: :put
     else
       link_to 'Reactivate User', reactivate_user_admin_user_path(resource), method: :put
+    end
+  end
+
+  csv do
+    column :email
+    column :first_name
+    column :last_name
+    column :url_slug
+    column :active
+    column :contact_permission
+    column :address
+    column :city
+    column :description
+    column :state
+    column :country
+    column :timezone
+    column :average_rating
+    column :current_sign_in_ip
+    column :current_sign_in_at
+    column :last_sign_in_ip
+    column :last_sign_in_at
+    column :created_at
+    column :updated_at
+
+    column :roles do |user|
+      user.roles.each do |role|
+          role[:name]
+        end
+      end
+
+    column :languages do |user|
+      user.languages.each do |language|
+        language[:name]
+      end
+    end
+
+    column :programs do |user|
+      user.programs.each do |program|
+        program[:name]
+      end
     end
   end
 
@@ -163,6 +204,7 @@ ActiveAdmin.register User do
       f.input :description
       f.input :contact_permission
       f.input :address
+      f.input :locale
       f.input :city
       f.input :state
       f.input :active

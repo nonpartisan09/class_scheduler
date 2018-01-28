@@ -1,5 +1,5 @@
 class UserMailer < ApplicationMailer
-  def welcome_email(user, password)
+  def welcome_email(user, password='')
     @user = user
     @password = password
 

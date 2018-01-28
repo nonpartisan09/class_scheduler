@@ -28,9 +28,7 @@ Role.create({
 })
 
 TermsAndConditions.create({
-    description: 'some text',
-    version: 1,
-    id: 1
+    description: 'some text'
 })
 
 Program.create({

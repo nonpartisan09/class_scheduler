@@ -7,7 +7,6 @@ import { FormattedMessage } from 'react-intl';
 
 import { LOWEST, HIGHEST, OLDEST, RECENT } from './SortFilter';
 
-import { getData } from './utils/sendData';
 import './CommentContainer.css';
 
 class CommentContainer extends Component {
@@ -27,21 +26,39 @@ class CommentContainer extends Component {
   render() {
     return (
       <div className='commentContainerMainContainer'>
-        <h4 className='commentContainerTitle'>
-         Comments
-        </h4>
-        <DropDownMenu className='commentContainerDropdown' value={ this.state.sortBy } onClose={ this.handleBlur } onChange={ this.handleChange } >
-          <MenuItem value={ 0 } primaryText='Sort by' />
-          <MenuItem value={ RECENT } primaryText='Most Recent' />
-          <MenuItem value={ OLDEST } primaryText='Oldest' />
-          <MenuItem value={ HIGHEST } primaryText='Highest Rating' />
-          <MenuItem value={ LOWEST } primaryText='Lowest Rating' />
-        </DropDownMenu>
+        { this.renderCommentHeader() }
         <ul className='commentContainerList'>
           { this.renderListItems() }
         </ul>
       </div>
     );
+  }
+
+  renderCommentHeader() {
+    const { comments } = this.state;
+
+    if (_.size(comments) > 10) {
+      return (
+        <div>
+          <h4 className='commentContainerTitleWithDropDown'>
+            Comments
+          </h4>
+          <DropDownMenu className='commentContainerDropdown' value={ this.state.sortBy } onClose={ this.handleBlur } onChange={ this.handleChange } >
+            <MenuItem value={ 0 } primaryText='Sort by' />
+            <MenuItem value={ RECENT } primaryText='Most Recent' />
+            <MenuItem value={ OLDEST } primaryText='Oldest' />
+            <MenuItem value={ HIGHEST } primaryText='Highest Rating' />
+            <MenuItem value={ LOWEST } primaryText='Lowest Rating' />
+          </DropDownMenu>
+        </div>
+      );
+    } else {
+      return (
+        <h4 className='commentContainerTitle'>
+          Comments
+        </h4>
+      );
+    }
   }
 
   handleChange(event, index, value) {
@@ -91,7 +108,7 @@ class CommentContainer extends Component {
         <li>
           <FormattedMessage
            id='CommentContainer.noCommentAvailable'
-            defaultMessage='No comment available'
+            defaultMessage='No comments available'
           />
         </li>
       )

@@ -6,13 +6,5 @@
   {
     "id": "ConversationIndexPage.NoMessage",
     "defaultMessage": "No Message Available"
-  },
-  {
-    "id": "messageReply",
-    "defaultMessage": "Reply"
-  },
-  {
-    "id": "conversationIndexPageReviewLink",
-    "defaultMessage": "Review"
   }
 ]

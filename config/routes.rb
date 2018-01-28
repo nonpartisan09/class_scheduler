@@ -9,18 +9,21 @@ Rails.application.routes.draw do
 
     resources :availabilities
     resource :conversations, only: [ :new, :create ]
-    resources :messages, only: [ :new, :create, :update ]
+    resources :messages, only: [ :new, :create ]
     resources :reviews, only: [ :create, :update, :destroy ]
     resources :sessions
     resource :users
 
     get 'reviews/(:user_id/:order)', to: 'reviews#index'
     get 'inbox', to: 'conversations#index'
+    get 'inbox/:id', to: 'conversations#show'
     get 'availabilities/new' => 'availabilities#new'
     get 'search' => 'availabilities#search'
     get 'results' => 'results#index'
     get 'volunteers', to: 'results#show'
     get 'my_profile', to: 'user_profiles#show'
+    get 'messages/:id', to: 'messages#update'
+
 
     # needed for devise
     devise_scope :user do

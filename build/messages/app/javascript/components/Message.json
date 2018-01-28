@@ -1,0 +1,10 @@
+[
+  {
+    "id": "messageReply",
+    "defaultMessage": "Reply"
+  },
+  {
+    "id": "conversationIndexPageReviewLink",
+    "defaultMessage": "View Profile / Review"
+  }
+]

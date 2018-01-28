@@ -23,6 +23,8 @@ import FormData from './utils/FormData';
 import SnackBarComponent from './reusable/SnackBarComponent';
 
 import './UserProfile.css';
+import formatLink from './utils/Link';
+import isCurrentUserLocated from './utils/isCurrentUserLocated';
 
 class UserProfile extends Component {
   constructor(props, context) {
@@ -32,10 +34,10 @@ class UserProfile extends Component {
     this.updateStars = this.updateStars.bind(this);
     this.handleViewProfileClick = this.handleViewProfileClick.bind(this);
 
-    const { review : { review, id } } = props;
+    const { review : { id } } = props;
 
     this.state = {
-      stars: review,
+      tenLastComments: props.ten_last_comments,
       showSnackBar: false,
       message: '',
       id: id
@@ -53,7 +55,6 @@ class UserProfile extends Component {
 
   updateStars(review, id) {
     this.setState({
-      stars: review,
       id: id
     });
   }
@@ -93,7 +94,15 @@ class UserProfile extends Component {
         </div>
       );
     } else {
-      const { user, user: { url_slug, first_name, ten_last_comments, programs }, review } = this.props;
+      const {
+        user,
+        user: {
+          url_slug,
+          first_name,
+          programs },
+        review
+      } = this.props;
+      const { tenLastComments } = this.state;
 
       return (
         <div>
@@ -115,7 +124,10 @@ class UserProfile extends Component {
             </Link>
 
             <div className='userProfileReviewAndComment' >
-              <ReviewContainer review={ review } onClick={ this.handleReviewSubmit } />
+              <ReviewContainer
+                review={ review }
+                onClick={ this.handleReviewSubmit }
+              />
             </div>
 
             <div className='userProfileDetailsContainer'>
@@ -159,7 +171,10 @@ class UserProfile extends Component {
               </div>
 
               <div className='userProfileCommentContainer'>
-                <CommentContainer userId={ url_slug } comments={ ten_last_comments } />
+                <CommentContainer
+                  userId={ url_slug }
+                  comments={ tenLastComments }
+                />
               </div>
             </div>
 
@@ -204,15 +219,16 @@ class UserProfile extends Component {
 
     if (state && state.search) {
       const { search, volunteers } = state;
+      const { currentUser: { locale } } = this.props;
 
-      history.replace('/volunteers', { ...{ search }, volunteers });
+      history.push(formatLink('/volunteers', locale), { ...{ search }, volunteers });
     }
   }
 
   renderLocation() {
-    const { currentUser: { city } } = this.props;
+    const { currentUser } = this.props;
 
-    if (city) {
+    if (isCurrentUserLocated(currentUser)) {
       return (
         <div className='userProfileField'>
           <FormattedMessage
@@ -274,29 +290,6 @@ class UserProfile extends Component {
     }
   }
 
-  handleGetUserData() {
-    const { match: { params: { url_slug } } } = this.props;
-
-    const requestParams = {
-      url: `/profiles/${url_slug}`,
-
-      successCallBack: ({ user, currentUser }) => {
-        this.setState({
-          user,
-          currentUser
-        });
-      },
-
-      errorCallBack: (message) => {
-        this.setState({
-          message: message,
-        });
-      }
-    };
-
-    return getData(requestParams);
-  }
-
   handleReviewSubmit(value, comment) {
     const { user: { url_slug }, review: { id } } = this.props;
 
@@ -309,12 +302,18 @@ class UserProfile extends Component {
       attributes,
       method,
       successCallBack: (response) => {
-        const { review: { review, id } } = response;
+        const { review: { id }, message, ten_last_comments } = response;
 
         this.setState({
-          stars: _.toNumber(review),
-          id: id
+          id: id,
+          showSnackBar: true,
+          message,
+          tenLastComments: ten_last_comments
         });
+
+        setTimeout(() => {
+          this.handleHideSnackBar();
+        }, 2000);
       },
 
       errorCallBack: (message) => {
@@ -361,19 +360,18 @@ UserProfile.propTypes = {
     thumbnail_url: PropTypes.string,
     url_slug: PropTypes.string,
   }),
+  ten_last_comments: PropTypes.array,
   history: PropTypes.object,
   location: PropTypes.shape({
     state: PropTypes.shape({
       volunteers: PropTypes.array,
       search: PropTypes.object
     })
-  }),
-  match: PropTypes.shape({
-    params: PropTypes.object
   })
 };
 
 UserProfile.defaultProps = {
+  ten_last_comments: [],
   user: {
     city: '',
     description: '',
@@ -385,10 +383,6 @@ UserProfile.defaultProps = {
   location: {
     state: {
       search: {}
-    }
-  },
-  match: {
-    params: {
     }
   }
 };

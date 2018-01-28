@@ -1,5 +1,9 @@
 [
   {
+    "id": "signIn",
+    "defaultMessage": "Sign In"
+  },
+  {
     "id": "SignIn.passwordRecovery",
     "defaultMessage": "Forgot your password?"
   },

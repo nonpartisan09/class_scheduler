@@ -9,24 +9,35 @@ class ConversationsController < ApplicationController
 
   def index
     @conversations = Conversation.participating(current_user).order('updated_at DESC')
-    @conversations = @conversations.collect { |conversation| ConversationDecorator.new(conversation).decorate }
+    @conversations = @conversations.collect { |conversation| ConversationDecorator.new(conversation, current_user).simple_decorate }
 
     @user = UserDecorator.new(current_user).simple_decorate
 
     @data = { :conversations => @conversations, :currentUser => @user }
+
+    render :index
   end
 
   def show
-    @message = Message.new
+    @conversation = ConversationDecorator.new(@conversation, current_user).decorate
+    @user = UserDecorator.new(current_user).simple_decorate
+
+    @data = { :conversation => @conversation, :currentUser => @user }
+
+    render :show
   end
 
   private
 
   def set_conversation
-    @conversation = Conversation.find_by(id: params[:id])
+    @conversation = Conversation.find_by(id: permitted_params[:id])
   end
 
   def check_participating!
     redirect_to '/inbox' unless @conversation.present? && @conversation.participates?(current_user)
+  end
+
+  def permitted_params
+    params.permit(:id)
   end
 end

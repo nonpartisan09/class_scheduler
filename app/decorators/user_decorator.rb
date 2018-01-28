@@ -11,6 +11,7 @@ class UserDecorator
     {
       :city => city,
       :state => state,
+      :locale => locale,
       :country => country,
       :programs => programs,
       :client => client,
@@ -27,6 +28,25 @@ class UserDecorator
     }.merge(availabilities_hash)
   end
 
+  def updateable
+    {
+        :programs => programs,
+        :locale => locale,
+        :address => address,
+        :city => city,
+        :country => country,
+        :state => state,
+        :client => client,
+        :volunteer => volunteer,
+        :email => email,
+        :first_name => first_name,
+        :thumbnail_image => picture,
+        :description => description,
+        :timezone => timezone,
+        :languages => languages,
+    }
+  end
+
   def availabilities_hash
     if volunteer
       {
@@ -41,6 +61,7 @@ class UserDecorator
   def decorate
     {
         :programs => programs,
+        :locale => locale,
         :address => address,
         :city => city,
         :country => country,
@@ -57,8 +78,11 @@ class UserDecorator
         :languages => languages,
         :average_rating => average_rating,
         :rating_count => rating_count,
-        :ten_last_comments => ten_last_comments
     }.merge(availabilities_hash)
+  end
+
+  def locale
+    user.locale || 'en'
   end
 
   def rating_count
@@ -139,9 +163,5 @@ class UserDecorator
 
   def last_logged_in
     time_ago_in_words(user.last_sign_in_at)
-  end
-
-  def ten_last_comments
-    user.reviews.last(10).collect{ |review| ReviewDecorator.new(review).simple_decorate }
   end
 end

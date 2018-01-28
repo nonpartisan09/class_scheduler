@@ -2,9 +2,10 @@
     display: flex;
     flex-flow: row wrap;
     justify-content: flex-start;
-    align-items: baseline;
     background-color: rgba(173, 225, 244, 0.3);
     margin-top: 24px;
+    flex: 1 1 auto;
+    align-items: center;
 }
 
 .programHeader {

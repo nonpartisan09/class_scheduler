@@ -11,6 +11,7 @@ import './Header.css';
 
 import { getData } from '../utils/sendData';
 import HomeLink from './HomeLink';
+import formatLink from '../utils/Link';
 
 class Header extends Component {
   constructor(props, context) {
@@ -58,20 +59,21 @@ class Header extends Component {
     }();
 
     if ( _.size(currentUser) > 0 ) {
+      const { locale } = currentUser;
       return (
         <nav className={ navigationClassName } >
-          <HomeLink />
+          <HomeLink locale={ locale } />
 
           { this.renderRoleLinks() }
 
-          <a href='/my_profile' className='slidingLink' >
+          <a href={ formatLink('/my_profile', locale) } className='slidingLink' >
             <FormattedMessage
               id='profileLink'
               defaultMessage='Profile'
             />
           </a>
 
-          <a href='/inbox' className='slidingLink' >
+          <a href={ formatLink('/inbox', locale) } className='slidingLink' >
             <FormattedMessage
               id='inboxLink'
               defaultMessage='Inbox'
@@ -94,17 +96,17 @@ class Header extends Component {
         <nav className={ navigationClassName } >
           <HomeLink />
 
-          <a href='/sign_up/volunteer' className='slidingLink'>
+          <a href={ formatLink('/sign_up/volunteer') } className='slidingLink'>
             <FormattedMessage
               id='signUpVolunteer'
             />
           </a>
-          <a href='/sign_up/client' className='slidingLink' >
+          <a href={ formatLink('/sign_up/client') } className='slidingLink' >
             <FormattedMessage
               id='signUpClient'
             />
           </a>
-          <a href='/sign_in/' className='slidingLink'>
+          <a href={ formatLink('/sign_in') }  className='slidingLink'>
             <FormattedMessage
               id='signIn'
             />
@@ -116,8 +118,9 @@ class Header extends Component {
   }
 
   renderStaticButtons() {
+    const { currentUser: { locale } } = this.props;
     return [
-      <a key='about' href='/about' className='slidingLink'>
+      <a key='about' href={ formatLink('/about', locale) } className='slidingLink'>
         <FormattedMessage
           id='aboutPage'
           defaultMessage='About'
@@ -128,25 +131,29 @@ class Header extends Component {
   }
 
   renderRoleLinks() {
-    if (this.props.currentUser.client) {
+    const { currentUser: { client, volunteer, locale } } = this.props;
+
+    if (client) {
       return (
-        <a href='/search' className='slidingLink'>
+        <a href={ formatLink('/search', locale) } className='slidingLink'>
           <FormattedMessage
             id='search'
             defaultMessage='Search'
           />
         </a>
       );
-    } else if (this.props.currentUser.volunteer) {
+    }
+
+    if (volunteer) {
       return (
         <span>
-          <a href='/availabilities/new' className='slidingLink'>
+          <a href={ formatLink('/availabilities/new', locale) } className='slidingLink'>
             <FormattedMessage
               id='availabilityCreateNew'
             />
           </a>
 
-          <a href='/availabilities' className='slidingLink'>
+          <a href={ formatLink('/availabilities', locale) } className='slidingLink'>
             <FormattedMessage
               id='availabilitiesLink'
               defaultMessage='Availabilities'
@@ -181,7 +188,7 @@ class Header extends Component {
       jsonBody: {},
       method: 'DELETE',
       successCallBack: () => {
-        location.assign('/');
+        location.assign(formatLink('/'));
       },
 
       errorCallBack: (message) => {

@@ -10,12 +10,11 @@
   "Delete": "Delete",
   "AvailabilityIndexPage.Help": "I can help with:",
   "availabilityCreateNew": "Create new availabilities",
-  "CommentContainer.noCommentAvailable": "No comment available",
+  "CommentContainer.noCommentAvailable": "No comments available",
   "CommentContainer.unavailable": "Not available",
   "ConversationIndexPage.Search": "Search for volunteers",
   "ConversationIndexPage.NoMessage": "No Message Available",
   "messageReply": "Reply",
-  "conversationIndexPageReviewLink": "Review",
   "Homepage.subtitle": "Connect and share with our community of clients and volunteers",
   "Homepage.list": "How this free service works:",
   "Homepage.listItem1": "Clients post what they need help with, such as English language tutoring.",
@@ -36,7 +35,7 @@
   "NewAvailability.startTimeBlank": "Please select a start time",
   "NewAvailability.endTimeBlank": "Please select an end time",
   "NewAvailability.startTimeError": "Please select a start time chronologically before end time",
-  "NewAvailability.endTimeError": "Please select an end time chronologically after end time",
+  "NewAvailability.endTimeError": "Please select an end time chronologically after start time",
   "NewAvailability.updateTimezone": "Not your timezone?",
   "NewAvailability.addAvailabilities": "Create All Availabilities",
   "signUpHeader": "Join Tutoria community: Step 2/2",
@@ -122,7 +121,8 @@
   "UserForm.addressVolunteerDialog3": "This info is not required unless you would like to allow clients to ask for face to face sessions.",
   "UserForm.addressClientDialog1": "Your location will only be used to help find volunteers in your area.",
   "UserForm.addressClientDialog2": "Your street address will not be shown to other users. Only your town/city and country.",
-  "UserForm.addressClientDialog3": "This info is not required unless you would like to use the location feature."
+  "UserForm.addressClientDialog3": "This info is not required unless you would like to use the location feature.",
+  "conversationIndexPageReviewLink": "View Profile / Review"
 },
   "es": {
   "aboutPage": "Acerca",
@@ -139,7 +139,6 @@
   "ConversationIndexPage.Search": "Buscar Voluntarios",
   "ConversationIndexPage.NoMessage": "Mensaje No Disponible",
   "messageReply": "Respuesta",
-  "conversationIndexPageReviewLink": "Revisar",
   "Footer.termsLink": "Términos de uso y Póliza de Privacidad",
   "homeLink": "Página principal",
   "profileLink": "Perfil",
@@ -235,11 +234,22 @@
   "UserForm.helpingWith": "Estoy interesado en ayudar con:",
   "UserForm.helpedWith": "Estoy interesado en que me ayuden con:",
   "UserForm.addressVolunteerDialog1": "Su ubicación solo será usado para ayudar a clientes encontrar voluntarios en su área.",
-  "UserForm.addressVolunteerDialog2": "Su dirección no será mostrada a otros usuarios.  Solo su pueblo/ciudad.",
   "UserForm.addressVolunteerDialog3": "Esta información no es requerida al menos que usted permita los clientes pedir sesiones de cara a cara.",
   "UserForm.addressClientDialog1": "Su ubicación solo será usada para ayudar encontrar voluntarios en su área.",
-  "UserForm.addressClientDialog2": "Su dirección no será mostrada a otros usuarios.  Solo su pueblo/ciudad.",
-  "UserForm.addressClientDialog3": "Esta información no es requerida al menos que usted le gustaría usar la función de ubicación.."
+  "UserForm.addressClientDialog3": "Esta información no es requerida al menos que usted le gustaría usar la función de ubicación.",
+  "conversationIndexPageReviewLink": "Ver Perfil / Evaluar",
+  "UserForm.meetingModeOne": "En línea y en persona",
+  "UserForm.meetingModeTwo": "Solamente en linea",
+  "UserForm.myLanguages": "Actualize Mis Lenguaje(s)",
+  "timezone": "Huso Horario",
+  "CommentContainer.noCommentAvailable": "Comentarios no disponibles",
+  "CommentContainer.unavailable": "No disponible",
+  "SignUp.signUpHeader": "Unirse a la comunidad Tutoría: Paso 1/2",
+  "UserProfile.Back": "Regresar a los resultados de búsqueda",
+  "UserForm.country": "País",
+  "UserForm.averageRating": "Evaluación Promedia",
+  "UserForm.addressVolunteerDialog2": "Su dirección no será mostrada a otros usuarios. Solo su pueblo/ciudad y país.",
+  "UserForm.addressClientDialog2": "Su dirección no será mostrada a otros usuarios. Solo su pueblo/ciudad y país."
   }
 }
 

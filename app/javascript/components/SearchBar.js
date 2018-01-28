@@ -17,6 +17,7 @@ import SearchOptionalFields from './SearchOptionalFields';
 
 import './SearchBar.css';
 import Footer from './reusable/Footer';
+import formatLink from './utils/Link';
 import SnackBarComponent from './reusable/SnackBarComponent';
 import SearchUrl from './utils/SearchUrl';
 
@@ -54,8 +55,9 @@ class SearchBar extends Component {
       },
       currentUser: {
         city,
-        timezone
-      } ,
+        timezone,
+        locale
+      },
       validateAllHandler
     } = this.props;
 
@@ -73,7 +75,7 @@ class SearchBar extends Component {
               disabled
             />
 
-            <a href="/my_profile" className='slidingLink' >
+            <a href={ formatLink('/my_profile', locale) } className='slidingLink' >
               <FormattedMessage id='SearchBar.timezoneLink' defaultMessage='Not your timezone?' />
             </a>
           </div>
@@ -213,7 +215,7 @@ class SearchBar extends Component {
   }
 
   postSearch() {
-    const { search, history } = this.props;
+    const { search, history, currentUser: { locale } } = this.props;
 
     const requestParams = {
       url: SearchUrl(search),
@@ -225,7 +227,7 @@ class SearchBar extends Component {
             status
           });
         } else {
-         history.push('/volunteers',
+         history.push(formatLink('/volunteers', locale),
            { ...response,
              ...{ search }
            });

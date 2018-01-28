@@ -15,4 +15,11 @@
 
 .availabilityListItem {
     padding-left: 0;
+    margin-right: 6px;
+}
+
+@media (min-device-width: 0) and (max-device-width: 650px), (max-width: 650px)  {
+    .availabilityIndexProgramsContainer {
+        margin: 12px 0;
+    }
 }

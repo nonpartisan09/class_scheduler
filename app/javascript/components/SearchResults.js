@@ -120,8 +120,8 @@ class SearchResults extends Component {
     if (pageCount > 1) {
       return (
         <ReactPaginate
-          previousLabel={ 'previous' }
-          nextLabel={ 'next' }
+          previousLabel='previous'
+          nextLabel='next'
           breakLabel={ <a href=''>...</a> }
           breakClassName='break-me'
           pageCount={ this.state.pageCount }
@@ -139,15 +139,16 @@ class SearchResults extends Component {
     const { volunteers } = this.state;
 
     if (volunteers) {
-      const { currentUser: { city: currentUserCity }, history } = this.props;
+      const { currentUser: { locale }, currentUser, history } = this.props;
       const { search } = this.state;
 
       return _.map(_.values(volunteers), ({ state, country, rating_count, languages, average_rating, thumbnail_image, first_name, city, last_logged_in, programs, url_slug }, key) => {
         return [
           <SearchResultItem
+            locale={ locale }
             key={ key }
             search={ search }
-            currentUserCity={ currentUserCity }
+            isCurrentUserLocated={ isCurrentUserLocated(currentUser) }
             firstName={ first_name }
             avatar={ thumbnail_image }
             lastLoggedin={ last_logged_in }

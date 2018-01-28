@@ -13,8 +13,7 @@ import SelectField from 'material-ui/SelectField';
 import PhotoIcon from 'material-ui/svg-icons/image/photo';
 import InfoIcon from 'material-ui/svg-icons/action/info';
 import Toggle from 'material-ui/Toggle';
-import validate from 'react-joi-validation';
-import { useSecondArgument } from 'react-joi-validation';
+import validate, { useSecondArgument } from 'react-joi-validation';
 
 import { FormattedMessage } from 'react-intl';
 
@@ -26,9 +25,11 @@ import Footer from './Footer';
 import newUser from '../utils/CheckUpdatedFields';
 import UserFormConstants from '../utils/UserFormConstants';
 import ReviewAsStars from '../ReviewAsStars';
-import { ENGLISH, SPANISH } from '../utils/available_locales';
+import { ENGLISH, SPANISH } from '../utils/availableLocales';
+import formatLink from '../utils/Link';
 
 import './withUserForm.css';
+import ErrorField from './ErrorField';
 
 const { SIGN_UP, UPDATE_PROFILE } = UserFormConstants;
 
@@ -335,9 +336,16 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
       const updatedUser = newUser(currentUser, user);
 
       if (_.size(updatedUser) > 0 && _.size(errors) === 0) {
+        const {  validateAllHandler } = this.props;
+
         return (
           <div className='userFormOuterButton'>
-            <RaisedButton className='userFormSaveButton' label={ wrappedProps.primaryButtonLabel } onClick={ this.handleSubmit } primary />
+            <RaisedButton
+              className='userFormSaveButton'
+              label={ wrappedProps.primaryButtonLabel }
+              onClick={ validateAllHandler(this.handleSubmit) }
+              primary
+            />
           </div>
         );
       }
@@ -652,16 +660,18 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
       if (type === SIGN_UP) {
         const {
           changeHandler,
+          errors,
           currentUser: {
             terms_and_conditions,
             contact_permission,
+            locale
           }
         } = this.props;
 
         return (
           <div>
             <div className='userFormTermsAndConditionsLink'>
-              <a href={ '/terms_of_use' } className='slidingLink' target='_blank' rel='noreferrer noopener'>
+              <a href={ formatLink('/terms_of_use', locale) } className='slidingLink' target='_blank' rel='noreferrer noopener'>
                 <FormattedMessage
                   id='UserForm.termsRead'
                   defaultMessage='Please read Tutoría’s terms of use.'
@@ -680,6 +690,8 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                 />
               }
             />
+
+            <ErrorField error={ errors.terms_and_conditions } />
 
             <Checkbox
               label={
@@ -843,7 +855,6 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
 
     handleSubmit() {
       const { errors } = this.props;
-
       if ( _.size(errors) === 0) {
         wrappedProps.primaryButtonAction.apply(this);
       }
@@ -937,6 +948,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
     changeValues: PropTypes.func.isRequired,
     validateHandler: PropTypes.func.isRequired,
     clearValidationAndResetValues: PropTypes.func.isRequired,
+    validateAllHandler: PropTypes.func.isRequired
   };
 
   UserForm.defaultProps = {

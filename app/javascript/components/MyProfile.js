@@ -4,8 +4,10 @@ import _ from 'lodash';
 import { FormattedMessage } from 'react-intl';
 
 import { postData } from './utils/sendData';
-import Header from './reusable/Header';
+import { POST } from './utils/RestConstants';
 
+import Header from './reusable/Header';
+import formatLink from './utils/Link';
 import UserFormConstants from './utils/UserFormConstants';
 
 import FormData from './utils/FormData';
@@ -20,9 +22,10 @@ const { UPDATE_PROFILE } = UserFormConstants;
 const ignoredFields = [
   'client',
   'volunteer',
-  'last_logged_in',
-  'availabilities',
-  'url_slug'
+  'url_slug',
+  'contact_permission',
+  'terms_and_conditions',
+  'volunteer'
 ];
 
 function handleUpdateProfile() {
@@ -37,7 +40,7 @@ function handleUpdateProfile() {
     const requestParams = {
       url: '/update',
       attributes,
-      method: 'POST',
+      method: POST,
       successCallBack: () => {
         this.setState({
           showSnackBar: true,
@@ -47,9 +50,19 @@ function handleUpdateProfile() {
 
         this.handleClearValues();
 
-        setTimeout(() => {
-          this.handleHideSnackBar();
-        }, 2000);
+        if (updatedUser.locale) {
+          setTimeout(() => {
+            this.handleHideSnackBar();
+            location.assign(formatLink('/my_profile', updatedUser.locale));
+          }, 2000);
+
+        } else {
+          setTimeout(() => {
+            this.handleHideSnackBar();
+            location.reload();
+          }, 2000);
+
+        }
       },
 
       errorCallBack: (message) => {

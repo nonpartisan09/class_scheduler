@@ -12,11 +12,12 @@ import UserFormConstants from './utils/UserFormConstants';
 
 import SignUpSchema from './schema/SignUpSchema';
 import { postData } from './utils/sendData';
+import formatLink from './utils/Link';
 
 const { SIGN_UP } = UserFormConstants;
 
 const ignoredFields = [
-  'current_password',
+  'current_password'
 ];
 
 function handleUserSignUp() {
@@ -46,7 +47,9 @@ function handleUserSignUp() {
         link = '/search';
       }
 
-      history.push(link, { signUp: true });
+      const userLocale = updatedUser.locale || '';
+
+      history.push(formatLink(link, userLocale), { signUp: true });
     },
 
     errorCallBack: (message) => {

@@ -2,8 +2,17 @@ class ConversationDecorator
   include ActionView::Helpers::DateHelper
   attr_reader :conversation
 
-  def initialize(conversation)
-    @conversation = conversation
+  def initialize(conversation, current_user)
+    @conversation, @current_user = conversation, current_user
+  end
+
+  def simple_decorate
+    {
+        :conversee_avatar => conversee_avatar,
+        :id => id,
+        :is_first_message_unread => is_first_message_unread,
+        :conversee => conversee
+    }
   end
 
   def decorate
@@ -18,36 +27,65 @@ class ConversationDecorator
     }
   end
 
+  def conversee
+    if @current_user.id != @conversation.author_id
+      sender_name
+    else
+      recipient_name
+    end
+  end
+
+  def conversee_avatar
+    if @current_user.id != @conversation.author_id
+      sender_avatar
+    else
+      recipient_avatar
+    end
+  end
+
+
+  def id
+    @conversation.id
+  end
+
   def author
-    @author ||= User.find(@conversation.author_id)
+    User.where(:id => @conversation.author_id).first || nil
   end
 
   def recipient
-    @recipient ||= User.find(@conversation.recipient_id)
+    User.where(:id => @conversation.recipient_id).first || nil
   end
 
   def sender_url_slug
-    author.url_slug
+    author.url_slug unless author.nil?
   end
 
   def recipient_url_slug
-    recipient.url_slug
+    recipient.url_slug unless recipient.nil?
   end
 
   def sender_name
-    author.first_name
+   if author.nil?
+     "Deleted User"
+   else
+     author.first_name
+   end
   end
 
   def recipient_name
-    recipient.first_name
+    if author.nil?
+      "Deleted User"
+    else
+      recipient.first_name
+    end
   end
 
   def recipient_avatar
-    picture(recipient.thumbnail_image)
+    picture(recipient.thumbnail_image) unless recipient.nil?
   end
 
   def sender_avatar
-    picture(author.thumbnail_image)
+    picture(author.thumbnail_image) unless author.nil?
   end
 
   def picture(thumbnail)
@@ -62,5 +100,13 @@ class ConversationDecorator
 
   def messages
     @conversation.messages.collect{ |message| MessageDecorator.new(message).decorate }
+  end
+
+  def is_first_message_unread
+    latest_message.unread && @current_user.id != latest_message.user_id
+  end
+
+  def latest_message
+    @conversation.messages.last
   end
 end

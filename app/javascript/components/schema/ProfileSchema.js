@@ -42,16 +42,7 @@ const ProfileSchema = {
     }
   }),
 
-  thumbnail_image: Joi.object().allow({}).keys({
-    image: Joi.object(),
-    url: Joi.string()
-  }).or('image', 'url').options({
-    language: {
-      object: {
-        missing: 'Must provide a thumbnail'
-      }
-    }
-  }),
+  thumbnail_image: Joi.alternatives().try(Joi.object(), Joi.string()),
 
   address: Joi.string().allow(''),
   city: Joi.string().allow(''),
@@ -68,7 +59,7 @@ const ProfileSchema = {
       }
     }
   }),
-  current_password: Joi.string().min(8),
+  current_password: Joi.string().min(8).allow(''),
   password: Joi.string().min(8).allow(''),
   password_confirmation: Joi.any().valid(Joi.ref('password')).options({
     language: {
@@ -76,7 +67,11 @@ const ProfileSchema = {
         allowOnly: 'Passwords don\'t match'
       }
     }
-  })
+  }),
+  client: Joi.bool(),
+  contact_permission: Joi.bool(),
+  terms_and_conditions: Joi.bool(),
+  volunteer: Joi.bool()
 };
 
 export default ProfileSchema;

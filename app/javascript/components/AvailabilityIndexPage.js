@@ -8,6 +8,7 @@ import { FormattedMessage } from 'react-intl';
 
 import Header from './reusable/Header';
 import AvailabilitiesTable from './AvailabilitiesTable';
+import formatLink from './utils/Link';
 
 import './AvailabilityIndexPage.css';
 
@@ -25,7 +26,7 @@ class AvailabilityIndexPage extends Component {
               defaultMessage='I can help with:'
             />
             <ul className='availabilityIndexProgramsContainer'>
-              { _.map(this.props.programs, ({ name }) => <Chip className='availabilityListItem' key={ name }>{ name }</Chip>) }
+              { this.renderAvailablePrograms() }
             </ul>
 
             { this.renderAvailabilities() }
@@ -35,8 +36,16 @@ class AvailabilityIndexPage extends Component {
     );
   }
 
+  renderAvailablePrograms() {
+    return _.map(this.props.programs, ({ name }) =>
+      <li key={ name } className='availabilityListItem'>
+        <Chip key={ name }>{ name }</Chip>
+      </li>
+    );
+  }
+
   renderAvailabilities() {
-    const { availabilities, currentUser: { timezone } } = this.props;
+    const { availabilities, currentUser: { timezone, locale } } = this.props;
 
     if ( _.size(availabilities) > 0 ) {
       return (
@@ -50,7 +59,7 @@ class AvailabilityIndexPage extends Component {
       );
     } else {
       return (
-        <a href='/availabilities/new' >
+        <a href={ formatLink('/availabilities/new', locale) } >
           <RaisedButton primary className='conversationButton' >
             <FormattedMessage
               id='availabilityCreateNew'

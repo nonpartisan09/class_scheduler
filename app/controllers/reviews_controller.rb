@@ -20,13 +20,18 @@ class ReviewsController < ApplicationController
      )
 
      @review.save!
+     ten_last_comments = get_ten_last_comments
    rescue Exception => e
      message = e.message
      status = :unprocessable_entity
 
      render json: { message: message }, status: status
    else
-     render json: { review: ReviewDecorator.new(@review).decorate }, status: :ok
+     render json: {
+         message: 'Review successful',
+         review: ReviewDecorator.new(@review).decorate,
+         ten_last_comments: ten_last_comments
+     }, status: :ok
     end
   end
 
@@ -42,13 +47,18 @@ class ReviewsController < ApplicationController
       @review.comment = permitted_params[:comment]
 
       @review.save!
+      ten_last_comments = get_ten_last_comments
     rescue Exception => e
       message = e.message
       status = :unprocessable_entity
 
       render json: { message: message }, status: status
     else
-      render json: { review: ReviewDecorator.new(@review).decorate }, status: :ok
+      render json: {
+          message: 'Review successful',
+          review: ReviewDecorator.new(@review).decorate,
+          ten_last_comments: ten_last_comments
+      }, status: :ok
     end
   end
 
@@ -87,16 +97,17 @@ class ReviewsController < ApplicationController
 
   private
 
+  def get_ten_last_comments
+    @user.reviews.last(10).collect{ |review| ReviewDecorator.new(review).simple_decorate }
+  end
+
   def update_average_rating
     begin
       ratings = Review.where(:user_id => @user.id)
       rating_count = ratings.count
       average_rating = ratings.average(:review)
 
-      @user.average_rating = average_rating
-      @user.rating_count = rating_count
-
-      @user.save!
+      @user.update_attributes(:average_rating => average_rating, :rating_count => rating_count)
     rescue Exception => e
       message = e.message
       status = :unprocessable_entity

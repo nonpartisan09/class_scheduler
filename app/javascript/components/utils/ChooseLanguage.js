@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { ENGLISH, SPANISH } from './available_locales';
+import { ENGLISH, SPANISH } from './availableLocales';
 
 function ChooseLanguage() {
   const currentUrl = _.split(window.location.href, '/');

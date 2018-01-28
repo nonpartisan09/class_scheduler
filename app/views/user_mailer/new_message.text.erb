@@ -1,9 +1,10 @@
-Welcome to tutoría.com, <%= @user.first_name %>
+<%= @user.first_name %>, you've got mail!
 ===============================================
 
-<%= @user.first_name %>, you've got mail!
-<%= @sender.first_name %> has sent you a message.
+<%= @sender.first_name %> has sent you a message:
+<%= @message.subject %>
 <%= @message.body %>
-
-To access it on tutoría.com just follow this link: <%= @url %>.
+To view the full message, please sign in: <%= @url %>.
+Have you worked with <%= @sender.first_name %>?
+Leave this person a review.
 Thanks and have a great day!

@@ -11,7 +11,8 @@ class User < ActiveRecord::Base
   has_many :enrollments
   has_many :programs, through: :enrollments
 
-  has_many :reviews, dependent: :destroy
+  has_many :reviews, :class_name => 'Review', foreign_key: 'user_id', dependent: :destroy
+  has_many :reviews, :class_name => 'Review', foreign_key: 'author_id', dependent: :destroy
   accepts_nested_attributes_for :reviews
 
   has_many :availabilities, dependent: :destroy

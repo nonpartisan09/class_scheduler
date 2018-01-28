@@ -49,16 +49,7 @@ const SignUpSchema = {
     }
   }),
 
-  thumbnail_image: Joi.object().keys({
-    image: Joi.object().allow({}),
-    url: Joi.string().allow('')
-  }).or('image', 'url').options({
-    language: {
-      object: {
-        missing: 'Must provide a thumbnail'
-      }
-    }
-  }),
+  thumbnail_image: Joi.alternatives().try(Joi.object(), Joi.string()),
 
   address: Joi.string().allow(''),
   city: Joi.string().allow(''),
@@ -91,7 +82,8 @@ const SignUpSchema = {
         allowOnly: 'Please agree to our terms of use'
       }
     }
-  })
+  }),
+  current_password: Joi.string().min(8).allow('')
 };
 
 export default SignUpSchema;

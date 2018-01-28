@@ -14,8 +14,10 @@
   <%= @message.body %>
 </p>
 <p>
-  To view the full message, please sign in: https://tutoria-staging.herokuapp.com/sign_in.
-  Have you worked with <%= @sender.first_name %>? Leave this person a review at (URL).
+  To view the full message, please sign in: <%= @url %>.
+</p>
+<p>
+  Have you worked with <%= @sender.first_name %>? Leave this person a review.
 </p>
 <p>Thanks and have a great day!</p>
 </body>

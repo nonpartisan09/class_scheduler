@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   before_action :configure_permitted_parameters, if: :devise_controller?
+  before_action :sign_out_if_inactive, if: -> { current_user.present? && !current_user.active }
 
   rescue_from ActionController::RoutingError, :with => :not_found
   respond_to :json, :xml, :html
@@ -76,14 +77,6 @@ class ApplicationController < ActionController::Base
     redirect_to root_path, alert: exception.message
   end
 
-  def after_sign_in_path_for(resource)
-    if resource.admin? && request.referer != new_user_session_path
-      super
-    else
-      admin_dashboard_path
-    end
-  end
-
   def configure_permitted_parameters
     attributes = [ :thumbnail_image ]
     devise_parameter_sanitizer.permit(:sign_up, keys: attributes)
@@ -101,4 +94,7 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def sign_out_if_inactive
+    sign_out
+  end
 end

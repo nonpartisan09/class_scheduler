@@ -17,7 +17,7 @@
   },
   {
     "id": "NewAvailability.endTimeError",
-    "defaultMessage": "Please select an end time chronologically after end time"
+    "defaultMessage": "Please select an end time chronologically after start time"
   },
   {
     "id": "NewAvailability.updateTimezone",

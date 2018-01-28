@@ -15,6 +15,7 @@ import Header from './reusable/Header';
 import SnackBarComponent from './reusable/SnackBarComponent';
 import { postData } from './utils/sendData';
 import Footer from './reusable/Footer';
+import formatLink from './utils/Link';
 
 const schema = {
   email: Joi.string().email({ minDomainAtoms: 2 }).required().options({
@@ -42,7 +43,7 @@ class NewPasswordPage extends Component {
     };
   }
   render() {
-    const { errors, changeHandler, validateHandler, currentUser: { email } } = this.props;
+    const { errors, changeHandler, validateHandler, currentUser: { email, locale } } = this.props;
 
     return (
       <div>
@@ -65,11 +66,11 @@ class NewPasswordPage extends Component {
           { this.renderSubmitButton() }
 
           <div className='signInLinkSecondaryContainer'>
-            <a href='/sign_up/client' className='signInLinkSecondary'>
+            <a href={ formatLink('/sign_up/client', locale) } className='signInLinkSecondary'>
               <FlatButton primary label={ <FormattedMessage id='signUpClient' /> } />
             </a>
 
-            <a href='/sign_up/volunteer' className='signInLinkSecondary'>
+            <a href={ formatLink('/sign_up/volunteer', locale) } className='signInLinkSecondary'>
               <FlatButton primary label={ <FormattedMessage id='signUpVolunteer' /> } />
             </a>
           </div>

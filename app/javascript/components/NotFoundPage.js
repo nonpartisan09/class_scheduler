@@ -10,12 +10,14 @@ import './utils/CheckMobile';
 import Logo from './reusable/Logo';
 
 import './NotFoundPage.css';
+import formatLink from './utils/Link';
 
 class NotFoundPage extends Component {
   render() {
+    const { currentUser: { locale }, currentUser } = this.props;
     return (
       <div className='notFoundPageContainer'>
-        <Header currentUser={ this.props.currentUser } />
+        <Header currentUser={ currentUser } />
         <Paper zDepth={ 1 } className='paperOverride' rounded={ false }>
           <Logo />
           <h1>
@@ -30,7 +32,7 @@ class NotFoundPage extends Component {
               defaultMessage='The page doesn’t exist or some other error occurred.'
             />
           </div>
-          <a href='/'>
+          <a href={ formatLink('/', locale) }>
             <RaisedButton
               primary
               label={
@@ -53,7 +55,9 @@ NotFoundPage.propTypes = {
 };
 
 NotFoundPage.defaultProps = {
- currentUser: {}
+ currentUser: {
+   locale: ''
+ }
 };
 
 export default NotFoundPage;

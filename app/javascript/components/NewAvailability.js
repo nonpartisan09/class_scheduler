@@ -14,6 +14,7 @@ import TimePicker from 'material-ui/TimePicker';
 import TextField from 'material-ui/TextField';
 
 import FormData from './utils/FormData';
+import formatLink from './utils/Link';
 
 import Header from './reusable/Header';
 import ErrorField from './reusable/ErrorField';
@@ -90,7 +91,7 @@ function validateTimes({ values, validateAllValues, changingValues, errors }, ca
               const endTimeError =
                 (<FormattedMessage
                   id='NewAvailability.endTimeError'
-                  defaultMessage='Please select an end time chronologically after end time'
+                  defaultMessage='Please select an end time chronologically after start time'
               />);
 
             if (endTimeIsBeforeStartTime) {
@@ -131,7 +132,10 @@ class NewAvailability extends Component {
     const {
       validateAllHandler,
       currentUser,
-      currentUser: { timezone }
+      currentUser: {
+        timezone,
+        locale
+      }
     } = this.props;
 
     return (
@@ -151,7 +155,7 @@ class NewAvailability extends Component {
                 disabled
               />
 
-              <a href="/my_profile" className='slidingLink' >
+              <a href={ formatLink('/my_profile', locale) } className='slidingLink' >
                 <FormattedMessage
                   id='NewAvailability.updateTimezone'
                   defaultMessage='Not your timezone?'
@@ -200,7 +204,7 @@ class NewAvailability extends Component {
     validateAllHandler();
 
     if (_.size(errors) === 0) {
-      const { availabilities } = this.props;
+      const { availabilities, currentUser: { locale } } = this.props;
 
       const attributes = FormData.from({ availabilities });
       const requestParams = {
@@ -208,7 +212,7 @@ class NewAvailability extends Component {
         attributes,
         method: 'POST',
         successCallBack: () => {
-          location.assign('/availabilities');
+          location.assign(formatLink('/availabilities', locale));
         },
         errorCallBack: (message) => {
           this.setState({

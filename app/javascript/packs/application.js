@@ -43,11 +43,10 @@ import './application.css';
 import localeData from '../../../build/locales/data.json';
 import SearchResults from '../components/SearchResults';
 import AboutPage from '../components/AboutPage';
+import ConversationPage from '../components/ConversationPage';
 
 addLocaleData([ ...en, ...es ]);
 const language = ChooseLanguage();
-console.warn('language:');
-console.warn(language);
 const messages = localeData[language];
 
 const { render }  = ReactDom;
@@ -78,28 +77,32 @@ document.addEventListener('DOMContentLoaded', () => {
       <MuiThemeProvider muiTheme={ getMuiTheme(MuiTheme) }>
         <Router >
           <Switch>
-            <Route exact path='/' render={ () => <Homepage { ...data } /> } />
-            <Route exact path='/:locale/inbox' render={ (props) => <ConversationIndexPage { ...data } { ...props } /> } />
-            <Route exact path='/:locale/messages/new' render={ (props) => <NewMessagePage { ...data } { ...props } /> } />
-            <Route exact path='/:locale/search' render={ (props) => <SearchBar { ...data } { ...props } /> } />
-            <Route exact path='/:locale/volunteers' render={ (props) => <SearchResults { ...data } { ...props } /> } />
-            <Route exact path='/:locale/my_profile' render={ (props) => <MyProfile { ...data } { ...props } /> } />
+            <Route exact path='/(en|es)' render={ () => <Homepage { ...data } /> } />
+
+            <Route exact path='/(en|es)/inbox' render={ (props) => <ConversationIndexPage { ...data } { ...props } /> } />
+            <Route exact path='/(en|es)/inbox/:id' render={ (props) => <ConversationPage { ...data } { ...props } /> } />
+            <Route exact path='/(en|es)/messages/new' render={ (props) => <NewMessagePage { ...data } { ...props } /> } />
+            <Route exact path='/(en|es)/search' render={ (props) => <SearchBar { ...data } { ...props } /> } />
+            <Route exact path='/(en|es)/volunteers' render={ (props) => <SearchResults { ...data } { ...props } /> } />
+            <Route exact path='/(en|es)/my_profile' render={ (props) => <MyProfile { ...data } { ...props } /> } />
             <Route
               exact
-              path='/:locale/profiles/:url_slug'
+              path='/(en|es)/profiles/:url_slug'
               render={ (props) => (renderUserProfile (data, props)) }
             />
-            <Route exact path='/:locale/password/new' component={ NewPasswordPage } />
-            <Route exact path='/:locale/password/edit' render={ (props) => <ResetPasswordPage { ...props } /> } />
-            <Route exact path='/:locale/availabilities/new' render={ (props) => <NewAvailability { ...data } { ...props } /> } />
-            <Route exact path='/:locale/availabilities' render={ (props) => <AvailabilityIndexPage { ...data }  { ...props } /> } />
+            <Route exact path='/(en|es)/password/new' component={ NewPasswordPage } />
+            <Route exact path='/(en|es)/password/edit' render={ (props) => <ResetPasswordPage { ...props } /> } />
+            <Route exact path='/(en|es)/availabilities/new' render={ (props) => <NewAvailability { ...data } { ...props } /> } />
+            <Route exact path='/(en|es)/availabilities' render={ (props) => <AvailabilityIndexPage { ...data }  { ...props } /> } />
 
-            <Route exact path='/:locale/about' render={ (props) => <AboutPage { ...data } { ...props } /> } />
-            <Route exact path='/:locale/sign_in' component={ SignIn } />
-            <Route exact path='/:locale/sign_up/:role' render={ (props) => <SignUp { ...data }  { ...props } /> } />
-            <Route exact path='/:locale/terms_of_use' render={ (props) => <TermsAndConditions { ...data } { ...props } /> } />
+            <Route exact path='/(en|es)/about' render={ (props) => <AboutPage { ...data } { ...props } /> } />
+            <Route exact path='/(en|es)/sign_in' component={ SignIn } />
+            <Route exact path='/(en|es)/sign_up/:role' render={ (props) => <SignUp { ...data }  { ...props } /> } />
+            <Route exact path='/(en|es)/terms_of_use' render={ (props) => <TermsAndConditions { ...data } { ...props } /> } />
 
+            <Route exact path='/' render={ () => <Homepage { ...data } /> } />
             <Route exact path='/inbox' render={ (props) => <ConversationIndexPage { ...data } { ...props } /> } />
+            <Route exact path='/inbox/:id' render={ (props) => <ConversationPage { ...data } { ...props } /> } />
             <Route exact path='/messages/new' render={ (props) => <NewMessagePage { ...data } { ...props } /> } />
             <Route exact path='/search' render={ (props) => <SearchBar { ...data } { ...props } /> } />
             <Route exact path='/volunteers' render={ (props) => <SearchResults { ...data } { ...props } /> } />
