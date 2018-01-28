@@ -1,7 +1,18 @@
 .navigation {
     width: 100%;
-    margin: 24px 0 24px 36px;
+    margin: 24px 0 36px;
     text-align: left;
+    padding-left: 24px;
+}
+
+.headerLocaleLinkContainer {
+    float: right;
+    margin-right: 24px;
+}
+
+.headerLocaleLinkContainer .slidingLink {
+    margin-right: 3px;
+    line-height: 36px;
 }
 
 .slidingLink {
@@ -59,6 +70,12 @@
         outline: none;
     }
 
+    .headerLocaleLinkContainer {
+        float: none;
+        margin-top: 12px;
+        margin-right: 0;
+    }
+
     .slidingLink {
         width: fit-content;
         display: block;
@@ -93,5 +110,10 @@
     .navMenuButton {
         outline: none;
         margin: 24px 0 0 24px;
+    }
+
+    .headerLocaleLinkContainer .slidingLink {
+        display: inline-block;
+        line-height: unset;
     }
 }

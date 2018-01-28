@@ -1,6 +1,5 @@
 class ReviewsController < ApplicationController
-  before_action :authenticate_user!
-  before_action :permitted_params
+  before_action :authenticate_user!, :permitted_params
   after_action :update_average_rating, except: [:index]
 
   def create
@@ -20,7 +19,7 @@ class ReviewsController < ApplicationController
      )
 
      @review.save!
-     ten_last_comments = get_ten_last_comments
+     @comments = get_ten_last_comments
    rescue Exception => e
      message = e.message
      status = :unprocessable_entity
@@ -29,8 +28,8 @@ class ReviewsController < ApplicationController
    else
      render json: {
          message: 'Review successful',
-         review: ReviewDecorator.new(@review).decorate,
-         ten_last_comments: ten_last_comments
+         review: ReviewDecorator.new(@review).simple_decorate,
+         comments: @comments
      }, status: :ok
     end
   end
@@ -47,7 +46,7 @@ class ReviewsController < ApplicationController
       @review.comment = permitted_params[:comment]
 
       @review.save!
-      ten_last_comments = get_ten_last_comments
+      @comments = get_ten_last_comments
     rescue Exception => e
       message = e.message
       status = :unprocessable_entity
@@ -56,8 +55,8 @@ class ReviewsController < ApplicationController
     else
       render json: {
           message: 'Review successful',
-          review: ReviewDecorator.new(@review).decorate,
-          ten_last_comments: ten_last_comments
+          review: ReviewDecorator.new(@review).simple_decorate,
+          comments: @comments
       }, status: :ok
     end
   end
@@ -66,15 +65,26 @@ class ReviewsController < ApplicationController
     redirect_if_unauthorized
 
     begin
-      reviews = Review.search(permitted_params[:user_id], permitted_params[:order])
-      comments = reviews.collect{ |review| ReviewDecorator.new(review).simple_decorate }
+      reviews = Review.search(permitted_params)
+      comments = reviews.collect{ |review| ReviewDecorator.new(review).decorate }
     rescue Exception => e
       message = e.message
       status = :unprocessable_entity
 
       render json: { message: message }, status: status
     else
-      render json: { comments: comments }, status: :ok
+
+      @data = {
+          comments: comments,
+          currentUser: UserDecorator.new(current_user).simple_decorate
+      }
+
+      respond_to do |format|
+        format.html { render :index }
+        format.json { render json: { comments: {
+            ten_last_comments: comments
+        } }, status: :ok }
+      end
     end
 
   end
@@ -98,7 +108,17 @@ class ReviewsController < ApplicationController
   private
 
   def get_ten_last_comments
-    @user.reviews.last(10).collect{ |review| ReviewDecorator.new(review).simple_decorate }
+    received_reviews = @user.received_reviews
+
+    if received_reviews.present?
+      count = received_reviews.count
+      ten_last_comments = received_reviews.order(created_at: :desc).limit(10).collect{ |review| ReviewDecorator.new(review).decorate }
+
+      @comments = {
+          count: count,
+          ten_last_comments: ten_last_comments
+      }
+    end
   end
 
   def update_average_rating
@@ -131,6 +151,7 @@ class ReviewsController < ApplicationController
   def permitted_params
     params.permit(
         :user_id,
+        :author_id,
         :review,
         :id,
         :comment,

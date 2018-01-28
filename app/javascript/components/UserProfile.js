@@ -33,11 +33,12 @@ class UserProfile extends Component {
     this.handleReviewSubmit = this.handleReviewSubmit.bind(this);
     this.updateStars = this.updateStars.bind(this);
     this.handleViewProfileClick = this.handleViewProfileClick.bind(this);
+    this.handleHideSnackBar = this.handleHideSnackBar.bind(this);
 
     const { review : { id } } = props;
 
     this.state = {
-      tenLastComments: props.ten_last_comments,
+      comments: props.comments,
       showSnackBar: false,
       message: '',
       id: id
@@ -99,10 +100,12 @@ class UserProfile extends Component {
         user: {
           url_slug,
           first_name,
-          programs },
+          programs
+        },
+        currentUser: { locale },
         review
       } = this.props;
-      const { tenLastComments } = this.state;
+      const { comments } = this.state;
 
       return (
         <div>
@@ -173,7 +176,8 @@ class UserProfile extends Component {
               <div className='userProfileCommentContainer'>
                 <CommentContainer
                   userId={ url_slug }
-                  comments={ tenLastComments }
+                  comments={ comments }
+                  locale={ locale }
                 />
               </div>
             </div>
@@ -302,13 +306,13 @@ class UserProfile extends Component {
       attributes,
       method,
       successCallBack: (response) => {
-        const { review: { id }, message, ten_last_comments } = response;
+        const { review: { id }, message, comments } = response;
 
         this.setState({
           id: id,
           showSnackBar: true,
           message,
-          tenLastComments: ten_last_comments
+          comments: comments
         });
 
         setTimeout(() => {
@@ -330,6 +334,12 @@ class UserProfile extends Component {
     };
 
     return postData(requestParams);
+  }
+
+  handleHideSnackBar() {
+    this.setState({
+      showSnackBar: false
+    });
   }
 
   renderAvailabilities() {
@@ -360,7 +370,10 @@ UserProfile.propTypes = {
     thumbnail_url: PropTypes.string,
     url_slug: PropTypes.string,
   }),
-  ten_last_comments: PropTypes.array,
+  comments: PropTypes.shape({
+    ten_last_comments: PropTypes.array,
+    count: PropTypes.number
+  }),
   history: PropTypes.object,
   location: PropTypes.shape({
     state: PropTypes.shape({
@@ -371,7 +384,10 @@ UserProfile.propTypes = {
 };
 
 UserProfile.defaultProps = {
-  ten_last_comments: [],
+  comments: {
+    ten_last_comments: [],
+    count: 0
+  },
   user: {
     city: '',
     description: '',

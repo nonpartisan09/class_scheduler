@@ -4,6 +4,8 @@ import _ from 'lodash';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
 import { FormattedMessage } from 'react-intl';
+import { getData } from './utils/sendData';
+import formatLink from './utils/Link';
 
 import { LOWEST, HIGHEST, OLDEST, RECENT } from './SortFilter';
 
@@ -35,9 +37,9 @@ class CommentContainer extends Component {
   }
 
   renderCommentHeader() {
-    const { comments } = this.state;
+    const { comments: { count } } = this.state;
 
-    if (_.size(comments) > 10) {
+    if (count > 10) {
       return (
         <div>
           <h4 className='commentContainerTitleWithDropDown'>
@@ -74,9 +76,9 @@ class CommentContainer extends Component {
     const requestParams = {
       url: `/reviews/${userId}/${sortBy}`,
 
-      successCallBack: ({ comments }) => {
+      successCallBack: ({ ten_last_comments }) => {
         this.setState({
-          comments
+          comments: { ten_last_comments }
         });
       },
 
@@ -91,14 +93,21 @@ class CommentContainer extends Component {
   }
 
   renderListItems() {
-    const { comments } = this.state;
+    const { comments: { ten_last_comments } } = this.state;
+    const { locale } = this.props;
 
-    if (_.size(comments) > 0) {
-      return _.map(comments, ({ comment, created_at, reviewer }, index) => {
+    if (_.size(ten_last_comments) > 0) {
+      return _.map(ten_last_comments, ({ comment, created_at, reviewer, reviewer_url_slug }, index) => {
+
         return (
           <li key={ index } className='commentContainerListItem'>
             <span>Posted { created_at } - </span>
-            <span>by { reviewer } -</span>
+            <span>by
+              <span> </span>
+              <a href={ formatLink(`/reviews/${reviewer_url_slug}`, locale)} className='slidingLink commentContainerLink'>
+                { reviewer }
+              </a>:
+            </span>
             <span> { this.renderComment(comment) }</span>
           </li>
         );
@@ -116,7 +125,7 @@ class CommentContainer extends Component {
   }
 
   renderComment(comment) {
-    if(comment) {
+    if (comment) {
       return comment;
     } else {
       return (
@@ -130,18 +139,22 @@ class CommentContainer extends Component {
 }
 
 CommentContainer.propTypes = {
+  locale: PropTypes.string,
   userId: PropTypes.string,
-  comments: PropTypes.arrayOf(
-    PropTypes.shape({
-      comment: PropTypes.string,
-      created_at: PropTypes.string,
-      reviewer: PropTypes.string
-    })
-  )
+  comments: PropTypes.shape({
+    count: PropTypes.number,
+    ten_last_comments: PropTypes.arrayOf(
+      PropTypes.shape({
+        comment: PropTypes.string,
+        created_at: PropTypes.string,
+        reviewer: PropTypes.string
+      })
+    )
+  })
 };
 
 CommentContainer.defaultProps = {
-  comments: [],
+  comments: { },
   userId: ''
 };
 

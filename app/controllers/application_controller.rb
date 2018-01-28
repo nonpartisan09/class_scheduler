@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :sign_out_if_inactive, if: -> { current_user.present? && !current_user.active }
-
+  before_action :set_locale
   rescue_from ActionController::RoutingError, :with => :not_found
   respond_to :json, :xml, :html
 
@@ -84,6 +84,11 @@ class ApplicationController < ActionController::Base
   end
 
   private
+
+  def set_locale
+    params.permit(:locale)
+    I18n.locale = params[:locale] || I18n.default_locale
+  end
 
   def decorate_user_if_present
     if current_user

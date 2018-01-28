@@ -1,0 +1,10 @@
+[
+  {
+    "id": "UserReviewIndexPage.noReviewAvailable",
+    "defaultMessage": "No reviews available"
+  },
+  {
+    "id": "UserReviewIndexPage.unavailable",
+    "defaultMessage": "Not available"
+  }
+]

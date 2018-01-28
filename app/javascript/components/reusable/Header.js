@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import { FormattedMessage } from 'react-intl';
+import { ENGLISH, SPANISH } from '../utils/availableLocales';
 
 import PaypalButton from '../PaypalButton';
 
@@ -88,6 +89,7 @@ class Header extends Component {
           </span>
 
           { this.renderStaticButtons() }
+          { this.renderUserChangeLocale() }
         </nav>
       );
     }
@@ -112,9 +114,24 @@ class Header extends Component {
             />
           </a>
           { this.renderStaticButtons() }
+          { this.renderGuestChangeLocale() }
         </nav>
       );
     }
+  }
+
+  renderUserChangeLocale() {
+    const { currentUser: { locale } } = this.props;
+
+    return (
+      <div className='headerLocaleLinkContainer'>
+        <span className='slidingLink'>English</span> / <span className='slidingLink'> Español</span>
+      </div>
+    );
+  }
+
+  renderGuestChangeLocale() {
+
   }
 
   renderStaticButtons() {

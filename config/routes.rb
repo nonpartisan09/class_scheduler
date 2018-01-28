@@ -24,7 +24,6 @@ Rails.application.routes.draw do
     get 'my_profile', to: 'user_profiles#show'
     get 'messages/:id', to: 'messages#update'
 
-
     # needed for devise
     devise_scope :user do
       get 'password/edit' => 'passwords#edit'

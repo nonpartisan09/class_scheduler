@@ -13,13 +13,13 @@ class UsersController < ApplicationController
 
     review = Review.where(:author_id => current_user.id, :user_id => @user.id).first
 
-    review = ReviewDecorator.new(review).decorate
-    ten_last_comments = get_ten_last_comments
+    review = ReviewDecorator.new(review).simple_decorate
+    @comments = get_ten_last_comments
 
     @data = {
         :currentUser => UserDecorator.new(current_user).simple_decorate,
         :user => UserDecorator.new(@user).decorate,
-        :ten_last_comments => ten_last_comments,
+        :comments => @comments,
         :review => review
     }
 
@@ -29,7 +29,17 @@ class UsersController < ApplicationController
   private
 
   def get_ten_last_comments
-    @user.reviews.last(10).collect{ |review| ReviewDecorator.new(review).simple_decorate }
+    received_reviews = @user.received_reviews
+
+    if received_reviews.present?
+      count = received_reviews.count
+      ten_last_comments = received_reviews.order(created_at: :desc).last(10).collect{ |review| ReviewDecorator.new(review).decorate }
+
+      @comments = {
+          count: count,
+          ten_last_comments: ten_last_comments
+      }
+    end
   end
 
   def permitted_params

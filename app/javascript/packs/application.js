@@ -44,6 +44,7 @@ import localeData from '../../../build/locales/data.json';
 import SearchResults from '../components/SearchResults';
 import AboutPage from '../components/AboutPage';
 import ConversationPage from '../components/ConversationPage';
+import UserReviewIndexPage from '../components/UserReviewIndexPage';
 
 addLocaleData([ ...en, ...es ]);
 const language = ChooseLanguage();
@@ -85,6 +86,9 @@ document.addEventListener('DOMContentLoaded', () => {
             <Route exact path='/(en|es)/search' render={ (props) => <SearchBar { ...data } { ...props } /> } />
             <Route exact path='/(en|es)/volunteers' render={ (props) => <SearchResults { ...data } { ...props } /> } />
             <Route exact path='/(en|es)/my_profile' render={ (props) => <MyProfile { ...data } { ...props } /> } />
+            <Route exact path='/(en|es)/:user_id/(:order)' render={ (props) => <UserReviewIndexPage { ...data } { ...props } /> } />
+            <Route exact path='/(en|es)/reviews/:user_id/(:order)' render={ (props) => <UserReviewIndexPage { ...data } { ...props } /> } />
+
             <Route
               exact
               path='/(en|es)/profiles/:url_slug'
@@ -107,6 +111,8 @@ document.addEventListener('DOMContentLoaded', () => {
             <Route exact path='/search' render={ (props) => <SearchBar { ...data } { ...props } /> } />
             <Route exact path='/volunteers' render={ (props) => <SearchResults { ...data } { ...props } /> } />
             <Route exact path='/my_profile' render={ (props) => <MyProfile { ...data } { ...props } /> } />
+            <Route exact path='/reviews/:user_id/(:order)' render={ (props) => <UserReviewIndexPage { ...data } { ...props } /> } />
+
             <Route
               exact
               path='/profiles/:url_slug'

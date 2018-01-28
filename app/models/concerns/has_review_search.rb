@@ -4,15 +4,15 @@ module HasReviewSearch
   extend ActiveSupport::Concern
 
   included do
-    def self.search(user, order)
-          belongs_to_user(user)
-          .in_order(order)
+    def self.search(params)
+          belongs_to_user(params)
+          .in_order(params[:order])
     end
 
-    scope :belongs_to_user, proc { |user|
-      if user.present?
-        user_id = User.find_by_url_slug!(user)
-        where(:user_id => user_id)
+    scope :belongs_to_user, proc { |params|
+      if params[:user_id].present?
+        user = User.find_by_url_slug!(params[:user_id])
+        user.received_reviews
       end
     }
 
@@ -27,7 +27,7 @@ module HasReviewSearch
       when 'lowest'
         order(review: :asc)
       else
-        raise Exception, 'Selected order is not allowed.'
+        last(10)
       end
     }
   end

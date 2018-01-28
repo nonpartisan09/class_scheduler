@@ -7,7 +7,7 @@ class ReviewDecorator
     @review = review
   end
 
-  def decorate
+  def simple_decorate
     {
         :review => review,
         :id => id,
@@ -15,14 +15,17 @@ class ReviewDecorator
     }
   end
 
-  def simple_decorate
+  def decorate
     {
         :comment => comment,
+        :review => review,
         :created_at => created_at,
-        :reviewer => reviewer
+        :reviewer => reviewer_first_name,
+        :reviewer_url_slug => reviewer_url_slug,
+        :reviewee => reviewee_first_name
     }
   end
-                                              
+
   def comment
     @review && @review[:comment] || ''
   end
@@ -40,6 +43,18 @@ class ReviewDecorator
   end
 
   def reviewer
-    User.find(@review[:author_id]).first_name
+    User.find(@review[:author_id]) || {}
+  end
+
+  def reviewer_first_name
+    reviewer.first_name || ''
+  end
+
+  def reviewee_first_name
+    User.find(@review[:user_id]).first_name || {}
+  end
+
+  def reviewer_url_slug
+    reviewer.url_slug || ''
   end
 end
