@@ -15,6 +15,8 @@ Rails.application.routes.draw do
     resource :users
 
     get 'reviews/(:user_id/:order)', to: 'reviews#index'
+
+    get 'reviews/test/:user_id', to: 'reviews#author_index'
     get 'inbox', to: 'conversations#index'
     get 'inbox/:id', to: 'conversations#show'
     get 'availabilities/new' => 'availabilities#new'

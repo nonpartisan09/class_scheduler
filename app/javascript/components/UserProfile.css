@@ -29,6 +29,11 @@
 .userProfileBackButton {
     float: left;
     margin-right: 24px;
+    margin-bottom: 24px;
+}
+
+.userProfileMessageButton {
+    margin-right: 12px;
 }
 
 .userProfileCommentContainer {
@@ -80,6 +85,12 @@
         padding: 24px;
     }
 
+    .userProfileBackButton {
+        float: none;
+        margin: 0;
+        min-width: 100vw;
+    }
+
    .userProfileDetailsContainer {
        margin-bottom: 24px;
    }
@@ -106,11 +117,6 @@
     .userProfileMessageButton, .userProfileReviewAndComment {
         margin: 12px 0;
     }
-
-    .userProfileMessageButton {
-        width: 170px;
-    }
-
     .userProfileLink, .userProfileReviewAndComment {
         display: block;
     }

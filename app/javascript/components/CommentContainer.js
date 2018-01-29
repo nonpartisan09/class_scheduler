@@ -21,7 +21,8 @@ class CommentContainer extends Component {
     this.state = {
       sortBy: 0,
       message: '',
-      comments: props.comments
+      ten_last_comments: props.comments && props.comments.ten_last_comments,
+      count: props.comments && props.comments.count
     };
   }
 
@@ -37,7 +38,7 @@ class CommentContainer extends Component {
   }
 
   renderCommentHeader() {
-    const { comments: { count } } = this.state;
+    const { count } = this.state;
 
     if (count > 10) {
       return (
@@ -70,21 +71,23 @@ class CommentContainer extends Component {
   }
 
   handleBlur() {
-    const { userId } = this.props;
+    const { userId, locale } = this.props;
     const { sortBy } = this.state;
 
+    const restfulUrl = locale? `/${locale}/reviews/${userId}/${sortBy}` : `/reviews/${userId}/${sortBy}`;
+
     const requestParams = {
-      url: `/reviews/${userId}/${sortBy}`,
+      url: restfulUrl,
 
       successCallBack: ({ ten_last_comments }) => {
         this.setState({
-          comments: { ten_last_comments }
+          ten_last_comments
         });
       },
 
       errorCallBack: (message) => {
         this.setState({
-          message: message,
+          message: message
         });
       }
     };
@@ -93,7 +96,7 @@ class CommentContainer extends Component {
   }
 
   renderListItems() {
-    const { comments: { ten_last_comments } } = this.state;
+    const { ten_last_comments } = this.state;
     const { locale } = this.props;
 
     if (_.size(ten_last_comments) > 0) {
@@ -101,10 +104,16 @@ class CommentContainer extends Component {
 
         return (
           <li key={ index } className='commentContainerListItem'>
-            <span>Posted { created_at } - </span>
-            <span>by
+            <span><FormattedMessage
+              id='CommentContainer.posted'
+              defaultMessage='Posted'
+            /> { created_at } - </span>
+            <span><FormattedMessage
+              id='CommentContainer.postedBy'
+              defaultMessage='by'
+            />
               <span> </span>
-              <a href={ formatLink(`/reviews/${reviewer_url_slug}`, locale)} className='slidingLink commentContainerLink'>
+              <a href={ formatLink(`/reviews/test/${reviewer_url_slug}`, locale) } className='slidingLink commentContainerLink'>
                 { reviewer }
               </a>:
             </span>

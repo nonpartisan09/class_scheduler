@@ -33,7 +33,7 @@ class UsersController < ApplicationController
 
     if received_reviews.present?
       count = received_reviews.count
-      ten_last_comments = received_reviews.order(created_at: :desc).last(10).collect{ |review| ReviewDecorator.new(review).decorate }
+      ten_last_comments = Review.received_review_search(permitted_params).collect{ |review| ReviewDecorator.new(review).decorate }
 
       @comments = {
           count: count,

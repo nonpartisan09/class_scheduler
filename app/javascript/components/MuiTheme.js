@@ -3,6 +3,7 @@
 const primaryColor1= '#004664';
 const primaryColor2= '#29aae2';
 
+const primaryTextColor = '#fff';
 const secondaryColor1= '#ade1f4';
 const disabledTextColor= '#a7a9ac';
 const accentColor= '#f1592a';
@@ -21,7 +22,7 @@ export default {
   },
 
   flatButton: {
-    textColor: '#fff',
+    textColor: primaryTextColor,
     primaryColor: primaryColor1,
     primaryColor1: primaryColor1,
     secondaryTextColor: secondaryColor1,
@@ -30,12 +31,12 @@ export default {
   },
 
   raisedButton: {
-    textColor: '#fff',
+    textColor: primaryTextColor,
     primaryColor: primaryColor2,
     primaryColor1: accentColor,
-    primaryTextColor: '#fff',
+    primaryTextColor: primaryTextColor,
     secondaryTextColor: secondaryColor4,
-    disabledTextColor: disabledTextColor
+    disabledTextColor: disabledTextColor,
   },
 
   textField: {

@@ -9,10 +9,6 @@ import Footer from './reusable/Footer';
 import { determineRecipient } from './utils/messageUtil';
 
 class ConversationPage extends Component {
-  componentWillMount(){
-    const { } = this.props;
-  }
-
   render() {
     const { currentUser } = this.props;
 

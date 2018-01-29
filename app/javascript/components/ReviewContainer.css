@@ -48,20 +48,24 @@
 
     .reviewContainerReview {
         display: inline-block;
-        margin: 0 24px;
+        margin: 0 12px 0 0;
         vertical-align: middle;
     }
 
     .reviewContainerSubmitButton {
-        margin-left: 24px;
+        margin-left: 12px;
     }
 }
 
 @media (min-device-width: 0px) and (max-device-width: 900px), (min-width: 0px) and (max-width: 900px) {
     .reviewContainerComment, .reviewContainerReview {
-        width: 160px;
+        width: auto;
         display: block;
-        margin: 0 0 12px;
+    }
+
+    .reviewContainerComment {
+        transform: unset;
+        margin-top: -12px;
     }
 
     .reviewContainerSubmitButton {
@@ -69,6 +73,7 @@
     }
 
     .reviewContainerReview {
+        margin: 0 0 12px;
         display: block;
         background-color: rgb(41, 170, 226);
         border-radius: 2px;

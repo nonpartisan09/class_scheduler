@@ -1,3 +1,33 @@
 es:
-  hola: "Hola mundo"
-
+  activerecord:
+    attributes:
+      documento:
+        doctipo: "Tipo"
+    errors:
+      models:
+        documento:
+          attributes:
+            doctipo:
+              blank: "es requerido"
+            asunto:
+              blank: "es requerido"
+  datetime:
+    distance_in_words:
+      x_days:
+        one: 'hace 1 día'
+        other: 'hace %{count} días'
+      about_x_hours:
+        one: 'hace 1 hora'
+        other: 'hace %{count} horas'
+      x_minutes:
+        one: 'hace 1 minuto'
+        other: 'hace %{count} minutos'
+        never: 'Nunca'
+  devise:
+    failure:
+      user:
+        unauthenticated: "Usuario no autenticado"
+    sessions:
+      user:
+        signed_in: "Usuario conectado"
+        signed_out: "Usuario desconectado"

@@ -1,5 +1,13 @@
 [
   {
+    "id": "CommentContainer.posted",
+    "defaultMessage": "Posted"
+  },
+  {
+    "id": "CommentContainer.postedBy",
+    "defaultMessage": "by"
+  },
+  {
     "id": "CommentContainer.noCommentAvailable",
     "defaultMessage": "No comments available"
   },

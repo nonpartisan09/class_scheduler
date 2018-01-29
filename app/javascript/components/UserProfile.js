@@ -138,8 +138,8 @@ class UserProfile extends Component {
                 <div className='userProfileField'>
                   <FormattedMessage
                     id='UserProfile.firstName'
-                    defaultMessage='First Name:'
-                  />
+                    defaultMessage='First Name'
+                  />:
                   <span> { first_name }</span>
                 </div>
 
@@ -148,15 +148,15 @@ class UserProfile extends Component {
                 <div className='userProfileField'>
                   <FormattedMessage
                     id='UserProfile.programsOffered'
-                    defaultMessage='Programs:'
-                  /> { programs? programs.join(', ') : '' }
+                    defaultMessage='Programs'
+                  />: { programs? programs.join(', ') : '' }
                 </div>
 
                 <div className='userProfileField'>
                   <FormattedMessage
                     id='UserProfile.lastLogIn'
-                    defaultMessage='Last logged in:'
-                  />
+                    defaultMessage='Last logged in'
+                  />:
                   <span> { user.last_logged_in} <FormattedMessage
                     id='ago'
                     defaultMessage='ago'
@@ -167,8 +167,8 @@ class UserProfile extends Component {
                 <div className='userProfileField'>
                   <FormattedMessage
                     id='UserProfile.moreInformation'
-                    defaultMessage='A bit more information:'
-                  />
+                    defaultMessage='A bit more information'
+                  />:
                   <span> { this.renderUserDescription() } </span>
                 </div>
               </div>
@@ -237,8 +237,8 @@ class UserProfile extends Component {
         <div className='userProfileField'>
           <FormattedMessage
             id='UserProfile.location'
-            defaultMessage='Location:'
-          />
+            defaultMessage='Location'
+          />:
           <span> { this.renderUserLocation() }</span>
         </div>
       );

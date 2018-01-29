@@ -348,6 +348,18 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
             />
           </div>
         );
+      } else {
+        return (
+          <div className='userFormOuterButton'>
+            <RaisedButton
+              className='userFormSaveButton'
+              label={ wrappedProps.primaryButtonLabel }
+              primary
+              disabled
+              disabledBackgroundColor={ "#D3D4D7" }
+            />
+          </div>
+        );
       }
     }
 
@@ -837,8 +849,8 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
           <h2 className='userFormHeader'>
             <FormattedMessage
               id='UserForm.helpingWith'
-              defaultMessage='I am interested in helping with:'
-            />
+              defaultMessage='I am interested in helping with'
+            />:
           </h2>
         );
       } else if (role === 'client' || client ) {
@@ -846,8 +858,8 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
           <h2 className='userFormHeader'>
             <FormattedMessage
               id='UserForm.helpedWith'
-              defaultMessage='I am interested in help with:'
-            />
+              defaultMessage='I am interested in help with'
+            />:
           </h2>
         );
       }
@@ -963,7 +975,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
     timezones: [],
     currentUser: {
       locale: 'en',
-      timezone: '',
+      timezone: 'Eastern Time (US & Canada)',
       languages: [],
       programs: [],
       address: '',

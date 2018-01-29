@@ -1,18 +1,18 @@
 require 'active_support/concern'
 
-module HasReviewSearch
+module HasAuthoredReviewSearch
   extend ActiveSupport::Concern
 
   included do
-    def self.search(params)
-          belongs_to_user(params)
+    def self.authored_review_search(params)
+      authored_by_author(params)
           .in_order(params[:order])
     end
 
     scope :belongs_to_user, proc { |params|
       if params[:user_id].present?
         user = User.find_by_url_slug!(params[:user_id])
-        user.received_reviews
+        user.authored_reviews
       end
     }
 

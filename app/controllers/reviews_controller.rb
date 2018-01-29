@@ -1,5 +1,7 @@
 class ReviewsController < ApplicationController
-  before_action :authenticate_user!, :permitted_params
+  before_action :authenticate_user!
+  before_action :permitted_params, except: [:author_index]
+  before_action :author_params, only: [:author_index]
   after_action :update_average_rating, except: [:index]
 
   def create
@@ -65,7 +67,7 @@ class ReviewsController < ApplicationController
     redirect_if_unauthorized
 
     begin
-      reviews = Review.search(permitted_params)
+      reviews = Review.received_review_search(permitted_params)
       comments = reviews.collect{ |review| ReviewDecorator.new(review).decorate }
     rescue Exception => e
       message = e.message
@@ -74,19 +76,34 @@ class ReviewsController < ApplicationController
       render json: { message: message }, status: status
     else
 
-      @data = {
-          comments: comments,
-          currentUser: UserDecorator.new(current_user).simple_decorate
-      }
-
-      respond_to do |format|
-        format.html { render :index }
-        format.json { render json: { comments: {
-            ten_last_comments: comments
-        } }, status: :ok }
-      end
+      render json: { ten_last_comments: comments }, status: :ok
     end
 
+  end
+
+  def author_index
+    def index
+      redirect_if_unauthorized
+
+      begin
+        reviews = Review.authored_review_search(author_params)
+        comments = reviews.collect{ |review| ReviewDecorator.new(review).decorate }
+      rescue Exception => e
+        message = e.message
+        status = :unprocessable_entity
+
+        render json: { message: message }, status: status
+      else
+
+        @data = {
+            comments: comments,
+            currentUser: UserDecorator.new(current_user).simple_decorate
+        }
+
+        format.html { render :index }
+      end
+
+    end
   end
 
   def destroy
@@ -112,7 +129,7 @@ class ReviewsController < ApplicationController
 
     if received_reviews.present?
       count = received_reviews.count
-      ten_last_comments = received_reviews.order(created_at: :desc).limit(10).collect{ |review| ReviewDecorator.new(review).decorate }
+      ten_last_comments = Review.received_review_search(permitted_params).collect{ |review| ReviewDecorator.new(review).decorate }
 
       @comments = {
           count: count,
@@ -148,10 +165,15 @@ class ReviewsController < ApplicationController
     end
   end
 
+  def author_params
+    params.permit(
+        :user_id,
+    )
+  end
+
   def permitted_params
     params.permit(
         :user_id,
-        :author_id,
         :review,
         :id,
         :comment,
