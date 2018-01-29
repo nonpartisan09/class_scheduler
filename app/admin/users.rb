@@ -183,13 +183,31 @@ ActiveAdmin.register User do
         end
       end
 
-      tab 'Reviews' do
-        table_for resource.reviews do
-          column "Author" do |review|
+      tab 'Received Reviews' do
+        table_for resource.received_reviews do
+          column "Reviewer" do |review|
               link_to User.find(review[:author_id]).email, admin_user_path(review[:author_id])
           end
-          column "Review rating", :review
-          column "Comment", :comment
+          column "Review rating" do |review|
+            review[:review]
+          end
+          column "Comment" do |review|
+            review[:comment]
+          end
+        end
+      end
+
+      tab 'Authored Reviews' do
+        table_for resource.authored_reviews do
+          column "Reviewee" do |review|
+            link_to User.find(review[:user_id]).email, admin_user_path(review[:user_id])
+          end
+          column "Review rating" do |review|
+            review[:review]
+          end
+          column "Comment" do |review|
+            review[:comment]
+          end
         end
       end
     end
