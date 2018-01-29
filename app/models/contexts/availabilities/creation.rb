@@ -51,6 +51,9 @@ module Contexts
           range = Range.new @utc_start_time, @utc_end_time
 
           overlaps = existing_availabilities.in_range(range)
+          ap range
+          ap existing_availabilities
+          ap existing_availabilities.in_range(range)
            if overlaps.present?
             raise Availabilities::Errors::OverlappingAvailability, 'This would overlap with some of your existing availabilities.
 You might want to delete them and try again.'

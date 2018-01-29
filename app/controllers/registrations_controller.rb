@@ -63,12 +63,15 @@ class RegistrationsController < Devise::RegistrationsController
 
     yield resource if block_given?
     if resource_updated
+      UserMailer.password_updated(resource).deliver_later unless account_update_params[:current_password].nil?
+
       if is_flashing_format?
         flash_key = update_needs_confirmation?(resource, prev_unconfirmed_email) ?
                         :update_needs_confirmation : :updated
         set_flash_message :notice, flash_key
       end
       bypass_sign_in resource, scope: resource_name
+
       respond_with resource, location: after_update_path_for(resource)
     else
       clean_up_passwords resource

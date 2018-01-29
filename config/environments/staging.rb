@@ -16,16 +16,12 @@ Rails.application.configure do
       host: 'tutoria.io'
   }
 
-  # SMTP settings for gmail
-  config.action_mailer.smtp_settings = {
-      :address              => "smtp.gmail.com",
-      :domain               => "gmail.com",
-      :port                 => 587,
-      :user_name            => ENV["GMAIL_USERNAME"],
-      :password             => ENV["GMAIL_KEY"],
-      :authentication       => :plain,
-      :enable_starttls_auto => true
-  }
+  # Care if the mailer can't send.
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.delivery_method = :letter_opener
+  config.action_mailer.default_url_options = { :host => 'http://localhost:5000' }
+
+  config.action_mailer.perform_caching = false
 
   config.action_mailer.default_url_options = { :host => 'http://tutoria-staging.herokuapp.com' }
   config.action_mailer.perform_caching = false

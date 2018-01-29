@@ -60,6 +60,11 @@ class ApplicationController < ActionController::Base
     render :not_found, :status => 404
   end
 
+  def set_locale
+    params.permit(:locale)
+    I18n.locale = params[:locale] || I18n.default_locale
+  end
+
   protected
 
   def authenticate_admin_user!
@@ -85,11 +90,6 @@ class ApplicationController < ActionController::Base
   end
 
   private
-
-  def set_locale
-    params.permit(:locale)
-    I18n.locale = params[:locale] || I18n.default_locale
-  end
 
   def decorate_user_if_present
     if current_user

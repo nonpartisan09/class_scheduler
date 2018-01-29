@@ -32,6 +32,8 @@ class ResultsController < ApplicationController
     render :show
   end
 
+  private
+
   def permit_search_params
     params.permit(
         :day,

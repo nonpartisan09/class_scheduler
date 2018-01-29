@@ -63,8 +63,8 @@ class AvailabilitiesTable extends Component {
             <span>
               <FormattedMessage
                 id='Availabilities.listDay'
-                defaultMessage='Day:'
-              /> { day }
+                defaultMessage='Day'
+              />: { day }
             </span>
           </li>
 
@@ -72,16 +72,16 @@ class AvailabilitiesTable extends Component {
             <span>
               <FormattedMessage
                 id='Availabilities.from'
-                defaultMessage='From:'
-              /> { start_time }
+                defaultMessage='From'
+              />: { start_time }
             </span>
           </li>
           <li>
             <span>
               <FormattedMessage
                 id='Availabilities.to'
-                defaultMessage='To:'
-              /> { end_time }
+                defaultMessage='To'
+              />: { end_time }
             </span>
           </li>
 
@@ -89,8 +89,8 @@ class AvailabilitiesTable extends Component {
             <span>
               <FormattedMessage
                 id='Availabilities.timezone'
-                defaultMessage='Timezone:'
-              /> { timezone }
+                defaultMessage='Timezone'
+              />: { timezone }
             </span>
           </li>
 
@@ -156,12 +156,17 @@ class AvailabilitiesTable extends Component {
     if (this.props.deletable) {
       return (
         <li className='availabilitiesTableButton'>
-          <RaisedButton primary fullWidth onClick={ this.handleDelete(id) } >
-            <FormattedMessage
-              id='Delete'
-              defaultMessage='Delete'
-            />
-          </RaisedButton>
+          <RaisedButton
+            primary
+            fullWidth
+            onClick={ this.handleDelete(id) }
+            label={
+              <FormattedMessage
+                id='Delete'
+                defaultMessage='Delete'
+              />
+            }
+          />
         </li>
       );
     }

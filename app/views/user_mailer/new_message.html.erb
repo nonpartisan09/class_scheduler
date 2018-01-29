@@ -4,6 +4,8 @@
   <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
 </head>
 <body>
+<%= image_tag attachments['logo.png'].url %>
+
 <h1><%= @user.first_name %>, you've got mail!</h1>
 <p>
  <%= @sender.first_name %> has sent you a message:<br>

@@ -63,7 +63,7 @@
         min-width: 100%;
     }
 
-   .userFormPasswordButton, .userFormProgramButton, .userFormSaveButton {
+   .userFormPasswordButton, .userFormProgramButton, .userFormLanguageButton, .userFormSaveButton {
        min-width: 100%;
        width: 100%;
     }

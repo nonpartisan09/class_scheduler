@@ -66,49 +66,58 @@ class SearchBar extends Component {
         <Header currentUser={ this.props.currentUser } />
         { this.renderTitle() }
 
-        <div className='searchBarTimezoneContainer'>
-          <div className='searchBarTimezoneAndLink'>
-            <TextField
-              value={ timezone }
-              className='searchBarTimezone'
-              name='searchBarTimezone'
-              disabled
-            />
+        <div className='searchBarContainer'>
+          <TextField
+            value={ timezone }
+            className='searchBarTimezone'
+            name='searchBarTimezone'
+            disabled
+          />
 
+          <div className='searchBarTimezoneLink'>
             <a href={ formatLink('/my_profile', locale) } className='slidingLink' >
-              <FormattedMessage id='SearchBar.timezoneLink' defaultMessage='Not your timezone?' />
+              <FormattedMessage
+                id='SearchBar.timezoneLink'
+                defaultMessage='Not your timezone?'
+              />
             </a>
           </div>
-        </div>
 
-        <div className='searchBarContainer'>
-          <div className='searchBarOptionContainer'>
-            <SelectField
-              className='searchBarOption'
-              hintText={ <FormattedMessage id='SearchBar.programs' defaultMessage='Program(s)' /> }
-              value={ program }
-              onChange={ this.changeHandlerProgram }
-              multiple
-              errorText={ errors.program }
-              selectionRenderer={ this.selectionRendererProgram }
-            >
-              { _.map(programs, ({ name, id }) => {
-                return <MenuItem key={ id } insetChildren checked={ _.indexOf(program, id) > -1 } value={ id } primaryText={ <span> { name } </span> } />;
-              })}
-            </SelectField>
+          <SelectField
+            className='searchBarOption'
+            hintText={
+              <FormattedMessage
+                id='SearchBar.programs'
+                defaultMessage='Program(s)'
+              />
+            }
+            value={ program }
+            onChange={ this.changeHandlerProgram }
+            multiple
+            errorText={ errors.program }
+            selectionRenderer={ this.selectionRendererProgram }
+          >
+            { _.map(programs, ({ name, id }) => {
+              return <MenuItem key={ id } insetChildren checked={ _.indexOf(program, id) > -1 } value={ id } primaryText={ <span> { name } </span> } />;
+            })}
+          </SelectField>
 
-            <SelectField
-              hintText={ <FormattedMessage id='SearchBar.days' defaultMessage='Day(s)' /> }
-              value={ day }
-              errorText={ errors.day }
-              onChange={ this.changeHandlerDay }
-              className='searchBarOption'
-              multiple
-              selectionRenderer={ this.selectionRendererDay }
-            >
-              { _.map(days, (value, key) => <MenuItem key={ value + key } insetChildren checked={ _.indexOf(day, value) > -1 } value={ value } primaryText={ <span> { value } </span> } />) }
-            </SelectField>
-          </div>
+          <SelectField
+            className='searchBarOption'
+            hintText={
+              <FormattedMessage
+                id='SearchBar.days'
+                defaultMessage='Day(s)'
+              />
+            }
+            value={ day }
+            errorText={ errors.day }
+            onChange={ this.changeHandlerDay }
+            multiple
+            selectionRenderer={ this.selectionRendererDay }
+          >
+            { _.map(days, (value, key) => <MenuItem key={ value + key } insetChildren checked={ _.indexOf(day, value) > -1 } value={ value } primaryText={ <span> { value } </span> } />) }
+          </SelectField>
 
           <SearchOptionalFields
             onChange={ changeHandler }
@@ -124,7 +133,10 @@ class SearchBar extends Component {
           <RaisedButton
             onClick={ validateAllHandler(this.handleSubmit) }
             className='searchBarOption searchBarButton'
-            label={ <FormattedMessage id='search' /> }
+            label={
+              <FormattedMessage
+                id='search'
+              /> }
             primary
           />
 
@@ -154,6 +166,17 @@ class SearchBar extends Component {
             id='signUpHeader'
           />
         </h1>
+      );
+    } else {
+      return (
+        <div className='searchBarHeaderContainer'>
+          <h1 className='searchBarHeader'>
+            <FormattedMessage
+              id='SearchBar.searchTitle'
+              defaultMessage='Search for volunteers'
+            />
+          </h1>
+        </div>
       );
     }
   }

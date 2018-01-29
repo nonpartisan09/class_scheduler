@@ -5,11 +5,11 @@ module HasReceivedReviewSearch
 
   included do
     def self.received_review_search(params)
-          belongs_to_user(params)
-          .in_order(params[:order])
+          received_by_user(params)
+          .in_received_order(params[:order])
     end
 
-    scope :belongs_to_user, proc { |params|
+    scope :received_by_user, proc { |params|
       if params[:user_id].present?
         user = User.find_by_url_slug!(params[:user_id])
         user.received_reviews
@@ -19,7 +19,7 @@ module HasReceivedReviewSearch
       end
     }
 
-    scope :in_order, proc { | order |
+    scope :in_received_order, proc { | order |
       case order
         when 'last'
           order(created_at: :desc).limit(10)
