@@ -16,8 +16,9 @@ class Footer extends Component {
                 id='Footer.termsLink'
               />
             </a>
+          </p>
+          <p>
             Copyright © 2017 Tutoria, Inc. All rights reserved.
-
           </p>
           <p>
             495A Henry St #1020, Brooklyn, NY, 11231, United States of America

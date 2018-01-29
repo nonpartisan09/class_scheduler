@@ -15,14 +15,21 @@
     margin: 0;
     -webkit-margin-before: 0;
     -webkit-margin-after: 0;
+    display: inline-block;
 }
 
 .footer p:first-of-type {
-    margin: 6px 0;
+    margin: 6px 0 3px;
 }
 
 .footerLink {
     margin-right: 12px;
+}
+
+@media (max-device-width: 900px), (max-width: 900px) {
+    .footer {
+        width: 50%;
+    }
 }
 
 @media (max-device-width: 600px), (max-width: 600px) {

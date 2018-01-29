@@ -21,6 +21,7 @@ class Header extends Component {
     this.handleSignOut = this.handleSignOut.bind(this);
     this.handleClickMenu = this.handleClickMenu.bind(this);
     this.handleKeyDown = this.handleKeyDown.bind(this);
+    this.handleSetGuestLocale = this.handleSetGuestLocale.bind(this);
 
     this.state = {
       showSnackBar: false,
@@ -89,7 +90,6 @@ class Header extends Component {
           </span>
 
           { this.renderStaticButtons() }
-          { this.renderUserChangeLocale() }
         </nav>
       );
     }
@@ -120,21 +120,32 @@ class Header extends Component {
     }
   }
 
-  renderUserChangeLocale() {
-    const { currentUser: { locale } } = this.props;
-
+  renderGuestChangeLocale() {
     return (
-      <div className='headerLocaleLinkContainer'>
-        <span className='slidingLink'>English</span> / <span className='slidingLink'> Español</span>
+      <div className='headerLocaleLinkContainer' onClick={ this.handleSetGuestLocale }>
+        <button value={ ENGLISH } className='slidingLink'>English</button> / <button value={ SPANISH } className='slidingLink'> Español</button>
       </div>
     );
   }
 
-  renderGuestChangeLocale() {
+  handleSetGuestLocale({ target }) {
+    if (target.value) {
+      localStorage.setItem('locale', target.value);
+      const pathname = _.split(window.location.pathname, '/');
+      const localePattern = new RegExp(`(${ENGLISH}|${SPANISH})`);
+      const currentGuestLocale = pathname[1] || '';
+      const isGuestLocaleAsExpected = localePattern.test(currentGuestLocale);
 
+      if (isGuestLocaleAsExpected) {
+        const newPathname = _.drop(pathname, 2).join('/');
+        location.assign(formatLink(`/${newPathname}`, target.value));
+      } else {
+        location.assign(formatLink(window.location.pathname, target.value));
+      }
+    }
   }
-
   renderStaticButtons() {
+
     const { currentUser: { locale } } = this.props;
     return [
       <a key='about' href={ formatLink('/about', locale) } className='slidingLink'>

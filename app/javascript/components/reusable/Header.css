@@ -7,12 +7,22 @@
 
 .headerLocaleLinkContainer {
     float: right;
-    margin-right: 24px;
+    margin-right: 36px;
+    line-height: 36px;
 }
 
 .headerLocaleLinkContainer .slidingLink {
     margin-right: 3px;
-    line-height: 36px;
+    -webkit-appearance: none;
+    outline: none;
+    border: none;
+    text-rendering: auto;
+    display: inline-block;
+    padding: 0;
+    align-items: unset;
+    -webkit-writing-mode: inherit;
+    font: inherit;
+    background-color: transparent;
 }
 
 .slidingLink {
@@ -64,7 +74,7 @@
     display: none;
 }
 
-@media (min-device-width: 0) and (max-device-width: 650px), (max-width: 650px) {
+@media (min-device-width: 0) and (max-device-width: 900px), (max-width: 900px) {
     .navigation a {
         margin-bottom: 6px;
         outline: none;

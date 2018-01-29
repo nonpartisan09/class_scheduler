@@ -15,4 +15,7 @@
         width: 364px;
         height: 77px;
     }
+    .logoItem {
+        margin-left: 0;
+    }
 }
