@@ -5,11 +5,11 @@ function ChooseLanguage() {
   const currentUrl = _.split(window.location.pathname, '/');
   const guestLocale = localStorage.getItem('locale');
 
-  if (guestLocale && (guestLocale === ENGLISH|| guestLocale === SPANISH)) {
-    return guestLocale;
-  } else if (currentUrl[1] === ENGLISH || currentUrl[1] === SPANISH) {
+  if (currentUrl[1] === ENGLISH || currentUrl[1] === SPANISH) {
     return currentUrl[1];
-  } else {
+  } else if (guestLocale && (guestLocale === ENGLISH|| guestLocale === SPANISH)) {
+    return guestLocale;
+  } else{
     return ENGLISH;
   }
 }

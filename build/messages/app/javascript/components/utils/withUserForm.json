@@ -57,7 +57,7 @@
   },
   {
     "id": "UserForm.languages",
-    "defaultMessage": "Select One or More Language(s)"
+    "defaultMessage": "Select Spoken Language(s)"
   },
   {
     "id": "UserForm.currentPassword",

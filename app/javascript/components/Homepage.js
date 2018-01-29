@@ -29,7 +29,9 @@ class Homepage extends Component {
             <div className='homepageTextContainer'>
               <div className='homepageCaption'>
                 <div className='homepageCaptionTitle'>
-                  <Logo />
+                  <div className='homepageLogo'>
+                    <Logo />
+                  </div>
                   <h2 className='homepageSubtitle'>
                     <FormattedMessage
                       id='Homepage.subtitle'
