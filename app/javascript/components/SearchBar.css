@@ -28,13 +28,15 @@
 .searchBarTimezone, .searchBarTimezoneLink, .searchBarOption {
     width: 45%;
     margin-right: 12px;
+    margin-bottom: 24px;
     flex: 1 1 auto;
     text-align: left;
 }
 
 .searchBarTimezoneLink .slidingLink {
+    transform: translateY(6px);
     margin-right: 0;
-    width: 100%;
+    width: fit-content;
 }
 
 @media (max-device-width: 600px), (max-width: 600px) {

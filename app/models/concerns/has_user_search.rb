@@ -8,8 +8,8 @@ module HasUserSearch
       join_tables
         .who_can_help_with(params[:program])
         .is_available(params, timezone)
-        .paginate_results(params[:page])
         .based_on_distance(params, current_full_address)
+        .paginate_results(params[:page])
         .by_order(params, current_full_address)
     end
 
@@ -37,7 +37,7 @@ module HasUserSearch
 
     scope :based_on_distance, proc { |params, current_full_address|
       if params[:distance].present? && current_full_address.present?
-        near(current_full_address, params[:distance], :order => :false)
+        near(current_full_address, params[:distance], :order => false)
       end
     }
 

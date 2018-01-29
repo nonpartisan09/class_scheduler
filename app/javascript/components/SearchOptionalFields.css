@@ -13,7 +13,7 @@
     flex: 1 1 auto;
 }
 
-.searchBarStartTimePicker, .searchBarEndTimePicker {
+.searchBarStartTimePicker, .searchBarEndTimePicker, .searchBarDistanceOption, .searchBarDistanceButton {
     min-width: 100%;
     max-width: 100%;
     align-self: flex-start;
