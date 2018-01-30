@@ -104,18 +104,20 @@ class CommentContainer extends Component {
 
         return (
           <li key={ index } className='commentContainerListItem'>
-            <span><FormattedMessage
+            <span>
+              <FormattedMessage
               id='CommentContainer.posted'
               defaultMessage='Posted'
-            /> { created_at } - </span>
-            <span><FormattedMessage
+            />
+            <span> { created_at } - </span>
+            <FormattedMessage
               id='CommentContainer.postedBy'
               defaultMessage='by'
             />
-              <span> </span>
-              <a href={ formatLink(`/reviews/test/${reviewer_url_slug}`, locale) } className='slidingLink commentContainerLink'>
-                { reviewer }
-              </a>:
+            <span> </span>
+            <a href={ formatLink(`/reviews/test/${reviewer_url_slug}`, locale) } className='slidingLink commentContainerLink'>
+              { reviewer }
+            </a>:
             </span>
             <span> { this.renderComment(comment) }</span>
           </li>

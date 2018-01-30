@@ -53,7 +53,8 @@ module HasUserSearch
         when 'last'
           order(last_sign_in_at: :desc)
         else
-          raise Contexts::Availabilities::Errors::IncorrectOrder, 'Selected order is not allowed.'
+          message = I18n.translate custom_errors.messages.incorrect_order
+          raise Contexts::Availabilities::Errors::IncorrectOrder, message
         end
       else
         order(last_sign_in_at: :desc)
@@ -98,7 +99,8 @@ module HasUserSearch
             :day => params[:day].split(/,/),
         }.merge(start_time_query).merge(end_time_query) })
       else
-        raise Contexts::Availabilities::Errors::DayMissing, 'Day field is required.'
+        message = I18n.translate custom_errors.messages.missing_day
+        raise Contexts::Availabilities::Errors::DayMissing, message
       end
     }
   end

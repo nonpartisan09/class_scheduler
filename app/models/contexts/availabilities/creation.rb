@@ -8,11 +8,13 @@ module Contexts
         @day = @availability[:day]
 
         unless @availability[:start_time].present? && @timezone.present?
-          raise Availabilities::Errors::StartTimeMissing, 'Start time is missing.'
+          message = I18n.translate custom_errors.messages.missing_start_time
+          raise Availabilities::Errors::StartTimeMissing, message
         end
 
         unless @availability[:end_time].present?  && @timezone.present?
-          raise Availabilities::Errors::EndTimeMissing, 'End time is missing.'
+          message = I18n.translate custom_errors.messages.missing_end_time
+          raise Availabilities::Errors::EndTimeMissing, message
         end
 
         initialize_start_time
@@ -37,7 +39,8 @@ module Contexts
         Availability.create!(new_availability_params)
 
         unless @new_availability
-          raise Availabilities::Errors::UnknownAvailabilityError, 'Unknown error happened. Thanks for contacting us.'
+          message = I18n.translate custom_errors.messages.unknown_error
+          raise Availabilities::Errors::UnknownAvailabilityError, message
         end
         @new_availability
       end
@@ -55,8 +58,8 @@ module Contexts
           ap existing_availabilities
           ap existing_availabilities.in_range(range)
            if overlaps.present?
-            raise Availabilities::Errors::OverlappingAvailability, 'This would overlap with some of your existing availabilities.
-You might want to delete them and try again.'
+             message = I18n.translate custom_errors.messages.overlapping_availability
+            raise Availabilities::Errors::OverlappingAvailability, message
            end
         end
       end
@@ -64,13 +67,15 @@ You might want to delete them and try again.'
       def check_if_less_than_30_minutes?
         minutes = ((@parsed_end_time - @parsed_start_time) / 1.minute).round
         if minutes < 30
-          raise Availabilities::Errors::ShortAvailability, 'The minimum required for a class is 30 minutes.'
+          message = I18n.translate custom_errors.messages.minimum_availability_required
+          raise Availabilities::Errors::ShortAvailability, message
         end
       end
 
       def check_if_starts_before_ends?
         if (@parsed_end_time - @parsed_start_time) < 0
-          raise Availabilities::Errors::ShortAvailability, 'Please select an end time chronologically after start time.'
+          message = I18n.translate custom_errors.messages.end_time_after_start_time
+          raise Availabilities::Errors::ShortAvailability, message
         end
       end
 

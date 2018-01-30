@@ -9,11 +9,13 @@ module Contexts
         @languages = languages
 
         if check_if_email_exists?
-          raise Users::Errors::AlreadyUsedEmail,'This email is already in use. Have you forgotten your password?'
+          message = I18n.translate custom_errors.messages.email_in_use
+          raise Users::Errors::AlreadyUsedEmail, message
         end
 
         if check_t_and_c_unticked?
-          raise Users::Errors::AcceptTermsAndConditions,'Please accept our terms and conditions.'
+          message = I18n.translate custom_errors.messages.agree_to_terms_and_conditions
+          raise Users::Errors::AcceptTermsAndConditions, message
         end
 
       end

@@ -11,3 +11,24 @@ en:
         one: '1 minute'
         other: '%{count} minutes ago'
         never: 'Never'
+  custom_errors:
+    messages:
+      agree_to_terms_and_conditions: 'Please accept our terms and conditions.'
+      deactivated_account: 'Your account is deactivated'
+      email_in_use: 'This email is already in use. Have you forgotten your password?'
+      end_time_after_start_time: 'Please select an end time chronologically after start time.'
+      incorrect_credentials: 'Error with your login or password'
+      incorrect_order: 'Selected order is not allowed.'
+      minimum_availability_required: 'The minimum required for a class is 30 minutes.'
+      missing_credentials: 'Missing email and password'
+      missing_day: 'Day field is required.'
+      missing_end_time: 'End time is required.'
+      missing_program: 'Program field is required.'
+      missing_role: 'It seems there was a problem with your registration, thanks for contacting us.'
+      missing_start_time: 'Start time is required.'
+      overlapping_availability: 'This would overlap with some of your existing availabilities. You might want to delete them and try again.'
+      unknown_error: 'An unknown error happened. Thanks for contacting us.'
+  custom_success:
+    messages:
+      review_created: 'Success, review created'
+      review_updated: 'Success, review updated'

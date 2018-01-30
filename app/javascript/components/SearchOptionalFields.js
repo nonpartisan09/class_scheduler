@@ -52,8 +52,12 @@ class SearchOptionalFields extends Component {
             onClick={ this.handleToggleEndTime }
           />
         </div>
-        { this.renderStartTime() }
-        { this.renderEndTime() }
+        <div className='searchBarStartTimePickerContainer'>
+          { this.renderStartTime() }
+        </div>
+        <div className='searchBarEndTimePickerContainer'>
+          { this.renderEndTime() }
+        </div>
 
         { this.renderDistanceButton() }
 

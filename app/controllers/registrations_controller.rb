@@ -89,7 +89,8 @@ class RegistrationsController < Devise::RegistrationsController
       @role_url_slug = @role.take.url_slug
       @role_id = @role.take.id
     else
-      raise Contexts::Users::Errors::UnknownRegistrationError, 'It seems there was a problem with your registration, thanks for contacting us.'
+      message = I18n.translate custom_errors.messages.unknown_error
+      raise Contexts::Users::Errors::UnknownRegistrationError, message
     end
   end
 

@@ -157,11 +157,7 @@ class UserProfile extends Component {
                     id='UserProfile.lastLogIn'
                     defaultMessage='Last logged in'
                   />:
-                  <span> { user.last_logged_in} <FormattedMessage
-                    id='ago'
-                    defaultMessage='ago'
-                  />
-                </span>
+                  { user.last_logged_in}
                 </div>
 
                 <div className='userProfileField'>

@@ -1,7 +1,7 @@
 .searchBarOptionalFieldContainer {
     display: flex;
     flex-flow: row wrap;
-    justify-content: space-evenly;
+    justify-content: space-between;
     align-items: center;
     max-width: 600px;
     margin: 0 auto;
@@ -13,10 +13,13 @@
     flex: 1 1 auto;
 }
 
+.searchBarStartTimePickerContainer, .searchBarEndTimePickerContainer {
+    width: 45%;
+}
+
 .searchBarStartTimePicker, .searchBarEndTimePicker, .searchBarDistanceOption, .searchBarDistanceButton {
     min-width: 100%;
     max-width: 100%;
-    align-self: flex-start;
     flex: 1 1 auto;
 }
 
@@ -41,7 +44,7 @@
         order: 0;
     }
 
-    .searchBarStartTimePicker {
+    .searchBarStartTimePickerContainer {
         order: 1;
     }
 
@@ -49,7 +52,7 @@
         order: 2;
     }
 
-    .searchBarEndTimePicker {
+    .searchBarEndTimePickerContainer {
         order: 4;
     }
 
@@ -61,9 +64,10 @@
         order: 6;
     }
 
-    .searchBarStartTimePicker, .searchBarEndTimePicker {
-        min-width: 100%;
-        max-width: 100%;
+    .searchBarStartTimePickerContainer, .searchBarEndTimePickerContainer, .searchBarDistanceOption {
+        min-width: 80%;
+        max-width: 80%;
+        margin: 0 auto;
     }
 
 }

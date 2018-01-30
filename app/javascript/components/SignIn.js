@@ -28,7 +28,7 @@ const schema = {
     }
   }
 }),
-  password: Joi.string().min(8).required(),
+  password: Joi.string().required(),
   remember_me: Joi.boolean()
 };
 
@@ -151,8 +151,6 @@ class SignIn extends Component {
   }
 
   handleKeyDown(event) {
-    console.warn('event.keycode:');
-    console.warn(event.keycode);
     if (event.keycode === 13) {
       this.handleSignIn();
     }
@@ -176,8 +174,8 @@ class SignIn extends Component {
         url: '/sign_in',
         attributes,
         method: 'POST',
-        successCallBack: () => {
-          location.assign('/');
+        successCallBack: ({ currentUser: { locale } }) => {
+          location.assign(formatLink('/', locale));
         },
         errorCallBack: (message) => {
           this.setState({

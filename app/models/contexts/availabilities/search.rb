@@ -8,11 +8,13 @@ module Contexts
 
       def execute
         unless @params[:program].present?
-          raise Contexts::Availabilities::Errors::ProgramMissing, 'Program field is required.'
+          message = I18n.translate custom_errors.messages.missing_program
+          raise Contexts::Availabilities::Errors::ProgramMissing, message
         end
 
         unless @params[:day].present?
-          raise Contexts::Availabilities::Errors::DayMissing, 'Day field is required.'
+          message = I18n.translate custom_errors.messages.missing_day
+          raise Contexts::Availabilities::Errors::DayMissing, message
         end
 
         @existing_volunteers = User.search(@params, @timezone, @current_user.full_address)

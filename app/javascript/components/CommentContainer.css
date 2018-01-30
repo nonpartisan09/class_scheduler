@@ -27,4 +27,5 @@
 
 .slidingLink.commentContainerLink {
   margin-right: 0;
+  display: inline-block;
 }

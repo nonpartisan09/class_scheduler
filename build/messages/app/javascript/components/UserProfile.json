@@ -16,10 +16,6 @@
     "defaultMessage": "Last logged in"
   },
   {
-    "id": "ago",
-    "defaultMessage": "ago"
-  },
-  {
     "id": "UserProfile.moreInformation",
     "defaultMessage": "A bit more information"
   },

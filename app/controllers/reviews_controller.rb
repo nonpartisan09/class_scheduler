@@ -28,8 +28,9 @@ class ReviewsController < ApplicationController
 
      render json: { message: message }, status: status
    else
+     message = I18n.translate custom_success.messages.review_created
      render json: {
-         message: 'Review successful',
+         message: message,
          review: ReviewDecorator.new(@review).simple_decorate,
          comments: @comments
      }, status: :ok
@@ -55,8 +56,10 @@ class ReviewsController < ApplicationController
 
       render json: { message: message }, status: status
     else
+      message = I18n.translate custom_success.messages.review_updated
+
       render json: {
-          message: 'Review successful',
+          message: message,
           review: ReviewDecorator.new(@review).simple_decorate,
           comments: @comments
       }, status: :ok
