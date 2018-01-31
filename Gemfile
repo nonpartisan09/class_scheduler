@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '2.3.4'
+ruby '2.4.1'
 
 git_source(:github) do |repo_name|
   repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
@@ -27,14 +27,11 @@ gem 'webpacker', '~> 3.0'
 # For automatically inlining email styling
 gem 'roadie-rails', '~>1.2.1'
 
-# Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
-#gem 'turbolinks', '~> 5'
-
 gem 'aws-sdk', '~> 2.10', require: false
 
 gem 'pg', '~> 0.21.0'
 
-gem 'will_paginate'
+gem 'will_paginate', '~> 3.1.6'
 
 gem 'delayed_job', '~> 4.1'
 gem 'devise', '~> 4.3'
@@ -42,14 +39,17 @@ gem 'devise', '~> 4.3'
 # geolocate users
 gem 'geocoder', '~> 1.4'
 
+gem 'unicorn-worker-killer'
+gem 'unicorn'
+
 # image helper
 gem 'paperclip', '5.1'
 
 gem 'factory_girl_rails', '~> 4.9'
 
-group :production do
-  gem 'unicorn', '~> 5.4.0'
-end
+gem 'puma', '~> 3.10.0'
+
+gem 'newrelic_rpm'
 
 gem 'jquery-rails', '~> 4.3.1'
 group :development, :test do
