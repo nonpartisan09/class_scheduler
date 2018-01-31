@@ -54,7 +54,7 @@ ActiveAdmin.register User do
   member_action :delete_user_with_email, method: :put do
     resource.delete_with_email!
 
-    redirect_to(admin_user_path(resource))
+    redirect_to(admin_users_path)
   end
 
   member_action :reactivate_user, method: :put do
