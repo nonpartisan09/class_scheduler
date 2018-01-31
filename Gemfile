@@ -54,7 +54,6 @@ group :production do
 end
 
 gem 'jquery-rails', '~> 4.3.1'
-
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', '~> 9.1', platforms: [:mri, :mingw, :x64_mingw], require: false
