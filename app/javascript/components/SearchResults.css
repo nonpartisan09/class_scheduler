@@ -5,8 +5,13 @@
     justify-content: space-evenly;
 }
 
+.paginationContainer {
+   width: 100%;
+    text-align: center;
+}
+
 .pagination {
-  list-style: none;
+    list-style: none;
 }
 
 @media (min-device-width: 0) and (min-width: 0) {

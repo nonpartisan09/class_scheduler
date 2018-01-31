@@ -125,7 +125,7 @@ class SearchResults extends Component {
 
     if (pageCount > 1) {
       return (
-        <div>
+        <div className='searchResultPaginationContainer'>
           <ReactPaginate
             previousLabel='previous'
             nextLabel='next'
