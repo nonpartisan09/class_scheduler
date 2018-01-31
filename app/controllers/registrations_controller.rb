@@ -50,7 +50,7 @@ class RegistrationsController < Devise::RegistrationsController
         Contexts::Users::Errors::AlreadyUsedEmail => e
       @message = e.message
 
-      render json: { error: { message: @message } }, status: 409
+      render json: { error: { message: @message } }, status: :conflict
     end
   end
 

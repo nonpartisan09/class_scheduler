@@ -2,18 +2,21 @@ module Contexts
   module Availabilities
     class Creation
       def initialize(availability, current_user)
+        I18n.locale = :en
+
         @availability = availability
         @timezone = current_user[:timezone]
         @current_user = current_user
-        @day = @availability[:day]
+        day_index = @availability[:day].to_i
+        @day = I18n.t('date.day_names')[day_index]
 
         unless @availability[:start_time].present? && @timezone.present?
-          message = I18n.translate custom_errors.messages.missing_start_time
+          message = I18n.t('custom_errors.messages.missing_start_time')
           raise Availabilities::Errors::StartTimeMissing, message
         end
 
         unless @availability[:end_time].present?  && @timezone.present?
-          message = I18n.translate custom_errors.messages.missing_end_time
+          message = I18n.t('custom_errors.messages.missing_end_time')
           raise Availabilities::Errors::EndTimeMissing, message
         end
 
@@ -31,6 +34,7 @@ module Contexts
         check_if_overlaps?
 
         new_availability_params = @availability.merge({
+            :day => @day,
             :start_time => @utc_start_time,
             :end_time => @utc_end_time,
             :user_id => @current_user.id,
@@ -39,7 +43,7 @@ module Contexts
         Availability.create!(new_availability_params)
 
         unless @new_availability
-          message = I18n.translate custom_errors.messages.unknown_error
+          message = I18n.t('custom_errors.messages.unknown_error')
           raise Availabilities::Errors::UnknownAvailabilityError, message
         end
         @new_availability
@@ -54,11 +58,8 @@ module Contexts
           range = Range.new @utc_start_time, @utc_end_time
 
           overlaps = existing_availabilities.in_range(range)
-          ap range
-          ap existing_availabilities
-          ap existing_availabilities.in_range(range)
            if overlaps.present?
-             message = I18n.translate custom_errors.messages.overlapping_availability
+             message = I18n.t('custom_errors.messages.overlapping_availability')
             raise Availabilities::Errors::OverlappingAvailability, message
            end
         end
@@ -67,14 +68,14 @@ module Contexts
       def check_if_less_than_30_minutes?
         minutes = ((@parsed_end_time - @parsed_start_time) / 1.minute).round
         if minutes < 30
-          message = I18n.translate custom_errors.messages.minimum_availability_required
+          message = I18n.t('custom_errors.messages.minimum_availability_required')
           raise Availabilities::Errors::ShortAvailability, message
         end
       end
 
       def check_if_starts_before_ends?
         if (@parsed_end_time - @parsed_start_time) < 0
-          message = I18n.translate custom_errors.messages.end_time_after_start_time
+          message = I18n.t('custom_errors.messages.end_time_after_start_time')
           raise Availabilities::Errors::ShortAvailability, message
         end
       end

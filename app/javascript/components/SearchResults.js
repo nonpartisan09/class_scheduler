@@ -2,18 +2,19 @@ import React, { Component } from 'react';
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import ReactPaginate from 'react-paginate';
+import { FormattedMessage } from 'react-intl';
 
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
 import SearchResultItem from './SearchResultItem';
 import Header from './reusable/Header';
 import { HIGHEST, RECENT, CLOSEST, NEWEST } from './SortFilter';
-
 import { getData } from './utils/sendData';
 import SearchUrl from './utils/SearchUrl';
 import isCurrentUserLocated from './utils/isCurrentUserLocated';
 
 import './SearchResults.css';
+import PageHeader from './reusable/PageHeader';
 
 class SearchResults extends Component {
   constructor(props) {
@@ -49,9 +50,13 @@ class SearchResults extends Component {
       <div>
         <Header currentUser={ currentUser } />
         <div className='searchResultsContainer'>
-          <h1 className='searchResultsHeader'>
-            Available Volunteers
-          </h1>
+          <PageHeader title={
+            <FormattedMessage
+              id='SearchResults.header'
+              defaultMessage='Available Volunteers'
+            />
+            }
+          />
           { this.renderSortDropDown() }
           <div className='searchResults'>
             { this.renderVolunteers() }
@@ -91,10 +96,11 @@ class SearchResults extends Component {
 
   handlePageClick({ selected }) {
     const { sortBy, search, page } = this.state;
+    const { currentUser: { locale } } = this.props;
 
     if (page !== selected + 1) {
       const requestParams = {
-        url: SearchUrl({ ...search, order: sortBy, page: selected + 1 }),
+        url: SearchUrl({ ...search, order: sortBy, page: selected + 1, locale }),
 
         successCallBack: ({ volunteers }) => {
           this.setState({
@@ -176,9 +182,10 @@ class SearchResults extends Component {
 
   handleBlur() {
     const { sortBy, search } = this.state;
+    const { currentUser: { locale } } = this.props;
 
     const requestParams = {
-      url: SearchUrl({ ...search, order: sortBy }),
+      url: SearchUrl({ ...search, order: sortBy, locale }),
 
       successCallBack: ({ volunteers, current_page, page_count }) => {
         this.setState({

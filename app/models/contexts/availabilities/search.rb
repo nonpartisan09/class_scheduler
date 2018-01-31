@@ -8,12 +8,12 @@ module Contexts
 
       def execute
         unless @params[:program].present?
-          message = I18n.translate custom_errors.messages.missing_program
+          message = I18n.t('custom_errors.messages.missing_program')
           raise Contexts::Availabilities::Errors::ProgramMissing, message
         end
 
         unless @params[:day].present?
-          message = I18n.translate custom_errors.messages.missing_day
+          message = I18n.t('custom_errors.messages.missing_day')
           raise Contexts::Availabilities::Errors::DayMissing, message
         end
 

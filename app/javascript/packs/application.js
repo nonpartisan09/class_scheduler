@@ -90,7 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <Route exact path={ `/${locale}/volunteers` } render={ (props) => <SearchResults { ...data } { ...props } /> } />
             <Route exact path={ `/${locale}/my_profile` } render={ (props) => <MyProfile { ...data } { ...props } /> } />
             <Route exact path={ `/${locale}/:user_id/(:order)` } render={ (props) => <UserReviewIndexPage { ...data } { ...props } /> } />
-            <Route exact path={ `/${locale}/reviews/test/:user_id` } render={ (props) => <UserReviewIndexPage { ...data } { ...props } /> } />
+            <Route exact path={ `/${locale}/reviews/author/:url_slug` } render={ (props) => <UserReviewIndexPage { ...data } { ...props } /> } />
 
             <Route
               exact
@@ -114,7 +114,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <Route exact path='/search' render={ (props) => <SearchBar { ...data } { ...props } /> } />
             <Route exact path='/volunteers' render={ (props) => <SearchResults { ...data } { ...props } /> } />
             <Route exact path='/my_profile' render={ (props) => <MyProfile { ...data } { ...props } /> } />
-            <Route exact path='/reviews/test/:user_id' render={ (props) => <UserReviewIndexPage { ...data } { ...props } /> } />
+            <Route exact path='/reviews/author/:url_slug' render={ (props) => <UserReviewIndexPage { ...data } { ...props } /> } />
 
             <Route
               exact

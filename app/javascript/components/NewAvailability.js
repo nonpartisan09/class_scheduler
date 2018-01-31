@@ -22,37 +22,24 @@ import { postData } from './utils/sendData';
 
 import './NewAvailability.css';
 import Footer from './reusable/Footer';
+import PageHeader from './reusable/PageHeader';
 
 const nowDate = new Date();
 const DEFAULT_START = _.toString(new Date(nowDate.setHours(0, 0)));
 const DEFAULT_END = _.toString(new Date(nowDate.setHours(23, 59)));
 
 const schema = Joi.object({}).pattern(/[0-9]+/, Joi.object({
-    day: Joi.string().required().options({
+    day: Joi.number().required().options({
       language: {
-        any: {
-          required:
-  <FormattedMessage
-    id='NewAvailability.selectDayError'
-    defaultMessage='Please select a day'
-          />,
-          empty:
-  <FormattedMessage
-    id='NewAvailability.selectDayError'
-    defaultMessage='Please select a day'
-          />
-        }
+        any: 'Please select a day',
+        empty: 'Please select a day'
       }
     }),
     start_time: Joi.date().default(DEFAULT_START).options({
       language: {
         date: {
           timestamp: {
-            javascript:
-  <FormattedMessage
-    id='NewAvailability.startTimeBlank'
-    defaultMessage='Please select a start time'
-              />
+            javascript: 'Please select a start time'
           }
         }
       }
@@ -61,11 +48,7 @@ const schema = Joi.object({}).pattern(/[0-9]+/, Joi.object({
       language: {
         date: {
           timestamp: {
-            javascript:
-  <FormattedMessage
-    id='NewAvailability.endTimeBlank'
-    defaultMessage='Please select an end time'
-            />
+            javascript: 'Please select an end time'
           }
         }
       }
@@ -195,6 +178,15 @@ class NewAvailability extends Component {
           />
         </h1>
       );
+    } else {
+      return (
+        <PageHeader title={
+          <FormattedMessage
+            id='NewAvailability.header'
+            defaultMessage='Create your availabilities'
+          />
+        }/>
+      );
     }
   }
 
@@ -248,7 +240,7 @@ class NewAvailability extends Component {
             onBlur={ validateHandler(`${availability}.day`) }
             fullWidth
           >
-            { _.map(days, (value, key) => <MenuItem key={ value + key } insetChildren checked={ availabilities[index] && availabilities[index].day === value } value={ value } primaryText={ <span> { value } </span> } />) }
+            { _.map(days, (value, index) => <MenuItem key={ value + index } insetChildren checked={ availabilities[index] && availabilities[index].day === value } value={ index } primaryText={ <span> { value } </span> } />) }
           </SelectField>
 
           <TimePicker

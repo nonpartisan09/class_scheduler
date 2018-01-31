@@ -5,23 +5,41 @@ import Paper from 'material-ui/Paper';
 import { FormattedMessage } from 'react-intl';
 import Header from './reusable/Header';
 import Footer from './reusable/Footer';
+import PageHeader from './reusable/PageHeader';
 
-import formatLink from './utils/Link';
+import './UserReviewIndexPage.css';
 
 class UserReviewIndexPage extends Component {
   render() {
-    const { comments, currentUser: { locale } } = this.props;
+    const { currentUser } = this.props;
+
+    return (
+      <div>
+        <Header currentUser={ currentUser } />
+        <Paper zDepth={ 1 } className='paperOverride' rounded={ false }>
+          <PageHeader title={
+            <FormattedMessage
+              id='UserReviewIndexPage.header'
+              defaultMessage='Most recent reviews'
+            />
+          } />
+          <ul className='userReviewIndexPageContainerList'>
+            { this.renderContent() }
+          </ul>
+        </Paper>
+        <Footer />
+      </div>
+    );
+  }
+  renderContent() {
+    const { comments } = this.props;
 
     if (_.size(comments) > 0) {
-      return _.map(comments, ({ comment, created_at, reviewer, reviewer_url_slug }, index) => {
+      return _.map(comments, ({ comment, created_at, reviewer, reviewee }, index) => {
         return (
-          <li key={ index } className='commentContainerListItem'>
+          <li key={ index } className='userReviewIndexPageContainerListItem'>
             <span>Posted { created_at } - </span>
-            <span>by
-              <a href={ formatLink(`/reviews/${reviewer_url_slug}`, locale) } className='slidingLink'>
-                { reviewer }
-              </a>-
-            </span>
+            <span>about {reviewee} - </span>
             <span> { this.renderComment(comment) }</span>
           </li>
         );
@@ -39,7 +57,7 @@ class UserReviewIndexPage extends Component {
   }
 
   renderComment(comment) {
-    if(comment) {
+    if (comment) {
       return comment;
     } else {
       return (
@@ -50,27 +68,17 @@ class UserReviewIndexPage extends Component {
       );
     }
   }
-
-  renderTest() {
-    return (
-      <div>
-        <Header currentUser={ currentUser } />
-        <Paper zDepth={ 1 } className='paperOverride' rounded={ false }>
-          { this.renderContent() }
-          </Paper>
-        <Footer />
-      </div>
-    );
-  }
 }
 
 UserReviewIndexPage.propTypes = {
-  comments: PropTypes.object,
+  comments: PropTypes.array,
+  reviewer: PropTypes.string,
   currentUser: PropTypes.object
 };
 
 UserReviewIndexPage.defaultProps = {
-  comments: {},
+  comments: [],
+  reviewer: '',
   currentUser: {}
 };
 

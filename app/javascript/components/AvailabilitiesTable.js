@@ -20,6 +20,7 @@ import { postData } from './utils/sendData';
 import SnackBarComponent from './reusable/SnackBarComponent';
 
 import './AvailabilitiesTable.css';
+import formatLink from './utils/Link';
 
 class AvailabilitiesTable extends Component {
   constructor(props, context) {
@@ -201,12 +202,14 @@ class AvailabilitiesTable extends Component {
     }
   }
   handleDelete(id) {
+    const { locale } = this.props;
+
     return () => {
       const requestParams = {
         url: `/availabilities/${id}`,
         method: 'DELETE',
         successCallBack: () => {
-          location.assign('/availabilities');
+          location.assign(formatLink('/availabilities', locale));
         },
         errorCallBack: (message) => {
           this.setState({
@@ -240,12 +243,14 @@ class AvailabilitiesTable extends Component {
 AvailabilitiesTable.propTypes = {
   availabilities: PropTypes.oneOfType([ PropTypes.array, PropTypes.object ]),
   timezone: PropTypes.string,
+  locale: PropTypes.string,
   deletable: PropTypes.bool
 };
 
 AvailabilitiesTable.defaultProps = {
   availabilities: {},
   timezone: '',
+  locale: '',
   deletable: false
 };
 

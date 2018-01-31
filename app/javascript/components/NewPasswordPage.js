@@ -16,6 +16,7 @@ import SnackBarComponent from './reusable/SnackBarComponent';
 import { postData } from './utils/sendData';
 import Footer from './reusable/Footer';
 import formatLink from './utils/Link';
+import PageHeader from './reusable/PageHeader';
 
 const schema = {
   email: Joi.string().email({ minDomainAtoms: 2 }).required().options({
@@ -48,7 +49,14 @@ class NewPasswordPage extends Component {
     return (
       <div>
         <Header  />
-
+        <PageHeader
+          title={
+            <FormattedMessage
+              id='NewPasswordPage.header'
+              defaultMessage='New Password'
+            />
+          }
+        />
         <form className="signInContainer">
           <TextField
             name='email'

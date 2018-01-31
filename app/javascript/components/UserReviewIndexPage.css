@@ -1,0 +1,9 @@
+.userReviewIndexPageContainerList {
+    list-style: none;
+    padding: 0;
+}
+
+.userReviewIndexPageContainerListItem {
+    padding: 0;
+    margin: 12px 0;
+}

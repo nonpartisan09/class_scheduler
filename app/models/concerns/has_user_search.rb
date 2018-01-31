@@ -53,7 +53,7 @@ module HasUserSearch
         when 'last'
           order(last_sign_in_at: :desc)
         else
-          message = I18n.translate custom_errors.messages.incorrect_order
+          message = I18n.t('custom_errors.messages.incorrect_order')
           raise Contexts::Availabilities::Errors::IncorrectOrder, message
         end
       else
@@ -95,11 +95,14 @@ module HasUserSearch
                         end
 
       if params[:day].present?
+        I18n.locale = :en
+        days = params[:day].split(/,/)
+        days = days.collect { |day| I18n.t('date.day_names')[day.to_i] }
         where({ :availabilities => {
-            :day => params[:day].split(/,/),
+            :day => days,
         }.merge(start_time_query).merge(end_time_query) })
       else
-        message = I18n.translate custom_errors.messages.missing_day
+        message = I18n.t('custom_errors.messages.missing_day')
         raise Contexts::Availabilities::Errors::DayMissing, message
       end
     }

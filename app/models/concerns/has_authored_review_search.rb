@@ -5,11 +5,11 @@ module HasAuthoredReviewSearch
 
   included do
     def self.authored_review_search(params)
-      authored_by_author(params)
+      authored_by_user(params)
           .in_authored_order(params[:order])
     end
 
-    scope :belongs_to_user, proc { |params|
+    scope :authored_by_user, proc { |params|
       if params[:user_id].present?
         user = User.find_by_url_slug!(params[:user_id])
         user.authored_reviews

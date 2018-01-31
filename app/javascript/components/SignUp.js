@@ -6,13 +6,12 @@ import FormData from './utils/FormData';
 import withUserForm from './reusable/withUserForm';
 import Header from './reusable/Header';
 
-import './SignUp.css';
-
 import UserFormConstants from './utils/UserFormConstants';
 
 import SignUpSchema from './schema/SignUpSchema';
 import { postData } from './utils/sendData';
 import formatLink from './utils/Link';
+import PageHeader from './reusable/PageHeader';
 
 const { SIGN_UP } = UserFormConstants;
 
@@ -22,7 +21,7 @@ const ignoredFields = [
 
 function handleUserSignUp() {
   const { match: { params: { role } }, history } = this.props;
-  const { currentUser } = this.props;
+  const { currentUser, currentUser: { locale } } = this.props;
 
   const updatedUser =  _.reduce(currentUser, (memo, value, key) => {
     if (key === 'thumbnail_image' || !_.isEmpty(value) || !_.includes(ignoredFields, key)) {
@@ -33,9 +32,10 @@ function handleUserSignUp() {
   }, {});
 
   const attributes = FormData.from({ user: updatedUser });
+  const restfulUrl = locale? `/${locale}/sign_up/${role}` : `/sign_up/${role}`;
 
   const requestParams = {
-    url: `/sign_up/${role}`,
+    url: restfulUrl,
     attributes,
     method: 'POST',
     successCallBack: () => {
@@ -73,13 +73,13 @@ class SignUp extends Component {
     return (
       <div>
         <Header />
-
-        <h1 className='signUpHeader'>
+        <PageHeader title={
           <FormattedMessage
             id='SignUp.signUpHeader'
             defaultMessage='Join Tutoria community: Step 1/2'
-          />
-        </h1>
+           />
+         }
+         />
       </div>
     );
   }

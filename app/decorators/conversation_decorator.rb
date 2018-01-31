@@ -20,10 +20,7 @@ class ConversationDecorator
         :recipient => recipient_name,
         :sender => sender_name,
         :messages => messages,
-        :recipient_avatar => recipient_avatar,
-        :sender_avatar => sender_avatar,
-        :senderUrlSlug => sender_url_slug,
-        :recipientUrlSlug => recipient_url_slug
+        :conversee_avatar => conversee_avatar
     }
   end
 

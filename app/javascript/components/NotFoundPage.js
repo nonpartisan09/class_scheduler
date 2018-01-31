@@ -11,6 +11,7 @@ import Logo from './reusable/Logo';
 
 import './NotFoundPage.css';
 import formatLink from './utils/Link';
+import PageHeader from './reusable/PageHeader';
 
 class NotFoundPage extends Component {
   render() {
@@ -20,12 +21,14 @@ class NotFoundPage extends Component {
         <Header currentUser={ currentUser } />
         <Paper zDepth={ 1 } className='paperOverride' rounded={ false }>
           <Logo />
-          <h1>
+          <PageHeader title={
             <FormattedMessage
               id='NotFoundPage.title'
               defaultMessage='Oops!'
             />
-          </h1>
+            }
+          />
+
           <div className='notFoundPageSection'>
             <FormattedMessage
               id='NotFoundPage.notFoundPage'

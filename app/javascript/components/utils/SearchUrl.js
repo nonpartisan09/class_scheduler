@@ -1,7 +1,7 @@
 import moment from 'moment/moment';
 import _ from 'lodash';
 
-function SearchUrl({ day, program, start_time, end_time, distance, order, page }) {
+function SearchUrl({ day, program, start_time, end_time, distance, order, page, locale }) {
   const startParam = _.isDate(start_time)? `&start_time=${moment(start_time).format('HH:MM')}` : '';
   const endParam = _.isDate(end_time)? `&end_time=${moment(end_time).format('HH:MM')}`: '';
   const dayParam = _.size(day) > 0? `&day=${day}` : '';
@@ -9,8 +9,9 @@ function SearchUrl({ day, program, start_time, end_time, distance, order, page }
   const distanceParam = distance > 0? `&distance=${distance}` : '';
   const orderParam = order? `&order=${order}` : '';
   const pageParam = page? `&page=${page}` : '';
+  const localeParam = locale? `/${locale}` : '';
 
-  return `/results?${programParam}${dayParam}${startParam}${endParam}${distanceParam}${orderParam}${pageParam}`;
+  return `${localeParam}/results?${programParam}${dayParam}${startParam}${endParam}${distanceParam}${orderParam}${pageParam}`;
 }
 
 export default SearchUrl;

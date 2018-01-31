@@ -291,14 +291,34 @@ class UserProfile extends Component {
   }
 
   handleReviewSubmit(value, comment) {
-    const { user: { url_slug }, review: { id } } = this.props;
+    const { user: { url_slug }, review: { id }, currentUser: { locale } } = this.props;
+    const { id: stateId } = this.state;
 
     const attributes = FormData.from({ review: _.toNumber(value), comment, user_id: url_slug, id });
     const method = id || this.state.id ? METHODS.PUT : METHODS.POST;
-    const restUrl = id || this.state.id ? `/reviews/${id||this.state.id}` : '/reviews';
+
+    const restfulUrl = function(){
+      if (id) {
+        if (locale) {
+          return `/${locale}/reviews/${id}`;
+        } else {
+          return `/reviews/${id}`;
+        }
+      } else if (stateId) {
+        if (locale) {
+          return `/${locale}/reviews/${stateId}`;
+        } else {
+          return `/reviews/${stateId}`;
+        }
+      } else if (locale) {
+        return `/${locale}/reviews`;
+      } else {
+        return '/reviews';
+      }
+    }();
 
     const requestParams = {
-      url: restUrl,
+      url: restfulUrl,
       attributes,
       method,
       successCallBack: (response) => {
@@ -339,13 +359,14 @@ class UserProfile extends Component {
   }
 
   renderAvailabilities() {
-    const { user: { availabilities, timezone } } = this.props;
+    const { user: { availabilities, timezone }, currentUser: { locale } } = this.props;
 
     if ( _.size(availabilities) > 0 ) {
       return (
         <AvailabilitiesTable
           availabilities={ availabilities }
           timezone={ timezone }
+          locale={ locale }
         />
       );
     }

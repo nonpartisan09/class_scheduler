@@ -19,6 +19,7 @@ import formatLink from './utils/Link';
 
 import './SignIn.css';
 import Footer from './reusable/Footer';
+import PageHeader from './reusable/PageHeader';
 
 const schema = {
   email: Joi.string().email({ minDomainAtoms: 2 }).required().options({
@@ -59,7 +60,13 @@ class SignIn extends Component {
     return (
       <div>
         <Header  />
-
+        <PageHeader title={
+          <FormattedMessage
+            id='signIn'
+            defaultMessage='Sign In'
+           />
+         }
+         />
         <form className="signInContainer" onSubmit={ this.handleKeyDown }>
           <TextField
             name='email'

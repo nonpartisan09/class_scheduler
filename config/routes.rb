@@ -14,9 +14,9 @@ Rails.application.routes.draw do
     resources :sessions
     resource :users
 
-    get 'reviews/(:user_id/:order)', to: 'reviews#index'
+    get 'reviews', to: 'reviews#index'
 
-    get 'reviews/test/:user_id', to: 'reviews#author_index'
+    get 'reviews/author/:url_slug', to: 'reviews#author_index'
     get 'inbox', to: 'conversations#index'
     get 'inbox/:id', to: 'conversations#show'
     get 'availabilities/new' => 'availabilities#new'

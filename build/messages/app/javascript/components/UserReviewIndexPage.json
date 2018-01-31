@@ -1,5 +1,9 @@
 [
   {
+    "id": "UserReviewIndexPage.header",
+    "defaultMessage": "Most recent reviews by"
+  },
+  {
     "id": "UserReviewIndexPage.noReviewAvailable",
     "defaultMessage": "No reviews available"
   },

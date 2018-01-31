@@ -32,3 +32,7 @@ en:
     messages:
       review_created: 'Success, review created'
       review_updated: 'Success, review updated'
+  date:
+    formats:
+      default: "%Y-%m-%d"
+    day_names: [Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday]

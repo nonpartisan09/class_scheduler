@@ -6,7 +6,7 @@ class AvailabilitiesController < ApplicationController
   def search
     user = UserDecorator.new(current_user).simple_decorate
     programs = Program.all
-    days =  Date::DAYNAMES
+    days = I18n.translate 'date.day_names'
 
     @data = {
         :currentUser => user,
@@ -21,7 +21,7 @@ class AvailabilitiesController < ApplicationController
     user = UserDecorator.new(current_user).simple_decorate
     programs = Program.all
     timezones = ActiveSupport::TimeZone.all
-    days =  Date::DAYNAMES
+    days = I18n.translate 'date.day_names'
 
     @data = {
         :availabilities => { },

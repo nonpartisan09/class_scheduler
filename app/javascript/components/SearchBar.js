@@ -20,6 +20,7 @@ import Footer from './reusable/Footer';
 import formatLink from './utils/Link';
 import SnackBarComponent from './reusable/SnackBarComponent';
 import SearchUrl from './utils/SearchUrl';
+import PageHeader from './reusable/PageHeader';
 
 class SearchBar extends Component {
   constructor(props) {
@@ -116,7 +117,7 @@ class SearchBar extends Component {
             multiple
             selectionRenderer={ this.selectionRendererDay }
           >
-            { _.map(days, (value, key) => <MenuItem key={ value + key } insetChildren checked={ _.indexOf(day, value) > -1 } value={ value } primaryText={ <span> { value } </span> } />) }
+            { _.map(days, (value, index) => <MenuItem key={ value + index } insetChildren checked={ _.indexOf(day, index) > -1 } value={ index } primaryText={ <span> { value } </span> } />) }
           </SelectField>
 
           <SearchOptionalFields
@@ -170,12 +171,14 @@ class SearchBar extends Component {
     } else {
       return (
         <div className='searchBarHeaderContainer'>
-          <h1 className='searchBarHeader'>
-            <FormattedMessage
-              id='SearchBar.searchTitle'
-              defaultMessage='Search for volunteers'
-            />
-          </h1>
+          <PageHeader
+            title={
+              <FormattedMessage
+                id='SearchBar.searchTitle'
+                defaultMessage='Search for volunteers'
+              />
+            }
+          />
         </div>
       );
     }
@@ -207,8 +210,12 @@ class SearchBar extends Component {
   }
 
   selectionRendererDay(values) {
+    const { days } = this.props;
+
     if (_.size(values) > 1) {
-      return _.trimEnd(values.join(', '), ', ');
+      return _.trimEnd(_.map(values, (value) => {
+        return days[value];
+      }).join(', '), ', ');
     } else if (_.size(values) === 1) {
       return values.toString();
     }
@@ -241,7 +248,7 @@ class SearchBar extends Component {
     const { search, history, currentUser: { locale } } = this.props;
 
     const requestParams = {
-      url: SearchUrl(search),
+      url: SearchUrl({ ...search, locale }),
       jsonBody: null,
       method: 'GET',
       successCallBack: (response, status) => {

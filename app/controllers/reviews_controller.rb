@@ -1,8 +1,7 @@
 class ReviewsController < ApplicationController
   before_action :authenticate_user!
-  before_action :permitted_params, except: [:author_index]
-  before_action :author_params, only: [:author_index]
-  after_action :update_average_rating, except: [:index]
+  before_action :permitted_params, except: [ :author_index]
+  after_action :update_average_rating, except: [ :index, :author_index ]
 
   def create
     check_if_redirect
@@ -28,7 +27,7 @@ class ReviewsController < ApplicationController
 
      render json: { message: message }, status: status
    else
-     message = I18n.translate custom_success.messages.review_created
+     message = I18n.t('custom_success.messages.review_created')
      render json: {
          message: message,
          review: ReviewDecorator.new(@review).simple_decorate,
@@ -56,7 +55,7 @@ class ReviewsController < ApplicationController
 
       render json: { message: message }, status: status
     else
-      message = I18n.translate custom_success.messages.review_updated
+      message = I18n.t('custom_success.messages.review_updated')
 
       render json: {
           message: message,
@@ -85,27 +84,25 @@ class ReviewsController < ApplicationController
   end
 
   def author_index
-    def index
-      redirect_if_unauthorized
+    redirect_if_unauthorized
 
-      begin
-        reviews = Review.authored_review_search(author_params)
-        comments = reviews.collect{ |review| ReviewDecorator.new(review).decorate }
-      rescue Exception => e
-        message = e.message
-        status = :unprocessable_entity
+    begin
+      user = User.find_by_url_slug(params[:url_slug])
+      reviews = Review.authored_review_search(params)
+      comments = reviews.collect{ |review| ReviewDecorator.new(review).decorate }
 
-        render json: { message: message }, status: status
-      else
+      @data = {
+          comments: comments,
+          reviewer: user.first_name,
+          currentUser: UserDecorator.new(current_user).simple_decorate
+      }
 
-        @data = {
-            comments: comments,
-            currentUser: UserDecorator.new(current_user).simple_decorate
-        }
+      render :author_index
+    rescue Exception => e
+      message = e.message
+      status = :unprocessable_entity
 
-        format.html { render :index }
-      end
-
+      render json: { message: message }, status: status
     end
   end
 
@@ -168,19 +165,13 @@ class ReviewsController < ApplicationController
     end
   end
 
-  def author_params
-    params.permit(
-        :user_id,
-    )
-  end
-
   def permitted_params
-    params.permit(
+    params.permit([
         :user_id,
         :review,
         :id,
         :comment,
         :order
-    )
+    ])
   end
 end

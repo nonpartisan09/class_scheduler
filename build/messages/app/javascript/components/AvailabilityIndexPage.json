@@ -1,7 +1,11 @@
 [
   {
+    "id": "AvailabilityIndexPage.Header",
+    "defaultMessage": "My availabilities"
+  },
+  {
     "id": "AvailabilityIndexPage.Help",
-    "defaultMessage": "I can help with:"
+    "defaultMessage": "I can help with"
   },
   {
     "id": "availabilityCreateNew",

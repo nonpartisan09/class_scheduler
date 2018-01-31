@@ -1,5 +1,9 @@
 [
   {
+    "id": "ConversationIndexPage.header",
+    "defaultMessage": "Inbox"
+  },
+  {
     "id": "ConversationIndexPage.Search",
     "defaultMessage": "Search for volunteers"
   },

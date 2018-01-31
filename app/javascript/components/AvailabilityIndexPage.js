@@ -11,6 +11,7 @@ import AvailabilitiesTable from './AvailabilitiesTable';
 import formatLink from './utils/Link';
 
 import './AvailabilityIndexPage.css';
+import PageHeader from './reusable/PageHeader';
 
 class AvailabilityIndexPage extends Component {
   render() {
@@ -20,11 +21,18 @@ class AvailabilityIndexPage extends Component {
       <div>
         <Header currentUser={ currentUser } />
         <Paper zDepth={ 1 } className='paperOverride' rounded={ false }>
+          <PageHeader title={
+            <FormattedMessage
+              id='AvailabilityIndexPage.Header'
+              defaultMessage='My availabilities'
+            />
+          } />
+
           <div className='availabilityIndexContainer'>
             <FormattedMessage
               id='AvailabilityIndexPage.Help'
-              defaultMessage='I can help with:'
-            />
+              defaultMessage='I can help with'
+            />:
             <ul className='availabilityIndexProgramsContainer'>
               { this.renderAvailablePrograms() }
             </ul>
@@ -53,6 +61,7 @@ class AvailabilityIndexPage extends Component {
           <AvailabilitiesTable
             availabilities={ availabilities }
             timezone={ timezone }
+            locale={ locale }
             deletable
           />
         </ul>

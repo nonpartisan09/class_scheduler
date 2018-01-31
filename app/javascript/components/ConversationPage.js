@@ -2,13 +2,23 @@ import React, { Component } from 'react';
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import Paper from 'material-ui/Paper';
+import {Tabs, Tab} from 'material-ui/Tabs';
+import { FormattedMessage } from 'react-intl';
 
 import Message from './Message';
 import Header from './reusable/Header';
 import Footer from './reusable/Footer';
 import { determineRecipient } from './utils/messageUtil';
+import { getData } from './utils/sendData';
+import { GET } from './utils/RestConstants';
 
 class ConversationPage extends Component {
+  componentWillMount(){
+    setTimeout(() => {
+      this.handleMarkAsRead();
+    }, 2000);
+  }
+
   render() {
     const { currentUser } = this.props;
 
@@ -16,16 +26,39 @@ class ConversationPage extends Component {
       <div>
         <Header currentUser={ currentUser } />
         <Paper zDepth={ 1 } className='paperOverride' rounded={ false }>
-          <div className='conversationBox'>
-            { this.renderMessages() }
-          </div>
+          <Tabs>
+            <Tab label={
+              <FormattedMessage
+                id='ConversationPage.receivedMessages'
+                defaultMessage='Received'
+              />
+              } >
+              <div>
+                <h2>Tab One</h2>
+                <p>
+                  This is an example tab.
+                </p>
+                <p>
+                  You can put any sort of HTML or react component in here. It even keeps the component state!
+                </p>
+              </div>
+            </Tab>
+            <Tab label="Item Two" >
+              <div>
+                <h2>Tab Two</h2>
+                <p>
+                  This is another example tab.
+                </p>
+              </div>
+            </Tab>
+          </Tabs>
         </Paper>
         <Footer />
       </div>
     );
   }
 
-  renderMessages() {
+  renderReceivedMessages() {
     const {
       currentUser: { url_slug: currentUrlSlug },
       conversation: {
@@ -37,7 +70,7 @@ class ConversationPage extends Component {
 
     const newRecipient = determineRecipient({ ...conversation, currentUrlSlug });
 
-    return _.map(messages, ({ body, subject, sent_on }, index) => {
+    return _.map(messages, ({ body, subject, sent_on, unread }, index) => {
       return (
         <Message
           key={ `${index} + ${sent_on}` }
@@ -50,6 +83,12 @@ class ConversationPage extends Component {
         />
       );
     });
+  }
+
+  handleMarkAsRead() {
+    const { conversation: { messages } } = this.props;
+
+    _.filter(messages, 'active');
   }
 }
 

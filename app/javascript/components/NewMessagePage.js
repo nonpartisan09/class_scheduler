@@ -18,6 +18,7 @@ import SnackBarComponent from './reusable/SnackBarComponent';
 
 import './NewMessagePage.css';
 import Footer from './reusable/Footer';
+import PageHeader from './reusable/PageHeader';
 
 
 class NewMessagePage extends Component {
@@ -52,6 +53,14 @@ class NewMessagePage extends Component {
       <div>
         <Header currentUser={ currentUser } />
         <Paper zDepth={ 1 } className='paperOverride' rounded={ false }>
+          <PageHeader title={
+            <FormattedMessage
+              id='NewMessagePage.header'
+              defaultMessage='Send new message'
+            />
+            }
+          />
+
           <form className='newMessageForm'>
             <TextField
               disabled

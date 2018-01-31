@@ -1,10 +1,9 @@
 class ResultsController < ApplicationController
   before_action :authenticate_user!
-  before_action :permit_search_params
 
   def index
     begin
-      search = Contexts::Availabilities::Search.new(permit_search_params, current_user)
+      search = Contexts::Availabilities::Search.new(params, current_user)
       results = search.execute
     rescue Contexts::Availabilities::Errors::ProgramMissing,
         Contexts::Availabilities::Errors::DayMissing,
@@ -30,19 +29,5 @@ class ResultsController < ApplicationController
     @data = { :currentUser => user }
 
     render :show
-  end
-
-  private
-
-  def permit_search_params
-    params.permit(
-        :day,
-        :start_time,
-        :end_time,
-        :program,
-        :distance,
-        :order,
-        :page
-    )
   end
 end

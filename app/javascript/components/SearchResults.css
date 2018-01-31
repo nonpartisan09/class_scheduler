@@ -9,13 +9,6 @@
   list-style: none;
 }
 
-@media (max-width: 500px) {
-    .searchResultsHeader {
-        margin: 0;
-        font-size: 24px;
-    }
-}
-
 @media (min-device-width: 0) and (min-width: 0) {
     .searchResultsContainer {
         text-align: center;
@@ -51,10 +44,6 @@
         max-width: 90%;
         text-align: center;
         margin: -24px 0 0 36px;
-    }
-
-    .searchResultsHeader {
-        margin: 0 0 24px;
     }
 
     .searchResultDropdown, .searchResultsHeader {

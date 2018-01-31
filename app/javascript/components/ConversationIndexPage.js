@@ -11,11 +11,10 @@ import RaisedButton from 'material-ui/RaisedButton';
 
 import Header from './reusable/Header';
 import Footer from './reusable/Footer';
-import { getData } from './utils/sendData';
-import { GET } from './utils/RestConstants';
 
 import './ConversationIndexPage.css';
 import formatLink from './utils/Link';
+import PageHeader from './reusable/PageHeader';
 
 class ConversationIndexPage extends Component {
   render() {
@@ -23,6 +22,13 @@ class ConversationIndexPage extends Component {
       <div>
         <Header currentUser={ this.props.currentUser } />
         <Paper zDepth={ 1 } className='paperOverride' rounded={ false }>
+          <PageHeader title={
+            <FormattedMessage
+              id='ConversationIndexPage.header'
+              defaultMessage='Inbox'
+            />
+          } />
+
           <div className='conversationBox'>
             { this.renderInbox() }
           </div>
@@ -93,7 +99,7 @@ class ConversationIndexPage extends Component {
 
       return (
         <ListItem
-          onClick={ this.handleClick({ id, is_first_message_unread }) }
+          onClick={ this.handleClick(id) }
           key={ conversee }
           leftAvatar={ <Avatar src={ conversee_avatar } /> }
           primaryText={ this.renderNewMessage({ conversee, is_first_message_unread }) }
@@ -102,35 +108,10 @@ class ConversationIndexPage extends Component {
     });
   }
 
-  handleClick({ id, is_first_message_unread }) {
+  handleClick(id) {
     return () => {
-      if (id) {
-        if (is_first_message_unread) {
-          this.handleReadMessage(id);
-        } else {
-          window.location.assign(`inbox/${id}`);
-        }
-      }
+      window.location.assign(`inbox/${id}`);
     };
-  }
-
-  handleReadMessage(id) {
-    const requestParams = {
-      url: `/messages/${id}`,
-      method: GET,
-
-      successCallBack: () => {
-        window.location.assign(`inbox/${id}`);
-      },
-
-      errorCallBack: (message) => {
-        this.setState({
-          message: message
-        });
-      }
-    };
-
-    return getData(requestParams);
   }
 
   renderNewMessage({ conversee, is_first_message_unread }) {

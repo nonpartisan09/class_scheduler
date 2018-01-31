@@ -115,7 +115,7 @@ class CommentContainer extends Component {
               defaultMessage='by'
             />
             <span> </span>
-            <a href={ formatLink(`/reviews/test/${reviewer_url_slug}`, locale) } className='slidingLink commentContainerLink'>
+            <a href={ formatLink(`/reviews/author/${reviewer_url_slug}`, locale) } className='slidingLink commentContainerLink'>
               { reviewer }
             </a>:
             </span>

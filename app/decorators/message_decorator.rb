@@ -11,7 +11,8 @@ class MessageDecorator
         :subject => subject,
         :body => body,
         :sent_on => sent_on,
-        :unread => unread
+        :unread => unread,
+        :sender_url_slug => sender
     }
   end
 
@@ -19,14 +20,10 @@ class MessageDecorator
     user = User.where(:id => @message.user_id).first
 
     if user.present?
-      user.first_name
+      user.url_slug
     else
      "Deleted User"
     end
-  end
-
-  def recipient
-
   end
 
   def id

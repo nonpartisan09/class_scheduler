@@ -12,10 +12,6 @@
     text-align: center;
 }
 
-.searchBarHeader {
-    font-size: 30px;
-}
-
 .searchBarContainer {
     display: flex;
     flex-flow: row wrap;
