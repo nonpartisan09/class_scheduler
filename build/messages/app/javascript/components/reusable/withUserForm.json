@@ -32,6 +32,10 @@
     "defaultMessage": "About me (in 280 characters or less)"
   },
   {
+    "id": "UserForm.emailNotification",
+    "defaultMessage": "I would like to receive an email when I get a new message"
+  },
+  {
     "id": "UserForm.meetToggle",
     "defaultMessage": "Willing to meet"
   },

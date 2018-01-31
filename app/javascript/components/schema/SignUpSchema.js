@@ -8,6 +8,7 @@ const SignUpSchema = {
       }
     }
   }),
+  email_notification: Joi.bool(),
   role: Joi.string(),
   locale: Joi.string(),
   programs: Joi.array().min(1).options({

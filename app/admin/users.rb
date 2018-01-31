@@ -8,31 +8,32 @@ ActiveAdmin.register User do
   end
 
   permit_params :email,
-      :id,
-      :first_name,
-      :last_name,
-      :url_slug,
-      :average_rating,
-      :terms_and_conditions,
-      :contact_permission,
+      :active,
       :address,
+      :average_rating,
       :city,
+      :contact_permission,
+      :country,
+      :created_at,
       :description,
+      :email_notification,
+      :first_name,
+      :id,
+      :last_name,
+      :last_sign_in_at,
       :locale,
       :state,
-      :active,
-      :country,
+      :terms_and_conditions,
       :timezone,
-      :last_sign_in_at,
-      :created_at,
       :updated_at,
-      reviews: [ :id, :description, :review ],
-      roles: [ :id, :name ],
-      role_ids: [],
-      languages: [ :id, :name ],
+      :url_slug,
       language_ids: [],
+      languages: [ :id, :name ],
+      program_ids: [],
       programs: [ :id, :name ],
-      program_ids: []
+      reviews: [ :id, :description, :review ],
+      role_ids: [],
+      roles: [ :id, :name ]
 
   scope :all, default: true
   scope :active, proc { User.active }
@@ -90,6 +91,7 @@ ActiveAdmin.register User do
     column :url_slug
     column :active
     column :contact_permission
+    column :email_notification
     column :address
     column :city
     column :locale
@@ -164,6 +166,7 @@ ActiveAdmin.register User do
           row :active
           row :locale
           row :contact_permission
+          row :email_notification
           row :address
           row :city
           row :description
@@ -238,6 +241,7 @@ ActiveAdmin.register User do
       f.input :first_name
       f.input :last_name
       f.input :description
+      f.input :email_notification
       f.input :contact_permission
       f.input :address
       f.input :locale

@@ -9,22 +9,22 @@ class UserDecorator
 
   def simple_decorate
     {
-      :city => city,
-      :state => state,
-      :locale => locale,
-      :country => country,
-      :programs => programs,
+      :average_rating => average_rating,
       :client => client,
-      :volunteer => volunteer,
+      :country => country,
       :email => email,
-      :url_slug => url_slug,
       :first_name => first_name,
+      :languages => languages,
       :last_logged_in => last_logged_in,
+      :locale => locale,
+      :programs => programs,
+      :rating_count => rating_count,
+      :state => state,
       :thumbnail_image => picture,
       :timezone => timezone,
-      :languages => languages,
-      :average_rating => average_rating,
-      :rating_count => rating_count
+      :url_slug => url_slug,
+      :volunteer => volunteer,
+      :city => city
     }.merge(availabilities_hash)
   end
 
@@ -39,6 +39,7 @@ class UserDecorator
         :client => client,
         :volunteer => volunteer,
         :email => email,
+        :email_notification => email_notification,
         :first_name => first_name,
         :thumbnail_image => picture,
         :description => description,
@@ -60,25 +61,29 @@ class UserDecorator
 
   def decorate
     {
-        :programs => programs,
-        :locale => locale,
         :address => address,
+        :average_rating => average_rating,
         :city => city,
-        :country => country,
-        :state => state,
-        :url_slug => url_slug,
         :client => client,
-        :volunteer => volunteer,
+        :country => country,
+        :description => description,
         :email => email,
         :first_name => first_name,
-        :last_logged_in => last_logged_in,
-        :thumbnail_image => picture,
-        :description => description,
-        :timezone => timezone,
         :languages => languages,
-        :average_rating => average_rating,
+        :last_logged_in => last_logged_in,
+        :locale => locale,
+        :programs => programs,
         :rating_count => rating_count,
+        :state => state,
+        :thumbnail_image => picture,
+        :timezone => timezone,
+        :url_slug => url_slug,
+        :volunteer => volunteer
     }.merge(availabilities_hash)
+  end
+
+  def email_notification
+    user.email_notification || true
   end
 
   def locale

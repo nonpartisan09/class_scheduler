@@ -37,8 +37,7 @@ class User < ActiveRecord::Base
 
   validates_confirmation_of :password
 
-  validates :timezone, presence: true
-  validates :email, presence: true
+  validates :timezone, :email, :locale, presence: true
   validates_uniqueness_of :email
 
   scope :volunteers, -> { includes(:roles).where({:roles => {:url_slug => 'volunteer'}}) }

@@ -13,7 +13,7 @@ class UsersController < ApplicationController
 
     review = Review.where(:author_id => current_user.id, :user_id => @user.id).first
 
-    review = ReviewDecorator.new(review).simple_decorate
+    review = ReviewDecorator.new(review, current_user.first_name, @user.first_name).simple_decorate
     @comments = get_ten_last_comments
 
     @data = {
@@ -33,7 +33,7 @@ class UsersController < ApplicationController
 
     if received_reviews.present?
       count = received_reviews.count
-      ten_last_comments = Review.received_review_search(permitted_params).collect{ |review| ReviewDecorator.new(review).decorate }
+      ten_last_comments = Review.received_review_search(permitted_params).collect{ |review| ReviewDecorator.new(review, @user.first_name).decorate }
 
       @comments = {
           count: count,

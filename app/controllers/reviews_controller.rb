@@ -30,7 +30,7 @@ class ReviewsController < ApplicationController
      message = I18n.t('custom_success.messages.review_created')
      render json: {
          message: message,
-         review: ReviewDecorator.new(@review).simple_decorate,
+         review: ReviewDecorator.new(@review, current_user, @user.first_name).simple_decorate,
          comments: @comments
      }, status: :ok
     end
@@ -59,7 +59,7 @@ class ReviewsController < ApplicationController
 
       render json: {
           message: message,
-          review: ReviewDecorator.new(@review).simple_decorate,
+          review: ReviewDecorator.new(@review, current_user, @user.first_name).simple_decorate,
           comments: @comments
       }, status: :ok
     end

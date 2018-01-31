@@ -78,6 +78,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
           thumbnail_image,
           description,
           timezone,
+          email_notification
         },
         currentUser,
         timezones
@@ -274,6 +275,18 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                 { this.renderUpdatePrograms() }
                 { this.renderUpdateLanguages() }
               </div>
+
+              <Checkbox
+                label={
+                  <FormattedMessage
+                    id='UserForm.emailNotification'
+                    defaultMessage='I would like to receive an email when I get a new message'
+                  />
+                }
+                checked={ email_notification }
+                className='userFormInputField emailNotification'
+                onCheck={ changeHandler('email_notification', { validate: true, strategy: useSecondArgument }) }
+              />
 
               { this.renderSignUpCheckBoxes() }
             </form>
@@ -978,6 +991,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
       timezone: 'Eastern Time (US & Canada)',
       languages: [],
       programs: [],
+      email_notification: true,
       address: '',
       city: '',
       state: '',
