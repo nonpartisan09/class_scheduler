@@ -34,7 +34,7 @@ class SearchResultItem extends Component {
           subtitle={
             <div className='searchResultItemDetails' >
               <p>
-                Last login: {lastLoggedin} ago
+                Last login: {lastLoggedin}
               </p>
               <p className='searchResultItemTruncate'>
                 { this.renderLanguages() }

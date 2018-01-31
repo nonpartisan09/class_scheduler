@@ -11,6 +11,9 @@ en:
         one: '1 minute'
         other: '%{count} minutes ago'
         never: 'Never'
+      less_than_x_minutes:
+        one: 'less than 1 minute ago'
+        other: 'less than %{count} minutes ago'
   custom_errors:
     messages:
       agree_to_terms_and_conditions: 'Please accept our terms and conditions.'

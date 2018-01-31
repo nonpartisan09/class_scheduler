@@ -2,15 +2,15 @@ es:
   activerecord:
     attributes:
       documento:
-        doctipo: "Tipo"
+        doctipo: 'Tipo'
     errors:
       models:
         documento:
           attributes:
             doctipo:
-              blank: "es requerido"
+              blank: 'es requerido'
             asunto:
-              blank: "es requerido"
+              blank: 'es requerido'
   datetime:
     distance_in_words:
       x_days:
@@ -23,18 +23,22 @@ es:
         one: 'hace 1 minuto'
         other: 'hace %{count} minutos'
         never: 'Nunca'
+      less_than_x_minutes:
+        one: 'hace menos de 1 minuto'
+        other: 'hace menos de %{count} minutos'
+
   date:
     formats:
-      default: "%Y-%m-%d"
+      default: '%Y-%m-%d'
     day_names: [Domingo, Lunes, Martes, Miércoles, Jueves, Viernes, Sábado]
   devise:
     failure:
       user:
-        unauthenticated: "Usuario no autenticado"
+        unauthenticated: 'Usuario no autenticado'
     sessions:
       user:
-        signed_in: "Usuario conectado"
-        signed_out: "Usuario desconectado"
+        signed_in: 'Usuario conectado'
+        signed_out: 'Usuario desconectado'
   custom_errors:
     messages:
       agree_to_terms_and_conditions: 'Please accept our terms and conditions.'

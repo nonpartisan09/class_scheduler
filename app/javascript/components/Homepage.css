@@ -65,6 +65,7 @@
     flex-flow: row wrap;
     justify-content: space-between;
     flex: 1 1 auto;
+    align-items: flex-end;
   }
 
   .homepageTextContainer {

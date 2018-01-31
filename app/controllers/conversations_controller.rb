@@ -1,6 +1,6 @@
 class ConversationsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_conversation, :check_participating!, only: [:new, :show]
+  before_action :set_conversation, :check_participating!, only: [:new, :show, :update]
 
   def new
     redirect_to conversation_path(@conversation) and return if @conversation
@@ -25,6 +25,13 @@ class ConversationsController < ApplicationController
     @data = { :conversation => @conversation, :currentUser => @user }
 
     render :show
+  end
+
+  def update
+    @conversation.messages.unread.update_attributes(:unread => false)
+    @conversation = ConversationDecorator.new(@conversation, current_user).decorate
+
+    render json: { :conversation => @conversation }
   end
 
   private

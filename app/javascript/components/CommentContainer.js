@@ -26,6 +26,21 @@ class CommentContainer extends Component {
     };
   }
 
+  componentWillReceiveProps({ comments: { ten_last_comments, count } }){
+    if (this.props.ten_last_comments !== ten_last_comments || this.props.count !== count) {
+      this.handleUpdateState();
+    }
+  }
+
+  handleUpdateState() {
+    const { comments: { ten_last_comments, count } } = this.props;
+
+    this.setState({
+      ten_last_comments: ten_last_comments,
+      count: count
+    });
+  }
+
   render() {
     return (
       <div className='commentContainerMainContainer'>

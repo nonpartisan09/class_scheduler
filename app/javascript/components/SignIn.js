@@ -67,7 +67,7 @@ class SignIn extends Component {
            />
          }
          />
-        <form className="signInContainer" onSubmit={ this.handleKeyDown }>
+        <form className='signInContainer' onSubmit={ this.handleKeyDown }>
           <TextField
             name='email'
             value={ email }
@@ -158,6 +158,8 @@ class SignIn extends Component {
   }
 
   handleKeyDown(event) {
+    console.warn('event.keycode:');
+    console.warn(event.keycode);
     if (event.keycode === 13) {
       this.handleSignIn();
     }

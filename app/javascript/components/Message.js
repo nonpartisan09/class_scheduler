@@ -10,6 +10,8 @@ import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import { FormattedMessage } from 'react-intl';
 import Divider from 'material-ui/Divider';
 
+import formatLink from './utils/Link';
+
 const iconButtonElement = (
   <IconButton
     touch
@@ -22,38 +24,13 @@ const iconButtonElement = (
 
 class Message extends Component {
   render() {
-    const {
-      newMessageFirstName,
-      newMessageRecipient,
-      sentOn,
-      avatar,
-      body
-    } = this.props;
-
-    const rightIconMenu = (
-      <IconMenu iconButtonElement={ iconButtonElement } >
-        <MenuItem>
-          <Link className='conversationIndexPageLink' to={ { pathname: '/messages/new', query: { recipient: newMessageRecipient, userName: newMessageFirstName } } } >
-            <FormattedMessage
-              id='messageReply'
-              defaultMessage='Reply'
-            />
-          </Link>
-        </MenuItem>
-        <MenuItem onClick={ this.handleReview(newMessageRecipient) }>
-          <FormattedMessage
-            id='conversationIndexPageReviewLink'
-            defaultMessage='View Profile / Review'
-          />
-        </MenuItem>
-      </IconMenu>
-    );
+    const { sentOn, avatar, body } = this.props;
 
     return (
       <div>
         <ListItem
           leftAvatar={ <Avatar src={ avatar } /> }
-          rightIconButton={ rightIconMenu }
+          rightIconButton={ this.renderRightIconMenu() }
           primaryText={ this.renderSubject() }
           secondaryText={
             <p>
@@ -67,6 +44,33 @@ class Message extends Component {
     );
   }
 
+  renderRightIconMenu() {
+    const { newMessageRecipient } = this.props;
+
+    if (newMessageRecipient) {
+      const { newMessageFirstName, locale} = this.props;
+
+      return (
+        <IconMenu iconButtonElement={ iconButtonElement } >
+          <MenuItem>
+            <Link className='conversationIndexPageLink' to={ { pathname: formatLink('/messages/new', locale), query: { recipient: newMessageRecipient, userName: newMessageFirstName } } } >
+              <FormattedMessage
+                id='messageReply'
+                defaultMessage='Reply'
+              />
+            </Link>
+          </MenuItem>
+          <MenuItem onClick={ this.handleReview(newMessageRecipient) }>
+            <FormattedMessage
+              id='conversationIndexPageReviewLink'
+              defaultMessage='View Profile / Review'
+            />
+          </MenuItem>
+        </IconMenu>
+      );
+    }
+  }
+
   handleReview(urlSlug) {
     return () => {
       location.assign(`/profiles/${urlSlug}`);
@@ -74,20 +78,19 @@ class Message extends Component {
   }
 
   renderSubject() {
-    const { currentUserIsRecipient, unread, subject, sentOn } = this.props;
-    const messageIsUnreadByRecipient = currentUserIsRecipient && unread;
+    const {  subject, sentOn, sender_first_name } = this.props;
 
-    if (messageIsUnreadByRecipient && subject) {
+    if (subject) {
       return (
-        <span className='conversationIndexPageUnread'>
-          { sentOn } - { subject }  - from { }
-        </span>
-      );
-    } else if (subject) {
-      return (
-        <span>
-          { sentOn } - { subject }
-        </span>
+        <p>
+          <span>{ sentOn } - </span>
+          <FormattedMessage
+            id='Message.sentBy'
+            defaultMessage='sent by'
+          /> <span>{ sender_first_name }: </span>
+          <span> { subject } </span>
+        </p>
+
       );
     } else {
       return '';
@@ -96,25 +99,25 @@ class Message extends Component {
 }
 
 Message.propTypes = {
-  currentUserIsRecipient: PropTypes.bool,
-  unread: PropTypes.bool,
-  newMessageFirstName: PropTypes.string,
-  newMessageRecipient: PropTypes.string,
+  newMessageFirstName: PropTypes.oneOfType([ PropTypes.object, PropTypes.string ]),
+  newMessageRecipient: PropTypes.any,
+  sender_first_name: PropTypes.string,
   sentOn: PropTypes.string,
   avatar: PropTypes.string,
   body: PropTypes.string,
-  subject: PropTypes.string
+  subject: PropTypes.string,
+  locale: PropTypes.string
 };
 
 Message.defaultProps = {
-  currentUserIsRecipient: false,
-  unread: false,
   subject: '',
   newMessageFirstName: '',
-  newMessageRecipient: '',
+  newMessageRecipient: null,
+  sender_first_name: '',
   sentOn: '',
   avatar: '',
-  body: ''
+  body: '',
+  locale: ''
 };
 
 export default Message;

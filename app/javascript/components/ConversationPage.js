@@ -2,18 +2,25 @@ import React, { Component } from 'react';
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import Paper from 'material-ui/Paper';
-import {Tabs, Tab} from 'material-ui/Tabs';
-import { FormattedMessage } from 'react-intl';
 
 import Message from './Message';
 import Header from './reusable/Header';
 import Footer from './reusable/Footer';
-import { determineRecipient } from './utils/messageUtil';
-import { getData } from './utils/sendData';
-import { GET } from './utils/RestConstants';
+import { postData } from './utils/sendData';
+import { PATCH } from './utils/RestConstants';
+import FormData from './utils/FormData';
 
 class ConversationPage extends Component {
-  componentWillMount(){
+  constructor(props, context) {
+    super(props, context);
+
+    this.state = {
+      message: '',
+      conversation: props.conversation
+    };
+  }
+
+  componentWillMount() {
     setTimeout(() => {
       this.handleMarkAsRead();
     }, 2000);
@@ -26,32 +33,7 @@ class ConversationPage extends Component {
       <div>
         <Header currentUser={ currentUser } />
         <Paper zDepth={ 1 } className='paperOverride' rounded={ false }>
-          <Tabs>
-            <Tab label={
-              <FormattedMessage
-                id='ConversationPage.receivedMessages'
-                defaultMessage='Received'
-              />
-              } >
-              <div>
-                <h2>Tab One</h2>
-                <p>
-                  This is an example tab.
-                </p>
-                <p>
-                  You can put any sort of HTML or react component in here. It even keeps the component state!
-                </p>
-              </div>
-            </Tab>
-            <Tab label="Item Two" >
-              <div>
-                <h2>Tab Two</h2>
-                <p>
-                  This is another example tab.
-                </p>
-              </div>
-            </Tab>
-          </Tabs>
+          { this.renderReceivedMessages() }
         </Paper>
         <Footer />
       </div>
@@ -59,46 +41,58 @@ class ConversationPage extends Component {
   }
 
   renderReceivedMessages() {
-    const {
-      currentUser: { url_slug: currentUrlSlug },
-      conversation: {
-        messages,
-        sender_avatar,
-      },
-      conversation
-    } = this.props;
+    const { currentUser: { locale } } = this.props;
 
-    const newRecipient = determineRecipient({ ...conversation, currentUrlSlug });
+    const { conversation: { messages, conversee, conversee_url_slug } } = this.state;
 
-    return _.map(messages, ({ body, subject, sent_on, unread }, index) => {
+    return _.map(messages, ({ body, subject, sent_on, sender_first_name, sender_avatar }, index) => {
+
       return (
         <Message
           key={ `${index} + ${sent_on}` }
-          newMessageFirstName={ newRecipient.firstName }
-          newMessageRecipient={ newRecipient.urlSlug }
+          sender_first_name={ sender_first_name }
+          newMessageFirstName={ conversee }
+          newMessageRecipient={ conversee_url_slug }
           body={ body }
           subject={ subject }
           sentOn={ sent_on }
           avatar={ sender_avatar }
+          locale={ locale }
         />
       );
     });
   }
 
   handleMarkAsRead() {
-    const { conversation: { messages } } = this.props;
+    const { conversation: { id } } = this.state;
+    const attributes = FormData.from({ id });
 
-    _.filter(messages, 'active');
+    const requestParams = {
+      url: '/conversation',
+      method: PATCH,
+      attributes,
+
+      successCallBack: ({ conversation }) => {
+        this.setState({
+          conversation
+        });
+      },
+
+      errorCallBack: (message) => {
+        this.setState({
+          message: message
+        });
+      }
+    };
+
+    return postData(requestParams);
   }
 }
 
 ConversationPage.propTypes = {
   conversation: PropTypes.shape({
-    sender_avatar: PropTypes.string,
-    recipient_avatar: PropTypes.string,
-    recipientUrlSlug: PropTypes.string,
-    senderUrlSlug: PropTypes.string,
-    messages: PropTypes.array
+    messages: PropTypes.array,
+    is_first_message_unread: PropTypes.bool
   }),
   currentUser: PropTypes.object
 };

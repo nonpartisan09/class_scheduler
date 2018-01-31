@@ -31,7 +31,7 @@ class SearchResults extends Component {
       pageCount: state && state.page_count || 1,
       page: state && state.current_page || 1,
       volunteers: state && state.volunteers || [],
-      search: state && state.search || ''
+      search: state && state.search || '',
     };
   }
 
@@ -98,7 +98,7 @@ class SearchResults extends Component {
     const { sortBy, search, page } = this.state;
     const { currentUser: { locale } } = this.props;
 
-    if (page !== selected + 1) {
+    if (page !== (selected + 1)) {
       const requestParams = {
         url: SearchUrl({ ...search, order: sortBy, page: selected + 1, locale }),
 
@@ -125,18 +125,32 @@ class SearchResults extends Component {
 
     if (pageCount > 1) {
       return (
-        <ReactPaginate
-          previousLabel='previous'
-          nextLabel='next'
-          breakLabel={ <a href=''>...</a> }
-          breakClassName='break-me'
-          pageCount={ this.state.pageCount }
-          marginPagesDisplayed={ 2 }
-          pageRangeDisplayed={ 5 }
-          onPageChange={ this.handlePageClick }
-          containerClassName='pagination'
-          activeClassName='active'
-        />
+        <div>
+          <ReactPaginate
+            previousLabel='previous'
+            nextLabel='next'
+            breakLabel={ <a href=''>...</a> }
+            breakClassName='break-me'
+            pageCount={ this.state.pageCount }
+            marginPagesDisplayed={ 0 }
+            pageRangeDisplayed={ 0 }
+            onPageChange={ this.handlePageClick }
+            containerClassName='pagination hideOnDesktop'
+            activeClassName='active'
+          />
+          <ReactPaginate
+            previousLabel='previous'
+            nextLabel='next'
+            breakLabel={ <a href=''>...</a> }
+            breakClassName='break-me'
+            pageCount={ this.state.pageCount }
+            marginPagesDisplayed={ 5 }
+            pageRangeDisplayed={ 5 }
+            onPageChange={ this.handlePageClick }
+            containerClassName='pagination hideOnMobile'
+            activeClassName='active'
+          />
+        </div>
       );
     }
   }

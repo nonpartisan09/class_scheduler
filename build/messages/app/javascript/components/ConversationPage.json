@@ -1,6 +1,6 @@
 [
   {
-    "id": "ConversationPage.receivedMessages",
-    "defaultMessage": "Received"
+    "id": "ConversationPage.You",
+    "defaultMessage": "You"
   }
 ]

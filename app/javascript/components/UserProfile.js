@@ -66,7 +66,7 @@ class UserProfile extends Component {
     return (
       <div>
         <Header currentUser={ currentUser } />
-        <Paper zDepth={ 1 } className='paperOverride' rounded={ false }>
+        <Paper zDepth={ 1 } className='paperOverride userProfilePaper' rounded={ false }>
           { this.renderContent() }
         </Paper>
         { this.renderSnackBar() }
@@ -78,7 +78,6 @@ class UserProfile extends Component {
 
   renderContent() {
     const { user } = this.props;
-
     if (!user.url_slug) {
       return (
         <div>

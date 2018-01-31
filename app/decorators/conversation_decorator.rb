@@ -17,11 +17,21 @@ class ConversationDecorator
 
   def decorate
     {
-        :recipient => recipient_name,
-        :sender => sender_name,
+        :conversee => conversee,
         :messages => messages,
-        :conversee_avatar => conversee_avatar
+        :id => id,
+        :is_first_message_unread => is_first_message_unread,
+        :conversee_avatar => conversee_avatar,
+        :conversee_url_slug => conversee_url_slug
     }
+  end
+
+  def conversee_url_slug
+    if @current_user.id != @conversation.author_id
+      sender_url_slug
+    else
+      recipient_url_slug
+    end
   end
 
   def conversee
@@ -96,7 +106,7 @@ class ConversationDecorator
   end
 
   def messages
-    @conversation.messages.collect{ |message| MessageDecorator.new(message).decorate }
+    @conversation.messages.collect{ |message| MessageDecorator.new(message, @current_user).decorate }
   end
 
   def is_first_message_unread

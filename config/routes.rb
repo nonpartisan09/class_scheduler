@@ -9,6 +9,7 @@ Rails.application.routes.draw do
 
     resources :availabilities
     resource :conversations, only: [ :new, :create ]
+    resource :conversation, only: [ :update ]
     resources :messages, only: [ :new, :create ]
     resources :reviews, only: [ :create, :update, :destroy ]
     resources :sessions
