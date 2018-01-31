@@ -174,7 +174,7 @@ class NewAvailability extends Component {
         <h1 className='signUpHeader'>
           <FormattedMessage
             id='signUpHeader'
-            defaultMessage='Join Tutoria community: Step 2/2'
+            defaultMessage='Join Tutoría community: Step 2/2'
           />
         </h1>
       );

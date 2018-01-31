@@ -76,7 +76,7 @@ class SignUp extends Component {
         <PageHeader title={
           <FormattedMessage
             id='SignUp.signUpHeader'
-            defaultMessage='Join Tutoria community: Step 1/2'
+            defaultMessage='Join Tutoría community: Step 1/2'
            />
          }
          />

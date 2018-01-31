@@ -135,6 +135,9 @@ ActiveAdmin.register User do
     tabs do
       tab 'Details' do
         attributes_table do
+          row :thumbnail do
+            img src: user.thumbnail_image.url(:thumbnail), class: 'admin-app-thumbnail' if user.thumbnail_image.present?
+          end
           row :email
           row :first_name
           row :last_name
