@@ -21,7 +21,7 @@ ActiveAdmin.register Availability do
     actions
   end
 
-  filter :user_id
+  filter :user_id, as: :select, collection: proc { User.volunteers.order(email: :asc).pluck(:email, :id) }
   filter :day
   filter :start_time
   filter :end_time
