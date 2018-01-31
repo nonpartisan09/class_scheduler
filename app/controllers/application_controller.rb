@@ -7,6 +7,8 @@ class ApplicationController < ActionController::Base
   rescue_from ActionController::RoutingError, :with => :not_found
   respond_to :json, :xml, :html
 
+  caches_action :index, :about_page, :t_and_c, :not_found
+
   def index
     decorate_user_if_present
     programs = Program.featured

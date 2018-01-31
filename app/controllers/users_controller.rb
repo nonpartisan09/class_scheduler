@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!, :permitted_params
+  caches_action :show
 
   def show
     unless current_user

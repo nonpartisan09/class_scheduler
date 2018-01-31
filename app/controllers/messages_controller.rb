@@ -1,6 +1,9 @@
 class MessagesController < ApplicationController
   before_action :authenticate_user!
   before_action :find_conversation!, except: [ :update ]
+
+  caches_action :new
+
   def new
     @message = current_user.messages.build
     @user = UserDecorator.new(current_user).simple_decorate

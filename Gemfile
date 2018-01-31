@@ -25,7 +25,9 @@ gem 'delayed_job_active_record'
 gem 'webpacker', '~> 3.0'
 
 # For automatically inlining email styling
-gem 'roadie-rails'
+gem 'roadie-rails', '~>1.2.1'
+
+gem 'actionpack-action_caching'
 
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
 #gem 'turbolinks', '~> 5'

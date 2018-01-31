@@ -1,5 +1,6 @@
 class UserProfilesController < ApplicationController
   before_action :authenticate_user!
+  caches_action :show
 
   def show
     unless current_user

@@ -18,6 +18,8 @@ GEM
       rack-test (>= 0.6.3)
       rails-dom-testing (~> 2.0)
       rails-html-sanitizer (~> 1.0, >= 1.0.2)
+    actionpack-action_caching (1.2.0)
+      actionpack (>= 4.0.0, < 6)
     actionview (5.1.4)
       activesupport (= 5.1.4)
       builder (~> 3.1)
@@ -367,6 +369,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  actionpack-action_caching
   activeadmin (~> 1.2.1)
   airbrake
   airbrake-ruby
@@ -391,7 +394,7 @@ DEPENDENCIES
   paperclip (= 5.1)
   pg (~> 0.21.0)
   rails (~> 5.1)
-  roadie-rails
+  roadie-rails (~> 1.2.1)
   rspec-rails (~> 3.6)
   sass-rails (~> 5.0)
   selenium-webdriver (~> 3.7)

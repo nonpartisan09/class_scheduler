@@ -7,6 +7,8 @@ class SessionsController < Devise::SessionsController
 
   respond_to :json
 
+  caches_action :new
+
   def create
     build_resource
     resource = User.find_for_database_authentication(:email=>params[:user][:email])

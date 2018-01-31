@@ -2,6 +2,8 @@ class RegistrationsController < Devise::RegistrationsController
   before_action :sign_up_params, only: [ :create ]
   before_action :account_update_params, :authenticate_user!, only: [ :update ]
 
+  caches_action :new
+
   def new
     build_resource({})
 
