@@ -85,6 +85,12 @@ class User < ActiveRecord::Base
     UserMailer.account_deactivated(self).deliver_later
   end
 
+  def delete_with_email!
+    UserMailer.account_deleted(self).deliver_later
+
+    self.destroy
+  end
+
   def activate_account!
     self.active = true
     self.save!

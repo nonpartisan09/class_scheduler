@@ -51,10 +51,23 @@ ActiveAdmin.register User do
     redirect_to(admin_user_path(resource))
   end
 
+  member_action :delete_user_with_email, method: :put do
+    resource.delete_with_email!
+
+    redirect_to(admin_user_path(resource))
+  end
+
   member_action :reactivate_user, method: :put do
     resource.activate_account!
     redirect_to(admin_user_path(resource))
   end
+
+  config.add_action_item(:delete_user, only: :show) do
+    if resource.active
+      link_to 'Delete User with email', delete_user_with_email_admin_user_path(resource), method: :put
+    end
+  end
+
 
   config.add_action_item(:impersonate, only: :show) do
     if resource.active
