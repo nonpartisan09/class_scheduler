@@ -3,8 +3,6 @@ class AvailabilitiesController < ApplicationController
   before_action :check_if_volunteer?, except: [:search]
   before_action :check_if_client?, only: [:search ]
 
-  caches_action :search, :new, :index
-
   def search
     user = UserDecorator.new(current_user).simple_decorate
     programs = Program.all

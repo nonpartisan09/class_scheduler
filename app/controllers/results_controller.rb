@@ -1,6 +1,5 @@
 class ResultsController < ApplicationController
   before_action :authenticate_user!
-  caches_action :index, :show
 
   def index
     begin

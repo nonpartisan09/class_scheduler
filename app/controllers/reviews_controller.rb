@@ -2,7 +2,6 @@ class ReviewsController < ApplicationController
   before_action :authenticate_user!
   before_action :permitted_params, except: [ :author_index]
   after_action :update_average_rating, except: [ :index, :author_index ]
-  caches_action :index, :author_index
 
   def create
     check_if_redirect

@@ -2,8 +2,6 @@ class ConversationsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_conversation, :check_participating!, only: [:new, :show, :update]
 
-  caches_action :show, :new, :index
-
   def new
     redirect_to conversation_path(@conversation) and return if @conversation
     @message = current_user.messages.build
