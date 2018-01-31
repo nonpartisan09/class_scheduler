@@ -92,6 +92,7 @@ ActiveAdmin.register User do
     column :contact_permission
     column :address
     column :city
+    column :locale
     column :description
     column :state
     column :country
@@ -161,6 +162,7 @@ ActiveAdmin.register User do
             end
           end
           row :active
+          row :locale
           row :contact_permission
           row :address
           row :city
