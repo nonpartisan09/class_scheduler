@@ -68,14 +68,20 @@ class AvailabilityIndexPage extends Component {
       );
     } else {
       return (
-        <a href={ formatLink('/availabilities/new', locale) } >
-          <RaisedButton primary className='conversationButton' >
-            <FormattedMessage
-              id='availabilityCreateNew'
-              defaultMessage='Create new availabilities'
+        <div>
+          <a href={ formatLink('/availabilities/new', locale) } >
+            <RaisedButton
+              primary
+              className='conversationButton'
+              label={
+                <FormattedMessage
+                  id='availabilityCreateNew'
+                  defaultMessage='Create new availabilities'
+                />
+              }
             />
-          </RaisedButton>
-        </a>
+          </a>
+        </div>
       );
     }
   }

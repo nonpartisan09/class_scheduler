@@ -178,12 +178,16 @@ class AvailabilitiesTable extends Component {
     if (this.props.deletable) {
       return (
         <TableRowColumn >
-          <FlatButton primary onClick={ this.handleDelete(id) } >
-            <FormattedMessage
-              id='Delete'
-              defaultMessage='Delete'
-            />
-          </FlatButton>
+          <FlatButton
+            primary
+            onClick={ this.handleDelete(id) }
+            label={
+              <FormattedMessage
+                id='Delete'
+                defaultMessage='Delete'
+              />
+            }
+          />
         </TableRowColumn>
       );
     }
