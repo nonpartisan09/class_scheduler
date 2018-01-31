@@ -19,51 +19,37 @@ import es from 'react-intl/locale-data/es';
 import ReactDom from 'react-dom';
 
 import MuiTheme from '../components/MuiTheme';
+
+import Homepage from '../components/Homepage';
+import SearchBar from '../components/SearchBar';
+
+import ConversationIndexPage from '../components/ConversationIndexPage';
+import NewMessagePage from '../components/NewMessagePage';
+import MyProfile from '../components/MyProfile';
+import SignUp from '../components/SignUp';
+import SignIn from '../components/SignIn';
+import NewPasswordPage from '../components/NewPasswordPage';
+import ResetPasswordPage from '../components/ResetPasswordPage';
+import NotFoundPage from '../components/NotFoundPage';
+
+import TermsAndConditions from '../components/TermsAndConditions';
+import NewAvailability from '../components/NewAvailability';
+import AvailabilityIndexPage from '../components/AvailabilityIndexPage';
+import UserProfile from '../components/UserProfile';
+import SearchResults from '../components/SearchResults';
+import AboutPage from '../components/AboutPage';
+import ConversationPage from '../components/ConversationPage';
+import UserReviewIndexPage from '../components/UserReviewIndexPage';
+
 import ChooseLanguage from '../components/utils/ChooseLanguage';
+
+import './application.css';
+
 import localeData from '../../../build/locales/data.json';
+
 import { ENGLISH, SPANISH } from '../components/utils/availableLocales';
 
-import asyncComponent from '../components/asyncComponent';
-import './application.css';
-import Homepage from '../components/Homepage';
-
-const Search = asyncComponent(() => import('../components/SearchBar')
-  .then(module => module.default), { name: 'Search' });
-const Inbox = asyncComponent(() => import('../components/ConversationIndexPage')
-  .then(module => module.default), { name: 'Inbox' });
-const NewMessage = asyncComponent(() => import('../components/NewMessagePage')
-  .then(module => module.default), { name: 'NewMessage' });
-const MyProfile = asyncComponent(() => import('../components/MyProfile')
-  .then(module => module.default), { name: 'MyProfile' });
-const SignUp = asyncComponent(() => import('../components/SignUp')
-  .then(module => module.default), { name: 'SignUp' });
-const SignIn = asyncComponent(() => import('../components/SignIn')
-  .then(module => module.default), { name: 'SignIn' });
-const NewPasswordPage = asyncComponent(() => import('../components/NewPasswordPage')
-  .then(module => module.default), { name: 'NewPasswordPage' });
-const ResetPasswordPage = asyncComponent(() => import('../components/ResetPasswordPage')
-  .then(module => module.default), { name: 'ResetPasswordPage' });
-const NotFoundPage = asyncComponent(() => import('../components/NotFoundPage')
-  .then(module => module.default), { name: 'NotFoundPage' });
-const TermsAndConditions = asyncComponent(() => import('../components/TermsAndConditions')
-  .then(module => module.default), { name: 'TermsAndConditions' });
-const NewAvailability = asyncComponent(() => import('../components/NewAvailability')
-  .then(module => module.default), { name: 'NewAvailability' });
-const UserProfile = asyncComponent(() => import('../components/UserProfile')
-  .then(module => module.default), { name: 'UserProfile' });
-const SearchResults = asyncComponent(() => import('../components/SearchResults')
-  .then(module => module.default), { name: 'SearchResults' });
-const AboutPage = asyncComponent(() => import('../components/AboutPage')
-  .then(module => module.default), { name: 'AboutPage' });
-const ConversationPage = asyncComponent(() => import('../components/ConversationPage')
-  .then(module => module.default), { name: 'ConversationPage' });
-const UserReviewIndexPage = asyncComponent(() => import('../components/UserReviewIndexPage')
-  .then(module => module.default), { name: 'UserReviewIndexPage' });
-const AvailabilityIndexPage = asyncComponent(() => import('../components/AvailabilityIndexPage')
-  .then(module => module.default), { name: 'AvailabilityIndexPage' });
-
 addLocaleData([ ...en, ...es ]);
-
 const language = ChooseLanguage();
 const messages = localeData[language];
 
@@ -100,10 +86,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
             <Route exact path={ `/${locale}` } render={ () => <Homepage { ...data } /> } />
 
-            <Route exact path={ `/${locale}/inbox` } render={ (props) => <Inbox { ...data } { ...props } /> } />
+            <Route exact path={ `/${locale}/inbox` } render={ (props) => <ConversationIndexPage { ...data } { ...props } /> } />
             <Route exact path={ `/${locale}/inbox/:id` } render={ (props) => <ConversationPage { ...data } { ...props } /> } />
-            <Route exact path={ `/${locale}/messages/new` } render={ (props) => <NewMessage { ...data } { ...props } /> } />
-            <Route exact path={ `/${locale}/search` } render={ (props) => <Search { ...data } { ...props } /> } />
+            <Route exact path={ `/${locale}/messages/new` } render={ (props) => <NewMessagePage { ...data } { ...props } /> } />
+            <Route exact path={ `/${locale}/search` } render={ (props) => <SearchBar { ...data } { ...props } /> } />
             <Route exact path={ `/${locale}/volunteers` } render={ (props) => <SearchResults { ...data } { ...props } /> } />
             <Route exact path={ `/${locale}/my_profile` } render={ (props) => <MyProfile { ...data } { ...props } /> } />
             <Route exact path={ `/${locale}/:user_id/(:order)` } render={ (props) => <UserReviewIndexPage { ...data } { ...props } /> } />
@@ -125,10 +111,10 @@ document.addEventListener('DOMContentLoaded', () => {
             <Route exact path={ `/${locale}/terms_of_use` } render={ (props) => <TermsAndConditions { ...data } { ...props } /> } />
 
             <Route exact path='/' render={ () => <Homepage { ...data } /> } />
-            <Route exact path='/inbox' render={ (props) => <Inbox { ...data } { ...props } /> } />
+            <Route exact path='/inbox' render={ (props) => <ConversationIndexPage { ...data } { ...props } /> } />
             <Route exact path='/inbox/:id' render={ (props) => <ConversationPage { ...data } { ...props } /> } />
-            <Route exact path='/messages/new' render={ (props) => <NewMessage { ...data } { ...props } /> } />
-            <Route exact path='/search' render={ (props) => <Search { ...data } { ...props } /> } />
+            <Route exact path='/messages/new' render={ (props) => <NewMessagePage { ...data } { ...props } /> } />
+            <Route exact path='/search' render={ (props) => <SearchBar { ...data } { ...props } /> } />
             <Route exact path='/volunteers' render={ (props) => <SearchResults { ...data } { ...props } /> } />
             <Route exact path='/my_profile' render={ (props) => <MyProfile { ...data } { ...props } /> } />
             <Route exact path='/reviews/author/:url_slug' render={ (props) => <UserReviewIndexPage { ...data } { ...props } /> } />
