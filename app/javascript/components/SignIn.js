@@ -158,8 +158,6 @@ class SignIn extends Component {
   }
 
   handleKeyDown(event) {
-    console.warn('event.keycode:');
-    console.warn(event.keycode);
     if (event.keycode === 13) {
       this.handleSignIn();
     }

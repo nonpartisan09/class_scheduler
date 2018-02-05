@@ -2,6 +2,7 @@ class AvailabilitiesController < ApplicationController
   before_action :authenticate_user!
   before_action :check_if_volunteer?, except: [:search]
   before_action :check_if_client?, only: [:search ]
+  before_action :permitted_params, only:
 
   def search
     user = UserDecorator.new(current_user).simple_decorate
@@ -49,13 +50,15 @@ class AvailabilitiesController < ApplicationController
             Contexts::Availabilities::Errors::StartTimeMissing,
             Contexts::Availabilities::Errors::EndTimeMissing,
             Contexts::Availabilities::Errors::ShortAvailability => e
-          message << e.message
-          status << :unprocessable_entity
+          message[number.to_i] = e.message
+          status = :unprocessable_entity
         else
+          status = :ok
           message << { availability: `#{@availability.id} successfully created` }
         end
       end
-      render :json=> { :message => message }, :status => :ok
+
+      render :json => { :message => message }, :status => status
     end
   end
 

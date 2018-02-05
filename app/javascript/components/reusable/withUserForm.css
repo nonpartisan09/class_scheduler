@@ -16,7 +16,7 @@
 }
 
 .userFormInnerButton {
-    margin: 24px 0;
+    margin: 0 0 24px;
     display: inline-block;
 }
 
@@ -46,6 +46,10 @@
     width: 49%;
     margin: 24px 0;
     border-radius: 2px;
+}
+
+.emailNotification {
+    margin: 24px 0 12px;
 }
 
 @media (min-device-width: 0) and (max-device-width: 500px), (max-width: 500px)  {

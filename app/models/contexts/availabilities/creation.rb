@@ -5,8 +5,9 @@ module Contexts
         I18n.locale = :en
 
         @availability = availability
-        @timezone = current_user[:timezone]
         @current_user = current_user
+        @timezone = current_user[:timezone]
+
         day_index = @availability[:day].to_i
         @day = I18n.t('date.day_names')[day_index]
 
@@ -40,28 +41,40 @@ module Contexts
             :user_id => @current_user.id,
         })
 
-        Availability.create!(new_availability_params)
+        @new_availability = Availability.create!(new_availability_params)
 
         unless @new_availability
           message = I18n.t('custom_errors.messages.unknown_error')
           raise Availabilities::Errors::UnknownAvailabilityError, message
         end
+
         @new_availability
       end
 
       private
 
       def check_if_overlaps?
-        existing_availabilities = Availability.where('day = ?', @day)
+        existing_availabilities = @current_user.availabilities.where('day = ?', @day)
 
         if existing_availabilities.present?
-          range = Range.new @utc_start_time, @utc_end_time
+          range = Range.new @utc_start_time.hour, @utc_end_time.hour
 
-          overlaps = existing_availabilities.in_range(range)
-           if overlaps.present?
-             message = I18n.t('custom_errors.messages.overlapping_availability')
+          overlaps = existing_availabilities.any? do |availability|
+            Time.zone = 'UTC'
+            existing_range = Range.new availability[:start_time].hour, availability[:end_time].hour
+
+            range === existing_range
+          end
+
+          ap 'creation.rb:67 RIGHT HERE'
+          ap 'creation.rb:68 overlaps'
+          ap overlaps
+
+
+          if overlaps === true
+            message = I18n.t('custom_errors.messages.overlapping_availability')
             raise Availabilities::Errors::OverlappingAvailability, message
-           end
+          end
         end
       end
 

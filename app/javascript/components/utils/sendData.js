@@ -91,11 +91,20 @@ function postData({ url, params, attributes, method='POST', successCallBack, err
     } else if (response.status < 500) {
 
       response.json().then((item) => {
-        const { errors, error } = item;
+        const { errors, error, message } = item;
 
-        const errorMessage = error && error.message ? error.message : _.flatMap(Object.entries(errors), (item) => {
-          return _.capitalize(item.join(' ').replace('_', ' '));
-        }).join(',');
+        const errorMessage = function(){
+          if (error && error.message) {
+            return error.message.join(',');
+          } else if (errors) {
+           return _.flatMap(Object.entries(errors), (item) => {
+              return _.capitalize(item.join(' ').replace('_', ' ')).join(',');
+            });
+          } else if (message) {
+            return message;
+          }
+        }();
+
         return errorCallBack(errorMessage);
       });
     }

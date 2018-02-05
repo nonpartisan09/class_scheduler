@@ -270,12 +270,6 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                 onBlur={ validateHandler('description') }
               />
 
-              <div>
-                { this.renderPasswordFields() }
-                { this.renderUpdatePrograms() }
-                { this.renderUpdateLanguages() }
-              </div>
-
               <Checkbox
                 label={
                   <FormattedMessage
@@ -287,6 +281,12 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                 className='userFormInputField emailNotification'
                 onCheck={ changeHandler('email_notification', { validate: true, strategy: useSecondArgument }) }
               />
+
+              <div>
+                { this.renderPasswordFields() }
+                { this.renderUpdatePrograms() }
+                { this.renderUpdateLanguages() }
+              </div>
 
               { this.renderSignUpCheckBoxes() }
             </form>

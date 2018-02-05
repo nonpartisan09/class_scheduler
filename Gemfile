@@ -52,6 +52,7 @@ gem 'puma', '~> 3.10.0'
 gem 'newrelic_rpm'
 
 gem 'jquery-rails', '~> 4.3.1'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', '~> 9.1', platforms: [:mri, :mingw, :x64_mingw], require: false
@@ -83,7 +84,7 @@ group :test do
   gem 'database_cleaner', '~> 1.6', require: false
   gem 'shoulda'
   gem 'shoulda-matchers', '~> 2.8', require: false
-  gem 'capybara-webkit', '~> 1.14', require: false
+  #gem 'capybara-webkit', '~> 1.14', require: false
 
 ## =========== STATS/ANALYTICS ==============
 # Error monitoring
