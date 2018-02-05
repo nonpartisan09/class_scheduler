@@ -3,8 +3,8 @@ class ReviewDecorator
 
   attr_reader :review
 
-  def initialize(review, reviewee_first_name = '', reviewer = { })
-    @review, @reviewer, @reviewee_first_name = review, reviewee_first_name, reviewer
+  def initialize(review, reviewee_first_name = '', reviewer= {})
+    @review, @reviewee_first_name, @reviewer = review, reviewee_first_name, reviewer
   end
 
   def simple_decorate
@@ -43,11 +43,15 @@ class ReviewDecorator
   end
 
   def reviewer
-    @reviewer ||= User.find(@review[:author_id])
+    if @reviewer.empty?
+      User.find(@review[:author_id])
+    else
+      @reviewer
+    end
   end
 
   def reviewer_first_name
-    @reviewer.first_name || ''
+    reviewer[:first_name] ||= ''
   end
 
   def reviewee_first_name
@@ -55,6 +59,6 @@ class ReviewDecorator
   end
 
   def reviewer_url_slug
-    reviewer.url_slug || ''
+    reviewer[:url_slug] ||= ''
   end
 end

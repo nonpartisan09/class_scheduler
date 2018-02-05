@@ -217,7 +217,7 @@ class SearchBar extends Component {
         return days[value];
       }).join(', '), ', ');
     } else if (_.size(values) === 1) {
-      return days[value];
+      return days[values];
     }
   }
 
