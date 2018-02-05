@@ -47,7 +47,7 @@ class ReviewDecorator
   end
 
   def reviewer_first_name
-    @reviewer.first_name ||= ''
+    @reviewer.first_name || ''
   end
 
   def reviewee_first_name
