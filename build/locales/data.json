@@ -231,7 +231,6 @@
     "UserForm.timezone": "Elija huso horario",
     "UserForm.aboutMe": "Sobre mi (en 280 letras o menos)",
     "UserForm.updatePrograms": "Actualize mis programas",
-    "UserForm.languages": "Elija Un(a) o Mas Lenguaje(s)",
     "UserForm.currentPassword": "Contraseña Actual",
     "UserForm.newPassword": "Contraseña Nueva",
     "UserForm.newPasswordConfirmation": "Confirmación de Nueva Contraseña",
@@ -261,6 +260,16 @@
     "UserForm.country": "País",
     "UserForm.averageRating": "Evaluación Promedia",
     "UserForm.addressVolunteerDialog2": "Su dirección no será mostrada a otros usuarios. Solo su pueblo/ciudad y país.",
-    "UserForm.addressClientDialog2": "Su dirección no será mostrada a otros usuarios. Solo su pueblo/ciudad y país."
+    "UserForm.addressClientDialog2": "Su dirección no será mostrada a otros usuarios. Solo su pueblo/ciudad y país.",
+    "AvailabilityIndexPage.Header": "Mis disponibilidades",
+    "ConversationPage.receivedMessages": "Recibidos",
+    "NewAvailability.header": "Crear sus disponibilidades",
+    "NewMessagePage.header": "Mandar nuevo mensaje",
+    "NewPasswordPage.header": "Nueva contraseña",
+    "SearchBar.searchTitle": "Buscar voluntarios",
+    "SearchResults.header": "Voluntarios disponibles",
+    "UserReviewIndexPage.header": "Evaluaciones más recientes de",
+    "Programs.featuredPrograms": "Programas destacados",
+    "UserForm.languages": "Elija lenguaje hablada"
   }
 }

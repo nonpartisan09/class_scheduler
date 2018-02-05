@@ -2,7 +2,6 @@ class AvailabilitiesController < ApplicationController
   before_action :authenticate_user!
   before_action :check_if_volunteer?, except: [:search]
   before_action :check_if_client?, only: [:search ]
-  before_action :permitted_params, only:
 
   def search
     user = UserDecorator.new(current_user).simple_decorate
