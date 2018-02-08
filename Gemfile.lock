@@ -228,7 +228,6 @@ GEM
       coderay (~> 1.1.0)
       method_source (~> 0.9.0)
     public_suffix (3.0.1)
-    puma (3.10.0)
     rack (2.0.3)
     rack-proxy (0.6.2)
       rack
@@ -391,7 +390,6 @@ DEPENDENCIES
   newrelic_rpm
   paperclip (= 5.1)
   pg (~> 0.21.0)
-  puma (~> 3.10.0)
   rails (~> 5.1)
   roadie-rails (~> 1.2.1)
   rspec-rails (~> 3.6)

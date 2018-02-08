@@ -124,8 +124,8 @@ class SearchBar extends Component {
             onChange={ changeHandler }
             changeValue={ changeValue }
             onBlur={ validateHandler }
-            startTime={ start_time }
-            endTime={ end_time }
+            start_time={ start_time }
+            end_time={ end_time }
             distance={ distance }
             city={ city }
             errors={ errors }
@@ -239,6 +239,7 @@ class SearchBar extends Component {
 
   handleSubmit() {
     const { errors } = this.props;
+
     if (_.size(errors) === 0) {
       this.postSearch();
     }

@@ -2,7 +2,7 @@
     display: inline-block;
     width: 24px;
     height: 28px;
-    background-position: center;
+    background-position: 50% 35%;
     background-size: 80%;
     background-image: url('/assets/white_star.svg');
     background-repeat: no-repeat;

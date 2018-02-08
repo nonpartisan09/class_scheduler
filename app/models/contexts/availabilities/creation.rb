@@ -66,11 +66,6 @@ module Contexts
             range === existing_range
           end
 
-          ap 'creation.rb:67 RIGHT HERE'
-          ap 'creation.rb:68 overlaps'
-          ap overlaps
-
-
           if overlaps === true
             message = I18n.t('custom_errors.messages.overlapping_availability')
             raise Availabilities::Errors::OverlappingAvailability, message

@@ -62,45 +62,53 @@ module HasUserSearch
     }
 
     scope :is_available, proc { | params, timezone |
-      start_time_query = if params[:start_time].present?
-                    parsed_start_time = Time.parse(params[:start_time])
-                    start_of_day = DateTime.new(2000,01,01).beginning_of_day
-                    Time.zone = timezone
-                    utc_start_time = Time.zone.local_to_utc(parsed_start_time).strftime("%H:%M:%S")
-
-                    start_time = if utc_start_time < start_of_day
-                                 start_of_day
-                               else
-                                 utc_start_time
-                               end
-
-                    { :start_time => start_time..DateTime.new(2000,01,01).end_of_day }
-                  else
-                    {}
-                  end
-
-      end_time_query = if params[:end_time].present?
-                         parsed_end_time = Time.parse(params[:end_time])
-                         end_of_day = DateTime.new(2000,01,01).end_of_day
-                         Time.zone = timezone
-                         utc_end_time = Time.zone.local_to_utc(parsed_end_time).strftime("%H:%M:%S")
-                         end_time = if utc_end_time > end_of_day
-                                      end_of_day
-                                    else
-                                      utc_end_time
-                                    end
-                         { :end_time => DateTime.new(2000,01,01).beginning_of_day..end_time }
-                        else
-                          {}
-                        end
-
       if params[:day].present?
         I18n.locale = :en
         days = params[:day].split(/,/)
         days = days.collect { |day| I18n.t('date.day_names')[day.to_i] }
-        where({ :availabilities => {
-            :day => days,
-        }.merge(start_time_query).merge(end_time_query) })
+
+        if params[:start_time].present? || params[:end_time].present?
+          Time.zone = timezone
+          start_of_day = DateTime.now.beginning_of_day
+          end_of_day = DateTime.now.end_of_day
+
+          start_time_query = parsed_start_time = Time.parse(params[:start_time])
+                             utc_start_time = Time.zone.local_to_utc(parsed_start_time)
+                             if utc_start_time >= start_of_day
+                               utc_start_time
+                             else
+                               start_of_day
+                             end
+
+          end_time_query =   parsed_end_time = Time.parse(params[:end_time])
+                             Time.zone = timezone
+                             utc_end_time = Time.zone.local_to_utc(parsed_end_time)
+                             if utc_end_time <= end_of_day
+                               utc_end_time
+                              else
+                                end_of_day
+                              end
+
+          if params[:start_time].present? && params[:end_time].present?
+            time_hash = {
+                            :start_time => start_time_query..end_time_query,
+                            :end_time => end_time_query..end_of_day
+                        }
+          elsif params[:start_time].present?
+            time_hash = {
+                            :start_time => start_time_query..end_time_query,
+                        }
+          elsif params[:end_time].present?
+            time_hash = {
+                            :end_time => end_time_query..end_of_day
+                        }
+          end
+
+          search_hash = { :day => days }.merge(time_hash)
+          where({ :availabilities => search_hash })
+        else
+          where({ :availabilities => { :day => days } })
+        end
       else
         message = I18n.t('custom_errors.messages.missing_day')
         raise Contexts::Availabilities::Errors::DayMissing, message

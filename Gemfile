@@ -47,8 +47,6 @@ gem 'paperclip', '5.1'
 
 gem 'factory_girl_rails', '~> 4.9'
 
-gem 'puma', '~> 3.10.0'
-
 gem 'newrelic_rpm'
 
 gem 'jquery-rails', '~> 4.3.1'

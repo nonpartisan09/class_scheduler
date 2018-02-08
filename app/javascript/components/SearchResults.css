@@ -81,7 +81,7 @@
 
     .searchResultDropdown {
         width: 200px;
-        transform: translateY(20px);
+        margin-bottom: 24px;
     }
 
     .pagination {

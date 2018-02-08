@@ -1,7 +1,7 @@
 [
   {
     "id": "UserReviewIndexPage.header",
-    "defaultMessage": "Most recent reviews by"
+    "defaultMessage": "Most recent reviews"
   },
   {
     "id": "UserReviewIndexPage.noReviewAvailable",
