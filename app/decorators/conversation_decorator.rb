@@ -114,6 +114,6 @@ class ConversationDecorator
   end
 
   def latest_message
-    @conversation.messages.last
+    @conversation.messages.first
   end
 end

@@ -7,8 +7,8 @@ import Message from './Message';
 import Header from './reusable/Header';
 import Footer from './reusable/Footer';
 import { postData } from './utils/sendData';
-import { PATCH } from './utils/RestConstants';
 import FormData from './utils/FormData';
+import METHODS from './utils/RestConstants';
 
 class ConversationPage extends Component {
   constructor(props, context) {
@@ -23,7 +23,7 @@ class ConversationPage extends Component {
   componentWillMount() {
     setTimeout(() => {
       this.handleMarkAsRead();
-    }, 2000);
+    }, 6000);
   }
 
   render() {
@@ -35,7 +35,7 @@ class ConversationPage extends Component {
         <Paper zDepth={ 1 } className='paperOverride' rounded={ false }>
           { this.renderReceivedMessages() }
         </Paper>
-        <Footer />
+        <Footer className='footerContainerFixed' />
       </div>
     );
   }
@@ -45,7 +45,7 @@ class ConversationPage extends Component {
 
     const { conversation: { messages, conversee, conversee_url_slug } } = this.state;
 
-    return _.map(messages, ({ body, subject, sent_on, sender_first_name, sender_avatar }, index) => {
+    return _.map(messages, ({ body, subject, sent_on, sender_first_name, sender_avatar, unread }, index) => {
 
       return (
         <Message
@@ -58,6 +58,8 @@ class ConversationPage extends Component {
           sentOn={ sent_on }
           avatar={ sender_avatar }
           locale={ locale }
+          unread={ unread }
+          divider={ _.size(messages) > 1 || index !== 0 || index !== (_.size(messages) - 1) }
         />
       );
     });
@@ -66,10 +68,9 @@ class ConversationPage extends Component {
   handleMarkAsRead() {
     const { conversation: { id } } = this.state;
     const attributes = FormData.from({ id });
-
     const requestParams = {
       url: '/conversation',
-      method: PATCH,
+      method: METHODS.PUT,
       attributes,
 
       successCallBack: ({ conversation }) => {

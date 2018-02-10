@@ -19,7 +19,12 @@ class UserMailer < ApplicationMailer
   def new_message(user, sender, message)
     @user, @sender, @message = user, sender, message
     @url = url
-    mail(to: @user.email, subject: "New message from #{sender.first_name} - tutoría")
+    I18n.with_locale(@user.locale) do
+      mail(
+          to: @user.email,
+          subject: "#{I18n.translate 'application_mailer.new_message.title'}: #{sender.first_name} - tutoría"
+      )
+    end
   end
 
   def account_deactivated(user)

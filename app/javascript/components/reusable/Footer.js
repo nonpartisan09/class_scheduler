@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import { FormattedMessage } from 'react-intl';
+import PropTypes from 'prop-types';
 
-import Divider from 'material-ui/Divider';
 import './Footer.css';
 
 class Footer extends Component {
   render() {
+    const { className } = this.props;
     return (
-      <div className='footerContainer' >
-        <Divider />
+      <div className={ `footerContainer ${className}` } >
         <div className='footer'>
           <p>
             <a href='/terms_of_use' className='slidingLink footerLink' target='_blank' rel='noreferrer noopener nofollow'>
@@ -31,11 +31,11 @@ class Footer extends Component {
 }
 
 Footer.propTypes = {
-
+  className: PropTypes.string
 };
 
 Footer.defaultProps = {
-
+  className: ''
 };
 
 export default Footer;

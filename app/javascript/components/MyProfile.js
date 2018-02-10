@@ -4,7 +4,6 @@ import _ from 'lodash';
 import { FormattedMessage } from 'react-intl';
 
 import { postData } from './utils/sendData';
-import { POST } from './utils/RestConstants';
 
 import Header from './reusable/Header';
 import formatLink from './utils/Link';
@@ -14,6 +13,7 @@ import FormData from './utils/FormData';
 import ProfileSchema from './schema/ProfileSchema';
 import withUserForm from './reusable/withUserForm';
 import newUser from './utils/CheckUpdatedFields';
+import METHODS from './utils/RestConstants';
 
 import './reusable/Header.css';
 
@@ -40,7 +40,7 @@ function handleUpdateProfile() {
     const requestParams = {
       url: '/update',
       attributes,
-      method: POST,
+      method: METHODS.POST,
       successCallBack: () => {
         this.setState({
           showSnackBar: true,

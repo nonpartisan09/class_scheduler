@@ -21,7 +21,7 @@ class MessageDecorator
 
   def sender_first_name
     if is_current_user_sender?
-      "you"
+      I18n.translate 'decorators.pronouns'
     else
       sender.first_name
     end
@@ -65,7 +65,7 @@ class MessageDecorator
   end
 
   def unread
-    @message.unread
+    @message.unread && !is_current_user_sender?
   end
 
   def sent_on

@@ -28,7 +28,12 @@ class ConversationsController < ApplicationController
   end
 
   def update
-    @conversation.messages.unread.update_attributes(:unread => false)
+    @messages = @conversation.messages.unread
+
+    @messages.each do |message|
+      message.update_attributes(:unread => false)
+    end
+
     @conversation = ConversationDecorator.new(@conversation, current_user).decorate
 
     render json: { :conversation => @conversation }
@@ -37,7 +42,7 @@ class ConversationsController < ApplicationController
   private
 
   def set_conversation
-    @conversation = Conversation.find_by(id: permitted_params[:id])
+    @conversation = Conversation.find(permitted_params[:id])
   end
 
   def check_participating!

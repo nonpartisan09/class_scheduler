@@ -16,11 +16,19 @@ class UsersController < ApplicationController
     review = ReviewDecorator.new(review, current_user.first_name, @user.first_name).simple_decorate
     @comments = get_ten_last_comments
 
+    availabilities = Availability.where(:user => @user.id).collect{ |n|
+      AvailabilityDecorator.new(n, {
+          :timezone => current_user.timezone,
+          :user_timezone => @user.timezone
+      }).decorate
+    }
+
     @data = {
         :currentUser => UserDecorator.new(current_user).simple_decorate,
         :user => UserDecorator.new(@user).decorate,
         :comments => @comments,
-        :review => review
+        :review => review,
+        :availabilities => availabilities
     }
 
     render :show

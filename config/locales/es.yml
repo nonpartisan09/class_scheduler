@@ -30,7 +30,7 @@ es:
   date:
     formats:
       default: '%Y-%m-%d'
-    day_names: [Domingo, Lunes, Martes, Miércoles, Jueves, Viernes, Sábado]
+    day_names: [Lunes, Martes, Miércoles, Jueves, Viernes, Sábado, Domingo]
   devise:
     failure:
       user:
@@ -60,3 +60,15 @@ es:
     messages:
       review_created: 'Success, review created'
       review_updated: 'Success, review updated'
+  decorators:
+    pronouns: [Tí]
+  application_mailer:
+    new_message:
+      title: 'New message from'
+      body:
+        first_line: 'usted tiene un correo electrónico'
+        second_line: 'le han mandando un mensaje'
+        third_line: 'Para mirar el mensaje completo, por favor ingrese a la siguiente página web'
+        fourth_line: '¿Le gustaría evaluar la persona con la que se ha contactado'
+        fifth_line: 'Déjele un comentario en su perfil'
+        sixth_line: 'Gracias y Buen día'

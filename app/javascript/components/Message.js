@@ -11,6 +11,7 @@ import { FormattedMessage } from 'react-intl';
 import Divider from 'material-ui/Divider';
 
 import formatLink from './utils/Link';
+import './Message.css';
 
 const iconButtonElement = (
   <IconButton
@@ -24,10 +25,18 @@ const iconButtonElement = (
 
 class Message extends Component {
   render() {
-    const { sentOn, avatar, body } = this.props;
+    const { avatar, body, unread } = this.props;
+
+    const messageContainer = function() {
+      if (unread) {
+        return 'messageContainerBold';
+      } else {
+        return 'messageContainer';
+      }
+    }();
 
     return (
-      <div>
+      <div className={ messageContainer }>
         <ListItem
           leftAvatar={ <Avatar src={ avatar } /> }
           rightIconButton={ this.renderRightIconMenu() }
@@ -39,9 +48,17 @@ class Message extends Component {
           }
           secondaryTextLines={ 2 }
         />
-        <Divider key={ sentOn } inset />
+        { this.renderDivider() }
       </div>
     );
+  }
+
+  renderDivider() {
+    const { sentOn, divider } = this.props;
+
+    if (divider) {
+      return <Divider key={ sentOn } inset />;
+    }
   }
 
   renderRightIconMenu() {
@@ -106,7 +123,9 @@ Message.propTypes = {
   avatar: PropTypes.string,
   body: PropTypes.string,
   subject: PropTypes.string,
-  locale: PropTypes.string
+  locale: PropTypes.string,
+  unread: PropTypes.bool,
+  divider: PropTypes.bool
 };
 
 Message.defaultProps = {
@@ -117,7 +136,9 @@ Message.defaultProps = {
   sentOn: '',
   avatar: '',
   body: '',
-  locale: ''
+  locale: '',
+  unread: false,
+  divider: false
 };
 
 export default Message;

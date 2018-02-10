@@ -33,7 +33,7 @@ class ConversationIndexPage extends Component {
             { this.renderInbox() }
           </div>
         </Paper>
-        <Footer />
+        <Footer className='footerContainerFixed' />
       </div>
     );
   }

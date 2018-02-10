@@ -155,8 +155,7 @@ class UserProfile extends Component {
                   <FormattedMessage
                     id='UserProfile.lastLogIn'
                     defaultMessage='Last logged in'
-                  />:
-                  { user.last_logged_in}
+                  />: { user.last_logged_in}
                 </div>
 
                 <div className='userProfileField'>
@@ -358,7 +357,7 @@ class UserProfile extends Component {
   }
 
   renderAvailabilities() {
-    const { user: { availabilities, timezone }, currentUser: { locale } } = this.props;
+    const { user: { timezone }, availabilities, currentUser: { locale } } = this.props;
 
     if ( _.size(availabilities) > 0 ) {
       return (
@@ -379,8 +378,8 @@ UserProfile.propTypes = {
     comment: PropTypes.string
   }),
   currentUser: PropTypes.object.isRequired,
+  availabilities: PropTypes.array,
   user: PropTypes.shape({
-    availabilities: PropTypes.array,
     programs: PropTypes.array,
     first_name: PropTypes.string,
     thumbnail_url: PropTypes.string,
@@ -400,6 +399,7 @@ UserProfile.propTypes = {
 };
 
 UserProfile.defaultProps = {
+  availabilities: [],
   comments: {
     ten_last_comments: [],
     count: 0

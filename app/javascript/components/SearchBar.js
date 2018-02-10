@@ -141,12 +141,14 @@ class SearchBar extends Component {
             primary
           />
 
-          { this.renderResults() }
+          <div className='emptyVolunteerResults'>
+            { this.renderResults() }
+          </div>
         </div>
 
         { this.renderSnackBar() }
 
-        <Footer />
+        <Footer className='footerContainerFixed' />
       </div>
     );
   }
@@ -162,11 +164,15 @@ class SearchBar extends Component {
 
     if (state && state.signUp) {
       return (
-        <h1 className='signUpHeader'>
-          <FormattedMessage
-            id='signUpHeader'
+        <div className='signUpHeader'>
+          <PageHeader
+            title={
+              <FormattedMessage
+                id='signUpHeader'
+              />
+            }
           />
-        </h1>
+        </div>
       );
     } else {
       return (
@@ -189,12 +195,10 @@ class SearchBar extends Component {
 
     if (status === 204) {
       return (
-        <div className='emptyVolunteerResults'>
-          <FormattedMessage
-            id='NewAvailability.noResultMessage'
-            defaultMessage=' Sorry, it seems no volunteers match these filters.'
-          />
-        </div>
+        <FormattedMessage
+          id='NewAvailability.noResultMessage'
+          defaultMessage=' Sorry, it seems no volunteers match these filters.'
+        />
       );
     }
   }

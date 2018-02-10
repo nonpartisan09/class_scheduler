@@ -6,9 +6,9 @@
 <body>
 <%= image_tag attachments['logo.png'].url %>
 
-<h1><%= @user.first_name %>, you've got mail!</h1>
+<h1><%= @user.first_name %>, <%= I18n.translate 'application_mailer.new_message.body.first_line' %>! </h1>
 <p>
- <%= @sender.first_name %> has sent you a message:<br>
+ <%= @sender.first_name %> <%= I18n.translate 'application_mailer.new_message.body.second_line' %>:<br>
 </p>
 
 <p><%= @message.subject %></p>
@@ -16,11 +16,13 @@
   <%= @message.body %>
 </p>
 <p>
-  To view the full message, please sign in: <%= @url %>.
+  <%= I18n.translate 'application_mailer.new_message.body.third_line' %>: <%= @url %>.
 </p>
 <p>
-  Have you worked with <%= @sender.first_name %>? Leave this person a review.
+  <%= I18n.translate 'application_mailer.new_message.body.fourth_line' %>: <%= @sender.first_name %>? <%= I18n.translate 'application_mailer.new_message.body.fifth_line' %>.
 </p>
-<p>Thanks and have a great day!</p>
+<p>
+  <%= I18n.translate 'application_mailer.new_message.body.sixth_line'%>!
+</p>
 </body>
 </html>

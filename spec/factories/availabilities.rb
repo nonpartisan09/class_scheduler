@@ -1,9 +1,13 @@
 FactoryGirl.define do
   sequence :start_time do |n|
-    DateTime.now
+    Time.zone = 'CET'
+    day_month= "Sunday, 7 Jan 2001"
+    Time.zone.parse("#{day_month} 10:00 #{Time.zone.tzinfo}")
   end
   sequence :end_time do |n|
-    DateTime.now + 1.hours
+    Time.zone = 'CET'
+    day_month="Sunday, 7 Jan 2001"
+    Time.zone.parse("#{day_month} 13:00 #{Time.zone.tzinfo}")
   end
 
   factory :availability do
@@ -12,6 +16,4 @@ FactoryGirl.define do
     end_time { generate :end_time }
     user_id { FactoryGirl.create(:user, :volunteer).id }
   end
-
-
 end

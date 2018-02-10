@@ -155,7 +155,7 @@ class NewAvailability extends Component {
             { this.renderAvailabilities() }
           </form>
         </div>
-        <Footer />
+        <Footer className='footerContainerFixed' />
       </div>
     );
   }

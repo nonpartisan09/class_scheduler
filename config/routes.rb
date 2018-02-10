@@ -8,8 +8,7 @@ Rails.application.routes.draw do
     get 'about' => 'application#about_page'
 
     resources :availabilities
-    resource :conversations, only: [ :new, :create ]
-    resource :conversation, only: [ :update ]
+    resources :conversations, only: [ :new, :create ]
     resources :messages, only: [ :new, :create ]
     resources :reviews, only: [ :create, :update, :destroy ]
     resources :sessions
@@ -17,6 +16,7 @@ Rails.application.routes.draw do
 
     get 'reviews', to: 'reviews#index'
 
+    put 'conversation', to: 'conversations#update'
     get 'reviews/author/:url_slug', to: 'reviews#author_index'
     get 'inbox', to: 'conversations#index'
     get 'inbox/:id', to: 'conversations#show'

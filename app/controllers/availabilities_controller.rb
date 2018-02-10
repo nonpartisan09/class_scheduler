@@ -1,7 +1,8 @@
 class AvailabilitiesController < ApplicationController
   before_action :authenticate_user!
   before_action :check_if_volunteer?, except: [:search]
-  before_action :check_if_client?, only: [:search ]
+  before_action :check_if_client?, only: [:search]
+  before_action :permitted_params, only: [:create]
 
   def search
     user = UserDecorator.new(current_user).simple_decorate
@@ -43,7 +44,13 @@ class AvailabilitiesController < ApplicationController
         creation = Contexts::Availabilities::Creation.new(permit_nested(permitted_params[number]), current_user)
 
         begin
-          @availability = creation.execute
+          @new_availabilities = creation.execute
+
+          status = :ok
+          messages = @new_availabilities.pluck(:id).collect do |id|
+            { id => `#{id} successfully created` }
+          end
+          message << messages
         rescue Contexts::Availabilities::Errors::UnknownAvailabilityError,
             Contexts::Availabilities::Errors::OverlappingAvailability,
             Contexts::Availabilities::Errors::StartTimeMissing,
@@ -51,12 +58,8 @@ class AvailabilitiesController < ApplicationController
             Contexts::Availabilities::Errors::ShortAvailability => e
           message[number.to_i] = e.message
           status = :unprocessable_entity
-        else
-          status = :ok
-          message << { availability: `#{@availability.id} successfully created` }
         end
       end
-
       render :json => { :message => message }, :status => status
     end
   end
@@ -64,7 +67,12 @@ class AvailabilitiesController < ApplicationController
   def index
     user = UserDecorator.new(current_user).simple_decorate
     programs = current_user.programs
-    availabilities = Availability.where(:user => current_user).collect{ |n| AvailabilityDecorator.new(n, current_user_timezone).decorate }
+    availabilities = Availability.where(:user => current_user).collect{ |n|
+      AvailabilityDecorator.new(n, {
+          :timezone => current_user_timezone,
+          :user_timezone => current_user_timezone
+      }).self_decorate
+    }
 
     @data = {
         :currentUser => user,

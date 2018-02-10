@@ -10,7 +10,7 @@ class UserDecorator
   def simple_decorate
     {
       :average_rating => average_rating,
-      :client => client,
+      :client => @user.client?,
       :country => country,
       :email => email,
       :first_name => first_name,
@@ -21,9 +21,9 @@ class UserDecorator
       :rating_count => rating_count,
       :state => state,
       :thumbnail_image => picture,
-      :timezone => timezone,
+      :timezone => user_timezone,
       :url_slug => url_slug,
-      :volunteer => volunteer,
+      :volunteer => @user.volunteer?,
       :city => city
     }.merge(availabilities_hash)
   end
@@ -36,23 +36,22 @@ class UserDecorator
         :city => city,
         :country => country,
         :state => state,
-        :client => client,
-        :volunteer => volunteer,
+        :client => @user.client?,
+        :volunteer => @user.volunteer?,
         :email => email,
         :email_notification => email_notification,
         :first_name => first_name,
         :thumbnail_image => picture,
         :description => description,
-        :timezone => timezone,
+        :timezone => user_timezone,
         :languages => languages,
     }
   end
 
   def availabilities_hash
-    if volunteer
+    if @user.volunteer?
       {
           :available_days => available_days,
-          :availabilities => availabilities
       }
     else
       { }
@@ -64,7 +63,7 @@ class UserDecorator
         :address => address,
         :average_rating => average_rating,
         :city => city,
-        :client => client,
+        :client => @user.client?,
         :country => country,
         :description => description,
         :email => email,
@@ -76,9 +75,9 @@ class UserDecorator
         :rating_count => rating_count,
         :state => state,
         :thumbnail_image => picture,
-        :timezone => timezone,
+        :timezone => user_timezone,
         :url_slug => url_slug,
-        :volunteer => volunteer
+        :volunteer => @user.volunteer?
     }.merge(availabilities_hash)
   end
 
@@ -102,7 +101,7 @@ class UserDecorator
     user.languages.pluck(:name)
   end
 
-  def timezone
+  def user_timezone
     user.timezone
   end
 
@@ -131,7 +130,7 @@ class UserDecorator
   end
 
   def availabilities
-    user.availabilities.collect{ |n| AvailabilityDecorator.new(n, timezone).decorate }
+    user.availabilities
   end
 
   def programs
@@ -152,14 +151,6 @@ class UserDecorator
 
   def state
     user.state ||= ''
-  end
-
-  def client
-    @user.client?
-  end
-
-  def volunteer
-    @user.volunteer?
   end
 
   def available_days

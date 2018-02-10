@@ -14,16 +14,17 @@ module HasUserSearch
     end
 
     scope :join_tables, proc {
-      includes(:programs, :roles, :availabilities)
+      includes(:programs, :availabilities)
     }
 
     scope :who_can_help_with, proc { |program|
       if program.present?
-        where({
-            :programs => { id: program.split(/,/) },
-            :roles => {:url_slug => 'volunteer' },
-            :active => true
+        volunteers.active.with_availabilities.where({
+            :programs => { id: program.split(/,/) }
         })
+      else
+        message = I18n.t('custom_errors.messages.missing_program')
+        raise Contexts::Availabilities::Errors::ProgramMissing, message
       end
     }
 
@@ -65,50 +66,28 @@ module HasUserSearch
       if params[:day].present?
         I18n.locale = :en
         days = params[:day].split(/,/)
-        days = days.collect { |day| I18n.t('date.day_names')[day.to_i] }
 
-        if params[:start_time].present? || params[:end_time].present?
-          Time.zone = timezone
-          start_of_day = DateTime.now.beginning_of_day
-          end_of_day = DateTime.now.end_of_day
+        Time.zone = timezone
+        start_time = params[:start_time] || '00:00'
+        end_time = params[:end_time]  || '23:59'
 
-          start_time_query = parsed_start_time = Time.parse(params[:start_time])
-                             utc_start_time = Time.zone.local_to_utc(parsed_start_time)
-                             if utc_start_time >= start_of_day
-                               utc_start_time
-                             else
-                               start_of_day
-                             end
+        queries = []
+        days.each { |day|
+          day_month = "#{I18n.t('date.day_names')[day.to_i]}, #{day.to_i + 1} Jan 2001"
+          start_of_day = Time.zone.parse("#{day_month} 00:00 #{Time.zone.tzinfo}").iso8601
+          end_of_day = Time.zone.parse("#{day_month} 23:59 #{Time.zone.tzinfo}").iso8601
+          start_query = Time.zone.parse("#{day_month} #{start_time} #{Time.zone.tzinfo}").iso8601
+          end_query = Time.zone.parse("#{day_month} #{end_time} #{Time.zone.tzinfo}").iso8601
 
-          end_time_query =   parsed_end_time = Time.parse(params[:end_time])
-                             Time.zone = timezone
-                             utc_end_time = Time.zone.local_to_utc(parsed_end_time)
-                             if utc_end_time <= end_of_day
-                               utc_end_time
-                              else
-                                end_of_day
-                              end
+          statement = where({ :availabilities => {
+              :start_time => start_of_day..end_query,
+              :end_time => start_query..end_of_day
+          }})
 
-          if params[:start_time].present? && params[:end_time].present?
-            time_hash = {
-                            :start_time => start_time_query..end_time_query,
-                            :end_time => end_time_query..end_of_day
-                        }
-          elsif params[:start_time].present?
-            time_hash = {
-                            :start_time => start_time_query..end_time_query,
-                        }
-          elsif params[:end_time].present?
-            time_hash = {
-                            :end_time => end_time_query..end_of_day
-                        }
-          end
+          queries << statement
+        }
 
-          search_hash = { :day => days }.merge(time_hash)
-          where({ :availabilities => search_hash })
-        else
-          where({ :availabilities => { :day => days } })
-        end
+        queries.inject(:or)
       else
         message = I18n.t('custom_errors.messages.missing_day')
         raise Contexts::Availabilities::Errors::DayMissing, message

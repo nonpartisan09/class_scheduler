@@ -2,6 +2,12 @@
     margin-top: 36px;
 }
 
+.footerContainerFixed {
+    position: fixed;
+    bottom: 0;
+    width: 100vw;
+}
+
 .footer {
     width: 425px;
     margin-top: 0;

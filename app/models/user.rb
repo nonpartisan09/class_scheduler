@@ -43,6 +43,8 @@ class User < ActiveRecord::Base
   scope :volunteers, -> { includes(:roles).where({:roles => {:url_slug => 'volunteer'}}) }
   scope :clients, -> { includes(:roles).where({:roles => {:url_slug => 'client'}}) }
   scope :admins, -> { includes(:roles).where({:roles => {:url_slug => 'admin'}}) }
+  scope :with_availabilities, -> { includes(:availabilities).where.not(:availabilities => { id: nil }) }
+
   scope :active, -> { where({:active => true }) }
 
   def self.authentication_keys

@@ -2,16 +2,26 @@ class AvailabilityDecorator
   include ActionView::Helpers::DateHelper
   attr_reader :availability
 
-  def initialize(availability, timezone)
-    @availability, @timezone = availability, timezone
+  def initialize(availability, opts={ })
+    @availability, @timezone, @user_timezone = availability, opts[:timezone], opts[:user_timezone]
+  end
+
+  def self_decorate
+    {
+        :day => self_day,
+        :start_time => start_time,
+        :end_time => end_time,
+        :timezone => @user_timezone,
+        :id => id
+    }
   end
 
   def decorate
     {
-        :day => day,
+        :day => current_user_day,
         :start_time => start_time,
         :end_time => end_time,
-        :timezone => @timezone,
+        :timezone => @user_timezone,
         :id => id
     }
   end
@@ -20,15 +30,22 @@ class AvailabilityDecorator
     @availability.id
   end
 
-  def day
+  def self_day
     @availability.day
   end
 
+  def current_user_day
+    Time.zone = @timezone
+    Time.zone.local_to_utc(@availability.start_time).strftime("%A")
+  end
+
   def start_time
-    @availability.start_time.in_time_zone(@timezone).strftime("%H:%M")
+    Time.zone = @timezone
+    Time.zone.parse(@availability.start_time.to_s).strftime("%H:%M")
   end
 
   def end_time
-    @availability.end_time.in_time_zone(@timezone).strftime("%H:%M")
+    Time.zone = @timezone
+    Time.zone.parse(@availability.end_time.to_s).strftime("%H:%M")
   end
 end

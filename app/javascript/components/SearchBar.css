@@ -29,6 +29,12 @@
     text-align: left;
 }
 
+.signUpHeader h1 {
+    width: 600px;
+    margin: 12px auto 24px;
+    text-align: left;
+}
+
 .searchBarTimezoneLink .slidingLink {
     transform: translateY(6px);
     margin-right: 0;

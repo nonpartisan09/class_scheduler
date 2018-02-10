@@ -1,4 +1,14 @@
 en:
+  application_mailer:
+    new_message:
+      title: 'New message from'
+      body:
+        first_line: 'you’ve got mail'
+        second_line: 'has sent you a message'
+        third_line: 'To view the full message, please sign in'
+        fourth_line: 'Have you worked with'
+        fifth_line: 'Leave this person a review'
+        sixth_line: 'Thanks and have a great day'
   datetime:
     distance_in_words:
       x_days:
@@ -38,4 +48,6 @@ en:
   date:
     formats:
       default: "%Y-%m-%d"
-    day_names: [Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday]
+    day_names: [Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday]
+  decorators:
+    pronouns: [You]
