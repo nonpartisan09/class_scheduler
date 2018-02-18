@@ -1,0 +1,75 @@
+.userForm {
+    margin-left: 48px;
+}
+
+.userFormHeader {
+    font-size: 16px;
+    font-weight: normal;
+}
+
+.userFormToggle {
+    width: 225px;
+}
+
+.userFormOuterButton {
+    padding-left: 48px;
+}
+
+.userFormInnerButton {
+    margin: 0 0 24px;
+    display: inline-block;
+}
+
+.userFormAverageRating {
+    margin: 12px 0;
+}
+
+.userFormAverageRatingLabel {
+    color: rgb(173, 225, 244);
+    font-size: 12px;
+    margin-bottom: 6px;
+}
+
+.userFormSecondButton {
+    margin-left: 12px;
+}
+
+.userFormTermsAndConditionsLink {
+    margin: 24px 0;
+}
+
+.userFormInputField {
+    min-width: 500px;
+}
+
+.userFormImage {
+    width: 49%;
+    margin: 24px 0;
+    border-radius: 2px;
+}
+
+.emailNotification {
+    margin: 24px 0 12px;
+}
+
+@media (min-device-width: 0) and (max-device-width: 500px), (max-width: 500px)  {
+    .userFormInnerButton, .userFormSecondButton, .userFormOuterButton {
+        display: block;
+        margin: 12px 0;
+        padding: 0;
+    }
+
+    .userForm {
+        margin-left: 0;
+    }
+
+    .userFormInputField {
+        min-width: 100%;
+    }
+
+   .userFormPasswordButton, .userFormProgramButton, .userFormLanguageButton, .userFormSaveButton {
+       min-width: 100%;
+       width: 100%;
+    }
+}
+

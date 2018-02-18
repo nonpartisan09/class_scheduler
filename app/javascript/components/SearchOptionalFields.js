@@ -28,48 +28,40 @@ class SearchOptionalFields extends Component {
   }
   render() {
     return (
-      <div>
-        <div className='searchBarButtonContainer'>
-          <div className='searchBarOptionalField'>
-            <FlatButton
-              primary
-              className='searchBarOptionalFieldMobile'
-              label={ <FormattedMessage
-                id='startTime'
+      <div className='searchBarOptionalFieldContainer'>
+        <div className='searchBarStartTimeButton'>
+          <FlatButton
+            primary
+            label={ <FormattedMessage
+              id='startTime'
             /> }
-              onClick={ this.handleToggleStartTime }
-            />
-            <div className='searchBarOptionalFieldMobile'>
-              { this.renderStartTime() }
-            </div>
-          </div>
-          <div className='searchBarOptionalField'>
-            <FlatButton
-              primary
-              className='searchBarOptionalFieldMobile'
-              label={ <FormattedMessage
-                id='endTime'
-            /> }
-              onClick={ this.handleToggleEndTime }
-            />
-            <div className='searchBarOptionalFieldMobile'>
-              { this.renderEndTime() }
-            </div>
-          </div>
-          { this.renderDistanceButton() }
+            onClick={ this.handleToggleStartTime }
+            fullWidth
+          />
         </div>
 
-        <div className='searchBarOptionalFieldContainer'>
-          <span className='searchBarOptionalField searchBarOptionalFieldScreen'>
-            { this.renderStartTime() }
-          </span>
-          <span className='searchBarOptionalField searchBarOptionalFieldScreen'>
-            { this.renderEndTime() }
-          </span>
-          <span className='searchBarDistanceOption searchBarOptionalFieldScreen'>
-            { this.renderDistance() }
-          </span>
+        <div className='searchBarEndTimeButton'>
+          <FlatButton
+            primary
+            label={
+              <FormattedMessage
+                id='endTime'
+              />
+            }
+            fullWidth
+            onClick={ this.handleToggleEndTime }
+          />
         </div>
+        <div className='searchBarStartTimePickerContainer'>
+          { this.renderStartTime() }
+        </div>
+        <div className='searchBarEndTimePickerContainer'>
+          { this.renderEndTime() }
+        </div>
+
+        { this.renderDistanceButton() }
+
+        { this.renderDistance() }
       </div>
     );
   }
@@ -79,7 +71,7 @@ class SearchOptionalFields extends Component {
 
     if (city) {
       return (
-        <div className='searchBarOptionalField'>
+        <div className='searchBarDistanceButton'>
           <FlatButton
             primary
             label={
@@ -89,10 +81,8 @@ class SearchOptionalFields extends Component {
               />
             }
             onClick={ this.handleToggleDistance }
+            fullWidth
           />
-          <div className='searchBarOptionalFieldMobile'>
-            { this.renderDistance() }
-          </div>
         </div>
       );
     }
@@ -107,10 +97,10 @@ class SearchOptionalFields extends Component {
       onBlur
     } = this.props;
 
-    if(showStartTime) {
+    if (showStartTime) {
       return (
         <TimePicker
-          textFieldStyle={ { width: '80%' } }
+          className='searchBarStartTimePicker'
           format='24hr'
           hintText={
             <FormattedMessage
@@ -137,7 +127,7 @@ class SearchOptionalFields extends Component {
     if (showEndTime) {
       return (
         <TimePicker
-          textFieldStyle={ { width: '80%' } }
+          className='searchBarEndTimePicker'
           format='24hr'
           hintText={
             <FormattedMessage
@@ -186,7 +176,7 @@ class SearchOptionalFields extends Component {
     if (showDistance) {
       return (
         <SelectField
-          style={ { width: '90%' } }
+          className='searchBarDistanceOption'
           value={ distance }
           errorText={ errors.distance }
           onChange={ this.changeHandlerDistance }

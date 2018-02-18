@@ -1,6 +1,6 @@
 class ConversationsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_conversation, :check_participating!, only: [:new, :show]
+  before_action :set_conversation, :check_participating!, only: [:new, :show, :update]
 
   def new
     redirect_to conversation_path(@conversation) and return if @conversation
@@ -9,24 +9,47 @@ class ConversationsController < ApplicationController
 
   def index
     @conversations = Conversation.participating(current_user).order('updated_at DESC')
-    @conversations = @conversations.collect { |conversation| ConversationDecorator.new(conversation).decorate }
+    @conversations = @conversations.collect { |conversation| ConversationDecorator.new(conversation, current_user).simple_decorate }
 
     @user = UserDecorator.new(current_user).simple_decorate
 
     @data = { :conversations => @conversations, :currentUser => @user }
+
+    render :index
   end
 
   def show
-    @message = Message.new
+    @conversation = ConversationDecorator.new(@conversation, current_user).decorate
+    @user = UserDecorator.new(current_user).simple_decorate
+
+    @data = { :conversation => @conversation, :currentUser => @user }
+
+    render :show
+  end
+
+  def update
+    @messages = @conversation.messages.unread
+
+    @messages.each do |message|
+      message.update_attributes(:unread => false)
+    end
+
+    @conversation = ConversationDecorator.new(@conversation, current_user).decorate
+
+    render json: { :conversation => @conversation }
   end
 
   private
 
   def set_conversation
-    @conversation = Conversation.find_by(id: params[:id])
+    @conversation = Conversation.find(permitted_params[:id])
   end
 
   def check_participating!
     redirect_to '/inbox' unless @conversation.present? && @conversation.participates?(current_user)
+  end
+
+  def permitted_params
+    params.permit(:id)
   end
 end

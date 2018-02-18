@@ -1,12 +1,13 @@
 class AvailabilitiesController < ApplicationController
   before_action :authenticate_user!
   before_action :check_if_volunteer?, except: [:search]
-  before_action :check_if_client?, only: [:search ]
+  before_action :check_if_client?, only: [:search]
+  before_action :permitted_params, only: [:create]
 
   def search
     user = UserDecorator.new(current_user).simple_decorate
     programs = Program.all
-    days =  Date::DAYNAMES
+    days = I18n.translate 'date.day_names'
 
     @data = {
         :currentUser => user,
@@ -21,7 +22,7 @@ class AvailabilitiesController < ApplicationController
     user = UserDecorator.new(current_user).simple_decorate
     programs = Program.all
     timezones = ActiveSupport::TimeZone.all
-    days =  Date::DAYNAMES
+    days = I18n.translate 'date.day_names'
 
     @data = {
         :availabilities => { },
@@ -43,26 +44,35 @@ class AvailabilitiesController < ApplicationController
         creation = Contexts::Availabilities::Creation.new(permit_nested(permitted_params[number]), current_user)
 
         begin
-          @availability = creation.execute
+          @new_availabilities = creation.execute
+
+          status = :ok
+          messages = @new_availabilities.pluck(:id).collect do |id|
+            { id => `#{id} successfully created` }
+          end
+          message << messages
         rescue Contexts::Availabilities::Errors::UnknownAvailabilityError,
             Contexts::Availabilities::Errors::OverlappingAvailability,
             Contexts::Availabilities::Errors::StartTimeMissing,
             Contexts::Availabilities::Errors::EndTimeMissing,
             Contexts::Availabilities::Errors::ShortAvailability => e
-          message << e.message
-          status << :unprocessable_entity
-        else
-          message << { availability: `#{@availability.id} successfully created` }
+          message[number.to_i] = e.message
+          status = :unprocessable_entity
         end
       end
-      render :json=> { :message => message }, :status => :ok
+      render :json => { :message => message }, :status => status
     end
   end
 
   def index
     user = UserDecorator.new(current_user).simple_decorate
     programs = current_user.programs
-    availabilities = Availability.where(:user => current_user).collect{ |n| AvailabilityDecorator.new(n).decorate }
+    availabilities = Availability.where(:user => current_user).collect{ |n|
+      AvailabilityDecorator.new(n, {
+          :timezone => current_user_timezone,
+          :user_timezone => current_user_timezone
+      }).self_decorate
+    }
 
     @data = {
         :currentUser => user,
@@ -80,6 +90,11 @@ class AvailabilitiesController < ApplicationController
 
   private
 
+  def current_user_timezone
+    return current_user[:timezone] if current_user[:timezone].present?
+    ''
+  end
+
   def check_if_volunteer?
     unless current_user.volunteer?
       redirect_to root_path
@@ -92,10 +107,6 @@ class AvailabilitiesController < ApplicationController
     end
   end
 
-  def build_search
-    { :start_time => '', :end_time => '', :day => '' }
-  end
-
   def permitted_params
     params.require(:availabilities)
   end
@@ -104,7 +115,7 @@ class AvailabilitiesController < ApplicationController
     params.permit(
         :day,
         :start_time,
-        :end_time,
+        :end_time
     )
   end
 end

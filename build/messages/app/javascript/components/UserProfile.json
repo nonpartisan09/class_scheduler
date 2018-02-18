@@ -5,27 +5,27 @@
   },
   {
     "id": "UserProfile.firstName",
-    "defaultMessage": "First Name:"
-  },
-  {
-    "id": "UserProfile.location",
-    "defaultMessage": "Location:"
+    "defaultMessage": "First Name"
   },
   {
     "id": "UserProfile.programsOffered",
-    "defaultMessage": "Programs:"
+    "defaultMessage": "Programs"
   },
   {
     "id": "UserProfile.lastLogIn",
-    "defaultMessage": "Last logged in:"
-  },
-  {
-    "id": "ago",
-    "defaultMessage": "ago"
+    "defaultMessage": "Last logged in"
   },
   {
     "id": "UserProfile.moreInformation",
-    "defaultMessage": "A bit more information:"
+    "defaultMessage": "A bit more information"
+  },
+  {
+    "id": "UserProfile.Back",
+    "defaultMessage": "Back to search results"
+  },
+  {
+    "id": "UserProfile.location",
+    "defaultMessage": "Location"
   },
   {
     "id": "UserProfile.NotAvailable",

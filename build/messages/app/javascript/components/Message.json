@@ -1,0 +1,14 @@
+[
+  {
+    "id": "messageReply",
+    "defaultMessage": "Reply"
+  },
+  {
+    "id": "conversationIndexPageReviewLink",
+    "defaultMessage": "View Profile / Review"
+  },
+  {
+    "id": "Message.sentBy",
+    "defaultMessage": "sent by"
+  }
+]

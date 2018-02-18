@@ -1,0 +1,74 @@
+es:
+  activerecord:
+    attributes:
+      documento:
+        doctipo: 'Tipo'
+    errors:
+      models:
+        documento:
+          attributes:
+            doctipo:
+              blank: 'es requerido'
+            asunto:
+              blank: 'es requerido'
+  datetime:
+    distance_in_words:
+      x_days:
+        one: 'hace 1 día'
+        other: 'hace %{count} días'
+      about_x_hours:
+        one: 'hace 1 hora'
+        other: 'hace %{count} horas'
+      x_minutes:
+        one: 'hace 1 minuto'
+        other: 'hace %{count} minutos'
+        never: 'Nunca'
+      less_than_x_minutes:
+        one: 'hace menos de 1 minuto'
+        other: 'hace menos de %{count} minutos'
+
+  date:
+    formats:
+      default: '%Y-%m-%d'
+    day_names: [Lunes, Martes, Miércoles, Jueves, Viernes, Sábado, Domingo]
+  devise:
+    failure:
+      user:
+        unauthenticated: 'Usuario no autenticado'
+    sessions:
+      user:
+        signed_in: 'Usuario conectado'
+        signed_out: 'Usuario desconectado'
+  custom_errors:
+    messages:
+      agree_to_terms_and_conditions: 'Por favor acepta nuestros términos de uso.'
+      deactivated_account: 'Su cuenta fue desactivada.'
+      email_in_use: 'Este correo electrónico ya está en uso. ¿Ha olvidado su contraseña?'
+      end_time_after_start_time: 'Por favor seleccione una hora de terminar cronológicamente después de la hora de comienzo.'
+      incorrect_credentials: 'No reconocemos este ID de usuario o contraseña.'
+      incorrect_order: 'La secuencia seleccionada está prohibida.'
+      minimum_availability_required: 'El mínimo requerido para una clase es de 30 minutos.'
+      missing_credentials: 'ID de usuario y contraseña perdidas.'
+      missing_day: 'El día es requerido.'
+      missing_end_time: 'La hora de terminar es obligatoria'
+      missing_program: 'El programa es requerido'
+      missing_role: 'Parece que fue un problema con su registro, gracias por contactarnos.'
+      missing_start_time: 'La hora de comienzo es obligatoria.'
+      overlapping_availability: 'Esto se superpondría con algunas de sus disponibilidades existentes. Es posible que desee eliminarlos y intentar de nuevo.'
+      unknown_error: 'Ocurrió un error desconocido. Gracias por contactarnos.'
+  custom_success:
+    messages:
+      review_created: 'Success, review created'
+      review_updated: 'Success, review updated'
+  decorators:
+    pronouns: [Tí]
+  application_mailer:
+    new_message:
+      title: 'New message from'
+      body:
+        first_line: 'usted tiene un correo electrónico'
+        second_line: 'le han mandando un mensaje'
+        third_line: 'Para mirar el mensaje completo, por favor ingrese a la siguiente página web'
+        fourth_line: '¿Le gustaría evaluar la persona con la que se ha contactado'
+        fifth_line: 'Déjele un comentario en su perfil'
+        sixth_line: 'Gracias y Buen día'

@@ -3,24 +3,28 @@ import _ from 'lodash';
 import { FormattedMessage } from 'react-intl';
 
 import FormData from './utils/FormData';
-import withUserForm from './withUserForm';
-import Header from './Header';
+import withUserForm from './reusable/withUserForm';
+import Header from './reusable/Header';
 
-import './SignUp.css';
-
-import UserFormConstants from './UserFormConstants';
+import UserFormConstants from './utils/UserFormConstants';
 
 import SignUpSchema from './schema/SignUpSchema';
-import { postData } from './sendData';
+import { postData } from './utils/sendData';
+import formatLink from './utils/Link';
+import PageHeader from './reusable/PageHeader';
 
 const { SIGN_UP } = UserFormConstants;
 
+const ignoredFields = [
+  'current_password'
+];
+
 function handleUserSignUp() {
-  const { match: { params: { role } } } = this.props;
-  const { currentUser } = this.props;
+  const { match: { params: { role } }, history } = this.props;
+  const { currentUser, currentUser: { locale } } = this.props;
 
   const updatedUser =  _.reduce(currentUser, (memo, value, key) => {
-    if (key === 'thumbnail_image' || !_.isEmpty(value) ) {
+    if (key === 'thumbnail_image' || !_.isEmpty(value) || !_.includes(ignoredFields, key)) {
       memo[key] = value;
     }
 
@@ -28,20 +32,24 @@ function handleUserSignUp() {
   }, {});
 
   const attributes = FormData.from({ user: updatedUser });
+  const restfulUrl = locale? `/${locale}/sign_up/${role}` : `/sign_up/${role}`;
 
   const requestParams = {
-    url: `/sign_up/${role}`,
+    url: restfulUrl,
     attributes,
     method: 'POST',
     successCallBack: () => {
       let link = '';
 
       if (role === 'volunteer') {
-        link = '/availabilities/new/sign_up';
+        link = '/availabilities/new';
       } else if (role === 'client' ) {
-        link = '/search/sign_up';
+        link = '/search';
       }
-      location.assign(link);
+
+      const userLocale = updatedUser.locale || '';
+
+      history.push(formatLink(link, userLocale), { signUp: true });
     },
 
     errorCallBack: (message) => {
@@ -65,13 +73,13 @@ class SignUp extends Component {
     return (
       <div>
         <Header />
-
-        <h1 className='signUpHeader'>
+        <PageHeader title={
           <FormattedMessage
-            id='NewAvailability.signUpHeader'
-            defaultMessage='Join Tutoria community: Step 2/2'
-          />
-        </h1>
+            id='SignUp.signUpHeader'
+            defaultMessage='Join Tutoría community: Step 1/2'
+           />
+         }
+         />
       </div>
     );
   }

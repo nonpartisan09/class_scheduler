@@ -4,10 +4,11 @@ import _ from 'lodash';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
 import { FormattedMessage } from 'react-intl';
+import { getData } from './utils/sendData';
+import formatLink from './utils/Link';
 
 import { LOWEST, HIGHEST, OLDEST, RECENT } from './SortFilter';
 
-import { getData } from './sendData';
 import './CommentContainer.css';
 
 class CommentContainer extends Component {
@@ -20,28 +21,59 @@ class CommentContainer extends Component {
     this.state = {
       sortBy: 0,
       message: '',
-      comments: props.comments
+      ten_last_comments: props.comments && props.comments.ten_last_comments,
+      count: props.comments && props.comments.count
     };
+  }
+
+  componentWillReceiveProps({ comments: { ten_last_comments, count } }){
+    if (this.props.ten_last_comments !== ten_last_comments || this.props.count !== count) {
+      this.handleUpdateState();
+    }
+  }
+
+  handleUpdateState() {
+    const { comments: { ten_last_comments, count } } = this.props;
+
+    this.setState({ ten_last_comments, count });
   }
 
   render() {
     return (
       <div className='commentContainerMainContainer'>
-        <h4 className='commentContainerTitle'>
-         Comments
-        </h4>
-        <DropDownMenu className='commentContainerDropdown' value={ this.state.sortBy } onClose={ this.handleBlur } onChange={ this.handleChange } >
-          <MenuItem value={ 0 } primaryText='Sort by' />
-          <MenuItem value={ RECENT } primaryText='Most Recent' />
-          <MenuItem value={ OLDEST } primaryText='Oldest' />
-          <MenuItem value={ HIGHEST } primaryText='Highest Rating' />
-          <MenuItem value={ LOWEST } primaryText='Lowest Rating' />
-        </DropDownMenu>
+        { this.renderCommentHeader() }
         <ul className='commentContainerList'>
           { this.renderListItems() }
         </ul>
       </div>
     );
+  }
+
+  renderCommentHeader() {
+    const { count } = this.state;
+
+    if (count > 10) {
+      return (
+        <div>
+          <h4 className='commentContainerTitleWithDropDown'>
+            Comments
+          </h4>
+          <DropDownMenu className='commentContainerDropdown' value={ this.state.sortBy } onClose={ this.handleBlur } onChange={ this.handleChange } >
+            <MenuItem value={ 0 } primaryText='Sort by' />
+            <MenuItem value={ RECENT } primaryText='Most Recent' />
+            <MenuItem value={ OLDEST } primaryText='Oldest' />
+            <MenuItem value={ HIGHEST } primaryText='Highest Rating' />
+            <MenuItem value={ LOWEST } primaryText='Lowest Rating' />
+          </DropDownMenu>
+        </div>
+      );
+    } else {
+      return (
+        <h4 className='commentContainerTitle'>
+          Comments
+        </h4>
+      );
+    }
   }
 
   handleChange(event, index, value) {
@@ -51,21 +83,23 @@ class CommentContainer extends Component {
   }
 
   handleBlur() {
-    const { userId } = this.props;
+    const { userId, locale } = this.props;
     const { sortBy } = this.state;
 
-    const requestParams = {
-      url: `/reviews/${userId}/${sortBy}`,
+    const restfulUrl = locale? `/${locale}/reviews/${userId}/${sortBy}` : `/reviews/${userId}/${sortBy}`;
 
-      successCallBack: ({ comments }) => {
+    const requestParams = {
+      url: restfulUrl,
+
+      successCallBack: ({ ten_last_comments }) => {
         this.setState({
-          comments
+          ten_last_comments
         });
       },
 
       errorCallBack: (message) => {
         this.setState({
-          message: message,
+          message: message
         });
       }
     };
@@ -74,14 +108,29 @@ class CommentContainer extends Component {
   }
 
   renderListItems() {
-    const { comments } = this.state;
+    const { ten_last_comments } = this.state;
+    const { locale } = this.props;
 
-    if (_.size(comments) > 0) {
-      return _.map(comments, ({ comment, created_at, reviewer }, index) => {
+    if (_.size(ten_last_comments) > 0) {
+      return _.map(ten_last_comments, ({ comment, created_at, reviewer_first_name, reviewer_url_slug }, index) => {
+
         return (
           <li key={ index } className='commentContainerListItem'>
-            <span>Posted { created_at } - </span>
-            <span>by { reviewer } -</span>
+            <span>
+              <FormattedMessage
+              id='CommentContainer.posted'
+              defaultMessage='Posted'
+            />
+            <span> { created_at } - </span>
+            <FormattedMessage
+              id='CommentContainer.postedBy'
+              defaultMessage='by'
+            />
+            <span> </span>
+            <a href={ formatLink(`/reviews/author/${reviewer_url_slug}`, locale) } className='slidingLink commentContainerLink'>
+              { reviewer_first_name }
+            </a>:
+            </span>
             <span> { this.renderComment(comment) }</span>
           </li>
         );
@@ -91,7 +140,7 @@ class CommentContainer extends Component {
         <li>
           <FormattedMessage
            id='CommentContainer.noCommentAvailable'
-            defaultMessage='No comment available'
+            defaultMessage='No comments available'
           />
         </li>
       )
@@ -99,7 +148,7 @@ class CommentContainer extends Component {
   }
 
   renderComment(comment) {
-    if(comment) {
+    if (comment) {
       return comment;
     } else {
       return (
@@ -113,18 +162,22 @@ class CommentContainer extends Component {
 }
 
 CommentContainer.propTypes = {
+  locale: PropTypes.string,
   userId: PropTypes.string,
-  comments: PropTypes.arrayOf(
-    PropTypes.shape({
-      comment: PropTypes.string,
-      created_at: PropTypes.string,
-      reviewer: PropTypes.string
-    })
-  )
+  comments: PropTypes.shape({
+    count: PropTypes.number,
+    ten_last_comments: PropTypes.arrayOf(
+      PropTypes.shape({
+        comment: PropTypes.string,
+        created_at: PropTypes.string,
+        reviewer_first_name: PropTypes.string
+      })
+    )
+  })
 };
 
 CommentContainer.defaultProps = {
-  comments: [],
+  comments: { },
   userId: ''
 };
 

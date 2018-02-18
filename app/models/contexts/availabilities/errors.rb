@@ -26,4 +26,8 @@ module Contexts::Availabilities::Errors
   class ProgramMissing < RuntimeError
 
   end
+
+  class IncorrectOrder < RuntimeError
+
+  end
 end

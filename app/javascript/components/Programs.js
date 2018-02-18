@@ -9,11 +9,11 @@ class Programs extends Component {
   render() {
     if (_.size(this.props.programs) > 0) {
       return (
-        <div>
+        <div className='programMainContainer'>
           <h3 className='programHeader'>
             <FormattedMessage
-              id='Programs.availablePrograms'
-              defaultMessage='Available Programs'
+              id='Programs.featuredPrograms'
+              defaultMessage='Featured Programs'
             />
           </h3>
           <div className='programContainer'>
@@ -32,10 +32,8 @@ class Programs extends Component {
     if (_.size(programs) > 0) {
       return programs.map((item) => {
         return (
-          <div key={ item.id } className='program' style={ { background: `url(/assets/${item.url_slug}.jpg) no-repeat center` } }>
-            <div className='programLabel'>
-              { item.name }
-            </div>
+          <div key={ item.name } className='program'>
+            { item.name }
           </div>
         );
       });

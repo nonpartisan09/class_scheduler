@@ -1,0 +1,129 @@
+.navigation {
+    width: 100%;
+    margin: 24px 0 36px;
+    text-align: left;
+    padding-left: 24px;
+}
+
+.headerLocaleLinkContainer {
+    float: right;
+    margin-right: 36px;
+    line-height: 36px;
+}
+
+.headerLocaleLinkContainer .slidingLink {
+    margin-right: 3px;
+    -webkit-appearance: none;
+    outline: none;
+    border: none;
+    text-rendering: auto;
+    display: inline-block;
+    padding: 0;
+    align-items: unset;
+    -webkit-writing-mode: inherit;
+    font: inherit;
+    background-color: transparent;
+}
+
+.slidingLink {
+    display: inline-block;
+    position: relative;
+    padding-bottom: 3px;
+    margin-right: 24px;
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+}
+
+.slidingLink:before {
+    content: '';
+    display: block;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 1px;
+    width: 0;
+    transition: width 0s ease, background .15s ease;
+    outline: none;
+}
+
+.slidingLink:after {
+    content: '';
+    display: block;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    height: 1px;
+    width: 0;
+    background: #f1592a;
+    transition: width .15s ease;
+}
+
+.slidingLink:hover:before {
+    width: 100%;
+    background: #f1592a;
+    transition: width .15s ease;
+}
+.slidingLink:hover:after {
+    width: 100%;
+    background: transparent;
+    transition: all 0s ease;
+}
+
+.navMenuButton, .navDisplayNone {
+    display: none;
+}
+
+@media (min-device-width: 0) and (max-device-width: 900px), (max-width: 900px) {
+    .navigation .slidingLink {
+        margin-bottom: 6px;
+        outline: none;
+    }
+
+    .headerLocaleLinkContainer {
+        float: none;
+        margin-top: 12px;
+        margin-right: 0;
+    }
+
+    .slidingLink {
+        width: fit-content;
+        display: block;
+        right: 0;
+        left: 0;
+        margin: 0 auto;
+    }
+
+    .slidingLink:hover:before, .slidingLink:hover:after {
+        width: 100%;
+        right: 0;
+        left: 0;
+        margin: 0 auto;
+    }
+
+    .navigation {
+        display: none;
+        padding: 0;
+        text-align: center;
+        margin: 0;
+    }
+
+    .navMenuButton, .navDisplayNone {
+        display: none;
+    }
+
+    .navDisplay, .navMenuButton {
+        display: block;
+        margin: 0;
+    }
+
+    .navMenuButton {
+        outline: none;
+        margin: 24px 0 0 24px;
+    }
+
+    .headerLocaleLinkContainer .slidingLink {
+        display: inline-block;
+        line-height: unset;
+    }
+}

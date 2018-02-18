@@ -1,0 +1,14 @@
+[
+  {
+    "id": "UserReviewIndexPage.header",
+    "defaultMessage": "Most recent reviews by"
+  },
+  {
+    "id": "UserReviewIndexPage.noReviewAvailable",
+    "defaultMessage": "No reviews available"
+  },
+  {
+    "id": "UserReviewIndexPage.unavailable",
+    "defaultMessage": "Not available"
+  }
+]

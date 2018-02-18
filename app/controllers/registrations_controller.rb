@@ -50,7 +50,7 @@ class RegistrationsController < Devise::RegistrationsController
         Contexts::Users::Errors::AlreadyUsedEmail => e
       @message = e.message
 
-      render json: { error: { message: @message } }, status: 409
+      render json: { error: { message: @message } }, status: :conflict
     end
   end
 
@@ -63,12 +63,15 @@ class RegistrationsController < Devise::RegistrationsController
 
     yield resource if block_given?
     if resource_updated
+      UserMailer.password_updated(resource).deliver_later unless account_update_params[:current_password].nil?
+
       if is_flashing_format?
         flash_key = update_needs_confirmation?(resource, prev_unconfirmed_email) ?
                         :update_needs_confirmation : :updated
         set_flash_message :notice, flash_key
       end
       bypass_sign_in resource, scope: resource_name
+
       respond_with resource, location: after_update_path_for(resource)
     else
       clean_up_passwords resource
@@ -86,23 +89,27 @@ class RegistrationsController < Devise::RegistrationsController
       @role_url_slug = @role.take.url_slug
       @role_id = @role.take.id
     else
-      raise Contexts::Users::Errors::UnknownRegistrationError, 'It seems there was a problem with your registration, thanks for contacting us.'
+      message = I18n.translate custom_errors.messages.unknown_error
+      raise Contexts::Users::Errors::UnknownRegistrationError, message
     end
   end
 
   def sign_up_params
     params.require(:user).permit(
-        :id,
-        :first_name,
-        :email,
-        :password,
-        :password_confirmation,
-        :description,
-        :contact_permission,
-        :terms_and_conditions,
-        :role,
         :address,
         :city,
+        :contact_permission,
+        :country,
+        :description,
+        :email,
+        :first_name,
+        :id,
+        :locale,
+        :password,
+        :password_confirmation,
+        :role,
+        :state,
+        :terms_and_conditions,
         :thumbnail_image,
         :timezone,
         :programs => '',
@@ -113,16 +120,20 @@ class RegistrationsController < Devise::RegistrationsController
 
   def account_update_params
     params.require(:user).permit(
-        :id,
-        :first_name,
-        :email,
-        :description,
+        :address,
+        :city,
+        :country,
         :current_password,
+        :description,
+        :email,
+        :email_notification,
+        :first_name,
+        :id,
+        :locale,
         :password,
         :password_confirmation,
         :role,
-        :address,
-        :city,
+        :state,
         :thumbnail_image,
         :timezone,
         :languages => [],

@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
+import Divider from 'material-ui/Divider';
+
 import { FormattedMessage } from 'react-intl';
 
 import {
@@ -14,10 +16,11 @@ import {
   TableRowColumn,
 } from 'material-ui/Table';
 
-import { postData } from './sendData';
+import { postData } from './utils/sendData';
 import SnackBarComponent from './reusable/SnackBarComponent';
 
 import './AvailabilitiesTable.css';
+import formatLink from './utils/Link';
 
 class AvailabilitiesTable extends Component {
   constructor(props, context) {
@@ -61,8 +64,8 @@ class AvailabilitiesTable extends Component {
             <span>
               <FormattedMessage
                 id='Availabilities.listDay'
-                defaultMessage='Day:'
-              /> { day }
+                defaultMessage='Day'
+              />: { day }
             </span>
           </li>
 
@@ -70,16 +73,16 @@ class AvailabilitiesTable extends Component {
             <span>
               <FormattedMessage
                 id='Availabilities.from'
-                defaultMessage='From:'
-              /> { start_time }
+                defaultMessage='From'
+              />: { start_time }
             </span>
           </li>
           <li>
             <span>
               <FormattedMessage
                 id='Availabilities.to'
-                defaultMessage='To:'
-              /> { end_time }
+                defaultMessage='To'
+              />: { end_time }
             </span>
           </li>
 
@@ -87,12 +90,16 @@ class AvailabilitiesTable extends Component {
             <span>
               <FormattedMessage
                 id='Availabilities.timezone'
-                defaultMessage='Timezone:'
-              /> { timezone }
+                defaultMessage='Timezone'
+              />: { timezone }
             </span>
           </li>
 
           { this.renderDeleteListContent(id) }
+
+         <div className='smallScreenAvailabilityTableDivider'>
+           <Divider />
+         </div>
         </div>
       );
     });
@@ -124,8 +131,8 @@ class AvailabilitiesTable extends Component {
                 </TableHeaderColumn>
                 <TableHeaderColumn key='timezone'>
                   <FormattedMessage
-                    id='Availabilities.timezone'
-                    defaultMessage='Timezone:'
+                    id='timezone'
+                    defaultMessage='Timezone'
                   />
                 </TableHeaderColumn>
                 { this.renderDeleteColumn() }
@@ -150,12 +157,17 @@ class AvailabilitiesTable extends Component {
     if (this.props.deletable) {
       return (
         <li className='availabilitiesTableButton'>
-          <RaisedButton primary fullWidth onClick={ this.handleDelete(id) } >
-            <FormattedMessage
-              id='Delete'
-              defaultMessage='Delete'
-            />
-          </RaisedButton>
+          <RaisedButton
+            primary
+            fullWidth
+            onClick={ this.handleDelete(id) }
+            label={
+              <FormattedMessage
+                id='Delete'
+                defaultMessage='Delete'
+              />
+            }
+          />
         </li>
       );
     }
@@ -166,12 +178,16 @@ class AvailabilitiesTable extends Component {
     if (this.props.deletable) {
       return (
         <TableRowColumn >
-          <FlatButton primary onClick={ this.handleDelete(id) } >
-            <FormattedMessage
-              id='Delete'
-              defaultMessage='Delete'
-            />
-          </FlatButton>
+          <FlatButton
+            primary
+            onClick={ this.handleDelete(id) }
+            label={
+              <FormattedMessage
+                id='Delete'
+                defaultMessage='Delete'
+              />
+            }
+          />
         </TableRowColumn>
       );
     }
@@ -190,12 +206,14 @@ class AvailabilitiesTable extends Component {
     }
   }
   handleDelete(id) {
+    const { locale } = this.props;
+
     return () => {
       const requestParams = {
         url: `/availabilities/${id}`,
         method: 'DELETE',
         successCallBack: () => {
-          location.assign('/availabilities');
+          location.assign(formatLink('/availabilities', locale));
         },
         errorCallBack: (message) => {
           this.setState({
@@ -229,12 +247,14 @@ class AvailabilitiesTable extends Component {
 AvailabilitiesTable.propTypes = {
   availabilities: PropTypes.oneOfType([ PropTypes.array, PropTypes.object ]),
   timezone: PropTypes.string,
+  locale: PropTypes.string,
   deletable: PropTypes.bool
 };
 
 AvailabilitiesTable.defaultProps = {
   availabilities: {},
   timezone: '',
+  locale: '',
   deletable: false
 };
 

@@ -9,27 +9,49 @@ class UserDecorator
 
   def simple_decorate
     {
-      :city => city,
-      :programs => programs,
-      :client => client,
-      :volunteer => volunteer,
-      :email => email,
-      :url_slug => url_slug,
-      :first_name => first_name,
-      :last_logged_in => last_logged_in,
-      :thumbnail_image => picture,
-      :timezone => timezone,
-      :languages => languages,
       :average_rating => average_rating,
-      :rating_count => rating_count
+      :client => @user.client?,
+      :country => country,
+      :email => email,
+      :first_name => first_name,
+      :languages => languages,
+      :last_logged_in => last_logged_in,
+      :locale => locale,
+      :programs => programs,
+      :rating_count => rating_count,
+      :state => state,
+      :thumbnail_image => picture,
+      :timezone => user_timezone,
+      :url_slug => url_slug,
+      :volunteer => @user.volunteer?,
+      :city => city
     }.merge(availabilities_hash)
   end
 
+  def updateable
+    {
+        :programs => programs,
+        :locale => locale,
+        :address => address,
+        :city => city,
+        :country => country,
+        :state => state,
+        :client => @user.client?,
+        :volunteer => @user.volunteer?,
+        :email => email,
+        :email_notification => email_notification,
+        :first_name => first_name,
+        :thumbnail_image => picture,
+        :description => description,
+        :timezone => user_timezone,
+        :languages => languages,
+    }
+  end
+
   def availabilities_hash
-    if volunteer
+    if @user.volunteer?
       {
           :available_days => available_days,
-          :availabilities => availabilities
       }
     else
       { }
@@ -38,25 +60,33 @@ class UserDecorator
 
   def decorate
     {
-        :programs => programs,
         :address => address,
+        :average_rating => average_rating,
         :city => city,
+        :client => @user.client?,
         :country => country,
-        :state => state,
-        :url_slug => url_slug,
-        :client => client,
-        :volunteer => volunteer,
+        :description => description,
         :email => email,
         :first_name => first_name,
-        :last_logged_in => last_logged_in,
-        :thumbnail_image => picture,
-        :description => description,
-        :timezone => timezone,
         :languages => languages,
-        :average_rating => average_rating,
+        :last_logged_in => last_logged_in,
+        :locale => locale,
+        :programs => programs,
         :rating_count => rating_count,
-        :ten_last_comments => ten_last_comments
+        :state => state,
+        :thumbnail_image => picture,
+        :timezone => user_timezone,
+        :url_slug => url_slug,
+        :volunteer => @user.volunteer?
     }.merge(availabilities_hash)
+  end
+
+  def email_notification
+    user.email_notification || true
+  end
+
+  def locale
+    user.locale || 'en'
   end
 
   def rating_count
@@ -71,7 +101,7 @@ class UserDecorator
     user.languages.pluck(:name)
   end
 
-  def timezone
+  def user_timezone
     user.timezone
   end
 
@@ -100,7 +130,7 @@ class UserDecorator
   end
 
   def availabilities
-    user.availabilities.collect{ |n| AvailabilityDecorator.new(n).decorate }
+    user.availabilities
   end
 
   def programs
@@ -123,23 +153,11 @@ class UserDecorator
     user.state ||= ''
   end
 
-  def client
-    @user.client?
-  end
-
-  def volunteer
-    @user.volunteer?
-  end
-
   def available_days
     availabilities.pluck(:day)
   end
 
   def last_logged_in
     time_ago_in_words(user.last_sign_in_at)
-  end
-
-  def ten_last_comments
-    user.reviews.last(10).collect{ |review| ReviewDecorator.new(review).comment_decorate }
   end
 end

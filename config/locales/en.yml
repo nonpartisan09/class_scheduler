@@ -1,33 +1,53 @@
-# Files in the config/locales directory are used for internationalization
-# and are automatically loaded by Rails. If you want to use locales other
-# than English, add the necessary files in this directory.
-#
-# To use the locales, use `I18n.t`:
-#
-#     I18n.t 'hello'
-#
-# In views, this is aliased to just `t`:
-#
-#     <%= t('hello') %>
-#
-# To use a different locale, set it with `I18n.locale`:
-#
-#     I18n.locale = :es
-#
-# This would use the information in config/locales/es.yml.
-#
-# The following keys must be escaped otherwise they will not be retrieved by
-# the default I18n backend:
-#
-# true, false, on, off, yes, no
-#
-# Instead, surround them with single quotes.
-#
-# en:
-#   'true': 'foo'
-#
-# To learn more, please read the Rails Internationalization guide
-# available at http://guides.rubyonrails.org/i18n.html.
-
 en:
-  hello: "Hello world"
+  application_mailer:
+    new_message:
+      title: 'New message from'
+      body:
+        first_line: 'you’ve got mail'
+        second_line: 'has sent you a message'
+        third_line: 'To view the full message, please sign in'
+        fourth_line: 'Have you worked with'
+        fifth_line: 'Leave this person a review'
+        sixth_line: 'Thanks and have a great day'
+  datetime:
+    distance_in_words:
+      x_days:
+        one: '1 day ago'
+        other: '%{count} days ago'
+      about_x_hours:
+        one: '1 hour ago'
+        other: '%{count} hours ago'
+      x_minutes:
+        one: '1 minute'
+        other: '%{count} minutes ago'
+        never: 'Never'
+      less_than_x_minutes:
+        one: 'less than 1 minute ago'
+        other: 'less than %{count} minutes ago'
+  custom_errors:
+    messages:
+      agree_to_terms_and_conditions: 'Please accept our terms and conditions.'
+      deactivated_account: 'Your account is deactivated'
+      email_in_use: 'This email is already in use. Have you forgotten your password?'
+      end_time_after_start_time: 'Please select an end time chronologically after start time.'
+      incorrect_credentials: 'Error with your login or password'
+      incorrect_order: 'Selected order is not allowed.'
+      minimum_availability_required: 'The minimum required for a class is 30 minutes.'
+      missing_credentials: 'Missing email and password'
+      missing_day: 'Day field is required.'
+      missing_end_time: 'End time is required.'
+      missing_program: 'Program field is required.'
+      missing_role: 'It seems there was a problem with your registration, thanks for contacting us.'
+      missing_start_time: 'Start time is required.'
+      overlapping_availability: 'This would overlap with some of your existing availabilities. You might want to delete them and try again.'
+      unknown_error: 'An unknown error happened. Thanks for contacting us.'
+  custom_success:
+    messages:
+      review_created: 'Success, review created'
+      review_updated: 'Success, review updated'
+  date:
+    formats:
+      default: "%Y-%m-%d"
+    day_names: [Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday]
+  decorators:
+    pronouns: [You]

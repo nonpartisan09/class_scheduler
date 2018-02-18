@@ -1,6 +1,6 @@
 Rails.application.configure do
   config.static_base_url =  'https://s3.amazonaws.com/tutoria/'
-  config.mailer_sender = 'test@test.com'
+  config.base_url = 'https://tutoria.io'
 
   # Settings specified here will take precedence over those in config/application.rb.
 
@@ -11,13 +11,18 @@ Rails.application.configure do
 
   config.action_mailer.delivery_method = :smtp
 
+  config.roadie_options = {
+      protocol: 'https',
+      host: 'tutoria.io'
+  }
+
   # SMTP settings for gmail
   config.action_mailer.smtp_settings = {
-      :address              => "smtp.gmail.com",
-      :domain               => "gmail.com",
+      :address              => ENV["SMTP"],
+      :domain               => "tutoria.io",
       :port                 => 587,
-      :user_name            => ENV["GMAIL_USERNAME"],
-      :password             => ENV["GMAIL_KEY"],
+      :user_name            => ENV["EMAIL_USERNAME"],
+      :password             => ENV["EMAIL_KEY"],
       :authentication       => :plain,
       :enable_starttls_auto => true
   }

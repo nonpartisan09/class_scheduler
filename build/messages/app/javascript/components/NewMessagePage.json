@@ -1,5 +1,9 @@
 [
   {
+    "id": "NewMessagePage.header",
+    "defaultMessage": "Send new message"
+  },
+  {
     "id": "NewMessagePage.recipient",
     "defaultMessage": "Recipient"
   },

@@ -3,26 +3,29 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 import { FormattedMessage } from 'react-intl';
 
-import { postData } from './sendData';
-import Header from './Header';
+import { postData } from './utils/sendData';
 
-import UserFormConstants from './UserFormConstants';
+import Header from './reusable/Header';
+import formatLink from './utils/Link';
+import UserFormConstants from './utils/UserFormConstants';
 
 import FormData from './utils/FormData';
 import ProfileSchema from './schema/ProfileSchema';
-import withUserForm from './withUserForm';
+import withUserForm from './reusable/withUserForm';
 import newUser from './utils/CheckUpdatedFields';
+import METHODS from './utils/RestConstants';
 
-import './Header.css';
+import './reusable/Header.css';
 
 const { UPDATE_PROFILE } = UserFormConstants;
 
 const ignoredFields = [
   'client',
   'volunteer',
-  'last_logged_in',
-  'availabilities',
-  'url_slug'
+  'url_slug',
+  'contact_permission',
+  'terms_and_conditions',
+  'volunteer'
 ];
 
 function handleUpdateProfile() {
@@ -37,7 +40,7 @@ function handleUpdateProfile() {
     const requestParams = {
       url: '/update',
       attributes,
-      method: 'POST',
+      method: METHODS.POST,
       successCallBack: () => {
         this.setState({
           showSnackBar: true,
@@ -47,9 +50,19 @@ function handleUpdateProfile() {
 
         this.handleClearValues();
 
-        setTimeout(() => {
-          this.handleHideSnackBar();
-        }, 2000);
+        if (updatedUser.locale) {
+          setTimeout(() => {
+            this.handleHideSnackBar();
+            location.assign(formatLink('/my_profile', updatedUser.locale));
+          }, 2000);
+
+        } else {
+          setTimeout(() => {
+            this.handleHideSnackBar();
+            location.reload();
+          }, 2000);
+
+        }
       },
 
       errorCallBack: (message) => {

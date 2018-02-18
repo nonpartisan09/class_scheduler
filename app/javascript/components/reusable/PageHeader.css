@@ -1,0 +1,18 @@
+.pageHeader {
+    font-size: 30px;
+}
+
+.pageHeaderContainer {
+    width: 100%;
+    text-align: center;
+}
+
+@media (min-device-width: 501px) and (min-width: 501px) {
+    .pageHeaderContainer {
+        width: auto;
+    }
+
+    .pageHeader {
+        margin: 12px 0 24px;
+    }
+}

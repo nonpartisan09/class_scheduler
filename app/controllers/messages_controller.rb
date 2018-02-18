@@ -1,5 +1,6 @@
 class MessagesController < ApplicationController
-  before_action :find_conversation!, :authenticate_user!
+  before_action :authenticate_user!
+  before_action :find_conversation!, except: [ :update ]
 
   def new
     @message = current_user.messages.build
@@ -21,8 +22,9 @@ class MessagesController < ApplicationController
 
   def update
     begin
-      @message = Message.find!(permitted_update_params[:id])
-      @message.unread = true
+      @conversation = Conversation.find(permitted_update_params[:id])
+      @message = @conversation.messages.last
+      @message.unread = false
       @message.save!
     rescue Exception => e
       message = e.message
@@ -41,7 +43,7 @@ class MessagesController < ApplicationController
   private
 
   def send_message_to_recipient
-    UserMailer.new_message(@recipient, @current_user, @message).deliver_later
+    UserMailer.new_message(@recipient, @current_user, @message).deliver_later if @recipient.email_notification
   end
 
   def find_conversation!
@@ -64,8 +66,6 @@ class MessagesController < ApplicationController
   end
 
   def permitted_update_params
-    params.permit(
-        :id
-    )
+    params.permit(:id)
   end
 end

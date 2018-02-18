@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '2.3.4'
+ruby '2.4.3'
 
 git_source(:github) do |repo_name|
   repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
@@ -13,6 +13,8 @@ gem 'rails', '~> 5.1', require: false
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 
+gem 'activeadmin', '~> 1.2.1'
+
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '~> 3.2', require: false
 
@@ -20,14 +22,16 @@ gem 'uglifier', '~> 3.2', require: false
 gem 'delayed_job_active_record'
 
 # Use React for views
-gem 'webpacker', '~> 3.0'
+gem 'webpacker', '~> 3.2.2'
 
-# Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
-gem 'turbolinks', '~> 5'
+# For automatically inlining email styling
+gem 'roadie-rails', '~>1.2.1'
 
 gem 'aws-sdk', '~> 2.10', require: false
 
 gem 'pg', '~> 0.21.0'
+
+gem 'will_paginate', '~> 3.1.6'
 
 gem 'delayed_job', '~> 4.1'
 gem 'devise', '~> 4.3'
@@ -35,14 +39,17 @@ gem 'devise', '~> 4.3'
 # geolocate users
 gem 'geocoder', '~> 1.4'
 
+gem 'unicorn-worker-killer'
+gem 'unicorn'
+
 # image helper
-gem 'paperclip', '~> 5.1'
+gem 'paperclip', '5.1'
 
-group :production do
-  gem 'unicorn'
-end
+gem 'factory_girl_rails', '~> 4.9'
 
-gem 'jquery-rails', '~>4.3.1'
+gem 'newrelic_rpm'
+
+gem 'jquery-rails', '~> 4.3.1'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -51,10 +58,11 @@ group :development, :test do
   gem 'capybara', '~> 2.13', require: false
   gem 'selenium-webdriver', '~> 3.7', require: false
   gem 'rspec-rails', '~> 3.6'
-  gem 'factory_girl_rails', '~> 4.9'
 
   # Use mysql as the database for Active Record
   gem 'mysql2', '>= 0.3.18', '< 0.5', require: false
+
+  gem 'awesome_print'
 end
 
 group :development do
@@ -74,7 +82,7 @@ group :test do
   gem 'database_cleaner', '~> 1.6', require: false
   gem 'shoulda'
   gem 'shoulda-matchers', '~> 2.8', require: false
-  gem 'capybara-webkit', '~> 1.14', require: false
+  #gem 'capybara-webkit', '~> 1.14', require: false
 
 ## =========== STATS/ANALYTICS ==============
 # Error monitoring
@@ -83,7 +91,6 @@ group :test do
 
 ## =========== TESTING TOOLS ==============
 
-  gem 'awesome_print'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

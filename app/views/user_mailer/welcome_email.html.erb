@@ -4,11 +4,21 @@
   <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
 </head>
 <body>
+<%= image_tag attachments['logo.png'].url %>
 <h1>Welcome to tutoría.com, <%= @user.first_name %></h1>
 <p>
   You have successfully signed up to tutoría.com as a <%= @role %>.
   Your username is: <%= @user.email %>.<br>
 </p>
+<%- if @password.present? %>
+<p>
+  Your password has been auto-generated: <%=@password%>.
+</p>
+<p>
+  You can change it by signing in and going to 'My profile'.
+</p>
+<%- end %>
+
 <p>
   To sign in to the site, just follow this link: <%= @url %>.
 </p>

@@ -1,4 +1,4 @@
-.commentContainerMainContainer {
+.commentContainerTitleWithDropDown, .commentContainerDropdown {
   margin-top: -32px;
 }
 
@@ -16,11 +16,16 @@
   margin: 8px 0 0;
 }
 
-.commentContainerDropdown, .commentContainerTitle {
+.commentContainerDropdown, .commentContainerTitle, .commentContainerTitleWithDropDown {
   display: inline-block;
   margin-bottom: 12px;
 }
 
 .commentContainerDropdown {
   transform: translateY(20px);
+}
+
+.slidingLink.commentContainerLink {
+  margin-right: 0;
+  display: inline-block;
 }

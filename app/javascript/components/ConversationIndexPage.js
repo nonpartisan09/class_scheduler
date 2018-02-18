@@ -2,51 +2,38 @@ import React, { Component } from 'react';
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import Paper from 'material-ui/Paper';
-import IconButton from 'material-ui/IconButton';
-import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
-import IconMenu from 'material-ui/IconMenu';
-import MenuItem from 'material-ui/MenuItem';
 import Subheader from 'material-ui/Subheader';
-import Avatar from 'material-ui/Avatar';
-import { Link } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
+import Avatar from 'material-ui/Avatar';
 
 import { List, ListItem } from 'material-ui/List';
 import RaisedButton from 'material-ui/RaisedButton';
 
-import Divider from 'material-ui/Divider';
+import Header from './reusable/Header';
+import Footer from './reusable/Footer';
 
-import Header from './Header';
 import './ConversationIndexPage.css';
-import Footer from './Footer';
-
-const iconButtonElement = (
-  <IconButton
-    touch
-    tooltip='more'
-    tooltipPosition='bottom-left'
-  >
-    <MoreVertIcon />
-  </IconButton>
-);
-
+import formatLink from './utils/Link';
+import PageHeader from './reusable/PageHeader';
 
 class ConversationIndexPage extends Component {
-  constructor(props, context) {
-    super(props, context);
-
-  }
-
   render() {
     return (
       <div>
         <Header currentUser={ this.props.currentUser } />
         <Paper zDepth={ 1 } className='paperOverride' rounded={ false }>
+          <PageHeader title={
+            <FormattedMessage
+              id='ConversationIndexPage.header'
+              defaultMessage='Inbox'
+            />
+          } />
+
           <div className='conversationBox'>
             { this.renderInbox() }
           </div>
         </Paper>
-        <Footer />
+        <Footer className='footerContainerFixed' />
       </div>
     );
   }
@@ -57,11 +44,11 @@ class ConversationIndexPage extends Component {
     if (_.size(conversations) > 0 ) {
       return this.renderConversations();
     } else {
-      const { currentUser: { volunteer, client } } = this.props;
+      const { currentUser: { volunteer, client, locale } } = this.props;
       const button = function(){
         if (client) {
           return (
-            <a href='/search' >
+            <a href={ formatLink('/search', locale) } >
               <RaisedButton
                 primary
                 label={
@@ -76,7 +63,7 @@ class ConversationIndexPage extends Component {
           );
         } else if (volunteer) {
           return (
-            <a href='/availabilities/new' >
+            <a href={ formatLink('/availabilities/new', locale) } >
               <RaisedButton
                 primary
                 className='conversationButton'
@@ -107,92 +94,40 @@ class ConversationIndexPage extends Component {
   renderConversations() {
     const { conversations } = this.props;
 
-    return _.map(conversations, (conversation, index) => {
-      const { recipient, sender, recipientUrlSlug } = conversation;
-      const { currentUser: { url_slug } } = this.props;
-      const conversee = url_slug !== recipientUrlSlug? recipient : sender;
-
-      const title = `Conversation with ${ conversee }`;
+    return _.map(conversations, (conversation) => {
+      const { conversee, id, conversee_avatar, is_first_message_unread } = conversation;
 
       return (
-        <List key={ index + sender }>
-          <Subheader >
-            { title }
-          </Subheader>
-
-          { this.renderMessages(conversation) }
-        </List>
-      );
-    });
-  }
-
-  renderMessages({ messages, sender_avatar, senderUrlSlug, recipientUrlSlug, sender, recipient }) {
-    const { currentUser: { url_slug } } = this.props;
-    const currentUserIsRecipient = url_slug === recipientUrlSlug;
-
-    const newMessageRecipient = currentUserIsRecipient? senderUrlSlug : recipientUrlSlug;
-    const newMessageFirstName = currentUserIsRecipient? sender : recipient;
-
-    return _.map(messages, ({ body, subject, sent_on, unread }, index ) => {
-      const rightIconMenu = (
-        <IconMenu iconButtonElement={ iconButtonElement } >
-          <MenuItem>
-            <Link className='conversationIndexPageLink' to={ { pathname: '/messages/new', query: { recipient: newMessageRecipient, userName: newMessageFirstName } } } >
-              <FormattedMessage
-                id='messageReply'
-                defaultMessage='Reply'
-              />
-            </Link>
-          </MenuItem>
-          <MenuItem onClick={ this.handleReview(newMessageRecipient) }>
-            <FormattedMessage
-              id='conversationIndexPageReviewLink'
-              defaultMessage='Review'
-            />
-          </MenuItem>
-        </IconMenu>
-      );
-
-      return [
         <ListItem
-          key={ sent_on + index }
-          leftAvatar={ <Avatar src={ sender_avatar } /> }
-          rightIconButton={ rightIconMenu }
-          primaryText={ this.renderSubject(currentUserIsRecipient && unread, subject) }
-          secondaryText={
-            <p>
-              { body }
-            </p>
-          }
-          secondaryTextLines={ 2 }
-        />,
-        <Divider key={ index + sent_on } inset />
-      ];
+          onClick={ this.handleClick(id) }
+          key={ conversee }
+          leftAvatar={ <Avatar src={ conversee_avatar } /> }
+          primaryText={ this.renderNewMessage({ conversee, is_first_message_unread }) }
+        />
+      );
     });
   }
 
-  renderSubject(messageIsUnreadByRecipient, subject='') {
-    if(messageIsUnreadByRecipient && subject) {
+  handleClick(id) {
+    return () => {
+      window.location.assign(`inbox/${id}`);
+    };
+  }
+
+  renderNewMessage({ conversee, is_first_message_unread }) {
+    if (is_first_message_unread) {
       return (
         <span className='conversationIndexPageUnread'>
-          { subject }
-        </span>
-      );
-    } else if (subject) {
-      return (
-        <span>
-          { subject }
+          Conversation with { conversee }
         </span>
       );
     } else {
-      return '';
+      return (
+        <span>
+          Conversation with { conversee }
+        </span>
+      );
     }
-  }
-
-  handleReview(urlSlug) {
-    return () => {
-      location.assign(`/profiles/${urlSlug}`);
-    };
   }
 }
 
@@ -212,8 +147,6 @@ ConversationIndexPage.propTypes = {
 
 ConversationIndexPage.defaultProps = {
   conversations: {
-    sender_avatar: '',
-    recipient_avatar: ''
   },
   currentUser: {
     courses: [],

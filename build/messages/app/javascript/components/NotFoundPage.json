@@ -5,10 +5,6 @@
   },
   {
     "id": "NotFoundPage.notFoundPage",
-    "defaultMessage": "The page doesn’t exist or some other error occurred"
-  },
-  {
-    "id": "NotFoundPage.linkToHome",
-    "defaultMessage": "Go to our"
+    "defaultMessage": "The page doesn’t exist or some other error occurred."
   }
 ]

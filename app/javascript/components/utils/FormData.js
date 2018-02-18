@@ -39,15 +39,7 @@ function buildFormDataAttributes(key, value){
 
   } else {
 
-    const newValue = function() {
-      if (_.isDate(value)) {
-        return value.toISOString();
-      } else {
-        return value;
-      }
-    }();
-
-    formData.push([key, newValue]);
+    formData.push([key, value]);
   }
 
   return formData;

@@ -6,10 +6,12 @@ import RaisedButton from 'material-ui/RaisedButton';
 import Chip from 'material-ui/Chip';
 import { FormattedMessage } from 'react-intl';
 
-import Header from './Header';
+import Header from './reusable/Header';
 import AvailabilitiesTable from './AvailabilitiesTable';
+import formatLink from './utils/Link';
 
 import './AvailabilityIndexPage.css';
+import PageHeader from './reusable/PageHeader';
 
 class AvailabilityIndexPage extends Component {
   render() {
@@ -19,13 +21,20 @@ class AvailabilityIndexPage extends Component {
       <div>
         <Header currentUser={ currentUser } />
         <Paper zDepth={ 1 } className='paperOverride' rounded={ false }>
+          <PageHeader title={
+            <FormattedMessage
+              id='AvailabilityIndexPage.Header'
+              defaultMessage='My availabilities'
+            />
+          } />
+
           <div className='availabilityIndexContainer'>
             <FormattedMessage
               id='AvailabilityIndexPage.Help'
-              defaultMessage='I can help with:'
-            />
+              defaultMessage='I can help with'
+            />:
             <ul className='availabilityIndexProgramsContainer'>
-              { _.map(this.props.programs, ({ name }) => <Chip className='availabilityListItem' key={ name }>{ name }</Chip>) }
+              { this.renderAvailablePrograms() }
             </ul>
 
             { this.renderAvailabilities() }
@@ -35,8 +44,16 @@ class AvailabilityIndexPage extends Component {
     );
   }
 
+  renderAvailablePrograms() {
+    return _.map(this.props.programs, ({ name }) =>
+      <li key={ name } className='availabilityListItem'>
+        <Chip key={ name }>{ name }</Chip>
+      </li>
+    );
+  }
+
   renderAvailabilities() {
-    const { availabilities, currentUser: { timezone } } = this.props;
+    const { availabilities, currentUser: { timezone, locale } } = this.props;
 
     if ( _.size(availabilities) > 0 ) {
       return (
@@ -44,20 +61,27 @@ class AvailabilityIndexPage extends Component {
           <AvailabilitiesTable
             availabilities={ availabilities }
             timezone={ timezone }
+            locale={ locale }
             deletable
           />
         </ul>
       );
     } else {
       return (
-        <a href='/availabilities/new' >
-          <RaisedButton primary className='conversationButton' >
-            <FormattedMessage
-              id='availabilityCreateNew'
-              defaultMessage='Create new availabilities'
+        <div>
+          <a href={ formatLink('/availabilities/new', locale) } >
+            <RaisedButton
+              primary
+              className='conversationButton'
+              label={
+                <FormattedMessage
+                  id='availabilityCreateNew'
+                  defaultMessage='Create new availabilities'
+                />
+              }
             />
-          </RaisedButton>
-        </a>
+          </a>
+        </div>
       );
     }
   }

@@ -12,26 +12,25 @@ class SessionsController < Devise::SessionsController
     resource = User.find_for_database_authentication(:email=>params[:user][:email])
     return invalid_login_attempt unless resource
 
-    if resource.valid_password?(params[:user][:password])
+    if resource.valid_password?(params[:user][:password]) && resource.active?
       sign_in('user', resource)
       user = UserDecorator.new(current_user).simple_decorate
       @data = { :success => true, :currentUser => user }
 
-      respond_to do |format|
-        format.html { redirect_to root_path }
-        format.json { render json: @data }
-      end
-      return
+      render json: @data
+    elsif resource.valid_password?(params[:user][:password]) && !resource.active?
+      account_block_login_attempt
+    else
+      invalid_login_attempt
     end
-    invalid_login_attempt
   end
 
   def new
-    self.resource = resource_class.new(sign_in_params)
+    self.resource = build_resource
 
-    if self.resource.email.present?
-      @message = 'It seems you have entered the wrong credentials.'
-    end
+    # if self.resource.email.present?
+    #   @message = 'It seems you have entered the wrong credentials.'
+    # end
 
     clean_up_passwords(resource)
     yield resource if block_given?
@@ -54,18 +53,34 @@ class SessionsController < Devise::SessionsController
     self.resource = resource_class.new_with_session(hash || {}, session)
   end
 
-  protected
+  private
+
   def ensure_params_exist
     return unless params[:user].blank? && params[:user][:password].blank? && params[:user][:email].blank?
-    render :json=> { :success=>false, :error => { :message => 'Missing email and password' } }, :status=> 422
+    message = I18n.translate "custom_errors.messages.missing_credentials"
+    render :json=> { success: false, error: { message: message  } }, :status=> :unauthorized
   end
 
   def invalid_login_attempt
     warden.custom_failure!
-    render :json=> { :success=>false, :error => { :message => 'Error with your login or password' } }, :status=>401
+    message = I18n.translate "custom_errors.messages.incorrect_credentials"
+    render :json=> { success: false, error: { message: message } }, status: :unauthorized
+  end
+
+  def account_block_login_attempt
+    warden.custom_failure!
+    message = I18n.translate "custom_errors.messages.deactivated_account"
+    render :json=> { success: false, error: { message: message } }, status: :unauthorized
   end
 
   def check_if_logged_in
-    redirect_to root_path and return if current_user.present?
+    redirect_to root_path(:locale => current_user[:locale]) and return if current_user.present?
+  end
+
+  def sign_in_params
+    params.require(:user).permit(
+        :email,
+        :password,
+    )
   end
 end

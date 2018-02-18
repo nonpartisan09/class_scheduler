@@ -9,9 +9,9 @@ import { FormattedMessage } from 'react-intl';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 
-import Header from './Header';
+import Header from './reusable/Header';
 import SnackBarComponent from './reusable/SnackBarComponent';
-import { getData } from './sendData';
+import { getData } from './utils/sendData';
 
 const schema = {
   password: Joi.string().min(8).max(30).required(),

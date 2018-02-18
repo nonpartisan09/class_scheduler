@@ -1,17 +1,15 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import _ from 'lodash';
 
 import { FormattedMessage } from 'react-intl';
 
-import FlatButton from 'material-ui/FlatButton';
-import RaisedButton from 'material-ui/RaisedButton';
-
-import Header from './Header';
+import Header from './reusable/Header';
 import './utils/CheckMobile';
 
 import './Homepage.css';
-import Footer from './Footer';
+import Footer from './reusable/Footer';
+import Programs from './Programs';
+import Logo from './reusable/Logo';
 
 class Homepage extends Component {
   constructor(props, context) {
@@ -31,21 +29,17 @@ class Homepage extends Component {
             <div className='homepageTextContainer'>
               <div className='homepageCaption'>
                 <div className='homepageCaptionTitle'>
-                  <h1 className='homepageCaptionItem'>
-                    <img
-                      className='logo'
-                      alt='tutoria logo'
-                      src='/assets/tutoria_logo_full color_web.png'
-                    />
-                  </h1>
+                  <div className='homepageLogo'>
+                    <Logo />
+                  </div>
                   <h2 className='homepageSubtitle'>
                     <FormattedMessage
                       id='Homepage.subtitle'
                       defaultMessage='Connect and share with our community of clients and volunteers'
                     />
                   </h2>
-                  { this.renderDesktopNavigation() }
                 </div>
+                <Programs programs={ this.props.programs } />
                 <div className='homepageListContainer'>
                   <h3>
                     <FormattedMessage
@@ -89,7 +83,6 @@ class Homepage extends Component {
                     admin@tutoria.io
                   </a>
                 </div>
-                { this.renderMobileNavigation() }
               </div>
             </div>
             <img
@@ -105,106 +98,17 @@ class Homepage extends Component {
             />
           </div>
         </div>
-        <Footer />
+        <Footer className='footerContainerFixed' />
       </div>
     );
   }
 
   renderDesktopHeader() {
-    if (!_.isEmpty(this.props.currentUser)) {
-      return (
-        <div className='homepageMobileHeader'>
-          <Header currentUser={ this.props.currentUser } />
-        </div>
-      );
-    }
-  }
-
-  renderDesktopNavigation() {
-    if (!window.mobilecheck() && _.isEmpty(this.props.currentUser)) {
-      return [
-        <div key={ 1 } className='homepageCaptionItem homepageDesktopNavigation' >
-          <div className='homepageButton'>
-            <RaisedButton
-              primary
-              label={
-                <FormattedMessage
-                  id='signIn'
-                  defaultMessage='Sign in'
-                />
-              }
-              onClick={ this.handleSignIn }
-            />
-          </div>
-          <div className='homepageButton'>
-            <FlatButton
-              className='homepageButton'
-              primary
-              onClick={ this.handleSignUpVolunteer }
-              label={
-                <FormattedMessage
-                  id='signUpVolunteer'
-                />
-              }
-            />
-          </div>
-          <div className='homepageButton'>
-            <FlatButton
-              className='homepageButton'
-              primary
-              onClick={ this.handleSignUpClient }
-              label={
-                <FormattedMessage
-                  id='signUpClient'
-                  defaultMessage='Sign up as a client'
-                />
-              }
-            />
-          </div>
-        </div>
-      ];
-    }
-  }
-
-  renderMobileNavigation() {
-    if (_.isEmpty(this.props.currentUser)) {
-      return [
-        <div key={ 1 } className='homepageMobileNavigation' >
-          <RaisedButton
-            primary
-            fullWidth
-            onClick={ this.handleSignIn }
-            label={
-              <FormattedMessage
-                id='signIn'
-              />
-            }
-          />
-
-          <FlatButton
-            primary
-            fullWidth
-            onClick={ this.handleSignUpVolunteer }
-            label={
-              <FormattedMessage
-                id='signUpVolunteer'
-              />
-            }
-          />
-
-          <FlatButton
-            primary
-            fullWidth
-            onClick={ this.handleSignUpClient }
-            label={
-              <FormattedMessage
-                id='signUpClient'
-              />
-            }
-          />
-        </div>
-      ];
-    }
+    return (
+      <div className='homepageMobileHeader'>
+        <Header currentUser={ this.props.currentUser } />
+      </div>
+    );
   }
 
   handleSignIn() {
@@ -222,10 +126,12 @@ class Homepage extends Component {
 
 Homepage.propTypes = {
   currentUser: PropTypes.object,
+  programs: PropTypes.array
 };
 
 Homepage.defaultProps = {
-  currentUser: { }
+  currentUser: { },
+  programs: []
 };
 
 export default Homepage;

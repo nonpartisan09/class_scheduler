@@ -12,6 +12,10 @@
     "defaultMessage": "Day(s)"
   },
   {
+    "id": "SearchBar.searchTitle",
+    "defaultMessage": "Search for volunteers"
+  },
+  {
     "id": "NewAvailability.noResultMessage",
     "defaultMessage": "Sorry, it seems no volunteers match these filters."
   }

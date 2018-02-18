@@ -32,6 +32,9 @@ RSpec.describe User, type: :model do
   it { is_expected.to have_db_column(:email).of_type(:string) }
   it { is_expected.to have_db_column(:url_slug).of_type(:string) }
 
+  it { is_expected.to have_db_column(:active).of_type(:boolean) }
+  it { is_expected.to have_db_column(:generated_password).of_type(:boolean) }
+
   it { is_expected.to have_db_column(:address).of_type(:string) }
   it { is_expected.to have_db_column(:city).of_type(:string) }
   it { is_expected.to have_db_column(:state).of_type(:string) }
@@ -47,6 +50,7 @@ RSpec.describe User, type: :model do
 
   it { is_expected.to have_db_column(:terms_and_conditions).of_type(:integer) }
   it { is_expected.to have_db_column(:contact_permission).of_type(:boolean) }
+  it { is_expected.to have_db_column(:email_notification).of_type(:boolean) }
 
   it { is_expected.to have_db_column(:created_at).of_type(:datetime) }
   it { is_expected.to have_db_column(:updated_at).of_type(:datetime) }

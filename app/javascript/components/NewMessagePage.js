@@ -11,13 +11,14 @@ import FloatingActionButton from 'material-ui/FloatingActionButton';
 import SendIcon from 'material-ui/svg-icons/content/send';
 
 import MessageSchema from './schema/MessageSchema';
-import Header from './Header';
+import Header from './reusable/Header';
 import FormData from './utils/FormData';
-import { postData } from './sendData';
+import { postData } from './utils/sendData';
 import SnackBarComponent from './reusable/SnackBarComponent';
 
 import './NewMessagePage.css';
-import Footer from './Footer';
+import Footer from './reusable/Footer';
+import PageHeader from './reusable/PageHeader';
 
 
 class NewMessagePage extends Component {
@@ -52,6 +53,14 @@ class NewMessagePage extends Component {
       <div>
         <Header currentUser={ currentUser } />
         <Paper zDepth={ 1 } className='paperOverride' rounded={ false }>
+          <PageHeader title={
+            <FormattedMessage
+              id='NewMessagePage.header'
+              defaultMessage='Send new message'
+            />
+            }
+          />
+
           <form className='newMessageForm'>
             <TextField
               disabled

@@ -1,12 +1,18 @@
 class User < ActiveRecord::Base
   include HasUrlSlug, HasUserSearch, ActsAsMessageable, IsUpdateable
-  has_and_belongs_to_many :roles, :join_table => :roles_users
+  include Warden
+
+  has_and_belongs_to_many :roles
+  accepts_nested_attributes_for :roles
+
   has_and_belongs_to_many :languages
+  accepts_nested_attributes_for :languages
 
   has_many :enrollments
   has_many :programs, through: :enrollments
 
-  has_many :reviews, dependent: :destroy
+  has_many :authored_reviews, class_name: 'Review', foreign_key: 'author_id', dependent: :destroy
+  has_many :received_reviews, class_name: 'Review', foreign_key: 'user_id', dependent: :destroy
 
   has_many :availabilities, dependent: :destroy
 
@@ -31,12 +37,15 @@ class User < ActiveRecord::Base
 
   validates_confirmation_of :password
 
-  validates :timezone, presence: true
-  validates :email, presence: true
+  validates :timezone, :email, :locale, presence: true
   validates_uniqueness_of :email
 
-  scope :volunteer, -> { includes(:roles).where({:roles => {:url_slug => 'volunteer'}})}
-  scope :client, -> { includes(:roles).where({:roles => {:url_slug => 'client'}})}
+  scope :volunteers, -> { includes(:roles).where({:roles => {:url_slug => 'volunteer'}}) }
+  scope :clients, -> { includes(:roles).where({:roles => {:url_slug => 'client'}}) }
+  scope :admins, -> { includes(:roles).where({:roles => {:url_slug => 'admin'}}) }
+  scope :with_availabilities, -> { includes(:availabilities).where.not(:availabilities => { id: nil }) }
+
+  scope :active, -> { where({:active => true }) }
 
   def self.authentication_keys
     [ :email ]
@@ -68,5 +77,37 @@ class User < ActiveRecord::Base
 
   def full_address
     "#{address} #{city} #{state} #{country}"
+  end
+
+  def deactivate_account!
+    self.active = false
+    self.save!
+
+    UserMailer.account_deactivated(self).deliver_later
+  end
+
+  def delete_with_email!
+    UserMailer.account_deleted(self).deliver_later
+
+    self.destroy
+  end
+
+  def activate_account!
+    self.active = true
+    self.save!
+
+    UserMailer.account_reactivated(self).deliver_later
+  end
+
+  def admin_user_creation!
+    generated_password = Devise.friendly_token.first(8)
+    self.password = generated_password
+    self.password_confirmation = generated_password
+    self.terms_and_conditions = TermsAndConditions.last.id
+    self.save!
+
+    UserMailer.welcome_email(self, generated_password).deliver_later
+
+    self
   end
 end

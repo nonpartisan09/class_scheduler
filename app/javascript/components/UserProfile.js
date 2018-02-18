@@ -4,22 +4,27 @@ import _ from 'lodash';
 import { Link } from 'react-router-dom';
 import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
+import FlatButton from 'material-ui/FlatButton';
+import RefreshIndicator from 'material-ui/RefreshIndicator';
+
 import { FormattedMessage } from 'react-intl';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import EditIcon from 'material-ui/svg-icons/image/edit';
-import METHODS from './RestConstants';
+import METHODS from './utils/RestConstants';
 
-import { postData } from './sendData';
+import { postData } from './utils/sendData';
 import AvailabilitiesTable from './AvailabilitiesTable';
-import Header from './Header';
+import Header from './reusable/Header';
 import CommentContainer from './CommentContainer';
 
 import ReviewContainer from './ReviewContainer';
-import Footer from './Footer';
+import Footer from './reusable/Footer';
 import FormData from './utils/FormData';
 import SnackBarComponent from './reusable/SnackBarComponent';
 
 import './UserProfile.css';
+import formatLink from './utils/Link';
+import isCurrentUserLocated from './utils/isCurrentUserLocated';
 
 class UserProfile extends Component {
   constructor(props, context) {
@@ -27,16 +32,19 @@ class UserProfile extends Component {
 
     this.handleReviewSubmit = this.handleReviewSubmit.bind(this);
     this.updateStars = this.updateStars.bind(this);
+    this.handleViewProfileClick = this.handleViewProfileClick.bind(this);
+    this.handleHideSnackBar = this.handleHideSnackBar.bind(this);
 
-    const { review : { review, id } } = props;
+    const { review : { id } } = props;
 
     this.state = {
-      stars: review,
+      comments: props.comments,
       showSnackBar: false,
       message: '',
       id: id
     };
   }
+
 
   componentWillUpdate({ review: { review, id } }) {
     const { review:  { review: currentReview, id: currentId } } = this.props;
@@ -48,109 +56,194 @@ class UserProfile extends Component {
 
   updateStars(review, id) {
     this.setState({
-      stars: review,
       id: id
     });
   }
 
   render() {
-    const { user, currentUser, user: { url_slug, first_name, ten_last_comments }, review } = this.props;
+    const { currentUser } = this.props;
 
     return (
       <div>
         <Header currentUser={ currentUser } />
-
-        <Paper zDepth={ 1 } className='paperOverride' rounded={ false }>
-          { this.renderProfilePicture() }
-
-          <Link to={ { pathname: '/messages/new', query: { recipient: url_slug, userName: first_name } } } className='userProfileLink' >
-            <RaisedButton
-              className='userProfileMessageButton'
-              label={
-                <FormattedMessage
-                  id='UserProfile.messageUser'
-                  defaultMessage='Message User'
-                />
-              }
-              primary
-            />
-          </Link>
-
-          <div className='userProfileReviewAndComment' >
-            <ReviewContainer review={ review } onClick={ this.handleReviewSubmit } />
-          </div>
-
-          <div className='userProfileDetailsContainer'>
-            <div className='userProfileLeftDetails'>
-              <div className='userProfileField'>
-                <FormattedMessage
-                  id='UserProfile.firstName'
-                  defaultMessage='First Name:'
-                />
-                <span> { user.first_name }</span>
-              </div>
-
-              <div className='userProfileField'>
-                <FormattedMessage
-                  id='UserProfile.location'
-                  defaultMessage='Location:'
-                />
-                <span> { this.renderUserLocation() }</span>
-              </div>
-
-              <div className='userProfileField'>
-                <FormattedMessage
-                  id='UserProfile.programsOffered'
-                  defaultMessage='Programs:'
-                /> { user && user.programs? user && user.programs.join(', ') : '' }
-              </div>
-
-              <div className='userProfileField'>
-                <FormattedMessage
-                  id='UserProfile.lastLogIn'
-                  defaultMessage='Last logged in:'
-                />
-                <span> { user.last_logged_in} <FormattedMessage
-                  id='ago'
-                  defaultMessage='ago'
-                />
-                </span>
-              </div>
-
-              <div className='userProfileField'>
-                <FormattedMessage
-                  id='UserProfile.moreInformation'
-                  defaultMessage='A bit more information:'
-                />
-                <span> { this.renderUserDescription() } </span>
-              </div>
-            </div>
-
-            <div className='userProfileCommentContainer'>
-              <CommentContainer userId={ url_slug } comments={ ten_last_comments } />
-            </div>
-          </div>
-
-          { this.renderAvailabilities() }
-
-          <Link className='userProfileSendEmail' to={ { pathname: '/messages/new', query: { recipient: url_slug, userName: first_name } } } >
-            <FloatingActionButton>
-              <EditIcon />
-            </FloatingActionButton>
-          </Link>
+        <Paper zDepth={ 1 } className='paperOverride userProfilePaper' rounded={ false }>
+          { this.renderContent() }
         </Paper>
-
         { this.renderSnackBar() }
         <Footer />
       </div>
     );
+
+  }
+
+  renderContent() {
+    const { user } = this.props;
+    if (!user.url_slug) {
+      return (
+        <div>
+          { this.renderBackButton() }
+          <div className='userProfileRefreshIndicator'>
+            <RefreshIndicator
+              size={ 50 }
+              top={ 0 }
+              left={ 0 }
+              loadingColor="#FF9800"
+              status='loading'
+            />
+          </div>
+        </div>
+      );
+    } else {
+      const {
+        user,
+        user: {
+          url_slug,
+          first_name,
+          programs
+        },
+        currentUser: { locale },
+        review
+      } = this.props;
+      const { comments } = this.state;
+
+      return (
+        <div>
+          { this.renderBackButton() }
+          { this.renderProfilePicture() }
+
+          <div className='userProfileButtonAndDetailsContainer'>
+            <Link to={ { pathname: '/messages/new', query: { recipient: url_slug, userName: first_name } } } className='userProfileLink' >
+              <RaisedButton
+                className='userProfileMessageButton'
+                label={
+                  <FormattedMessage
+                    id='UserProfile.messageUser'
+                    defaultMessage='Message User'
+                  />
+                }
+                primary
+              />
+            </Link>
+
+            <div className='userProfileReviewAndComment' >
+              <ReviewContainer
+                review={ review }
+                onClick={ this.handleReviewSubmit }
+              />
+            </div>
+
+            <div className='userProfileDetailsContainer'>
+              <div className='userProfileLeftDetails'>
+                <div className='userProfileField'>
+                  <FormattedMessage
+                    id='UserProfile.firstName'
+                    defaultMessage='First Name'
+                  />:
+                  <span> { first_name }</span>
+                </div>
+
+                { this.renderLocation() }
+
+                <div className='userProfileField'>
+                  <FormattedMessage
+                    id='UserProfile.programsOffered'
+                    defaultMessage='Programs'
+                  />: { programs? programs.join(', ') : '' }
+                </div>
+
+                <div className='userProfileField'>
+                  <FormattedMessage
+                    id='UserProfile.lastLogIn'
+                    defaultMessage='Last logged in'
+                  />: { user.last_logged_in}
+                </div>
+
+                <div className='userProfileField'>
+                  <FormattedMessage
+                    id='UserProfile.moreInformation'
+                    defaultMessage='A bit more information'
+                  />:
+                  <span> { this.renderUserDescription() } </span>
+                </div>
+              </div>
+
+              <div className='userProfileCommentContainer'>
+                <CommentContainer
+                  userId={ url_slug }
+                  comments={ comments }
+                  locale={ locale }
+                />
+              </div>
+            </div>
+
+            { this.renderAvailabilities() }
+
+            <Link className='userProfileSendEmail' to={ { pathname: '/messages/new', query: { recipient: url_slug, userName: first_name } } } >
+              <FloatingActionButton>
+                <EditIcon />
+              </FloatingActionButton>
+            </Link>
+          </div>
+        </div>
+      );
+    }
+  }
+
+  renderBackButton() {
+    const { location: { state } } = this.props;
+
+    if (state && state.search) {
+      return (
+        <div className='userProfileBackButton'>
+          <FlatButton
+            primary
+            label={
+              <FormattedMessage
+                id='UserProfile.Back'
+                defaultMessage='Back to search results'
+              />
+            }
+            onClick={ this.handleViewProfileClick }
+          />
+        </div>
+      );
+    }
+  }
+
+  handleViewProfileClick() {
+    const { history } = this.props;
+
+    const { location: { state } } = this.props;
+
+    if (state && state.search) {
+      const { search, volunteers } = state;
+      const { currentUser: { locale } } = this.props;
+
+      history.push(formatLink('/volunteers', locale), { ...{ search }, volunteers });
+    }
+  }
+
+  renderLocation() {
+    const { currentUser } = this.props;
+
+    if (isCurrentUserLocated(currentUser)) {
+      return (
+        <div className='userProfileField'>
+          <FormattedMessage
+            id='UserProfile.location'
+            defaultMessage='Location'
+          />:
+          <span> { this.renderUserLocation() }</span>
+        </div>
+      );
+    }
   }
 
   renderUserLocation() {
-    const { user: { city } } = this.props;
+    const { user: { city, country, state } } = this.props;
 
-    if (city) {
-      return city;
+    if (city || country || state) {
+      return _.compact([ city, state, country ]).join(', ');
     } else {
       return this.renderNotAvailable();
     }
@@ -196,23 +289,49 @@ class UserProfile extends Component {
   }
 
   handleReviewSubmit(value, comment) {
-    const { user: { url_slug }, review: { id } } = this.props;
+    const { user: { url_slug }, review: { id }, currentUser: { locale } } = this.props;
+    const { id: stateId } = this.state;
 
     const attributes = FormData.from({ review: _.toNumber(value), comment, user_id: url_slug, id });
     const method = id || this.state.id ? METHODS.PUT : METHODS.POST;
-    const restUrl = id || this.state.id ? `/reviews/${id||this.state.id}` : '/reviews';
+
+    const restfulUrl = function(){
+      if (id) {
+        if (locale) {
+          return `/${locale}/reviews/${id}`;
+        } else {
+          return `/reviews/${id}`;
+        }
+      } else if (stateId) {
+        if (locale) {
+          return `/${locale}/reviews/${stateId}`;
+        } else {
+          return `/reviews/${stateId}`;
+        }
+      } else if (locale) {
+        return `/${locale}/reviews`;
+      } else {
+        return '/reviews';
+      }
+    }();
 
     const requestParams = {
-      url: restUrl,
+      url: restfulUrl,
       attributes,
       method,
       successCallBack: (response) => {
-        const { review: { review, id } } = response;
+        const { review: { id }, message, comments } = response;
 
         this.setState({
-          stars: _.toNumber(review),
-          id: id
+          id: id,
+          showSnackBar: true,
+          message,
+          comments: comments
         });
+
+        setTimeout(() => {
+          this.handleHideSnackBar();
+        }, 2000);
       },
 
       errorCallBack: (message) => {
@@ -231,14 +350,21 @@ class UserProfile extends Component {
     return postData(requestParams);
   }
 
+  handleHideSnackBar() {
+    this.setState({
+      showSnackBar: false
+    });
+  }
+
   renderAvailabilities() {
-    const { user: { availabilities, timezone } } = this.props;
+    const { user: { timezone }, availabilities, currentUser: { locale } } = this.props;
 
     if ( _.size(availabilities) > 0 ) {
       return (
         <AvailabilitiesTable
           availabilities={ availabilities }
           timezone={ timezone }
+          locale={ locale }
         />
       );
     }
@@ -250,24 +376,46 @@ UserProfile.propTypes = {
     review: PropTypes.number,
     id: PropTypes.any,
     comment: PropTypes.string
-  }).isRequired,
+  }),
   currentUser: PropTypes.object.isRequired,
+  availabilities: PropTypes.array,
   user: PropTypes.shape({
-    availabilities: PropTypes.array,
-    programs: PropTypes.array.isRequired,
-    first_name: PropTypes.string.isRequired,
+    programs: PropTypes.array,
+    first_name: PropTypes.string,
     thumbnail_url: PropTypes.string,
     url_slug: PropTypes.string,
-  }).isRequired,
+  }),
+  comments: PropTypes.shape({
+    ten_last_comments: PropTypes.array,
+    count: PropTypes.number
+  }),
+  history: PropTypes.object,
+  location: PropTypes.shape({
+    state: PropTypes.shape({
+      volunteers: PropTypes.array,
+      search: PropTypes.object
+    })
+  })
 };
 
 UserProfile.defaultProps = {
+  availabilities: [],
+  comments: {
+    ten_last_comments: [],
+    count: 0
+  },
   user: {
     city: '',
     description: '',
   },
   review: {
     comment: ''
+  },
+  history: {},
+  location: {
+    state: {
+      search: {}
+    }
   }
 };
 

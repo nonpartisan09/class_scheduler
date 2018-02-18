@@ -17,6 +17,7 @@ class ReviewContainer extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
 
     const { review: { review, comment } } = props;
+
     this.state = {
       comment: comment,
       review: review,

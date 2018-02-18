@@ -1,23 +1,11 @@
 [
   {
-    "id": "NewAvailability.selectDayError",
-    "defaultMessage": "Please select a day"
-  },
-  {
-    "id": "NewAvailability.startTimeBlank",
-    "defaultMessage": "Please select a start time"
-  },
-  {
-    "id": "NewAvailability.endTimeBlank",
-    "defaultMessage": "Please select an end time"
-  },
-  {
     "id": "NewAvailability.startTimeError",
     "defaultMessage": "Please select a start time chronologically before end time"
   },
   {
     "id": "NewAvailability.endTimeError",
-    "defaultMessage": "Please select an end time chronologically after end time"
+    "defaultMessage": "Please select an end time chronologically after start time"
   },
   {
     "id": "NewAvailability.updateTimezone",
@@ -29,7 +17,11 @@
   },
   {
     "id": "signUpHeader",
-    "defaultMessage": "Join Tutoria community: Step 2/2"
+    "defaultMessage": "Join Tutoría community: Step 2/2"
+  },
+  {
+    "id": "NewAvailability.header",
+    "defaultMessage": "Create your availabilities"
   },
   {
     "id": "NewAvailability.selectDay",

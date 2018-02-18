@@ -1,19 +1,19 @@
 [
   {
     "id": "Availabilities.listDay",
-    "defaultMessage": "Day:"
+    "defaultMessage": "Day"
   },
   {
     "id": "Availabilities.from",
-    "defaultMessage": "From:"
+    "defaultMessage": "From"
   },
   {
     "id": "Availabilities.to",
-    "defaultMessage": "To:"
+    "defaultMessage": "To"
   },
   {
     "id": "Availabilities.timezone",
-    "defaultMessage": "Timezone:"
+    "defaultMessage": "Timezone"
   },
   {
     "id": "Availabilities.day",
@@ -26,6 +26,10 @@
   {
     "id": "endTime",
     "defaultMessage": "End Time"
+  },
+  {
+    "id": "timezone",
+    "defaultMessage": "Timezone"
   },
   {
     "id": "Delete",

@@ -8,6 +8,8 @@ const ProfileSchema = {
       }
     }
   }),
+  email_notification: Joi.bool(),
+  locale: Joi.string(),
   programs: Joi.array().min(1).options({
     language: {
       array: {
@@ -18,11 +20,17 @@ const ProfileSchema = {
 
   languages: Joi.array(),
 
-  first_name: Joi.string().required().regex(/^[a-zA-Z\u00C0-\u017F]+$/).options({
+  first_name: Joi.string().required().regex(/^[ a-zA-Z\u00C0-\u017F]+$/).options({
     language: {
       any: {
         required: 'Please enter your first name',
         empty: 'Please enter your first name',
+      },
+      string: {
+        regex: {
+          base: 'Please enter a first name without invalid characters',
+          name: 'Please enter a first name without invalid characters',
+        }
       }
     }
   }),
@@ -35,16 +43,7 @@ const ProfileSchema = {
     }
   }),
 
-  thumbnail_image: Joi.object().keys({
-    image: Joi.object(),
-    url: Joi.string()
-  }).or('image', 'url').options({
-    language: {
-      object: {
-        missing: 'Must provide a thumbnail'
-      }
-    }
-  }),
+  thumbnail_image: Joi.alternatives().try(Joi.object(), Joi.string()),
 
   address: Joi.string().allow(''),
   city: Joi.string().allow(''),
@@ -61,7 +60,7 @@ const ProfileSchema = {
       }
     }
   }),
-  current_password: Joi.string().min(8),
+  current_password: Joi.string().min(8).allow(''),
   password: Joi.string().min(8).allow(''),
   password_confirmation: Joi.any().valid(Joi.ref('password')).options({
     language: {
@@ -69,7 +68,11 @@ const ProfileSchema = {
         allowOnly: 'Passwords don\'t match'
       }
     }
-  })
+  }),
+  client: Joi.bool(),
+  contact_permission: Joi.bool(),
+  terms_and_conditions: Joi.bool(),
+  volunteer: Joi.bool()
 };
 
 export default ProfileSchema;

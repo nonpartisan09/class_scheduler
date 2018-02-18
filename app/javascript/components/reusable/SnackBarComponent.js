@@ -15,7 +15,7 @@ class SnackBarComponent extends Component {
 }
 
 SnackBarComponent.propTypes = {
-  message: PropTypes.object,
+  message: PropTypes.oneOfType([ PropTypes.string, PropTypes.object ]),
 };
 
 SnackBarComponent.defaultProps = {

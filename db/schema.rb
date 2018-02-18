@@ -10,13 +10,34 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180111172440) do
+ActiveRecord::Schema.define(version: 20180211183339) do
+
+  create_table "about_pages", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.text "spanish_description"
+  end
+
+  create_table "active_admin_comments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "namespace"
+    t.text "body"
+    t.string "resource_type"
+    t.bigint "resource_id"
+    t.string "author_type"
+    t.bigint "author_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["author_type", "author_id"], name: "index_active_admin_comments_on_author_type_and_author_id"
+    t.index ["namespace"], name: "index_active_admin_comments_on_namespace"
+    t.index ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id"
+  end
 
   create_table "availabilities", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "day"
     t.boolean "vacation"
-    t.time "start_time"
-    t.time "end_time"
+    t.datetime "start_time"
+    t.datetime "end_time"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id"
@@ -87,6 +108,7 @@ ActiveRecord::Schema.define(version: 20180111172440) do
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "featured", default: false
   end
 
   create_table "reviews", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -102,7 +124,7 @@ ActiveRecord::Schema.define(version: 20180111172440) do
   create_table "roles", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name"
     t.string "url_slug"
-    t.boolean "displayable"
+    t.boolean "displayable", default: true
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -116,7 +138,6 @@ ActiveRecord::Schema.define(version: 20180111172440) do
   end
 
   create_table "terms_and_conditions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.integer "version"
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -150,10 +171,14 @@ ActiveRecord::Schema.define(version: 20180111172440) do
     t.datetime "thumbnail_image_updated_at"
     t.text "description"
     t.string "timezone", default: "UTC"
-    t.integer "average_rating"
-    t.integer "rating_count"
+    t.integer "average_rating", default: 0
+    t.integer "rating_count", default: 0
     t.string "state"
     t.string "country"
+    t.boolean "active", default: true
+    t.boolean "generated_password", default: false
+    t.string "locale", default: "en"
+    t.boolean "email_notification", default: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

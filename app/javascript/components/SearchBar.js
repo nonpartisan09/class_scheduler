@@ -2,7 +2,6 @@ import _ from 'lodash';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import Joi from 'joi-browser';
 import validate from 'react-joi-validation';
 import { FormattedMessage } from 'react-intl';
 
@@ -10,58 +9,18 @@ import TextField from 'material-ui/TextField';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import RaisedButton from 'material-ui/RaisedButton';
-import moment from 'moment';
 
-import { getData } from './sendData';
-import Header from './Header';
+import SearchValidationSchema from './schema/SearchValidationSchema';
+import { getData } from './utils/sendData';
+import Header from './reusable/Header';
 import SearchOptionalFields from './SearchOptionalFields';
 
 import './SearchBar.css';
-import Footer from './Footer';
+import Footer from './reusable/Footer';
+import formatLink from './utils/Link';
 import SnackBarComponent from './reusable/SnackBarComponent';
-
-function restfulUrl({ day, program, start_time, end_time, distance }) {
-  const startParam = _.isDate(start_time)? `&start_time=${moment(start_time).format('HH:MM')}` : '';
-  const endParam = _.isDate(end_time)? `&end_time=${moment(end_time).format('HH:MM')}`: '';
-  const dayParam = _.size(day) > 0? `&day=${day}` : '';
-  const programParam = _.size(program) > 0? `program=${program}` : '';
-  const distanceParam = distance > 0? `&distance=${distance}` : '';
-
-  return `/results?${programParam}${dayParam}${startParam}${endParam}${distanceParam}`;
-}
-
-const schema = {
-  day: Joi.array().min(1).required().options({
-    language: {
-      array: {
-        min: 'Please select at least one day'
-      }
-    }
-  }),
-  program: Joi.array().min(1).required().options({
-    language: {
-      array: {
-        min: 'Please select at least one program'
-      }
-    }
-  }),
-  distance: Joi.number(),
-
-  start_time: Joi.date().timestamp().options({
-    language: {
-      any: {
-        allowOnly: 'Please select a start time'
-      }
-    }
-  }),
-  end_time: Joi.date().timestamp().options({
-    language: {
-      any: {
-        allowOnly: 'Please enter an end time'
-      }
-    }
-  })
-};
+import SearchUrl from './utils/SearchUrl';
+import PageHeader from './reusable/PageHeader';
 
 class SearchBar extends Component {
   constructor(props) {
@@ -97,8 +56,9 @@ class SearchBar extends Component {
       },
       currentUser: {
         city,
-        timezone
-      } ,
+        timezone,
+        locale
+      },
       validateAllHandler
     } = this.props;
 
@@ -107,56 +67,65 @@ class SearchBar extends Component {
         <Header currentUser={ this.props.currentUser } />
         { this.renderTitle() }
 
-        <div className='searchBarTimezoneContainer'>
-          <div className='searchBarTimezoneAndLink'>
-            <TextField
-              value={ timezone }
-              className='searchBarTimezone'
-              name='searchBarTimezone'
-              disabled
-            />
+        <div className='searchBarContainer'>
+          <TextField
+            value={ timezone }
+            className='searchBarTimezone'
+            name='searchBarTimezone'
+            disabled
+          />
 
-            <a href="/my_profile" className='slidingLink' >
-              <FormattedMessage id='SearchBar.timezoneLink' defaultMessage='Not your timezone?' />
+          <div className='searchBarTimezoneLink'>
+            <a href={ formatLink('/my_profile', locale) } className='slidingLink' >
+              <FormattedMessage
+                id='SearchBar.timezoneLink'
+                defaultMessage='Not your timezone?'
+              />
             </a>
           </div>
-        </div>
 
-        <div className='searchBarContainer'>
-          <div className='searchBarOptionContainer'>
-            <SelectField
-              className='searchBarOption'
-              hintText={ <FormattedMessage id='SearchBar.programs' defaultMessage='Program(s)' /> }
-              value={ program }
-              onChange={ this.changeHandlerProgram }
-              multiple
-              errorText={ errors.program }
-              selectionRenderer={ this.selectionRendererProgram }
-            >
-              { _.map(programs, ({ name, id }) => {
-                return <MenuItem key={ id } insetChildren checked={ _.indexOf(program, id) > -1 } value={ id } primaryText={ <span> { name } </span> } />;
-              })}
-            </SelectField>
+          <SelectField
+            className='searchBarOption'
+            hintText={
+              <FormattedMessage
+                id='SearchBar.programs'
+                defaultMessage='Program(s)'
+              />
+            }
+            value={ program }
+            onChange={ this.changeHandlerProgram }
+            multiple
+            errorText={ errors.program }
+            selectionRenderer={ this.selectionRendererProgram }
+          >
+            { _.map(programs, ({ name, id }) => {
+              return <MenuItem key={ id } insetChildren checked={ _.indexOf(program, id) > -1 } value={ id } primaryText={ <span> { name } </span> } />;
+            })}
+          </SelectField>
 
-            <SelectField
-              hintText={ <FormattedMessage id='SearchBar.days' defaultMessage='Day(s)' /> }
-              value={ day }
-              errorText={ errors.day }
-              onChange={ this.changeHandlerDay }
-              className='searchBarOption'
-              multiple
-              selectionRenderer={ this.selectionRendererDay }
-            >
-              { _.map(days, (value, key) => <MenuItem key={ value + key } insetChildren checked={ _.indexOf(day, value) > -1 } value={ value } primaryText={ <span> { value } </span> } />) }
-            </SelectField>
-          </div>
+          <SelectField
+            className='searchBarOption'
+            hintText={
+              <FormattedMessage
+                id='SearchBar.days'
+                defaultMessage='Day(s)'
+              />
+            }
+            value={ day }
+            errorText={ errors.day }
+            onChange={ this.changeHandlerDay }
+            multiple
+            selectionRenderer={ this.selectionRendererDay }
+          >
+            { _.map(days, (value, index) => <MenuItem key={ value + index } insetChildren checked={ _.indexOf(day, index) > -1 } value={ index } primaryText={ <span> { value } </span> } />) }
+          </SelectField>
 
           <SearchOptionalFields
             onChange={ changeHandler }
             changeValue={ changeValue }
             onBlur={ validateHandler }
-            startTime={ start_time }
-            endTime={ end_time }
+            start_time={ start_time }
+            end_time={ end_time }
             distance={ distance }
             city={ city }
             errors={ errors }
@@ -165,16 +134,21 @@ class SearchBar extends Component {
           <RaisedButton
             onClick={ validateAllHandler(this.handleSubmit) }
             className='searchBarOption searchBarButton'
-            label={ <FormattedMessage id='search' /> }
+            label={
+              <FormattedMessage
+                id='search'
+              /> }
             primary
           />
 
-          { this.renderResults() }
+          <div className='emptyVolunteerResults'>
+            { this.renderResults() }
+          </div>
         </div>
 
         { this.renderSnackBar() }
 
-        <Footer />
+        <Footer className='footerContainerFixed' />
       </div>
     );
   }
@@ -186,15 +160,32 @@ class SearchBar extends Component {
   }
 
   renderTitle() {
-    const { match: { params: { sign_up } } } = this.props;
+    const { location: { state }  } = this.props;
 
-    if (sign_up) {
+    if (state && state.signUp) {
       return (
-        <h1 className='signUpHeader'>
-          <FormattedMessage
-            id='signUpHeader'
+        <div className='signUpHeader'>
+          <PageHeader
+            title={
+              <FormattedMessage
+                id='signUpHeader'
+              />
+            }
           />
-        </h1>
+        </div>
+      );
+    } else {
+      return (
+        <div className='searchBarHeaderContainer'>
+          <PageHeader
+            title={
+              <FormattedMessage
+                id='SearchBar.searchTitle'
+                defaultMessage='Search for volunteers'
+              />
+            }
+          />
+        </div>
       );
     }
   }
@@ -204,12 +195,10 @@ class SearchBar extends Component {
 
     if (status === 204) {
       return (
-        <div className='emptyVolunteerResults'>
-          <FormattedMessage
-            id='NewAvailability.noResultMessage'
-            defaultMessage=' Sorry, it seems no volunteers match these filters.'
-          />
-        </div>
+        <FormattedMessage
+          id='NewAvailability.noResultMessage'
+          defaultMessage=' Sorry, it seems no volunteers match these filters.'
+        />
       );
     }
   }
@@ -225,10 +214,14 @@ class SearchBar extends Component {
   }
 
   selectionRendererDay(values) {
+    const { days } = this.props;
+
     if (_.size(values) > 1) {
-      return _.trimEnd(values.join(', '), ', ');
+      return _.trimEnd(_.map(values, (value) => {
+        return days[value];
+      }).join(', '), ', ');
     } else if (_.size(values) === 1) {
-      return values.toString();
+      return days[values];
     }
   }
 
@@ -250,25 +243,29 @@ class SearchBar extends Component {
 
   handleSubmit() {
     const { errors } = this.props;
+
     if (_.size(errors) === 0) {
       this.postSearch();
     }
   }
 
   postSearch() {
-    const { search, history } = this.props;
+    const { search, history, currentUser: { locale } } = this.props;
 
     const requestParams = {
-      url: restfulUrl(search),
+      url: SearchUrl({ ...search, locale }),
       jsonBody: null,
       method: 'GET',
       successCallBack: (response, status) => {
         if (status === 204) {
-          return this.setState({
+          this.setState({
             status
           });
         } else {
-         return history.push('/available_volunteers', { ...response });
+         history.push(formatLink('/volunteers', locale),
+           { ...response,
+             ...{ search }
+           });
         }
       },
       errorCallBack: (message) => {
@@ -288,7 +285,6 @@ class SearchBar extends Component {
 }
 
 SearchBar.propTypes = {
-  match: PropTypes.object,
   programs: PropTypes.array,
   errors: PropTypes.object,
   days: PropTypes.array,
@@ -313,11 +309,14 @@ SearchBar.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
+  location: PropTypes.shape({
+    state: PropTypes.object
+  })
 };
 
 SearchBar.defaultProps = {
-  match: {
-    params: { }
+  location: {
+    state: {}
   },
   days: [],
   errors: {},
@@ -331,11 +330,11 @@ SearchBar.defaultProps = {
     day: [],
     program: [],
     distance: 0,
-  }
+  },
 };
 
 const validationOptions = {
-  joiSchema: schema,
+  joiSchema: SearchValidationSchema,
   only: 'search',
   allowUnknown: true
 };

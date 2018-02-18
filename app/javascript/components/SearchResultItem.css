@@ -6,21 +6,11 @@
     min-height: 14px;
 }
 
-.searchResultItemStar {
-    display: inline-block;
-    width: 24px;
-    height: 24px;
-    background-position: center;
-    background-size: 80%;
-    background-image: url('/assets/white_star.svg');
-    background-repeat: no-repeat;
-    cursor: pointer;
-    background-color: rgb(41, 170, 226);
-    padding: 4px;
-}
-
-.searchResultItemStarSelected {
-    background-image: url('/assets/orange_star.svg');
+.searchResultItemTruncate {
+    width: 250px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 @media (min-device-width: 0) and (min-width: 0) {
@@ -37,15 +27,6 @@
         display: inline-block;
         text-align: center;
         margin-top: 12px;
-    }
-
-    .searchResultItemReview {
-        margin: 12px 0 24px;
-        display: block;
-        background-color: rgb(41, 170, 226);
-        padding: 4px;
-        border-radius: 2px;
-        width: 160px;
     }
 
     .searchResultItemRequest {
@@ -69,11 +50,6 @@
 }
 
 @media (min-device-width: 750px) and (min-width: 750px) {
-
-    .searchResultItemReview {
-        margin: 12px auto 24px;
-    }
-
     .searchResultItemCard {
         max-width: 48%;
         margin: 0 6px 12px 0;

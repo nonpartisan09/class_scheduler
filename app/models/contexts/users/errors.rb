@@ -22,4 +22,7 @@ module Contexts::Users::Errors
 
   end
 
+  class AcceptTermsAndConditions < RuntimeError
+
+  end
 end

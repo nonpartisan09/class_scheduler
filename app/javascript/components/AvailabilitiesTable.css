@@ -20,14 +20,16 @@
 
 .tableHideSmallScreen th:last-of-type span {
     display: block;
-    padding-right: 24px;
-    text-align: center;
 }
 
-@media (min-device-width: 0) and (max-device-width: 650px) {
+@media (min-device-width: 0) and (max-device-width: 650px), (max-width: 650px)  {
    .tableHideSmallScreen {
        display: none;
    }
+
+    .smallScreenAvailabilityTableDivider {
+        margin: 24px 0;
+    }
 
     .tableHideMediumScreen {
         display: block;

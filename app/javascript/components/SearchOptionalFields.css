@@ -1,66 +1,73 @@
-.searchBarButtonContainer, .searchBarOptionalFieldContainer {
-    display: block;
-    width: 800px;
-    margin: 12px auto;
-}
-
 .searchBarOptionalFieldContainer {
-    height: 60px;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 600px;
+    margin: 0 auto;
+    width: 100%;
 }
 
-.searchBarOptionalField, .searchBarDistanceOption {
-    width: 28%;
-    display: inline-block;
-    padding: 0 12px;
-    vertical-align: middle;
+.searchBarStartTimeButton, .searchBarEndTimeButton {
+    width: 50%;
+    flex: 1 1 auto;
 }
 
-.searchBarDistanceOption {
-    transform: translateY(7px);
+.searchBarStartTimePickerContainer, .searchBarEndTimePickerContainer {
+    width: 45%;
 }
 
-.searchBarOptionalFieldDisplay {
-    display: inline-block;
+.searchBarStartTimePicker, .searchBarEndTimePicker, .searchBarDistanceOption, .searchBarDistanceButton {
+    min-width: 100%;
+    max-width: 100%;
+    flex: 1 1 auto;
 }
 
-.searchBarOptionalFieldDisplayNone, .searchBarOptionalFieldMobile {
-    display: none;
+.searchBarDistanceButton {
+    margin: 12px 0;
 }
 
-@media (min-device-width: 0) and (max-device-width: 850px), (max-width: 850px) {
-    .searchBarButtonContainer, .searchBarOptionalFieldContainer {
+@media (min-device-width: 0) and (max-device-width: 600px), (max-width: 600px) {
+    .searchBarButtonContainer {
         display: block;
         width: 100%;
         text-align: center;
         height: auto;
     }
 
-    .searchBarOptionalFieldMobile, .searchBarOptionalField {
-        display: block;
-        margin: 6px 0;
-        padding: 0;
-        transform: none;
-        height: auto;
-        width: auto;
-        text-align: center;
-    }
-    .searchBarOptionalField {
+    .searchBarStartTimeButton, .searchBarEndTimeButton, .searchBarDistanceButton {
         width: 100%;
+        margin: 0;
     }
 
-    .searchBarOptionalFieldMobile {
-        max-width: 50%;
+    .searchBarStartTimeButton {
+        order: 0;
+    }
+
+    .searchBarStartTimePickerContainer {
+        order: 1;
+    }
+
+    .searchBarEndTimeButton {
+        order: 2;
+    }
+
+    .searchBarEndTimePickerContainer {
+        order: 4;
+    }
+
+    .searchBarDistanceButton {
+        order: 5;
+    }
+
+    .searchBarDistanceOption {
+        order: 6;
+    }
+
+    .searchBarStartTimePickerContainer, .searchBarEndTimePickerContainer, .searchBarDistanceOption {
+        min-width: 80%;
+        max-width: 80%;
         margin: 0 auto;
     }
 
-    .searchBarOptionalFieldScreen {
-        display: none;
-    }
-}
-
-@media (min-device-width: 0) and (max-device-width: 500px), (max-width: 500px) {
-    .searchBarOptionalFieldMobile {
-        width: 100%;
-        min-width: 100%;
-    }
 }

@@ -12,42 +12,50 @@ import { Card, CardActions, CardHeader } from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 
+import ReviewAsStars from './ReviewAsStars';
 import './SearchResultItem.css';
+import formatLink from './utils/Link';
 
 class SearchResultItem extends Component {
+  constructor(props) {
+    super(props);
+
+    this.handleViewProfileClick = this.handleViewProfileClick.bind(this);
+  }
+
   render() {
-    const { firstName, city, lastLoggedin, urlSlug, ratingCount } = this.props;
+    const { firstName, lastLoggedin, urlSlug, ratingCount, averageRating, locale } = this.props;
 
     return (
       <Card className='searchResultItemCard' >
         <CardHeader
+          style={ { height: '245px' } }
           title={ firstName }
           subtitle={
             <div className='searchResultItemDetails' >
               <p>
-                Last login: {lastLoggedin} ago
+                Last login: {lastLoggedin}
               </p>
-              <p>
+              <p className='searchResultItemTruncate'>
                 { this.renderLanguages() }
               </p>
-              <p>
+              <p className='searchResultItemTruncate'>
                 { this.renderPrograms() }
               </p>
-              <p>
-                { this.renderCity(city) }
+              <p className='searchResultItemTruncate'>
+                { this.renderUserLocation() }
               </p>
-              <div className='searchResultItemReview' >
-                { this.renderReviews() }
-              </div>
-              <span>
-                { `${ratingCount} rating(s)`}
-              </span>
+
+              <ReviewAsStars
+                ratingCount={ ratingCount }
+                averageRating={ averageRating }
+              />
             </div>
           }
           avatar={ this.renderAvatar() }
         />
         <CardActions>
-          <Link to={ { pathname: '/messages/new', query: { recipient: urlSlug, userName: firstName } } } >
+          <Link to={ { pathname: formatLink('/messages/new', locale), query: { recipient: urlSlug, userName: firstName } } } >
             <RaisedButton
               className='searchResultItemRequest'
               label={
@@ -65,7 +73,7 @@ class SearchResultItem extends Component {
             />
           </Link>
 
-          <a href={ `/profiles/${urlSlug}` }>
+          <a href={ formatLink(`/profiles/${urlSlug}`, locale) } >
             <FlatButton
               className='searchResultItemVisitProfile'
               label={
@@ -75,6 +83,7 @@ class SearchResultItem extends Component {
                 />
               }
               primary
+              onClick={ this.handleViewProfileClick }
             />
           </a>
         </CardActions>
@@ -82,30 +91,10 @@ class SearchResultItem extends Component {
     );
   }
 
-  renderReviews() {
-    const { averageRating } = this.props;
+  handleViewProfileClick() {
+    const { urlSlug: url_slug, search, history, volunteers, locale } = this.props;
 
-    return [
-      _.times(5, (index) => {
-        const className = function(){
-          if (index < averageRating) {
-            return 'searchResultItemStar searchResultItemStarSelected';
-          } else {
-            return 'searchResultItemStar';
-          }
-        }();
-
-        return (
-          <div key={ index } className={ className }>
-            <label htmlFor={ `starRating${index}` } />
-            <option
-              value={ index + 1 }
-              id={ `starRating${index}` }
-            />
-          </div>
-        );
-      })
-    ];
+    history.push(formatLink(`/profiles/${url_slug}`, locale), { ...{ search }, volunteers });
   }
 
   renderAvatar() {
@@ -134,11 +123,11 @@ class SearchResultItem extends Component {
     }
   }
 
-  renderCity(city) {
-    const { currentUserCity } = this.props;
+  renderUserLocation() {
+    const { isCurrentUserLocated, city, state, country } = this.props;
 
-    if (city && currentUserCity) {
-      return city;
+    if (isCurrentUserLocated) {
+      return _.compact([ city, state, country ]).join(', ');
     } else {
       return null;
     }
@@ -146,28 +135,40 @@ class SearchResultItem extends Component {
 }
 
 SearchResultItem.propTypes = {
-  currentUserCity: PropTypes.string,
+  isCurrentUserLocated: PropTypes.bool,
   avatar: PropTypes.node.isRequired,
   firstName: PropTypes.string,
   city: PropTypes.string,
+  country: PropTypes.string,
+  state: PropTypes.string,
   lastLoggedin: PropTypes.string,
   programs: PropTypes.array,
   urlSlug: PropTypes.string,
   languages: PropTypes.array,
   averageRating: PropTypes.number,
-  ratingCount: PropTypes.number
+  ratingCount: PropTypes.number,
+  search: PropTypes.object,
+  volunteers: PropTypes.array,
+  history: PropTypes.object,
+  locale: PropTypes.string
 };
 
 SearchResultItem.defaultProps = {
+  locale: '',
+  volunteers: [],
+  search: {},
   averageRating: 0,
-  currentUserCity: '',
+  isCurrentUserLocated: false,
   firstName: '',
   city: '',
+  country: '',
+  state: '',
   lastLoggedin: '',
   programs: [],
   urlSlug: '',
   languages: [],
-  ratingCount: 0
+  ratingCount: 0,
+  history: {}
 };
 
 export default SearchResultItem;
