@@ -32,9 +32,9 @@ FactoryGirl.define do
     active true
     terms_and_conditions true
     timezone 'UTC'
-    programs = []
-    programs << FactoryGirl.create(:program)
-    programs { programs }
+    # programs = []
+    # programs << FactoryGirl.create(:program)
+    # programs { programs }
     languages Language.all
     average_rating { generate :average_rating }
     rating_count { generate :rating_count }
@@ -43,16 +43,16 @@ FactoryGirl.define do
   end
 
   trait :client do
-    roles = []
-    roles << Role.find_by_name('Client')
-
-    roles { roles }
+    # roles = []
+    # roles << Role.find_by_name('Client')
+    #
+    # roles { roles }
   end
 
   trait :volunteer do
-    roles = []
-    roles << Role.find_by_name('Volunteer')
-
-    roles { roles }
+    # roles = []
+    # roles << Role.find_by_name('Volunteer')
+    #
+    # roles { roles }
   end
 end
