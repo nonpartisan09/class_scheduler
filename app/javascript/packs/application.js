@@ -85,54 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <Switch>
 
             <Route exact path={ `/${locale}` } render={ () => <Homepage { ...data } /> } />
-
-            <Route exact path={ `/${locale}/inbox` } render={ (props) => <ConversationIndexPage { ...data } { ...props } /> } />
-            <Route exact path={ `/${locale}/inbox/:id` } render={ (props) => <ConversationPage { ...data } { ...props } /> } />
-            <Route exact path={ `/${locale}/messages/new` } render={ (props) => <NewMessagePage { ...data } { ...props } /> } />
-            <Route exact path={ `/${locale}/search` } render={ (props) => <SearchBar { ...data } { ...props } /> } />
-            <Route exact path={ `/${locale}/volunteers` } render={ (props) => <SearchResults { ...data } { ...props } /> } />
-            <Route exact path={ `/${locale}/my_profile` } render={ (props) => <MyProfile { ...data } { ...props } /> } />
-            <Route exact path={ `/${locale}/:user_id/(:order)` } render={ (props) => <UserReviewIndexPage { ...data } { ...props } /> } />
-            <Route exact path={ `/${locale}/reviews/author/:url_slug` } render={ (props) => <UserReviewIndexPage { ...data } { ...props } /> } />
-
-            <Route
-              exact
-              path={ `/${locale}/profiles/:url_slug` }
-              render={ (props) => (renderUserProfile (data, props)) }
-            />
-            <Route exact path={ `/${locale}/password/new` } component={ NewPasswordPage } />
-            <Route exact path={ `/${locale}/password/edit` } render={ (props) => <ResetPasswordPage { ...props } /> } />
-            <Route exact path={ `/${locale}/availabilities/new` } render={ (props) => <NewAvailability { ...data } { ...props } /> } />
-            <Route exact path={ `/${locale}/availabilities` } render={ (props) => <AvailabilityIndexPage { ...data }  { ...props } /> } />
-
-            <Route exact path={ `/${locale}/about` } render={ (props) => <AboutPage { ...data } { ...props } /> } />
-            <Route exact path={ `/${locale}/sign_in` } component={ SignIn } />
-            <Route exact path={ `/${locale}/sign_up/:role` } render={ (props) => <SignUp { ...data }  { ...props } /> } />
-            <Route exact path={ `/${locale}/terms_of_use` } render={ (props) => <TermsAndConditions { ...data } { ...props } /> } />
-
             <Route exact path='/' render={ () => <Homepage { ...data } /> } />
-            <Route exact path='/inbox' render={ (props) => <ConversationIndexPage { ...data } { ...props } /> } />
-            <Route exact path='/inbox/:id' render={ (props) => <ConversationPage { ...data } { ...props } /> } />
-            <Route exact path='/messages/new' render={ (props) => <NewMessagePage { ...data } { ...props } /> } />
-            <Route exact path='/search' render={ (props) => <SearchBar { ...data } { ...props } /> } />
-            <Route exact path='/volunteers' render={ (props) => <SearchResults { ...data } { ...props } /> } />
-            <Route exact path='/my_profile' render={ (props) => <MyProfile { ...data } { ...props } /> } />
-            <Route exact path='/reviews/author/:url_slug' render={ (props) => <UserReviewIndexPage { ...data } { ...props } /> } />
-
-            <Route
-              exact
-              path='/profiles/:url_slug'
-              render={ (props) => (renderUserProfile (data, props)) }
-            />
-            <Route exact path='/password/new' component={ NewPasswordPage } />
-            <Route exact path='/password/edit' render={ (props) => <ResetPasswordPage { ...props } /> } />
-            <Route exact path='/availabilities/new' render={ (props) => <NewAvailability { ...data } { ...props } /> } />
-            <Route exact path='/availabilities' render={ (props) => <AvailabilityIndexPage { ...data }  { ...props } /> } />
-
-            <Route exact path='/about' render={ (props) => <AboutPage { ...data } { ...props } /> } />
-            <Route exact path='/sign_in' component={ SignIn } />
-            <Route exact path='/sign_up/:role' render={ (props) => <SignUp { ...data }  { ...props } /> } />
-            <Route exact path='/terms_of_use' render={ (props) => <TermsAndConditions { ...data } { ...props } /> } />
 
             <Route path='/*' render={ () => <NotFoundPage { ...data } /> } />
           </Switch>

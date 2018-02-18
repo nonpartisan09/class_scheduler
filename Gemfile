@@ -39,13 +39,9 @@ gem 'devise', '~> 4.3'
 # geolocate users
 gem 'geocoder', '~> 1.4'
 
-gem 'unicorn-worker-killer'
-gem 'unicorn'
-
 # image helper
+gem 'puma', '~> 3.11.2'
 gem 'paperclip', '5.1'
-
-gem 'factory_girl_rails', '~> 4.9'
 
 gem 'newrelic_rpm'
 
@@ -79,6 +75,7 @@ group :development do
 end
 
 group :test do
+  gem 'factory_girl_rails', '~> 4.9'
   gem 'database_cleaner', '~> 1.6', require: false
   gem 'shoulda'
   gem 'shoulda-matchers', '~> 2.8', require: false
