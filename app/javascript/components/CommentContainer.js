@@ -35,10 +35,7 @@ class CommentContainer extends Component {
   handleUpdateState() {
     const { comments: { ten_last_comments, count } } = this.props;
 
-    this.setState({
-      ten_last_comments: ten_last_comments,
-      count: count
-    });
+    this.setState({ ten_last_comments, count });
   }
 
   render() {
@@ -115,7 +112,7 @@ class CommentContainer extends Component {
     const { locale } = this.props;
 
     if (_.size(ten_last_comments) > 0) {
-      return _.map(ten_last_comments, ({ comment, created_at, reviewer, reviewer_url_slug }, index) => {
+      return _.map(ten_last_comments, ({ comment, created_at, reviewer_first_name, reviewer_url_slug }, index) => {
 
         return (
           <li key={ index } className='commentContainerListItem'>
@@ -131,7 +128,7 @@ class CommentContainer extends Component {
             />
             <span> </span>
             <a href={ formatLink(`/reviews/author/${reviewer_url_slug}`, locale) } className='slidingLink commentContainerLink'>
-              { reviewer }
+              { reviewer_first_name }
             </a>:
             </span>
             <span> { this.renderComment(comment) }</span>
@@ -173,7 +170,7 @@ CommentContainer.propTypes = {
       PropTypes.shape({
         comment: PropTypes.string,
         created_at: PropTypes.string,
-        reviewer: PropTypes.string
+        reviewer_first_name: PropTypes.string
       })
     )
   })

@@ -1,7 +1,15 @@
 FactoryGirl.define do
   factory :message do
-    body "MyText"
-    conversation nil
-    user nil
+    before(:build) do |message, proxy|
+      if proxy.user.present?
+        message.conversation_id { create(:conversation, { recipient_id: proxy.user.id }).id }
+      else
+        message.conversation_id { create(:conversation).id }
+      end
+    end
+
+    subject "TestSubject"
+    body "TestBody"
+    user { FactoryGirl.create(:user) }
   end
 end

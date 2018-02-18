@@ -28,9 +28,13 @@ class ReviewsController < ApplicationController
      render json: { message: message }, status: status
    else
      message = I18n.t('custom_success.messages.review_created')
+     review = ReviewDecorator.new(@review, {
+         reviewee_first_name: @user.first_name,
+         reviewer: current_user }).simple_decorate
+
      render json: {
          message: message,
-         review: ReviewDecorator.new(@review, @user.first_name, current_user).simple_decorate,
+         review: review,
          comments: @comments
      }, status: :ok
     end
@@ -56,10 +60,13 @@ class ReviewsController < ApplicationController
       render json: { message: message }, status: status
     else
       message = I18n.t('custom_success.messages.review_updated')
+      review = ReviewDecorator.new(@review, {
+          reviewee_first_name: @user.first_name,
+          reviewer: current_user }).simple_decorate
 
       render json: {
           message: message,
-          review: ReviewDecorator.new(@review, @user.first_name, current_user).simple_decorate,
+          review: review,
           comments: @comments
       }, status: :ok
     end

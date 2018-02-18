@@ -32,7 +32,9 @@ FactoryGirl.define do
     active true
     terms_and_conditions true
     timezone 'UTC'
-    programs [ Program.first ]
+    programs = []
+    programs << FactoryGirl.create(:program)
+    programs { programs }
     languages Language.all
     average_rating { generate :average_rating }
     rating_count { generate :rating_count }

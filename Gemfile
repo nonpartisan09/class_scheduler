@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '2.4.1'
+ruby '2.4.3'
 
 git_source(:github) do |repo_name|
   repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
@@ -22,7 +22,7 @@ gem 'uglifier', '~> 3.2', require: false
 gem 'delayed_job_active_record'
 
 # Use React for views
-gem 'webpacker', '~> 3.0'
+gem 'webpacker', '~> 3.2.2'
 
 # For automatically inlining email styling
 gem 'roadie-rails', '~>1.2.1'

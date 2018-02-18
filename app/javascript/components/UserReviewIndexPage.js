@@ -11,18 +11,22 @@ import './UserReviewIndexPage.css';
 
 class UserReviewIndexPage extends Component {
   render() {
-    const { currentUser } = this.props;
-
+    const { currentUser, reviewer } = this.props;
+      const title = function(){
+        return [
+          <FormattedMessage
+            id='UserReviewIndexPage.header'
+            defaultMessage='Most recent reviews by'
+            key='reviewBy'
+          />,
+          <span key='reviewer'> {reviewer}</span>
+        ]
+      }();
     return (
       <div>
         <Header currentUser={ currentUser } />
         <Paper zDepth={ 1 } className='paperOverride' rounded={ false }>
-          <PageHeader title={
-            <FormattedMessage
-              id='UserReviewIndexPage.header'
-              defaultMessage='Most recent reviews'
-            />
-          } />
+          <PageHeader title={ title } />
           <ul className='userReviewIndexPageContainerList'>
             { this.renderContent() }
           </ul>
@@ -35,11 +39,11 @@ class UserReviewIndexPage extends Component {
     const { comments } = this.props;
 
     if (_.size(comments) > 0) {
-      return _.map(comments, ({ comment, created_at, reviewer, reviewee }, index) => {
+      return _.map(comments, ({ comment, created_at, reviewee }, index) => {
         return (
           <li key={ index } className='userReviewIndexPageContainerListItem'>
             <span>Posted { created_at } - </span>
-            <span>about {reviewee} - </span>
+            <span>about {reviewee } - </span>
             <span> { this.renderComment(comment) }</span>
           </li>
         );
