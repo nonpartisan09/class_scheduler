@@ -15,5 +15,4 @@ RSpec.describe Availability, type: :model do
   it { is_expected.to have_db_column(:start_time).of_type(:datetime) }
   it { is_expected.to have_db_column(:end_time).of_type(:datetime) }
   it { is_expected.to have_db_column(:day).of_type(:string) }
-  it { is_expected.to have_db_column(:vacation).of_type(:boolean) }
 end

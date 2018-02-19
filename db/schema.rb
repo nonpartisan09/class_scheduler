@@ -10,13 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180211183339) do
+ActiveRecord::Schema.define(version: 20180119173326) do
 
   create_table "about_pages", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.text "description"
+    t.text "spanish_description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.text "spanish_description"
   end
 
   create_table "active_admin_comments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -35,7 +35,6 @@ ActiveRecord::Schema.define(version: 20180211183339) do
 
   create_table "availabilities", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "day"
-    t.boolean "vacation"
     t.datetime "start_time"
     t.datetime "end_time"
     t.datetime "created_at", null: false
@@ -106,9 +105,9 @@ ActiveRecord::Schema.define(version: 20180211183339) do
     t.string "name"
     t.string "url_slug"
     t.text "description"
+    t.boolean "featured", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean "featured", default: false
   end
 
   create_table "reviews", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -149,6 +148,20 @@ ActiveRecord::Schema.define(version: 20180211183339) do
     t.string "url_slug", default: "", null: false
     t.integer "terms_and_conditions"
     t.boolean "contact_permission"
+    t.string "address"
+    t.string "city"
+    t.float "latitude", limit: 24
+    t.float "longitude", limit: 24
+    t.text "description"
+    t.string "timezone", default: "UTC"
+    t.integer "average_rating", default: 0
+    t.integer "rating_count", default: 0
+    t.string "state"
+    t.string "country"
+    t.boolean "active", default: true
+    t.boolean "generated_password", default: false
+    t.string "locale", default: "en"
+    t.boolean "email_notification", default: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "email", default: "", null: false
@@ -161,24 +174,10 @@ ActiveRecord::Schema.define(version: 20180211183339) do
     t.datetime "last_sign_in_at"
     t.string "current_sign_in_ip"
     t.string "last_sign_in_ip"
-    t.string "address"
-    t.string "city"
-    t.float "latitude", limit: 24
-    t.float "longitude", limit: 24
     t.string "thumbnail_image_file_name"
     t.string "thumbnail_image_content_type"
     t.integer "thumbnail_image_file_size"
     t.datetime "thumbnail_image_updated_at"
-    t.text "description"
-    t.string "timezone", default: "UTC"
-    t.integer "average_rating", default: 0
-    t.integer "rating_count", default: 0
-    t.string "state"
-    t.string "country"
-    t.boolean "active", default: true
-    t.boolean "generated_password", default: false
-    t.string "locale", default: "en"
-    t.boolean "email_notification", default: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
