@@ -1,5 +1,8 @@
 Rails.application.configure do
-  config.static_base_url =  'https://s3.amazonaws.com/tutoria/'
+  # Verifies that versions and hashed value of the package contents in the project's package.json
+  config.webpacker.check_yarn_integrity = false
+
+  config.static_base_url =  "https://s3.amazonaws.com/#{ENV.fetch('S3_BUCKET_NAME')}"
   config.base_url = 'https://tutoria.io'
 
   # Settings specified here will take precedence over those in config/application.rb.
@@ -16,14 +19,18 @@ Rails.application.configure do
       host: 'tutoria.io'
   }
 
-  # Care if the mailer can't send.
-  config.action_mailer.raise_delivery_errors = true
-  config.action_mailer.delivery_method = :letter_opener
-  config.action_mailer.default_url_options = { :host => 'http://localhost:5000' }
+  # SMTP settings for gmail
+  config.action_mailer.smtp_settings = {
+      :address              => ENV["SMTP"],
+      :domain               => "tutoria.io",
+      :port                 => 587,
+      :user_name            => ENV["EMAIL_USERNAME"],
+      :password             => ENV["EMAIL_KEY"],
+      :authentication       => :plain,
+      :enable_starttls_auto => true
+  }
 
-  config.action_mailer.perform_caching = false
-
-  config.action_mailer.default_url_options = { :host => 'http://tutoria-staging.herokuapp.com' }
+  config.action_mailer.default_url_options = { :host => 'https://tutoria.io' }
   config.action_mailer.perform_caching = false
 
   # Eager load code on boot. This eager loads most of Rails and
@@ -113,7 +120,7 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
-  # config/environments/production.rb
+  # config/environments/staging.rb
   config.paperclip_defaults = {
       storage: :s3,
       s3_credentials: {
@@ -123,5 +130,4 @@ Rails.application.configure do
           s3_region: ENV.fetch('AWS_REGION'),
       },
   }
-
 end

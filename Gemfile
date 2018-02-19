@@ -39,13 +39,15 @@ gem 'devise', '~> 4.3'
 # geolocate users
 gem 'geocoder', '~> 1.4'
 
-# image helper
 gem 'puma', '~> 3.11.2'
+# image helper
 gem 'paperclip', '5.1'
 
 gem 'newrelic_rpm'
 
 gem 'jquery-rails', '~> 4.3.1'
+
+gem 'ffi', '1.9.17'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -55,18 +57,19 @@ group :development, :test do
   gem 'selenium-webdriver', '~> 3.7', require: false
   gem 'rspec-rails', '~> 3.6'
 
-  # Use mysql as the database for Active Record
-  gem 'mysql2', '>= 0.3.18', '< 0.5', require: false
 
   gem 'awesome_print'
 end
 
 group :development do
+  # Use mysql as the database for Active Record
+  gem 'mysql2', '>= 0.3.18', '< 0.5', require: false
+
   gem 'gem_bench', :require => false, :group => :development
   gem 'guard-rspec', require: false
   # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
   gem 'web-console', '>= 3.3.0'
-  gem 'listen', '~> 3.1', require: false
+  gem 'listen', '~> 3.1'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring', '~> 2.0', require: false
   gem 'spring-watcher-listen', '~> 2.0.0'

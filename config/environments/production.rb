@@ -1,5 +1,8 @@
 Rails.application.configure do
-  config.static_base_url =  'https://s3.amazonaws.com/tutoria/'
+  # Verifies that versions and hashed value of the package contents in the project's package.json
+  config.webpacker.check_yarn_integrity = false
+
+  config.static_base_url =  "https://s3.amazonaws.com/#{ENV.fetch('S3_BUCKET_NAME')}"
   config.base_url = 'https://tutoria.io'
 
   # Settings specified here will take precedence over those in config/application.rb.
@@ -27,7 +30,7 @@ Rails.application.configure do
       :enable_starttls_auto => true
   }
 
-  config.action_mailer.default_url_options = { :host => 'http://tutoria-staging.herokuapp.com' }
+  config.action_mailer.default_url_options = { :host => 'https://tutoria.io' }
   config.action_mailer.perform_caching = false
 
   # Eager load code on boot. This eager loads most of Rails and
@@ -54,7 +57,7 @@ Rails.application.configure do
   # config.assets.css_compressor = :sass
 
   # Do not fallback to assets pipeline if a precompiled asset is missed.
-  config.assets.compile = false
+  config.assets.compile = true
   config.assets.digest = true
 
   # `config.assets.precompile` and `config.assets.version` have moved to config/initializers/assets.rb

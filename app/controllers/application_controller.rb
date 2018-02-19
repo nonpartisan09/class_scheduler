@@ -56,8 +56,6 @@ class ApplicationController < ActionController::Base
     @data = {
         :currentUser => @user
     }
-
-    render :not_found, :status => 404
   end
 
   def set_locale

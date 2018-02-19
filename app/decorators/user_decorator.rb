@@ -44,7 +44,7 @@ class UserDecorator
         :thumbnail_image => picture,
         :description => description,
         :timezone => user_timezone,
-        :languages => languages,
+        :languages => languages
     }
   end
 

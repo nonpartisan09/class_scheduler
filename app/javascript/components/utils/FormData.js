@@ -45,7 +45,7 @@ function buildFormDataAttributes(key, value){
   return formData;
 }
 
-module.exports  = {
+const FormData  = {
   from: function(json){
     let formData = [];
 
@@ -62,3 +62,5 @@ module.exports  = {
     return formData;
   }
 };
+
+export default FormData;

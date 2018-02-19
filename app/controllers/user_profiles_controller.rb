@@ -5,15 +5,14 @@ class UserProfilesController < ApplicationController
     unless current_user
       redirect_to root_path && return
     end
-    user = UserDecorator.new(current_user)
-    current_user = user.updateable
+    user = UserDecorator.new(current_user).updateable
     programs = Program.all
     languages = Language.all
     timezones = ActiveSupport::TimeZone.all
 
     @data = {
         :programs => programs,
-        :currentUser => current_user,
+        :currentUser => user,
         :timezones => timezones,
         :languages => languages
     }

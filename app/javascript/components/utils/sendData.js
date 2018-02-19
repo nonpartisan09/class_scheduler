@@ -95,7 +95,7 @@ function postData({ url, params, attributes, method='POST', successCallBack, err
 
         const errorMessage = function(){
           if (error && error.message) {
-            return error.message.join(',');
+            return _.isArray(error.message.length)? error.message.join(',') : error.message;
           } else if (errors) {
            return _.flatMap(Object.entries(errors), (item) => {
               return _.capitalize(item.join(' ').replace('_', ' ')).join(',');
