@@ -1,3 +1,7 @@
+// config/webpack/production.js
 const environment = require('./environment');
 
-module.exports = environment.toWebpackConfig();
+const config = environment.toWebpackConfig();
+config.devtool = 'none';
+
+module.exports = config;

@@ -8,7 +8,7 @@ git_source(:github) do |repo_name|
 end
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.1', require: false
+gem 'rails', '~> 5.1'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
@@ -34,7 +34,7 @@ gem 'pg', '~> 0.21.0'
 gem 'will_paginate', '~> 3.1.6'
 
 gem 'delayed_job', '~> 4.1'
-gem 'devise', '~> 4.3'
+gem 'devise', '4.3'
 
 # geolocate users
 gem 'geocoder', '~> 1.4'
@@ -47,7 +47,7 @@ gem 'newrelic_rpm'
 
 gem 'jquery-rails', '~> 4.3.1'
 
-gem 'ffi', '1.9.17'
+gem 'ffi', '1.9.16'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
