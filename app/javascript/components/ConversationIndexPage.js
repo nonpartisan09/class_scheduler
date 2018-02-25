@@ -3,6 +3,7 @@ import _ from 'lodash';
 import PropTypes from 'prop-types';
 import Paper from 'material-ui/Paper';
 import Subheader from 'material-ui/Subheader';
+import CloseIcon from 'material-ui/svg-icons/navigation/close';
 import { FormattedMessage } from 'react-intl';
 import Avatar from 'material-ui/Avatar';
 
@@ -17,6 +18,16 @@ import formatLink from './utils/Link';
 import PageHeader from './reusable/PageHeader';
 
 class ConversationIndexPage extends Component {
+  constructor(props, context) {
+    super(props, context);
+
+    this.handleClose = this.handleClose.bind(this);
+
+    this.state = {
+        showAlert: localStorage.getItem('showAlertInfo')
+    };
+  }
+
   render() {
     return (
       <div>
@@ -28,7 +39,7 @@ class ConversationIndexPage extends Component {
               defaultMessage='Inbox'
             />
           } />
-
+          { this.renderAlertInfo() }
           <div className='conversationBox'>
             { this.renderInbox() }
           </div>
@@ -36,6 +47,22 @@ class ConversationIndexPage extends Component {
         <Footer className='footerContainerFixed' />
       </div>
     );
+  }
+
+  renderAlertInfo() {
+    if (localStorage.getItem('showAlertInfo') !== 'hidden' || this.state.showAlert !== 'hidden' ) {
+        return (
+          <div className='alert alertInfo'>
+            <FormattedMessage
+              id='ConversationIndexPage.alertInfo'
+              defaultMessage=' Please note messages older than a month are automatically deleted.'
+                />
+            <span className='alertCloseButton' onClick={ this.handleClose }>
+              <CloseIcon color='#0c5460' style={ { width: '20x', height: '20px' } } />
+            </span>
+          </div>
+        );
+    }
   }
 
   renderInbox() {
@@ -128,6 +155,14 @@ class ConversationIndexPage extends Component {
         </span>
       );
     }
+  }
+
+  handleClose() {
+    localStorage.setItem('showAlertInfo', 'hidden');
+
+    this.setState({
+      showAlert: 'hidden'
+    });
   }
 }
 
