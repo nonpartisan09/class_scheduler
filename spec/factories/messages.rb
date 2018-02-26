@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :message do
     before(:build) do |message, proxy|
       if proxy.user.present?
@@ -10,6 +10,6 @@ FactoryGirl.define do
 
     subject "TestSubject"
     body "TestBody"
-    user { FactoryGirl.create(:user) }
+    user { FactoryBot.create(:user) }
   end
 end

@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe UserMailer, type: :mailer do
   describe 'When a user signs up' do
-    let(:user) { FactoryGirl.create(:user) }
+    let(:user) { FactoryBot.create(:user) }
     let(:mail) { UserMailer.welcome_email(user) }
 
     it 'renders the headers' do
@@ -16,9 +16,9 @@ RSpec.describe UserMailer, type: :mailer do
     end
   end
   describe 'When a user receives a new email' do
-    let!(:user) { FactoryGirl.create(:user) }
-    let(:sender) { FactoryGirl.create(:user) }
-    let(:message) { FactoryGirl.build(:message, { user: user }) }
+    let!(:user) { FactoryBot.create(:user) }
+    let(:sender) { FactoryBot.create(:user) }
+    let(:message) { FactoryBot.build(:message, { user: user }) }
 
     let(:mail) { UserMailer.new_message(user, sender, message) }
 
@@ -33,7 +33,7 @@ RSpec.describe UserMailer, type: :mailer do
     end
   end
   describe 'When a user is deactivated' do
-    let(:user) { FactoryGirl.create(:user) }
+    let(:user) { FactoryBot.create(:user) }
     let(:mail) { UserMailer.account_deactivated(user) }
 
     it 'renders the headers' do
@@ -47,7 +47,7 @@ RSpec.describe UserMailer, type: :mailer do
     end
   end
   describe 'When a user is reactivated' do
-    let(:user) { FactoryGirl.create(:user) }
+    let(:user) { FactoryBot.create(:user) }
     let(:mail) { UserMailer.account_reactivated(user) }
 
     it 'renders the headers' do
@@ -62,7 +62,7 @@ RSpec.describe UserMailer, type: :mailer do
   end
 
   describe 'When a user is deleted' do
-    let(:user) { FactoryGirl.create(:user) }
+    let(:user) { FactoryBot.create(:user) }
     let(:mail) { UserMailer.account_deleted(user) }
 
     it 'renders the headers' do
@@ -77,7 +77,7 @@ RSpec.describe UserMailer, type: :mailer do
   end
 
   describe 'When a user updates their password' do
-    let(:user) { FactoryGirl.create(:user) }
+    let(:user) { FactoryBot.create(:user) }
     let(:mail) { UserMailer.password_updated(user) }
 
     it 'renders the headers' do

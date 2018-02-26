@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   sequence :start_time do |n|
     Time.zone = 'CET'
     day_month= "Sunday, 7 Jan 2001"
@@ -14,6 +14,6 @@ FactoryGirl.define do
     day "Sunday"
     start_time { generate :start_time }
     end_time { generate :end_time }
-    user_id { FactoryGirl.create(:user, :volunteer).id }
+    user_id { FactoryBot.create(:user, :volunteer).id }
   end
 end

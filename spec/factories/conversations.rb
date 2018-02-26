@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :conversation do
     author_id { create(:user).id }
     recipient_id { create(:user).id }

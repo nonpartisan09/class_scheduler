@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :program do
 
     after(:build) do |program, proxy|

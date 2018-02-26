@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   sequence :email do |n|
     "email@domain#{n}.com"
   end
@@ -33,7 +33,7 @@ FactoryGirl.define do
     terms_and_conditions true
     timezone 'UTC'
     # programs = []
-    # programs << FactoryGirl.create(:program)
+    # programs << FactoryBot.create(:program)
     # programs { programs }
     languages Language.all
     average_rating { generate :average_rating }

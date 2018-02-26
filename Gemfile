@@ -49,9 +49,9 @@ gem 'jquery-rails', '~> 4.3.1'
 
 gem 'ffi', '1.9.16'
 
-gem 'factory_girl_rails', '~> 4.9'
-
 group :development, :test do
+  gem 'factory_bot_rails'
+
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', '~> 9.1', platforms: [:mri, :mingw, :x64_mingw], require: false
   # Adds support for Capybara system testing and selenium driver

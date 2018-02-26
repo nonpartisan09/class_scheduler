@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   sequence :review do |n|
     rand(1..5)
   end
@@ -10,13 +10,13 @@ FactoryGirl.define do
   factory :review do
     review { generate :review }
     comment { generate :comment }
-    author_id { FactoryGirl.create(:user, :volunteer).id }
+    author_id { FactoryBot.create(:user, :volunteer).id }
     after(:build) do |review, proxy|
       if proxy.user.present?
 
         review.user_id = proxy.user.id
       else
-        user_id { FactoryGirl.create(:user, :client).id }
+        user_id { FactoryBot.create(:user, :client).id }
       end
     end
   end
