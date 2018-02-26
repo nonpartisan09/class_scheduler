@@ -44,23 +44,19 @@ class AvailabilitiesController < ApplicationController
         creation = Contexts::Availabilities::Creation.new(permit_nested(permitted_params[number]), current_user)
 
         begin
-          @new_availabilities = creation.execute
-
-          status = :ok
-          messages = @new_availabilities.pluck(:id).collect do |id|
-            { id => `#{id} successfully created` }
-          end
-          message << messages
+          @availability = creation.execute
         rescue Contexts::Availabilities::Errors::UnknownAvailabilityError,
             Contexts::Availabilities::Errors::OverlappingAvailability,
             Contexts::Availabilities::Errors::StartTimeMissing,
             Contexts::Availabilities::Errors::EndTimeMissing,
             Contexts::Availabilities::Errors::ShortAvailability => e
-          message[number.to_i] = e.message
-          status = :unprocessable_entity
+          message << e.message
+          status << :unprocessable_entity
+        else
+          message << { availability: `#{@availability.id} successfully created` }
         end
       end
-      render :json => { :message => message }, :status => status
+      render :json=> { :message => message }, :status => :ok
     end
   end
 

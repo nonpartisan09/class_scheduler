@@ -20,25 +20,60 @@ class UsersController < ApplicationController
 
     @comments = get_ten_last_comments
 
-    availabilities = Availability.where(:user => @user.id).collect{ |n|
-      AvailabilityDecorator.new(n, {
-          :timezone => current_user.timezone,
-          :user_timezone => @user.timezone
-      }).decorate
-    }
+    @availabilities = Availability.where(:user => @user.id)
+
+    normalize_for_current_user
 
     @data = {
         :currentUser => UserDecorator.new(current_user).simple_decorate,
         :user => UserDecorator.new(@user).decorate,
         :comments => @comments,
         :review => review,
-        :availabilities => availabilities
+        :availabilities => @availabilities
     }
 
     render :show
   end
 
   private
+
+  def normalize_for_current_user
+    #TODO please improve
+    availabilities = []
+    @availabilities.each do |availability|
+      Time.zone = current_user.timezone
+      first_day = availability.start_time.strftime("%A")
+      second_day = availability.end_time.strftime("%A")
+
+      if first_day != second_day
+        split_availability =  AvailabilityDecorator.new(availability, {
+            :timezone => current_user.timezone,
+            :user_timezone => @user.timezone,
+            :day => first_day,
+            :end_time => "23:59"
+        }).decorate
+
+        availabilities << split_availability
+
+        split_availability_2 = AvailabilityDecorator.new(availability, {
+            :timezone => current_user.timezone,
+            :user_timezone => @user.timezone,
+            :day => second_day,
+            :start_time => "00:00"
+        }).decorate
+
+        availabilities << split_availability_2
+      else
+        availability = AvailabilityDecorator.new(availability, {
+            :timezone => current_user.timezone,
+            :user_timezone => @user.timezone,
+        }).decorate
+
+        availabilities << availability
+      end
+    end
+    @availabilities = availabilities
+  end
 
   def get_ten_last_comments
     received_reviews = @user.received_reviews

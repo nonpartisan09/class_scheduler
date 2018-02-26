@@ -3,7 +3,12 @@ class AvailabilityDecorator
   attr_reader :availability
 
   def initialize(availability, opts={ })
-    @availability, @timezone, @user_timezone = availability, opts[:timezone], opts[:user_timezone]
+    @availability = availability
+    @timezone = opts[:timezone]
+    @user_timezone = opts[:user_timezone]
+    @start_time = opts[:start_time]
+    @end_time = opts[:end_time]
+    @day = opts[:day]
   end
 
   def self_decorate
@@ -36,16 +41,16 @@ class AvailabilityDecorator
 
   def current_user_day
     Time.zone = @timezone
-    Time.zone.local_to_utc(@availability.start_time).strftime("%A")
+    @day ||= Time.zone.local_to_utc(@availability.start_time).strftime("%A")
   end
 
   def start_time
     Time.zone = @timezone
-    Time.zone.parse(@availability.start_time.to_s).strftime("%H:%M")
+    @start_time || Time.zone.parse(@availability.start_time.to_s).strftime("%H:%M")
   end
 
   def end_time
     Time.zone = @timezone
-    Time.zone.parse(@availability.end_time.to_s).strftime("%H:%M")
+    @end_time || Time.zone.parse(@availability.end_time.to_s).strftime("%H:%M")
   end
 end

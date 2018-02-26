@@ -33,106 +33,28 @@ module Contexts
 
         check_if_starts_before_ends?
 
-        create_availability
+        Time.zone = 'UTC'
 
-        @new_availabilities
-      end
+        new_availability_params = @availability.merge({
+                                                          :day => @day,
+                                                          :start_time => @parsed_start_time,
+                                                          :end_time => @parsed_end_time,
+                                                          :user_id => @current_user.id,
+                                                      })
 
-      private
+        @new_availability = Availability.create!(new_availability_params)
+        @new_availability
 
-      def create_availability
-        @new_availabilities = []
-
-        if !is_start_time_day_before? && !is_end_time_day_after?
-          Time.zone = 'UTC'
-
-          new_availability_params = @availability.merge({
-              :day => @day,
-              :start_time => @parsed_start_time,
-              :end_time => @parsed_end_time,
-              :user_id => @current_user.id,
-          })
-
-          new_availability = Availability.create!(new_availability_params)
-          @new_availabilities << new_availability
-
-        elsif is_start_time_day_before?
-          day_one = @availability[:day].to_i == 0? 6 : @availability[:day].to_i - 1
-          start_time = @availability[:start_time].chars.last(23).first(6).join('')
-          end_time = @availability[:end_time].chars.last(23).first(6).join('')
-
-          Time.zone = @timezone
-
-          parsed_start_time_one = Time.zone.parse("#{day_month(day_one)} #{start_time} #{Time.zone.tzinfo}")
-          parsed_end_time_two = Time.zone.parse("#{day_month(@day_index)} #{end_time} #{Time.zone.tzinfo}")
-
-          Time.zone = 'UTC'
-          parsed_end_time_one = Time.zone.utc_to_local(Time.parse("#{day_month(day_one)} 23:59 #{Time.zone.tzinfo}"))
-          parsed_start_time_two = Time.zone.utc_to_local(Time.parse("#{day_month(@day_index)} 00:00 #{Time.zone.tzinfo}"))
-
-          availability_one = @availability.merge({
-              :day => @day,
-              :start_time => parsed_start_time_one,
-              :end_time => parsed_end_time_one,
-              :user_id => @current_user.id,
-          })
-
-          availability_two = @availability.merge({
-              :day => @day,
-              :start_time => parsed_start_time_two,
-              :end_time => parsed_end_time_two,
-              :user_id => @current_user.id,
-          })
-
-          availability_one = Availability.create(availability_one)
-          availability_two = Availability.create(availability_two)
-
-          @new_availabilities << availability_one
-          @new_availabilities << availability_two
-
-        elsif is_end_time_day_after?
-          day_two = @availability[:day].to_i == 6?  0 : @availability[:day].to_i + 1
-          Time.zone = @timezone
-
-          start_time = @availability[:start_time].chars.last(23).first(6).join('')
-          end_time = @availability[:end_time].chars.last(23).first(6).join('')
-
-
-          parsed_start_time_one = Time.zone.parse("#{day_month(@day_index)} #{start_time}")
-          parsed_end_time_two = Time.zone.parse("#{day_month(day_two)} #{end_time}")
-
-          parsed_end_time_one = Time.zone.utc_to_local(Time.parse("#{day_month(@day_index)} 23:59 #{Time.zone.tzinfo}"))
-          parsed_start_time_two = Time.zone.utc_to_local(Time.parse("#{day_month(day_two)} 00:00 #{Time.zone.tzinfo}"))
-
-          availability_one = @availability.merge({
-              :day => @day,
-              :start_time => parsed_start_time_one,
-              :end_time => parsed_end_time_one,
-              :user_id => @current_user.id,
-          })
-
-          availability_two = @availability.merge({
-              :day => @day,
-              :start_time => parsed_start_time_two,
-              :end_time => parsed_end_time_two,
-              :user_id => @current_user.id,
-          })
-
-          availability_one = Availability.create(availability_one)
-          availability_two = Availability.create(availability_two)
-
-          @new_availabilities << availability_one
-          @new_availabilities << availability_two
-        end
-
-        if @new_availabilities == []
+        unless @new_availability
           message = I18n.t('custom_errors.messages.unknown_error')
           raise Availabilities::Errors::UnknownAvailabilityError, message
         end
 
         Time.zone = 'UTC'
-        @new_availabilities
+        @new_availability
       end
+
+      private
 
       def check_if_overlaps?
         Time.zone = @timezone
