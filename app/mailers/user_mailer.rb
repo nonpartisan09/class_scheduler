@@ -56,7 +56,7 @@ class UserMailer < ApplicationMailer
   private
 
   def url
-   'https://tutoria-staging.herokuapp.com/sign_in'
+   'http://tutoria.io/sign_in'
   end
 
   def admin_email
