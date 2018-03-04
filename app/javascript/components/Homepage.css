@@ -48,14 +48,10 @@
   margin-left: 24px;
 }
 
-@media (min-device-width: 1301px), (min-width: 1301px) {
-  .homepageImage {
-    height: 100%;
-  }
-
-  .homepageTextContainer {
-    height: auto;
-  }
+@media (min-device-width: 901px) and (max-device-height: 530px) {
+    .homepageImage, .homepageTextContainer {
+        height: auto;
+    }
 }
 
 @media (min-device-width: 901px), (min-width: 901px) {
@@ -66,7 +62,7 @@
     justify-content: space-between;
     flex: 1 1 auto;
     align-items: flex-end;
-    height: 80vh;
+    height: auto;
   }
 
   .homepageTextContainer {

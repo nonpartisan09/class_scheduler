@@ -98,7 +98,7 @@ class Homepage extends Component {
             />
           </div>
         </div>
-        <Footer className='footerContainerFixed' />
+        <Footer />
       </div>
     );
   }
