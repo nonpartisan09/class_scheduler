@@ -2,12 +2,6 @@
     margin-top: 36px;
 }
 
-.footerContainerFixed {
-    position: fixed;
-    bottom: 0;
-    width: 100vw;
-}
-
 .footer {
     width: 425px;
     margin-top: 0;
@@ -30,6 +24,21 @@
 
 .footerLink {
     margin-right: 12px;
+}
+
+@media (max-device-height: 530px) {
+    .footerContainerFixed {
+        position: relative;
+        width: 100vw;
+    }
+}
+
+@media (min-device-height: 531px) {
+    .footerContainerFixed {
+        position: fixed;
+        bottom: 0;
+        width: 100vw;
+    }
 }
 
 @media (max-device-width: 900px), (max-width: 900px) {
