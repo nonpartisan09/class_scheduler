@@ -82,75 +82,75 @@ class UserDecorator
   end
 
   def email_notification
-    user.email_notification || true
+    @user.email_notification || true
   end
 
   def locale
-    user.locale || 'en'
+    @user.locale || 'en'
   end
 
   def rating_count
-    user.rating_count || 0
+    @user.rating_count || 0
   end
 
   def average_rating
-    user.average_rating || 0
+    @user.average_rating || 0
   end
 
   def languages
-    user.languages.pluck(:name)
+    @user.languages.pluck(:name)
   end
 
   def user_timezone
-    user.timezone
+    @user.timezone
   end
 
   def description
-    user.description ||= ''
+    @user.description ||= ''
   end
 
   def url_slug
-    user.url_slug
+    @user.url_slug
   end
 
   def first_name
-    user.first_name
+    @user.first_name
   end
 
   def email
-    user.email
+    @user.email
   end
 
   def picture
     if Rails.env.production?
-      URI.join('https:' + user.thumbnail_image.url(:thumbnail)).to_s
+      URI.join('https:' + @user.thumbnail_image.url(:thumbnail)).to_s
     else
-      URI.join(Rails.configuration.static_base_url, user.thumbnail_image.url(:thumbnail)).to_s
+      URI.join(Rails.configuration.static_base_url, @user.thumbnail_image.url(:thumbnail)).to_s
     end
   end
 
   def availabilities
-    user.availabilities
+    @user.availabilities
   end
 
   def programs
-    user.programs.pluck(:name)
+    @user.programs.pluck(:name)
   end
 
   def address
-    user.address ||= ''
+    @user.address ||= ''
   end
 
   def city
-    user.city ||= ''
+    @user.city ||= ''
   end
 
   def country
-    user.country ||= ''
+    @user.country ||= ''
   end
 
   def state
-    user.state ||= ''
+    @user.state ||= ''
   end
 
   def available_days
@@ -158,6 +158,10 @@ class UserDecorator
   end
 
   def last_logged_in
-    time_ago_in_words(user.last_sign_in_at)
+    if @user.last_sign_in_at?
+      time_ago_in_words(@user.last_sign_in_at)
+    else
+      nil
+    end
   end
 end
