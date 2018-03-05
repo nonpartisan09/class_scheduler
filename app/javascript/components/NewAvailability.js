@@ -102,21 +102,26 @@ class NewAvailability extends Component {
 
     this.state = {
       numberOfAvailabilities: 1,
-      error: { }
+      error: { },
     };
   }
 
   render() {
     const {
       validateAllHandler,
-      currentUser,
-      currentUser: {
-        timezone,
-        locale
-      }
+      location: { state },
+      currentUser: user
     } = this.props;
 
-    return (
+    const currentUser = function(){
+      if (state) {
+        return state.currentUser;
+      } else {
+        return user;
+      }
+    }();
+
+      return (
       <div>
         <Header currentUser={ currentUser } />
 
@@ -126,13 +131,13 @@ class NewAvailability extends Component {
           <form className='newAvailabilityFormContainer'>
             <div>
               <TextField
-                value={ timezone }
+                value={ currentUser.timezone }
                 className='newAvailabilityTimezone'
                 name='timezoneAvailability'
                 disabled
               />
 
-              <a href={ formatLink('/my_profile', locale) } className='slidingLink' >
+              <a href={ formatLink('/my_profile', currentUser.locale) } className='slidingLink' >
                 <FormattedMessage
                   id='NewAvailability.updateTimezone'
                   defaultMessage='Not your timezone?'
@@ -361,7 +366,6 @@ NewAvailability.propTypes = {
 NewAvailability.defaultProps = {
   currentUser: {
     email: '',
-    timezone: 'UTC',
   },
   location: {
     state: {}
