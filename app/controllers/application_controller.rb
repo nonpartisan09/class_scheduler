@@ -77,6 +77,10 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def after_sign_in_path_for(resource)
+    session["user_return_to"] || root_url
+  end
+
   def access_denied(exception)
     redirect_to root_path, alert: exception.message
   end

@@ -100,9 +100,12 @@ class NewAvailability extends Component {
     this.handleRemoveAvailability = this.handleRemoveAvailability.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
 
+    const days = props.location && props.location.state && props.location.state.days;
+
     this.state = {
       numberOfAvailabilities: 1,
       error: { },
+      days: days || props.days
     };
   }
 
@@ -122,46 +125,46 @@ class NewAvailability extends Component {
     }();
 
       return (
-      <div>
-        <Header currentUser={ currentUser } />
+        <div>
+          <Header currentUser={ currentUser } />
 
-        <div className='availabilityContainer'>
-          { this.renderTitle() }
+          <div className='availabilityContainer'>
+            { this.renderTitle() }
 
-          <form className='newAvailabilityFormContainer'>
-            <div>
-              <TextField
-                value={ currentUser.timezone }
-                className='newAvailabilityTimezone'
-                name='timezoneAvailability'
-                disabled
+            <form className='newAvailabilityFormContainer'>
+              <div>
+                <TextField
+                  value={ currentUser.timezone }
+                  className='newAvailabilityTimezone'
+                  name='timezoneAvailability'
+                  disabled
               />
 
-              <a href={ formatLink('/my_profile', currentUser.locale) } className='slidingLink' >
-                <FormattedMessage
-                  id='NewAvailability.updateTimezone'
-                  defaultMessage='Not your timezone?'
+                <a href={ formatLink('/my_profile', currentUser.locale) } className='slidingLink' >
+                  <FormattedMessage
+                    id='NewAvailability.updateTimezone'
+                    defaultMessage='Not your timezone?'
                 />
-              </a>
-            </div>
+                </a>
+              </div>
 
-            <RaisedButton
-              className='addAvailabilitiesButton'
-              label={
-                <FormattedMessage
-                  id='NewAvailability.addAvailabilities'
-                  defaultMessage='Create All Availabilities'
+              <RaisedButton
+                className='addAvailabilitiesButton'
+                label={
+                  <FormattedMessage
+                    id='NewAvailability.addAvailabilities'
+                    defaultMessage='Create All Availabilities'
                 />
               }
-              primary
-              onClick={ validateAllHandler(this.handleSubmit) }
+                primary
+                onClick={ validateAllHandler(this.handleSubmit) }
             />
 
-            { this.renderAvailabilities() }
-          </form>
+              { this.renderAvailabilities() }
+            </form>
+          </div>
+          <Footer className='footerContainerFixed' />
         </div>
-        <Footer className='footerContainerFixed' />
-      </div>
     );
   }
 
@@ -223,13 +226,13 @@ class NewAvailability extends Component {
 
   renderAvailabilities() {
     const { numberOfAvailabilities } = this.state;
-    const { changeHandler, validateAllHandler, days } = this.props;
+    const { changeHandler, validateAllHandler } = this.props;
 
     return _.times(numberOfAvailabilities, (index) => {
       const { availabilities, errors } = this.props;
       const currentAvailability = availabilities[index] || { };
       const { day, start_time, end_time } = currentAvailability;
-      const { error } = this.state;
+      const { error, days } = this.state;
 
       return (
         <div key={ index } className='availabilitiesContainer' >
@@ -364,14 +367,12 @@ NewAvailability.propTypes = {
 };
 
 NewAvailability.defaultProps = {
-  currentUser: {
-    email: '',
-  },
+  currentUser: { },
   location: {
     state: {}
   },
-  errors: {},
   days: [],
+  errors: {},
   availabilities: {
     0: {
       start_time: {},

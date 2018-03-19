@@ -12,7 +12,7 @@ class UserMailer < ApplicationMailer
     end
 
     @url = url
-
+    @domain = domain_name
     mail(to: @user.email, subject: 'Welcome to tutoría')
   end
 
@@ -55,8 +55,12 @@ class UserMailer < ApplicationMailer
 
   private
 
+  def domain_name
+    Rails.configuration.base_domain
+  end
+
   def url
-   'http://tutoria.io/sign_in'
+   "#{domain_name}/sign_in"
   end
 
   def admin_email

@@ -5,9 +5,9 @@
 </head>
 <body>
 <%= image_tag attachments['logo.png'].url %>
-<h1>Welcome to tutoría.com, <%= @user.first_name %></h1>
+<h1>Welcome to <%= @domain %>, <%= @user.first_name %></h1>
 <p>
-  You have successfully signed up to tutoría.com as a <%= @role %>.
+  You have successfully signed up to <%= @domain %> as a <%= @role %>.
   Your username is: <%= @user.email %>.<br>
 </p>
 <%- if @password.present? %>

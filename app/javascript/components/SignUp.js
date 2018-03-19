@@ -38,7 +38,7 @@ function handleUserSignUp() {
     url: restfulUrl,
     attributes,
     method: 'POST',
-    successCallBack: ({ currentUser }) => {
+    successCallBack: ({ currentUser, days }) => {
       let link = '';
 
       if (role === 'volunteer') {
@@ -49,7 +49,7 @@ function handleUserSignUp() {
 
       const userLocale = updatedUser.locale || '';
 
-      history.push(formatLink(link, userLocale), { signUp: true, currentUser });
+      history.push(formatLink(link, userLocale), { signUp: true, currentUser, days });
     },
 
     errorCallBack: (message) => {

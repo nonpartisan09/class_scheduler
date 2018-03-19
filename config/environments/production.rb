@@ -32,6 +32,7 @@ Rails.application.configure do
 
   config.action_mailer.default_url_options = { :host => 'https://tutoria.io' }
   config.action_mailer.perform_caching = false
+  config.base_domain = ENV["DOMAIN_NAME"]
 
   # Eager load code on boot. This eager loads most of Rails and
   # your application in memory, allowing both threaded web servers

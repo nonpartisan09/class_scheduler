@@ -29,14 +29,14 @@ Rails.application.routes.draw do
 
     # needed for devise
     devise_scope :user do
+      get 'sign_in', to: 'sessions#new', as: :login
+      delete 'sign_out', to: 'sessions#destroy'
+      post 'sign_in', to: 'sessions#create'
       get 'password/edit' => 'passwords#edit'
       get 'password/new' => 'passwords#new'
       post 'password' => 'passwords#create'
       put 'password' => 'passwords#update'
-      get 'sign_in', to: 'sessions#new'
-      delete 'sign_out', to: 'sessions#destroy'
-      post 'sign_in' => 'sessions#create'
-      get 'sign_up/:role', to:'registrations#new'
+      get 'sign_up/:role', to:'registrations#new', as: :sign_up
       post 'sign_up/:role' => 'registrations#create'
       post 'update', to:'registrations#update'
       get 'profiles/:url_slug', to:'users#show'

@@ -36,6 +36,8 @@ Rails.application.configure do
       port: '5000'
   }
 
+  config.base_domain = ENV["DOMAIN_NAME"]
+
   config.action_mailer.perform_caching = false
 
   # Print deprecation notices to the Rails logger.

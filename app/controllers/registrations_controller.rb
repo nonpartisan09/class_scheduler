@@ -29,21 +29,22 @@ class RegistrationsController < Devise::RegistrationsController
 
       @registration.execute
       user = UserDecorator.new(@user).simple_decorate
+      days = I18n.translate 'date.day_names'
 
       if @user.persisted?
         if @user.active_for_authentication?
           sign_up(resource_name, @user)
 
-          render json: { currentUser: user }, status: :ok
+          render json: { currentUser: user, days: days }, status: :ok
         else
           expire_data_after_sign_in!
-          render json: { currentUser: user }, status: :ok
+          render json: { currentUser: user, days: days }, status: :ok
         end
       else
         clean_up_passwords @user
         set_minimum_password_length
 
-        render json: { currentUser: user }, status: :ok
+        render json: { currentUser: user, days: days }, status: :ok
       end
 
     rescue Contexts::Users::Errors::AlreadyUsedEmailAlreadyUsedDisplayName,
