@@ -1,6 +1,7 @@
 .homepageWithoutFooter {
   display: flex;
   flex-flow: column;
+  height: 90vh;
 }
 
 .homepageMainContainer .footerContainer {
@@ -15,7 +16,7 @@
 }
 
 .homepageImage {
-  width: 100%;
+  width: 80vh;
   object-fit: cover;
 }
 
