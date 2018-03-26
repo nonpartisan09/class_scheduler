@@ -59,7 +59,6 @@ group :development, :test do
   gem 'selenium-webdriver', '~> 3.7', require: false
   gem 'rspec-rails', '~> 3.6'
 
-
   gem 'awesome_print'
 end
 
