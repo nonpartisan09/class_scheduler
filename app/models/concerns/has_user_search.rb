@@ -67,24 +67,49 @@ module HasUserSearch
         I18n.locale = :en
         days = params[:day].split(/,/)
 
-        Time.zone = timezone
-        start_time = params[:start_time] || '00:00'
-        end_time = params[:end_time]  || '23:59'
-
         queries = []
         days.each { |day|
-          day_month = "#{I18n.t('date.day_names')[day.to_i]}, #{day.to_i + 1} Jan 2001"
-          start_of_day = Time.zone.parse("#{day_month} 00:00 #{Time.zone.tzinfo}").iso8601
-          end_of_day = Time.zone.parse("#{day_month} 23:59 #{Time.zone.tzinfo}").iso8601
-          start_query = Time.zone.parse("#{day_month} #{start_time} #{Time.zone.tzinfo}").iso8601
-          end_query = Time.zone.parse("#{day_month} #{end_time} #{Time.zone.tzinfo}").iso8601
+          day_index = day.to_i
+          day_month = "#{I18n.t('date.day_names')[day_index]}, #{day_index + 1} Jan 2001"
 
-          statement = where({ :availabilities => {
-              :start_time => start_of_day..end_query,
-              :end_time => start_query..end_of_day
-          }})
+          Time.zone = 'UTC'
+          start_of_day = Time.zone.parse("#{day_month} 00:00")&.utc
+          end_of_day = Time.zone.parse("#{day_month} 23:59")&.utc
 
-          queries << statement
+          Time.zone = timezone
+          start_query = if params[:start_time]
+                          Time.zone.parse("#{day_month} #{params[:start_time]}")&.utc
+                        else
+                          start_of_day
+                        end
+
+          end_query = if params[:end_time]
+                        Time.zone.parse("#{day_month} #{params[:end_time]}")&.utc
+                      else
+                        end_of_day
+                      end
+
+
+
+          # check end_query > end of day then add a statement
+          if end_query.strftime("%d").to_i != (day_index + 1)
+            day_month = "#{I18n.t('date.day_names')[0]}, 1 Jan 2001"
+            end_query = Time.zone.parse("#{day_month} #{params[:end_time]}")&.utc
+          end
+
+          # check start_query < start of day then add a statement
+          if start_query.strftime("%d").to_i != (day_index + 1)
+            day_month = "#{I18n.t('date.day_names')[6]}, 7 Jan 2001"
+            start_query = Time.zone.parse("#{day_month} #{params[:start_time]}")&.utc
+          end
+
+            start_statement = Availability.arel_table[:start_time].gteq(start_query).and(Availability.arel_table[:start_time].lteq(end_query))
+            end_statement = Availability.arel_table[:end_time].lteq(end_query).and(Availability.arel_table[:end_time].gteq(start_query))
+
+            statement = where(start_statement.or(end_statement))
+
+            queries << statement
+          end
         }
 
         queries.inject(:or)

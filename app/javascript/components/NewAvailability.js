@@ -204,6 +204,9 @@ class NewAvailability extends Component {
 
         const attributes = FormData.from({ availabilities });
 
+        console.warn('attributes:');
+        console.warn(attributes);
+
         const requestParams = {
           url: '/availabilities',
           attributes,

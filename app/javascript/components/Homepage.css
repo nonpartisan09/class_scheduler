@@ -96,6 +96,10 @@
   .homepageImage, .homepageTextContainer {
     height: 100%;
   }
+
+  .homepageWithoutFooter {
+    height: auto;
+  }
 }
 
 
