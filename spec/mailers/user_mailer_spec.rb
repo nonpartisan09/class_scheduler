@@ -12,7 +12,7 @@ RSpec.describe UserMailer, type: :mailer do
     end
 
     it 'renders the body' do
-      expect(mail.body.encoded).to include("You have successfully signed up to tutor=C3=ADa.com as a user")
+      expect(mail.body.encoded).to include("You have successfully signed up to domainname as a user")
     end
   end
   describe 'When a user receives a new email' do

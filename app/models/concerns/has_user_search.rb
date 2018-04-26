@@ -68,7 +68,7 @@ module HasUserSearch
         days = params[:day].split(/,/)
 
         queries = []
-        days.each { |day|
+        days.each do |day|
           day_index = day.to_i
           day_month = "#{I18n.t('date.day_names')[day_index]}, #{day_index + 1} Jan 2001"
 
@@ -89,8 +89,6 @@ module HasUserSearch
                         end_of_day
                       end
 
-
-
           # check end_query > end of day then add a statement
           if end_query.strftime("%d").to_i != (day_index + 1)
             day_month = "#{I18n.t('date.day_names')[0]}, 1 Jan 2001"
@@ -109,8 +107,7 @@ module HasUserSearch
             statement = where(start_statement.or(end_statement))
 
             queries << statement
-          end
-        }
+        end
 
         queries.inject(:or)
       else

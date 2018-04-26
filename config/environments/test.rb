@@ -9,7 +9,7 @@ Rails.application.configure do
       default_url: nil
   }
 
-  config.base_domain = ENV["DOMAIN_NAME"]
+  config.base_domain = 'domainname'
 
   # Settings specified here will take precedence over those in config/application.rb.
 

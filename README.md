@@ -73,3 +73,20 @@ Scheduling:
 - `$ rake db:seed`
 - `$ rake assets:precompile`
 - `$ foreman start`
+
+## Troubleshooting
+
+When deploying to Amazon, if node garbage collection leaks and you get a V8:
+- restart the app
+- deploy latest stable version
+- try again
+
+## SSL certificates
+
+are provided by Let's Encrypt via the use of certbot on the server
+
+## IMPORTANT
+
+Do not deploy master to staging
+Staging does not have the certificates set up by bash scripts on master
+The app will crash
