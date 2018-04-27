@@ -1,75 +1,76 @@
 source 'https://rubygems.org'
 
-ruby '2.4.3'
-
 git_source(:github) do |repo_name|
   repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
   "https://github.com/#{repo_name}.git"
 end
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.1'
+gem 'rails', '~> 5.2'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 
-gem 'activeadmin', '~> 1.2.1'
+gem 'activeadmin', '~> 1.3'
 
 # Use Uglifier as compressor for JavaScript assets
-gem 'uglifier', '~> 3.2', require: false
+gem 'uglifier', '~> 4.1', require: false
 
 # needed for Heroku
-gem 'delayed_job_active_record'
+gem 'delayed_job_active_record', '~> 4.1'
 
 # Use React for views
-gem 'webpacker', '~> 3.2.2'
+gem 'webpacker', '~> 3.4'
 
 # For automatically inlining email styling
-gem 'roadie-rails', '~>1.2.1'
+gem 'roadie-rails', '~>1.3'
 
-gem 'aws-sdk', '~> 2.10', require: false
+gem 'aws-sdk', '~> 3.0', require: false
 
-gem 'pg', '~> 0.21.0'
+gem 'pg', '~> 1.0'
 
 gem 'will_paginate', '~> 3.1.6'
 
 gem 'delayed_job', '~> 4.1'
-gem 'devise', '4.3'
+gem 'devise', '~> 4.4'
 
 # geolocate users
 gem 'geocoder', '~> 1.4'
 
 gem 'puma', '~> 3.11.2'
 # image helper
-gem 'paperclip', '5.1'
+gem 'paperclip', '~> 6.0'
 
-gem 'newrelic_rpm'
+gem 'newrelic_rpm', '~> 5.0'
 
-gem 'jquery-rails', '~> 4.3.1'
+gem 'jquery-rails', '~> 4.3'
 
-gem 'ffi', '1.9.16'
+gem 'ffi', '~> 1.9.16'
+
+group :production do
+  ruby '2.5.0'
+end
 
 group :development, :test do
-  gem 'factory_bot_rails'
+  ruby '2.5.1'
+  gem 'factory_bot_rails', '~> 4.8'
 
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug', '~> 9.1', platforms: [:mri, :mingw, :x64_mingw], require: false
+  gem 'byebug', '~> 10.0', platforms: [:mri, :mingw, :x64_mingw], require: false
   # Adds support for Capybara system testing and selenium driver
-  gem 'capybara', '~> 2.13', require: false
-  gem 'selenium-webdriver', '~> 3.7', require: false
-  gem 'rspec-rails', '~> 3.6'
+  gem 'capybara', '~> 3.0', require: false
+  gem 'selenium-webdriver', '~> 3.11', require: false
+  gem 'rspec-rails', '~> 3.7'
 
-  gem 'awesome_print'
+  gem 'awesome_print', '~> 1.8'
 end
 
 group :development do
   # Use mysql as the database for Active Record
-  gem 'mysql2', '>= 0.3.18', '< 0.5', require: false
+  gem 'mysql2', '~> 0.5', require: false
 
-  gem 'gem_bench', :require => false, :group => :development
-  gem 'guard-rspec', require: false
-  # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
-  gem 'web-console', '>= 3.3.0'
+  gem 'gem_bench', '~> 1.0', :require => false, :group => :development
+  gem 'guard-rspec', '~> 4.7', require: false
   gem 'listen', '~> 3.1'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring', '~> 2.0', require: false
@@ -79,15 +80,14 @@ group :development do
 end
 
 group :test do
-  gem 'database_cleaner', '~> 1.6', require: false
-  gem 'shoulda'
-  gem 'shoulda-matchers', '~> 2.8', require: false
-  #gem 'capybara-webkit', '~> 1.14', require: false
+  gem 'database_cleaner', '~> 1.7', require: false
+  gem 'shoulda', '~> 2.11'
+  gem 'shoulda-matchers', '~> 3.1'
 
 ## =========== STATS/ANALYTICS ==============
 # Error monitoring
-  gem 'airbrake'
-  gem 'airbrake-ruby'
+  gem 'airbrake', '~> 7.3'
+  gem 'airbrake-ruby', '~> 2.9'
 
 ## =========== TESTING TOOLS ==============
 
