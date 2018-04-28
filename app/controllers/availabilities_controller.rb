@@ -40,8 +40,8 @@ class AvailabilitiesController < ApplicationController
       message = []
       status = []
 
-      permitted_params.each do |number|
-        creation = Contexts::Availabilities::Creation.new(permit_nested(permitted_params[number]), current_user)
+      permitted_params.each do |key, value|
+        creation = Contexts::Availabilities::Creation.new(permit_nested(value), current_user)
 
         begin
           @availability = creation.execute

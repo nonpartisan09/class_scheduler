@@ -101,12 +101,12 @@ module HasUserSearch
             start_query = Time.zone.parse("#{day_month} #{params[:start_time]}")&.utc
           end
 
-            start_statement = Availability.arel_table[:start_time].gteq(start_query).and(Availability.arel_table[:start_time].lteq(end_query))
-            end_statement = Availability.arel_table[:end_time].lteq(end_query).and(Availability.arel_table[:end_time].gteq(start_query))
+          start_statement = Availability.arel_table[:start_time].gteq(start_query).and(Availability.arel_table[:start_time].lteq(end_query))
+          end_statement = Availability.arel_table[:end_time].lteq(end_query).and(Availability.arel_table[:end_time].gteq(start_query))
 
-            statement = where(start_statement.or(end_statement))
+          statement = where(start_statement.or(end_statement))
 
-            queries << statement
+          queries << statement
         end
 
         queries.inject(:or)

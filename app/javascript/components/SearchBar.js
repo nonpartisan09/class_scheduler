@@ -39,9 +39,54 @@ class SearchBar extends Component {
     };
   }
 
+  renderDays() {
+    const { errors, search: { day }, location: { state } } = this.props;
+
+    if (state && state.days) {
+      return (
+        <SelectField
+          className='searchBarOption'
+          hintText={
+            <FormattedMessage
+              id='SearchBar.days'
+              defaultMessage='Day(s)'
+            />
+          }
+          value={ day }
+          errorText={ errors.day }
+          onChange={ this.changeHandlerDay }
+          multiple
+          selectionRenderer={ this.selectionRendererDay }
+        >
+          { _.map(state.days, (value, index) => <MenuItem key={ value + index } insetChildren checked={ _.indexOf(day, index) > -1 } value={ index } primaryText={ <span> { value } </span> } />) }
+        </SelectField>
+      );
+    } else {
+      const { days } = this.props;
+
+      return (
+        <SelectField
+          className='searchBarOption'
+          hintText={
+            <FormattedMessage
+              id='SearchBar.days'
+              defaultMessage='Day(s)'
+            />
+          }
+          value={ day }
+          errorText={ errors.day }
+          onChange={ this.changeHandlerDay }
+          multiple
+          selectionRenderer={ this.selectionRendererDay }
+        >
+          { _.map(days, (value, index) => <MenuItem key={ value + index } insetChildren checked={ _.indexOf(day, index) > -1 } value={ index } primaryText={ <span> { value } </span> } />) }
+        </SelectField>
+      );
+    }
+  }
+
   render() {
     const {
-      days,
       programs,
       errors,
       changeHandler,
@@ -50,7 +95,6 @@ class SearchBar extends Component {
       search: {
         distance,
         program,
-        day,
         start_time,
         end_time
       },
@@ -59,6 +103,7 @@ class SearchBar extends Component {
         timezone,
         locale
       },
+      location: { state },
       validateAllHandler
     } = this.props;
 
@@ -69,7 +114,7 @@ class SearchBar extends Component {
 
         <div className='searchBarContainer'>
           <TextField
-            value={ timezone }
+            value={ state && state.currentUser.timezone || timezone }
             className='searchBarTimezone'
             name='searchBarTimezone'
             disabled
@@ -103,22 +148,7 @@ class SearchBar extends Component {
             })}
           </SelectField>
 
-          <SelectField
-            className='searchBarOption'
-            hintText={
-              <FormattedMessage
-                id='SearchBar.days'
-                defaultMessage='Day(s)'
-              />
-            }
-            value={ day }
-            errorText={ errors.day }
-            onChange={ this.changeHandlerDay }
-            multiple
-            selectionRenderer={ this.selectionRendererDay }
-          >
-            { _.map(days, (value, index) => <MenuItem key={ value + index } insetChildren checked={ _.indexOf(day, index) > -1 } value={ index } primaryText={ <span> { value } </span> } />) }
-          </SelectField>
+          { this.renderDays() }
 
           <SearchOptionalFields
             onChange={ changeHandler }

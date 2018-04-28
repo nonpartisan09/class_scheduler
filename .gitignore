@@ -13,7 +13,6 @@
 !/log/.keep
 !/tmp/.keep
 
-/node_modules
 /public
 /yarn-error.log
 /vendor/bundle
@@ -29,6 +28,5 @@
 !.elasticbeanstalk/*.global.yml
 /public/packs
 /public/packs-test
-/node_modules
 yarn-debug.log*
 .yarn-integrity

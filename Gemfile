@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 
+ruby '2.5.0'
+
 git_source(:github) do |repo_name|
   repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
   "https://github.com/#{repo_name}.git"
@@ -47,12 +49,7 @@ gem 'jquery-rails', '~> 4.3'
 
 gem 'ffi', '~> 1.9.16'
 
-group :production do
-  ruby '2.5.0'
-end
-
 group :development, :test do
-  ruby '2.5.1'
   gem 'factory_bot_rails', '~> 4.8'
 
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
