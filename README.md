@@ -90,3 +90,5 @@ are provided by Let's Encrypt via the use of certbot on the server
 Do not deploy master to staging
 Staging does not have the certificates set up by bash scripts on master
 The app will crash
+
+Node modules are version controlled for the sake of Amazon EC2
