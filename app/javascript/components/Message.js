@@ -103,7 +103,7 @@ class Message extends Component {
           <span>{ sentOn } - </span>
           <FormattedMessage
             id='Message.sentBy'
-            defaultMessage='sent by'
+            defaultMessage='Sent by'
           /> <span>{ sender_first_name }: </span>
           <span> { subject } </span>
         </p>
