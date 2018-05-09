@@ -19,13 +19,13 @@ import formatLink from './utils/Link';
 import PageHeader from './reusable/PageHeader';
 
 const schema = {
-  email: Joi.string().email({ minDomainAtoms: 2 }).required().options({
+  email: Joi.string().email().required().options({
     language: {
       any: {
-        required: <FormattedMessage id='NewPasswordPage.invalidEmail' defaultMessage='Please enter a valid email.' />
+        required: 'Please enter a valid email.'
       },
       string: {
-        email: <FormattedMessage id='NewPasswordPage.invalidEmail' />
+        email: 'Please enter a valid email.'
       }
     }
   }),
@@ -127,7 +127,10 @@ class NewPasswordPage extends Component {
         successCallBack: () => {
           this.setState({
             showSnackBar: true,
-            message: <FormattedMessage id='NewPasswordPage.success' defaultMessage='A message has been sent to your email address.' />
+            message: <FormattedMessage
+              id='NewPasswordPage.success'
+              defaultMessage='A message has been sent to your email address.'
+            />
           });
 
           setTimeout(() => {
@@ -137,7 +140,7 @@ class NewPasswordPage extends Component {
         errorCallBack: (message) => {
           this.setState({
             showSnackBar: true,
-            message: message
+            message
           });
 
           setTimeout(() => {

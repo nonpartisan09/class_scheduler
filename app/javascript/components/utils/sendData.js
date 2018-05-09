@@ -1,6 +1,12 @@
 import _ from 'lodash';
 import METHODS from './RestConstants';
 
+function flatMapErrors(errors) {
+  return  _.flatMap(Object.entries(errors), (item) => {
+      return _.capitalize(item.join(' ').replace(/_/g, ' '));
+  }).join(',');
+}
+
 function getData({ url, params='', jsonBody, method='GET', successCallBack, errorCallBack }) {
   const body = jsonBody? JSON.stringify(jsonBody) : null;
   const restUrl = params? `${url}?${params}` : url;
@@ -30,9 +36,7 @@ function getData({ url, params='', jsonBody, method='GET', successCallBack, erro
 
       response.json().then((item) => {
         const { errors, error } = item;
-        const errorMessage = error && error.message ? error.message : _.flatMap(Object.entries(errors), (item) => {
-          return _.capitalize(item.join(' ').replace(/_/g, ' '));
-        }).join(',');
+        const errorMessage = error && error.message ? error.message : flatMapErrors(errors);
         return errorCallBack(errorMessage);
       });
     }
@@ -97,9 +101,7 @@ function postData({ url, params, attributes, method='POST', successCallBack, err
           if (error && error.message) {
             return _.isArray(error.message.length)? error.message.join(',') : error.message;
           } else if (errors) {
-           return _.flatMap(Object.entries(errors), (item) => {
-              return _.capitalize(item.join(' ').replace('_', ' ')).join(',');
-            });
+           return flatMapErrors(errors);
           } else if (message) {
             return message;
           }
@@ -121,5 +123,6 @@ function getCSRFToken() {
 
 export {
   getData,
-  postData
+  postData,
+  flatMapErrors
 };

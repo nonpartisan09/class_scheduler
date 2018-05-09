@@ -22,13 +22,13 @@ import Footer from './reusable/Footer';
 import PageHeader from './reusable/PageHeader';
 
 const schema = {
-  email: Joi.string().email({ minDomainAtoms: 2 }).required().options({
+  email: Joi.string().email().required().options({
   language: {
-    any: {
-      allowOnly: 'Please enter a valid email.'
+      any: {
+        allowOnly: 'Please enter a valid email.'
+      }
     }
-  }
-}),
+  }),
   password: Joi.string().required(),
   remember_me: Joi.boolean()
 };

@@ -50,7 +50,7 @@ const ProfileSchema = {
   state: Joi.string().allow(''),
   country: Joi.string().allow(''),
 
-  email: Joi.string().email({ minDomainAtoms: 2 }).required().options({
+  email: Joi.string().email().required().options({
     language: {
       any: {
         required: 'Please enter an email'

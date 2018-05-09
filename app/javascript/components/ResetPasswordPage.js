@@ -18,7 +18,7 @@ const schema = {
   password_confirmation: Joi.any().valid(Joi.ref('password')).required().options({
     language: {
       any: {
-        allowOnly: <FormattedMessage id='passwordNoMatch' defaultMessage='Passwords don’t match' />
+        allowOnly: 'Passwords don’t match'
       }
     }
   }),
