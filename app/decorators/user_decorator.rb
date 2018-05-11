@@ -44,7 +44,9 @@ class UserDecorator
         :thumbnail_image => picture,
         :description => description,
         :timezone => user_timezone,
-        :languages => languages
+        :languages => languages,
+        :rating_count => rating_count,
+        :average_rating => average_rating
     }
   end
 
@@ -90,11 +92,11 @@ class UserDecorator
   end
 
   def rating_count
-    @user.rating_count || 0
+    @user.rating_count
   end
 
   def average_rating
-    @user.average_rating || 0
+    @user.average_rating
   end
 
   def languages

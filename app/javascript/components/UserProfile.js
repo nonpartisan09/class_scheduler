@@ -319,19 +319,8 @@ class UserProfile extends Component {
       url: restfulUrl,
       attributes,
       method,
-      successCallBack: (response) => {
-        const { review: { id }, message, comments } = response;
-
-        this.setState({
-          id: id,
-          showSnackBar: true,
-          message,
-          comments: comments
-        });
-
-        setTimeout(() => {
-          this.handleHideSnackBar();
-        }, 2000);
+      successCallBack: () => {
+        location.reload();
       },
 
       errorCallBack: (message) => {

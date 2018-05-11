@@ -49,9 +49,6 @@ class AvailabilitiesTable extends Component {
           <TableRowColumn>
             { end_time }
           </TableRowColumn>
-          <TableRowColumn >
-            { timezone }
-          </TableRowColumn>
           { this.renderDeleteRow(id) }
         </TableRow>
       );
@@ -127,12 +124,6 @@ class AvailabilitiesTable extends Component {
                   <FormattedMessage
                     id='endTime'
                     defaultMessage='End Time'
-                  />
-                </TableHeaderColumn>
-                <TableHeaderColumn key='timezone'>
-                  <FormattedMessage
-                    id='timezone'
-                    defaultMessage='Timezone'
                   />
                 </TableHeaderColumn>
                 { this.renderDeleteColumn() }

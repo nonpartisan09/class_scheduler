@@ -55,9 +55,9 @@ class AvailabilitiesController < ApplicationController
         else
           message << { availability: `#{@availability.id} successfully created` }
         end
-        
-        render :json=> { :message => message }, :status => :ok
       end
+
+      render :json=> { :message => message }, :status => :ok
     end
   end
 
