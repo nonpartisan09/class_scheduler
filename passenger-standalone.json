@@ -1,6 +1,0 @@
-{
-  "ssl" : true,
-  "ssl_port" : 443,
-  "ssl_certificate" : "/etc/letsencrypt/live/tutoria.io/fullchain.pem",
-  "ssl_certificate_key" : "/etc/letsencrypt/live/tutoria.io/privkey.pem"
-}
