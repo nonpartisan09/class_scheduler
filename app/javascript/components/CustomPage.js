@@ -7,16 +7,16 @@ import ChooseLanguage from './utils/ChooseLanguage';
 import Footer from './reusable/Footer';
 import Header from './reusable/Header';
 
-import './AboutPage.css';
+import './CustomPage.css';
 
-class AboutPage extends Component {
+class CustomPage extends Component {
   render() {
-    const { about_page_content, currentUser } = this.props;
+    const { page_content, currentUser } = this.props;
     const content = function(){
-      if (ChooseLanguage() === 'es' && about_page_content['es']) {
-        return Parser(about_page_content['es']);
-      } else if (about_page_content['en']) {
-        return Parser(about_page_content['en']);
+      if (ChooseLanguage() === 'es' && page_content['es']) {
+        return Parser(page_content['es']);
+      } else if (page_content['en']) {
+        return Parser(page_content['en']);
       } else {
         return null;
       }
@@ -26,7 +26,7 @@ class AboutPage extends Component {
       <div>
         <Header currentUser={ currentUser } />
         <Paper zDepth={ 1 } className='paperOverride' rounded={ false }>
-          <div className='aboutPageContainer'>
+          <div className='customPageContainer'>
             { content }
           </div>
         </Paper>
@@ -37,17 +37,17 @@ class AboutPage extends Component {
 
 }
 
-AboutPage.propTypes = {
+CustomPage.propTypes = {
   currentUser: PropTypes.object.isRequired,
-  about_page_content: PropTypes.shape({
+  page_content: PropTypes.shape({
     description: PropTypes.node,
     spanish_description: PropTypes.node
   })
 
 };
 
-AboutPage.defaultProps = {
-  about_page_content: { }
+CustomPage.defaultProps = {
+  page_content: { }
 };
 
-export default AboutPage;
+export default CustomPage;

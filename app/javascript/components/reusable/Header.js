@@ -148,6 +148,12 @@ class Header extends Component {
 
     const { currentUser: { locale } } = this.props;
     return [
+      <a key='faq' href={ formatLink('/faq', locale) } className='slidingLink'>
+        <FormattedMessage
+          id='FAQPage'
+          defaultMessage='FAQ'
+        />
+      </a>,
       <a key='about' href={ formatLink('/about', locale) } className='slidingLink'>
         <FormattedMessage
           id='aboutPage'

@@ -22,18 +22,35 @@ class ApplicationController < ActionController::Base
   def about_page
     decorate_user_if_present
 
-    about_page_content = AboutPages.last
-    about_page_content = {
-        :en => about_page_content[:description],
-        :es => about_page_content[:spanish_description]
+    page_content = AboutPages.last
+    page_content = {
+        :en => page_content[:description],
+        :es => page_content[:spanish_description]
     }
 
     @data = {
         :currentUser => @user,
-        :about_page_content => about_page_content
+        :page_content => page_content
     }
 
-    render :about_page
+    render :custom_page
+  end
+
+  def faq_page
+    decorate_user_if_present
+
+    page_content = FaqPage.last
+    page_content = {
+        :en => page_content[:description],
+        :es => page_content[:spanish_description]
+    }
+
+    @data = {
+        :currentUser => @user,
+        :page_content => page_content
+    }
+
+    render :custom_page
   end
 
   def t_and_c

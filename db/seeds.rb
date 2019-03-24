@@ -54,3 +54,13 @@ if user.present?
   user.roles << Role.find_by_url_slug('admin')
   user.save!
 end
+
+AboutPage.create({
+    description: 'about page in English',
+    spanish_description: 'about page in Spanish',
+})
+
+FaqPage.create({
+    description: 'FAQ page in English',
+    spanish_description: 'FAQ page in Spanish',
+})

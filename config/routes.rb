@@ -6,6 +6,7 @@ Rails.application.routes.draw do
     root 'application#index'
     get 'terms_of_use' => 'application#t_and_c'
     get 'about' => 'application#about_page'
+    get 'faq' => 'application#faq_page'
 
     resources :availabilities
     resources :conversations, only: [ :new, :create ]

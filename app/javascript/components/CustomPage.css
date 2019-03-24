@@ -1,0 +1,7 @@
+.customPageContainer {
+    width: 100%;
+}
+
+.customPageContainer .imageContainer {
+    text-align: center;
+}

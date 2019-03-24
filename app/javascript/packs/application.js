@@ -46,7 +46,7 @@ import NewAvailability from '../components/NewAvailability';
 import AvailabilityIndexPage from '../components/AvailabilityIndexPage';
 import UserProfile from '../components/UserProfile';
 import SearchResults from '../components/SearchResults';
-import AboutPage from '../components/AboutPage';
+import CustomPage from '../components/CustomPage';
 import ConversationPage from '../components/ConversationPage';
 import UserReviewIndexPage from '../components/UserReviewIndexPage';
 
@@ -114,7 +114,8 @@ document.addEventListener('DOMContentLoaded', () => {
             <Route exact path={ `/${locale}/availabilities/new` } render={ (props) => <NewAvailability { ...data } { ...props } /> } />
             <Route exact path={ `/${locale}/availabilities` } render={ (props) => <AvailabilityIndexPage { ...data }  { ...props } /> } />
 
-            <Route exact path={ `/${locale}/about` } render={ (props) => <AboutPage { ...data } { ...props } /> } />
+            <Route exact path={ `/${locale}/about` } render={ (props) => <CustomPage { ...data } { ...props } /> } />
+            <Route exact path={ `/${locale}/faq` } render={ (props) => <CustomPage { ...data } { ...props } /> } />
             <Route exact path={ `/${locale}/sign_in` } component={ SignIn } />
             <Route exact path={ `/${locale}/sign_up/:role` } render={ (props) => <SignUp { ...data }  { ...props } /> } />
             <Route exact path={ `/${locale}/terms_of_use` } render={ (props) => <TermsAndConditions { ...data } { ...props } /> } />
@@ -138,7 +139,8 @@ document.addEventListener('DOMContentLoaded', () => {
             <Route exact path='/availabilities/new' render={ (props) => <NewAvailability { ...data } { ...props } /> } />
             <Route exact path='/availabilities' render={ (props) => <AvailabilityIndexPage { ...data }  { ...props } /> } />
 
-            <Route exact path='/about' render={ (props) => <AboutPage { ...data } { ...props } /> } />
+            <Route exact path='/about' render={ (props) => <CustomPage { ...data } { ...props } /> } />
+            <Route exact path='/faq' render={ (props) => <CustomPage { ...data } { ...props } /> } />
             <Route exact path='/sign_in' component={ SignIn } />
             <Route exact path='/sign_up/:role' render={ (props) => <SignUp { ...data }  { ...props } /> } />
             <Route exact path='/terms_of_use' render={ (props) => <TermsAndConditions { ...data } { ...props } /> } />
