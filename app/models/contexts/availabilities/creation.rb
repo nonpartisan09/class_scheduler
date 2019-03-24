@@ -99,16 +99,19 @@ module Contexts
         "#{I18n.t('date.day_names')[@day_index]}, #{index + 1} Jan 2001"
       end
 
+      def parse_time(time)
+        t = Time.zone.parse(time)
+        Time.zone.parse(t.strftime("#{@day_index + 1} Jan 2001 %T"))
+      end
+
       def initialize_start_time
-        Time.zone = @timezone
-        start_time = @availability[:start_time].chars.last(23).first(6).join('')
-        @parsed_start_time = Time.zone.parse("#{day_month(@day_index)} #{start_time} #{Time.zone.tzinfo}")
+        @parsed_start_time = parse_time(@availability[:start_time])
+        return @parsed_start_time
       end
 
       def initialize_end_time
-        Time.zone = @timezone
-        end_time = @availability[:end_time].chars.last(23).first(6).join('')
-        @parsed_end_time = Time.zone.parse("#{day_month(@day_index)} #{end_time} #{Time.zone.tzinfo}")
+        @parsed_end_time = parse_time(@availability[:end_time])
+        return @parsed_end_time
       end
 
       def is_start_time_day_before?
