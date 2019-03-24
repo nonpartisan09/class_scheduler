@@ -67,6 +67,7 @@ const SignUpSchema = {
       }
     }
   }),
+  phone_number: Joi.string().required(),
   password: Joi.string().min(8).max(30).required(),
   password_confirmation: Joi.any().valid(Joi.ref('password')).required().options({
     language: {

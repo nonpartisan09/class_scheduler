@@ -17,6 +17,7 @@ class UserDecorator
       :languages => languages,
       :last_logged_in => last_logged_in,
       :locale => locale,
+      :phone_number => phone_number,
       :programs => programs,
       :rating_count => rating_count,
       :state => state,
@@ -40,6 +41,7 @@ class UserDecorator
         :volunteer => @user.volunteer?,
         :email => email,
         :email_notification => email_notification,
+        :phone_number => phone_number,
         :first_name => first_name,
         :thumbnail_image => picture,
         :description => description,
@@ -73,6 +75,7 @@ class UserDecorator
         :languages => languages,
         :last_logged_in => last_logged_in,
         :locale => locale,
+        :phone_number => phone_number,
         :programs => programs,
         :rating_count => rating_count,
         :state => state,
@@ -121,6 +124,10 @@ class UserDecorator
 
   def email
     @user.email
+  end
+
+  def phone_number
+    @user.phone_number
   end
 
   def picture

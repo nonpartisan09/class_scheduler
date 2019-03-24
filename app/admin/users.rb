@@ -22,6 +22,7 @@ ActiveAdmin.register User do
       :last_name,
       :last_sign_in_at,
       :locale,
+      :phone_number,
       :state,
       :terms_and_conditions,
       :timezone,
@@ -86,6 +87,7 @@ ActiveAdmin.register User do
 
   csv do
     column :email
+    column :phone_number
     column :first_name
     column :last_name
     column :url_slug
@@ -155,6 +157,7 @@ ActiveAdmin.register User do
             img src: user.thumbnail_image.url(:thumbnail), class: 'admin-app-thumbnail' if user.thumbnail_image.present?
           end
           row :email
+          row :phone_number
           row :first_name
           row :last_name
           row :url_slug
@@ -238,6 +241,7 @@ ActiveAdmin.register User do
     f.inputs do
       f.semantic_errors *f.object.errors.keys
       f.input :email
+      f.input :phone_number
       f.input :first_name
       f.input :last_name
       f.input :description

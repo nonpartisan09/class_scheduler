@@ -60,6 +60,7 @@ const ProfileSchema = {
       }
     }
   }),
+  phone_number: Joi.string().required(),
   current_password: Joi.string().min(8).allow(''),
   password: Joi.string().min(8).allow(''),
   password_confirmation: Joi.any().valid(Joi.ref('password')).options({

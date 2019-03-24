@@ -71,6 +71,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
         currentUser: {
           first_name,
           email,
+          phone_number,
           address,
           city,
           state,
@@ -120,6 +121,25 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                 errorText={ errors.email }
                 onChange={ changeHandler('email') }
                 onBlur={ validateHandler('email') }
+              />
+
+              <br />
+
+              <TextField
+                name='phone_number'
+                value={ phone_number }
+                className='userFormInputField phoneNumber'
+                hintText=''
+                floatingLabelText={
+                  <FormattedMessage
+                    id='UserForm.phoneNumber'
+                    defaultMessage='Phone Number'
+                  />
+                }
+                floatingLabelFixed
+                errorText={ errors.phone_number }
+                onChange={ changeHandler('phone_number') }
+                onBlur={ validateHandler('phone_number') }
               />
 
               <br />
@@ -949,6 +969,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
       state: PropTypes.string,
       country: PropTypes.string,
       email: PropTypes.string,
+      phone_number: PropTypes.string,
       languages: PropTypes.array,
       password: PropTypes.string,
       password_confirmation: PropTypes.string,
@@ -998,6 +1019,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
       country: '',
       first_name: '',
       email: '',
+      phone_number: '',
       password: '',
       password_confirmation: '',
       current_password: '',
