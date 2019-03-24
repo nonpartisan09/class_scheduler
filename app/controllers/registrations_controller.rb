@@ -7,12 +7,20 @@ class RegistrationsController < Devise::RegistrationsController
 
     yield resource if block_given?
 
+    validate_role_params
     programs = Program.all
     languages = Language.all
     timezones = ActiveSupport::TimeZone.all
-    @data = { :programs => programs, :timezones => timezones, :languages => languages}
+    how_they_found_us_options = @role_url_slug == 'volunteer' \
+      ? HowTheyFoundUsOption.where(:for_volunteer => true) \
+      : HowTheyFoundUsOption.where(:for_client => true)
+    @data = {
+      :programs => programs,
+      :timezones => timezones,
+      :languages => languages,
+      :how_they_found_us_options => how_they_found_us_options
+    }
 
-    validate_role_params
     respond_with(resource, render: :new)
   end
 
@@ -105,6 +113,7 @@ class RegistrationsController < Devise::RegistrationsController
         :description,
         :email,
         :first_name,
+        :how_they_found_us,
         :id,
         :locale,
         :password,
@@ -131,6 +140,7 @@ class RegistrationsController < Devise::RegistrationsController
         :email,
         :email_notification,
         :first_name,
+        :how_they_found_us,
         :id,
         :locale,
         :password,

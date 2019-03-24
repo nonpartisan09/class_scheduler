@@ -44,6 +44,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
       this.changeHandlerLanguages = this.changeHandlerLanguages.bind(this);
       this.selectionRenderer = this.selectionRenderer.bind(this);
       this.changeTimezoneHandler = this.changeTimezoneHandler.bind(this);
+      this.changeHowTheyFoundUsHandler = this.changeHowTheyFoundUsHandler.bind(this);
       this.changeLocaleHandler = this.changeLocaleHandler.bind(this);
       this.handleImageUpload = this.handleImageUpload.bind(this);
       this.handleShowDialog = this.handleShowDialog.bind(this);
@@ -79,10 +80,12 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
           thumbnail_image,
           description,
           timezone,
+          how_they_found_us,
           email_notification
         },
         currentUser,
-        timezones
+        timezones,
+        how_they_found_us_options
       } = this.props;
 
       return (
@@ -271,6 +274,8 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
               </SelectField>
 
               <br />
+
+              { this.renderHowTheyFoundUs() }
 
               <TextField
                 name='description'
@@ -681,6 +686,53 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
       }
     }
 
+    renderHowTheyFoundUs() {
+      const { type } = wrappedProps;
+
+      if (type !== SIGN_UP)
+        return;
+
+      const {
+        validateHandler,
+        errors,
+        currentUser: {
+          how_they_found_us
+        },
+        how_they_found_us_options
+      } = this.props;
+
+      return (
+        <div>
+        <SelectField
+          floatingLabelFixed
+          floatingLabelText={
+            <FormattedMessage
+              id='UserForm.howTheyFoundUs'
+              defaultMessage='How did you find out about us?'
+            />
+          }
+          value={ how_they_found_us }
+          className='userFormInputField howTheyFoundUs'
+          errorText={ errors.how_they_found_us }
+          onChange={ this.changeHowTheyFoundUsHandler }
+          onBlur={ validateHandler('how_they_found_us') }
+        >
+          {
+            _.map(how_they_found_us_options, ({ name, spanish_name, id }, index) =>
+            <MenuItem key={ name + id + index }
+              insetChildren
+              checked={ how_they_found_us === name }
+              value={ name }
+              primaryText={ <span> { this.props.match.params[0] === ENGLISH ? name : spanish_name } </span> }
+            />)
+          }
+        </SelectField>
+
+        <br />
+        </div>
+      );
+    }
+
     handleShowPassword() {
       this.setState({
         showPassword: true
@@ -875,6 +927,12 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
       changeValue('timezone', value);
     }
 
+    changeHowTheyFoundUsHandler(proxy, index, value) {
+      const { changeValue } = this.props;
+
+      changeValue('how_they_found_us', value);
+    }
+
     renderProgramLabel() {
       const { match: { params: { role } }, currentUser: { client, volunteer } } = this.props;
       if (role === 'volunteer' || volunteer ) {
@@ -989,6 +1047,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
     languages: PropTypes.array,
     programs: PropTypes.array,
     timezones: PropTypes.array,
+    how_they_found_us_options: PropTypes.array,
     changeHandler: PropTypes.func.isRequired,
     changeValue: PropTypes.func.isRequired,
     changeValues: PropTypes.func.isRequired,
@@ -1007,9 +1066,11 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
     languages: [],
     programs: [],
     timezones: [],
+    how_they_found_us_options: [],
     currentUser: {
       locale: 'en',
       timezone: 'Eastern Time (US & Canada)',
+      how_they_found_us: '',
       languages: [],
       programs: [],
       email_notification: true,

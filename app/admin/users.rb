@@ -18,6 +18,7 @@ ActiveAdmin.register User do
       :description,
       :email_notification,
       :first_name,
+      :how_they_found_us,
       :id,
       :last_name,
       :last_sign_in_at,
@@ -94,6 +95,7 @@ ActiveAdmin.register User do
     column :active
     column :contact_permission
     column :email_notification
+    column :how_they_found_us
     column :address
     column :city
     column :locale
@@ -170,6 +172,7 @@ ActiveAdmin.register User do
           row :locale
           row :contact_permission
           row :email_notification
+          row :how_they_found_us
           row :address
           row :city
           row :description
@@ -247,6 +250,7 @@ ActiveAdmin.register User do
       f.input :description
       f.input :email_notification
       f.input :contact_permission
+      f.input :how_they_found_us
       f.input :address
       f.input :locale
       f.input :city

@@ -72,6 +72,7 @@ class UserDecorator
         :description => description,
         :email => email,
         :first_name => first_name,
+        :how_they_found_us => how_they_found_us,
         :languages => languages,
         :last_logged_in => last_logged_in,
         :locale => locale,
@@ -160,6 +161,10 @@ class UserDecorator
 
   def state
     @user.state ||= ''
+  end
+
+  def how_they_found_us
+    @user.how_they_found_us ||= ''
   end
 
   def available_days

@@ -48,6 +48,13 @@ Language.create({
     url_slug: 'espanol'
 })
 
+HowTheyFoundUsOption.create({
+    name: 'Yellow Pages',
+    spanish_name: 'páginas amarillas',
+    for_volunteer: true,
+    for_client: true
+})
+
 user = User.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?
 
 if user.present?

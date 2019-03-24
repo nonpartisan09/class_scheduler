@@ -77,6 +77,7 @@ const SignUpSchema = {
     }
   }),
   contact_permission: Joi.boolean(),
+  how_they_found_us: Joi.string().required(),
 
   terms_and_conditions: Joi.boolean().valid(true).options({
     language: {

@@ -1,0 +1,2 @@
+class HowTheyFoundUsOption < ApplicationRecord
+end
