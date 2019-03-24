@@ -69,6 +69,8 @@ const ProfileSchema = {
       }
     }
   }),
+  average_rating: Joi.any(),
+  rating_count: Joi.any(),
   client: Joi.bool(),
   contact_permission: Joi.bool(),
   terms_and_conditions: Joi.bool(),

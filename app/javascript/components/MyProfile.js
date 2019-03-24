@@ -25,7 +25,9 @@ const ignoredFields = [
   'url_slug',
   'contact_permission',
   'terms_and_conditions',
-  'volunteer'
+  'volunteer',
+  'average_rating',
+  'rating_count',
 ];
 
 function handleUpdateProfile() {
