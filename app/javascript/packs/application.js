@@ -7,6 +7,7 @@
 // To reference this file, add <%= javascript_pack_tag 'application' %> to the appropriate
 // layout file, like app/views/layouts/application.html.erb
 
+import 'babel-polyfill';
 import React from 'react';
 import Joi from 'joi-browser';
 import ReactJoiValidation from 'react-joi-validation';
