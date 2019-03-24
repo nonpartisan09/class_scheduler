@@ -39,17 +39,16 @@ function handleUserSignUp() {
     attributes,
     method: 'POST',
     successCallBack: ({ currentUser, days }) => {
+      const userLocale = updatedUser.locale || '';
       let link = '';
 
       if (role === 'volunteer') {
-        link = '/availabilities/new';
+        link = '/volunteer_sign_up_completed';
+        window.location.href = formatLink(link, userLocale);
       } else if (role === 'client' ) {
         link = '/search';
+        history.push(formatLink(link, userLocale), { signUp: true, currentUser, days });
       }
-
-      const userLocale = updatedUser.locale || '';
-
-      history.push(formatLink(link, userLocale), { signUp: true, currentUser, days });
     },
 
     errorCallBack: (message) => {

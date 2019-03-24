@@ -119,6 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <Route exact path={ `/${locale}/faq` } render={ (props) => <CustomPage { ...data } { ...props } /> } />
             <Route exact path={ `/${locale}/sign_in` } component={ SignIn } />
             <Route exact path={ `/${locale}/sign_up/:role` } render={ (props) => <SignUp { ...data }  { ...props } /> } />
+            <Route exact path={ `/${locale}/volunteer_sign_up_completed` } render={ (props) => <CustomPage { ...data }  { ...props } /> } />
             <Route exact path={ `/${locale}/terms_of_use` } render={ (props) => <TermsAndConditions { ...data } { ...props } /> } />
 
             <Route exact path='/' render={ () => <Homepage { ...data } /> } />
@@ -144,6 +145,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <Route exact path='/faq' render={ (props) => <CustomPage { ...data } { ...props } /> } />
             <Route exact path='/sign_in' component={ SignIn } />
             <Route exact path='/sign_up/:role' render={ (props) => <SignUp { ...data }  { ...props } /> } />
+            <Route exact path='/volunteer_sign_up_completed' render={ (props) => <CustomPage { ...data }  { ...props } /> } />
             <Route exact path='/terms_of_use' render={ (props) => <TermsAndConditions { ...data } { ...props } /> } />
 
             <Route path='/*' render={ () => <NotFoundPage { ...data } /> } />

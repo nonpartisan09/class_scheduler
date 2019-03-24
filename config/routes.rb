@@ -7,6 +7,7 @@ Rails.application.routes.draw do
     get 'terms_of_use' => 'application#t_and_c'
     get 'about' => 'application#about_page'
     get 'faq' => 'application#faq_page'
+    get 'volunteer_sign_up_completed' => 'application#volunteer_sign_up_completed_page'
 
     resources :availabilities
     resources :conversations, only: [ :new, :create ]

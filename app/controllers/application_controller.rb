@@ -53,6 +53,28 @@ class ApplicationController < ActionController::Base
     render :custom_page
   end
 
+  def volunteer_sign_up_completed_page
+    decorate_user_if_present
+
+    page_content_en = <<-EOF
+<p>Thank you for completing the first part of volunteer signup. We just emailed you with next steps. If you didn't receive our email, please let us know at <a href="mailto:admin@tutoria.io">admin@tutoria.io</a>.</p>
+    EOF
+    page_content_es = <<-EOF
+<p>Gracias por completar la primera parte de su registración como voluntario/a. Le acabamos de enviar un correo electrónico con los pasos a seguir. Si usted no ha recibido nuestro correo electrónico todavía, por favor déjenoslo saber escribiéndonos a <a href="mailto:admin@tutoria.io">admin@tutoria.io</a>.</p>
+    EOF
+    page_content = {
+        :en => page_content_en,
+        :es => page_content_es
+    }
+
+    @data = {
+        :currentUser => @user,
+        :page_content => page_content
+    }
+
+    render :custom_page
+  end
+
   def t_and_c
     decorate_user_if_present
 
