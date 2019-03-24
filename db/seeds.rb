@@ -51,6 +51,6 @@ Language.create({
 user = User.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?
 
 if user.present?
-  user.roles = Role.find_by_url_slug('admin')
+  user.roles << Role.find_by_url_slug('admin')
   user.save!
 end
