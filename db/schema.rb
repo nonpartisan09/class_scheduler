@@ -10,16 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180119173326) do
+ActiveRecord::Schema.define(version: 2018_01_19_173326) do
 
-  create_table "about_pages", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
+  create_table "about_pages", force: :cascade do |t|
     t.text "description"
     t.text "spanish_description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "active_admin_comments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
     t.text "body"
     t.string "resource_type"
@@ -33,7 +36,7 @@ ActiveRecord::Schema.define(version: 20180119173326) do
     t.index ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id"
   end
 
-  create_table "availabilities", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "availabilities", force: :cascade do |t|
     t.string "day"
     t.datetime "start_time"
     t.datetime "end_time"
@@ -43,7 +46,7 @@ ActiveRecord::Schema.define(version: 20180119173326) do
     t.index ["user_id"], name: "index_availabilities_on_user_id"
   end
 
-  create_table "conversations", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "conversations", force: :cascade do |t|
     t.integer "author_id"
     t.integer "recipient_id"
     t.datetime "created_at", null: false
@@ -51,7 +54,7 @@ ActiveRecord::Schema.define(version: 20180119173326) do
     t.index ["author_id", "recipient_id"], name: "index_conversations_on_author_id_and_recipient_id", unique: true
   end
 
-  create_table "delayed_jobs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "delayed_jobs", force: :cascade do |t|
     t.integer "priority", default: 0, null: false
     t.integer "attempts", default: 0, null: false
     t.text "handler", null: false
@@ -66,7 +69,7 @@ ActiveRecord::Schema.define(version: 20180119173326) do
     t.index ["priority", "run_at"], name: "delayed_jobs_priority"
   end
 
-  create_table "enrollments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "enrollments", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "program_id"
     t.datetime "created_at", null: false
@@ -75,21 +78,21 @@ ActiveRecord::Schema.define(version: 20180119173326) do
     t.index ["user_id"], name: "index_enrollments_on_user_id"
   end
 
-  create_table "languages", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "languages", force: :cascade do |t|
     t.string "name"
     t.string "url_slug"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "languages_users", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "languages_users", id: false, force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "language_id", null: false
     t.index ["language_id", "user_id"], name: "index_languages_users_on_language_id_and_user_id"
     t.index ["user_id", "language_id"], name: "index_languages_users_on_user_id_and_language_id"
   end
 
-  create_table "messages", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "messages", force: :cascade do |t|
     t.text "body"
     t.text "subject"
     t.boolean "unread", default: true
@@ -101,7 +104,7 @@ ActiveRecord::Schema.define(version: 20180119173326) do
     t.index ["user_id"], name: "index_messages_on_user_id"
   end
 
-  create_table "programs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "programs", force: :cascade do |t|
     t.string "name"
     t.string "url_slug"
     t.text "description"
@@ -110,7 +113,7 @@ ActiveRecord::Schema.define(version: 20180119173326) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "reviews", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "reviews", force: :cascade do |t|
     t.integer "author_id"
     t.integer "user_id"
     t.integer "review"
@@ -120,7 +123,7 @@ ActiveRecord::Schema.define(version: 20180119173326) do
     t.index ["author_id", "user_id"], name: "index_reviews_on_author_id_and_user_id", unique: true
   end
 
-  create_table "roles", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "roles", force: :cascade do |t|
     t.string "name"
     t.string "url_slug"
     t.boolean "displayable", default: true
@@ -129,20 +132,20 @@ ActiveRecord::Schema.define(version: 20180119173326) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "roles_users", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "roles_users", id: false, force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "role_id"
     t.index ["role_id"], name: "index_roles_users_on_role_id"
     t.index ["user_id"], name: "index_roles_users_on_user_id"
   end
 
-  create_table "terms_and_conditions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "terms_and_conditions", force: :cascade do |t|
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "users", force: :cascade do |t|
     t.string "first_name"
     t.string "last_name"
     t.string "url_slug", default: "", null: false
@@ -150,8 +153,8 @@ ActiveRecord::Schema.define(version: 20180119173326) do
     t.boolean "contact_permission"
     t.string "address"
     t.string "city"
-    t.float "latitude", limit: 24
-    t.float "longitude", limit: 24
+    t.float "latitude"
+    t.float "longitude"
     t.text "description"
     t.string "timezone", default: "UTC"
     t.integer "average_rating", default: 0
