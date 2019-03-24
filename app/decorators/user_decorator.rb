@@ -84,7 +84,7 @@ class UserDecorator
   end
 
   def email_notification
-    @user.email_notification || nil
+    @user.email_notification
   end
 
   def locale
