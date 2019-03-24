@@ -22,7 +22,9 @@ module Contexts
 
       def execute
         @user.terms_and_conditions = TermsAndConditions.last.id
-        @user.roles << Role.find(@role_id)
+        role = Role.find(@role_id)
+        @user.roles << role
+        @user.active = role.url_slug != 'volunteer'
 
         build_programs
 
@@ -52,7 +54,11 @@ module Contexts
       end
 
       def send_welcome_email
-        UserMailer.welcome_email(@user).deliver_later
+        if @user.volunteer?
+          UserMailer.volunteer_welcome_email(@user).deliver_later
+        elsif @user.client?
+          UserMailer.client_welcome_email(@user).deliver_later
+        end
       end
 
       def check_t_and_c_unticked?

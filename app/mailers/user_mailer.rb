@@ -1,18 +1,19 @@
 class UserMailer < ApplicationMailer
-  def welcome_email(user, password='')
+  def client_welcome_email(user, password='')
     @user = user
     @password = password
-
-    if @user.volunteer?
-      @role = "volunteer"
-    elsif @user.client?
-      @role = "client"
-    else
-      @role = "user"
-    end
-
     @url = url
     @domain = domain_name
+    @role = "client"
+    mail(to: @user.email, subject: 'Welcome to tutoría')
+  end
+
+  def volunteer_welcome_email(user, password='')
+    @user = user
+    @password = password
+    @url = url
+    @domain = domain_name
+    @role = "volunteer"
     mail(to: @user.email, subject: 'Welcome to tutoría')
   end
 
