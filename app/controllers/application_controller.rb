@@ -22,7 +22,7 @@ class ApplicationController < ActionController::Base
   def about_page
     decorate_user_if_present
 
-    page_content = AboutPages.last
+    page_content = AboutPage.last
     page_content = {
         :en => page_content[:description],
         :es => page_content[:spanish_description]
