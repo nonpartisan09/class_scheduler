@@ -270,7 +270,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                 onChange={ this.changeTimezoneHandler }
                 onBlur={ validateHandler('timezone') }
               >
-                { _.map(timezones, ({ name, id }, index) => <MenuItem key={ name + id + index } insetChildren checked={ timezone === name } value={ name } primaryText={ <span> { name } </span> } />) }
+                { _.map(timezones, name => <MenuItem key={ name } insetChildren checked={ timezone === name } value={ name } primaryText={ <span> { name } </span> } />) }
               </SelectField>
 
               <br />

@@ -10,7 +10,7 @@ class RegistrationsController < Devise::RegistrationsController
     validate_role_params
     programs = Program.all
     languages = Language.all
-    timezones = ActiveSupport::TimeZone.all
+    timezones = ActiveSupport::TimeZone.all.map(&:name)
     how_they_found_us_options = @role_url_slug == 'volunteer' \
       ? HowTheyFoundUsOption.where(:for_volunteer => true) \
       : HowTheyFoundUsOption.where(:for_client => true)
