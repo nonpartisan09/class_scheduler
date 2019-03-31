@@ -4,10 +4,7 @@
 
 .footer {
     width: 425px;
-    margin-top: 0;
-    margin-right: 0;
-    margin-left: auto;
-    margin-bottom: 12px;
+    margin: 0 0 12px auto;
     font-size: 10px;
 }
 
@@ -26,18 +23,16 @@
     margin-right: 12px;
 }
 
-@media (max-device-height: 530px) {
-    .footerContainerFixed {
-        position: relative;
-        width: 100vw;
-    }
+.footerContainerFixed {
+    position: relative;
+    width: 100vw;
 }
 
-@media (min-device-height: 531px) {
+
+@media (min-device-height: 720px) {
     .footerContainerFixed {
         position: fixed;
         bottom: 0;
-        width: 100vw;
     }
 }
 

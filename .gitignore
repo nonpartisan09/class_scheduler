@@ -21,6 +21,7 @@
 /public/packs-test
 
 .idea
+*.iml
 
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
