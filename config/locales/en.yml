@@ -9,6 +9,18 @@ en:
         fourth_line: 'Have you worked with'
         fifth_line: 'Leave this person a review'
         sixth_line: 'Thanks and have a great day'
+    welcome_message:
+      title: 'Welcome to Tutoría'
+      body:
+        first_line: 'Welcome to'
+        second_line_first_half: 'You have successfully signed up as a client'
+        second_line_second_half: 'as a client.'
+        third_line: 'Your username is:'
+        fourth_line: 'Your password has been auto-generated:'
+        fifth_line: 'You can change it by signing in and going to "My profile".'
+        sixth_line: 'To sign in to the site, just follow this link:'
+        seventh_line: 'Thanks for joining and have a great day!'
+        eighth_line: 'Team Tutoría'
   datetime:
     distance_in_words:
       x_days:

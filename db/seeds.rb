@@ -62,7 +62,7 @@ if user.present?
   user.save!
 end
 
-AboutPage.create({
+AboutPages.create({
     description: 'about page in English',
     spanish_description: 'about page in Spanish',
 })

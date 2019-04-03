@@ -1,11 +1,12 @@
-Welcome to <%= @domain %>, <%= @user.first_name %>
+<%="#{I18n.translate 'application_mailer.welcome_message.body.first_line'}"%> <%= @domain %>, <%= @user.first_name %>
 ===============================================
 
-You have successfully signed up to <%= @domain %> as a <%= @role %>
-Your username is: <%= @user.email %>.
+<%="#{I18n.translate 'application_mailer.welcome_message.body.second_line_first_half'}"%> <%= @domain %> <%="#{I18n.translate 'application_mailer.welcome_message.body.second_line_second_half'}"%>
+<%="#{I18n.translate 'application_mailer.welcome_message.body.third_line'}"%> <%= @user.email %>.
 
-To sign in to the site, just follow this link: <%= @url %>.
+<%="#{I18n.translate 'application_mailer.welcome_message.body.sixth_line'}"%> <%= @url %>.
 
-Thanks for joining and have a great day!
+<%="#{I18n.translate 'application_mailer.welcome_message.body.seventh_line'}"%>
 
-Team Tutoría
+<%="#{I18n.translate 'application_mailer.welcome_message.body.eighth_line'}"%>
+
