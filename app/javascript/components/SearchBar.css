@@ -42,6 +42,11 @@
 }
 
 @media (max-device-width: 600px), (max-width: 600px) {
+    .signUpHeader h1 {
+        width: 100%;
+        text-align: center;
+    }
+
     .searchBarContainer {
         display: block;
         margin: 0 auto;
