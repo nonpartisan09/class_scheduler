@@ -10,6 +10,7 @@ import './Homepage.css';
 import Footer from './reusable/Footer';
 import Programs from './Programs';
 import Logo from './reusable/Logo';
+import NonChromeMessage from './reusable/NonChromeMessage';
 
 class Homepage extends Component {
   constructor(props, context) {
@@ -23,6 +24,7 @@ class Homepage extends Component {
   render() {
     return (
       <div className='homepageMainContainer'>
+        <NonChromeMessage/>
         <div className='homepageWithoutFooter'>
           { this.renderDesktopHeader() }
           <div className='homepageContainer'>

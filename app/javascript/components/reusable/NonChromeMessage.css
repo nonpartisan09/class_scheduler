@@ -1,0 +1,13 @@
+body {
+    color: #333;
+    font: 14px/24px "Open Sans", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", Sans-Serif;
+}
+
+.notice-warning {
+    background: linear-gradient(#ffdc72, #ffbf00);
+    border: 1px solid #f2b600;
+    border-bottom-color: #c90;
+    border-radius: 6px;
+    padding: 10px 16px;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, .5);
+}

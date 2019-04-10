@@ -12,6 +12,7 @@ import SignUpSchema from './schema/SignUpSchema';
 import { postData } from './utils/sendData';
 import formatLink from './utils/Link';
 import PageHeader from './reusable/PageHeader';
+import NonChromeMessage from './reusable/NonChromeMessage';
 
 const { SIGN_UP } = UserFormConstants;
 
@@ -71,6 +72,7 @@ class SignUp extends Component {
   render() {
     return (
       <div>
+        <NonChromeMessage/>
         <Header />
         <PageHeader title={
           <FormattedMessage
