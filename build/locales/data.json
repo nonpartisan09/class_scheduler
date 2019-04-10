@@ -135,7 +135,8 @@
   "UserProfile.NotAvailable": "Not available",
   "UserReviewIndexPage.header": "Most recent reviews by",
   "UserReviewIndexPage.noReviewAvailable": "No reviews available",
-  "UserReviewIndexPage.unavailable": "Not available"
+  "UserReviewIndexPage.unavailable": "Not available",
+  "NonChromeMessage": "For Optimal Performance, {link} is recommended"
 },
   "es": {
     "aboutPage": "Acerca",
@@ -278,6 +279,7 @@
     "SearchResults.header": "Voluntarios/as disponibles",
     "UserReviewIndexPage.header": "Comentarios más recientes de",
     "Programs.featuredPrograms": "Programas destacados",
-    "UserForm.languages": "Mi Idioma de Preferencia"
+    "UserForm.languages": "Mi Idioma de Preferencia",
+    "NonChromeMessage": "Para obtener un rendimiento óptimo, se recomienda utilizar el navegador web {link}"
   }
 }

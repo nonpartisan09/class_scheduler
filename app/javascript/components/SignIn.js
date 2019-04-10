@@ -20,6 +20,7 @@ import formatLink from './utils/Link';
 import './SignIn.css';
 import Footer from './reusable/Footer';
 import PageHeader from './reusable/PageHeader';
+import NonChromeMessage from './reusable/NonChromeMessage';
 
 const schema = {
   email: Joi.string().email().required().options({
@@ -59,6 +60,7 @@ class SignIn extends Component {
 
     return (
       <div>
+        <NonChromeMessage/>
         <Header  />
         <PageHeader title={
           <FormattedMessage
