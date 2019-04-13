@@ -11,6 +11,7 @@
     "lodash": "^4.17.5",
     "material-ui": "^0.19.4",
     "moment": "^2.19.1",
+    "postcss-loader": "2.0.8",
     "prop-types": "^15.5.4",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
@@ -20,10 +21,10 @@
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
     "react-simple-file-input": "^2.0.1",
-    "webpack": "^3.11.0",
-    "webpack-merge": "^4.1.0",
+    "sass-loader": "^7.1.0",
     "style-loader": "^0.19.1",
-    "postcss-loader": "2.0.8"
+    "webpack": "^3.11.0",
+    "webpack-merge": "^4.1.0"
   },
   "devDependencies": {
     "babel-cli": "6.26.0",
