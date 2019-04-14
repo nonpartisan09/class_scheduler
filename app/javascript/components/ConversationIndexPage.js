@@ -13,7 +13,6 @@ import RaisedButton from 'material-ui/RaisedButton';
 import Header from './reusable/Header';
 import Footer from './reusable/Footer';
 
-import './ConversationIndexPage.css';
 import formatLink from './utils/Link';
 import PageHeader from './reusable/PageHeader';
 

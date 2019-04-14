@@ -6,8 +6,6 @@ import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import { FormattedMessage } from 'react-intl';
 
-import './ReviewContainer.css';
-
 class ReviewContainer extends Component {
   constructor(props) {
     super(props);

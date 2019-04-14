@@ -6,7 +6,6 @@ import { FormattedMessage } from 'react-intl';
 import Header from './reusable/Header';
 import './utils/CheckMobile';
 
-import './Homepage.css';
 import Footer from './reusable/Footer';
 import Programs from './Programs';
 import Logo from './reusable/Logo';

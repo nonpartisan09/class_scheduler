@@ -16,7 +16,6 @@ import FormData from './utils/FormData';
 import { postData } from './utils/sendData';
 import SnackBarComponent from './reusable/SnackBarComponent';
 
-import './NewMessagePage.css';
 import Footer from './reusable/Footer';
 import PageHeader from './reusable/PageHeader';
 

@@ -20,7 +20,6 @@ import Header from './reusable/Header';
 import ErrorField from './reusable/ErrorField';
 import { postData } from './utils/sendData';
 
-import './NewAvailability.css';
 import Footer from './reusable/Footer';
 import PageHeader from './reusable/PageHeader';
 

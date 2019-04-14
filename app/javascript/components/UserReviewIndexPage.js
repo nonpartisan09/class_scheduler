@@ -7,8 +7,6 @@ import Header from './reusable/Header';
 import Footer from './reusable/Footer';
 import PageHeader from './reusable/PageHeader';
 
-import './UserReviewIndexPage.css';
-
 class UserReviewIndexPage extends Component {
   render() {
     const { currentUser, reviewer } = this.props;

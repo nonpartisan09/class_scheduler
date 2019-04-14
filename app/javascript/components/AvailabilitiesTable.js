@@ -19,7 +19,6 @@ import {
 import { postData } from './utils/sendData';
 import SnackBarComponent from './reusable/SnackBarComponent';
 
-import './AvailabilitiesTable.css';
 import formatLink from './utils/Link';
 
 class AvailabilitiesTable extends Component {

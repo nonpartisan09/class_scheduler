@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import { FormattedMessage } from 'react-intl';
-import './NonChromeMessage.css';
 
 class NonChromeMessage extends Component {
     render() {

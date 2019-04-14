@@ -15,7 +15,6 @@ import { getData } from './utils/sendData';
 import Header from './reusable/Header';
 import SearchOptionalFields from './SearchOptionalFields';
 
-import './SearchBar.css';
 import Footer from './reusable/Footer';
 import formatLink from './utils/Link';
 import SnackBarComponent from './reusable/SnackBarComponent';

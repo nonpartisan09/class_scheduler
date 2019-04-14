@@ -6,8 +6,6 @@ import Parser from 'html-react-parser';
 import Footer from './reusable/Footer';
 import Header from './reusable/Header';
 
-import './TermsAndConditions.css';
-
 const TermsAndConditions = ({ currentUser, terms_and_conditions })=> {
   const content = function(){
     if (terms_and_conditions) {

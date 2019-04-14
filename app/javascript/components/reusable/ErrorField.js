@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import './ErrorField.css';
-
 const ErrorField = ({ error })=> {
    if (error) {
      return (

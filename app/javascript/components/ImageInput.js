@@ -7,7 +7,6 @@ import { FormattedMessage } from 'react-intl';
 import FileInput from 'react-simple-file-input';
 import DialogComponent from './DialogComponent';
 
-import './ImageInput.css';
 
 const allowedFileTypes = [ 'image/png', 'image/jpeg', 'image/gif', 'image/jpg' ];
 const minImageSize = 40000;

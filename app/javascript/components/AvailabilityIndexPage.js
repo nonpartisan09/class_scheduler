@@ -10,7 +10,6 @@ import Header from './reusable/Header';
 import AvailabilitiesTable from './AvailabilitiesTable';
 import formatLink from './utils/Link';
 
-import './AvailabilityIndexPage.css';
 import PageHeader from './reusable/PageHeader';
 
 class AvailabilityIndexPage extends Component {
