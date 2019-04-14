@@ -15,7 +15,6 @@ import withUserForm from './reusable/withUserForm';
 import newUser from './utils/CheckUpdatedFields';
 import METHODS from './utils/RestConstants';
 
-import './reusable/Header.css';
 
 const { UPDATE_PROFILE } = UserFormConstants;
 

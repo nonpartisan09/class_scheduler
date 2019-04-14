@@ -13,7 +13,6 @@ import { getData } from './utils/sendData';
 import SearchUrl from './utils/SearchUrl';
 import isCurrentUserLocated from './utils/isCurrentUserLocated';
 
-import './SearchResults.css';
 import PageHeader from './reusable/PageHeader';
 
 class SearchResults extends Component {

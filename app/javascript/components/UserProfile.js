@@ -22,7 +22,6 @@ import Footer from './reusable/Footer';
 import FormData from './utils/FormData';
 import SnackBarComponent from './reusable/SnackBarComponent';
 
-import './UserProfile.css';
 import formatLink from './utils/Link';
 import isCurrentUserLocated from './utils/isCurrentUserLocated';
 

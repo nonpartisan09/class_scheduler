@@ -28,7 +28,6 @@ import ReviewAsStars from '../ReviewAsStars';
 import { ENGLISH, SPANISH } from '../utils/availableLocales';
 import formatLink from '../utils/Link';
 
-import './withUserForm.css';
 import ErrorField from './ErrorField';
 
 const { SIGN_UP, UPDATE_PROFILE } = UserFormConstants;

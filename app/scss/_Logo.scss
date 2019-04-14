@@ -1,0 +1,13 @@
+.logo__item {
+  height: auto;
+  margin-left: 24px;
+  img {
+    width: 260px;
+  }
+  @include breakpoint(medium) {
+    margin-left: 0;
+    img {
+      width: 364px;
+    }
+  }
+}

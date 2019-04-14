@@ -8,8 +8,6 @@ import { ENGLISH, SPANISH } from '../utils/availableLocales';
 
 import PaypalButton from '../PaypalButton';
 
-import './Header.css';
-
 import { getData } from '../utils/sendData';
 import HomeLink from './HomeLink';
 import formatLink from '../utils/Link';
