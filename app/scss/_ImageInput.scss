@@ -21,13 +21,6 @@ input[type=file].fileInput {
     margin-left: 12px;
 }
 
-@media (min-device-width: 0) and (max-device-width: 650px) {
-    .imageInputImageCaption {
-        margin-left: 6px;
-        font-size: 2.5vmax;
-    }
-}
-
 @media (max-width: 650px) {
     .imageInputImageCaption {
         margin-left: 6px;
