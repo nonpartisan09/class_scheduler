@@ -74,7 +74,7 @@
     display: none;
 }
 
-@media (min-device-width: 0) and (max-device-width: 900px), (max-width: 900px) {
+@media (max-width: 900px) {
     .navigation .slidingLink {
         margin-bottom: 6px;
         outline: none;

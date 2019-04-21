@@ -27,7 +27,7 @@
     margin: 12px 0;
 }
 
-@media (min-device-width: 0) and (max-device-width: 600px), (max-width: 600px) {
+@media (max-width: 600px) {
     .searchBarButtonContainer {
         display: block;
         width: 100%;

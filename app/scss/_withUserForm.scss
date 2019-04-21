@@ -52,7 +52,7 @@
     margin: 24px 0 12px;
 }
 
-@media (min-device-width: 0) and (max-device-width: 500px), (max-width: 500px)  {
+@media (max-width: 500px)  {
     .userFormInnerButton, .userFormSecondButton, .userFormOuterButton {
         display: block;
         margin: 12px 0;
