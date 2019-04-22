@@ -4,9 +4,11 @@ import './NonChromeMessage.css';
 
 class NonChromeMessage extends Component {
     render() {
-        const browser = navigator.userAgent.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i)[1];
+
+        const ua = navigator.userAgent.split(' ');
+
         let styles = {
-            display: browser == 'Chrome' ? 'none' : 'block'
+            display: ua[ua.length-1].includes('Safari') && ua[ua.length - 2].includes('Chrome') ? 'none' : 'block'
         };
         return (
           <h3 style={ styles } className="notice-warning">
@@ -14,7 +16,7 @@ class NonChromeMessage extends Component {
               id='NonChromeMessage'
               defaultMessage='For optimal performance, {link} is recommended.'
               values={ {
-                  link: <a href="https://www.google.com/chrome">Google Chrome</a>
+                  link: <a href="https://www.google.com/chrome" rel="noopener noreferrer" target="_blank">Google Chrome</a>
               } }
             />
           </h3>
