@@ -21,7 +21,7 @@ class AvailabilitiesController < ApplicationController
   def new
     user = UserDecorator.new(current_user).simple_decorate
     programs = Program.all
-    timezones = ActiveSupport::TimeZone.all
+    timezones = ActiveSupport::TimeZone.all.map(&:name)
     days = I18n.translate 'date.day_names'
 
     @data = {

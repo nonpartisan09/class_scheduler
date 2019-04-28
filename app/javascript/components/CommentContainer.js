@@ -9,7 +9,6 @@ import formatLink from './utils/Link';
 
 import { LOWEST, HIGHEST, OLDEST, RECENT } from './SortFilter';
 
-import './CommentContainer.css';
 
 class CommentContainer extends Component {
   constructor(props) {

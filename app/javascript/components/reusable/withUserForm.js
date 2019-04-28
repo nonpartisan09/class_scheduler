@@ -28,7 +28,6 @@ import ReviewAsStars from '../ReviewAsStars';
 import { ENGLISH, SPANISH } from '../utils/availableLocales';
 import formatLink from '../utils/Link';
 
-import './withUserForm.css';
 import ErrorField from './ErrorField';
 
 const { SIGN_UP, UPDATE_PROFILE } = UserFormConstants;
@@ -270,7 +269,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                 onChange={ this.changeTimezoneHandler }
                 onBlur={ validateHandler('timezone') }
               >
-                { _.map(timezones, ({ name, id }, index) => <MenuItem key={ name + id + index } insetChildren checked={ timezone === name } value={ name } primaryText={ <span> { name } </span> } />) }
+                { _.map(timezones, name => <MenuItem key={ name } insetChildren checked={ timezone === name } value={ name } primaryText={ <span> { name } </span> } />) }
               </SelectField>
 
               <br />

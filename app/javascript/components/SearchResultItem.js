@@ -13,7 +13,6 @@ import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 
 import ReviewAsStars from './ReviewAsStars';
-import './SearchResultItem.css';
 import formatLink from './utils/Link';
 
 class SearchResultItem extends Component {

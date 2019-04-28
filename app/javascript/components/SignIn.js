@@ -17,7 +17,6 @@ import SnackBarComponent from './reusable/SnackBarComponent';
 import { postData } from './utils/sendData';
 import formatLink from './utils/Link';
 
-import './SignIn.css';
 import Footer from './reusable/Footer';
 import PageHeader from './reusable/PageHeader';
 import NonChromeMessage from './reusable/NonChromeMessage';

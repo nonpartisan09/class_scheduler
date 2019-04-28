@@ -8,7 +8,7 @@ class UserProfilesController < ApplicationController
     user = UserDecorator.new(current_user).updateable
     programs = Program.all
     languages = Language.all
-    timezones = ActiveSupport::TimeZone.all
+    timezones = ActiveSupport::TimeZone.all.map(&:name)
 
     @data = {
         :programs => programs,

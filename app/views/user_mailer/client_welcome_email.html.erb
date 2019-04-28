@@ -3,26 +3,30 @@
 <head>
   <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
 </head>
+
 <body>
 <%= image_tag attachments['logo.png'].url %>
-<h1>Welcome to <%= @domain %>, <%= @user.first_name %></h1>
+<h1><%=I18n.translate 'application_mailer.welcome_message.body.first_line'%> <%= @domain %>, <%= @user.first_name %></h1>
 <p>
-  You have successfully signed up to <%= @domain %> as a <%= @role %>.
-  Your username is: <%= @user.email %>.<br>
+  <%=I18n.translate 'application_mailer.welcome_message.body.second_line_first_half'%> <%= @domain %> <%=I18n.translate 'application_mailer.welcome_message.body.second_line_second_half'%>
+  <%=I18n.translate 'application_mailer.welcome_message.body.third_line'%> <%= @user.email %>.<br>
 </p>
-<%- if @password.present? %>
+  <%- if @password.present? %>
 <p>
-  Your password has been auto-generated: <%=@password%>.
+  <%=I18n.translate 'application_mailer.welcome_message.body.fourth_line'%> <%=@password%>.
 </p>
 <p>
-  You can change it by signing in and going to 'My profile'.
+  <%=I18n.translate 'application_mailer.welcome_message.body.fifth_line'%>
 </p>
-<%- end %>
-
+  <%- end %>
 <p>
-  To sign in to the site, just follow this link: <a href="https://<%= @url %>"><%= @url %></a>.
+  <%=I18n.translate 'application_mailer.welcome_message.body.sixth_line'%> <a href="https://<%= @url %>"><%= @url %></a>.
 </p>
-<p>Thanks for joining and have a great day!</p>
-<p>Team Tutoría</p>
+<p>
+  <%=I18n.translate 'application_mailer.welcome_message.body.seventh_line'%>
+</p>
+<p>
+  <%=I18n.translate 'application_mailer.welcome_message.body.eighth_line'%>
+</p>
 </body>
 </html>

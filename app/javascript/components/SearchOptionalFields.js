@@ -6,8 +6,6 @@ import SelectField from 'material-ui/SelectField';
 import FlatButton from 'material-ui/FlatButton';
 import { FormattedMessage } from 'react-intl';
 
-import './SearchOptionalFields.css';
-
 const UNIT = 'miles';
 
 class SearchOptionalFields extends Component {

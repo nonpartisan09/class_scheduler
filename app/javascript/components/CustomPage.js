@@ -7,7 +7,6 @@ import ChooseLanguage from './utils/ChooseLanguage';
 import Footer from './reusable/Footer';
 import Header from './reusable/Header';
 
-import './CustomPage.css';
 
 class CustomPage extends Component {
   render() {

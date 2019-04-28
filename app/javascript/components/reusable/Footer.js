@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 
-import './Footer.css';
-
 class Footer extends Component {
   render() {
     const { className } = this.props;

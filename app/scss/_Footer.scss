@@ -29,20 +29,20 @@
 }
 
 
-@media (min-device-height: 720px) {
+@media (min-height: 720px) {
     .footerContainerFixed {
         position: fixed;
         bottom: 0;
     }
 }
 
-@media (max-device-width: 900px), (max-width: 900px) {
+@media (max-width: 900px) {
     .footer {
         width: 50%;
     }
 }
 
-@media (max-device-width: 600px), (max-width: 600px) {
+@media (max-width: 600px) {
     .footerLink {
         margin: 0;
     }

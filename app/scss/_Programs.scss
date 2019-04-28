@@ -25,7 +25,7 @@
     margin-bottom: 0;
 }
 
-@media (min-device-width: 0)  and (max-device-width: 900px), (max-width: 900px) {
+@media (max-width: 900px) {
     .programMainContainer, .programContainer {
         display: block;
         padding: 3px 0 6px;

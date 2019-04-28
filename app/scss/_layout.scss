@@ -1,0 +1,26 @@
+body {
+  display: flex;
+  flex-flow: column nowrap;
+  height: 100%;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+  margin: 0;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+.paperOverride {
+  max-width: 950px;
+  padding: 12px 24px 24px 24px;
+  margin: 24px auto;
+  position: relative;
+  min-height: 100px;
+}
+
+@media (max-width: 650px)  {
+  html {
+    font-size: 3vmax;
+  }
+}

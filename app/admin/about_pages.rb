@@ -1,4 +1,4 @@
-ActiveAdmin.register AboutPages do
+ActiveAdmin.register AboutPage do
   permit_params :description,
       :spanish_description,
       :created_at,

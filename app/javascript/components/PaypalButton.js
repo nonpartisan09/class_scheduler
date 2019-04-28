@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import FlatButton from 'material-ui/FlatButton';
 import { FormattedMessage } from 'react-intl';
 
-import './PaypalButton.css';
 
 class PaypalButton extends Component {
   render() {

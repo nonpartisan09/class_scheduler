@@ -22,7 +22,7 @@
     display: block;
 }
 
-@media (min-device-width: 0) and (max-device-width: 650px), (max-width: 650px)  {
+@media (max-width: 650px)  {
    .tableHideSmallScreen {
        display: none;
    }
@@ -40,12 +40,3 @@
     }
 }
 
-@media (max-width: 650px) {
-    .tableHideSmallScreen {
-        display: none;
-    }
-
-    .tableHideMediumScreen {
-        display: block;
-    }
-}

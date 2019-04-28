@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 
-import './ReviewAsStars.css';
 
 class ReviewAsStars extends Component {
   render() {

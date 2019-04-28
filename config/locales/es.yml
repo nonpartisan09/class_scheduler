@@ -72,3 +72,15 @@ es:
         fourth_line: '¿Le gustaría evaluar la persona con la que se ha contactado'
         fifth_line: 'Déjele un comentario en su perfil'
         sixth_line: 'Gracias y Buen día'
+    welcome_message:
+      title: 'Bienvenido a Tutoría'
+      body:
+        first_line: 'Bienvenido a'
+        second_line_first_half: 'Su cuenta como cliente de'
+        second_line_second_half: 'ha sido exitosamente creada.'
+        third_line: 'Su cuenta de usuario es:'
+        fourth_line: 'Su contraseña ha sido generada automáticamente:'
+        fifth_line: 'Puede cambiarlo iniciando sesión y dirigiéndose a "Mi perfil".'
+        sixth_line: 'Para acceder a nuestra página web, solo haga click en:'
+        seventh_line: 'Gracias por ser parte de nuestra organización y que tenga un buen día!'
+        eighth_line: 'Equipo Tutoría'

@@ -9,7 +9,6 @@ import Footer from './reusable/Footer';
 import './utils/CheckMobile';
 import Logo from './reusable/Logo';
 
-import './NotFoundPage.css';
 import formatLink from './utils/Link';
 import PageHeader from './reusable/PageHeader';
 

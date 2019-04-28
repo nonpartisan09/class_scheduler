@@ -1,0 +1,75 @@
+.searchResultItemRequest, .searchResultItemVisitProfile {
+    width: 45%;
+}
+
+.searchResultItemDetails p {
+    min-height: 14px;
+}
+
+.searchResultItemTruncate {
+    width: 250px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.searchResultItemCard {
+    width: 100%;
+    max-width: none;
+    margin-bottom: 12px;
+}
+
+.searchResultItemAvatar {
+    width: 100px;
+    height: 50px;
+    object-fit: contain;
+    display: inline-block;
+    text-align: center;
+    margin-top: 12px;
+}
+
+.searchResultItemRequest {
+    margin-right: 2px;
+}
+
+.searchResultItemRequestIcon {
+    display: inline-block;
+    transform: translateY(5px);
+    margin-right: 12px;
+}
+
+.searchResultItemDetails {
+    display: block;
+}
+
+
+.searchResultItemDetails {
+    white-space: unset;
+}
+
+@media (min-width: 750px) {
+    .searchResultItemCard {
+        max-width: 48%;
+        margin: 0 6px 12px 0;
+    }
+
+    .searchResultItemAvatar, .searchResultItemDetails {
+        display: inline-block;
+    }
+
+    .searchResultItemRequest {
+        margin-right: 12px;
+    }
+
+    .searchResultItemRequestIcon {
+        margin-right: 12px;
+    }
+
+}
+
+@media (min-width: 1100px) {
+    .searchResultItemCard {
+        max-width: 32%;
+        margin-right: 12px;
+    }
+}

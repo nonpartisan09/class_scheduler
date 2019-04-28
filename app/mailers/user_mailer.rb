@@ -4,8 +4,13 @@ class UserMailer < ApplicationMailer
     @password = password
     @url = url
     @domain = domain_name
-    @role = "client"
-    mail(to: @user.email, subject: 'Welcome to tutoría')
+    @locale = locale
+    I18n.with_locale(@locale) do
+      mail(
+          to: @user.email,
+          subject: I18n.translate('application_mailer.welcome_message.title')
+      )
+    end
   end
 
   def volunteer_welcome_email(user, password='')
@@ -14,6 +19,7 @@ class UserMailer < ApplicationMailer
     @url = url
     @domain = domain_name
     @role = "volunteer"
+    @locale = locale
     mail(to: @user.email, subject: 'Welcome to tutoría')
   end
 

@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
 
-import './Logo.css';
-
 class Logo extends Component {
 
   render() {
     return (
-      <h1 className='logoItem'>
+      <h1 className='logo__item'>
         <img
           className='logo'
           alt='tutoria logo'

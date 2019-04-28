@@ -11,7 +11,6 @@ import { FormattedMessage } from 'react-intl';
 import Divider from 'material-ui/Divider';
 
 import formatLink from './utils/Link';
-import './Message.css';
 
 const iconButtonElement = (
   <IconButton

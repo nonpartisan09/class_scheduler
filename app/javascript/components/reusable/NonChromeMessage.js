@@ -4,9 +4,7 @@ import './NonChromeMessage.css';
 
 class NonChromeMessage extends Component {
     render() {
-
         const ua = navigator.userAgent.split(' ');
-
         let styles = {
             display: ua[ua.length-1].includes('Safari') && ua[ua.length - 2].includes('Chrome') ? 'none' : 'block'
         };

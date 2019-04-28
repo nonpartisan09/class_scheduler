@@ -8,6 +8,8 @@
 // layout file, like app/views/layouts/application.html.erb
 
 import 'babel-polyfill';
+import '../../main.scss';
+
 import React from 'react';
 import Joi from 'joi-browser';
 import ReactJoiValidation from 'react-joi-validation';
@@ -53,7 +55,6 @@ import UserReviewIndexPage from '../components/UserReviewIndexPage';
 
 import ChooseLanguage from '../components/utils/ChooseLanguage';
 
-import './application.css';
 
 import localeData from '../../../build/locales/data.json';
 
