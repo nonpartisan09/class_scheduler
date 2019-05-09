@@ -161,7 +161,9 @@ class SearchResults extends Component {
       const { currentUser: { locale }, currentUser, history } = this.props;
       const { search } = this.state;
 
-      return _.map(_.values(volunteers), ({ state, country, rating_count, languages, average_rating, thumbnail_image, first_name, city, last_logged_in, programs, url_slug }, key) => {
+      console.log(volunteers);
+
+      return _.map(_.values(volunteers), ({ state, country, rating_count, languages, average_rating, thumbnail_image, first_name, city, current_sign_in, programs, url_slug }, key) => {
         return [
           <SearchResultItem
             locale={ locale }
@@ -170,7 +172,7 @@ class SearchResults extends Component {
             isCurrentUserLocated={ isCurrentUserLocated(currentUser) }
             firstName={ first_name }
             avatar={ thumbnail_image }
-            lastLoggedin={ last_logged_in }
+            lastLoggedin={ current_sign_in }
             city={ city }
             state={ state }
             country={ country }

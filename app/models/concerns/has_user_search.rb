@@ -52,13 +52,13 @@ module HasUserSearch
         when "closest"
           near(current_full_address, 10000, :order => "")
         when 'last'
-          order(last_sign_in_at: :desc)
+          order(current_sign_in_at: :desc)
         else
           message = I18n.t('custom_errors.messages.incorrect_order')
           raise Contexts::Availabilities::Errors::IncorrectOrder, message
         end
       else
-        order(last_sign_in_at: :desc)
+        order(current_sign_in_at: :desc)
       end
     }
 
@@ -67,6 +67,7 @@ module HasUserSearch
         I18n.locale = :en
         days = params[:day].split(/,/)
 
+        logger.debug days
         queries = []
         days.each do |day|
           day_index = day.to_i
