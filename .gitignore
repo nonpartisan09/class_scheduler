@@ -20,8 +20,6 @@
 /yarn-error.log
 /vendor/bundle
 
-/node_modules/*
-
 .byebug_history
 /public/packs-test
 

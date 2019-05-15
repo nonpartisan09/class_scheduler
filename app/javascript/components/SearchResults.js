@@ -161,8 +161,6 @@ class SearchResults extends Component {
       const { currentUser: { locale }, currentUser, history } = this.props;
       const { search } = this.state;
 
-      console.log(volunteers);
-
       return _.map(_.values(volunteers), ({ state, country, rating_count, languages, average_rating, thumbnail_image, first_name, city, current_sign_in, programs, url_slug }, key) => {
         return [
           <SearchResultItem

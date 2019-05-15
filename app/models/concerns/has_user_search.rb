@@ -67,7 +67,6 @@ module HasUserSearch
         I18n.locale = :en
         days = params[:day].split(/,/)
 
-        logger.debug days
         queries = []
         days.each do |day|
           day_index = day.to_i
