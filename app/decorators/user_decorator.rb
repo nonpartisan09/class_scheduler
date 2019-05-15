@@ -16,6 +16,7 @@ class UserDecorator
       :first_name => first_name,
       :languages => languages,
       :last_logged_in => last_logged_in,
+      :current_sign_in => current_sign_in,
       :locale => locale,
       :phone_number => phone_number,
       :programs => programs,
@@ -174,6 +175,14 @@ class UserDecorator
   def last_logged_in
     if @user.last_sign_in_at?
       time_ago_in_words(@user.last_sign_in_at)
+    else
+      nil
+    end
+  end
+
+  def current_sign_in
+    if @user.current_sign_in_at?
+      time_ago_in_words(@user.current_sign_in_at)
     else
       nil
     end
