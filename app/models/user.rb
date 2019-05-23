@@ -96,7 +96,11 @@ class User < ActiveRecord::Base
     self.active = true
     self.save!
 
-    UserMailer.account_reactivated(self).deliver_later
+    if client?
+      UserMailer.account_reactivated(self).deliver_later
+    else
+      UserMailer.account_activated(self).deliver_later
+    end
   end
 
   def admin_user_creation!
