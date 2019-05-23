@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+</head>
+<body>
+<%= image_tag attachments['logo.png'].url %>
+<h1><%= @user.first_name %>,</h1>
+<p>Congratulations! Your account on tutoria.io has been activated.</p>
+<p>
+  On our platform, contact is initiated by clients. So, you must appear in their search results. To do this, please login to create your availabilities. Once you're logged in, this can be done from the Availabilities menu option.
+</p>
+<p>
+  If you have any questions, check out our FAQ page or contact us at <%= @admin_email %>.
+</p>
+<p>
+  Thanks,
+</p>
+<p>Team Tutoría</p>
+</body>
+</html>

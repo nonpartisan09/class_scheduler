@@ -47,6 +47,13 @@ class UserMailer < ApplicationMailer
     mail(to: @user.email, subject: 'Tutoría Account Re-enabled')
   end
 
+  def account_activated(user)
+    @user = user
+    @admin_email = admin_email
+
+    mail(to: @user.email, subject: 'Please set your availabilities in tutoría')
+  end
+
   def account_deleted(user)
     @user = user
 
