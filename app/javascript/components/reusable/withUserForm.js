@@ -63,6 +63,8 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
         showLanguages: false,
         user: props.currentUser
       };
+
+      this.sortArrayProps(props);
     }
 
     render() {
@@ -1013,6 +1015,12 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
           </div>
         );
       }
+    }
+
+    sortArrayProps(propsObject) {
+      Object.values(propsObject).map(item => {
+        if (item instanceof Array) item.sort();
+      });
     }
   }
 
