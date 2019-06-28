@@ -5,6 +5,16 @@ ActiveAdmin.register User do
       user.admin_user_creation!
       redirect_to(admin_user_path(user))
     end
+    def update
+      @active = User.find(params[:id]).try(:active)
+      super
+      if @user.active == true
+        # send email here
+        resource.activate_account!
+      else
+        resource.deactivate_account!
+      end
+    end
   end
 
   permit_params :email,
