@@ -2,18 +2,11 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import MoodIcon from 'material-ui/svg-icons/social/mood';
-import EmailIcon from 'material-ui/svg-icons/communication/email';
-
-import { FormattedMessage } from 'react-intl';
-import { Link } from 'react-router-dom';
-
-import { Card, CardActions, CardHeader } from 'material-ui/Card';
-
-import RaisedButton from 'material-ui/RaisedButton';
-import FlatButton from 'material-ui/FlatButton';
+import { Card, CardHeader } from 'material-ui/Card';
 
 import ReviewAsStars from './ReviewAsStars';
 import formatLink from './utils/Link';
+import MessageButtons, { MessageTypes } from './reusable/MessageButtons';
 
 class SearchResultItem extends Component {
   constructor(props) {
@@ -26,14 +19,16 @@ class SearchResultItem extends Component {
     const { firstName, lastLoggedin, urlSlug, ratingCount, averageRating, locale } = this.props;
 
     return (
-      <Card className='searchResultItemCard' >
+      <Card className='searchResultItemCard'>
         <CardHeader
           style={ { height: '245px' } }
           title={ firstName }
-          subtitle={
-            <div className='searchResultItemDetails' >
+          subtitle={ (
+            <div className='searchResultItemDetails'>
               <p>
-                Last login: {lastLoggedin}
+                Last login: 
+                {' '}
+                {lastLoggedin}
               </p>
               <p className='searchResultItemTruncate'>
                 { this.renderLanguages() }
@@ -50,42 +45,15 @@ class SearchResultItem extends Component {
                 averageRating={ averageRating }
               />
             </div>
-          }
+) }
           avatar={ this.renderAvatar() }
         />
-        <CardActions>
-          <Link to={ { pathname: formatLink('/messages/new', locale), query: { recipient: urlSlug, userName: firstName } } } >
-            <RaisedButton
-              className='searchResultItemRequest'
-              label={
-                <span>
-                  <div className='searchResultItemRequestIcon'>
-                    <EmailIcon color='white' />
-                  </div>
-                  <FormattedMessage
-                    id='SearchResultItem.request'
-                    defaultMessage='Request'
-                  />
-                </span>
-              }
-              primary
-            />
-          </Link>
-
-          <a href={ formatLink(`/profiles/${urlSlug}`, locale) } >
-            <FlatButton
-              className='searchResultItemVisitProfile'
-              label={
-                <FormattedMessage
-                  id='SearchResultItem.viewProfile'
-                  defaultMessage='View Profile'
-                />
-              }
-              primary
-              onClick={ this.handleViewProfileClick }
-            />
-          </a>
-        </CardActions>
+        <MessageButtons
+          newMessageFirstName={ firstName }
+          newMessageRecipient={ urlSlug }
+          locale={ locale }
+          messageType={ MessageTypes.SEND }
+        />
       </Card>
     );
   }

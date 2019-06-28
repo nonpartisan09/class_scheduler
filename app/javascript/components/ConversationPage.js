@@ -9,6 +9,7 @@ import Footer from './reusable/Footer';
 import { postData } from './utils/sendData';
 import FormData from './utils/FormData';
 import METHODS from './utils/RestConstants';
+import MessageButtons, { MessageTypes } from './reusable/MessageButtons';
 
 class ConversationPage extends Component {
   constructor(props, context) {
@@ -27,13 +28,20 @@ class ConversationPage extends Component {
   }
 
   render() {
-    const { currentUser } = this.props;
+    const { currentUser, conversation: { conversee, conversee_url_slug } }= this.props;
 
     return (
       <div>
         <Header currentUser={ currentUser } />
         <Paper zDepth={ 1 } className='paperOverride' rounded={ false }>
           { this.renderReceivedMessages() }
+          <br/>
+          <MessageButtons
+            newMessageFirstName={ conversee }
+            newMessageRecipient={ conversee_url_slug }
+            locale={ currentUser.locale }
+            messageType={ MessageTypes.REPLY }
+          />
         </Paper>
         <Footer className='footerContainerFixed' />
       </div>
@@ -41,9 +49,7 @@ class ConversationPage extends Component {
   }
 
   renderReceivedMessages() {
-    const { currentUser: { locale } } = this.props;
-
-    const { conversation: { messages, conversee, conversee_url_slug } } = this.state;
+    const { conversation: { messages } } = this.state;
 
     return _.map(messages, ({ body, subject, sent_on, sender_first_name, sender_avatar, unread }, index) => {
 
@@ -51,15 +57,11 @@ class ConversationPage extends Component {
         <Message
           key={ `${index} + ${sent_on}` }
           sender_first_name={ sender_first_name }
-          newMessageFirstName={ conversee }
-          newMessageRecipient={ conversee_url_slug }
           body={ body }
           subject={ subject }
           sentOn={ sent_on }
           avatar={ sender_avatar }
-          locale={ locale }
           unread={ unread }
-          divider={ _.size(messages) > 1 || index !== 0 || index !== (_.size(messages) - 1) }
         />
       );
     });
@@ -93,9 +95,12 @@ class ConversationPage extends Component {
 ConversationPage.propTypes = {
   conversation: PropTypes.shape({
     messages: PropTypes.array,
-    is_first_message_unread: PropTypes.bool
+    is_first_message_unread: PropTypes.bool,
+    conversee: PropTypes.any,
+    conversee_url_slug: PropTypes.oneOfType([ PropTypes.object, PropTypes.string ])
   }),
-  currentUser: PropTypes.object
+  currentUser: PropTypes.object,
+
 };
 
 ConversationPage.defaultProps = {
@@ -104,7 +109,9 @@ ConversationPage.defaultProps = {
     recipient_avatar: '',
     recipientUrlSlug: '',
     senderUrlSlug: '',
-    messages: []
+    messages: [],
+    conversee: null,
+    conversee_url_slug: ''
   },
   currentUser: { }
 };
