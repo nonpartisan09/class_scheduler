@@ -1,30 +1,28 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import IconMenu from 'material-ui/IconMenu';
-import MenuItem from 'material-ui/MenuItem';
 import Avatar from 'material-ui/Avatar';
-import { Link } from 'react-router-dom';
-import { ListItem } from 'material-ui/List';
-import IconButton from 'material-ui/IconButton';
-import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import { FormattedMessage } from 'react-intl';
 import Divider from 'material-ui/Divider';
+import {
+  Card,
+  CardHeader,
+  CardText
+} from 'material-ui';
 
-import formatLink from './utils/Link';
-
-const iconButtonElement = (
-  <IconButton
-    touch
-    tooltip='more'
-    tooltipPosition='bottom-left'
-  >
-    <MoreVertIcon />
-  </IconButton>
-);
+let styles = {
+  wordWrap: 'break-word'
+};
 
 class Message extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      expanded: false,
+    };
+  }
+
   render() {
-    const { avatar, body, unread } = this.props;
+    const { body, unread } = this.props;
 
     const messageContainer = function() {
       if (unread) {
@@ -36,20 +34,31 @@ class Message extends Component {
 
     return (
       <div className={ messageContainer }>
-        <ListItem
-          leftAvatar={ <Avatar src={ avatar } /> }
-          rightIconButton={ this.renderRightIconMenu() }
-          primaryText={ this.renderSubject() }
-          secondaryText={
-            <p>
-              { body }
-            </p>
-          }
-          secondaryTextLines={ 2 }
-        />
+        <Card expanded={ this.state.expanded } onExpandChange={ this.handleExpandChange }>
+          <CardHeader
+            showExpandableButton
+            avatar={ this.renderAvatar() }
+            title={ this.renderSubject() }
+          />
+          <CardText expandable style={ styles }>
+            { body }
+          </CardText>
+        </Card>
         { this.renderDivider() }
       </div>
     );
+  }
+
+  renderAvatar() {
+    const { sender_first_name, avatar } = this.props;
+    return(
+      avatar ?
+        <Avatar src={ avatar } />
+      : (
+        <Avatar>
+          { sender_first_name[0].charAt(0).toUpperCase() }
+        </Avatar>
+        ) );
   }
 
   renderDivider() {
@@ -60,37 +69,14 @@ class Message extends Component {
     }
   }
 
-  renderRightIconMenu() {
-    const { newMessageRecipient } = this.props;
-
-    if (newMessageRecipient) {
-      const { newMessageFirstName, locale} = this.props;
-
-      return (
-        <IconMenu iconButtonElement={ iconButtonElement } >
-          <MenuItem>
-            <Link className='conversationIndexPageLink' to={ { pathname: formatLink('/messages/new', locale), query: { recipient: newMessageRecipient, userName: newMessageFirstName } } } >
-              <FormattedMessage
-                id='messageReply'
-                defaultMessage='Reply'
-              />
-            </Link>
-          </MenuItem>
-          <MenuItem onClick={ this.handleReview(newMessageRecipient) }>
-            <FormattedMessage
-              id='conversationIndexPageReviewLink'
-              defaultMessage='View Profile / Review'
-            />
-          </MenuItem>
-        </IconMenu>
-      );
-    }
-  }
-
   handleReview(urlSlug) {
     return () => {
       location.assign(`/profiles/${urlSlug}`);
     };
+  }
+
+  handleExpandChange = (expanded) => {
+    this.setState({ expanded: expanded });
   }
 
   renderSubject() {
@@ -99,12 +85,25 @@ class Message extends Component {
     if (subject) {
       return (
         <p>
-          <span>{ sentOn } - </span>
+          <span>
+            { sentOn }
+          </span>
+          <br />
           <FormattedMessage
-            id='Message.sentBy'
-            defaultMessage='Sent by'
-          /> <span>{ sender_first_name }: </span>
-          <span> { subject } </span>
+            id='Message.sentby'
+            defaultMessage='Sent by: '
+          />
+          <span>
+            { sender_first_name }
+          </span>
+          <br />
+          <FormattedMessage
+            id='Message.subject'
+            defaultMessage='Subject: '
+          />
+          <span>
+            { subject }
+          </span>
         </p>
 
       );
@@ -115,27 +114,21 @@ class Message extends Component {
 }
 
 Message.propTypes = {
-  newMessageFirstName: PropTypes.oneOfType([ PropTypes.object, PropTypes.string ]),
-  newMessageRecipient: PropTypes.any,
-  sender_first_name: PropTypes.string,
+  sender_first_name: PropTypes.array,
   sentOn: PropTypes.string,
   avatar: PropTypes.string,
   body: PropTypes.string,
   subject: PropTypes.string,
-  locale: PropTypes.string,
   unread: PropTypes.bool,
   divider: PropTypes.bool
 };
 
 Message.defaultProps = {
   subject: '',
-  newMessageFirstName: '',
-  newMessageRecipient: null,
   sender_first_name: '',
   sentOn: '',
   avatar: '',
   body: '',
-  locale: '',
   unread: false,
   divider: false
 };

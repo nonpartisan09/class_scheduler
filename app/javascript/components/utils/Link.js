@@ -13,5 +13,4 @@ function formatLink(link, locale='') {
     return `/en${link}`;
   }
 }
-
 export default formatLink;
