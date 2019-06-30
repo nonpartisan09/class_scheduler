@@ -7,6 +7,15 @@ ActiveAdmin.register User do
     end
   end
 
+  class ReadonlyInput < Formtastic::Inputs::StringInput
+    def to_html
+      input_wrapping do
+        label_html <<
+            template.content_tag('div', @object.send(method))
+      end
+    end
+  end
+
   permit_params :email,
       :active,
       :address,
@@ -255,7 +264,7 @@ ActiveAdmin.register User do
       f.input :locale
       f.input :city
       f.input :state
-      f.input :active
+      f.input :active, as: :readonly
       f.input :country, :as => :string
       f.input :timezone, collection: ActiveSupport::TimeZone.all.map(&:name), selected: resource.timezone
       roles_collection = Role.all.collect{|role| [role.name, role.id, { checked: resource.roles.include?(role) } ]}
@@ -267,5 +276,5 @@ ActiveAdmin.register User do
     end
     f.actions
   end
-
+  
 end
