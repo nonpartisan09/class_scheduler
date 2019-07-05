@@ -62,4 +62,4 @@ en:
       default: "%Y-%m-%d"
     day_names: [Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday]
   decorators:
-    pronouns: [You]
+    pronouns: You

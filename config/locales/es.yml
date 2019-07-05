@@ -61,7 +61,7 @@ es:
       review_created: 'Success, review created'
       review_updated: 'Success, review updated'
   decorators:
-    pronouns: [Tí]
+    pronouns: Tí
   application_mailer:
     new_message:
       title: 'New message from'
