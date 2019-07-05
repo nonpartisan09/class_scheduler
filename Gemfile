@@ -22,42 +22,42 @@ gem 'uglifier', '~> 4.1', require: false
 gem 'delayed_job_active_record', '~> 4.1'
 
 # Use React for views
-gem 'webpacker', '~> 3.4'
+gem 'webpacker', '~> 4.0'
 
 # For automatically inlining email styling
-gem 'roadie-rails', '~>1.3'
+gem 'roadie-rails', '~> 2.1'
 
 gem 'aws-sdk', '~> 3.0', require: false
 
-gem 'pg', '~> 1.0'
+gem 'pg', '~> 1.1'
 
-gem 'will_paginate', '~> 3.1.6'
+gem 'will_paginate', '~> 3.1'
 
 gem 'delayed_job', '~> 4.1'
-gem 'devise', '~> 4.4'
+gem 'devise', '~> 4.6'
 
 # geolocate users
-gem 'geocoder', '~> 1.4'
+gem 'geocoder', '~> 1.5'
 
 gem 'puma', '~> 3.11.2'
 # image helper
-gem 'paperclip', '~> 6.0'
+gem 'paperclip', '~> 6.1'
 
-gem 'newrelic_rpm', '~> 5.0'
+gem 'newrelic_rpm', '~> 6.5'
 
 gem 'jquery-rails', '~> 4.3'
 
-gem 'ffi', '~> 1.9.16'
+gem 'ffi', '~> 1.11'
 
 group :development, :test do
-  gem 'factory_bot_rails', '~> 4.8'
+	gem 'factory_bot_rails', '~> 4.8'
 
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug', '~> 10.0', platforms: [:mri, :mingw, :x64_mingw], require: false
+  gem 'byebug', '~> 11.0', platforms: [:mri, :mingw, :x64_mingw], require: false
   # Adds support for Capybara system testing and selenium driver
-  gem 'capybara', '~> 3.0', require: false
-  gem 'selenium-webdriver', '~> 3.11', require: false
-  gem 'rspec-rails', '~> 3.7'
+  gem 'capybara', '~> 3.25', require: false
+  gem 'selenium-webdriver', '~> 3.142', require: false
+  gem 'rspec-rails', '~> 3.8'
 
   gem 'awesome_print', '~> 1.8'
 end
@@ -70,21 +70,21 @@ group :development do
   gem 'guard-rspec', '~> 4.7', require: false
   gem 'listen', '~> 3.1'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-  gem 'spring', '~> 2.0', require: false
-  gem 'spring-watcher-listen', '~> 2.0.0'
+  gem 'spring', '~> 2.1', require: false
+  gem 'spring-watcher-listen', '~> 2.0'
   gem 'derailed_benchmarks', '~> 1.3', require: false
   gem 'letter_opener_web', '~> 1.3'
 end
 
 group :test do
   gem 'database_cleaner', '~> 1.7', require: false
-  gem 'shoulda', '~> 2.11'
-  gem 'shoulda-matchers', '~> 3.1'
+  gem 'shoulda', '~> 3.6'
+  gem 'shoulda-matchers', '~> 3.0'
 
 ## =========== STATS/ANALYTICS ==============
 # Error monitoring
-  gem 'airbrake', '~> 7.3'
-  gem 'airbrake-ruby', '~> 2.9'
+  gem 'airbrake', '~> 9.3'
+  gem 'airbrake-ruby', '~> 4.5'
 
 ## =========== TESTING TOOLS ==============
 
