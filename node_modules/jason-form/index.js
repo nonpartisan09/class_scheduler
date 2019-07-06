@@ -1,7 +1,7 @@
 'use strict';
 
-var FormData = require('./src/FormData');
-
-module.exports = {
-  FormData: FormData
-};
+if (process.env.NODE_ENV === 'production') {
+  module.exports = require('./cjs/jason-form.production.min.js');
+} else {
+  module.exports = require('./cjs/jason-form.development.js');
+}

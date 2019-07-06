@@ -15,6 +15,12 @@
       "type": ["string", "object"]
     },
     "insertInto": {
+      "anyOf": [
+        { "type": "string" },
+        { "instanceof": "Function" }
+      ]
+    },
+    "transform": {
       "type": "string"
     },
     "singleton": {
@@ -27,5 +33,5 @@
       "type": "boolean"
     }
   },
-  "additionalProperties": true
+  "additionalProperties": false
 }

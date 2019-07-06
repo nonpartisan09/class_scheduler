@@ -71,6 +71,10 @@ var cert = {
   private: fs.readFileSync(__dirname + '/rsa.1024.priv'),
   public: fs.readFileSync(__dirname + '/node.cert')
 }
+var cert2 = {
+  private: fs.readFileSync(__dirname + '/cert.priv'),
+  public: fs.readFileSync(__dirname + '/cert.pub')
+}
 var i = 0
 function testIt (keys) {
   test('key ' + (++i), function (t) {
@@ -94,3 +98,4 @@ testIt(rsapass2)
 testIt(pass1024)
 testIt(pass1024)
 testIt(cert)
+testIt(cert2)
