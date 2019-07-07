@@ -84,7 +84,11 @@ module HasUserSearch
                         end
 
           end_query = if params[:end_time]
-                        Time.zone.parse("#{day_month} #{params[:end_time]}")&.utc
+                        if params[:end_time] == "0:00"
+                          Time.zone.parse("#{day_month} 23:59")&.utc
+                        else
+                          Time.zone.parse("#{day_month} #{params[:end_time]}")&.utc
+                        end
                       else
                         end_of_day
                       end
