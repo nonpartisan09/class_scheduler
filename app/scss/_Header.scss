@@ -20,7 +20,9 @@
 }
 
 .roleLinks,
-.rightElements {
+.rightElements,
+.contactElements,
+.signedOutHeader {
     display: flex;
 }
 
@@ -36,6 +38,17 @@
 
 .signUpMenu a {
     text-decoration: none;
+}
+
+.languageMenuChevron,
+.signUpChevron {
+    align-self: center;
+}
+
+// Window.width < 900px Styles
+
+.menuMobile .roleLinks .sliderButtonContainer {
+    display: inherit;
 }
 
 .menuMobile .rightElements,
@@ -74,4 +87,12 @@
 .menuMobile .langaugeMenuMobilePanel,
 .signedOutMenuMobile .signedOutMenuMobilePanel {
     box-shadow: none;
+}
+
+.menuMobile .logo__item .logo {
+    width: 10pc;
+}
+
+.menuMobile .languageMenuContent {
+    justify-content: center;
 }

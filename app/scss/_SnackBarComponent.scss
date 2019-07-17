@@ -1,0 +1,19 @@
+.snackBar .snackBarContent {
+    background-color: darkred;
+    font-family: Lato;
+    font-size: 18px;
+    padding-left: 1pc;
+    padding-right: 1pc;
+}
+
+.snackBarMessage {
+    display: flex;
+}
+
+.errorExclamationIcon {
+    align-self: center;
+}
+
+.snackBarMessageText {
+    padding-left: 1pc;
+}
