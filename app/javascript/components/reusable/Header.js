@@ -3,16 +3,12 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import {
-  FlatButton
-} from 'material-ui';
-import {
   AppBar,
   Toolbar,
   Menu,
-  MenuItem,
   ExpansionPanel,
   ExpansionPanelSummary,
-  ExpansionPanelDetails
+  ExpansionPanelDetails,
 } from '@material-ui/core';
 import {
   FaFacebookF,
@@ -26,10 +22,12 @@ import {
   ENGLISH,
   SPANISH
 } from '../utils/availableLocales';
+import SliderButton from './SliderButton';
 import PaypalButton from '../PaypalButton';
 import { getData } from '../utils/sendData';
 import HomeLink from './HomeLink';
 import formatLink from '../utils/Link';
+import SnackBarComponent from './SnackBarComponent';
 
 class Header extends Component {
   constructor(props, context) {
@@ -50,6 +48,7 @@ class Header extends Component {
     this.renderMobileElements = this.renderMobileElements.bind(this);
     this.handleMenuCollapse = this.handleMenuCollapse.bind(this);
     this.renderLanguageMenu = this.renderLanguageMenu.bind(this);
+    this.handleHideSnackBar = this.handleHideSnackBar.bind(this);
 
     this.state = {
       showSnackBar: false,
@@ -84,6 +83,11 @@ class Header extends Component {
               { this.renderMobileElements() }
             </ExpansionPanelDetails>
           </ExpansionPanel>
+          <SnackBarComponent
+            isOpen={ this.state.showSnackBar }
+            message={ this.state.message }
+            handleClose={ this.handleHideSnackBar }
+          />
         </div>
       );
     } else {
@@ -115,6 +119,11 @@ class Header extends Component {
               </span>
             </Toolbar>
           </AppBar>
+          <SnackBarComponent
+            isOpen={ this.state.showSnackBar }
+            message={ this.state.message }
+            handleClose={ this.handleHideSnackBar }
+          />
         </div>
       );
     }
@@ -141,6 +150,7 @@ class Header extends Component {
     return(
       <div className='mobileElements'>
         { this.renderRightElements() }
+        <br />
         { this.renderContactElements() }
       </div>
     );
@@ -152,6 +162,10 @@ class Header extends Component {
     );
   }
 
+  handleHideSnackBar() {
+    this.setState({ showSnackBar: false });
+  }
+
   handleMenuCollapse() {
     const isOpen = this.state.open;
     this.setState({ open: !isOpen });
@@ -159,14 +173,6 @@ class Header extends Component {
 
   renderRightElements() {
     const { currentUser: { locale } } = this.props;
-    const style = {
-      'color': '#004664',
-      'fontFamily': 'Lato',
-      'fontSize': '18px',
-      'fontWeight': 'bold',
-      'paddingLeft': '1pc',
-      'paddingRight': '1pc'
-    };
 
     return (
       <div className='rightElements'>
@@ -180,25 +186,22 @@ class Header extends Component {
           ) }
         </div>
         <div className='headerStaticButtons'>
-          <FlatButton
-            className='headerlink'
+          <SliderButton
             href={ formatLink('/faq', locale) }
-            style={ style }
           >
             <FormattedMessage
               id='FAQPage'
               defaultMessage='FAQ'
             />
-          </FlatButton>
-          <FlatButton
+          </SliderButton>
+          <SliderButton
             href={ formatLink('/about', locale) }
-            style={ style }
           >
             <FormattedMessage
               id='aboutPage'
               defaultMessage='About'
             />
-          </FlatButton>
+          </SliderButton>
           { this.renderLanguageMenu() }
           <PaypalButton key='paypal' />
         </div>
@@ -207,14 +210,9 @@ class Header extends Component {
   }
 
   renderLanguageMenu() {
-    const style = {
-      'color': '#004664',
-      'fontFamily': 'Lato',
-      'fontSize': '18px',
-      'fontWeight': 'bold',
-      'paddingLeft': '1pc',
-      'paddingRight': '1pc'
-    };
+    const currentLocale = localStorage.getItem('locale');
+    const languageEnglishValue = 'English';
+    const languageSpanishValue = 'Español';
 
     if (this.state.mobile) {
       return(
@@ -236,20 +234,20 @@ class Header extends Component {
             <ExpansionPanelDetails
               classes={ { root: 'languageMenuContent' } }
             >
-              <FlatButton
-                style={ style }
+              <SliderButton
+                disabled={ currentLocale === ENGLISH }
                 value={ ENGLISH }
                 onClick={ this.handleSetGuestLocale }
               >
-                English
-              </FlatButton>
-              <FlatButton
-                style={ style }
+                { languageEnglishValue }
+              </SliderButton>
+              <SliderButton
+                disabled={ currentLocale === SPANISH }
                 value={ SPANISH }
                 onClick={ this.handleSetGuestLocale }
               >
-                Español
-              </FlatButton>
+                { languageSpanishValue }
+              </SliderButton>
             </ExpansionPanelDetails>
           </ExpansionPanel>
         </div>
@@ -257,16 +255,17 @@ class Header extends Component {
     } else {
       return(
         <div className='languageMenu'>
-          <FlatButton
+          <SliderButton
             onClick={ this.handleLanguageMenuOpen }
-            style={ style }
-            icon={ <FaChevronDown /> }
           >
             <FormattedMessage
               id='Header.selectLanguage'
               defaultMessage='Select Language'
             />
-          </FlatButton>
+            <FaChevronDown
+              className='languageMenuChevron'
+            />
+          </SliderButton>
           <Menu
             id="simple-menu"
             keepMounted
@@ -274,20 +273,20 @@ class Header extends Component {
             open={ Boolean(this.state.LAnchorEl) }
             onClose={ this.handleLanguageMenuClose }
           >
-            <MenuItem
-              style={ style }
+            <SliderButton
+              disabled={ currentLocale === ENGLISH }
               value={ ENGLISH }
               onClick={ this.handleSetGuestLocale }
             >
-              English
-            </MenuItem>
-            <MenuItem
-              style={ style }
+              { languageEnglishValue }
+            </SliderButton>
+            <SliderButton
+              disabled={ currentLocale === SPANISH }
               value={ SPANISH }
               onClick={ this.handleSetGuestLocale }
             >
-              Español
-            </MenuItem>
+              { languageSpanishValue }
+            </SliderButton>
           </Menu>
         </div>
       );
@@ -311,65 +310,54 @@ class Header extends Component {
   }
 
   renderContactElements() {
-    const style = {
-      'color': 'grey',
-    };
-    const labelStyle = {
-      'textTransform': 'none',
-    };
-
     const phoneNumber = '+1-202-555-0159';
     const email = 'admin@tutoria.io';
     const facebook = 'Facebook';
     const facebookLink = 'https://www.facebook.com/Tutoria-416182735512904/';
+    const size = 20;
 
     return(
       <div className='contactElements'>
-        <FlatButton
-          className='contactPhone'
-          style={ style }
-          icon={ (
-            <FaPhone
-              label={ (
-                <FormattedMessage
-                  id="UserForm.phoneNumber"
-                  defaultMessage="Phone Number"
-                />
-              ) }
-              />
-            ) }
-          label={ phoneNumber }
+        <SliderButton
+          grey
           href={ 'tel:'+phoneNumber }
-        />
-        <FlatButton
-          className='contactEmail'
-          style={ style }
-          icon={ (
-            <FaEnvelope
-              label={ (
-                <FormattedMessage
-                  id="UserForm.email"
-                  defaultMessage="Email address"
-                />
-              ) }
+        >
+          <FaPhone
+            size={ size }
+            label={ (
+              <FormattedMessage
+                id="UserForm.phoneNumber"
+                defaultMessage="Phone Number"
               />
             ) }
-          label={ email }
-          labelStyle={ labelStyle }
+          />
+          { phoneNumber }
+        </SliderButton>
+        <SliderButton
+          grey
           href={ 'mailto:'+email }
-        />
-        <FlatButton
-          className='contactFaceBook'
-          style={ style }
-          icon={ (
-            <FaFacebookF
-              label='Facebook'
+        >
+          <FaEnvelope
+            size={ size }
+            label={ (
+              <FormattedMessage
+                id="UserForm.email"
+                defaultMessage="Email address"
               />
             ) }
-          label={ facebook }
-          labelStyle={ labelStyle }
+          />
+          { email }
+        </SliderButton>
+        <SliderButton
+          grey
           href={ facebookLink }
-        />
+        >
+          <FaFacebookF
+            size={ size }
+            label='Facebook'
+          />
+          { facebook }
+        </SliderButton>
       </div>
     );
   }
@@ -401,14 +389,6 @@ class Header extends Component {
 
   renderSignedOutHeader() {
     const { currentUser: { locale } } = this.props;
-    const style = {
-      'color': '#004664',
-      'fontFamily': 'Lato',
-      'fontSize': '18px',
-      'fontWeight': 'bold',
-      'paddingLeft': '1pc',
-      'paddingRight': '1pc'
-    };
 
     if (this.state.mobile) {
       return(
@@ -418,7 +398,9 @@ class Header extends Component {
           >
             <ExpansionPanelSummary
               expandIcon={ (
-                <FaChevronDown />
+                <FaChevronDown
+                  className='signUpMenuChevron'
+                />
               ) }
               classes={ { root: 'signedOutMenuSummary', content: 'signedOutMenuSummaryContent' } }
             >
@@ -430,50 +412,48 @@ class Header extends Component {
             <ExpansionPanelDetails
               classes={ { root: 'signedOutMenuContent' } }
             >
-              <FlatButton
-                style={ style }
+              <SliderButton
                 href={ formatLink('/sign_up/client', locale) }
               >
                 <FormattedMessage
                   id='signUpClient'
                   default='Sign Up As Client'
                 />
-              </FlatButton>
-              <FlatButton
-                style={ style }
+              </SliderButton>
+              <SliderButton
                 href={ formatLink('/sign_up/volunteer', locale) }
               >
                 <FormattedMessage
                   id='signUpVolunteer'
                   default='Sign Up As Volunteer'
                 />
-              </FlatButton>
+              </SliderButton>
             </ExpansionPanelDetails>
           </ExpansionPanel>
-          <FlatButton
+          <SliderButton
             href={ formatLink('/sign_in', locale) }
-            style={ style }
           >
             <FormattedMessage
               id='logIn'
               defaultMessage='Login'
             />
-          </FlatButton>
+          </SliderButton>
         </div>
       );
     } else {
       return (
         <div className='signedOutHeader'>
-          <FlatButton
+          <SliderButton
             onClick={ this.handleSignUpMenuOpen }
-            style={ style }
-            icon={ <FaChevronDown /> }
           >
             <FormattedMessage
               id='signUp'
               defaultMessage='Sign Up'
             />
-          </FlatButton>
+            <FaChevronDown
+              className='signUpChevron'
+            />
+          </SliderButton>
           <Menu
             className='signUpMenu'
             keepMounted
@@ -482,35 +462,32 @@ class Header extends Component {
             onClose={ this.handleSignUpMenuClose }
           >
             <a href={ formatLink('/sign_up/client', locale) }>
-              <MenuItem
-                style={ style }
+              <SliderButton
               >
                 <FormattedMessage
                   id='signUpClient'
                   default='Sign Up As Client'
                 />
-              </MenuItem>
+              </SliderButton>
             </a>
             <a href={ formatLink('/sign_up/volunteer', locale) }>
-              <MenuItem
-                style={ style }
+              <SliderButton
               >
                 <FormattedMessage
                   id='signUpVolunteer'
                   default='Sign Up As Volunteer'
                 />
-              </MenuItem>
+              </SliderButton>
             </a>
           </Menu>
-          <FlatButton
+          <SliderButton
             href={ formatLink('/sign_in', locale) }
-            style={ style }
           >
             <FormattedMessage
               id='logIn'
               defaultMessage='Login'
             />
-          </FlatButton>
+          </SliderButton>
         </div>
       );
     }
@@ -518,61 +495,48 @@ class Header extends Component {
 
   renderRoleLinks() {
     const { currentUser: { client, locale } } = this.props;
-    const style = {
-      'color': '#004664',
-      'fontFamily': 'Lato',
-      'fontSize': '18px',
-      'fontWeight': 'bold',
-      'paddingLeft': '1pc',
-      'paddingRight': '1pc'
-    };
 
     return (
-      <div className='roleLinks' >
-        <FlatButton
+      <div className='roleLinks'>
+        <SliderButton
           onClick={ this.handleSignOut }
-          style={ style }
         >
           <FormattedMessage
             id='signOutLink'
             defaultMessage='Sign Out'
           />
-        </FlatButton>
+        </SliderButton>
         {
           client
           ?
           (
-            <FlatButton
+            <SliderButton
               href={ formatLink('/search', locale) }
-              style={ style }
             >
               <FormattedMessage
                 id='search'
                 defaultMessage='Search'
               />
-            </FlatButton>
+            </SliderButton>
           )
           :
           (
             <span>
-              <FlatButton
+              <SliderButton
                 href={ formatLink('/availabilities/new', locale) }
-                style={ style }
               >
                 <FormattedMessage
                   id='availabilityCreateNew'
                 />
-              </FlatButton>
-
-              <FlatButton
+              </SliderButton>
+              <SliderButton
                 href={ formatLink('/availabilities', locale) }
-                style={ style }
               >
                 <FormattedMessage
                   id='availabilitiesLink'
                   defaultMessage='Availabilities'
                 />
-              </FlatButton>
+              </SliderButton>
             </span>
           )
         }
