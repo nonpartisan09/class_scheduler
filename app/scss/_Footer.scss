@@ -1,3 +1,52 @@
-.footer {
-    flex-shrink: 0;
+
+@import url('https://fonts.googleapis.com/css?family=Roboto+Slab');
+
+.footerHeader {
+    font-family: 'Roboto Slab';
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.footerToolbar {
+    background-color: #004664;
+    padding: 2pc;
+}
+
+.footerLinks a {
+    color: white;
+    font-family: Lato;
+    font-size: 18px;
+    text-decoration: none;
+}
+.footerLinks a:hover {
+    text-decoration: underline;
+}
+
+.footerBody {
+    font-family: Lato;
+    font-size: 18px;
+    display: flex;
+}
+
+.footerBody > span {
+    display: flex;
+    flex-flow: column;
+    padding-right: 2pc;
+}
+
+.footerAddress {
+    display: flex;
+    flex-flow: column;
+}
+
+.copyrightAndLogo {
+    flex-flow: row;
+}
+
+.facebookIcon {
+    padding-right: .2pc;
+}
+
+.copyrightLogo {
+    padding-left: .2pc;
 }

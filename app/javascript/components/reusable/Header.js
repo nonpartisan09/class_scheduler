@@ -22,7 +22,7 @@ import {
   ENGLISH,
   SPANISH
 } from '../utils/availableLocales';
-import SliderButton from './SliderButton';
+import SliderButton from './withStyles/StyledSliderButton';
 import PaypalButton from '../PaypalButton';
 import { getData } from '../utils/sendData';
 import HomeLink from './HomeLink';
@@ -105,7 +105,6 @@ class Header extends Component {
             </Toolbar>
             <Toolbar
               classes={ { root: 'menuAppBarLower' } }
-              title={ this.renderHomeButton() }
             >
               <span
                 classes={ { root: 'menuAppBarLowerLeftElements' } }
@@ -158,17 +157,10 @@ class Header extends Component {
 
   renderHomeButton() {
     return(
-      <HomeLink className='headerHomeLink' />
+      <HomeLink
+        className='headerHomeLink'
+      />
     );
-  }
-
-  handleHideSnackBar() {
-    this.setState({ showSnackBar: false });
-  }
-
-  handleMenuCollapse() {
-    const isOpen = this.state.open;
-    this.setState({ open: !isOpen });
   }
 
   renderRightElements() {
@@ -269,7 +261,10 @@ class Header extends Component {
           <Menu
             id="simple-menu"
             keepMounted
+            anchorOrigin={ {vertical: 'bottom', horizontal: 'center'} }
+            transformOrigin={ {vertical: 'top', horizontal: 'center'} }
             anchorEl={ this.state.LAnchorEl }
+            getContentAnchorEl={ null }
             open={ Boolean(this.state.LAnchorEl) }
             onClose={ this.handleLanguageMenuClose }
           >
@@ -291,22 +286,6 @@ class Header extends Component {
         </div>
       );
     }
-  }
-
-  handleLanguageMenuOpen(event) {
-    this.setState({ LAnchorEl: event.currentTarget });
-  }
-
-  handleLanguageMenuClose() {
-    this.setState({LAnchorEl: null });
-  }
-
-  handleSignUpMenuOpen(event) {
-    this.setState({ SUAnchorEl: event.currentTarget });
-  }
-
-  handleSignUpMenuClose() {
-    this.setState({ SUAnchorEl: null });
   }
 
   renderContactElements() {
@@ -358,31 +337,6 @@ class Header extends Component {
           />
           { facebook }
         </SliderButton>
-      </div>
-    );
-  }
-
-  handleSetGuestLocale({ target }) {
-    const value = target.getAttribute('value');
-    localStorage.setItem('locale', value);
-    const pathname = _.split(window.location.pathname, '/');
-    const localePattern = new RegExp(`(${ENGLISH}|${SPANISH})`);
-    const currentGuestLocale = pathname[1] || '';
-    const isGuestLocaleAsExpected = localePattern.test(currentGuestLocale);
-
-    if (isGuestLocaleAsExpected) {
-      const newPathname = _.drop(pathname, 2).join('/');
-      location.assign(formatLink(`/${newPathname}`, value));
-    } else {
-      location.assign(formatLink(window.location.pathname, value));
-    }
-    this.handleLanguageMenuClose();
-  }
-
-  rendersignedInHeader() {
-    return (
-      <div className='signedInHeader'>
-        { this.renderRoleLinks() }
       </div>
     );
   }
@@ -458,6 +412,9 @@ class Header extends Component {
             className='signUpMenu'
             keepMounted
             anchorEl={ this.state.SUAnchorEl }
+            getContentAnchorEl={ null }
+            anchorOrigin={ {vertical: 'bottom', horizontal: 'center'} }
+            transformOrigin={ {vertical: 'top', horizontal: 'center'} }
             open={ Boolean(this.state.SUAnchorEl) }
             onClose={ this.handleSignUpMenuClose }
           >
@@ -542,6 +499,56 @@ class Header extends Component {
         }
       </div>
     );
+  }
+
+  rendersignedInHeader() {
+    return (
+      <div className='signedInHeader'>
+        { this.renderRoleLinks() }
+      </div>
+    );
+  }
+
+  handleHideSnackBar() {
+    this.setState({ showSnackBar: false });
+  }
+
+  handleMenuCollapse() {
+    const isOpen = this.state.open;
+    this.setState({ open: !isOpen });
+  }
+
+  handleLanguageMenuOpen(event) {
+    this.setState({ LAnchorEl: event.currentTarget });
+  }
+
+  handleLanguageMenuClose() {
+    this.setState({LAnchorEl: null });
+  }
+
+  handleSignUpMenuOpen(event) {
+    this.setState({ SUAnchorEl: event.currentTarget });
+  }
+
+  handleSignUpMenuClose() {
+    this.setState({ SUAnchorEl: null });
+  }
+
+  handleSetGuestLocale({ target }) {
+    const value = target.getAttribute('value');
+    localStorage.setItem('locale', value);
+    const pathname = _.split(window.location.pathname, '/');
+    const localePattern = new RegExp(`(${ENGLISH}|${SPANISH})`);
+    const currentGuestLocale = pathname[1] || '';
+    const isGuestLocaleAsExpected = localePattern.test(currentGuestLocale);
+
+    if (isGuestLocaleAsExpected) {
+      const newPathname = _.drop(pathname, 2).join('/');
+      location.assign(formatLink(`/${newPathname}`, value));
+    } else {
+      location.assign(formatLink(window.location.pathname, value));
+    }
+    this.handleLanguageMenuClose();
   }
 
   handleSignOut() {
