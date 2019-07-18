@@ -84,7 +84,7 @@ const styles = {
 
   class SliderButton extends Component {
       render() {
-          const { classes, grey, ...other } = this.props;
+          const { classes, grey, children, ...other } = this.props;
           return(
             <span id='slider-button-container' className='sliderButtonContainer'>
               <Button
@@ -97,7 +97,7 @@ const styles = {
                   className={ classes.sliderButtonText }
                   { ...other }
                 >
-                  { this.props.children }
+                  { children }
                 </span>
                 <span
                   id='slide-line'

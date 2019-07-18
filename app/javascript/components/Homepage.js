@@ -23,7 +23,7 @@ class Homepage extends Component {
       <div className='homepageMainContainer'>
         <NonChromeMessage />
         <Header currentUser={ this.props.currentUser } />
-        <Footer />
+        <Footer currentUser={ this.props.currentUser } />
       </div>
     );
   }
