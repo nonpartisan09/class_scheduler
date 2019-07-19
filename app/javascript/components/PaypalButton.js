@@ -24,6 +24,7 @@ class PaypalButton extends Component {
           className='paypalButton'
           variant='extended'
           style={ buttonStyle }
+          type='submit'
           >
           <FormattedMessage
             id='PaypalButton.donate'
@@ -35,13 +36,5 @@ class PaypalButton extends Component {
   }
 
 }
-
-PaypalButton.propTypes = {
-
-};
-
-PaypalButton.defaultProps = {
-
-};
 
 export default PaypalButton;

@@ -44,7 +44,6 @@ class Header extends Component {
     this.handleLanguageMenuClose = this.handleLanguageMenuClose.bind(this);
     this.handleSignUpMenuOpen = this.handleSignUpMenuOpen.bind(this);
     this.handleSignUpMenuClose = this.handleSignUpMenuClose.bind(this);
-    this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
     this.renderMobileElements = this.renderMobileElements.bind(this);
     this.handleMenuCollapse = this.handleMenuCollapse.bind(this);
     this.renderLanguageMenu = this.renderLanguageMenu.bind(this);
@@ -57,14 +56,13 @@ class Header extends Component {
       SUAnchorEl: null,
       currentUserLoggedIn: !_.isEmpty(props.currentUser),
       open: false,
-      mobile: false
     };
   }
 
   render() {
     const menuIconSize = 30;
 
-    if (this.state.mobile) {
+    if (this.props.mobile) {
       return(
         <div className='wholeHeader'>
           <ExpansionPanel className='menuMobile'>
@@ -93,7 +91,7 @@ class Header extends Component {
     } else {
       return(
         <div className='wholeHeader'>
-          <AppBar 
+          <AppBar
             position='static'
             style={ { backgroundColor: 'white' } }
             classes={ { root: 'menuAppBar' } }
@@ -125,23 +123,6 @@ class Header extends Component {
           />
         </div>
       );
-    }
-  }
-
-  componentDidMount() {
-    this.updateWindowDimensions();
-    window.addEventListener('resize', this.updateWindowDimensions);
-  }
-  
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.updateWindowDimensions);
-  }
-  
-  updateWindowDimensions() {
-    if (window.innerWidth < 900) {
-      this.setState({ mobile: true });
-    } else {
-      this.setState({ mobile: false });
     }
   }
 
@@ -179,7 +160,7 @@ class Header extends Component {
         </div>
         <div className='headerStaticButtons'>
           <SliderButton
-            href={ formatLink('/faq', locale) }
+            to={ formatLink('/faq', locale) }
           >
             <FormattedMessage
               id='FAQPage'
@@ -187,7 +168,7 @@ class Header extends Component {
             />
           </SliderButton>
           <SliderButton
-            href={ formatLink('/about', locale) }
+            to={ formatLink('/about', locale) }
           >
             <FormattedMessage
               id='aboutPage'
@@ -367,7 +348,7 @@ class Header extends Component {
               classes={ { root: 'signedOutMenuContent' } }
             >
               <SliderButton
-                href={ formatLink('/sign_up/client', locale) }
+                to={ formatLink('/sign_up/client', locale) }
               >
                 <FormattedMessage
                   id='signUpClient'
@@ -375,7 +356,7 @@ class Header extends Component {
                 />
               </SliderButton>
               <SliderButton
-                href={ formatLink('/sign_up/volunteer', locale) }
+                to={ formatLink('/sign_up/volunteer', locale) }
               >
                 <FormattedMessage
                   id='signUpVolunteer'
@@ -385,7 +366,7 @@ class Header extends Component {
             </ExpansionPanelDetails>
           </ExpansionPanel>
           <SliderButton
-            href={ formatLink('/sign_in', locale) }
+            to={ formatLink('/sign_in', locale) }
           >
             <FormattedMessage
               id='logIn'
@@ -418,27 +399,27 @@ class Header extends Component {
             open={ Boolean(this.state.SUAnchorEl) }
             onClose={ this.handleSignUpMenuClose }
           >
-            <a href={ formatLink('/sign_up/client', locale) }>
-              <SliderButton
-              >
-                <FormattedMessage
-                  id='signUpClient'
-                  default='Sign Up As Client'
-                />
-              </SliderButton>
-            </a>
-            <a href={ formatLink('/sign_up/volunteer', locale) }>
-              <SliderButton
-              >
-                <FormattedMessage
-                  id='signUpVolunteer'
-                  default='Sign Up As Volunteer'
-                />
-              </SliderButton>
-            </a>
+            <SliderButton
+              to={ formatLink('/sign_up/client', locale) }
+              onClick={ this.handleSignUpMenuClose }
+            >
+              <FormattedMessage
+                id='signUpClient'
+                default='Sign Up As Client'
+              />
+            </SliderButton>
+            <SliderButton
+              to={ formatLink('/sign_up/volunteer', locale) }
+              onClick={ this.handleSignUpMenuClose }
+            >
+              <FormattedMessage
+                id='signUpVolunteer'
+                default='Sign Up As Volunteer'
+              />
+            </SliderButton>
           </Menu>
           <SliderButton
-            href={ formatLink('/sign_in', locale) }
+            to={ formatLink('/sign_in', locale) }
           >
             <FormattedMessage
               id='logIn'
@@ -468,7 +449,7 @@ class Header extends Component {
           ?
           (
             <SliderButton
-              href={ formatLink('/search', locale) }
+              to={ formatLink('/search', locale) }
             >
               <FormattedMessage
                 id='search'
@@ -480,14 +461,14 @@ class Header extends Component {
           (          
             <span>
               <SliderButton
-                href={ formatLink('/availabilities/new', locale) }
+                to={ formatLink('/availabilities/new', locale) }
               >
                 <FormattedMessage
                   id='availabilityCreateNew'
                 />
               </SliderButton>
               <SliderButton
-                href={ formatLink('/availabilities', locale) }
+                to={ formatLink('/availabilities', locale) }
               >
                 <FormattedMessage
                   id='availabilitiesLink'
@@ -576,15 +557,8 @@ class Header extends Component {
 }
 
 Header.propTypes = {
-  currentUser: PropTypes.object,
-};
-
-Header.defaultProps = {
-  currentUser: { }
-};
-
-Header.contextTypes = {
-  router: PropTypes.object
+  currentUser: PropTypes.object.isRequired,
+  mobile: PropTypes.bool.isRequired,
 };
 
 export default Header;

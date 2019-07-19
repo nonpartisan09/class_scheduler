@@ -22,14 +22,12 @@ class UserReviewIndexPage extends Component {
       }();
     return (
       <div>
-        <Header currentUser={ currentUser } />
         <Paper zDepth={ 1 } className='paperOverride' rounded={ false }>
           <PageHeader title={ title } />
           <ul className='userReviewIndexPageContainerList'>
             { this.renderContent() }
           </ul>
         </Paper>
-        <Footer />
       </div>
     );
   }

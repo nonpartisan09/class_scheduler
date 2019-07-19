@@ -108,7 +108,6 @@ class SearchBar extends Component {
 
     return (
       <div>
-        <Header currentUser={ this.props.currentUser } />
         { this.renderTitle() }
 
         <div className='searchBarContainer'>
@@ -176,8 +175,6 @@ class SearchBar extends Component {
         </div>
 
         { this.renderSnackBar() }
-
-        <Footer className='footerContainerFixed' />
       </div>
     );
   }

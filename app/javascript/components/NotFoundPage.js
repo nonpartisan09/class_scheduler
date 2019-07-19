@@ -17,7 +17,6 @@ class NotFoundPage extends Component {
     const { currentUser: { locale }, currentUser } = this.props;
     return (
       <div className='notFoundPageContainer'>
-        <Header currentUser={ currentUser } />
         <Paper zDepth={ 1 } className='paperOverride' rounded={ false }>
           <Logo />
           <PageHeader title={
@@ -45,7 +44,6 @@ class NotFoundPage extends Component {
             />
           </a>
         </Paper>
-        <Footer />
       </div>
     );
   }

@@ -43,7 +43,7 @@ import SignIn from '../components/SignIn';
 import NewPasswordPage from '../components/NewPasswordPage';
 import ResetPasswordPage from '../components/ResetPasswordPage';
 import NotFoundPage from '../components/NotFoundPage';
-
+import ContentWrapper from '../components/ContentWrapper';
 import TermsAndConditions from '../components/TermsAndConditions';
 import NewAvailability from '../components/NewAvailability';
 import AvailabilityIndexPage from '../components/AvailabilityIndexPage';
@@ -92,67 +92,52 @@ document.addEventListener('DOMContentLoaded', () => {
   render(
     <IntlProvider locale={ language } messages={ messages }>
       <MuiThemeProvider muiTheme={ getMuiTheme(MuiTheme) }>
-        <Router >
-          <Switch>
-
-            <Route exact path={ `/${locale}` } render={ () => <Homepage { ...data } /> } />
-
-            <Route exact path={ `/${locale}/inbox` } render={ (props) => <ConversationIndexPage { ...data } { ...props } /> } />
-            <Route exact path={ `/${locale}/inbox/:id` } render={ (props) => <ConversationPage { ...data } { ...props } /> } />
-            <Route exact path={ `/${locale}/messages/new` } render={ (props) => <NewMessagePage { ...data } { ...props } /> } />
-            <Route exact path={ `/${locale}/search` } render={ (props) => <SearchBar { ...data } { ...props } /> } />
-            <Route exact path={ `/${locale}/volunteers` } render={ (props) => <SearchResults { ...data } { ...props } /> } />
-            <Route exact path={ `/${locale}/my_profile` } render={ (props) => <MyProfile { ...data } { ...props } /> } />
-            <Route exact path={ `/${locale}/:user_id/(:order)` } render={ (props) => <UserReviewIndexPage { ...data } { ...props } /> } />
-            <Route exact path={ `/${locale}/reviews/author/:url_slug` } render={ (props) => <UserReviewIndexPage { ...data } { ...props } /> } />
-
-            <Route
-              exact
-              path={ `/${locale}/profiles/:url_slug` }
-              render={ (props) => (renderUserProfile (data, props)) }
-            />
-            <Route exact path={ `/${locale}/password/new` } component={ NewPasswordPage } />
-            <Route exact path={ `/${locale}/password/edit` } render={ (props) => <ResetPasswordPage { ...props } /> } />
-            <Route exact path={ `/${locale}/availabilities/new` } render={ (props) => <NewAvailability { ...data } { ...props } /> } />
-            <Route exact path={ `/${locale}/availabilities` } render={ (props) => <AvailabilityIndexPage { ...data }  { ...props } /> } />
-
-            <Route exact path={ `/${locale}/about` } render={ (props) => <CustomPage { ...data } { ...props } /> } />
-            <Route exact path={ `/${locale}/faq` } render={ (props) => <CustomPage { ...data } { ...props } /> } />
-            <Route exact path={ `/${locale}/sign_in` } component={ SignIn } />
-            <Route exact path={ `/${locale}/sign_up/:role` } render={ (props) => <SignUp { ...data }  { ...props } /> } />
-            <Route exact path={ `/${locale}/volunteer_sign_up_completed` } render={ (props) => <CustomPage { ...data }  { ...props } /> } />
-            <Route exact path={ `/${locale}/terms_of_use` } render={ (props) => <TermsAndConditions { ...data } { ...props } /> } />
-
-            <Route exact path='/' render={ () => <Homepage { ...data } /> } />
-            <Route exact path='/inbox' render={ (props) => <ConversationIndexPage { ...data } { ...props } /> } />
-            <Route exact path='/inbox/:id' render={ (props) => <ConversationPage { ...data } { ...props } /> } />
-            <Route exact path='/messages/new' render={ (props) => <NewMessagePage { ...data } { ...props } /> } />
-            <Route exact path='/search' render={ (props) => <SearchBar { ...data } { ...props } /> } />
-            <Route exact path='/volunteers' render={ (props) => <SearchResults { ...data } { ...props } /> } />
-            <Route exact path='/my_profile' render={ (props) => <MyProfile { ...data } { ...props } /> } />
-            <Route exact path='/reviews/author/:url_slug' render={ (props) => <UserReviewIndexPage { ...data } { ...props } /> } />
-
-            <Route
-              exact
-              path='/profiles/:url_slug'
-              render={ (props) => (renderUserProfile (data, props)) }
-            />
-            <Route exact path='/password/new' component={ NewPasswordPage } />
-            <Route exact path='/password/edit' render={ (props) => <ResetPasswordPage { ...props } /> } />
-            <Route exact path='/availabilities/new' render={ (props) => <NewAvailability { ...data } { ...props } /> } />
-            <Route exact path='/availabilities' render={ (props) => <AvailabilityIndexPage { ...data }  { ...props } /> } />
-
-            <Route exact path='/about' render={ (props) => <CustomPage { ...data } { ...props } /> } />
-            <Route exact path='/faq' render={ (props) => <CustomPage { ...data } { ...props } /> } />
-            <Route exact path='/sign_in' component={ SignIn } />
-            <Route exact path='/sign_up/:role' render={ (props) => <SignUp { ...data }  { ...props } /> } />
-            <Route exact path='/volunteer_sign_up_completed' render={ (props) => <CustomPage { ...data }  { ...props } /> } />
-            <Route exact path='/terms_of_use' render={ (props) => <TermsAndConditions { ...data } { ...props } /> } />
-
-            <Route path='/*' render={ () => <NotFoundPage { ...data } /> } />
-          </Switch>
+        <Router>
+          <ContentWrapper currentUser={ data.currentUser }>
+            <Switch>
+              <Route exact path={ `/${locale}` } render={ (props) => <Homepage { ...data } { ...props } /> } />
+              <Route exact path={ `/${locale}/inbox` } render={ (props) => <ConversationIndexPage { ...data } { ...props } /> } />
+              <Route exact path={ `/${locale}/inbox/:id` } render={ (props) => <ConversationPage { ...data } { ...props } /> } />
+              <Route exact path={ `/${locale}/messages/new` } render={ (props) => <NewMessagePage { ...data } { ...props } /> } />
+              <Route exact path={ `/${locale}/search` } render={ (props) => <SearchBar { ...data } { ...props } /> } />
+              <Route exact path={ `/${locale}/volunteers` } render={ (props) => <SearchResults { ...data } { ...props } /> } />
+              <Route exact path={ `/${locale}/my_profile` } render={ (props) => <MyProfile { ...data } { ...props } /> } />
+              <Route exact path={ `/${locale}/:user_id/(:order)` } render={ (props) => <UserReviewIndexPage { ...data } { ...props } /> } />
+              <Route exact path={ `/${locale}/reviews/author/:url_slug` } render={ (props) => <UserReviewIndexPage { ...data } { ...props } /> } />
+              <Route exact path={ `/${locale}/profiles/:url_slug` } render={ (props) => (renderUserProfile (data, props)) } />
+              <Route exact path={ `/${locale}/password/new` } component={ NewPasswordPage } />
+              <Route exact path={ `/${locale}/password/edit` } render={ (props) => <ResetPasswordPage { ...props } /> } />
+              <Route exact path={ `/${locale}/availabilities/new` } render={ (props) => <NewAvailability { ...data } { ...props } /> } />
+              <Route exact path={ `/${locale}/availabilities` } render={ (props) => <AvailabilityIndexPage { ...data } { ...props } /> } />
+              <Route exact path={ `/${locale}/about` } render={ (props) => <CustomPage { ...data } { ...props } /> } />
+              <Route exact path={ `/${locale}/faq` } render={ (props) => <CustomPage { ...data } { ...props } /> } />
+              <Route exact path={ `/${locale}/sign_in` } component={ SignIn } />
+              <Route exact path={ `/${locale}/sign_up/:role` } render={ (props) => <SignUp { ...data } { ...props } /> } />
+              <Route exact path={ `/${locale}/volunteer_sign_up_completed` } render={ (props) => <CustomPage { ...data } { ...props } /> } />
+              <Route exact path={ `/${locale}/terms_of_use` } render={ (props) => <TermsAndConditions { ...data } { ...props } /> } />
+              <Route exact path='/' render={ () => <Homepage { ...data } /> } />
+              <Route exact path='/inbox' render={ (props) => <ConversationIndexPage { ...data } { ...props } /> } />
+              <Route exact path='/inbox/:id' render={ (props) => <ConversationPage { ...data } { ...props } /> } />
+              <Route exact path='/messages/new' render={ (props) => <NewMessagePage { ...data } { ...props } /> } />
+              <Route exact path='/search' render={ (props) => <SearchBar { ...data } { ...props } /> } />
+              <Route exact path='/volunteers' render={ (props) => <SearchResults { ...data } { ...props } /> } />
+              <Route exact path='/my_profile' render={ (props) => <MyProfile { ...data } { ...props } /> } />
+              <Route exact path='/reviews/author/:url_slug' render={ (props) => <UserReviewIndexPage { ...data } { ...props } /> } />
+              <Route exact path='/profiles/:url_slug' render={ (props) => (renderUserProfile (data, props)) } />
+              <Route exact path='/password/new' component={ NewPasswordPage } />
+              <Route exact path='/password/edit' render={ (props) => <ResetPasswordPage { ...props } /> } />
+              <Route exact path='/availabilities/new' render={ (props) => <NewAvailability { ...data } { ...props } /> } />
+              <Route exact path='/availabilities' render={ (props) => <AvailabilityIndexPage { ...data } { ...props } /> } />
+              <Route exact path='/about' render={ (props) => <CustomPage { ...data } { ...props } /> } />
+              <Route exact path='/faq' render={ (props) => <CustomPage { ...data } { ...props } /> } />
+              <Route exact path='/sign_in' component={ SignIn } />
+              <Route exact path='/sign_up/:role' render={ (props) => <SignUp { ...data } { ...props } /> } />
+              <Route exact path='/volunteer_sign_up_completed' render={ (props) => <CustomPage { ...data } { ...props } /> } />
+              <Route exact path='/terms_of_use' render={ (props) => <TermsAndConditions { ...data } { ...props } /> } />
+              <Route path='/*' render={ () => <NotFoundPage { ...data } /> } />
+            </Switch>
+          </ContentWrapper>
         </Router>
-
       </MuiThemeProvider>
     </IntlProvider>, container);
 });

@@ -48,7 +48,6 @@ class NewPasswordPage extends Component {
 
     return (
       <div>
-        <Header  />
         <PageHeader
           title={
             <FormattedMessage
@@ -85,7 +84,6 @@ class NewPasswordPage extends Component {
 
           { this.renderSnackBar() }
         </form>
-        <Footer />
       </div>
     );
   }

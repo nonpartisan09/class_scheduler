@@ -60,7 +60,6 @@ class SignIn extends Component {
     return (
       <div>
         <NonChromeMessage/>
-        <Header  />
         <PageHeader title={
           <FormattedMessage
             id='signIn'
@@ -153,7 +152,6 @@ class SignIn extends Component {
 
           { this.renderSnackBar() }
         </form>
-        <Footer />
       </div>
     );
   }
