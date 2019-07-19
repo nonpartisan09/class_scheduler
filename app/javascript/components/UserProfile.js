@@ -64,12 +64,10 @@ class UserProfile extends Component {
 
     return (
       <div>
-        <Header currentUser={ currentUser } />
         <Paper zDepth={ 1 } className='paperOverride userProfilePaper' rounded={ false }>
           { this.renderContent() }
         </Paper>
         { this.renderSnackBar() }
-        <Footer />
       </div>
     );
 

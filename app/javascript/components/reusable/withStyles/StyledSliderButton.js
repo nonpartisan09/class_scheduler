@@ -4,6 +4,9 @@ import {
     withStyles
 } from '@material-ui/core';
 import PropTypes from 'prop-types';
+import {
+    Link
+} from 'react-router-dom';
 
 const styles = {
     button: {
@@ -84,11 +87,13 @@ const styles = {
 
   class SliderButton extends Component {
       render() {
-          const { classes, grey, children, ...other } = this.props;
+          const { classes, grey, children, to, ...other } = this.props;
           return(
             <span id='slider-button-container' className='sliderButtonContainer'>
               <Button
                 className={ grey ? classes.greyButton : classes.button }
+                component={ to === '' ? undefined : Link }
+                to={ to }
                 disableFocusRipple
                 { ...other }
                 >
@@ -112,10 +117,12 @@ const styles = {
   SliderButton.propTypes = {
     classes: PropTypes.object.isRequired,
     children: PropTypes.any.isRequired,
+    to: PropTypes.any,
     grey: PropTypes.bool,
   };
 
   SliderButton.defaultProps = {
+      to: '',
       grey: false,
   };
   

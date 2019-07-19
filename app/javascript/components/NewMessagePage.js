@@ -50,7 +50,6 @@ class NewMessagePage extends Component {
 
     return (
       <div>
-        <Header currentUser={ currentUser } />
         <Paper zDepth={ 1 } className='paperOverride' rounded={ false }>
           <PageHeader title={
             <FormattedMessage
@@ -116,7 +115,6 @@ class NewMessagePage extends Component {
 
           { this.renderSnackBar() }
         </Paper>
-        <Footer />
       </div>
     );
   }

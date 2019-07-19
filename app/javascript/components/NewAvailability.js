@@ -125,8 +125,6 @@ class NewAvailability extends Component {
 
       return (
         <div>
-          <Header currentUser={ currentUser } />
-
           <div className='availabilityContainer'>
             { this.renderTitle() }
 
@@ -162,7 +160,6 @@ class NewAvailability extends Component {
               { this.renderAvailabilities() }
             </form>
           </div>
-          <Footer className='footerContainerFixed' />
         </div>
     );
   }

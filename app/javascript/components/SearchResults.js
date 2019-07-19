@@ -47,7 +47,6 @@ class SearchResults extends Component {
 
     return (
       <div>
-        <Header currentUser={ currentUser } />
         <div className='searchResultsContainer'>
           <PageHeader title={
             <FormattedMessage

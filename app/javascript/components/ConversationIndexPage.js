@@ -30,7 +30,6 @@ class ConversationIndexPage extends Component {
   render() {
     return (
       <div>
-        <Header currentUser={ this.props.currentUser } />
         <Paper zDepth={ 1 } className='paperOverride' rounded={ false }>
           <PageHeader title={
             <FormattedMessage
@@ -43,7 +42,6 @@ class ConversationIndexPage extends Component {
             { this.renderInbox() }
           </div>
         </Paper>
-        <Footer className='footerContainerFixed' />
       </div>
     );
   }

@@ -23,13 +23,11 @@ class CustomPage extends Component {
 
     return (
       <div>
-        <Header currentUser={ currentUser } />
         <Paper zDepth={ 1 } className='paperOverride' rounded={ false }>
           <div className='customPageContainer'>
             { content }
           </div>
         </Paper>
-        <Footer />
       </div>
     );
   }

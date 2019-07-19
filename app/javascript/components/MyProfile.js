@@ -105,7 +105,6 @@ class MyProfile extends Component {
   render() {
     return (
       <div>
-        <Header currentUser={ this.props.currentUser } />
       </div>
     );
   }

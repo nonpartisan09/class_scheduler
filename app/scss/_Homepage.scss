@@ -1,0 +1,277 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto+Slab');
+
+h1 {
+    font-family: 'Roboto Slab';
+    font-size: 60px;
+    font-weight: bold;
+    line-height: initial;
+}
+
+h2 {
+    font-family: 'Roboto Slab';
+    font-size: 40px;
+    font-weight: bold;
+    line-height: initial;
+}
+
+p {
+    font-family: 'Lato';
+    font-size: 18px;
+}
+
+.splashContainer {
+    margin-left: 10pc;
+    margin-right: 10pc;
+}
+
+.orangeText {
+    color: #F1592A;
+}
+
+.signUpButton > span {
+    color: white;
+    font-weight: bold;
+    font-family: 'Lato';
+    font-size: 18px;
+    align-self: baseline;
+}
+
+.homepageContact {
+    display: flex;
+    padding-bottom: 2pc;
+}
+
+.featuredProgramsContainer {
+    margin-left: 10pc;
+    margin-right: 10pc;
+    margin-top: 3pc;
+    margin-bottom: 3pc;
+    text-align: center;
+}
+
+.programCardsContainer {
+    display: flex;
+    flex-flow: row;
+    flex-wrap: wrap;
+    text-align: left;
+    justify-content: center;
+}
+
+.programCardsContainer > div {
+    padding: 2pc;
+    min-width: 5pc;
+    max-width: 20pc;
+}
+
+.programCardsContainer > div > div {
+    background-color: #004664;
+    color: white;
+    height: 20pc;
+    padding: 1pc;
+}
+
+.programCardsHeader {
+    font-size: 30px;
+}
+
+.howItWorksContainer {
+    margin-top: 3pc;
+    margin-bottom: 3pc;
+    align-items: center;
+    display: flex;
+    flex-flow: column;
+}
+
+.howItWorksCardsContainer {
+    text-align: right;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 80pc;
+}
+
+.howItWorksCardsContainer > div > div {
+    margin: 1pc;
+    width: 35pc;
+    height: 13pc;
+    justify-content: center;
+    box-shadow: none;
+    background-color: #FAFAFA;
+}
+
+.howItWorksCardsContainer > div > div > div {
+    display: flex;
+    flex-flow: column;
+    height: -webkit-fill-available;
+    align-items: center;
+}
+
+.cardContent {
+    height: -webkit-fill-available;
+    display: flex;
+    align-content: center;
+    width: 20pc;
+}
+
+.cardTextSpan {
+    color: #004664;
+    display: grid;
+    width: 20pc;
+}
+
+.cardIndexSpan {
+    width: 6pc;
+    height: 8pc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    background-color: #004664;
+    text-align: center;
+    font-size: 3rem;
+    align-self: center;
+    margin-left: 1pc;
+}
+
+.whereWeAreContainer {
+    margin-top: 3pc;
+    margin-bottom: 3pc;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+}
+
+.whereWeAreMapContainer {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    color: #A7A9AC;
+}
+
+.joinUsContainer {
+    margin-top: 3pc;
+    margin-bottom: 3pc;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    background-color: #004664;
+    color: white;
+}
+
+.joinUsFormContainer {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    color: #A7A9AC;
+}
+
+.joinUsForm {
+    background-color: white;
+    width: 40pc;
+    padding: 5pc;
+    padding-bottom: 2pc;
+    margin: 2pc;
+}
+
+.joinUsForm > div {
+    margin-bottom: 2pc;
+    margin-top: 2pc;
+}
+
+.joinUsForm > div > div > input {
+    text-align: center;
+    font-family: 'Lato';
+    font-size: 18px;
+}
+
+.joinUsForm > div > div::before {
+    border-bottom-color: #004664;
+    border-bottom-width: 3px;
+}
+
+.joinUsForm > div > div::after {
+    border-bottom-color: #F1592A;
+    border-bottom-width: 3px;
+}
+
+.expansionPanel > div:last-child {
+    border-radius: unset;
+    box-shadow: 0px 3px 0px 0px #004664;
+    background-color: #FAFAFA;
+    color: #A7A9AC;
+}
+
+.languageButtonsContainer {
+    display: flex;
+    flex-flow: column;
+    width: -webkit-fill-available;
+}
+
+.languageButtonsContainer > button {
+    justify-content: space-between;
+}
+
+.languageButtonsContainer > button > span {
+    text-transform: none;
+    font-family: 'Lato';
+    font-size: 18px;
+    display: -webkit-box;
+    display: flex;
+    padding-left: 1pc;
+    padding-right: 1pc;
+}
+
+.languageButton:hover {
+    background-color: transparent;
+}
+
+.languageButton > span {
+    color: #A7A9AC;
+}
+
+.languageButton > span:hover {
+    background-color: transparent;
+    color: #F1592A;
+}
+
+.checked > span {
+    color: #F1592A;
+    background-color: rgba(241, 89, 42, 0.2);
+}
+
+.checked {
+    border: #004664;
+}
+
+.radioButtons > div {
+    margin: 2pc;
+    flex-flow: row;
+    justify-content: space-around;
+}
+
+.radioButtonCircle,
+.radioButtonCheckedCircle {
+    color: #F1592A;
+}
+
+.splashContainer > button,
+.submitButtonContainer > a {
+    text-transform: none;
+    background-color: #004664;
+    color: white;
+    text-transform: none;
+    font-family: 'Lato';
+    font-size: 18px;
+    padding-right: 3pc;
+    padding-left: 3pc;
+}
+
+.splashContainer > button:hover,
+.submitButtonContainer > a:hover {
+    background-color: #F1592A;
+}
+
+.submitButtonContainer {
+    display: flex;
+    justify-content: center; 
+}

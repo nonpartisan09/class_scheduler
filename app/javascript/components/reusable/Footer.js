@@ -9,17 +9,20 @@ import {
   FaFacebookF,
   FaRegCopyright
 } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 import formatLink from '../utils/Link';
 import PaypalButton from '../PaypalButton';
 
 class Footer extends Component {
+
   render() {
+    const { style } = this.props;
     return (
-      <AppBar 
-        position='static'
-        style={ { backgroundColor: 'white' } }
+      <AppBar
+        position='relative'
         classes={ { root: 'footerAppBar' } }
+        style={ style }
       >
         <Toolbar
           classes={ { root: 'footerToolbar' } }
@@ -35,6 +38,8 @@ class Footer extends Component {
     const { currentUser: { locale } } = this.props;
     const facebook = 'Facebook';
     const facebookLink = 'https://www.facebook.com/Tutoria-416182735512904/';
+    const phoneNumber = '+1-202-555-0159';
+    const email = 'admin@tutoria.io';
     const size = 20;
 
     return(
@@ -48,18 +53,20 @@ class Footer extends Component {
               Copyright
               { <FaRegCopyright className='copyrightLogo' /> }
             </span>
-            2019 Tutoria, Inc.
+            2019 Tutoria,
+            <br />
+            Inc.
           </span>
           <span className='footerLinks'>
-            <a href={ formatLink('/about', locale) }>
+            <Link to={ formatLink('/about', locale) }>
               <FormattedMessage
                 id='aboutPage'
                 defaultMessage='About'
               />
-            </a>
-            <a href={ formatLink('/FAQ', locale) }>
+            </Link>
+            <Link to={ formatLink('/FAQ', locale) }>
               FAQ
-            </a>
+            </Link>
             <a href={ facebookLink }>
               <FaFacebookF
                 size={ size }
@@ -71,8 +78,19 @@ class Footer extends Component {
           <span className='footerAddress'>
             <b>Address</b>
             495A Henry St #1020
+            <br />
             Brookyln, NY, 11231,
+            <br />
             United States of America
+          </span>
+          <span className='footerContact'>
+            <b>Contact</b>
+            <a href={ 'tel:'+phoneNumber }>
+              Tel: +1-202-555-0159
+            </a>
+            <a href={ 'mailto:'+email }>
+              Email: admin@tutoria.io
+            </a>
           </span>
         </span>
       </span>
@@ -82,11 +100,8 @@ class Footer extends Component {
 }
 
 Footer.propTypes = {
-  currentUser: PropTypes.object,
-};
-
-Footer.defaultProps = {
-  currentUser: { }
+  currentUser: PropTypes.object.isRequired,
+  style: PropTypes.object.isRequired,
 };
 
 export default Footer;

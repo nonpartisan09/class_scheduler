@@ -3,29 +3,38 @@
 
 .footerHeader {
     font-family: 'Roboto Slab';
-    font-size: 18px;
+    font-size: 20px;
     font-weight: bold;
+}
+
+.footerAppBar {
+    bottom: 0;
 }
 
 .footerToolbar {
     background-color: #004664;
+    justify-content: space-around;
     padding: 2pc;
+    padding-left: 4pc;
+    padding-right: 4pc;
 }
 
-.footerLinks a {
+.footerLinks a,
+.footerContact a {
     color: white;
     font-family: Lato;
     font-size: 18px;
     text-decoration: none;
 }
-.footerLinks a:hover {
+.footerLinks a:hover,
+.footerContact a:hover {
     text-decoration: underline;
 }
 
 .footerBody {
     font-family: Lato;
     font-size: 18px;
-    display: flex;
+    display: inline-flex;
 }
 
 .footerBody > span {
@@ -49,4 +58,23 @@
 
 .copyrightLogo {
     padding-left: .2pc;
+}
+
+@media (max-width: 901px) {
+    .footerToolbar {
+        flex-flow: column;
+    }
+
+    .paypalButtonContainer {
+        padding-top: 1pc;
+        padding-bottom: 2pc;
+    }
+
+    .footerBody {
+        flex-flow: column;
+    }
+
+    .footerBody > span {
+        padding-bottom: 2pc;
+    }
 }

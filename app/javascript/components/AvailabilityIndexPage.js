@@ -18,7 +18,6 @@ class AvailabilityIndexPage extends Component {
 
     return (
       <div>
-        <Header currentUser={ currentUser } />
         <Paper zDepth={ 1 } className='paperOverride' rounded={ false }>
           <PageHeader title={
             <FormattedMessage

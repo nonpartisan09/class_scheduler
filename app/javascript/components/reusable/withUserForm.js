@@ -325,7 +325,6 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
           </Paper>
 
           { this.renderSnackBar() }
-          <Footer />
         </div>
       );
     }

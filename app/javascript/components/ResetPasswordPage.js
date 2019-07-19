@@ -41,8 +41,6 @@ class ResetPasswordPage extends Component {
 
     return (
       <div>
-        <Header  />
-
         <form className="signInContainer">
           <TextField
             name='password'

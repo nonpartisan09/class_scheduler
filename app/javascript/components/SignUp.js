@@ -73,7 +73,6 @@ class SignUp extends Component {
     return (
       <div>
         <NonChromeMessage/>
-        <Header />
         <PageHeader title={
           <FormattedMessage
             id='SignUp.signUpHeader'

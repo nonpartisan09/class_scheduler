@@ -32,7 +32,6 @@ class ConversationPage extends Component {
 
     return (
       <div>
-        <Header currentUser={ currentUser } />
         <Paper zDepth={ 1 } className='paperOverride' rounded={ false }>
           { this.renderReceivedMessages() }
           <br/>
@@ -43,7 +42,6 @@ class ConversationPage extends Component {
             messageType={ MessageTypes.REPLY }
           />
         </Paper>
-        <Footer className='footerContainerFixed' />
       </div>
     );
   }
