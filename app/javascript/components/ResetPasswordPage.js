@@ -9,7 +9,6 @@ import { FormattedMessage } from 'react-intl';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 
-import Header from './reusable/Header';
 import SnackBarComponent from './reusable/SnackBarComponent';
 import { getData } from './utils/sendData';
 

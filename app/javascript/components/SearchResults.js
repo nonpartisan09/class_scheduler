@@ -7,7 +7,6 @@ import { FormattedMessage } from 'react-intl';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
 import SearchResultItem from './SearchResultItem';
-import Header from './reusable/Header';
 import { HIGHEST, RECENT, CLOSEST, NEWEST } from './SortFilter';
 import { getData } from './utils/sendData';
 import SearchUrl from './utils/SearchUrl';

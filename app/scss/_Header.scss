@@ -26,6 +26,14 @@
     display: flex;
 }
 
+.roleLinks > span {
+    display: flex;
+    flex-flow: row;
+    width: min-content;
+    align-items: center;
+    text-align: center;
+}
+
 .headerStaticButtons,
 .headerVariableButtons {
     align-items: center;
@@ -45,10 +53,25 @@
     align-self: center;
 }
 
+.profileMenuContainer {
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+}
+
 // Window.width < 900px Styles
 
 .menuMobile .roleLinks .sliderButtonContainer {
     display: inherit;
+}
+
+.menuMobile .signedInHeader {
+    align-items: center;
+}
+
+.menuMobile .roleLinks > span {
+    flex-flow: column;
+    width: stretch;
 }
 
 .menuMobile .rightElements,
@@ -94,5 +117,14 @@
 }
 
 .menuMobile .languageMenuContent {
+    justify-content: center;
+}
+
+.menuMobile .logo__item {
+    margin: 0;
+}
+
+.signedOutMenuMobile > div > div {
+    display: flex;
     justify-content: center;
 }

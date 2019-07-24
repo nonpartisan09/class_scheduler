@@ -5,7 +5,6 @@ import { FormattedMessage } from 'react-intl';
 
 import { postData } from './utils/sendData';
 
-import Header from './reusable/Header';
 import formatLink from './utils/Link';
 import UserFormConstants from './utils/UserFormConstants';
 

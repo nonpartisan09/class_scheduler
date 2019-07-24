@@ -20,8 +20,6 @@ import { FormattedMessage } from 'react-intl';
 import ImageInput from '../ImageInput';
 import DialogComponent from '../DialogComponent';
 import SnackBarComponent from './SnackBarComponent';
-import Footer from './Footer';
-
 import newUser from '../utils/CheckUpdatedFields';
 import UserFormConstants from '../utils/UserFormConstants';
 import ReviewAsStars from '../ReviewAsStars';
@@ -71,8 +69,6 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
       const {
         errors, changeHandler, validateHandler,
         currentUser: {
-          first_name,
-          email,
           phone_number,
           address,
           city,
@@ -85,6 +81,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
         },
         currentUser,
         timezones,
+        location,
       } = this.props;
 
       return (
@@ -110,7 +107,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
 
               <TextField
                 name='email'
-                value={ email }
+                value={ _.isEmpty(location.state) ? '' : location.state.currentUser.email }
                 className='userFormInputField email'
                 hintText=''
                 floatingLabelText={
@@ -152,7 +149,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
 
               <TextField
                 name='first_name'
-                value={ first_name }
+                value={ _.isEmpty(location.state) ? '' : location.state.currentUser.first_name }
                 hintText=''
                 className='userFormInputField firstName'
                 floatingLabelText={
@@ -1066,7 +1063,8 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
     changeValues: PropTypes.func.isRequired,
     validateHandler: PropTypes.func.isRequired,
     clearValidationAndResetValues: PropTypes.func.isRequired,
-    validateAllHandler: PropTypes.func.isRequired
+    validateAllHandler: PropTypes.func.isRequired,
+    location: PropTypes.object.isRequired,
   };
 
   UserForm.defaultProps = {

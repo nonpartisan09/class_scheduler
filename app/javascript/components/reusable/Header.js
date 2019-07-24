@@ -9,6 +9,7 @@ import {
   ExpansionPanel,
   ExpansionPanelSummary,
   ExpansionPanelDetails,
+  Avatar,
 } from '@material-ui/core';
 import {
   FaFacebookF,
@@ -29,6 +30,12 @@ import HomeLink from './HomeLink';
 import formatLink from '../utils/Link';
 import SnackBarComponent from './SnackBarComponent';
 
+const menu = {
+  LANGUAGE: 'LA',
+  SIGN_UP: 'SU',
+  PROFILE: 'PR'
+};
+
 class Header extends Component {
   constructor(props, context) {
     super(props, context);
@@ -40,23 +47,80 @@ class Header extends Component {
     this.handleSetGuestLocale = this.handleSetGuestLocale.bind(this);
     this.renderContactElements = this.renderContactElements.bind(this);
     this.renderSignedOutHeader = this.renderSignedOutHeader.bind(this);
-    this.handleLanguageMenuOpen = this.handleLanguageMenuOpen.bind(this);
-    this.handleLanguageMenuClose = this.handleLanguageMenuClose.bind(this);
-    this.handleSignUpMenuOpen = this.handleSignUpMenuOpen.bind(this);
-    this.handleSignUpMenuClose = this.handleSignUpMenuClose.bind(this);
     this.renderMobileElements = this.renderMobileElements.bind(this);
-    this.handleMenuCollapse = this.handleMenuCollapse.bind(this);
     this.renderLanguageMenu = this.renderLanguageMenu.bind(this);
     this.handleHideSnackBar = this.handleHideSnackBar.bind(this);
+    this.handleProfilePicError = this.handleProfilePicError.bind(this);
+    this.handleMenuOpen = this.handleMenuOpen.bind(this);
+    this.handleMenuClose = this.handleMenuClose.bind(this);
 
     this.state = {
       showSnackBar: false,
       message: '',
-      LAnchorEl: null,
+      LAAnchorEl: null,
       SUAnchorEl: null,
+      PRAnchorEl: null,
       currentUserLoggedIn: !_.isEmpty(props.currentUser),
-      open: false,
+      profilePicSrc: this.props.currentUser.thumbnail_image,
     };
+  }
+
+  handleProfilePicError() {
+    this.setState({ profilePicSrc: '' });
+  }
+
+  handleHideSnackBar() {
+    this.setState({ showSnackBar: false });
+  }
+
+  handleMenuOpen(event, menu) {
+    menu+='AnchorEl';
+    this.setState({ [menu]: event.currentTarget });
+  }
+
+  handleMenuClose(menu) {
+    menu+='AnchorEl';
+    this.setState({ [menu]: null });
+  }
+
+  handleSetGuestLocale({ target }) {
+    const value = target.getAttribute('value');
+    localStorage.setItem('locale', value);
+    const pathname = _.split(window.location.pathname, '/');
+    const localePattern = new RegExp(`(${ENGLISH}|${SPANISH})`);
+    const currentGuestLocale = pathname[1] || '';
+    const isGuestLocaleAsExpected = localePattern.test(currentGuestLocale);
+
+    if (isGuestLocaleAsExpected) {
+      const newPathname = _.drop(pathname, 2).join('/');
+      location.assign(formatLink(`/${newPathname}`, value));
+    } else {
+      location.assign(formatLink(window.location.pathname, value));
+    }
+    this.handleMenuClose('LA');
+  }
+
+  handleSignOut() {
+    const requestParams = {
+      url: '/sign_out',
+      jsonBody: {},
+      method: 'DELETE',
+      successCallBack: () => {
+        location.assign(formatLink('/'));
+      },
+
+      errorCallBack: (message) => {
+        this.setState({
+          showSnackBar: true,
+          message: message
+        });
+
+        setTimeout(() => {
+          this.handleHideSnackBar();
+        }, 2000);
+      }
+    };
+    return getData(requestParams);
   }
 
   render() {
@@ -100,6 +164,7 @@ class Header extends Component {
               classes={ { root: 'menuAppBarHigher' } }
             >
               { this.renderContactElements() }
+              { this.renderSignedInProfile() }
             </Toolbar>
             <Toolbar
               classes={ { root: 'menuAppBarLower' } }
@@ -130,7 +195,6 @@ class Header extends Component {
     return(
       <div className='mobileElements'>
         { this.renderRightElements() }
-        <br />
         { this.renderContactElements() }
       </div>
     );
@@ -145,7 +209,7 @@ class Header extends Component {
   }
 
   renderRightElements() {
-    const { currentUser: { locale } } = this.props;
+    const { currentUser, currentUser: { locale } } = this.props;
 
     return (
       <div className='rightElements'>
@@ -176,6 +240,7 @@ class Header extends Component {
             />
           </SliderButton>
           { this.renderLanguageMenu() }
+          { (this.props.mobile && !_.isEmpty(currentUser)) ? this.renderSignedInProfile() : ''}
           <PaypalButton key='paypal' />
         </div>
       </div>
@@ -187,7 +252,7 @@ class Header extends Component {
     const languageEnglishValue = 'English';
     const languageSpanishValue = 'Español';
 
-    if (this.state.mobile) {
+    if (this.props.mobile) {
       return(
         <div className='langaugeMenuMobile'>
           <ExpansionPanel
@@ -229,7 +294,7 @@ class Header extends Component {
       return(
         <div className='languageMenu'>
           <SliderButton
-            onClick={ this.handleLanguageMenuOpen }
+            onClick={ (event) => this.handleMenuOpen(event, menu.LANGUAGE) }
           >
             <FormattedMessage
               id='Header.selectLanguage'
@@ -244,10 +309,10 @@ class Header extends Component {
             keepMounted
             anchorOrigin={ {vertical: 'bottom', horizontal: 'center'} }
             transformOrigin={ {vertical: 'top', horizontal: 'center'} }
-            anchorEl={ this.state.LAnchorEl }
+            anchorEl={ this.state.LAAnchorEl }
             getContentAnchorEl={ null }
-            open={ Boolean(this.state.LAnchorEl) }
-            onClose={ this.handleLanguageMenuClose }
+            open={ Boolean(this.state.LAAnchorEl) }
+            onClose={ () => this.handleMenuClose('LA') }
           >
             <SliderButton
               disabled={ currentLocale === ENGLISH }
@@ -311,6 +376,8 @@ class Header extends Component {
         <SliderButton
           grey
           href={ facebookLink }
+          target='_blank'
+          rel='noopener noreferrer'
         >
           <FaFacebookF
             size={ size }
@@ -325,7 +392,7 @@ class Header extends Component {
   renderSignedOutHeader() {
     const { currentUser: { locale } } = this.props;
 
-    if (this.state.mobile) {
+    if (this.props.mobile) {
       return(
         <div className='signedOutMenuMobile'>
           <ExpansionPanel
@@ -379,7 +446,7 @@ class Header extends Component {
       return (
         <div className='signedOutHeader'>
           <SliderButton
-            onClick={ this.handleSignUpMenuOpen }
+            onClick={ (event) => this.handleMenuOpen(event, menu.SIGN_UP) }
           >
             <FormattedMessage
               id='signUp'
@@ -397,11 +464,11 @@ class Header extends Component {
             anchorOrigin={ {vertical: 'bottom', horizontal: 'center'} }
             transformOrigin={ {vertical: 'top', horizontal: 'center'} }
             open={ Boolean(this.state.SUAnchorEl) }
-            onClose={ this.handleSignUpMenuClose }
+            onClose={ () => this.handleMenuClose('SU') }
           >
             <SliderButton
               to={ formatLink('/sign_up/client', locale) }
-              onClick={ this.handleSignUpMenuClose }
+              onClick={ () => this.handleMenuClose('SU')  }
             >
               <FormattedMessage
                 id='signUpClient'
@@ -410,7 +477,7 @@ class Header extends Component {
             </SliderButton>
             <SliderButton
               to={ formatLink('/sign_up/volunteer', locale) }
-              onClick={ this.handleSignUpMenuClose }
+              onClick={ () => this.handleMenuClose('SU') }
             >
               <FormattedMessage
                 id='signUpVolunteer'
@@ -436,14 +503,6 @@ class Header extends Component {
 
     return (
       <div className='roleLinks'>
-        <SliderButton
-          onClick={ this.handleSignOut }
-        >
-          <FormattedMessage
-            id='signOutLink'
-            defaultMessage='Sign Out'
-          />
-        </SliderButton>
         {
           client
           ?
@@ -490,69 +549,89 @@ class Header extends Component {
     );
   }
 
-  handleHideSnackBar() {
-    this.setState({ showSnackBar: false });
-  }
-
-  handleMenuCollapse() {
-    const isOpen = this.state.open;
-    this.setState({ open: !isOpen });
-  }
-
-  handleLanguageMenuOpen(event) {
-    this.setState({ LAnchorEl: event.currentTarget });
-  }
-
-  handleLanguageMenuClose() {
-    this.setState({LAnchorEl: null });
-  }
-
-  handleSignUpMenuOpen(event) {
-    this.setState({ SUAnchorEl: event.currentTarget });
-  }
-
-  handleSignUpMenuClose() {
-    this.setState({ SUAnchorEl: null });
-  }
-
-  handleSetGuestLocale({ target }) {
-    const value = target.getAttribute('value');
-    localStorage.setItem('locale', value);
-    const pathname = _.split(window.location.pathname, '/');
-    const localePattern = new RegExp(`(${ENGLISH}|${SPANISH})`);
-    const currentGuestLocale = pathname[1] || '';
-    const isGuestLocaleAsExpected = localePattern.test(currentGuestLocale);
-
-    if (isGuestLocaleAsExpected) {
-      const newPathname = _.drop(pathname, 2).join('/');
-      location.assign(formatLink(`/${newPathname}`, value));
-    } else {
-      location.assign(formatLink(window.location.pathname, value));
-    }
-    this.handleLanguageMenuClose();
-  }
-
-  handleSignOut() {
-    const requestParams = {
-      url: '/sign_out',
-      jsonBody: {},
-      method: 'DELETE',
-      successCallBack: () => {
-        location.assign(formatLink('/'));
-      },
-
-      errorCallBack: (message) => {
-        this.setState({
-          showSnackBar: true,
-          message: message
-        });
-
-        setTimeout(() => {
-          this.handleHideSnackBar();
-        }, 2000);
+  renderSignedInProfile() {
+    const { currentUser, currentUser: { locale } } = this.props;
+    if(!_.isEmpty(currentUser)) {
+      if(this.props.mobile) {
+        return(
+          <span className='signedOutMenuMobile'>
+            <ExpansionPanel
+              classes={ { root: 'signedOutMenuMobilePanel', rounded: 'signedOutMenuMobilePanelRounded' } }
+            >
+              <ExpansionPanelSummary
+                expandIcon={ (
+                  <FaChevronDown
+                    className='signUpMenuChevron'
+                  />
+                ) }
+                classes={ { root: 'signedOutMenuSummary', content: 'signedOutMenuSummaryContent' } }
+              >
+                { 'User: ' }
+                { currentUser.first_name }
+              </ExpansionPanelSummary>
+              <ExpansionPanelDetails
+                classes={ { root: 'signedOutMenuContent' } }
+              >
+                <SliderButton
+                  to={ formatLink('/my_profile', locale) }
+                >
+                  <FormattedMessage
+                    id='profileLink'
+                    default='My profile'
+                  />
+                </SliderButton>
+                <SliderButton
+                  onClick={ () => this.handleSignOut() }
+                >
+                  <FormattedMessage
+                    id='signOutLink'
+                    default='Sign out'
+                  />
+                </SliderButton>
+              </ExpansionPanelDetails>
+            </ExpansionPanel>
+          </span>
+        );
+      } else {
+        return(
+          <span className='profileMenuContainer'>
+            <SliderButton grey onClick={ (event) => this.handleMenuOpen(event, menu.PROFILE) }>
+              <Avatar src={ this.state.profilePicSrc } onError={ this.handleProfilePicError }>
+                { currentUser.first_name.charAt(0).toUpperCase() }
+              </Avatar>
+            </SliderButton>
+            <Menu
+              className='profileMenu'
+              keepMounted
+              anchorEl={ this.state.PRAnchorEl }
+              getContentAnchorEl={ null }
+              anchorOrigin={ {vertical: 'bottom', horizontal: 'center'} }
+              transformOrigin={ {vertical: 'top', horizontal: 'center'} }
+              open={ Boolean(this.state.PRAnchorEl) }
+              onClose={ () => this.handleMenuClose('PR') }
+            >
+              <SliderButton
+                to={ formatLink('/my_profile', locale) }
+                onClick={ () => this.handleMenuClose('PR')  }
+              >
+                <FormattedMessage
+                  id='profileLink'
+                  default='Profile'
+                />
+              </SliderButton>
+              <SliderButton
+                onClick={ () => { this.handleSignOut(); this.handleMenuClose('PR'); } }
+              >
+                <FormattedMessage
+                  id='signOutLink'
+                  default='Sign out'
+                />
+              </SliderButton>
+            </Menu>
+          </span>
+        );
       }
-    };
-    return getData(requestParams);
+    }
   }
 }
 

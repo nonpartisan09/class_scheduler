@@ -49,7 +49,7 @@ p {
     text-align: center;
 }
 
-.programCardsContainer {
+.featuredProgramsContentContainer {
     display: flex;
     flex-flow: row;
     flex-wrap: wrap;
@@ -57,17 +57,23 @@ p {
     justify-content: center;
 }
 
-.programCardsContainer > div {
+.featuredProgramsContentContainer  > div {
     padding: 2pc;
-    min-width: 5pc;
-    max-width: 20pc;
+    min-width: 20pc;
 }
 
-.programCardsContainer > div > div {
+.featuredProgramsContentContainer > div > div {
     background-color: #004664;
     color: white;
     height: 20pc;
     padding: 1pc;
+}
+
+.featuredProgramsContentContainer p {
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
 }
 
 .programCardsHeader {
@@ -82,7 +88,7 @@ p {
     flex-flow: column;
 }
 
-.howItWorksCardsContainer {
+.howItWorksContentContainer {
     text-align: right;
     display: flex;
     flex-wrap: wrap;
@@ -90,7 +96,7 @@ p {
     width: 80pc;
 }
 
-.howItWorksCardsContainer > div > div {
+.howItWorksContentContainer > div > div {
     margin: 1pc;
     width: 35pc;
     height: 13pc;
@@ -99,15 +105,15 @@ p {
     background-color: #FAFAFA;
 }
 
-.howItWorksCardsContainer > div > div > div {
+.howItWorksContentContainer > div > div > div {
     display: flex;
     flex-flow: column;
-    height: -webkit-fill-available;
+    height: stretch;
     align-items: center;
 }
 
 .cardContent {
-    height: -webkit-fill-available;
+    height: stretch;
     display: flex;
     align-content: center;
     width: 20pc;
@@ -141,7 +147,7 @@ p {
     align-items: center;
 }
 
-.whereWeAreMapContainer {
+.whereWeAreContentContainer > div {
     display: flex;
     flex-flow: column;
     align-items: center;
@@ -158,7 +164,7 @@ p {
     color: white;
 }
 
-.joinUsFormContainer {
+.joinUsContentContainer {
     display: flex;
     flex-flow: column;
     align-items: center;
@@ -204,7 +210,7 @@ p {
 .languageButtonsContainer {
     display: flex;
     flex-flow: column;
-    width: -webkit-fill-available;
+    width: stretch;
 }
 
 .languageButtonsContainer > button {
@@ -274,4 +280,84 @@ p {
 .submitButtonContainer {
     display: flex;
     justify-content: center; 
+}
+
+.needHelpContainer {
+    margin-top: 3pc;
+    margin-bottom: 3pc;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+}
+
+.needHelpSubtitle > a {
+    text-decoration: none;
+    color: #29AAE2;
+}
+
+.needHelpSubtitle > a:hover {
+    text-decoration: underline;
+}
+
+.needHelpLinks {
+    display: flex;
+    flex-flow: row;
+    width: stretch;
+    justify-content: space-around;
+    padding-top: 3pc;
+    padding-bottom: 3pc;
+    color: #004664;
+}
+
+.needHelpLinks .homepageContact {
+    width: inherit;
+    justify-content: space-around;
+    padding-bottom: 0;
+}
+
+.needHelpLinks .homepageContact span a span span {
+    flex-flow: column;
+    font-family: 'Roboto Slab';
+    font-size: 30px;
+    font-weight: bold;
+    line-height: initial;
+}
+
+@media (max-width: 901px) {
+    .homepageMainContainer > div {
+        margin: 1pc;
+        display: flex;
+        flex-flow: column;
+        align-items: center;
+    }
+    
+    h1 {
+        font-size: 40px;
+    }
+
+    h1, h2, p {
+        text-align: center;
+    }
+
+    .splashContainer .homepageContact {
+        flex-flow: column;
+    }
+
+    .howItWorksContentContainer {
+        flex-flow: column;
+        align-items: center;
+    }
+
+    .joinUsContentContainer {
+        width: stretch;
+    }
+    .joinUsForm {
+        width: inherit;
+        padding: 1pc;
+    }
+
+    .needHelpLinks .homepageContact {
+        flex-flow: column;
+        justify-content: space-between;
+    }
 }

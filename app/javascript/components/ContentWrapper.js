@@ -10,6 +10,7 @@ class ContentWrapper extends Component {
     constructor(props) {
         super(props);
 
+        this.setContentHeight = this.setContentHeight.bind(this);
         this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
         this.calculateFooterPosition = this.calculateFooterPosition.bind(this);
 
@@ -32,8 +33,12 @@ class ContentWrapper extends Component {
     componentDidUpdate(prevProps) {
         if(this.props.location !== prevProps.location) {
             this.updateWindowDimensions();
-            this.setState({ contentHeight: this.pagecontent.offsetHeight });
+            this.setContentHeight();
         }
+    }
+
+    setContentHeight() {
+        this.setState({ contentHeight: this.pagecontent.offsetHeight });
     }
     
     updateWindowDimensions() {

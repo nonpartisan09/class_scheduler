@@ -11,12 +11,9 @@ import FloatingActionButton from 'material-ui/FloatingActionButton';
 import SendIcon from 'material-ui/svg-icons/content/send';
 
 import MessageSchema from './schema/MessageSchema';
-import Header from './reusable/Header';
 import FormData from './utils/FormData';
 import { postData } from './utils/sendData';
 import SnackBarComponent from './reusable/SnackBarComponent';
-
-import Footer from './reusable/Footer';
 import PageHeader from './reusable/PageHeader';
 
 

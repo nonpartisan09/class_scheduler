@@ -11,10 +11,8 @@ import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
 
 import FormData from './utils/FormData';
-import Header from './reusable/Header';
 import SnackBarComponent from './reusable/SnackBarComponent';
 import { postData } from './utils/sendData';
-import Footer from './reusable/Footer';
 import formatLink from './utils/Link';
 import PageHeader from './reusable/PageHeader';
 

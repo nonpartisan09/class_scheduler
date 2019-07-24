@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import _ from 'lodash';
 import {
   FaEnvelope,
   FaPhone,
@@ -33,6 +34,8 @@ import {
 import {
   Link
 } from 'react-router-dom';
+import validate from 'react-joi-validation';
+import PropTypes from 'prop-types';
 
 import SliderButton from './reusable/withStyles/StyledSliderButton';
 import {
@@ -40,13 +43,63 @@ import {
   SPANISH
 } from './utils/availableLocales';
 import formatLink from './utils/Link';
+import SignUpSchema from './schema/SignUpSchema';
+
+const pageContent = {
+  featuredPrograms: {
+    name: 'featuredPrograms',
+    header: 'Featured Programs',
+    subtitle: 'Below are our featured programs!',
+  },
+  howItWorks: {
+    name: 'howItWorks',
+    header: 'How it Works',
+    subtitle: 'The stages of an avarage interaction are shown below!',
+    howItWorksStages: [
+      {
+        icon: (<MdTouchApp size={ 60 } />),
+        title: 'clientPost',
+        description: 'Clients post what they need help with, such as English language tutoring.'
+      },
+      {
+        icon: (<FaPeopleCarry size={ 60 } />),
+        title: 'volunteerPost',
+        description: 'Volunteers post what they can help with.'
+      },
+      {
+        icon: (<FaInbox size={ 60 } />),
+        title: 'contact',
+        description: 'Clients contact volunteers matching their needs and availability.'
+      },
+      {
+        icon: (<FaAward size={ 60 } />),
+        title: 'review',
+        description: 'After working together, volunteers and clients review each other.'
+      },
+    ],
+  },
+  whereWeAre: {
+    name: 'whereWeAre',
+    header: 'Where we Are',
+    subtitle: 'The map below shows the spread of our clients across the country'
+  },
+  joinUs: {
+    name: 'joinUs',
+    header: 'Join Us',
+    subtitle: 'Just fill out the form below to get started!'
+  },
+  needHelp: {
+    name: 'joinUs',
+    header: 'Need Help?'
+  }
+};
 
 class Homepage extends Component {
   constructor(props, context) {
     super(props, context);
 
-    this.handleSelect = this.handleSelect.bind(this);
-    this.handleSignUpScroll = this.handleSignUpScroll.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleScroll = this.handleScroll.bind(this);
 
     this.joinUsFormRef = React.createRef();
 
@@ -56,13 +109,13 @@ class Homepage extends Component {
     };
   }
 
-  handleSelect(event, stateToChange) {
+  handleChange(event, stateToChange) {
     const newValue = event.currentTarget.value;
     this.setState({ [stateToChange]: newValue });
   }
 
-  handleSignUpScroll() {
-    window.scrollTo(0, this.joinUsFormRef.current.offsetTop);
+  handleScroll(verticalScrollPosition) {
+    window.scrollTo(0, verticalScrollPosition);
   }
 
   render() {
@@ -73,6 +126,7 @@ class Homepage extends Component {
         { this.renderHowItWorks() }
         { this.renderWhereWeAre() }
         { this.renderJoinUs() }
+        { this.renderNeedHelp() }
       </div>
     );
   }
@@ -93,7 +147,7 @@ class Homepage extends Component {
         <Fab
           className='signUpButton'
           variant='extended'
-          onClick={ this.handleSignUpScroll }
+          onClick={ () => { console.log(this.joinUsFormRef); this.handleScroll(this.joinUsFormRef.current.offsetTop); } }
           >
           <FormattedMessage
             id='SignUp'
@@ -104,15 +158,14 @@ class Homepage extends Component {
     );
   }
 
-  renderContactButtons() {
+  renderContactButtons(size = 30) {
     const phoneNumber = '+1-202-555-0159';
     const email = 'admin@tutoria.io';
-    const size = 30;
 
     return(
       <div className='homepageContact'>
         <SliderButton
-          to={ 'tel:'+phoneNumber }
+          href={ 'tel:'+phoneNumber }
         >
           <FaPhone
             size={ size }
@@ -126,7 +179,7 @@ class Homepage extends Component {
           { phoneNumber }
         </SliderButton>
         <SliderButton
-          to={ 'mailto:'+email }
+          href={ 'mailto:'+email }
         >
           <FaEnvelope
             size={ size }
@@ -143,33 +196,28 @@ class Homepage extends Component {
     );
   }
 
-  renderFeaturedPrograms() {
-    const programs = [
-      {
-        program: 'English',
-        description: 'Our English language program helps connect you with English speakers'
-      },
-      {
-        program: 'Citizenship',
-        description: 'Our citizenship program helps you through the process of applying for citizenship'
-      },
-      {
-        program: 'Job Interview',
-        description: 'Our Job Interview program helps you to prepare for job interviews'
-      },
-    ];
+  renderElementContainer(content, children) {
     return(
-      <div className='featuredProgramsContainer'>
-        <h2 className='featuredProgramsHeader'>
-          Featured Programs
+      <div className={ content.name+'Container' }>
+        <h2 className={ content.name+'Header' }>
+          { content.header }
         </h2>
-        <p className='featuredProgramsSubtitle'>
-          Below are our featured programs!
+        <p className={ content.name+'Subtitle' }>
+          { content.subtitle }
         </p>
-        <div className='programCardsContainer'>
-          { this.renderProgramCards(programs) }
+        <div className={ content.name+'ContentContainer' }>
+          { children }
         </div>
       </div>
+    );
+  }
+
+  renderFeaturedPrograms() {
+    return(
+      this.renderElementContainer(
+        pageContent.featuredPrograms,
+        this.renderProgramCards(this.props.programs)
+      )
     );
   }
 
@@ -179,8 +227,8 @@ class Homepage extends Component {
 
     content.forEach(element => {
       cards.push(
-        <div key={ 'programCard'+element.program } className={ 'programCard'+element.program }>
-          <Card className={ element.program+'card' }>
+        <div key={ 'programCard'+element.id } className={ 'programCard'+element.id }>
+          <Card className={ element.id+'card' }>
             <CardHeader
               avatar={
                 <FaComments size={ size } />
@@ -188,7 +236,7 @@ class Homepage extends Component {
             />
             <CardContent>
               <h2 className='programCardsHeader'>
-                { element.program }
+                { element.name }
               </h2>
               <p className='programCardsText'>
                 { element.description }
@@ -202,41 +250,11 @@ class Homepage extends Component {
   }
 
   renderHowItWorks() {
-    const size = 60;
-    const howItWorksStages = [
-      {
-        icon: (<MdTouchApp size={ size } />),
-        title: 'clientPost',
-        description: 'Clients post what they need help with, such as English language tutoring.'
-      },
-      {
-        icon: (<FaPeopleCarry size={ size } />),
-        title: 'volunteerPost',
-        description: 'Volunteers post what they can help with.'
-      },
-      {
-        icon: (<FaInbox size={ size } />),
-        title: 'contact',
-        description: 'Clients contact volunteers matching their needs and availability.'
-      },
-      {
-        icon: (<FaAward size={ size } />),
-        title: 'review',
-        description: 'After working together, volunteers and clients review each other.'
-      },
-    ];
     return(
-      <div className='howItWorksContainer'>
-        <h2 className='howItWorksHeader'>
-          How it Works
-        </h2>
-        <p className='howItWorksSubtitle'>
-          The stages of an avarage interaction are shown below!
-        </p>
-        <div className='howItWorksCardsContainer'>
-          { this.renderHowItWorksCards(howItWorksStages) }
-        </div>
-      </div>
+      this.renderElementContainer(
+        pageContent.howItWorks,
+        this.renderHowItWorksCards(pageContent.howItWorks.howItWorksStages)
+      )
     );
   }
 
@@ -272,52 +290,66 @@ class Homepage extends Component {
   renderWhereWeAre() {
     const size = 60;
     return(
-      <div className='whereWeAreContainer'>
-        <h2 className='whereWeAreHeader'>
-          Where we Are
-        </h2>
-        <p className='whereWeAreSubtitle'>
-          The map below shows the spread of our clients across the country
-        </p>
-        <div className='whereWeAreMapContainer'>
-          <p>
-            Content coming soon!
-          </p>
-          <FaWrench size={ size } />
-        </div>
-      </div>
+      this.renderElementContainer(
+        pageContent.whereWeAre,
+        (
+          <div>
+            <p>
+              Content coming soon!
+            </p>
+            <FaWrench size={ size } />
+          </div>
+      ))
     );
   }
 
   renderJoinUs() {
     return(
-      <div className='joinUsContainer' ref={ this.joinUsFormRef }>
-        <h2 className='joinUsHeader'>
-          Join Us
-        </h2>
-        <p className='joinUsSubtitle'>
-          Just fill out the form below to get started!
-        </p>
-        <div className='joinUsFormContainer'>
-          { this.renderJoinUsForm() }
-        </div>
+      <div ref={ this.joinUsFormRef }>
+        {
+          this.renderElementContainer(
+            pageContent.joinUs,
+            this.renderJoinUsForm()
+          ) }
       </div>
     );
   }
 
   renderJoinUsForm() {
+    const { errors, changeHandler, validateHandler } = this.props;
     const size = 30;
     return(
       <span className='joinUsForm'>
         <TextField
-          id='standard-full-width'
-          placeholder='Your email'
+          label={ (
+            <FormattedMessage
+              id='UserForm.email'
+              defaultMessage='Email'
+            />
+          ) }
           fullWidth
+          type='email'
+          autoComplete='email'
+          name='email'
+          margin='normal'
+          helperText={ errors.email }
+          error={ errors.email!=null }
+          onChange={ changeHandler('email') }
+          onBlur={ validateHandler('email') }
         />
         <TextField
-          id='standard-full-width'
-          placeholder='Your first name'
+          label={ (
+            <FormattedMessage
+              id='UserForm.firstName'
+              defaultMessage='First Name'
+            />
+          ) }
           fullWidth
+          type='text'
+          helperText={ errors.first_name }
+          error={ errors.first_name!=null }
+          onChange={ changeHandler('first_name') }
+          onBlur={ validateHandler('first_name') }
         />
         <span className='expansionPanel'>
           <ExpansionPanel>
@@ -339,7 +371,7 @@ class Homepage extends Component {
                   value={ ENGLISH }
                   disabled={ this.state.languageChecked === ENGLISH }
                   disableRipple
-                  onClick={  (event) => this.handleSelect(event, 'languageChecked')  }
+                  onClick={  (event) => this.handleChange(event, 'languageChecked')  }
                 >
                   <p>
                     English
@@ -357,7 +389,7 @@ class Homepage extends Component {
                   value={ SPANISH }
                   disabled={ this.state.languageChecked === SPANISH }
                   disableRipple
-                  onClick={  (event) => this.handleSelect(event, 'languageChecked')  }
+                  onClick={  (event) => this.handleChange(event, 'languageChecked')  }
                 >
                   <p>
                     Español
@@ -371,7 +403,7 @@ class Homepage extends Component {
         <span className='radioButtons'>
           <RadioGroup
             name='signUpTypeRadio'
-            onChange={ (event) => this.handleSelect(event, 'signUpType') }
+            onChange={ (event) => this.handleChange(event, 'signUpType') }
           >
             <FormControlLabel
               value="client"
@@ -402,7 +434,17 @@ class Homepage extends Component {
             className='submitButton'
             variant='extended'
             component={ Link }
-            to={ formatLink('/sign_up/client', this.state.languageChecked) }
+            disabled={ !_.isEmpty(errors) }
+            to={ {
+              pathname: formatLink('/sign_up/'+this.state.signUpType, this.state.languageChecked),
+              state: {
+                currentUser: {
+                  first_name: this.props.first_name,
+                  email: this.props.email
+                }
+              }
+            } }
+            onClick={ (event) => { this.handleScroll(event, 0); this.handleSubmit; } }
             >
             <FormattedMessage
               id='Submit'
@@ -413,8 +455,44 @@ class Homepage extends Component {
       </span>
     );
   }
+
+  renderNeedHelp() {
+    return(
+      <div className='needHelpContainer'>
+        <h2 className='needHelpHeader'>
+          { pageContent.needHelp.header }
+        </h2>
+        <p className='needHelpSubtitle'>
+          Please call or send an email. Also check our
+          { ' ' }
+          { <Link to={ formatLink('/FAQ', this.state.languageChecked) }>FAQ</Link> }
+          .
+        </p>
+        <span className='needHelpLinks'>
+          { this.renderContactButtons(70) }
+        </span>
+      </div>
+    );
+  }
 }
 
-export default Homepage;
+Homepage.propTypes = {
+  errors: PropTypes.object.isRequired,
+  changeHandler: PropTypes.func.isRequired,
+  validateHandler: PropTypes.func.isRequired,
+  first_name: PropTypes.string,
+  email: PropTypes.string,
+};
+
+Homepage.defaultProps = {
+  first_name: '',
+  email: ''
+};
+
+const validationOptions = {
+  joiSchema: SignUpSchema,
+};
+
+export default validate(Homepage, validationOptions);
 
 

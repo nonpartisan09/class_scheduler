@@ -10,9 +10,6 @@ import Avatar from 'material-ui/Avatar';
 import { List, ListItem } from 'material-ui/List';
 import RaisedButton from 'material-ui/RaisedButton';
 
-import Header from './reusable/Header';
-import Footer from './reusable/Footer';
-
 import formatLink from './utils/Link';
 import PageHeader from './reusable/PageHeader';
 
