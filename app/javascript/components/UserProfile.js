@@ -14,11 +14,8 @@ import METHODS from './utils/RestConstants';
 
 import { postData } from './utils/sendData';
 import AvailabilitiesTable from './AvailabilitiesTable';
-import Header from './reusable/Header';
 import CommentContainer from './CommentContainer';
-
 import ReviewContainer from './ReviewContainer';
-import Footer from './reusable/Footer';
 import FormData from './utils/FormData';
 import SnackBarComponent from './reusable/SnackBarComponent';
 

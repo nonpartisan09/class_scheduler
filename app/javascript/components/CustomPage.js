@@ -4,8 +4,6 @@ import Paper from 'material-ui/Paper';
 import Parser from 'html-react-parser';
 
 import ChooseLanguage from './utils/ChooseLanguage';
-import Footer from './reusable/Footer';
-import Header from './reusable/Header';
 
 
 class CustomPage extends Component {

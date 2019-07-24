@@ -4,8 +4,6 @@ import PropTypes from 'prop-types';
 import Paper from 'material-ui/Paper';
 
 import Message from './Message';
-import Header from './reusable/Header';
-import Footer from './reusable/Footer';
 import { postData } from './utils/sendData';
 import FormData from './utils/FormData';
 import METHODS from './utils/RestConstants';

@@ -4,10 +4,7 @@ import { FormattedMessage } from 'react-intl';
 
 import FormData from './utils/FormData';
 import withUserForm from './reusable/withUserForm';
-import Header from './reusable/Header';
-
 import UserFormConstants from './utils/UserFormConstants';
-
 import SignUpSchema from './schema/SignUpSchema';
 import { postData } from './utils/sendData';
 import formatLink from './utils/Link';

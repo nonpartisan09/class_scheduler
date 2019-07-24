@@ -15,12 +15,8 @@ import TextField from 'material-ui/TextField';
 
 import FormData from './utils/FormData';
 import formatLink from './utils/Link';
-
-import Header from './reusable/Header';
 import ErrorField from './reusable/ErrorField';
 import { postData } from './utils/sendData';
-
-import Footer from './reusable/Footer';
 import PageHeader from './reusable/PageHeader';
 
 const nowDate = new Date();

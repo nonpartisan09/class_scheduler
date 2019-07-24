@@ -4,8 +4,6 @@ import Paper from 'material-ui/Paper';
 
 import { FormattedMessage } from 'react-intl';
 import RaisedButton from 'material-ui/RaisedButton';
-import Header from './reusable/Header';
-import Footer from './reusable/Footer';
 import './utils/CheckMobile';
 import Logo from './reusable/Logo';
 

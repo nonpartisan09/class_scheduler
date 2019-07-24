@@ -12,10 +12,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 
 import SearchValidationSchema from './schema/SearchValidationSchema';
 import { getData } from './utils/sendData';
-import Header from './reusable/Header';
 import SearchOptionalFields from './SearchOptionalFields';
-
-import Footer from './reusable/Footer';
 import formatLink from './utils/Link';
 import SnackBarComponent from './reusable/SnackBarComponent';
 import SearchUrl from './utils/SearchUrl';

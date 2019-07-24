@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 import Paper from 'material-ui/Paper';
 import { FormattedMessage } from 'react-intl';
-import Header from './reusable/Header';
-import Footer from './reusable/Footer';
 import PageHeader from './reusable/PageHeader';
 
 class UserReviewIndexPage extends Component {

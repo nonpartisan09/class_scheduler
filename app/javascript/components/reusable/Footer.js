@@ -67,7 +67,7 @@ class Footer extends Component {
             <Link to={ formatLink('/FAQ', locale) }>
               FAQ
             </Link>
-            <a href={ facebookLink }>
+            <a href={ facebookLink } rel='noopener noreferrer' target='_blank'>
               <FaFacebookF
                 size={ size }
                 className='facebookIcon'

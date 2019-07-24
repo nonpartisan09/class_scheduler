@@ -3,9 +3,6 @@ import PropTypes from 'prop-types';
 import Paper from 'material-ui/Paper';
 import Parser from 'html-react-parser';
 
-import Footer from './reusable/Footer';
-import Header from './reusable/Header';
-
 const TermsAndConditions = ({ currentUser, terms_and_conditions })=> {
   const content = function(){
     if (terms_and_conditions) {
