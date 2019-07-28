@@ -5,9 +5,9 @@
       {
         "corejs": 2,
         "modules": false,
+        "forceAllTransforms": true,
         "targets": {
           "browsers": [ "> 1%", "last 10 versions"],
-          "uglify": true
         },
         "useBuiltIns": "entry"
       }
