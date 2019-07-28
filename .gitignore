@@ -16,6 +16,7 @@
 !/log/.keep
 !/tmp/.keep
 
+/node_modules
 /public
 /yarn-error.log
 /vendor/bundle
