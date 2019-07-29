@@ -165,8 +165,6 @@ document.addEventListener("DOMContentLoaded", () => {
               exact
               path={`/${locale}/availabilities`}
               render={props => {
-                // console.log("props", props);
-                // console.log("data", data);
                 return <AvailabilityIndexPage {...data} {...props} />;
               }}
             />

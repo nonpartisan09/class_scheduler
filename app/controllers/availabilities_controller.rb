@@ -72,7 +72,7 @@ class AvailabilitiesController < ApplicationController
       }).self_decorate
     }
 
-    print availabilities
+   
     @data = {
         :currentUser => user,
         :programs => programs,
