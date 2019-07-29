@@ -45,6 +45,7 @@ class AvailabilitiesController < ApplicationController
 
         begin
           @availability = creation.execute
+       
         rescue Contexts::Availabilities::Errors::UnknownAvailabilityError,
             Contexts::Availabilities::Errors::OverlappingAvailability,
             Contexts::Availabilities::Errors::StartTimeMissing,
@@ -71,12 +72,13 @@ class AvailabilitiesController < ApplicationController
       }).self_decorate
     }
 
+    print availabilities
     @data = {
         :currentUser => user,
         :programs => programs,
         :availabilities => availabilities
     }
-
+   
     respond_with(@data, :index)
   end
 

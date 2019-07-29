@@ -5,6 +5,7 @@
 'use strict';
 
 const docsUrl = require('../util/docsUrl');
+const jsxUtil = require('../util/jsx');
 
 // ------------------------------------------------------------------------------
 // Rule Definition
@@ -13,7 +14,19 @@ const docsUrl = require('../util/docsUrl');
 // NOTE: '<' and '{' are also problematic characters, but they do not need
 // to be included here because it is a syntax error when these characters are
 // included accidentally.
-const DEFAULTS = ['>', '"', '\'', '}'];
+const DEFAULTS = [{
+  char: '>',
+  alternatives: ['&gt;']
+}, {
+  char: '"',
+  alternatives: ['&quot;', '&ldquo;', '&#34;', '&rdquo;']
+}, {
+  char: '\'',
+  alternatives: ['&apos;', '&lsquo;', '&#39;', '&rsquo;']
+}, {
+  char: '}',
+  alternatives: ['&#125;']
+}];
 
 module.exports = {
   meta: {
@@ -29,7 +42,23 @@ module.exports = {
         forbid: {
           type: 'array',
           items: {
-            type: 'string'
+            oneOf: [{
+              type: 'string'
+            }, {
+              type: 'object',
+              properties: {
+                char: {
+                  type: 'string'
+                },
+                alternatives: {
+                  type: 'array',
+                  uniqueItems: true,
+                  items: {
+                    type: 'string'
+                  }
+                }
+              }
+            }]
           }
         }
       },
@@ -58,10 +87,18 @@ module.exports = {
         for (let j = 0; j < entities.length; j++) {
           for (let index = 0; index < rawLine.length; index++) {
             const c = rawLine[index];
-            if (c === entities[j]) {
+            if (typeof entities[j] === 'string') {
+              if (c === entities[j]) {
+                context.report({
+                  loc: {line: i, column: start + index},
+                  message: `HTML entity, \`${entities[j]}\` , must be escaped.`,
+                  node: node
+                });
+              }
+            } else if (c === entities[j].char) {
               context.report({
                 loc: {line: i, column: start + index},
-                message: 'HTML entities must be escaped.',
+                message: `\`${entities[j].char}\` can be escaped with ${entities[j].alternatives.map(alt => `\`${alt}\``).join(', ')}.`,
                 node: node
               });
             }
@@ -71,8 +108,8 @@ module.exports = {
     }
 
     return {
-      Literal: function(node) {
-        if (node.type === 'Literal' && node.parent.type === 'JSXElement') {
+      'Literal, JSXText': function(node) {
+        if (jsxUtil.isJSX(node.parent)) {
           reportInvalidEntity(node);
         }
       }

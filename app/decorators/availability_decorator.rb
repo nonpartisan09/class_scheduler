@@ -1,3 +1,4 @@
+
 class AvailabilityDecorator
   include ActionView::Helpers::DateHelper
   attr_reader :availability
@@ -40,12 +41,15 @@ class AvailabilityDecorator
   end
 
   def current_user_day
+
     Time.zone = @timezone
     @day ||= Time.zone.local_to_utc(@availability.start_time).strftime("%A")
   end
 
   def start_time
+    
     Time.zone = @timezone
+
     @start_time || Time.zone.parse(@availability.start_time.to_s).strftime("%H:%M")
   end
 

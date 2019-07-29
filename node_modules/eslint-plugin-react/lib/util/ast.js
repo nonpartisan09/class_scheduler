@@ -18,13 +18,35 @@ function findReturnStatement(node) {
 
   const bodyNodes = (node.value ? node.value.body.body : node.body.body);
 
-  let i = bodyNodes.length - 1;
-  for (; i >= 0; i--) {
-    if (bodyNodes[i].type === 'ReturnStatement') {
-      return bodyNodes[i];
+  return (function loopNodes(nodes) {
+    let i = nodes.length - 1;
+    for (; i >= 0; i--) {
+      if (nodes[i].type === 'ReturnStatement') {
+        return nodes[i];
+      }
+      if (nodes[i].type === 'SwitchStatement') {
+        let j = nodes[i].cases.length - 1;
+        for (; j >= 0; j--) {
+          return loopNodes(nodes[i].cases[j].consequent);
+        }
+      }
     }
+    return false;
+  }(bodyNodes));
+}
+
+/**
+ * Get node with property's name
+ * @param {Object} node - Property.
+ * @returns {Object} Property name node.
+ */
+function getPropertyNameNode(node) {
+  if (node.key || ['MethodDefinition', 'Property'].indexOf(node.type) !== -1) {
+    return node.key;
+  } else if (node.type === 'MemberExpression') {
+    return node.property;
   }
-  return false;
+  return null;
 }
 
 /**
@@ -33,12 +55,8 @@ function findReturnStatement(node) {
  * @returns {String} Property name.
  */
 function getPropertyName(node) {
-  if (node.key || ['MethodDefinition', 'Property'].indexOf(node.type) !== -1) {
-    return node.key.name;
-  } else if (node.type === 'MemberExpression') {
-    return node.property.name;
-  }
-  return '';
+  const nameNode = getPropertyNameNode(node);
+  return nameNode ? nameNode.name : '';
 }
 
 /**
@@ -52,20 +70,20 @@ function getComponentProperties(node) {
     case 'ClassExpression':
       return node.body.body;
     case 'ObjectExpression':
-      // return node.properties;
       return node.properties;
     default:
       return [];
   }
 }
 
+
 /**
-     * Checks if the node is the first in its line, excluding whitespace.
-     * @param {Object} context The node to check
-     * @param {ASTNode} node The node to check
-     * @return {Boolean} true if its the first node in its line
-     */
-function isNodeFirstInLine(context, node) {
+ * Gets the first node in a line from the initial node, excluding whitespace.
+ * @param {Object} context The node to check
+ * @param {ASTNode} node The node to check
+ * @return {ASTNode} the first node in the line
+ */
+function getFirstNodeInLine(context, node) {
   const sourceCode = context.getSourceCode();
   let token = node;
   let lines;
@@ -78,16 +96,67 @@ function isNodeFirstInLine(context, node) {
     token.type === 'JSXText' &&
         /^\s*$/.test(lines[lines.length - 1])
   );
+  return token;
+}
 
+/**
+ * Checks if the node is the first in its line, excluding whitespace.
+ * @param {Object} context The node to check
+ * @param {ASTNode} node The node to check
+ * @return {Boolean} true if it's the first node in its line
+ */
+function isNodeFirstInLine(context, node) {
+  const token = getFirstNodeInLine(context, node);
   const startLine = node.loc.start.line;
   const endLine = token ? token.loc.end.line : -1;
   return startLine !== endLine;
 }
 
+/**
+ * Checks if the node is a function or arrow function expression.
+ * @param {Object} context The node to check
+ * @return {Boolean} true if it's a function-like expression
+ */
+function isFunctionLikeExpression(node) {
+  return node.type === 'FunctionExpression' || node.type === 'ArrowFunctionExpression';
+}
+
+/**
+ * Checks if the node is a function.
+ * @param {Object} context The node to check
+ * @return {Boolean} true if it's a function
+ */
+function isFunction(node) {
+  return node.type === 'FunctionExpression' || node.type === 'FunctionDeclaration';
+}
+
+/**
+ * Checks if the node is an arrow function.
+ * @param {Object} context The node to check
+ * @return {Boolean} true if it's an arrow function
+ */
+function isArrowFunction(node) {
+  return node.type === 'ArrowFunctionExpression';
+}
+
+/**
+ * Checks if the node is a class.
+ * @param {Object} context The node to check
+ * @return {Boolean} true if it's a class
+ */
+function isClass(node) {
+  return node.type === 'ClassDeclaration' || node.type === 'ClassExpression';
+}
 
 module.exports = {
   findReturnStatement: findReturnStatement,
+  getFirstNodeInLine: getFirstNodeInLine,
   getPropertyName: getPropertyName,
+  getPropertyNameNode: getPropertyNameNode,
   getComponentProperties: getComponentProperties,
+  isArrowFunction: isArrowFunction,
+  isClass: isClass,
+  isFunction: isFunction,
+  isFunctionLikeExpression: isFunctionLikeExpression,
   isNodeFirstInLine: isNodeFirstInLine
 };

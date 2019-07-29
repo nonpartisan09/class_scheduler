@@ -10,14 +10,27 @@ const docsUrl = require('./docsUrl');
 // Rule Definition
 // ------------------------------------------------------------------------------
 
-function makeNoMethodSetStateRule(methodName) {
+function mapTitle(methodName) {
+  const map = {
+    componentDidMount: 'did-mount',
+    componentDidUpdate: 'did-update',
+    componentWillUpdate: 'will-update'
+  };
+  const title = map[methodName];
+  if (!title) {
+    throw Error(`No docsUrl for '${methodName}'`);
+  }
+  return `no-${title}-set-state`;
+}
+
+function makeNoMethodSetStateRule(methodName, shouldCheckUnsafeCb) {
   return {
     meta: {
       docs: {
         description: `Prevent usage of setState in ${methodName}`,
         category: 'Best Practices',
         recommended: false,
-        url: docsUrl(methodName)
+        url: docsUrl(mapTitle(methodName))
       },
 
       schema: [{
@@ -27,6 +40,18 @@ function makeNoMethodSetStateRule(methodName) {
 
     create: function(context) {
       const mode = context.options[0] || 'allow-in-func';
+
+      function nameMatches(name) {
+        if (name === methodName) {
+          return true;
+        }
+
+        if (typeof shouldCheckUnsafeCb === 'function' && shouldCheckUnsafeCb(context)) {
+          return name === `UNSAFE_${methodName}`;
+        }
+
+        return false;
+      }
 
       // --------------------------------------------------------------------------
       // Public
@@ -46,19 +71,20 @@ function makeNoMethodSetStateRule(methodName) {
           const ancestors = context.getAncestors(callee).reverse();
           let depth = 0;
           for (let i = 0, j = ancestors.length; i < j; i++) {
-            if (/Function(Expression|Declaration)$/.test(ancestors[i].type)) {
+            const ancestor = ancestors[i];
+            if (/Function(Expression|Declaration)$/.test(ancestor.type)) {
               depth++;
             }
             if (
-              (ancestors[i].type !== 'Property' && ancestors[i].type !== 'MethodDefinition') ||
-              ancestors[i].key.name !== methodName ||
+              (ancestor.type !== 'Property' && ancestor.type !== 'MethodDefinition') ||
+              !nameMatches(ancestor.key.name) ||
               (mode !== 'disallow-in-func' && depth > 1)
             ) {
               continue;
             }
             context.report({
               node: callee,
-              message: `Do not use setState in ${methodName}`
+              message: `Do not use setState in ${ancestor.key.name}`
             });
             break;
           }

@@ -1,16 +1,16 @@
-import _ from 'lodash';
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import Paper from 'material-ui/Paper';
-import RaisedButton from 'material-ui/RaisedButton';
-import Chip from 'material-ui/Chip';
-import { FormattedMessage } from 'react-intl';
+import _ from "lodash";
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import Paper from "material-ui/Paper";
+import RaisedButton from "material-ui/RaisedButton";
+import Chip from "material-ui/Chip";
+import { FormattedMessage } from "react-intl";
 
-import Header from './reusable/Header';
-import AvailabilitiesTable from './AvailabilitiesTable';
-import formatLink from './utils/Link';
+import Header from "./reusable/Header";
+import AvailabilitiesTable from "./AvailabilitiesTable";
+import formatLink from "./utils/Link";
 
-import PageHeader from './reusable/PageHeader';
+import PageHeader from "./reusable/PageHeader";
 
 class AvailabilityIndexPage extends Component {
   render() {
@@ -18,25 +18,27 @@ class AvailabilityIndexPage extends Component {
 
     return (
       <div>
-        <Header currentUser={ currentUser } />
-        <Paper zDepth={ 1 } className='paperOverride' rounded={ false }>
-          <PageHeader title={
+        <Header currentUser={currentUser} />
+        <Paper zDepth={1} className="paperOverride" rounded={false}>
+          <PageHeader
+            title={
+              <FormattedMessage
+                id="AvailabilityIndexPage.Header"
+                defaultMessage="My availabilities"
+              />
+            }
+          />
+
+          <div className="availabilityIndexContainer">
             <FormattedMessage
-              id='AvailabilityIndexPage.Header'
-              defaultMessage='My availabilities'
+              id="AvailabilityIndexPage.Help"
+              defaultMessage="I can help with"
             />
-          } />
-
-          <div className='availabilityIndexContainer'>
-            <FormattedMessage
-              id='AvailabilityIndexPage.Help'
-              defaultMessage='I can help with'
-            />:
-            <ul className='availabilityIndexProgramsContainer'>
-              { this.renderAvailablePrograms() }
+            :
+            <ul className="availabilityIndexProgramsContainer">
+              {this.renderAvailablePrograms()}
             </ul>
-
-            { this.renderAvailabilities() }
+            {this.renderAvailabilities()}
           </div>
         </Paper>
       </div>
@@ -44,23 +46,26 @@ class AvailabilityIndexPage extends Component {
   }
 
   renderAvailablePrograms() {
-    return _.map(this.props.programs, ({ name }) =>
-      <li key={ name } className='availabilityListItem'>
-        <Chip key={ name }>{ name }</Chip>
+    return _.map(this.props.programs, ({ name }) => (
+      <li key={name} className="availabilityListItem">
+        <Chip key={name}>{name}</Chip>
       </li>
-    );
+    ));
   }
 
   renderAvailabilities() {
-    const { availabilities, currentUser: { timezone, locale } } = this.props;
+    const {
+      availabilities,
+      currentUser: { timezone, locale }
+    } = this.props;
 
-    if ( _.size(availabilities) > 0 ) {
+    if (_.size(availabilities) > 0) {
       return (
-        <ul className='availabilityIndexListContainer'>
+        <ul className="availabilityIndexListContainer">
           <AvailabilitiesTable
-            availabilities={ availabilities }
-            timezone={ timezone }
-            locale={ locale }
+            availabilities={availabilities}
+            timezone={timezone}
+            locale={locale}
             deletable
           />
         </ul>
@@ -68,14 +73,14 @@ class AvailabilityIndexPage extends Component {
     } else {
       return (
         <div>
-          <a href={ formatLink('/availabilities/new', locale) } >
+          <a href={formatLink("/availabilities/new", locale)}>
             <RaisedButton
               primary
-              className='conversationButton'
+              className="conversationButton"
               label={
                 <FormattedMessage
-                  id='availabilityCreateNew'
-                  defaultMessage='Create new availabilities'
+                  id="availabilityCreateNew"
+                  defaultMessage="Create new availabilities"
                 />
               }
             />
@@ -100,9 +105,9 @@ AvailabilityIndexPage.defaultProps = {
   availabilities: [],
   programs: [],
   currentUser: {
-    first_name: '',
-    email: '',
-    timezone: ''
+    first_name: "",
+    email: "",
+    timezone: ""
   }
 };
 

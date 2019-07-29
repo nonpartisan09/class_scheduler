@@ -33,6 +33,7 @@ module.exports = {
 
   create: function(context) {
     const isNoStrings = context.options[0] ? context.options[0].noStrings : false;
+    const sourceCode = context.getSourceCode();
 
     const message = isNoStrings ?
       'Strings not allowed in JSX files' :
@@ -41,7 +42,7 @@ module.exports = {
     function reportLiteralNode(node) {
       context.report({
         node: node,
-        message: message
+        message: `${message}: “${sourceCode.getText(node).trim()}”`
       });
     }
 
@@ -72,6 +73,12 @@ module.exports = {
     return {
 
       Literal: function(node) {
+        if (getValidation(node)) {
+          reportLiteralNode(node);
+        }
+      },
+
+      JSXText: function(node) {
         if (getValidation(node)) {
           reportLiteralNode(node);
         }

@@ -5,22 +5,31 @@
 'use strict';
 
 const docsUrl = require('../util/docsUrl');
+const linkComponentsUtil = require('../util/linkComponents');
 
 // ------------------------------------------------------------------------------
 // Rule Definition
 // ------------------------------------------------------------------------------
 
 function isTargetBlank(attr) {
-  return attr.name.name === 'target' &&
+  return attr.name &&
+    attr.name.name === 'target' &&
+    attr.value &&
     attr.value.type === 'Literal' &&
     attr.value.value.toLowerCase() === '_blank';
 }
 
-function hasExternalLink(element) {
+function hasExternalLink(element, linkAttribute) {
   return element.attributes.some(attr => attr.name &&
-      attr.name.name === 'href' &&
+      attr.name.name === linkAttribute &&
       attr.value.type === 'Literal' &&
       /^(?:\w+:|\/\/)/.test(attr.value.value));
+}
+
+function hasDynamicLink(element, linkAttribute) {
+  return element.attributes.some(attr => attr.name &&
+    attr.name.name === linkAttribute &&
+    attr.value.type === 'JSXExpressionContainer');
 }
 
 function hasSecureRel(element) {
@@ -41,21 +50,31 @@ module.exports = {
       recommended: true,
       url: docsUrl('jsx-no-target-blank')
     },
-    schema: []
+    schema: [{
+      type: 'object',
+      properties: {
+        enforceDynamicLinks: {
+          enum: ['always', 'never']
+        }
+      },
+      additionalProperties: false
+    }]
   },
 
   create: function(context) {
+    const configuration = context.options[0] || {};
+    const enforceDynamicLinks = configuration.enforceDynamicLinks || 'always';
+    const components = linkComponentsUtil.getLinkComponents(context);
+
     return {
       JSXAttribute: function(node) {
-        if (node.parent.name.name !== 'a') {
+        if (!components.has(node.parent.name.name) || !isTargetBlank(node) || hasSecureRel(node.parent)) {
           return;
         }
 
-        if (
-          isTargetBlank(node) &&
-          hasExternalLink(node.parent) &&
-          !hasSecureRel(node.parent)
-        ) {
+        const linkAttribute = components.get(node.parent.name.name);
+
+        if (hasExternalLink(node.parent, linkAttribute) || (enforceDynamicLinks === 'always' && hasDynamicLink(node.parent, linkAttribute))) {
           context.report(node, 'Using target="_blank" without rel="noopener noreferrer" ' +
           'is a security risk: see https://mathiasbynens.github.io/rel-noopener');
         }

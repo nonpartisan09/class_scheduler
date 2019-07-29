@@ -1,32 +1,32 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import _ from 'lodash';
-import Paper from 'material-ui/Paper';
-import { FormattedMessage } from 'react-intl';
-import Header from './reusable/Header';
-import Footer from './reusable/Footer';
-import PageHeader from './reusable/PageHeader';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import _ from "lodash";
+import Paper from "material-ui/Paper";
+import { FormattedMessage } from "react-intl";
+import Header from "./reusable/Header";
+import Footer from "./reusable/Footer";
+import PageHeader from "./reusable/PageHeader";
 
 class UserReviewIndexPage extends Component {
   render() {
     const { currentUser, reviewer } = this.props;
-      const title = function(){
-        return [
-          <FormattedMessage
-            id='UserReviewIndexPage.header'
-            defaultMessage='Most recent reviews by'
-            key='reviewBy'
-          />,
-          <span key='reviewer'> {reviewer}</span>
-        ]
-      }();
+    const title = (function() {
+      return [
+        <FormattedMessage
+          id="UserReviewIndexPage.header"
+          defaultMessage="Most recent reviews by"
+          key="reviewBy"
+        />,
+        <span key="reviewer">{reviewer}</span>
+      ];
+    })();
     return (
       <div>
-        <Header currentUser={ currentUser } />
-        <Paper zDepth={ 1 } className='paperOverride' rounded={ false }>
-          <PageHeader title={ title } />
-          <ul className='userReviewIndexPageContainerList'>
-            { this.renderContent() }
+        <Header currentUser={currentUser} />
+        <Paper zDepth={1} className="paperOverride" rounded={false}>
+          <PageHeader title={title} />
+          <ul className="userReviewIndexPageContainerList">
+            {this.renderContent()}
           </ul>
         </Paper>
         <Footer />
@@ -39,10 +39,10 @@ class UserReviewIndexPage extends Component {
     if (_.size(comments) > 0) {
       return _.map(comments, ({ comment, created_at, reviewee }, index) => {
         return (
-          <li key={ index } className='userReviewIndexPageContainerListItem'>
-            <span>Posted { created_at } - </span>
-            <span>about {reviewee } - </span>
-            <span> { this.renderComment(comment) }</span>
+          <li key={index} className="userReviewIndexPageContainerListItem">
+            <span>Posted {created_at} - </span>
+            <span>about {reviewee} - </span>
+            <span> {this.renderComment(comment)}</span>
           </li>
         );
       });
@@ -50,8 +50,8 @@ class UserReviewIndexPage extends Component {
       return (
         <li>
           <FormattedMessage
-            id='UserReviewIndexPage.noReviewAvailable'
-            defaultMessage='No reviews available'
+            id="UserReviewIndexPage.noReviewAvailable"
+            defaultMessage="No reviews available"
           />
         </li>
       );
@@ -64,8 +64,8 @@ class UserReviewIndexPage extends Component {
     } else {
       return (
         <FormattedMessage
-          id='UserReviewIndexPage.unavailable'
-          defaultMessage='Not available'
+          id="UserReviewIndexPage.unavailable"
+          defaultMessage="Not available"
         />
       );
     }
@@ -80,7 +80,7 @@ UserReviewIndexPage.propTypes = {
 
 UserReviewIndexPage.defaultProps = {
   comments: [],
-  reviewer: '',
+  reviewer: "",
   currentUser: {}
 };
 

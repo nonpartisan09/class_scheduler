@@ -59,7 +59,7 @@ function isSupported(feature, browsers) {
     }
   }
 
-  return (0, _browserslist2.default)(browsers).map(function (browser) {
+  return (0, _browserslist2.default)(browsers, { ignoreUnknownVersions: true }).map(function (browser) {
     return browser.split(" ");
   }).every(function (browser) {
     return data.stats[browser[0]] && data.stats[browser[0]][browser[1]] === "y";
@@ -82,7 +82,7 @@ function find(query) {
 }
 
 function getLatestStableBrowsers() {
-  return _browserslist2.default.queries.lastVersions.select(1);
+  return (0, _browserslist2.default)("last 1 version");
 }
 
 setBrowserScope();
