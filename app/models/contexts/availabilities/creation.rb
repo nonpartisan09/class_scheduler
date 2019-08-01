@@ -33,7 +33,9 @@ module Contexts
 
         check_if_starts_before_ends?
 
-        Time.zone = 'UTC'
+        # Time.zone = 'UTC'
+
+        Time.zone = @timezone
 
         new_availability_params = @availability.merge({
                                                           :day => @day,
@@ -50,7 +52,8 @@ module Contexts
           raise Availabilities::Errors::UnknownAvailabilityError, message
         end
 
-        Time.zone = 'UTC'
+        # Time.zone = 'UTC'
+        Time.zone = @timezone
         @new_availability
       end
 
@@ -115,13 +118,15 @@ module Contexts
       end
 
       def is_start_time_day_before?
-        Time.zone = 'UTC'
+        # Time.zone = 'UTC'
+        Time.zone = @timezone
 
         Time.zone.parse(@availability[:start_time]).strftime("%H").to_i - offset <= 0
       end
 
       def is_end_time_day_after?
-        Time.zone = 'UTC'
+        # Time.zone = 'UTC'
+        Time.zone = @timezone
 
         Time.zone.parse(@availability[:end_time]).strftime("%H").to_i + offset.abs >= 24
       end
