@@ -20,6 +20,7 @@ class ConversationIndexPage extends Component {
 	constructor(props, context) {
 		super(props, context);
 		this.handleClose = this.handleClose.bind(this);
+	
 		this.state = {
 			showAlert: localStorage.getItem('showAlertInfo')
 		};
