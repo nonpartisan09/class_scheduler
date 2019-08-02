@@ -11,7 +11,6 @@ import MessageButtons, { MessageTypes } from './reusable/MessageButtons';
 class ConversationPage extends Component {
 	constructor(props, context) {
 		super(props, context);
-
 		this.state = {
 			conversation: props.conversation
 		};

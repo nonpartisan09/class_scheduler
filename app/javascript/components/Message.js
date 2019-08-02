@@ -48,7 +48,6 @@ class Message extends Component {
 
 	renderAvatar() {
 		const { sender_first_name, avatar } = this.props;
-
 		return avatar ? (
 			<Avatar className='avatar' src={avatar} />
 		) : (
@@ -57,7 +56,7 @@ class Message extends Component {
 	}
 
 	renderDivider() {
-		const { sentOn, divider, unread } = this.props;
+		const { sentOn, divider } = this.props;
 		let className = this.state.read ? 'messageContainerBold' : '';
 		if (divider) {
 			return <Divider className={className} key={sentOn} inset />;
@@ -75,7 +74,7 @@ class Message extends Component {
 	};
 
 	renderSubject() {
-		const { subject, sentOn, sender_first_name, unread } = this.props;
+		const { subject, sentOn, sender_first_name } = this.props;
 		let className = this.state.unread ? 'messageContainerBold' : '';
 
 		if (subject) {

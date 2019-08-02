@@ -19,9 +19,7 @@ import PageHeader from './reusable/PageHeader';
 class ConversationIndexPage extends Component {
 	constructor(props, context) {
 		super(props, context);
-
 		this.handleClose = this.handleClose.bind(this);
-
 		this.state = {
 			showAlert: localStorage.getItem('showAlertInfo')
 		};
@@ -108,7 +106,6 @@ class ConversationIndexPage extends Component {
 
 		return _.map(conversations, (conversation) => {
 			const { conversee, id, conversee_avatar, is_first_message_unread } = conversation;
-
 			return (
 				<ListItem
 					onClick={this.handleClick(id)}
