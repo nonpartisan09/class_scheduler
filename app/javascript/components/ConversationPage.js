@@ -7,6 +7,8 @@ import Message from './Message';
 import { postData } from './utils/sendData';
 import FormData from './utils/FormData';
 import METHODS from './utils/RestConstants';
+import Header from './reusable/Header';
+import Footer from './reusable/Footer';
 import MessageButtons, { MessageTypes } from './reusable/MessageButtons';
 
 class ConversationPage extends Component {
@@ -14,15 +16,8 @@ class ConversationPage extends Component {
     super(props, context);
 
     this.state = {
-      message: '',
       conversation: props.conversation
     };
-  }
-
-  componentWillMount() {
-    setTimeout(() => {
-      this.handleMarkAsRead();
-    }, 6000);
   }
 
   render() {
@@ -52,39 +47,16 @@ class ConversationPage extends Component {
       return (
         <Message
           key={ `${index} + ${sent_on}` }
-          sender_first_name={ sender_first_name }
+          sender_first_name={ [sender_first_name] }
           body={ body }
           subject={ subject }
           sentOn={ sent_on }
           avatar={ sender_avatar }
           unread={ unread }
+          conversation={ this.state.conversation }
         />
       );
     });
-  }
-
-  handleMarkAsRead() {
-    const { conversation: { id } } = this.state;
-    const attributes = FormData.from({ id });
-    const requestParams = {
-      url: '/conversation',
-      method: METHODS.PUT,
-      attributes,
-
-      successCallBack: ({ conversation }) => {
-        this.setState({
-          conversation
-        });
-      },
-
-      errorCallBack: (message) => {
-        this.setState({
-          message: message
-        });
-      }
-    };
-
-    return postData(requestParams);
   }
 }
 
