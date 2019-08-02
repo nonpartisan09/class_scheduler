@@ -15,6 +15,7 @@ let styles = {
 class Message extends Component {
 	constructor(props) {
 		super(props);
+		
 		this.state = {
 			expanded: false,
 			unread: this.props.unread,
