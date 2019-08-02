@@ -13,6 +13,7 @@ class MessagesController < ApplicationController
         recipient_id: @recipient.id)
     @message = current_user.messages.build(permitted_params.except(:recipient_id))
     @message.conversation_id = @conversation.id
+    @message.unread = true
     @message.save!
 
     send_message_to_recipient

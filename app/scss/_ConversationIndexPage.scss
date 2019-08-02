@@ -40,6 +40,9 @@
 }
 
 .alertCloseButton:hover {
-   cursor: pointer
+    cursor: pointer;
 }
 
+.avatar {
+    object-fit: cover;
+}

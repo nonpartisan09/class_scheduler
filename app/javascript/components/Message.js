@@ -8,6 +8,9 @@ import {
   CardHeader,
   CardText
 } from 'material-ui';
+import { postData } from './utils/sendData';
+import FormData from './utils/FormData';
+import METHODS from './utils/RestConstants';
 
 let styles = {
   wordWrap: 'break-word'
@@ -18,11 +21,14 @@ class Message extends Component {
     super(props);
     this.state = {
       expanded: false,
+      unread: this.props.unread,
+      message: ''
     };
   }
 
   render() {
-    const { body, unread } = this.props;
+    const { body } = this.props;
+    let unread = this.state.unread;
 
     const messageContainer = function() {
       if (unread) {
@@ -33,7 +39,7 @@ class Message extends Component {
     }();
 
     return (
-      <div className={ messageContainer }>
+      <div onClick={ () => this.changeRead() } className={ messageContainer }>
         <Card expanded={ this.state.expanded } onExpandChange={ this.handleExpandChange }>
           <CardHeader
             showExpandableButton
@@ -53,7 +59,7 @@ class Message extends Component {
     const { sender_first_name, avatar } = this.props;
     return(
       avatar ?
-        <Avatar src={ avatar } />
+        <Avatar className='avatar' src={ avatar } />
       : (
         <Avatar>
           { sender_first_name[0].charAt(0).toUpperCase() }
@@ -63,9 +69,9 @@ class Message extends Component {
 
   renderDivider() {
     const { sentOn, divider } = this.props;
-
+    let className = this.state.unread ? 'messageContainerBold' : '';
     if (divider) {
-      return <Divider key={ sentOn } inset />;
+      return <Divider className={ className } key={ sentOn } inset />;
     }
   }
 
@@ -80,11 +86,12 @@ class Message extends Component {
   }
 
   renderSubject() {
-    const {  subject, sentOn, sender_first_name } = this.props;
+    const { subject, sentOn, sender_first_name } = this.props;
+    let className = this.state.unread ? 'messageContainerBold' : '';
 
     if (subject) {
       return (
-        <p>
+        <p className={ className }>
           <span>
             { sentOn }
           </span>
@@ -110,6 +117,34 @@ class Message extends Component {
     } else {
       return '';
     }
+  }
+
+  changeRead() {
+    this.handleMarkAsRead();
+  }
+
+  handleMarkAsRead() {
+    const id = this.props.conversation.id;
+    const attributes = FormData.from({ id });
+
+    const requestParams = {
+      url: '/conversation',
+      method: METHODS.PUT,
+      attributes,
+
+      successCallBack: ({ unread }) => {
+        this.setState({
+          unread
+        });
+      },
+
+      errorCallBack: (message) => {
+        this.setState({
+          message: message
+        });
+      }
+    };
+    return postData(requestParams);
   }
 }
 
