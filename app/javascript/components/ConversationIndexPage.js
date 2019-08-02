@@ -1,8 +1,3 @@
-/* eslint-disable jsx-a11y/no-static-element-interactions */
-/* eslint-disable react/jsx-curly-spacing */
-/* eslint-disable react/jsx-wrap-multilines */
-/* eslint-disable react/jsx-indent-props */
-/* eslint-disable react/jsx-indent */
 import React, { Component } from 'react';
 import _ from 'lodash';
 import PropTypes from 'prop-types';
