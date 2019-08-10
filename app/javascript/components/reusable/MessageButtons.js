@@ -32,7 +32,15 @@ class MessageButtons extends Component {
             className='messageButtonItem'
             label={ (
               <span>
+<<<<<<< HEAD
+<<<<<<< HEAD
                 <div className='searchResultItemRequestIcon'>
+=======
+                <div className='searchResultRequestIcon'>
+>>>>>>> 66daf7bc... Fixed bug and boy scouted some linting
+=======
+                <div className='searchResultItemRequestIcon'>
+>>>>>>> 8b57da03... fixed uneccesary change
                   <EmailIcon color='white' />
                 </div>
                 <FormattedMessage

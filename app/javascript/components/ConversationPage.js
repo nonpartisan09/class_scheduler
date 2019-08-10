@@ -99,8 +99,7 @@ ConversationPage.propTypes = {
     conversee: PropTypes.any,
     conversee_url_slug: PropTypes.oneOfType([ PropTypes.object, PropTypes.string ])
   }),
-  currentUser: PropTypes.object,
-
+  currentUser: PropTypes.object
 };
 
 ConversationPage.defaultProps = {

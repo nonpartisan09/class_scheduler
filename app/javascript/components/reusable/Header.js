@@ -1,13 +1,32 @@
 import _ from 'lodash';
-import MenuIcon from 'material-ui/svg-icons/navigation/menu';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-
 import { FormattedMessage } from 'react-intl';
-import { ENGLISH, SPANISH } from '../utils/availableLocales';
+import { 
+  FlatButton
+} from 'material-ui';
+import {
+  AppBar,
+  Toolbar,
+  Menu,
+  MenuItem,
+  ExpansionPanel,
+  ExpansionPanelSummary,
+  ExpansionPanelDetails
+} from '@material-ui/core';
+import { 
+  FaFacebookF,
+  FaPhone,
+  FaEnvelope,
+  FaChevronDown,
+  FaBars
+} from 'react-icons/fa';
 
+import {
+  ENGLISH,
+  SPANISH
+} from '../utils/availableLocales';
 import PaypalButton from '../PaypalButton';
-
 import { getData } from '../utils/sendData';
 import HomeLink from './HomeLink';
 import formatLink from '../utils/Link';
@@ -17,201 +36,548 @@ class Header extends Component {
     super(props, context);
 
     this.handleSignOut = this.handleSignOut.bind(this);
-    this.handleClickMenu = this.handleClickMenu.bind(this);
-    this.handleKeyDown = this.handleKeyDown.bind(this);
+    this.renderHomeButton = this.renderHomeButton.bind(this);
+    this.renderRightElements = this.renderRightElements.bind(this);
+    this.rendersignedInHeader = this.rendersignedInHeader.bind(this);
     this.handleSetGuestLocale = this.handleSetGuestLocale.bind(this);
+    this.renderContactElements = this.renderContactElements.bind(this);
+    this.renderSignedOutHeader = this.renderSignedOutHeader.bind(this);
+    this.handleLanguageMenuOpen = this.handleLanguageMenuOpen.bind(this);
+    this.handleLanguageMenuClose = this.handleLanguageMenuClose.bind(this);
+    this.handleSignUpMenuOpen = this.handleSignUpMenuOpen.bind(this);
+    this.handleSignUpMenuClose = this.handleSignUpMenuClose.bind(this);
+    this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
+    this.renderMobileElements = this.renderMobileElements.bind(this);
+    this.handleMenuCollapse = this.handleMenuCollapse.bind(this);
+    this.renderLanguageMenu = this.renderLanguageMenu.bind(this);
 
     this.state = {
       showSnackBar: false,
       message: '',
-      showLinks: false
+      LAnchorEl: null,
+      SUAnchorEl: null,
+      currentUserLoggedIn: !_.isEmpty(props.currentUser),
+      open: false,
+      mobile: false
     };
   }
+
   render() {
-    const mobile = true;
+    const menuIconSize = 30;
 
-    return(
-      <div>
-        <div className='navMenuButton' role='button' onKeyDown={ this.handleKeyDown } tabIndex={ 0 } onClick={ this.handleClickMenu }>
-          <MenuIcon />
-          { this.renderLinks(mobile) }
+    if (this.state.mobile) {
+      return(
+        <div className='wholeHeader'>
+          <ExpansionPanel className='menuMobile'>
+            <ExpansionPanelSummary
+              expandIcon={ (
+                <FaBars
+                  size={ menuIconSize }
+                />
+              ) }
+            >
+              { this.renderHomeButton() }
+            </ExpansionPanelSummary>
+            <ExpansionPanelDetails
+              classes={ { root: 'menuMobileExpansionPanelDetails' } }
+            >
+              { this.renderMobileElements() }
+            </ExpansionPanelDetails>
+          </ExpansionPanel>
         </div>
+      );
+    } else {
+      return(
+        <div className='wholeHeader'>
+          <AppBar 
+            position='static'
+            style={ { backgroundColor: 'white' } }
+            classes={ { root: 'menuAppBar' } }
+          >
+            <Toolbar
+              classes={ { root: 'menuAppBarHigher' } }
+            >
+              { this.renderContactElements() }
+            </Toolbar>
+            <Toolbar
+              classes={ { root: 'menuAppBarLower' } }
+              title={ this.renderHomeButton() }
+            >
+              <span
+                classes={ { root: 'menuAppBarLowerLeftElements' } }
+              >
+                { this.renderHomeButton() }
+              </span>
+              <span
+                classes={ { root: 'menuAppBarLowerRightElements' } }
+              >
+                { this.renderRightElements() }
+              </span>
+            </Toolbar>
+          </AppBar>
+        </div>
+      );
+    }
+  }
 
-        { this.renderLinks() }
+  componentDidMount() {
+    this.updateWindowDimensions();
+    window.addEventListener('resize', this.updateWindowDimensions);
+  }
+  
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateWindowDimensions);
+  }
+  
+  updateWindowDimensions() {
+    if (window.innerWidth < 900) {
+      this.setState({ mobile: true });
+    } else {
+      this.setState({ mobile: false });
+    }
+  }
+
+  renderMobileElements() {
+    return(
+      <div className='mobileElements'>
+        { this.renderRightElements() }
+        { this.renderContactElements() }
       </div>
     );
   }
 
-  renderLinks(mobile) {
-    const { currentUser } = this.props;
-    const { showLinks } = this.state;
+  renderHomeButton() {
+    return(
+      <HomeLink className='headerHomeLink' />
+    );
+  }
 
-    const navigationClassName = function(){
-      if (mobile) {
-        if (showLinks) {
-          return 'navigation navDisplay';
-        } else {
-          return 'navigation navDisplayNone';
-        }
-      } else {
-        return 'navigation';
-      }
-    }();
+  handleMenuCollapse() {
+    const isOpen = this.state.open;
+    this.setState({ open: !isOpen });
+  }
 
-    if ( _.size(currentUser) > 0 ) {
-      const { locale } = currentUser;
-      return (
-        <nav className={ navigationClassName } >
-          <HomeLink locale={ locale } />
+  renderRightElements() {
+    const { currentUser: { locale } } = this.props;
+    const style = {
+      'color': '#004664',
+      'fontFamily': 'Lato',
+      'fontSize': '18px',
+      'fontWeight': 'bold',
+      'paddingLeft': '1pc',
+      'paddingRight': '1pc'
+    };
 
-          { this.renderRoleLinks() }
-
-          <a href={ formatLink('/my_profile', locale) } className='slidingLink' >
+    return (
+      <div className='rightElements'>
+        <div className='headerVariableButtons'>
+          { (
+            this.state.currentUserLoggedIn
+            ?
+            this.rendersignedInHeader()
+            :
+            this.renderSignedOutHeader()
+          ) }
+        </div>
+        <div className='headerStaticButtons'>
+          <FlatButton
+            className='headerlink'
+            href={ formatLink('/faq', locale) }
+            style={ style }
+          >
             <FormattedMessage
-              id='profileLink'
-              defaultMessage='Profile'
+              id='FAQPage'
+              defaultMessage='FAQ'
             />
-          </a>
-
-          <a href={ formatLink('/inbox', locale) } className='slidingLink' >
+          </FlatButton>
+          <FlatButton
+            href={ formatLink('/about', locale) }
+            style={ style }  
+          >
             <FormattedMessage
-              id='inboxLink'
-              defaultMessage='Inbox'
+              id='aboutPage'
+              defaultMessage='About'
             />
-          </a>
+          </FlatButton>
+          { this.renderLanguageMenu() }
+          <PaypalButton key='paypal' />
+        </div>
+      </div>
+    );
+  }
 
-          <span role='button' tabIndex={ 0 } onClick={ this.handleSignOut } className='slidingLink' >
-            <FormattedMessage
-              id='signOutLink'
-              defaultMessage='Sign out'
-             />
-          </span>
+  renderLanguageMenu() {
+    const style = {
+      'color': '#004664',
+      'fontFamily': 'Lato',
+      'fontSize': '18px',
+      'fontWeight': 'bold',
+      'paddingLeft': '1pc',
+      'paddingRight': '1pc'
+    };
 
-          { this.renderStaticButtons() }
-        </nav>
+    if (this.state.mobile) {
+      return(
+        <div className='langaugeMenuMobile'>
+          <ExpansionPanel
+            classes={ { root: 'langaugeMenuMobilePanel', rounded: 'langaugeMenuMobilePanelRounded' } }
+          >
+            <ExpansionPanelSummary
+              expandIcon={ (
+                <FaChevronDown />
+              ) }
+              classes={ { root: 'languageMenuSummary', content: 'languageMenuSummaryContent' } }
+            >
+              <FormattedMessage
+                id='Header.selectLanguage'
+                defaultMessage='Select Language'
+              />
+            </ExpansionPanelSummary>
+            <ExpansionPanelDetails
+              classes={ { root: 'languageMenuContent' } }
+            >
+              <FlatButton
+                style={ style }
+                value={ ENGLISH }
+                onClick={ this.handleSetGuestLocale }
+              >
+                English
+              </FlatButton>
+              <FlatButton
+                style={ style }
+                value={ SPANISH }
+                onClick={ this.handleSetGuestLocale }
+              >
+                Español
+              </FlatButton>
+            </ExpansionPanelDetails>
+          </ExpansionPanel>
+        </div>
       );
-    }
-    else {
-      return (
-        <nav className={ navigationClassName } >
-          <HomeLink />
-
-          <a href={ formatLink('/sign_up/volunteer') } className='slidingLink'>
+    } else {
+      return(
+        <div className='languageMenu'>
+          <FlatButton
+            onClick={ this.handleLanguageMenuOpen }
+            style={ style }
+            icon={ <FaChevronDown /> }
+          >
             <FormattedMessage
-              id='signUpVolunteer'
+              id='Header.selectLanguage'
+              defaultMessage='Select Language'
             />
-          </a>
-          <a href={ formatLink('/sign_up/client') } className='slidingLink' >
-            <FormattedMessage
-              id='signUpClient'
-            />
-          </a>
-          <a href={ formatLink('/sign_in') }  className='slidingLink'>
-            <FormattedMessage
-              id='signIn'
-            />
-          </a>
-          { this.renderStaticButtons() }
-          { this.renderGuestChangeLocale() }
-        </nav>
+          </FlatButton>
+          <Menu
+            id="simple-menu"
+            keepMounted
+            anchorEl={ this.state.LAnchorEl }
+            open={ Boolean(this.state.LAnchorEl) }
+            onClose={ this.handleLanguageMenuClose }
+          >
+            <MenuItem
+              style={ style }
+              value={ ENGLISH }
+              onClick={ this.handleSetGuestLocale }
+            >
+              English
+            </MenuItem>
+            <MenuItem
+              style={ style }
+              value={ SPANISH }
+              onClick={ this.handleSetGuestLocale }
+            >
+              Español
+            </MenuItem>
+          </Menu>
+        </div>
       );
     }
   }
 
-  renderGuestChangeLocale() {
-    return (
-      <div className='headerLocaleLinkContainer' onClick={ this.handleSetGuestLocale }>
-        <button value={ ENGLISH } className='slidingLink'>English</button> / <button value={ SPANISH } className='slidingLink'> Español</button>
+  handleLanguageMenuOpen(event) {
+    this.setState({ LAnchorEl: event.currentTarget });
+  }
+
+  handleLanguageMenuClose() {
+    this.setState({LAnchorEl: null });
+  }
+
+  handleSignUpMenuOpen(event) {
+    this.setState({ SUAnchorEl: event.currentTarget });
+  }
+
+  handleSignUpMenuClose() {
+    this.setState({ SUAnchorEl: null });
+  }
+
+  renderContactElements() {
+    const style = {
+      'color': 'grey',
+    };
+    const labelStyle = {
+      'textTransform': 'none',
+    };
+
+    const phoneNumber = '+1-202-555-0159';
+    const email = 'admin@tutoria.io';
+    const facebook = 'Facebook';
+    const facebookLink = 'https://www.facebook.com/Tutoria-416182735512904/';
+
+    return(
+      <div className='contactElements'>
+        <FlatButton
+          className='contactPhone'
+          style={ style }
+          icon={ (
+            <FaPhone
+              label={ (
+                <FormattedMessage
+                  id="UserForm.phoneNumber"
+                  defaultMessage="Phone Number"
+                />
+              ) }
+              />
+            ) }
+          label={ phoneNumber }
+          href={ 'tel:'+phoneNumber }
+        />
+        <FlatButton
+          className='contactEmail'
+          style={ style }
+          icon={ (
+            <FaEnvelope
+              label={ (
+                <FormattedMessage
+                  id="UserForm.email"
+                  defaultMessage="Email address"
+                />
+              ) }
+              />
+            ) }
+          label={ email }
+          labelStyle={ labelStyle }
+          href={ 'mailto:'+email }
+        />
+        <FlatButton
+          className='contactFaceBook'
+          style={ style }
+          icon={ (
+            <FaFacebookF
+              label='Facebook'
+              />
+            ) }
+          label={ facebook }
+          labelStyle={ labelStyle }
+          href={ facebookLink }
+        />
       </div>
     );
   }
 
   handleSetGuestLocale({ target }) {
-    if (target.value) {
-      localStorage.setItem('locale', target.value);
-      const pathname = _.split(window.location.pathname, '/');
-      const localePattern = new RegExp(`(${ENGLISH}|${SPANISH})`);
-      const currentGuestLocale = pathname[1] || '';
-      const isGuestLocaleAsExpected = localePattern.test(currentGuestLocale);
+    const value = target.getAttribute('value');
+    localStorage.setItem('locale', value);
+    const pathname = _.split(window.location.pathname, '/');
+    const localePattern = new RegExp(`(${ENGLISH}|${SPANISH})`);
+    const currentGuestLocale = pathname[1] || '';
+    const isGuestLocaleAsExpected = localePattern.test(currentGuestLocale);
 
-      if (isGuestLocaleAsExpected) {
-        const newPathname = _.drop(pathname, 2).join('/');
-        location.assign(formatLink(`/${newPathname}`, target.value));
-      } else {
-        location.assign(formatLink(window.location.pathname, target.value));
-      }
+    if (isGuestLocaleAsExpected) {
+      const newPathname = _.drop(pathname, 2).join('/');
+      location.assign(formatLink(`/${newPathname}`, value));
+    } else {
+      location.assign(formatLink(window.location.pathname, value));
     }
+    this.handleLanguageMenuClose();
   }
-  renderStaticButtons() {
 
+  rendersignedInHeader() {
+    return (
+      <div className='signedInHeader'>
+        { this.renderRoleLinks() }
+      </div>
+    );
+  }
+
+  renderSignedOutHeader() {
     const { currentUser: { locale } } = this.props;
-    return [
-      <a key='faq' href={ formatLink('/faq', locale) } className='slidingLink'>
-        <FormattedMessage
-          id='FAQPage'
-          defaultMessage='FAQ'
-        />
-      </a>,
-      <a key='about' href={ formatLink('/about', locale) } className='slidingLink'>
-        <FormattedMessage
-          id='aboutPage'
-          defaultMessage='About'
-        />
-      </a>,
-      <PaypalButton key='paypal' />
-    ];
+    const style = {
+      'color': '#004664',
+      'fontFamily': 'Lato',
+      'fontSize': '18px',
+      'fontWeight': 'bold',
+      'paddingLeft': '1pc',
+      'paddingRight': '1pc'
+    };
+    
+    if (this.state.mobile) {
+      return(
+        <div className='signedOutMenuMobile'>
+          <ExpansionPanel
+            classes={ { root: 'signedOutMenuMobilePanel', rounded: 'signedOutMenuMobilePanelRounded' } }
+          >
+            <ExpansionPanelSummary
+              expandIcon={ (
+                <FaChevronDown />
+              ) }
+              classes={ { root: 'signedOutMenuSummary', content: 'signedOutMenuSummaryContent' } }
+            >
+              <FormattedMessage
+                id='signUp'
+                defaultMessage='Sign Up'
+              />
+            </ExpansionPanelSummary>
+            <ExpansionPanelDetails
+              classes={ { root: 'signedOutMenuContent' } }
+            >
+              <FlatButton
+                style={ style }
+                href={ formatLink('/sign_up/client', locale) }
+              >
+                <FormattedMessage
+                  id='signUpClient'
+                  default='Sign Up As Client'
+                />
+              </FlatButton>
+              <FlatButton
+                style={ style }
+                href={ formatLink('/sign_up/volunteer', locale) }
+              >
+                <FormattedMessage
+                  id='signUpVolunteer'
+                  default='Sign Up As Volunteer'
+                />
+              </FlatButton>
+            </ExpansionPanelDetails>
+          </ExpansionPanel>
+          <FlatButton
+            href={ formatLink('/sign_in', locale) }
+            style={ style }
+          >
+            <FormattedMessage
+              id='logIn'
+              defaultMessage='Login'
+            />
+          </FlatButton>
+        </div>
+      );
+    } else {
+      return (
+        <div className='signedOutHeader'>
+          <FlatButton
+            onClick={ this.handleSignUpMenuOpen }
+            style={ style }
+            icon={ <FaChevronDown /> }
+          >
+            <FormattedMessage
+              id='signUp'
+              defaultMessage='Sign Up'
+            />
+          </FlatButton>
+          <Menu
+            className='signUpMenu'
+            keepMounted
+            anchorEl={ this.state.SUAnchorEl }
+            open={ Boolean(this.state.SUAnchorEl) }
+            onClose={ this.handleSignUpMenuClose }
+          >
+            <a href={ formatLink('/sign_up/client', locale) }>
+              <MenuItem
+                style={ style }
+              >
+                <FormattedMessage
+                  id='signUpClient'
+                  default='Sign Up As Client'
+                />
+              </MenuItem>
+            </a>
+            <a href={ formatLink('/sign_up/volunteer', locale) }>
+              <MenuItem
+                style={ style }
+              >
+                <FormattedMessage
+                  id='signUpVolunteer'
+                  default='Sign Up As Volunteer'
+                />
+              </MenuItem>
+            </a>
+          </Menu>
+          <FlatButton
+            href={ formatLink('/sign_in', locale) }
+            style={ style }
+          >
+            <FormattedMessage
+              id='logIn'
+              defaultMessage='Login'
+            />
+          </FlatButton>
+        </div>
+      );
+    }
   }
 
   renderRoleLinks() {
-    const { currentUser: { client, volunteer, locale } } = this.props;
+    const { currentUser: { client, locale } } = this.props;
+    const style = {
+      'color': '#004664',
+      'fontFamily': 'Lato',
+      'fontSize': '18px',
+      'fontWeight': 'bold',
+      'paddingLeft': '1pc',
+      'paddingRight': '1pc'
+    };
 
-    if (client) {
-      return (
-        <a href={ formatLink('/search', locale) } className='slidingLink'>
+    return (
+      <div className='roleLinks' >
+        <FlatButton
+          onClick={ this.handleSignOut }
+          style={ style }
+        >
           <FormattedMessage
-            id='search'
-            defaultMessage='Search'
+            id='signOutLink'
+            defaultMessage='Sign Out'
           />
-        </a>
-      );
-    }
+        </FlatButton>
+        { 
+          client
+          ?
+          (
+            <FlatButton
+              href={ formatLink('/search', locale) }
+              style={ style }
+            >
+              <FormattedMessage
+                id='search'
+                defaultMessage='Search'
+              />
+            </FlatButton>
+          )
+          :
+          (          
+            <span>
+              <FlatButton
+                href={ formatLink('/availabilities/new', locale) }
+                style={ style }
+              >
+                <FormattedMessage
+                  id='availabilityCreateNew'
+                />
+              </FlatButton>
 
-    if (volunteer) {
-      return (
-        <span>
-          <a href={ formatLink('/availabilities/new', locale) } className='slidingLink'>
-            <FormattedMessage
-              id='availabilityCreateNew'
-            />
-          </a>
-
-          <a href={ formatLink('/availabilities', locale) } className='slidingLink'>
-            <FormattedMessage
-              id='availabilitiesLink'
-              defaultMessage='Availabilities'
-            />
-          </a>
-        </span>
-      );
-    }
-  }
-
-  setLinkState() {
-    const { showLinks } = this.state;
-
-    this.setState({
-      showLinks: !showLinks
-    });
-  }
-
-  handleKeyDown(event) {
-    if (event.keycode === 13) {
-     this.setLinkState();
-    }
-  }
-
-  handleClickMenu() {
-    this.setLinkState();
+              <FlatButton
+                href={ formatLink('/availabilities', locale) }
+                style={ style }
+              >
+                <FormattedMessage
+                  id='availabilitiesLink'
+                  defaultMessage='Availabilities'
+                />
+              </FlatButton>
+            </span>
+          )
+        }
+      </div>
+    );
   }
 
   handleSignOut() {
@@ -234,7 +600,6 @@ class Header extends Component {
         }, 2000);
       }
     };
-
     return getData(requestParams);
   }
 }

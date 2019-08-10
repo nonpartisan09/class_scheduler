@@ -7,8 +7,6 @@ import Header from './reusable/Header';
 import './utils/CheckMobile';
 
 import Footer from './reusable/Footer';
-import Programs from './Programs';
-import Logo from './reusable/Logo';
 import NonChromeMessage from './reusable/NonChromeMessage';
 
 class Homepage extends Component {
@@ -23,82 +21,8 @@ class Homepage extends Component {
   render() {
     return (
       <div className='homepageMainContainer'>
-        <NonChromeMessage/>
-        <div className='homepageWithoutFooter'>
-          { this.renderDesktopHeader() }
-          <div className='homepageContainer'>
-            <div className='homepageTextContainer'>
-              <div className='homepageCaption'>
-                <div className='homepageCaptionTitle'>
-                  <div className='homepageLogo'>
-                    <Logo />
-                  </div>
-                  <h2 className='homepageSubtitle'>
-                    <FormattedMessage
-                      id='Homepage.subtitle'
-                      defaultMessage='Connect and share with our community of clients and volunteers'
-                    />
-                  </h2>
-                </div>
-                <Programs programs={ this.props.programs } />
-                <div className='homepageListContainer'>
-                  <h3>
-                    <FormattedMessage
-                      id='Homepage.list'
-                      defaultMessage='How this free service works:'
-                    />
-                  </h3>
-
-                  <ul className='homepageList'>
-                    <li className='homepageListItem'>
-                      <FormattedMessage
-                        id='Homepage.listItem1'
-                        defaultMessage='Clients post what they need help with, such as English language tutoring.'
-                      />
-                    </li>
-                    <li className='homepageListItem'>
-                      <FormattedMessage
-                        id='Homepage.listItem2'
-                        defaultMessage='Volunteers post what they can help with.'
-                      />
-                    </li>
-                    <li className='homepageListItem'>
-                      <FormattedMessage
-                        id='Homepage.listItem3'
-                        defaultMessage='Clients contact volunteers matching their needs and availability.'
-                      />
-                    </li>
-                    <li className='homepageListItem'>
-                      <FormattedMessage
-                        id='Homepage.listItem4'
-                        defaultMessage='After working together, volunteers and clients review each other.'
-                      />
-                    </li>
-                  </ul>
-                  <FormattedMessage
-                    id='Homepage.question'
-                    defaultMessage='Questions? Email us at'
-                  />
-                  {' '}
-                  <a className='homepageMailToLink' href='mailto:admin@tutoria.io' target='_blank' rel='noopener noreferrer'>
-                    admin@tutoria.io
-                  </a>
-                </div>
-              </div>
-            </div>
-            <img
-              className='homepageImage'
-              src='/assets/community_800.jpg'
-              alt='Learn and help community'
-              srcSet={
-                `${'/assets/community_200.jpg'} 200w,
-               ${'/assets/community_400.jpg'} 400w,
-               ${'/assets/community_600.jpg'} 600w,
-               ${'/assets/community_800.jpg'} 800w`
-              }
-            />
-          </div>
-        </div>
+        <NonChromeMessage />
+        <Header currentUser={ this.props.currentUser } />
         <Footer />
       </div>
     );
