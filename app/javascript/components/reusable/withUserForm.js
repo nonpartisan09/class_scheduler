@@ -1023,7 +1023,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
 
     sortArrayProps(propsObject) {
       Object.values(propsObject).map(item => {
-        if (item instanceof Array) item.sort();
+        if (item instanceof Array) { item.sort(); }
       });
     }
   }
@@ -1040,6 +1040,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
       email: PropTypes.string,
       phone_number: PropTypes.string,
       languages: PropTypes.array,
+      how_they_found_us: PropTypes.string,
       password: PropTypes.string,
       password_confirmation: PropTypes.string,
       contact_permission: PropTypes.bool,

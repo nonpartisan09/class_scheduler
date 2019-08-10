@@ -1,129 +1,77 @@
-.navigation {
-    width: 100%;
-    margin: 24px 0 36px;
-    text-align: left;
-    padding-left: 24px;
+.menuAppBar {
+    padding-right: 4%;
+    padding-left: 4%;
 }
 
-.headerLocaleLinkContainer {
-    float: right;
-    margin-right: 36px;
-    line-height: 36px;
+.menuAppBarLower .logo__item {
+    margin: 0%;
 }
 
-.headerLocaleLinkContainer .slidingLink {
-    margin-right: 3px;
-    -webkit-appearance: none;
-    outline: none;
-    border: none;
-    text-rendering: auto;
-    display: inline-block;
-    padding: 0;
-    align-items: unset;
-    -webkit-writing-mode: inherit;
-    font: inherit;
-    background-color: transparent;
+.menuAppBarLower .logo__item .logo {
+    width: 15pc;
 }
 
-.slidingLink {
-    display: inline-block;
-    position: relative;
-    padding-bottom: 3px;
-    margin-right: 24px;
+.menuAppBarHigher {
+    justify-content: flex-end;
+}
+
+.menuAppBarLower {
+    justify-content: space-between;
+}
+
+.roleLinks,
+.rightElements {
+    display: flex;
+}
+
+.headerStaticButtons,
+.headerVariableButtons {
+    align-items: center;
+    align-self: center;
+}
+
+.headerStaticButtons {
+    display: inherit;
+}
+
+.signUpMenu a {
     text-decoration: none;
-    color: inherit;
-    cursor: pointer;
 }
 
-.slidingLink:before {
-    content: '';
-    display: block;
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    height: 1px;
-    width: 0;
-    transition: width 0s ease, background .15s ease;
-    outline: none;
+.menuMobile .rightElements,
+.menuMobile .menuMobileExpansionPanelDetails {
+    display: flow-root;
 }
 
-.slidingLink:after {
-    content: '';
-    display: block;
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    height: 1px;
-    width: 0;
-    background: #f1592a;
-    transition: width .15s ease;
+.menuMobile .mobileElements .roleLinks,
+.menuMobile .mobileElements .contactElements,
+.menuMobile .rightElements .headerStaticButtons,
+.menuMobile .rightElements .headerVariableButtons .signedOutMenuMobile, .signedInHeader {
+    display: grid;
 }
 
-.slidingLink:hover:before {
-    width: 100%;
-    background: #f1592a;
-    transition: width .15s ease;
-}
-.slidingLink:hover:after {
-    width: 100%;
-    background: transparent;
-    transition: all 0s ease;
+.languageMenuSummary .languageMenuSummaryContent,
+.signedOutMenuSummary .signedOutMenuSummaryContent {
+    flex-grow: 0;
 }
 
-.navMenuButton, .navDisplayNone {
-    display: none;
+.menuMobile .languageMenuContent,
+.menuMobile .signedOutMenuContent {
+    display: grid;
+    padding: 0;
 }
 
-@media (max-width: 900px) {
-    .navigation .slidingLink {
-        margin-bottom: 6px;
-        outline: none;
-    }
+.languageMenuSummary .languageMenuSummaryContent,
+.signedOutMenuSummary .signedOutMenuSummaryContent {
+    color: #004664;
+    font-family: Lato;
+    font-size: 18px;
+    font-weight: bold;
+    padding-left: 1pc;
+    padding-right: 1pc;
+}
 
-    .headerLocaleLinkContainer {
-        float: none;
-        margin-top: 12px;
-        margin-right: 0;
-    }
-
-    .slidingLink {
-        width: fit-content;
-        display: block;
-        right: 0;
-        left: 0;
-        margin: 0 auto;
-    }
-
-    .slidingLink:hover:before, .slidingLink:hover:after {
-        width: 100%;
-        right: 0;
-        left: 0;
-        margin: 0 auto;
-    }
-
-    .navigation {
-        display: none;
-        padding: 0;
-        text-align: center;
-        margin: 0;
-    }
-
-    .navMenuButton, .navDisplayNone {
-        display: none;
-    }
-
-    .navDisplay, .navMenuButton {
-        display: block;
-        margin: 0;
-    }
-
-    .navMenuButton {
-        outline: none;
-        margin: 24px 0 0 24px;
-    }
-
-    .headerLocaleLinkContainer .slidingLink {
-        display: inline-block;
-        line-height: unset;
-    }
+.menuMobile .langaugeMenuMobilePanel,
+.signedOutMenuMobile .signedOutMenuMobilePanel {
+    box-shadow: none;
 }
