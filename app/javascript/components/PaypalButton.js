@@ -13,7 +13,8 @@ class PaypalButton extends Component {
       'fontWeight': 'bold',
       'paddingRight': '3pc',
       'paddingLeft': '3pc',
-      'textTransform': 'none'
+      'textTransform': 'none',
+      'paddingTop': '3px',
     };
 
     return (

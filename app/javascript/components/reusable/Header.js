@@ -16,7 +16,8 @@ import {
   FaPhone,
   FaEnvelope,
   FaChevronDown,
-  FaBars
+  FaBars,
+  FaLinkedin
 } from 'react-icons/fa';
 
 import {
@@ -29,6 +30,8 @@ import { getData } from '../utils/sendData';
 import HomeLink from './HomeLink';
 import formatLink from '../utils/Link';
 import SnackBarComponent from './SnackBarComponent';
+import NonChromeMessage from './NonChromeMessage';
+import contactInfo from '../../ContactInfo';
 
 const menu = {
   LANGUAGE: 'LA',
@@ -155,6 +158,7 @@ class Header extends Component {
     } else {
       return(
         <div className='wholeHeader'>
+          <NonChromeMessage />
           <AppBar
             position='static'
             style={ { backgroundColor: 'white' } }
@@ -239,7 +243,6 @@ class Header extends Component {
               defaultMessage='About'
             />
           </SliderButton>
-          { this.renderLanguageMenu() }
           { (this.props.mobile && !_.isEmpty(currentUser)) ? this.renderSignedInProfile() : ''}
           <PaypalButton key='paypal' />
         </div>
@@ -335,17 +338,13 @@ class Header extends Component {
   }
 
   renderContactElements() {
-    const phoneNumber = '+1-202-555-0159';
-    const email = 'admin@tutoria.io';
-    const facebook = 'Facebook';
-    const facebookLink = 'https://www.facebook.com/Tutoria-416182735512904/';
     const size = 20;
 
     return(
       <div className='contactElements'>
         <SliderButton
           grey
-          href={ 'tel:'+phoneNumber }
+          href={ 'tel:'+contactInfo.PHONE }
         >
           <FaPhone
             size={ size }
@@ -356,11 +355,11 @@ class Header extends Component {
               />
             ) }
           />
-          { phoneNumber }
+          { contactInfo.PHONE }
         </SliderButton>
         <SliderButton
           grey
-          href={ 'mailto:'+email }
+          href={ 'mailto:'+contactInfo.EMAIL }
         >
           <FaEnvelope
             size={ size }
@@ -371,11 +370,11 @@ class Header extends Component {
               />
             ) }
           />
-          { email }
+          { contactInfo.EMAIL }
         </SliderButton>
         <SliderButton
           grey
-          href={ facebookLink }
+          href={ contactInfo.FACEBOOK }
           target='_blank'
           rel='noopener noreferrer'
         >
@@ -383,7 +382,19 @@ class Header extends Component {
             size={ size }
             label='Facebook'
           />
-          { facebook }
+          Facebook
+        </SliderButton>
+        <SliderButton
+          grey
+          href={ contactInfo.LINKEDIN }
+          target='_blank'
+          rel='noopener noreferrer'
+        >
+          <FaLinkedin
+            size={ size }
+            label='LinkedIn'
+          />
+          LinkedIn
         </SliderButton>
       </div>
     );
@@ -440,6 +451,7 @@ class Header extends Component {
               defaultMessage='Login'
             />
           </SliderButton>
+          { this.renderLanguageMenu() }
         </div>
       );
     } else {
@@ -493,6 +505,7 @@ class Header extends Component {
               defaultMessage='Login'
             />
           </SliderButton>
+          { this.renderLanguageMenu() }
         </div>
       );
     }
@@ -542,9 +555,19 @@ class Header extends Component {
   }
 
   rendersignedInHeader() {
+    const { currentUser: { locale } } = this.props;
     return (
       <div className='signedInHeader'>
         { this.renderRoleLinks() }
+        <span className='inboxButton'>
+          <SliderButton
+            to={ formatLink('/inbox', locale) }
+          >
+            <FormattedMessage
+              id='inboxLink'
+            />
+          </SliderButton>
+        </span>
       </div>
     );
   }

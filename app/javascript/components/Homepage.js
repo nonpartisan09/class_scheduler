@@ -44,6 +44,7 @@ import {
 } from './utils/availableLocales';
 import formatLink from './utils/Link';
 import SignUpSchema from './schema/SignUpSchema';
+import contactInfo from '../ContactInfo';
 
 const pageContent = {
   featuredPrograms: {
@@ -80,8 +81,8 @@ const pageContent = {
   },
   whereWeAre: {
     name: 'whereWeAre',
-    header: 'Where we Are',
-    subtitle: 'The map below shows the spread of our clients across the country'
+    header: 'Where We Are',
+    subtitle: ''
   },
   joinUs: {
     name: 'joinUs',
@@ -159,13 +160,11 @@ class Homepage extends Component {
   }
 
   renderContactButtons(size = 30) {
-    const phoneNumber = '+1-202-555-0159';
-    const email = 'admin@tutoria.io';
 
     return(
       <div className='homepageContact'>
         <SliderButton
-          href={ 'tel:'+phoneNumber }
+          href={ 'tel:'+contactInfo.PHONE }
         >
           <FaPhone
             size={ size }
@@ -176,10 +175,10 @@ class Homepage extends Component {
               />
             ) }
           />
-          { phoneNumber }
+          { contactInfo.PHONE }
         </SliderButton>
         <SliderButton
-          href={ 'mailto:'+email }
+          href={ 'mailto:'+contactInfo.EMAIL }
         >
           <FaEnvelope
             size={ size }
@@ -190,7 +189,7 @@ class Homepage extends Component {
               />
             ) }
           />
-          { email }
+          { contactInfo.EMAIL }
         </SliderButton>
       </div>
     );
@@ -324,7 +323,7 @@ class Homepage extends Component {
           label={ (
             <FormattedMessage
               id='UserForm.email'
-              defaultMessage='Email'
+              defaultMessage='Email address'
             />
           ) }
           fullWidth
