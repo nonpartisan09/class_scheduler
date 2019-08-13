@@ -122,8 +122,10 @@ ActiveRecord::Schema.define(version: 2019_03_11_025435) do
 
   create_table "programs", force: :cascade do |t|
     t.string "name"
+    t.string "spanish_name"
     t.string "url_slug"
     t.text "description"
+    t.text "spanish_description"
     t.boolean "featured", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

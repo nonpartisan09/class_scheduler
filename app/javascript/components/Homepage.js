@@ -107,6 +107,7 @@ class Homepage extends Component {
     this.state = {
       languageChecked: ENGLISH,
       signUpType: 'client',
+      locale: localStorage.getItem('locale'),
     };
   }
 
@@ -151,7 +152,7 @@ class Homepage extends Component {
           onClick={ () => { console.log(this.joinUsFormRef); this.handleScroll(this.joinUsFormRef.current.offsetTop); } }
           >
           <FormattedMessage
-            id='SignUp'
+            id='signUp'
             defaultMessage='Sign Up'
           />
         </Fab>
@@ -235,10 +236,10 @@ class Homepage extends Component {
             />
             <CardContent>
               <h2 className='programCardsHeader'>
-                { element.name }
+                { this.state.locale === 'es' ? element.spanish_name : element.name }
               </h2>
               <p className='programCardsText'>
-                { element.description }
+                { this.state.locale === 'es' ? element.spanish_description : element.description }
               </p>
             </CardContent>
           </Card>
@@ -446,7 +447,7 @@ class Homepage extends Component {
             onClick={ (event) => { this.handleScroll(event, 0); this.handleSubmit; } }
             >
             <FormattedMessage
-              id='Submit'
+              id='ReviewContainer.SubmitButton'
               defaultMessage='Submit'
             />
           </Fab>
@@ -481,6 +482,7 @@ Homepage.propTypes = {
   validateHandler: PropTypes.func.isRequired,
   first_name: PropTypes.string,
   email: PropTypes.string,
+  programs: PropTypes.array.isRequired,
 };
 
 Homepage.defaultProps = {

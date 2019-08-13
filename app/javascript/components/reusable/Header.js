@@ -205,8 +205,10 @@ class Header extends Component {
   }
 
   renderHomeButton() {
+    const { currentUser: { locale } } = this.props;
     return(
       <HomeLink
+        locale={ locale }
         className='headerHomeLink'
       />
     );
