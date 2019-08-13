@@ -29,7 +29,7 @@
 .roleLinks > span {
     display: flex;
     flex-flow: row;
-    width: min-content;
+    width: max-content;
     align-items: center;
     text-align: center;
 }
@@ -49,7 +49,8 @@
 }
 
 .languageMenuChevron,
-.signUpChevron {
+.signUpChevron,
+.inboxButton {
     align-self: center;
 }
 
@@ -57,6 +58,10 @@
     display: flex;
     flex-flow: row;
     align-items: center;
+}
+
+.signedInHeader {
+    display: flex;
 }
 
 // Window.width < 900px Styles
@@ -82,7 +87,8 @@
 .menuMobile .mobileElements .roleLinks,
 .menuMobile .mobileElements .contactElements,
 .menuMobile .rightElements .headerStaticButtons,
-.menuMobile .rightElements .headerVariableButtons .signedOutMenuMobile, .signedInHeader {
+.menuMobile .rightElements .headerVariableButtons .signedOutMenuMobile,
+.menuMobile .rightElements .headerVariableButtons .signedInHeader {
     display: grid;
 }
 
@@ -116,8 +122,9 @@
     width: 10pc;
 }
 
-.menuMobile .languageMenuContent {
-    justify-content: center;
+.langaugeMenuMobilePanel {
+    flex-flow: column;
+    align-items: center;
 }
 
 .menuMobile .logo__item {

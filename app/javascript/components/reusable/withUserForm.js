@@ -69,6 +69,8 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
       const {
         errors, changeHandler, validateHandler,
         currentUser: {
+          first_name,
+          email,
           phone_number,
           address,
           city,
@@ -107,7 +109,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
 
               <TextField
                 name='email'
-                value={ _.isEmpty(location.state) ? '' : location.state.currentUser.email }
+                value={ _.isEmpty(location.state) ? email : location.state.currentUser.email }
                 className='userFormInputField email'
                 hintText=''
                 floatingLabelText={
@@ -149,7 +151,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
 
               <TextField
                 name='first_name'
-                value={ _.isEmpty(location.state) ? '' : location.state.currentUser.first_name }
+                value={ _.isEmpty(location.state) ? first_name : location.state.currentUser.first_name }
                 hintText=''
                 className='userFormInputField firstName'
                 floatingLabelText={

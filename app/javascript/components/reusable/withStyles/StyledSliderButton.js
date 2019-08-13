@@ -79,9 +79,12 @@ const styles = {
         paddingLeft: '5px',
         paddingRight: '5px',
         display: 'flex',
-        width: '100%',
+        width: 'fit-content',
         justifyContent: 'space-between',
         alignItems: 'center',
+        '& > svg': {
+            paddingRight: '0.5pc',
+        }
     }
   };
 

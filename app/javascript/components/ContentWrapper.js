@@ -61,6 +61,9 @@ class ContentWrapper extends Component {
     }
 
     render () {
+        const childrenWithProps = React.Children.map(this.props.children, child =>
+            React.cloneElement(child, this.props.currentUser)
+          );
 
         return (
           <div className='pageWrapper'>
@@ -69,7 +72,7 @@ class ContentWrapper extends Component {
               className='pageContent'
               ref={ (pagecontent) => this.pagecontent = pagecontent }
             >
-              {this.props.children}
+              {childrenWithProps}
             </div>
             <Footer style={ { position: this.calculateFooterPosition() } } currentUser={ this.props.currentUser } />
             <NonChromeMessage />

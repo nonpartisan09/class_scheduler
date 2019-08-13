@@ -7,12 +7,14 @@ import {
 import { FormattedMessage } from 'react-intl';
 import { 
   FaFacebookF,
-  FaRegCopyright
+  FaRegCopyright,
+  FaLinkedin
 } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
 import formatLink from '../utils/Link';
 import PaypalButton from '../PaypalButton';
+import contactInfo from '../../ContactInfo';
 
 class Footer extends Component {
 
@@ -36,10 +38,6 @@ class Footer extends Component {
 
   renderLeftElements() {
     const { currentUser: { locale } } = this.props;
-    const facebook = 'Facebook';
-    const facebookLink = 'https://www.facebook.com/Tutoria-416182735512904/';
-    const phoneNumber = '+1-202-555-0159';
-    const email = 'admin@tutoria.io';
     const size = 20;
 
     return(
@@ -67,12 +65,19 @@ class Footer extends Component {
             <Link to={ formatLink('/FAQ', locale) }>
               FAQ
             </Link>
-            <a href={ facebookLink } rel='noopener noreferrer' target='_blank'>
+            <a href={ contactInfo.FACEBOOK } rel='noopener noreferrer' target='_blank'>
               <FaFacebookF
                 size={ size }
                 className='facebookIcon'
               />
-              { facebook }
+              Facebook
+            </a>
+            <a href={ contactInfo.LINKEDIN } rel='noopener noreferrer' target='_blank'>
+              <FaLinkedin
+                size={ size }
+                className='linkedInIcon'
+              />
+              LinkedIn
             </a>
           </span>
           <span className='footerAddress'>
@@ -85,10 +90,10 @@ class Footer extends Component {
           </span>
           <span className='footerContact'>
             <b>Contact</b>
-            <a href={ 'tel:'+phoneNumber }>
+            <a href={ 'tel:'+contactInfo.PHONE }>
               Tel: +1-202-555-0159
             </a>
-            <a href={ 'mailto:'+email }>
+            <a href={ 'mailto:'+contactInfo.EMAIL }>
               Email: admin@tutoria.io
             </a>
           </span>
