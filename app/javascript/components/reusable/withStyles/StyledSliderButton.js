@@ -20,6 +20,7 @@ const styles = {
         textTransform: 'none',
         position: 'relative',
         marginBottom: '3px',
+        marginTop: '6px',
         display: 'grid',
         transition: 'width 3s ease',
         '&:hover': {
@@ -52,6 +53,7 @@ const styles = {
         paddingRight: '1pc',
         textTransform: 'none',
         marginBottom: '3px',
+        marginTop: '6px',
         display: 'grid',
         transition: 'width 3s ease',
         '&:hover': {
