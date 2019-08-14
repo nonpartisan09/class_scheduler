@@ -1,0 +1,16 @@
+.cardCarouselContent {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    padding: 4px;
+}
+
+.cardCarouselContent > p {
+    font-size: 14px;
+    color: darkgray;
+    margin: 0;
+}
+
+.cardCarouselContent > h3 {
+    color: #004664;
+}
