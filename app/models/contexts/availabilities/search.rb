@@ -12,6 +12,11 @@ module Contexts
           raise Contexts::Availabilities::Errors::ProgramMissing, message
         end
 
+        unless @params[:language].present?
+          message = I18n.t('custom_errors.messages.missing_language')
+          raise Contexts::Availabilities::Errors::LanguageMissing, message
+        end
+
         unless @params[:day].present?
           message = I18n.t('custom_errors.messages.missing_day')
           raise Contexts::Availabilities::Errors::DayMissing, message

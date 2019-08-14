@@ -15,6 +15,13 @@ const SearchValidationSchema = {
       }
     }
   }),
+  language: Joi.array().min(1).required().options({
+    language: {
+      array: {
+        min: 'Please select at least one language'
+      }
+    }
+  }),
   distance: Joi.number(),
 
   start_time: Joi.date().timestamp().options({

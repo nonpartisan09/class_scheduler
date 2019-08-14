@@ -24,8 +24,10 @@ class SearchBar extends Component {
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.selectionRendererProgram = this.selectionRendererProgram.bind(this);
+    this.selectionRendererLanguage = this.selectionRendererLanguage.bind(this);
     this.selectionRendererDay = this.selectionRendererDay.bind(this);
     this.changeHandlerProgram = this.changeHandlerProgram.bind(this);
+    this.changeHandlerLanguage = this.changeHandlerLanguage.bind(this);
     this.changeHandlerDay = this.changeHandlerDay.bind(this);
 
     this.state = {
@@ -84,6 +86,7 @@ class SearchBar extends Component {
   render() {
     const {
       programs,
+      languages,
       errors,
       changeHandler,
       changeValue,
@@ -91,6 +94,7 @@ class SearchBar extends Component {
       search: {
         distance,
         program,
+        language,
         start_time,
         end_time
       },
@@ -140,6 +144,25 @@ class SearchBar extends Component {
           >
             { _.map(programs, ({ name, id }) => {
               return <MenuItem key={ id } insetChildren checked={ _.indexOf(program, id) > -1 } value={ id } primaryText={ <span> { name } </span> } />;
+            })}
+          </SelectField>
+
+          <SelectField
+            className='searchBarOption'
+            hintText={
+              <FormattedMessage
+                id='SearchBar.languages'
+                defaultMessage='Language(s)'
+              />
+            }
+            value={ language }
+            onChange={ this.changeHandlerLanguage }
+            multiple
+            errorText={ errors.language }
+            selectionRenderer={ this.selectionRendererLanguage }
+          >
+            { _.map(languages, ({ name, id }) => {
+              return <MenuItem key={ id } insetChildren checked={ _.indexOf(language, id) > -1 } value={ id } primaryText={ <span> { name } </span> } />;
             })}
           </SelectField>
 
@@ -231,6 +254,11 @@ class SearchBar extends Component {
     changeValue('program', value, { validate: true });
   }
 
+  changeHandlerLanguage(event, index, value) {
+    const { changeValue } = this.props;
+    changeValue('language', value, { validate: true });
+  }
+
   changeHandlerDay(event, index, value) {
     const { changeValue } = this.props;
     changeValue('day', value, { validate: true });
@@ -261,6 +289,22 @@ class SearchBar extends Component {
 
     } else if (_.size(values) === 1) {
       return _.map(programs, ({ name, id }) => { if (_.indexOf(values, id) > -1) { return name; } });
+    }
+  }
+
+  selectionRendererLanguage(values) {
+    const { languages } = this.props;
+    if (_.size(values) > 1) {
+      const newValues = _.map(languages, ({ name, id }) => {
+        if ( _.indexOf(values, id) > -1) {
+          return `${name}, `;
+        }
+      });
+
+      return _.trimEnd(newValues.join(''), ', ');
+
+    } else if (_.size(values) === 1) {
+      return _.map(languages, ({ name, id }) => { if (_.indexOf(values, id) > -1) { return name; } });
     }
   }
 
@@ -309,6 +353,7 @@ class SearchBar extends Component {
 
 SearchBar.propTypes = {
   programs: PropTypes.array,
+  languages: PropTypes.array,
   errors: PropTypes.object,
   days: PropTypes.array,
   currentUser: PropTypes.shape({
@@ -321,6 +366,7 @@ SearchBar.propTypes = {
   search: PropTypes.shape({
     day: PropTypes.array,
     program: PropTypes.array,
+    language: PropTypes.array,
     distance: PropTypes.number,
     start_time: PropTypes.instanceOf(Date),
     end_time: PropTypes.instanceOf(Date),
@@ -344,6 +390,7 @@ SearchBar.defaultProps = {
   days: [],
   errors: {},
   programs: [],
+  languages: [],
   currentUser: {
     first_name: '',
     email: '',
@@ -352,6 +399,7 @@ SearchBar.defaultProps = {
   search: {
     day: [],
     program: [],
+    language: [],
     distance: 0,
   },
 };

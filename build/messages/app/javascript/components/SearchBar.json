@@ -8,6 +8,10 @@
     "defaultMessage": "Program(s)"
   },
   {
+    "id": "SearchBar.languages",
+    "defaultMessage": "Language(s)"
+  },
+  {
     "id": "SearchBar.days",
     "defaultMessage": "Day(s)"
   },
