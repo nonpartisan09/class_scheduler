@@ -27,6 +27,10 @@ module Contexts::Availabilities::Errors
 
   end
 
+  class LanguageMissing < RuntimeError
+
+  end
+
   class IncorrectOrder < RuntimeError
 
   end

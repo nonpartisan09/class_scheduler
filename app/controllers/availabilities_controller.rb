@@ -7,11 +7,16 @@ class AvailabilitiesController < ApplicationController
   def search
     user = UserDecorator.new(current_user).simple_decorate
     programs = Program.all
+    languages = Language.all
     days = I18n.translate 'date.day_names'
 
     @data = {
         :currentUser => user,
         :programs => programs,
+        :languages => languages,
+        :search => {
+          language: user[:language_ids],
+        },
         :days => days
     }
 

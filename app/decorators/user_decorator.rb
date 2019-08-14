@@ -15,6 +15,7 @@ class UserDecorator
       :email => email,
       :first_name => first_name,
       :languages => languages,
+      :language_ids => language_ids,
       :last_logged_in => last_logged_in,
       :current_sign_in => current_sign_in,
       :locale => locale,
@@ -75,6 +76,7 @@ class UserDecorator
         :first_name => first_name,
         :how_they_found_us => how_they_found_us,
         :languages => languages,
+        :language_ids => language_ids,
         :last_logged_in => last_logged_in,
         :locale => locale,
         :phone_number => phone_number,
@@ -106,6 +108,10 @@ class UserDecorator
 
   def languages
     @user.languages.pluck(:name)
+  end
+
+  def language_ids
+    @user.languages.pluck(:id)
   end
 
   def user_timezone

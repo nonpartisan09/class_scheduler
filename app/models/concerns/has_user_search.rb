@@ -7,6 +7,7 @@ module HasUserSearch
     def self.search(params, timezone, current_full_address)
       join_tables
         .who_can_help_with(params[:program])
+        .who_can_speak(params[:language])
         .is_available(params, timezone)
         .based_on_distance(params, current_full_address)
         .paginate_results(params[:page])
@@ -25,6 +26,15 @@ module HasUserSearch
       else
         message = I18n.t('custom_errors.messages.missing_program')
         raise Contexts::Availabilities::Errors::ProgramMissing, message
+      end
+    }
+
+    scope :who_can_speak, proc { |language|
+      if language.present?
+        volunteers.active.includes(:languages).where(:languages => { id: language.split(/,/) })
+      else
+        message = I18n.t('custom_errors.messages.missing_language')
+        raise Contexts::Availabilities::Errors::LanguageMissing, message
       end
     }
 

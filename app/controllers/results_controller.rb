@@ -6,6 +6,7 @@ class ResultsController < ApplicationController
       search = Contexts::Availabilities::Search.new(params, current_user)
       results = search.execute
     rescue Contexts::Availabilities::Errors::ProgramMissing,
+        Contexts::Availabilities::Errors::LanguageMissing,
         Contexts::Availabilities::Errors::DayMissing,
         Contexts::Availabilities::Errors::IncorrectOrder => e
       @message = e.message
