@@ -1,8 +1,53 @@
-.cardCarouselContent {
+.cardCarouselContainer {
+    padding-right: 20vw;
+    padding-left: 20vw;
+    margin-top: 2pc;
     display: flex;
-    flex-flow: column;
-    align-items: center;
+    justify-content: center;
+    height: 80%;
+}
+
+.cardCarouselContainer > div {
+    position: absolute;
+    width: 20pc;
+    transform-origin: bottom;
+}
+
+.cardCarouselCardcenter {
+    z-index: 1;
+}
+
+.cardCarouselCardcenter:hover > .cardCarouselAction > .cardCarouselQuote {
+    background-color: rgba(241, 89, 42, 0.5);
+}
+
+.cardCarouselCardleft {
+    transform: rotate(-10deg);
+}
+
+.cardCarouselCardright {
+    transform: rotate(10deg);
+}
+
+.cardCarouselMediaContainer {
+    position: relative;
+    height: 35vh;
+}
+
+.cardCarouselMediaQuote {
+    position: absolute;
+    top: -30vh;
+    text-align: center;
+}
+
+.cardCarouselMedia {
+    height: inherit;
+}
+
+.cardCarouselContent {
+    text-align: center;
     padding: 4px;
+    height: fit-content;
 }
 
 .cardCarouselContent > p {
@@ -12,5 +57,6 @@
 }
 
 .cardCarouselContent > h3 {
+    margin: 1px;
     color: #004664;
 }
