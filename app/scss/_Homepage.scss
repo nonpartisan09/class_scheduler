@@ -17,10 +17,21 @@ p {
     font-size: 18px;
 }
 
-.splashContainer,
-.testimonialsContainer {
+.splashObjects {
     margin-left: 10pc;
     margin-right: 10pc;
+    display: flex;
+    flex-flow: row;
+}
+
+.testimonialsContainer {
+    margin-top: 3pc;
+    margin-bottom: 3pc;
+}
+
+.testimonialsSubtitle {
+    text-align: center;
+    color: darkgray;
 }
 
 .orangeText {
