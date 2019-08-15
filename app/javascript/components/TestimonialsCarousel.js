@@ -18,29 +18,37 @@ class TestimonialsCarousel extends Component {
     
     handleNext = () => {
       this.setState(prevState => {
-         return { activeStep: prevState.activeStep + 1 };
+         return {
+          activeStep: prevState.activeStep + 1,
+        };
       });
     }
     
     handleBack = () => {
       this.setState(prevState => {
-         return { activeStep: prevState.activeStep - 1 };
+         return {
+          activeStep: prevState.activeStep - 1,
+        };
       });
     }
 
     renderSingleCard(data, position, clickAction) {
       return(
-        <Card className={ 'cardCarouselCard'+position }>
+        <Card
+          className={ 'cardCarouselCard'+position }
+          >
           <CardActionArea className='cardCarouselAction' onClick={ clickAction }>
             <span className='cardCarouselMediaContainer'>
-              <img
+              <CardMedia
                 className='cardCarouselMedia'
+                type='img'
                 alt={ data.first_name+' image' }
-                src={ data.img_src }
+                image={ data.img_src }
                 title={ data.first_name+' Testimonial' }
               />
               <span className='cardCarouselMediaQuote'>
-                { data.quote }
+                
+                { '"'+data.quote+'"' }
               </span>
             </span>
             <CardContent className='cardCarouselContent'>
@@ -60,7 +68,6 @@ class TestimonialsCarousel extends Component {
     }
 
     renderDeck() {
-      console.log(this.props.data.length);
       return(
         <span className='cardCarouselContainer'>
           { this.state.activeStep > 0 ? this.renderSingleCard(this.props.data[this.state.activeStep-1], 'left', this.handleBack) : '' }

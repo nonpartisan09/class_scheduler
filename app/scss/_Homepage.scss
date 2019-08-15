@@ -349,8 +349,24 @@ p {
         text-align: center;
     }
 
-    .splashContainer .homepageContact {
+    .splashObjects {
+        margin-left: 2pc;
+        margin-right: 2pc;
+        display: block;
+    }
+
+    .testimonialsContainer {
+        height: 60vh
+    }
+
+    .splashContainer .homepageContact,
+    .splashObjects {
         flex-flow: column;
+    }
+
+    .splashContainer > button {
+        display: flex;
+        margin: auto;
     }
 
     .howItWorksContentContainer {
