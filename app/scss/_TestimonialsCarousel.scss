@@ -1,3 +1,7 @@
+$card_width: 20pc;
+$card_media_height: 20pc;
+$media_padding: 2pc;
+
 .cardCarouselContainer {
     padding-right: 20vw;
     padding-left: 20vw;
@@ -9,34 +13,50 @@
 
 .cardCarouselContainer > div {
     position: absolute;
-    width: 20pc;
+    width: $card_width;
     transform-origin: bottom;
+    box-shadow: 5px 5px 10px 0px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 2px 1px -1px rgba(0,0,0,0.12);
 }
 
 .cardCarouselCardcenter {
     z-index: 1;
 }
 
-.cardCarouselCardcenter:hover > .cardCarouselAction > .cardCarouselQuote {
-    background-color: rgba(241, 89, 42, 0.5);
+.cardCarouselCardright {
+    z-index: 0;
+    transform: rotate(5deg) scaleY(0.8) translate($card_width/10,-$card_media_height/4);
 }
 
 .cardCarouselCardleft {
-    transform: rotate(-10deg);
+    z-index: 0;
+    transform: rotate(-5deg) scaleY(0.8) translate(-$card_width/10,-$card_media_height/4);
 }
 
-.cardCarouselCardright {
-    transform: rotate(10deg);
+.cardCarouselMediaQuote {
+    width: ($card_width)-($media_padding*2);
+    height: ($card_media_height)-($media_padding*2);
+    font-size: 18px;
+    flex-flow: wrap;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    display: none;
+    padding: $media_padding;
+}
+
+.cardCarouselCardcenter:hover > .cardCarouselAction > .cardCarouselMediaContainer > .cardCarouselMediaQuote {
+    background-color: rgba(241, 89, 42, 0.5);
+    display: flex;
 }
 
 .cardCarouselMediaContainer {
     position: relative;
-    height: 35vh;
+    height: $card_media_height;
 }
 
 .cardCarouselMediaQuote {
     position: absolute;
-    top: -30vh;
+    top: -($card_media_height);
     text-align: center;
 }
 
@@ -59,4 +79,33 @@
 .cardCarouselContent > h3 {
     margin: 1px;
     color: #004664;
+}
+
+@media (max-width: 901px) {
+    $mobile_card_width: 13pc;
+    $mobile_card_media_height: 15pc;
+    $mobile_media_padding:1pc;
+    $mobile_font_size: 12px;
+
+    .cardCarouselContainer {
+        padding-left: $mobile_media_padding;
+        padding-right: $mobile_media_padding;
+        height: inherit;
+    }
+
+    .cardCarouselContainer > div {
+        width: $mobile_card_width;
+    }
+
+    .cardCarouselMedia {
+        height: $mobile_card_media_height;
+    }
+
+    .cardCarouselMediaQuote {
+        font-size: $mobile_font_size;
+        width: ($mobile_card_width)-($mobile_media_padding*2);
+        height: ($mobile_card_media_height)-($mobile_media_padding*2);
+        padding: $mobile_media_padding;
+        transform: translateY(($mobile_card_media_height/2)-($mobile_media_padding*2)-($mobile_font_size/2))
+    }
 }
