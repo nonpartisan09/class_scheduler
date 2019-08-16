@@ -30,6 +30,7 @@
     "react-simple-file-input": "^2.1.0",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.23.1",
+    "video-react": "^0.14.1",
     "webpack": "^4.33.0",
     "webpack-merge": "^4.2.1"
   },
