@@ -1,3 +1,5 @@
+@import '~video-react/styles/scss/video-react';
+
 $card_width: 20pc;
 $card_media_height: 20pc;
 $media_padding: 2pc;
@@ -60,7 +62,8 @@ $media_padding: 2pc;
     text-align: center;
 }
 
-.cardCarouselMedia {
+.cardCarouselMedia,
+.cardCarouselMediaPlayer {
     height: inherit;
 }
 
@@ -90,7 +93,6 @@ $media_padding: 2pc;
     .cardCarouselContainer {
         padding-left: $mobile_media_padding;
         padding-right: $mobile_media_padding;
-        height: inherit;
     }
 
     .cardCarouselContainer > div {
@@ -99,6 +101,14 @@ $media_padding: 2pc;
 
     .cardCarouselMedia {
         height: $mobile_card_media_height;
+    }
+    
+    .cardCarouselMediaPlayer {
+        height: $mobile_card_media_height;
+    }
+
+    .caardCarouselVideoContainer > .cardCarouselContent {
+        padding: 4px; 
     }
 
     .cardCarouselMediaQuote {
