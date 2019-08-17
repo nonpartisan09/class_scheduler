@@ -31,12 +31,12 @@
     <p>
       <b>Screening Interview:</b> To ensure a safe and productive environment for our clients, we ask that our
       volunteers undergo a brief screening interview. This interview requires no preparation and can be done
-      remotely. Feel free to call, text, or email our colleague Jose to schedule. His contact details are below:
+      remotely. Feel free to call, text, or email our colleague Jon to schedule. His contact details are below:
     </p>
-    <a href="mailto:jose.gamboa@earthlink.net">jose.gamboa@earthlink.net</a><br>
-    <a href="tel:+1-408-591-6729">(408) 591-6729</a>
+    <a href="mailto:<%= ENV['SCREENING_EMAIL_ADDRESS'] %>"><%= ENV['SCREENING_EMAIL_ADDRESS'] %></a><br>
+    <a href="tel:<%= ENV['SCREENING_PHONE_NUMBER_ATTRIBUTE'] %>"><%= ENV['SCREENING_PHONE_NUMBER_DISPLAY'] %></a>
     <p>
-      At the end of the screening interview, confirm with Jose that he will activate your profile on the site.
+      At the end of the screening interview, confirm with Jon that he will activate your profile on the site.
       Once done, you can proceed to Step 2 below.
     </p>
   </li>
