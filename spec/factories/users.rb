@@ -35,7 +35,6 @@ FactoryBot.define do
     # programs = []
     # programs << FactoryBot.create(:program)
     # programs { programs }
-    languages Language.all
     average_rating { generate :average_rating }
     rating_count { generate :rating_count }
     country "USA"
