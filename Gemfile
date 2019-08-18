@@ -63,9 +63,6 @@ group :development, :test do
 end
 
 group :development do
-  # Use mysql as the database for Active Record
-  gem 'mysql2', '~> 0.5', require: false
-
   gem 'gem_bench', '~> 1.0', :require => false, :group => :development
   gem 'guard-rspec', '~> 4.7', require: false
   gem 'listen', '~> 3.1'
