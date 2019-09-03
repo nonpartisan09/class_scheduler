@@ -11,6 +11,11 @@ import {
   BigPlayButton
 } from 'video-react';
 
+import {
+  ENGLISH,
+  SPANISH
+} from './utils/availableLocales';
+
 class TestimonialsCarousel extends Component {
     constructor(props, context) {
         super(props, context);
@@ -37,6 +42,18 @@ class TestimonialsCarousel extends Component {
     }
 
     renderSingleCard(data, position, clickAction) {
+      let quote, role = '';
+      const locale = localStorage.getItem('locale');
+
+      if (locale === ENGLISH) {
+        quote = data.quote;
+        role = data.role;
+      } else
+      if (locale === SPANISH) {
+        quote = data.es_quote;
+        role = data.es_role;
+      }
+
       return(
         <Card
           className={ 'cardCarouselCard'+position }
@@ -63,7 +80,7 @@ class TestimonialsCarousel extends Component {
                     { data.first_name }
                   </h3>
                   <p>
-                    { data.role }
+                    { role }
                   </p>
                   <p>
                     { data.location }
@@ -73,33 +90,31 @@ class TestimonialsCarousel extends Component {
             )
             :
             (
-              <span>
-                <CardActionArea className='cardCarouselAction' onClick={ clickAction }>
-                  <span className='cardCarouselMediaContainer'>
-                    <CardMedia
-                      className='cardCarouselMedia'
-                      component='img'
-                      alt={ data.first_name+' image' }
-                      src={ data.img_src }
-                      title={ data.first_name+' Testimonial' }
-                    />
-                    <span className='cardCarouselMediaQuote'>
-                      { '"'+data.quote+'"' }
-                    </span>
+              <CardActionArea className='cardCarouselAction' onClick={ clickAction }>
+                <span className='cardCarouselMediaContainer'>
+                  <CardMedia
+                    className='cardCarouselMedia'
+                    component='img'
+                    alt={ data.first_name+' image' }
+                    src={ data.img_src }
+                    title={ data.first_name+' Testimonial' }
+                  />
+                  <span className='cardCarouselMediaQuote'>
+                    { '"'+quote+'"' }
                   </span>
-                  <CardContent className='cardCarouselContent'>
-                    <h3 className='cardCarouselFirstName'>
-                      { data.first_name }
-                    </h3>
-                    <p>
-                      { data.role }
-                    </p>
-                    <p>
-                      { data.location }
-                    </p>
-                  </CardContent>
-                </CardActionArea>
-              </span>
+                </span>
+                <CardContent className='cardCarouselContent'>
+                  <h3 className='cardCarouselFirstName'>
+                    { data.first_name }
+                  </h3>
+                  <p>
+                    { role }
+                  </p>
+                  <p>
+                    { data.location }
+                  </p>
+                </CardContent>
+              </CardActionArea>
             )
           }
         </Card>
