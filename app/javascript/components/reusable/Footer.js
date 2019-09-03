@@ -91,7 +91,7 @@ class Footer extends Component {
           <span className='footerContact'>
             <b>Contact</b>
             <a href={ 'tel:'+contactInfo.PHONE }>
-              Tel: +1-202-555-0159
+              { 'Tel: '+contactInfo.PHONE }
             </a>
             <a href={ 'mailto:'+contactInfo.EMAIL }>
               Email: admin@tutoria.io

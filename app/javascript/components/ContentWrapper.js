@@ -51,7 +51,7 @@ class ContentWrapper extends Component {
 
     calculateFooterPosition() {
         return(
-            this.state.contentHeight < (0.5*window.innerHeight)
+            this.state.contentHeight < (0.4*window.innerHeight)
             && !this.state.mobile
             ?
             'absolute'
