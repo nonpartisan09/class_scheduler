@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
-import NonChromeMessage from './reusable/NonChromeMessage';
 import Header from './reusable/Header';
 import Footer from './reusable/Footer';
 
@@ -75,7 +74,6 @@ class ContentWrapper extends Component {
               {childrenWithProps}
             </div>
             <Footer style={ { position: this.calculateFooterPosition() } } currentUser={ this.props.currentUser } />
-            <NonChromeMessage />
           </div>
         );
     }

@@ -16,7 +16,6 @@ import SnackBarComponent from './reusable/SnackBarComponent';
 import { postData } from './utils/sendData';
 import formatLink from './utils/Link';
 import PageHeader from './reusable/PageHeader';
-import NonChromeMessage from './reusable/NonChromeMessage';
 
 const schema = {
   email: Joi.string().email().required().options({
@@ -56,7 +55,6 @@ class SignIn extends Component {
 
     return (
       <div>
-        <NonChromeMessage/>
         <PageHeader title={
           <FormattedMessage
             id='signIn'
