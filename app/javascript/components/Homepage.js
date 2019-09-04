@@ -46,6 +46,7 @@ import {
 import formatLink from './utils/Link';
 import SignUpSchema from './schema/SignUpSchema';
 import contactInfo from '../ContactInfo';
+import UserMap from './UserMap';
 
 const pageContent = {
   testimonials: [
@@ -377,21 +378,11 @@ class Homepage extends Component {
   }
 
   renderWhereWeAre() {
-    const size = 60;
     return(
       this.renderElementContainer(
         pageContent.whereWeAre,
-        (
-          <div>
-            <p>
-              <FormattedMessage
-                id='Homepage.contentComingSoon'
-              />
-            </p>
-            <FaWrench size={ size } />
-          </div>
-      ))
-    );
+        (<UserMap />)
+    ));
   }
 
   renderJoinUs() {
