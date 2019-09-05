@@ -5,3 +5,13 @@
     height: 50vh;
     width: 70vw;
 }
+
+.leaflet-popup-content-wrapper,
+.leaflet-popup-tip {
+    background-color: #313131;
+}
+
+.leaflet-popup-content > p {
+    margin: 0;
+    color: white;
+}
