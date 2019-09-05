@@ -8,10 +8,20 @@
 
 .leaflet-popup-content-wrapper,
 .leaflet-popup-tip {
-    background-color: #313131;
+    background-color: #FAFAFA;
+    box-shadow: 7px 7px 9px -5px rgba(0,0,0,0.75);
+}
+
+.leaflet-popup-content > h4 {
+    font-family: 'Roboto Slab';
+    font-size: 30px;
+    font-weight: bold;
+    line-height: initial;
+    color: #004664;
+    margin: 0;
 }
 
 .leaflet-popup-content > p {
     margin: 0;
-    color: white;
+    color: darkgray;
 }
