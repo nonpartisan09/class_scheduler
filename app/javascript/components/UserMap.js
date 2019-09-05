@@ -15,13 +15,13 @@ class UserMap extends Component {
                     key={ city.properties.userCity }
                     className={ 'circle'+city.properties.userCity }
                     center={ [city.geometry.coordinates[0], city.geometry.coordinates[1]] }
-                    color='#0080FF'
+                    color='#004664'
                     fillColor='#F1592A'
-                    fi
+                    fillOpacity={ 0.5 }
                     radius={ city.properties.userCityCount*circleMultiplier }
                   >
                     <Popup>
-                      <p>{ city.properties.userCity }</p>
+                      <h4>{ city.properties.userCity }</h4>
                       <p>{ 'Clients: '+city.properties.clientCount }</p>
                       <p>{ 'Volunteers: '+city.properties.volunteerCount }</p>
                     </Popup>
@@ -44,6 +44,7 @@ class UserMap extends Component {
         >
           { this.createUserLocationDataCircles(dummyLocationData) }
           <TileLayer
+            greyscale
             url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'
             attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           />
