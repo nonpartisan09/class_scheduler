@@ -57,9 +57,9 @@ const pageContent = {
       location: 'Venezuela',
       quote: '',
       es_quote: '',
-      img_src: 'https://s3.amazonaws.com/elasticbeanstalk-us-east-1-853357102893/testimonials/yaquelin.jpg',
-      video: false,
-      video_src: '',
+      img_src: '',
+      video: true,
+      video_src: 'https://s3.amazonaws.com/elasticbeanstalk-us-east-1-853357102893/testimonials/yaquelin_testimonial_subs.mp4',
     },
     {
       names: 'Irma and Mirella',
