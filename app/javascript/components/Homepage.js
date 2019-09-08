@@ -104,49 +104,49 @@ const pageContent = {
   ],
   featuredPrograms: {
     name: 'featuredPrograms',
-    header: 'Featured Programs',
-    subtitle: 'Below are our featured programs!',
+    header: 'Programs.featuredPrograms',
+    subtitle: '',
   },
   howItWorks: {
     name: 'howItWorks',
-    header: 'How it Works',
-    subtitle: 'The stages of an avarage interaction are shown below!',
+    header: 'Homepage.list',
+    subtitle: '',
     howItWorksStages: [
       {
         icon: (<MdTouchApp size={ 60 } />),
         title: 'clientPost',
-        description: 'Clients post what they need help with, such as English language tutoring.'
+        description: 'Homepage.listItem1'
       },
       {
         icon: (<FaPeopleCarry size={ 60 } />),
         title: 'volunteerPost',
-        description: 'Volunteers post what they can help with.'
+        description: 'Homepage.listItem2'
       },
       {
         icon: (<FaInbox size={ 60 } />),
         title: 'contact',
-        description: 'Clients contact volunteers matching their needs and availability.'
+        description: 'Homepage.listItem3'
       },
       {
         icon: (<FaAward size={ 60 } />),
         title: 'review',
-        description: 'After working together, volunteers and clients review each other.'
+        description: 'Homepage.listItem4'
       },
     ],
   },
   whereWeAre: {
     name: 'whereWeAre',
-    header: 'Where We Are',
+    header: 'Homepage.whereWeAre',
     subtitle: ''
   },
   joinUs: {
     name: 'joinUs',
-    header: 'Join Us',
-    subtitle: 'Just fill out the form below to get started!'
+    header: 'Homepage.joinUs',
+    subtitle: 'Homepage.fillOutForm'
   },
   needHelp: {
-    name: 'joinUs',
-    header: 'Need Help?'
+    name: 'needHelp',
+    header: 'Homepage.needHelp'
   }
 };
 
@@ -195,7 +195,9 @@ class Homepage extends Component {
     return(
       <div className='testimonialsContainer'>
         <p className='testimonialsSubtitle'>
-          Click on the image below to see what our clients say
+          <FormattedMessage
+            id="Testimonial.clickImage"
+          />
         </p>
         <TestimonialsCarousel data={ pageContent.testimonials } />
       </div>
@@ -206,13 +208,20 @@ class Homepage extends Component {
     return(
       <div className='splashContainer'>
         <h1 className='spashHeader'>
-          Connect and share with our community of clients and volunteers
+          <FormattedMessage
+            id="Homepage.subtitle"
+            defaultMessage="Connect and share with our community of clients and volunteers"
+          />
         </h1>
         <p>
-          We&apos;re an all-volunteer team inspired by the impact of free tutoring in our local communities. We&apos;ve seen the challenges in meeting people who need our help or arranging where and when to meet. Our clients would say the same thing.
+          <FormattedMessage
+            id="Homepage.subsubtitle"
+          />
         </p>
         <p className='orangeText'>
-          If you have any questions, please email or call us. We will be glad to help you!
+          <FormattedMessage
+            id="Homepage.emailOrCall"
+          />
         </p>
         { this.renderContactButtons() }
         <Fab
@@ -269,10 +278,17 @@ class Homepage extends Component {
     return(
       <div className={ content.name+'Container' }>
         <h2 className={ content.name+'Header' }>
-          { content.header }
+          <FormattedMessage
+            id={ content.header }
+          />
         </h2>
         <p className={ content.name+'Subtitle' }>
-          { content.subtitle }
+          {
+            content.subtitle &&
+            <FormattedMessage
+              id={ content.subtitle }
+            />
+          }
         </p>
         <div className={ content.name+'ContentContainer' }>
           { children }
@@ -341,7 +357,9 @@ class Homepage extends Component {
                     { element.icon }
                   </span>
                   <p>
-                    { element.description }
+                    <FormattedMessage
+                      id={ element.description }
+                    />
                   </p>
                 </span>
                 <span className='cardIndexSpan'>
@@ -364,7 +382,9 @@ class Homepage extends Component {
         (
           <div>
             <p>
-              Content coming soon!
+              <FormattedMessage
+                id='Homepage.contentComingSoon'
+              />
             </p>
             <FaWrench size={ size } />
           </div>
@@ -424,7 +444,9 @@ class Homepage extends Component {
           <ExpansionPanel>
             <ExpansionPanelSummary expandIcon={ <FaCaretDown /> }>
               <p className='languageSelectorTitle'>
-                Website & Notification Language
+                <FormattedMessage
+                  id='UserForm.locale'
+                />
               </p>
             </ExpansionPanelSummary>
             <ExpansionPanelDetails>
@@ -482,7 +504,7 @@ class Homepage extends Component {
                   checkedIcon={ <FaRegDotCircle className='radioButtonCheckedCircle' size={ size } /> }
                 />
               ) }
-              label="Client"
+              label={ <FormattedMessage id='client' /> }
               checked={ this.state.signUpType === 'client' }
             />
             <FormControlLabel
@@ -493,7 +515,7 @@ class Homepage extends Component {
                   checkedIcon={ <FaRegDotCircle className='radioButtonCheckedCircle' size={ size } /> }
                 />
               ) }
-              label="Volunteer"
+              label={ <FormattedMessage id='volunteer' /> }
               checked={ this.state.signUpType === 'volunteer' }
             />
           </RadioGroup>
@@ -516,8 +538,7 @@ class Homepage extends Component {
             onClick={ (event) => { this.handleScroll(event, 0); this.handleSubmit; } }
             >
             <FormattedMessage
-              id='ReviewContainer.SubmitButton'
-              defaultMessage='Submit'
+              id='Homepage.joinUsSubmit'
             />
           </Fab>
         </span>
@@ -529,10 +550,14 @@ class Homepage extends Component {
     return(
       <div className='needHelpContainer'>
         <h2 className='needHelpHeader'>
-          { pageContent.needHelp.header }
+          <FormattedMessage
+            id={ pageContent.needHelp.header }
+          />
         </h2>
         <p className='needHelpSubtitle'>
-          Please call or send an email. Also check our
+          <FormattedMessage
+            id='Homepage.askForHelp'
+          />
           { ' ' }
           { <Link to={ formatLink('/FAQ', this.state.languageChecked) }>FAQ</Link> }
           .

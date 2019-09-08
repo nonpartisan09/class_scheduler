@@ -591,8 +591,11 @@ class Header extends Component {
                 ) }
                 classes={ { root: 'signedOutMenuSummary', content: 'signedOutMenuSummaryContent' } }
               >
-                { 'User: ' }
-                { currentUser.first_name }
+                <FormattedMessage
+                  id='userLabel'
+                  defaultMessage='User: {username}'
+                  values={{ username: currentUser.first_name }}
+                />
               </ExpansionPanelSummary>
               <ExpansionPanelDetails
                 classes={ { root: 'signedOutMenuContent' } }
