@@ -42,14 +42,16 @@ class TestimonialsCarousel extends Component {
     }
 
     renderSingleCard(data, position, clickAction) {
-      let quote, role = '';
+      let names, quote, role = '';
       const locale = localStorage.getItem('locale');
 
       if (locale === ENGLISH) {
+        names = data.names;
         quote = data.quote;
         role = data.role;
       } else
       if (locale === SPANISH) {
+        names = data.es_names;
         quote = data.es_quote;
         role = data.es_role;
       }
@@ -77,7 +79,7 @@ class TestimonialsCarousel extends Component {
                 </span>
                 <CardContent className='cardCarouselContent'>
                   <h3 className='cardCarouselFirstName'>
-                    { data.first_name }
+                    { names }
                   </h3>
                   <p>
                     { role }
@@ -95,9 +97,9 @@ class TestimonialsCarousel extends Component {
                   <CardMedia
                     className='cardCarouselMedia'
                     component='img'
-                    alt={ data.first_name+' image' }
+                    alt={ names+' image' }
                     src={ data.img_src }
-                    title={ data.first_name+' Testimonial' }
+                    title={ names+' Testimonial' }
                   />
                   <span className='cardCarouselMediaQuote'>
                     { '"'+quote+'"' }
@@ -105,7 +107,7 @@ class TestimonialsCarousel extends Component {
                 </span>
                 <CardContent className='cardCarouselContent'>
                   <h3 className='cardCarouselFirstName'>
-                    { data.first_name }
+                    { names }
                   </h3>
                   <p>
                     { role }
