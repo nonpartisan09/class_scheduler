@@ -84,7 +84,7 @@ class Footer extends Component {
             <b>Address</b>
             495A Henry St #1020
             <br />
-            Brookyln, NY, 11231,
+            Brooklyn, NY, 11231,
             <br />
             United States of America
           </span>
