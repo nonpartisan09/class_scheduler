@@ -416,8 +416,12 @@ class Homepage extends Component {
               size="large"
             >
               <Button
-                className={ 'userSelectClientsButton'+this.state.clientsSelected }
+                className='userSelectClientsButton'
                 onClick={ () => this.handleUserToggle('clientsSelected', this.state.clientsSelected) }
+                style={ {
+                  backgroundColor: this.state.clientsSelected ? '#F1592A' : '',
+                  color: this.state.clientsSelected ? 'white' : '',
+                } }
               >
                 <FormattedMessage
                   id='HomePage.UserSelectClients'
@@ -425,8 +429,12 @@ class Homepage extends Component {
                 />
               </Button>
               <Button
-                className={ 'userSelectVolunteersButton'+this.state.volunteersSelected }
+                className='userSelectVolunteersButton'
                 onClick={ () => this.handleUserToggle('volunteersSelected', this.state.volunteersSelected) }
+                style={ {
+                  backgroundColor: this.state.volunteersSelected ? '#004664' : '',
+                  color: this.state.volunteersSelected ? 'white' : '',
+                } }
               >
                 <FormattedMessage
                   id='HomePage.UserSelectVolunteers'
@@ -436,6 +444,7 @@ class Homepage extends Component {
             </ButtonGroup>
           </Grid>
           <FormControlLabel
+            className='mapToggleLabel'
             control={
               (
                 <Switch
@@ -473,7 +482,7 @@ class Homepage extends Component {
             labelPlacement='end'
           />
         </FormGroup>
-        <UserMap view={ this.state.mapView } users={ this.state.users } />
+        <UserMap view={ this.state.mapView } viewClients={ this.state.clientsSelected } viewVolunteers={ this.state.volunteersSelected } />
       </div>
     );
   }

@@ -6,7 +6,6 @@ const dummyLocationData = {
             'properties': {
                 'userCity': 'Elkhart',
                 'userCityCount': 74,
-                'clientCount': 40,
                 'volunteerCount': 34
             },
             'geometry': {
@@ -23,7 +22,6 @@ const dummyLocationData = {
                 'userCity': 'Edmonton',
                 'userCityCount': 72,
                 'clientCount': 38,
-                'volunteerCount': 34
             },
             'geometry': {
                 'type': 'Point',
