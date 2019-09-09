@@ -432,7 +432,7 @@ class Homepage extends Component {
                 className='userSelectVolunteersButton'
                 onClick={ () => this.handleUserToggle('volunteersSelected', this.state.volunteersSelected) }
                 style={ {
-                  backgroundColor: this.state.volunteersSelected ? '#004664' : '',
+                  backgroundColor: this.state.volunteersSelected ? '#29AAE2' : '',
                   color: this.state.volunteersSelected ? 'white' : '',
                 } }
               >
