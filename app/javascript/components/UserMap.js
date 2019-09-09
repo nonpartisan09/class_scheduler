@@ -57,7 +57,7 @@ class UserMap extends Component {
                   key={ city.properties.userCity }
                   className={ 'circle'+city.properties.userCity }
                   center={ [city.geometry.coordinates[0], city.geometry.coordinates[1]] }
-                  color='#004664'
+                  color='#29AAE2'
                   fillColor='#F1592A'
                   fillOpacity={ 0.5 }
                   radius={ city.properties.userCityCount*circleMultiplier }
