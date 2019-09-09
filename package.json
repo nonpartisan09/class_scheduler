@@ -29,7 +29,6 @@
     "react-router-dom": "^5.0.1",
     "react-simple-file-input": "^2.1.0",
     "react-leaflet": "^2.4.0",
-    "react-leaflet-heatmap-layer": "^2.0.0",
     "leaflet": "^1.5.1",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.23.1",

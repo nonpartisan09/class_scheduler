@@ -164,6 +164,21 @@ p {
     color: #A7A9AC;
 }
 
+.mapToggleLabel {
+    align-self: center;
+}
+
+.whereWeAreComponentsContainer > div > div > div > button {
+    text-transform: none;
+    font-family: 'Lato';
+    font-size: 18px;
+}
+
+.userSelectClientsButtontrue,
+.userSelectVolunteersButtontrue {
+    background-color: #F1592A;
+}
+
 .joinUsContainer {
     margin-top: 3pc;
     margin-bottom: 3pc;
