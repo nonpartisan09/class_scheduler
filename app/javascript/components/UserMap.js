@@ -1,13 +1,41 @@
 import React, { Component } from 'react';
 import { Map, TileLayer, CircleMarker, Popup } from 'react-leaflet';
+import { FormattedMessage } from 'react-intl';
+import PropTypes from 'prop-types';
 
 import dummyLocationData from '../../../DummyData'; // Needs actual data
+
+const userTypes = {
+  CLIENT: 'client',
+  VOLUNTEER: 'volunteer',
+  BOTH: 'both'
+};
  
 class UserMap extends Component {
 
+    calculateTotalUsers(data, userType) {
+      let totalUsers = 0;
+
+      data.features.forEach((city) => {
+        if(userType === userTypes.BOTH) {
+          totalUsers+=city.properties.userCityCount;
+        } else
+        if(userType === userTypes.CLIENT) {
+          if(city.properties.clientCount)
+          totalUsers+=city.properties.clientCount;
+        } else
+        if(userType === userTypes.VOLUNTEER) {
+          if(city.properties.volunteerCount)
+          totalUsers+=city.properties.volunteerCount;
+        }
+      });
+
+      console.log(totalUsers);
+      return totalUsers;
+    }
+
     createUserLocationDataCircles(data, viewClients, viewVolunteers) {
       const pointsArray = [];
-      const circleMultiplier = 0.2;
 
       if(viewClients && viewVolunteers) {
         data.features.forEach((city) => {
@@ -21,11 +49,19 @@ class UserMap extends Component {
                     color='#F1592A'
                     fillColor='#F1592A'
                     fillOpacity={ 0.5 }
-                    radius={ city.properties.clientCount*circleMultiplier }
+                    radius={ this.calculateTotalUsers(data,userTypes.CLIENT)/city.properties.clientCount }
                   >
                     <Popup>
                       <h4>{ city.properties.userCity }</h4>
-                      <p>{ 'Clients: '+city.properties.clientCount }</p>
+                      <p>
+                        <FormattedMessage
+                          id='HomePage.UserSelectClients'
+                          default='Clients'
+                        />
+                        {
+                        ': '+city.properties.clientCount
+                        }
+                      </p>
                     </Popup>
                   </CircleMarker>
               )
@@ -41,11 +77,19 @@ class UserMap extends Component {
                     color='#29AAE2'
                     fillColor='#29AAE2'
                     fillOpacity={ 0.5 }
-                    radius={ city.properties.volunteerCount*circleMultiplier }
+                    radius={ this.calculateTotalUsers(data,userTypes.VOLUNTEER)/city.properties.volunteerCount }
                   >
                     <Popup>
                       <h4>{ city.properties.userCity }</h4>
-                      <p>{ 'Volunteers: '+city.properties.volunteerCount }</p>
+                      <p>
+                        <FormattedMessage
+                          id='HomePage.UserSelectVolunteers'
+                          default='Volunteers'
+                        />
+                        {
+                        ': '+city.properties.volunteerCount
+                        }
+                      </p>
                     </Popup>
                   </CircleMarker>
               )
@@ -60,12 +104,28 @@ class UserMap extends Component {
                   color='#29AAE2'
                   fillColor='#F1592A'
                   fillOpacity={ 0.5 }
-                  radius={ city.properties.userCityCount*circleMultiplier }
+                  radius={ this.calculateTotalUsers(data,userTypes.BOTH)/city.properties.userCityCount }
                 >
                   <Popup>
                     <h4>{ city.properties.userCity }</h4>
-                    <p>{ 'Clients: '+city.properties.clientCount }</p>
-                    <p>{ 'Volunteers: '+city.properties.volunteerCount }</p>
+                    <p>
+                      <FormattedMessage
+                        id='HomePage.UserSelectClients'
+                        default='Clients'
+                      />
+                      {
+                      ': '+city.properties.clientCount
+                      }
+                    </p>
+                    <p>
+                      <FormattedMessage
+                        id='HomePage.UserSelectVolunteers'
+                        default='Volunteers'
+                      />
+                      {
+                      ': '+city.properties.volunteerCount
+                      }
+                    </p>
                   </Popup>
                 </CircleMarker>
             )
@@ -84,11 +144,19 @@ class UserMap extends Component {
                     color='#F1592A'
                     fillColor='#F1592A'
                     fillOpacity={ 0.5 }
-                    radius={ city.properties.clientCount*circleMultiplier }
+                    radius={ this.calculateTotalUsers(data,userTypes.CLIENT)/city.properties.clientCount }
                   >
                     <Popup>
                       <h4>{ city.properties.userCity }</h4>
-                      <p>{ 'Clients: '+city.properties.clientCount }</p>
+                      <p>
+                        <FormattedMessage
+                          id='HomePage.UserSelectClients'
+                          default='Clients'
+                        />
+                        {
+                        ': '+city.properties.clientCount
+                        }
+                      </p>
                     </Popup>
                   </CircleMarker>
               )
@@ -108,11 +176,19 @@ class UserMap extends Component {
                     color='#29AAE2'
                     fillColor='#29AAE2'
                     fillOpacity={ 0.5 }
-                    radius={ city.properties.volunteerCount*circleMultiplier }
+                    radius={ this.calculateTotalUsers(data,userTypes.VOLUNTEER)/city.properties.volunteerCount }
                   >
                     <Popup>
                       <h4>{ city.properties.userCity }</h4>
-                      <p>{ 'Volunteers: '+city.properties.volunteerCount }</p>
+                      <p>
+                        <FormattedMessage
+                          id='HomePage.UserSelectVolunteers'
+                          default='Volunteers'
+                        />
+                        {
+                        ': '+city.properties.volunteerCount
+                        }
+                      </p>
                     </Popup>
                   </CircleMarker>
               )
@@ -144,5 +220,11 @@ class UserMap extends Component {
   }
  
 }
+
+UserMap.propTypes = {
+  view: PropTypes.string.isRequired,
+  viewClients: PropTypes.bool.isRequired,
+  viewVolunteers: PropTypes.bool.isRequired
+};
  
 export default UserMap;
