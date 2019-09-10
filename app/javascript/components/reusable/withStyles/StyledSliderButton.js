@@ -4,9 +4,6 @@ import {
     withStyles
 } from '@material-ui/core';
 import PropTypes from 'prop-types';
-import {
-    Link
-} from 'react-router-dom';
 
 const styles = {
     button: {
@@ -97,8 +94,7 @@ const styles = {
             <span id='slider-button-container' className='sliderButtonContainer'>
               <Button
                 className={ grey ? classes.greyButton : classes.button }
-                component={ to === '' ? undefined : Link }
-                to={ to }
+                href={ to }
                 disableFocusRipple
                 { ...other }
                 >
