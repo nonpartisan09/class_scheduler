@@ -21,6 +21,7 @@ class UserDecorator
       :locale => locale,
       :phone_number => phone_number,
       :programs => programs,
+      :program_ids => program_ids,
       :rating_count => rating_count,
       :state => state,
       :thumbnail_image => picture,
@@ -81,6 +82,7 @@ class UserDecorator
         :locale => locale,
         :phone_number => phone_number,
         :programs => programs,
+        :program_ids => program_ids,
         :rating_count => rating_count,
         :state => state,
         :thumbnail_image => picture,
@@ -152,6 +154,10 @@ class UserDecorator
 
   def programs
     @user.programs.pluck(:name)
+  end
+
+  def program_ids
+    @user.programs.pluck(:id)
   end
 
   def address

@@ -9,15 +9,16 @@ class AvailabilitiesController < ApplicationController
     programs = Program.all
     languages = Language.all
     days = I18n.translate 'date.day_names'
-
     @data = {
         :currentUser => user,
-        :programs => programs,
         :languages => languages,
+        :programs => programs,
+        :days => days,
         :search => {
           language: user[:language_ids],
+          program: user[:program_ids],
+          day: (0..6).to_a
         },
-        :days => days
     }
 
     render :search
