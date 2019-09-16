@@ -42,24 +42,26 @@ class TestimonialsCarousel extends Component {
     }
 
     renderSingleCard(data, position, clickAction) {
-      let names, quote, role = '';
+      let names, quote, role;
       const locale = localStorage.getItem('locale');
 
-      if (locale === ENGLISH) {
-        names = data.names;
-        quote = data.quote;
-        role = data.role;
-      } else
       if (locale === SPANISH) {
         names = data.es_names;
         quote = data.es_quote;
         role = data.es_role;
       }
+      else {
+        names = data.names;
+        quote = data.quote;
+        role = data.role;
+      }
+
 
       return(
         <Card
           className={ 'cardCarouselCard'+position }
           >
+          { console.log(names, role, quote) }
           { 
             data.video && position === 'center'
             ?

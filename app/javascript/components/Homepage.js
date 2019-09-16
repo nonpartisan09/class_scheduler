@@ -67,8 +67,8 @@ const pageContent = {
       role: 'Citizenship Client and Volunteer',
       es_role: 'Clienta y Voluntaria de Ciudadanía',
       location: 'New York, NY',
-      quote: "Irma: I felt very comfortable and grateful for Tutoria's help. I give them five stars!\n" +
-             "Mirella: Tutoria is an excellent program because I set my own hours and have an opportunity to practice my Spanish. Also, Tutoria's staff is kind and really wants to help people.",
+      quote:'Irma: I felt very comfortable and grateful for Tutoria\'s help. I give them five stars!\n' +
+            'Mirella: Tutoria is an excellent program because I set my own hours and have an opportunity to practice my Spanish. Also, Tutoria\'s staff is kind and really wants to help people.',
       es_quote: 'Irma: Me sentí muy cómoda y agradecida por la ayuda de Tutoria. ¡Les doy cinco estrellas!\n' +
                 'Mirella: Tutoría es un programa excelente porque yo establezco mi horario y tengo una oportunidad para practicar mi español. Además, los administradores/as son amables y realmente quieren ayudar a la gente.',
       img_src: 'https://s3.amazonaws.com/elasticbeanstalk-us-east-1-853357102893/testimonials/IrmaandMirella.jpg',
