@@ -49,6 +49,8 @@ gem 'jquery-rails', '~> 4.3'
 
 gem 'ffi', '~> 1.11'
 
+gem 'active_model_serializers', '~> 0.10.0'
+
 group :development, :test do
 	gem 'factory_bot_rails', '~> 4.8'
 
