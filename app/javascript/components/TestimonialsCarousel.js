@@ -12,7 +12,6 @@ import {
 } from 'video-react';
 
 import {
-  ENGLISH,
   SPANISH
 } from './utils/availableLocales';
 
@@ -61,7 +60,6 @@ class TestimonialsCarousel extends Component {
         <Card
           className={ 'cardCarouselCard'+position }
           >
-          { console.log(names, role, quote) }
           { 
             data.video && position === 'center'
             ?
