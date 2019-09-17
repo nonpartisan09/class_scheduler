@@ -82,7 +82,7 @@ const pageContent = {
       es_role: 'Cliente y Voluntario de Ciudadanía',
       location: 'New York, NY',
       quote: 'Amilcar: Tutoria volunteers are very organized and professional. I would definitely recommend them.\n' +
-             "Dane: Tutoria is a fantastic organization with a really positive mission. I've really enjoyed working with Amilcar. It's exciting seeing the progress he's made, and I'm looking forward to continuing our work together.",
+             'Dane: Tutoria is a fantastic organization with a really positive mission. I\'ve really enjoyed working with Amilcar. It\'s exciting seeing the progress he\'s made, and I\'m looking forward to continuing our work together.',
       es_quote: 'Amilcar: Los voluntarios/as de Tutoria son muy organizados y profesionales. Yo definitivamente los recomendaría.\n' +
                 'Dane: Tutoria es una organización fantástica con un objetivo realmente positivo. Realmente disfruté ayudar a Amilcar. Es emocionante ver el progreso que el ha realizado, y espero continuar nuestros estudios juntos.',
       img_src: 'https://s3.amazonaws.com/elasticbeanstalk-us-east-1-853357102893/testimonials/AmilcarandDane.jpeg',
@@ -285,9 +285,11 @@ class Homepage extends Component {
         <p className={ content.name+'Subtitle' }>
           {
             content.subtitle &&
-            <FormattedMessage
-              id={ content.subtitle }
-            />
+            (
+              <FormattedMessage
+                id={ content.subtitle }
+              />
+            )
           }
         </p>
         <div className={ content.name+'ContentContainer' }>
@@ -576,7 +578,7 @@ Homepage.propTypes = {
   validateHandler: PropTypes.func.isRequired,
   first_name: PropTypes.string,
   email: PropTypes.string,
-  programs: PropTypes.array.isRequired,
+  programs: PropTypes.array,
 };
 
 Homepage.defaultProps = {

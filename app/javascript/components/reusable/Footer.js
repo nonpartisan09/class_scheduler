@@ -10,7 +10,6 @@ import {
   FaRegCopyright,
   FaLinkedin
 } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
 
 import formatLink from '../utils/Link';
 import PaypalButton from '../PaypalButton';
@@ -56,15 +55,35 @@ class Footer extends Component {
             Inc.
           </span>
           <span className='footerLinks'>
-            <Link to={ formatLink('/about', locale) }>
+            <b>
+              <FormattedMessage
+                id='Footer.usefulLinks'
+                defaultMessage='Useful Links'
+              />
+            </b>
+            <a href={ formatLink('/about', locale) }>
               <FormattedMessage
                 id='aboutPage'
                 defaultMessage='About'
               />
-            </Link>
-            <Link to={ formatLink('/FAQ', locale) }>
+            </a>
+            <a href={ formatLink('/FAQ', locale) }>
               FAQ
-            </Link>
+            </a>
+            <a href={ formatLink('/terms_of_use', locale) }>
+              <FormattedMessage
+                id='Footer.TAC'
+                defaultMessage='Terms & Conditions'
+              />
+            </a>
+          </span>
+          <span className='socialMediaLinks'>
+            <b>
+              <FormattedMessage
+                id='Footer.socialMedia'
+                defaultMessage='Social Media'
+              />
+            </b>
             <a href={ contactInfo.FACEBOOK } rel='noopener noreferrer' target='_blank'>
               <FaFacebookF
                 size={ size }
@@ -78,23 +97,6 @@ class Footer extends Component {
                 className='linkedInIcon'
               />
               LinkedIn
-            </a>
-          </span>
-          <span className='footerAddress'>
-            <b>Address</b>
-            495A Henry St #1020
-            <br />
-            Brooklyn, NY, 11231,
-            <br />
-            United States of America
-          </span>
-          <span className='footerContact'>
-            <b>Contact</b>
-            <a href={ 'tel:'+contactInfo.PHONE }>
-              { 'Tel: '+contactInfo.PHONE }
-            </a>
-            <a href={ 'mailto:'+contactInfo.EMAIL }>
-              Email: admin@tutoria.io
             </a>
           </span>
         </span>
