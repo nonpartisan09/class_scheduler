@@ -77,20 +77,17 @@ class UsersController < ApplicationController
 
   def get_ten_last_comments
     received_reviews = @user.received_reviews
-
-    if received_reviews.present?
-      count = received_reviews.count
-      ten_last_comments = Review.received_review_search(permitted_params).collect do |review|
-        ReviewDecorator.new(review,
-            { reviewee_first_name: @user.first_name }
-        ).decorate
-      end
-
-      @comments = {
-          count: count,
-          ten_last_comments: ten_last_comments
-      }
+    count = received_reviews.count
+    ten_last_comments = Review.received_review_search(permitted_params).collect do |review|
+      ReviewDecorator.new(review,
+          { reviewee_first_name: @user.first_name }
+      ).decorate
     end
+
+    @comments = {
+        count: count,
+        ten_last_comments: ten_last_comments
+    }
   end
 
   def permitted_params
