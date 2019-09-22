@@ -41,17 +41,19 @@ class TestimonialsCarousel extends Component {
     }
 
     renderSingleCard(data, position, clickAction) {
-      let names, quote, role;
+      let names, quote1, quote2, role;
       const locale = localStorage.getItem('locale');
 
       if (locale === SPANISH) {
         names = data.es_names;
-        quote = data.es_quote;
+        quote1 = data.es_quote1;
+        quote2 = data.es_quote2;
         role = data.es_role;
       }
       else {
         names = data.names;
-        quote = data.quote;
+        quote1 = data.quote1;
+        quote2 = data.quote2;
         role = data.role;
       }
 
@@ -102,7 +104,8 @@ class TestimonialsCarousel extends Component {
                     title={ names+' Testimonial' }
                   />
                   <span className='cardCarouselMediaQuote'>
-                    { '"'+quote+'"' }
+                    <p>{ quote1 }</p>
+                    { quote2 && <p>{ quote2 }</p> }
                   </span>
                 </span>
                 <CardContent className='cardCarouselContent'>
