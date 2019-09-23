@@ -8,7 +8,9 @@ import { FormattedMessage } from 'react-intl';
 import { 
   FaFacebookF,
   FaRegCopyright,
-  FaLinkedin
+  FaLinkedin,
+  FaEnvelope,
+  FaPhone
 } from 'react-icons/fa';
 
 import formatLink from '../utils/Link';
@@ -43,17 +45,14 @@ class Footer extends Component {
       <span className='leftElementsContainer'>
         <h3 className='footerHeader'>
           Tutoria
+          { ' ' }
+          <span className='copyrightAndLogo'>
+            Copyright
+            { <FaRegCopyright className='copyrightLogo' /> }
+            2019 Tutoria, Inc.
+          </span>
         </h3>
         <span className='footerBody'>
-          <span className='footerCopyright'>
-            <span className='copyrightAndLogo'>
-              Copyright
-              { <FaRegCopyright className='copyrightLogo' /> }
-            </span>
-            2019 Tutoria,
-            <br />
-            Inc.
-          </span>
           <span className='footerLinks'>
             <b>
               <FormattedMessage
@@ -97,6 +96,57 @@ class Footer extends Component {
                 className='linkedInIcon'
               />
               LinkedIn
+            </a>
+          </span>
+          <span className='footerAddress'>
+            <b>
+              <FormattedMessage
+                id='Footer.address'
+                defaultMessage='Address'
+              />
+            </b>
+            <a href='https://goo.gl/maps/DosRMFgkkADSrzmd6' rel='noopener noreferrer' target='_blank'>
+              { 
+                '495a Henry Street #1020,\n'+
+                'Brooklyn, NY, 11231,\n'+
+                'United States of America'
+              }
+            </a>
+          </span>
+          <span className='footerContact'>
+            <b>
+              <FormattedMessage
+                id='Footer.contact'
+                defaultMessage='Contact Us'
+              />
+            </b>
+            <a
+              href={ 'tel:'+contactInfo.PHONE }
+            >
+              <FaPhone
+                size={ size }
+                label={ (
+                  <FormattedMessage
+                    id="UserForm.phoneNumber"
+                    defaultMessage="Phone Number"
+                  />
+                ) }
+              />
+              { ' '+contactInfo.PHONE }
+            </a>
+            <a
+              href={ 'mailto:'+contactInfo.EMAIL }
+            >
+              <FaEnvelope
+                size={ size }
+                label={ (
+                  <FormattedMessage
+                    id="UserForm.email"
+                    defaultMessage="Email address"
+                  />
+                ) }
+              />
+              { ' '+contactInfo.EMAIL }
             </a>
           </span>
         </span>
