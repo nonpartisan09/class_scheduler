@@ -43,6 +43,11 @@ a:hover {
 
 .copyrightAndLogo {
     flex-flow: row;
+    font-size: 40%;
+}
+
+.footerAddress {
+    white-space: pre;
 }
 
 .facebookIcon,
@@ -64,11 +69,21 @@ a:hover {
         padding-bottom: 2pc;
     }
 
+    .leftElementsContainer {
+        width: 100%;
+    }
+
     .footerBody {
-        flex-flow: column;
+        display: grid;
+        grid-template-columns: 50% 50%;
+        font-size: small;
+    }
+
+    .footerBody > span > a {
+        font-size: x-small;
     }
 
     .footerBody > span {
-        padding-bottom: 2pc;
+        padding: none;
     }
 }
