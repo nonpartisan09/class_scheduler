@@ -654,7 +654,7 @@ class Homepage extends Component {
             id='Homepage.askForHelp'
           />
           { ' ' }
-          { <a href={ formatLink('/FAQ', this.state.languageChecked) }>FAQ</a> }
+          { <a href={ formatLink('/faq', this.state.languageChecked) }>FAQ</a> }
           .
         </p>
         <span className='needHelpLinks'>

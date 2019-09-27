@@ -66,7 +66,7 @@ class Footer extends Component {
                 defaultMessage='About'
               />
             </a>
-            <a href={ formatLink('/FAQ', locale) }>
+            <a href={ formatLink('/faq', locale) }>
               FAQ
             </a>
             <a href={ formatLink('/terms_of_use', locale) }>
@@ -105,13 +105,11 @@ class Footer extends Component {
                 defaultMessage='Address'
               />
             </b>
-            <a href='https://goo.gl/maps/DosRMFgkkADSrzmd6' rel='noopener noreferrer' target='_blank'>
-              { 
-                '495a Henry Street #1020,\n'+
-                'Brooklyn, NY, 11231,\n'+
-                'United States of America'
-              }
-            </a>
+            { 
+              '495a Henry Street #1020,\n'+
+              'Brooklyn, NY, 11231,\n'+
+              'United States of America'
+            }
           </span>
           <span className='footerContact'>
             <b>
