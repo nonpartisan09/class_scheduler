@@ -12,6 +12,7 @@ export default class UserMap extends Component{
       mapCenter: [0,0],
       cities: [],
       feature: null,
+      hostUrl: window.location.href
     }
   }
 
@@ -21,7 +22,7 @@ export default class UserMap extends Component{
   }
 
   componentDidMount = () => {
-    fetch('http://0.0.0.0:9294/api/v1/city')
+    fetch(this.state.hostUrl + '/api/v1/city')
         .then(res => res.json())
         .then(data => {
           this.setState({cities: data.features});
