@@ -210,7 +210,6 @@ class Homepage extends Component {
         </span>
         { this.renderFeaturedPrograms() }
         { this.renderHowItWorks() }
-        { this.renderWhereWeAre() }
         { this.renderJoinUs() }
         { this.renderNeedHelp() }
       </div>
