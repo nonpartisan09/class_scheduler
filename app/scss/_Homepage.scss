@@ -70,13 +70,17 @@ p {
 .featuredProgramsContentContainer  > div {
     padding: 2pc;
     min-width: 20pc;
+    max-width: 20vw;
 }
 
 .featuredProgramsContentContainer > div > div {
     background-color: #004664;
     color: white;
-    height: 20pc;
     padding: 1pc;
+}
+
+.featuredProgramsContentContainer > div > div > div {
+    padding: 0;
 }
 
 .featuredProgramsContentContainer p {
