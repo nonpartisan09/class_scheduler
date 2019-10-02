@@ -23,7 +23,6 @@ function SearchUrl({ day, program, language, start_time, end_time, distance, ord
   const pageParam = page? `&page=${page}` : '';
   const localeParam = locale? `/${locale}` : '';
 
-  console.log(`${localeParam}/results?${programParam}${languageParam}${dayParam}${startParam}${endParam}${distanceParam}${orderParam}${pageParam}`);
   return `${localeParam}/results?${programParam}${languageParam}${dayParam}${startParam}${endParam}${distanceParam}${orderParam}${pageParam}`;
 }
 

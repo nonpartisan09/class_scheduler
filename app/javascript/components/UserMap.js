@@ -18,7 +18,6 @@ export default class UserMap extends Component{
 
   onClick(e){
     const feature = e.target.feature;
-    console.log('clicked', feature.properties);
   }
 
   componentDidMount = () => {
