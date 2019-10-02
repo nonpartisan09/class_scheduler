@@ -5,3 +5,26 @@
 .customPageContainer .imageContainer {
     text-align: center;
 }
+
+.customPageContainer > h1 {
+    font-family: 'Roboto Slab';
+    font-size: 60px;
+    font-weight: bold;
+    line-height: initial;
+}
+
+.customPageContainer > h2 {
+    font-family: 'Roboto Slab';
+    font-size: 40px;
+    font-weight: bold;
+    line-height: initial;
+}
+
+.customPageContainer {
+    font-family: 'Lato';
+    font-size: 18px;
+}
+
+.customPageContainer > a {
+    color: #004664;
+}
