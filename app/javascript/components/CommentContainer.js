@@ -26,7 +26,7 @@ class CommentContainer extends Component {
   }
 
   componentWillReceiveProps({ comments: { ten_last_comments, count } }){
-    if (this.props.ten_last_comments !== ten_last_comments || this.props.count !== count) {
+    if (this.props.comments.ten_last_comments !== ten_last_comments || this.props.comments.count !== count) {
       this.handleUpdateState();
     }
   }
