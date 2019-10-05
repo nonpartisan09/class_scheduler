@@ -67,7 +67,10 @@ class Footer extends Component {
               />
             </a>
             <a href={ formatLink('/faq', locale) }>
-              FAQ
+              <FormattedMessage
+                id='FAQPage'
+                defaultMessage='FAQ'
+              />
             </a>
             <a href={ formatLink('/terms_of_use', locale) }>
               <FormattedMessage

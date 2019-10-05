@@ -658,8 +658,13 @@ class Homepage extends Component {
             id='Homepage.askForHelp'
           />
           { ' ' }
-          { <a href={ formatLink('/faq', this.state.languageChecked) }>FAQ</a> }
-          .
+          { <a href={ formatLink('/faq', this.state.languageChecked) }>
+              <FormattedMessage
+                id='FAQPage'
+                defaultMessage='FAQ'
+              />
+            </a>
+          }.
         </p>
         <span className='needHelpLinks'>
           { this.renderContactButtons(70) }
