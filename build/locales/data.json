@@ -168,7 +168,7 @@
   "NonChromeMessage": "For Optimal Performance, {link} is recommended"
 },
   "es": {
-    "aboutPage": "Acerca",
+    "aboutPage": "¿Quiénes somos?",
     "Availabilities.listDay": "Día",
     "Availabilities.from": "Desde",
     "Availabilities.to": "Hasta",
@@ -196,7 +196,7 @@
     "Footer.address": "Dirección de envío",
     "Footer.contact": "Contáctenos",
     "Homepage.subtitle": "Conéctese y comparta con nuestra comunidad de clientes/as y voluntarios/as",
-    "Homepage.subsubtitle": "Somos un grupo de voluntarios/as inspirados en ayudar a nuestra comunidad. Hemos visto lo difícil que es que la gente que necesita ayuda encuentre el lugar y el momento indicado para hacerlo. Por esto creamos Tutoría.",
+    "Homepage.subsubtitle": "Somos un grupo de voluntarios/as inspirados en ayudar a nuestra comunidad. Hemos visto lo difícil que es encontrar ayuda en el lugar y el momento indicado. Por esa razón creamos Tutoría.",
     "Homepage.list": "Como funciona este servicio gratuito.",
     "Homepage.listItem1": "Los clientes/as publican con que necesitan ayuda. Por ejemplo: Aprender inglés.",
     "Homepage.listItem2": "Los voluntarios/as publican en que pueden ayudar",
@@ -287,7 +287,7 @@
     "UserProfile.NotAvailable": "No disponible",
     "withUserForm.locationDialog": "¿Por qué necesita mi dirección y ciudad?",
     "UserForm.email": "Correo electrónico",
-    "FAQPage": "FAQ",
+    "FAQPage": "Preguntas Frecuentes",
     "UserForm.emailNotification": "Notifíqueme sobre nuevos mensajes por correo electrónico",
     "UserForm.howTheyFoundUs": "¿Cómo usted se enteró de nosotros?",
     "UserForm.firstName": "Primer Nombre",
