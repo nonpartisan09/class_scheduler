@@ -101,7 +101,7 @@ module Contexts
 
       def parse_time(time)
         t = Time.zone.parse(time)
-        Time.zone.parse(t.strftime("#{@day_index + 1} Jan 2001 %T"))
+        Time.zone.parse(t.strftime("#{@day_index + 1} Jan 2001 %R"))
       end
 
       def initialize_start_time
