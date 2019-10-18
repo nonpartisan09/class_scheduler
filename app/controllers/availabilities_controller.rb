@@ -44,7 +44,7 @@ class AvailabilitiesController < ApplicationController
   def create
     if permitted_params.present?
       message = []
-      status = []
+      status = :ok
 
       permitted_params.each do |key, value|
         creation = Contexts::Availabilities::Creation.new(permit_nested(value), current_user)
@@ -57,13 +57,13 @@ class AvailabilitiesController < ApplicationController
             Contexts::Availabilities::Errors::EndTimeMissing,
             Contexts::Availabilities::Errors::ShortAvailability => e
           message << e.message
-          status << :unprocessable_entity
+          status = :unprocessable_entity
         else
           message << { availability: `#{@availability.id} successfully created` }
         end
       end
 
-      render :json=> { :message => message }, :status => :ok
+      render :json=> { :message => message }, :status => status
     end
   end
 
