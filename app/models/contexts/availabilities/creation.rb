@@ -42,7 +42,7 @@ module Contexts
                                                           :user_id => @current_user.id,
                                                       })
 
-        @new_availability = Availability.create!(new_availability_params)
+        @new_availability = Availability.find_or_create_by!(new_availability_params)
         @new_availability
 
         unless @new_availability
@@ -57,7 +57,6 @@ module Contexts
       private
 
       def check_if_overlaps?
-        Time.zone = @timezone
         existing_availabilities = @current_user.availabilities.where('day = ?', @day)
 
         if existing_availabilities.present?
@@ -65,8 +64,8 @@ module Contexts
 
           overlaps = existing_availabilities.any? do |availability|
             existing_range = availability[:start_time]..availability[:end_time]
-
-            current_range == existing_range
+            # identical times are ok.  Check for other overlaps
+            (current_range != existing_range) && (current_range.overlaps? existing_range)
           end
 
           if overlaps
