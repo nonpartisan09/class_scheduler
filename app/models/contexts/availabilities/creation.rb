@@ -41,7 +41,6 @@ module Contexts
                                                           :end_time => @parsed_end_time,
                                                           :user_id => @current_user.id,
                                                       })
-
         @new_availability = Availability.find_or_create_by!(new_availability_params)
         @new_availability
 
@@ -60,12 +59,21 @@ module Contexts
         existing_availabilities = @current_user.availabilities.where('day = ?', @day)
 
         if existing_availabilities.present?
-          current_range = @parsed_start_time..@parsed_end_time
+          current_range = { start_time: @parsed_start_time.beginning_of_minute, 
+                            end_time: @parsed_end_time.beginning_of_minute}
 
           overlaps = existing_availabilities.any? do |availability|
-            existing_range = availability[:start_time]..availability[:end_time]
-            # identical times are ok.  Check for other overlaps
-            (current_range != existing_range) && (current_range.overlaps? existing_range)
+            start_time = availability[:start_time].beginning_of_minute
+            end_time = availability[:end_time].beginning_of_minute
+
+            same = (current_range[:start_time] == start_time) && (current_range[:end_time] == end_time)
+            start_overlap = (current_range[:start_time] > start_time) && (current_range[:start_time] < end_time)
+            end_overlap = (current_range[:end_time] > start_time) && (current_range[:end_time] < end_time) 
+
+            # overlap if not exact equal AND either of the following
+            # existing start > new start and < new end
+            # existing end > new start and < new end
+            (!same) && ( start_overlap || end_overlap )
           end
 
           if overlaps
