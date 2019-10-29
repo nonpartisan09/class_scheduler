@@ -1,4 +1,4 @@
-if Rails.env.production?
+if Rails.env.staging? or Rails.env.production?
   Geocoder.configure(
       :lookup => :google,
       :use_https => true,
