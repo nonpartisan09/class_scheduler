@@ -203,6 +203,7 @@ class Homepage extends Component {
 
   render() {
     return (
+      
       <div className='homepageMainContainer'>
         <span className='splashObjects'>
           { this.renderSplash() }

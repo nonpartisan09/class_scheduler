@@ -1,3 +1,8 @@
+.homepageMainContainer {
+    width: 100%;
+}
+
+
 h1 {
     font-family: 'Roboto Slab';
     font-size: 60px;
@@ -349,10 +354,12 @@ p {
 
 @media (max-width: 901px) {
     .homepageMainContainer > div {
+        width: 90%;
         margin: 1pc;
         display: flex;
         flex-flow: column;
         align-items: center;
+        
     }
     
     h1 {
@@ -364,18 +371,19 @@ p {
     }
 
     .splashObjects {
-        margin-left: 2pc;
-        margin-right: 2pc;
+        margin: auto;
         display: block;
     }
 
     .testimonialsContainer {
-        height: 60vh
+        height: 60vh;
+        width: 90%;
     }
 
     .splashContainer .homepageContact,
     .splashObjects {
         flex-flow: column;
+        width: 90%;
     }
 
     .splashContainer > button {
@@ -384,16 +392,27 @@ p {
     }
 
     .howItWorksContentContainer {
+        width: 90%;
         flex-flow: column;
         align-items: center;
+        
+        div {
+            div {
+                width: 100%;
+                margin: auto;
+            }
+        }
+    }
+    .joinUsContainer {
+        width: 100%;
     }
 
     .joinUsContentContainer {
-        width: stretch;
+        width: 90%;
     }
     
     .joinUsForm {
-        width: inherit;
+        width: 90%;
         padding: 1pc;
     }
 
