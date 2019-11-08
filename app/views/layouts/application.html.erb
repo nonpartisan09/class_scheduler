@@ -5,8 +5,13 @@
     <%= csrf_meta_tags %>
     <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0" >
     <meta charset='utf-8' />
-    <meta name="description" lang="es" content='Tutoria es una aplicación gratuita que sirve para conectar a quienes están buscando ayuda con los voluntarios/as que están dispuestos a ayudarlos. ¿Interesado en las oportunidades para voluntarios? Regístrese como voluntario. ¿En busca de tutoría para aprender inglés u otros servicios intelectuales? Regístrese como cliente y encuentre voluntarios.' >
-    <meta name="description" lang="en" content='Tutoria is a free web application connecting those looking for help with volunteers who want to make a difference. Interested in volunteer opportunities? Sign up a as a volunteer. Looking for a tutor to help learn English or other knowledge services? Join us as a client and find volunteers all over the world.' >
+    <% if @_request.env["PATH_INFO"].include? "/es"%>
+      <meta name="description" content="Tutoria es una aplicación gratuita que sirve para conectar a quienes están buscando ayuda con los voluntarios/as que están dispuestos a ayudarlos. ¿Interesado en las oportunidades para voluntarios? Regístrese como voluntario. ¿En busca de tutoría para aprender inglés u otros servicios intelectuales? Regístrese como cliente y encuentre voluntarios." 
+    <% else %>
+      <meta name="description" content="Tutoria is a free web application connecting those looking for help with volunteers who want to make a difference. Interested in volunteer opportunities? Sign up a as a volunteer. Looking for a tutor to help learn English or other knowledge services? Join us as a client and find volunteers all over the world.">
+    <% end %>
+    <link rel="alternate" hreflang="en" href="https://tutoria.io" />
+    <link rel="alternate" hreflang="es" href="https://tutoria.io/es" />
     <meta name='referrer' content='origin' >
     <meta http-equiv='X-UA-Compatible' content='IE=edge' >
 
