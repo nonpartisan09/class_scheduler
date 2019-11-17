@@ -59,7 +59,7 @@ class AvailabilitiesController < ApplicationController
           message << e.message
           status = :unprocessable_entity
         else
-          message << { availability: `#{@availability.id} successfully created` }
+          message << nil # no error message for this availability
         end
       end
 
