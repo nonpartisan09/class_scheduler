@@ -67,13 +67,8 @@ module Contexts
             end_time = availability[:end_time].beginning_of_minute
 
             same = (current_range[:start_time] == start_time) && (current_range[:end_time] == end_time)
-            start_overlap = (current_range[:start_time] > start_time) && (current_range[:start_time] < end_time)
-            end_overlap = (current_range[:end_time] > start_time) && (current_range[:end_time] < end_time) 
-
-            # overlap if not exact equal AND either of the following
-            # existing start > new start and < new end
-            # existing end > new start and < new end
-            (!same) && ( start_overlap || end_overlap )
+            overlap = (current_range[:start_time] < end_time) && (current_range[:end_time] > start_time)
+            same || overlap
           end
 
           if overlaps
