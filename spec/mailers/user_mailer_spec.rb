@@ -1,9 +1,23 @@
 require 'rails_helper'
 
 RSpec.describe UserMailer, type: :mailer do
-  describe 'When a user signs up' do
-    let(:user) { FactoryBot.create(:user) }
-    let(:mail) { UserMailer.welcome_email(user) }
+  describe 'When a client user signs up' do
+    let(:user) { FactoryBot.create(:client_user) }
+    let(:mail) { UserMailer.client_welcome_email(user) }
+
+    it 'renders the headers' do
+      expect(mail.subject).to eq('Welcome to Tutoría')
+      expect(mail.to).to eq([user.email])
+      expect(mail.from).to eq(['no-reply@tutoria.io'])
+    end
+
+    it 'renders the body' do
+      expect(mail.body.encoded).to include("You have successfully signed up domainname as a client.")
+    end
+  end
+  describe 'When a volunteer user signs up' do
+    let(:user) { FactoryBot.create(:volunteer_user) }
+    let(:mail) { UserMailer.volunteer_welcome_email(user) }
 
     it 'renders the headers' do
       expect(mail.subject).to eq('Welcome to tutoría')
@@ -12,7 +26,7 @@ RSpec.describe UserMailer, type: :mailer do
     end
 
     it 'renders the body' do
-      expect(mail.body.encoded).to include("You have successfully signed up to domainname as a user")
+      expect(mail.body.encoded).to include("You have successfully signed up to domainname as a volunteer")
     end
   end
   describe 'When a user receives a new email' do
@@ -43,7 +57,7 @@ RSpec.describe UserMailer, type: :mailer do
     end
 
     it 'renders the body' do
-      expect(mail.body.encoded).to include("Your Tutor=C3=ADa account with username #{user[:email]} has been disa=\nbled by the administrator")
+      expect(mail.body.encoded).to include("Your Tutor=C3=ADa account with username #{user[:email]} has been dis=\nabled by the administrator")
     end
   end
   describe 'When a user is reactivated' do
