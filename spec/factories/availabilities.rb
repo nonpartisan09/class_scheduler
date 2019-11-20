@@ -11,7 +11,7 @@ FactoryBot.define do
   end
 
   factory :availability do
-    day "Sunday"
+    day { "Sunday" }
     start_time { generate :start_time }
     end_time { generate :end_time }
     user_id { FactoryBot.create(:user, :volunteer).id }
