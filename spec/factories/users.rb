@@ -27,18 +27,18 @@ FactoryBot.define do
     first_name { generate :first_name }
     email { generate :email }
     last_sign_in_at { generate :last_sign_in_at }
-    password 'password'
+    password { 'password' }
     url_slug
-    active true
-    terms_and_conditions true
+    active { true }
+    terms_and_conditions { true }
     timezone 'UTC'
     # programs = []
     # programs << FactoryBot.create(:program)
     # programs { programs }
     average_rating { generate :average_rating }
     rating_count { generate :rating_count }
-    country "USA"
-    city "Boston"
+    country { "USA" }
+    city { "Boston" }
   end
 
   trait :client do
