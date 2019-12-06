@@ -47,12 +47,13 @@ function getData({ url, params='', jsonBody, method='GET', successCallBack, erro
 
 function postData({ url, params, attributes, method='POST', successCallBack, errorCallBack }) {
   const restUrl = params? `${url}?${params}` : url;
-
+  
   const body = function(){
     if (_.size(attributes) > 0) {
       const body = new FormData();
 
       _.each(attributes, ([name, value]) => {
+       
         body.append(name, value);
       });
 
@@ -70,6 +71,7 @@ function postData({ url, params, attributes, method='POST', successCallBack, err
     },
     credentials: 'same-origin'
   }).then(response => {
+ 
     if (response.status < 400) {
       if (response.status === 204 || response.status === 302) {
         if (!_.isUndefined(successCallBack)) {
@@ -80,6 +82,7 @@ function postData({ url, params, attributes, method='POST', successCallBack, err
 
         if (contentType && contentType.indexOf('application/json') !== -1) {
           return response.json().then((json) => {
+            
             if (!_.isUndefined(successCallBack)) {
               return successCallBack(json);
             }
