@@ -22,25 +22,29 @@ class Message extends Component {
     this.state = {
       expanded: false,
       unread: this.props.unread,
-      message: ''
+      message: '',
     };
+
+    this.setStyle = this.setStyle.bind(this);
+  }
+
+  setStyle() {
+    if (this.state.unread) {
+      return 'messageContainerBold';
+    } else {
+      return 'messageContainer';
+    }
   }
 
   render() {
     const { body } = this.props;
-    let unread = this.state.unread;
 
-    const messageContainer = function() {
-      if (unread) {
-        return 'messageContainerBold';
-      } else {
-        return 'messageContainer';
-      }
-    }();
+    const messageContainer = this.setStyle();
 
     return (
-      <div onClick={ () => this.changeRead() } className={ messageContainer }>
-        <Card expanded={ this.state.expanded } onExpandChange={ this.handleExpandChange }>
+
+      <div className={ messageContainer }>
+        <Card onClick={ () => this.changeRead() } expanded={ this.state.expanded } onExpandChange={ this.handleExpandChange }>
           <CardHeader
             showExpandableButton
             avatar={ this.renderAvatar() }
@@ -62,16 +66,16 @@ class Message extends Component {
         <Avatar className='avatar' src={ avatar } />
       : (
         <Avatar>
-          { sender_first_name[0].charAt(0).toUpperCase() }
+          { sender_first_name[0].toUpperCase() }
         </Avatar>
         ) );
   }
 
   renderDivider() {
     const { sentOn, divider } = this.props;
-    let className = this.state.unread ? 'messageContainerBold' : '';
+
     if (divider) {
-      return <Divider className={ className } key={ sentOn } inset />;
+      return <Divider className={ this.state.boldStyle } key={ sentOn } inset />;
     }
   }
 
@@ -87,11 +91,11 @@ class Message extends Component {
 
   renderSubject() {
     const { subject, sentOn, sender_first_name } = this.props;
-    let className = this.state.unread ? 'messageContainerBold' : '';
+    const boldStyle = this.setStyle();
 
     if (subject) {
       return (
-        <p className={ className }>
+        <p className={ boldStyle }>
           <span>
             { sentOn }
           </span>
@@ -100,7 +104,7 @@ class Message extends Component {
             id='Message.sentby'
             defaultMessage='Sent by: '
           />
-          <span>
+          <span className={ boldStyle }>
             { sender_first_name }
           </span>
           <br />
@@ -124,15 +128,17 @@ class Message extends Component {
   }
 
   handleMarkAsRead() {
-    const id = this.props.conversation.id;
+    const id = this.props.id;
+
     const attributes = FormData.from({ id });
 
     const requestParams = {
-      url: '/conversation',
+      url: '/message',
       method: METHODS.PUT,
       attributes,
 
-      successCallBack: ({ unread }) => {
+      successCallBack: ({ message: { unread } }) => {
+
         this.setState({
           unread
         });
@@ -149,13 +155,13 @@ class Message extends Component {
 }
 
 Message.propTypes = {
-  sender_first_name: PropTypes.array,
+  sender_first_name: PropTypes.string,
   sentOn: PropTypes.string,
   avatar: PropTypes.string,
   body: PropTypes.string,
   subject: PropTypes.string,
   unread: PropTypes.bool,
-  divider: PropTypes.bool
+  divider: PropTypes.bool,
 };
 
 Message.defaultProps = {
