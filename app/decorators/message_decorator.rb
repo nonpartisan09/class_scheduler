@@ -9,6 +9,7 @@ class MessageDecorator
 
   def decorate
     {
+        :id => id,
         :subject => subject,
         :body => body,
         :sent_on => sent_on,

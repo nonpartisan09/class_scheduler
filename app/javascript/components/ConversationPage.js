@@ -2,11 +2,7 @@ import React, { Component } from 'react';
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import Paper from 'material-ui/Paper';
-
 import Message from './Message';
-import { postData } from './utils/sendData';
-import FormData from './utils/FormData';
-import METHODS from './utils/RestConstants';
 import MessageButtons, { MessageTypes } from './reusable/MessageButtons';
 
 class ConversationPage extends Component {
@@ -14,20 +10,14 @@ class ConversationPage extends Component {
     super(props, context);
 
     this.state = {
-      message: '',
       conversation: props.conversation
     };
   }
 
-  componentWillMount() {
-    setTimeout(() => {
-      this.handleMarkAsRead();
-    }, 6000);
-  }
 
   render() {
     const { currentUser, conversation: { conversee, conversee_url_slug } }= this.props;
-
+   
     return (
       <div>
         <Paper zDepth={ 1 } className='paperOverride' rounded={ false }>
@@ -47,8 +37,8 @@ class ConversationPage extends Component {
   renderReceivedMessages() {
     const { conversation: { messages } } = this.state;
 
-    return _.map(messages, ({ body, subject, sent_on, sender_first_name, sender_avatar, unread }, index) => {
-
+    return _.map(messages, ({  id, body, subject, sent_on, sender_first_name, sender_avatar, unread }, index) => {
+    
       return (
         <Message
           key={ `${index} + ${sent_on}` }
@@ -58,33 +48,10 @@ class ConversationPage extends Component {
           sentOn={ sent_on }
           avatar={ sender_avatar }
           unread={ unread }
+          id={ id }
         />
       );
     });
-  }
-
-  handleMarkAsRead() {
-    const { conversation: { id } } = this.state;
-    const attributes = FormData.from({ id });
-    const requestParams = {
-      url: '/conversation',
-      method: METHODS.PUT,
-      attributes,
-
-      successCallBack: ({ conversation }) => {
-        this.setState({
-          conversation
-        });
-      },
-
-      errorCallBack: (message) => {
-        this.setState({
-          message: message
-        });
-      }
-    };
-
-    return postData(requestParams);
   }
 }
 
