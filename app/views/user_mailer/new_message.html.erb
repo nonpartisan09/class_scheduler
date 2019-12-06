@@ -1,28 +1,33 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
-</head>
-<body>
-<%= image_tag attachments['logo.png'].url %>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  
+  <body>
+    <%= image_tag attachments['logo.png'].url %>
 
-<h1><%= @user.first_name %>, <%= I18n.translate 'application_mailer.new_message.body.first_line' %>! </h1>
-<p>
- <%= @sender.first_name %> <%= I18n.translate 'application_mailer.new_message.body.second_line' %>:<br>
-</p>
+    <h1><%= @user.first_name %>, <%= I18n.translate 'application_mailer.new_message.body.first_line' %>! </h1>
+    <p>
+      <%= @sender.first_name %> <%= I18n.translate 'application_mailer.new_message.body.second_line' %>:<br>
+    </p>
 
-<p><%= @message.subject %></p>
-<p>
-  <%= @message.body %>
-</p>
-<p>
-  <%= I18n.translate 'application_mailer.new_message.body.third_line' %>: <%= @url %>.
-</p>
-<p>
-  <%= I18n.translate 'application_mailer.new_message.body.fourth_line' %>: <%= @sender.first_name %>? <%= I18n.translate 'application_mailer.new_message.body.fifth_line' %>.
-</p>
-<p>
-  <%= I18n.translate 'application_mailer.new_message.body.sixth_line'%>!
-</p>
-</body>
+    <p><%= @message.subject %></p>
+    <p>
+      <%= @message.body %>
+    </p>
+    <p>
+      <%= I18n.translate 'application_mailer.new_message.body.third_line' %> 
+      <%= @sender.first_name %>,
+      <%= I18n.translate 'application_mailer.new_message.body.seventh_line' %>:
+      <%= @url %>.
+      <%= I18n.translate 'application_mailer.new_message.body.eighth_line' %> 
+    </p>
+    <p>
+      <%= I18n.translate 'application_mailer.new_message.body.fourth_line' %>: <%= @sender.first_name %>? <%= I18n.translate 'application_mailer.new_message.body.fifth_line' %>.
+    </p>
+    <p>
+      <%= I18n.translate 'application_mailer.new_message.body.sixth_line'%>!
+    </p>
+  </body>
 </html>

@@ -68,10 +68,12 @@ es:
       body:
         first_line: 'usted tiene un correo electrónico'
         second_line: 'le han mandando un mensaje'
-        third_line: 'Para mirar el mensaje completo, por favor ingrese a la siguiente página web'
+        third_line: 'Para ver el mensaje completo y responder a '
         fourth_line: '¿Le gustaría evaluar la persona con la que se ha contactado'
         fifth_line: 'Déjele un comentario en su perfil'
         sixth_line: 'Gracias y Buen día'
+        seventh_line: ' por favor ingrese a la siguiente página electrónica '
+        eighth_line: ' No responda este correo electrónico.'
     welcome_message:
       title: 'Bienvenido a Tutoría'
       body:
