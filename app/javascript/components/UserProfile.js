@@ -99,7 +99,7 @@ class UserProfile extends Component {
         review
       } = this.props;
       const { comments } = this.state;
-
+    
       return (
         <div>
           { this.renderBackButton() }
@@ -184,10 +184,7 @@ class UserProfile extends Component {
   }
 
   renderBackButton() {
-    const { location: { state } } = this.props;
-
-    if (state && state.search) {
-      return (
+    return (
         <div className='userProfileBackButton'>
           <FlatButton
             primary
@@ -201,20 +198,11 @@ class UserProfile extends Component {
           />
         </div>
       );
-    }
   }
 
   handleViewProfileClick() {
     const { history } = this.props;
-
-    const { location: { state } } = this.props;
-
-    if (state && state.search) {
-      const { search, volunteers } = state;
-      const { currentUser: { locale } } = this.props;
-
-      history.push(formatLink('/volunteers', locale), { ...{ search }, volunteers });
-    }
+    history.goBack();
   }
 
   renderLocation() {
@@ -273,8 +261,6 @@ class UserProfile extends Component {
       );
     }
   }
-
-
 
   renderSnackBar() {
     if (this.state.showSnackBar) {
@@ -403,3 +389,4 @@ UserProfile.defaultProps = {
 };
 
 export default UserProfile;
+
