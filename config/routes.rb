@@ -27,6 +27,7 @@ Rails.application.routes.draw do
     get 'reviews', to: 'reviews#index'
 
     put 'conversation', to: 'conversations#update'
+    put 'message', to: 'messages#update'
     get 'reviews/author/:url_slug', to: 'reviews#author_index'
     get 'inbox', to: 'conversations#index'
     get 'inbox/:id', to: 'conversations#show'
