@@ -53,12 +53,14 @@ class SearchResultItem extends Component {
           newMessageRecipient={ urlSlug }
           locale={ locale }
           messageType={ MessageTypes.SEND }
+          handleViewProfileClick={ this.handleViewProfileClick }
         />
       </Card>
     );
   }
 
   handleViewProfileClick() {
+ 
     const { urlSlug: url_slug, search, history, volunteers, locale } = this.props;
 
     history.push(formatLink(`/profiles/${url_slug}`, locale), { ...{ search }, volunteers });

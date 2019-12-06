@@ -24,7 +24,7 @@ export const MessageTypes = {
 class MessageButtons extends Component {
 
   render() {
-      const { locale, newMessageRecipient, newMessageFirstName, messageType } = this.props;
+      const { locale, newMessageRecipient, newMessageFirstName, messageType, handleViewProfileClick } = this.props;
     return (
       <CardActions>
         <Link to={ { pathname: formatLink('/messages/new', locale), query: { recipient: newMessageRecipient, userName: newMessageFirstName } } }>
@@ -54,7 +54,7 @@ class MessageButtons extends Component {
                 />
                 ) }
             primary
-            onClick={ this.handleViewProfileClick }
+            onClick={ handleViewProfileClick }
             />
         </a>
       </CardActions>

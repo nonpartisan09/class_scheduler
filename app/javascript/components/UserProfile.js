@@ -185,24 +185,32 @@ class UserProfile extends Component {
 
   renderBackButton() {
     return (
-        <div className='userProfileBackButton'>
-          <FlatButton
-            primary
-            label={
-              <FormattedMessage
-                id='UserProfile.Back'
-                defaultMessage='Back to search results'
-              />
-            }
-            onClick={ this.handleViewProfileClick }
-          />
-        </div>
+      <div className='userProfileBackButton'>
+        <FlatButton
+          primary
+          label={
+            <FormattedMessage
+              id='UserProfile.Back'
+              defaultMessage='Back to search results'
+            />
+          }
+          onClick={ this.handleViewProfileClick }
+        />
+      </div>
       );
   }
 
   handleViewProfileClick() {
     const { history } = this.props;
-    history.goBack();
+
+    const { location: { state } } = this.props;
+
+    if (state && state.search) {
+      const { search, volunteers } = state;
+      const { currentUser: { locale } } = this.props;
+
+      history.push(formatLink('/volunteers', locale), { ...{ search }, volunteers });
+    }
   }
 
   renderLocation() {
