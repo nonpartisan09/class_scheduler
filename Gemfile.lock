@@ -1116,8 +1116,13 @@ GEM
     pry (0.12.2)
       coderay (~> 1.1.0)
       method_source (~> 0.9.0)
+<<<<<<< HEAD
     public_suffix (4.0.1)
     puma (3.11.4)
+=======
+    public_suffix (3.1.1)
+    puma (3.12.2)
+>>>>>>> b02a80a9c2b434cdaee6d255a5cd57bf5e098cd5
     rack (2.0.7)
     rack-proxy (0.6.5)
       rack
@@ -1273,7 +1278,7 @@ DEPENDENCIES
   newrelic_rpm (~> 6.5)
   paperclip (~> 6.1)
   pg (~> 1.1)
-  puma (~> 3.11.2)
+  puma (~> 3.12.2)
   rails (~> 5.2.2.1)
   roadie-rails (~> 2.1)
   rspec-rails (~> 3.8)
