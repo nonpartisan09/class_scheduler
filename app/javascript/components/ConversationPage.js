@@ -14,7 +14,6 @@ class ConversationPage extends Component {
     };
   }
 
-
   render() {
     const { currentUser, conversation: { conversee, conversee_url_slug } }= this.props;
    

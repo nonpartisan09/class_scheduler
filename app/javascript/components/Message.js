@@ -22,7 +22,7 @@ class Message extends Component {
     this.state = {
       expanded: false,
       unread: this.props.unread,
-      message: '',
+      message: ''
     };
 
     this.setStyle = this.setStyle.bind(this);
@@ -75,7 +75,7 @@ class Message extends Component {
     const { sentOn, divider } = this.props;
    
     if (divider) {
-      return <Divider className={ this.state.boldStyle } key={ sentOn } inset />;
+      return <Divider className={ this.setStyle() } key={ sentOn } inset />;
     }
   }
 
