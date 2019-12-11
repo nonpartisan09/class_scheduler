@@ -172,7 +172,6 @@ class Homepage extends Component {
     this.state = {
       languageChecked: ENGLISH,
       signUpType: 'client',
-      locale: localStorage.getItem('locale'),
       mapView: 'row',
       clientsSelected: true,
       volunteersSelected: true,
@@ -349,10 +348,10 @@ class Homepage extends Component {
             />
             <CardContent>
               <h2 className='programCardsHeader'>
-                { this.state.locale === 'es' ? element.spanish_name : element.name }
+                { this.props.locale === 'es' ? element.spanish_name : element.name }
               </h2>
               <p className='programCardsText'>
-                { this.state.locale === 'es' ? element.spanish_description : element.description }
+                { this.props.locale === 'es' ? element.spanish_description : element.description }
               </p>
             </CardContent>
           </Card>
