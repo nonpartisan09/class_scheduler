@@ -8,12 +8,11 @@ import ChooseLanguage from './utils/ChooseLanguage';
 
 class CustomPage extends Component {
   render() {
-    const { page_content, currentUser } = this.props;
+    const { page_content, currentUser, locale } = this.props;
     const content = function(){
-      if (ChooseLanguage() === 'es' && page_content['es']) {
-        return Parser(page_content['es']);
-      } else if (page_content['en']) {
-        return Parser(page_content['en']);
+    
+      if (locale && page_content) {
+        return Parser(page_content[locale]);
       } else {
         return null;
       }
