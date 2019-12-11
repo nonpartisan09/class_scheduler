@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Paper from 'material-ui/Paper';
 import Parser from 'html-react-parser';
 
-const TermsAndConditions = ({ currentUser, terms_and_conditions })=> {
+const TermsAndConditions = ({ currentUser, terms_and_conditions, locale })=> {
   const content = function(){
     if (terms_and_conditions) {
       return Parser(terms_and_conditions);
