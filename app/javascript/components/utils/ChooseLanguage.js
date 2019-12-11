@@ -1,17 +1,19 @@
-import _ from 'lodash';
 import { ENGLISH, SPANISH } from './availableLocales';
 
-function ChooseLanguage() {
-  const currentUrl = _.split(window.location.pathname, '/');
+function ChooseLanguage(setLang, languageInferredFromServer) {
+  
+  
+  const re = /(\/[a-z]{2})?(\/.*)?$/
+  let path =  window.location.pathname.match(re);
+
+  if (path[0].includes(`/${ENGLISH}`)) return setLang(ENGLISH)
+  if (path[0].includes(`/${SPANISH}`)) return setLang(SPANISH)
+
   const guestLocale = localStorage.getItem('locale');
+  let defineLocale = guestLocale || languageInferredFromServer;
 
-  if (currentUrl[1] === ENGLISH || currentUrl[1] === SPANISH) {
-    return currentUrl[1];
-  } else if (guestLocale && (guestLocale === ENGLISH|| guestLocale === SPANISH)) {
-    return guestLocale;
-  } else{
-    return ENGLISH;
-  }
+  return window.location.replace(`${window.location.origin}/${defineLocale}${path[2]}`)
+  
 }
-
+  
 export default ChooseLanguage;
