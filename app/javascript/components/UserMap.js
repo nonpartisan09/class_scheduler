@@ -11,9 +11,10 @@ export default class UserMap extends Component{
       zoom: 1,
       mapCenter: [0,0],
       cities: [],
+      newyork: [],
       feature: null,
-      hostUrl: window.location.href
-    }
+      hostUrl: window.location.href,
+    };
   }
 
   onClick(e){
@@ -26,6 +27,11 @@ export default class UserMap extends Component{
         .then(data => {
           this.setState({cities: data.features});
         });
+    fetch(this.state.hostUrl + '/api/v1/empty')
+          .then(res => res.json())
+          .then(data => {
+              this.setState({newyork: data.features});
+          });
   };
   render() {
               return (
@@ -48,7 +54,7 @@ export default class UserMap extends Component{
         let volunteerCount = cities.properties['volunteerCount'];
         let totalClientCount = cities.properties['totalClientCount'];
         let totalVolunteerCount = cities.properties['totalVolunteerCount'];
-        let origin = [cities.geometry.coordinates[0], cities.geometry.coordinates[1]];
+        let origin = [cities.geometry.coordinates[0]['latitude'], cities.geometry.coordinates[0]['longitude']];
 
         if(this.props.viewClients && !this.props.viewVolunteers)
         return (
@@ -59,7 +65,7 @@ export default class UserMap extends Component{
                   color='#F1592A'
                   fillColor='#F1592A'
                   fillOpacity={ 0.5 }
-                  radius={totalClientCount/clientCount}
+                  radius={(clientCount/totalClientCount) * 100 *.40  }
               >
                 <Popup>
                   <h4>{ city }</h4>
@@ -84,7 +90,7 @@ export default class UserMap extends Component{
                   color='#29AAE2'
                   fillColor='#29AAE2'
                   fillOpacity={ 0.5 }
-                  radius={totalVolunteerCount/volunteerCount}
+                  radius={(volunteerCount/totalVolunteerCount) * 100 *.40 }
               >
                 <Popup>
                   <h4>{ city }</h4>
@@ -135,8 +141,102 @@ export default class UserMap extends Component{
               </CircleMarker>
           );
       })}
-    </Map>
-    </div>
+                    {this.state.newyork.map(newyork => {
+                          let city = newyork.properties['userCity'];
+                          let userCityCount = newyork.properties['userCityCount'];
+                          let clientCount = newyork.properties['clientCount'];
+                          let volunteerCount = newyork.properties['volunteerCount'];
+                          let totalClientCount = newyork.properties['totalClientCount'];
+                          let totalVolunteerCount = newyork.properties['totalVolunteerCount'];
+                          let origin = [newyork.geometry.coordinates[0], newyork.geometry.coordinates[1]];
+
+                          if(this.props.viewClients && !this.props.viewVolunteers)
+                              return (
+                                <CircleMarker
+                                  key={ city+'client' }
+                                  className={ 'circle'+city }
+                                  center={ origin }
+                                  color='#F1592A'
+                                  fillColor='#F1592A'
+                                  fillOpacity={ 0.5 }
+                                  radius={ (clientCount/totalClientCount) * 100 *.40 }
+                                  >
+                                  <Popup>
+                                    <h4>{ city }</h4>
+                                    <p>
+                                      <FormattedMessage
+                                        id='HomePage.UserSelectClients'
+                                        default='Clients'
+                                              />
+                                      {
+                                                  ': '+clientCount
+                                              }
+                                    </p>
+                                  </Popup>
+                                </CircleMarker>
+                              );
+                          else if(this.props.viewVolunteers && !this.props.viewClients)
+                              return(
+                                <CircleMarker
+                                  key={ city+'volunteer' }
+                                  className={ 'circle'+city }
+                                  center={ origin }
+                                  color='#29AAE2'
+                                  fillColor='#29AAE2'
+                                  fillOpacity={ 0.5 }
+                                  radius={ (volunteerCount/totalVolunteerCount) * 100 *.40 }
+                                  >
+                                  <Popup>
+                                    <h4>{ city }</h4>
+                                    <p>
+                                      <FormattedMessage
+                                        id='HomePage.UserSelectVolunteers'
+                                        default='Volunteers'
+                                              />
+                                      {
+                                                  ': '+volunteerCount
+                                              }
+                                    </p>
+                                  </Popup>
+                                </CircleMarker>
+                              );
+                          else if(this.props.viewClients && this.props.viewVolunteers)
+                              return(
+                                <CircleMarker
+                                  key={ city+'both' }
+                                  className={ 'circle'+city }
+                                  center={ origin }
+                                  color='#17294d'
+                                  fillColor='#17294d'
+                                  fillOpacity={ 0.5 }
+                                  radius={ (volunteerCount+clientCount/userCityCount)*.40 }
+                                  >
+                                  <Popup>
+                                    <h4>{ city }</h4>
+                                    <p>
+                                      <FormattedMessage
+                                        id='HomePage.UserSelectClients'
+                                        default='Clients'
+                                              />
+                                      {
+                                                  ': '+clientCount
+                                              }
+                                    </p>
+                                    <p>
+                                      <FormattedMessage
+                                        id='HomePage.UserSelectVolunteers'
+                                        default='Volunteers'
+                                              />
+                                      {
+                                                  ': '+volunteerCount
+                                              }
+                                    </p>
+                                  </Popup>
+                                </CircleMarker>
+                              );
+                      })}
+                  </Map>
+                </div>
     );
   }
 }

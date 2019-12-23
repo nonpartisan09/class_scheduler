@@ -19,20 +19,21 @@ class CitySerializer < ActiveModel::Serializer
   def geometry
     return {
         type: "Point",
-        coordinates: [object["latitude"],object["longitude"]]
+        coordinates:[city_coordinates[0],city_coordinates[1]]
     }
   end
 
   def city_count
-    return User.select(:city).where(city: object.city).count
+    return User.where(:city => object.city).count
+
   end
 
   def client_count
-    return User.select('roles.name').joins(:roles).where("roles.name = 'Client'").where(city:object.city).count
+    return User.joins(:roles).where("roles.name = 'Client'").where(:city => object.city).count
   end
 
   def volunteer_count
-    return User.select('roles.name').joins(:roles).where("roles.name = 'Volunteer'").where(city:object.city).count
+    return User.joins(:roles).where("roles.name = 'Volunteer'").where(:city => object.city).count
   end
 
   def total_client_count
@@ -41,6 +42,14 @@ class CitySerializer < ActiveModel::Serializer
 
   def total_volunteer_count
     return User.select('roles.name').joins(:roles).where("roles.name = 'Volunteer'").count
+  end
+
+  def city_coordinates
+    return User.select('latitude','longitude')
+           .where(city: object.city)
+           .where.not(:latitude => nil)
+           .where.not(:longitude => nil)
+           .limit(1)
   end
 
 end
