@@ -1,25 +1,24 @@
 Welcome to <%= @domain %>, <%= @user.first_name %>
 ===============================================
 
-You have successfully signed up to <%= @domain %> as a <%= @role %>
-Your username is: <%= @user.email %>.
+You have successfully created a <%= @role %> account on <%= @domain %>. This is the first step in the registration process.
 
-To sign in to the site, just follow this link: <%= @url %>.
+Your username is: <%= @user.email %>. To sign in to the site, just follow this link: https://<%= @url %>. Only do this after your account is activated, per the steps below.
 
 Here are the last steps required to become active on our platform:
 
-1. Screening Interview: To ensure a safe and productive environment for our clients, we ask that our volunteers undergo a brief screening interview. This interview requires no preparation and can be done remotely. Feel free to call, text, or email our colleague Jon to schedule. His contact details are below:
+1. Screening Interview: To ensure a safe and productive environment for our clients and volunteers, we ask that our volunteers undergo a brief screening interview by video. This interview requires no preparation. Feel free to call, text, or email our Volunteer Support Team to schedule. Their contact details are below:
 
 <%= ENV['SCREENING_EMAIL_ADDRESS'] %>
 <%= ENV['SCREENING_PHONE_NUMBER_DISPLAY'] %>
 
-At the end of the screening interview, confirm with Jon that he will activate your profile on the site. Once done, you can proceed to Step 2 below.
+At the end of the screening interview, confirm with the team that they will activate your account. Once done, you can proceed to Step 2 below.
 
-2. Availabilities: Please enter your availabilities so you appear in clients' search results.  This can be done from the Availabilities menu option.
+2. Availabilities: Please enter your availabilities so you appear in clients' search results. Once logged in, this can be done from the Availabilities menu option.
 
 Once Step 2 is complete, clients will be able to reach out to you for help.
 
-If you have any questions, check out our FAQ page at https://<%= @domain %>/faq or contact us at admin@<%= @domain %>. Thanks for dedicating your time to clients in need!
+If you have any questions, check out our FAQ page at https://<%= @domain %>/faq or contact us at volunteer@<%= @domain %>. Thanks for dedicating your time to clients in need!
 
 Yours in service,
 
