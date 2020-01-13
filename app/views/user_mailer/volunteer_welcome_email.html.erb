@@ -7,12 +7,16 @@
 <%= image_tag attachments['logo.png'].url %>
 <h1>Welcome to <%= @domain %>, <%= @user.first_name %></h1>
 <p>
-  You have successfully signed up to <%= @domain %> as a <%= @role %>.
-  Your username is: <%= @user.email %>.<br>
+  You have successfully created a <%= @role %> account on <%= @domain %>.  This is the first step in the registration process.
+</p>
+<p>
+  Your username is: <%= @user.email %>.
+  To sign in to the site, just follow this link: <a href="https://<%= @url %>"><%= @url %></a>.
+  Only do this after your account is activated, per the steps below.
 </p>
 <%- if @password.present? %>
 <p>
-  Your password has been auto-generated: <%=@password%>.
+  Your password has been auto-generated: <%= @password %>.
 </p>
 <p>
   You can change it by signing in and going to 'My profile'.
@@ -20,36 +24,32 @@
 <%- end %>
 
 <p>
-  To sign in to the site, just follow this link: <a href="https://<%= @url %>"><%= @url %></a>.
-</p>
-
-<p>
   Here are the last steps required to become active on our platform:
 </p>
 <ol>
   <li>
     <p>
-      <b>Screening Interview:</b> To ensure a safe and productive environment for our clients, we ask that our
-      volunteers undergo a brief screening interview. This interview requires no preparation and can be done
-      remotely. Feel free to call, text, or email our colleague Jon to schedule. His contact details are below:
+      <b>Screening Interview:</b> To ensure a safe and productive environment for our clients and volunteers,
+      we ask that our volunteers undergo a brief screening interview by video. This interview requires no preparation.
+      Feel free to call, text, or email our Volunteer Support Team to schedule. Their contact details are below:
     </p>
     <a href="mailto:<%= ENV['SCREENING_EMAIL_ADDRESS'] %>"><%= ENV['SCREENING_EMAIL_ADDRESS'] %></a><br>
     <a href="tel:<%= ENV['SCREENING_PHONE_NUMBER_ATTRIBUTE'] %>"><%= ENV['SCREENING_PHONE_NUMBER_DISPLAY'] %></a>
     <p>
-      At the end of the screening interview, confirm with Jon that he will activate your profile on the site.
+      At the end of the screening interview, confirm with the team that they will activate your account.
       Once done, you can proceed to Step 2 below.
     </p>
   </li>
   <li>
     <b>Availabilities:</b> Please enter your availabilities so you appear in clients' search results.
-    This can be done from the Availabilities menu option.
+    Once logged in, this can be done from the Availabilities menu option.
   </li>
 </ol>
 <p>
   Once Step 2 is complete, clients will be able to reach out to you for help.
 </p>
 <p>
-  If you have any questions, check out our <a href="https://<%= @domain %>/faq">FAQ page</a> or contact us at <a href="mailto:admin@<%= @domain %>">admin@<%= @domain %></a>. Thanks for dedicating your time to clients in need!
+  If you have any questions, check out our <a href="https://<%= @domain %>/faq">FAQ page</a> or contact us at <a href="mailto:volunteer@<%= @domain %>">volunteer@<%= @domain %></a>. Thanks for dedicating your time to clients in need!
 </p>
 
 <p>Yours in service,</p>
