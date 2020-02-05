@@ -14,7 +14,7 @@ class SnackBarComponent extends Component {
     return (
       <Snackbar
         classes={ { root: 'snackBar' } }
-        open={ this.props.isOpen }
+        open={ this.props.open }
       >
         <SnackbarContent
           classes={ { root: 'snackBarContent' } }
@@ -43,7 +43,7 @@ class SnackBarComponent extends Component {
 SnackBarComponent.propTypes = {
   message: PropTypes.oneOfType([ PropTypes.string, PropTypes.object ]),
   handleClose: PropTypes.func.isRequired,
-  isOpen: PropTypes.bool.isRequired,
+  open: PropTypes.bool.isRequired,
 };
 
 SnackBarComponent.defaultProps = {
