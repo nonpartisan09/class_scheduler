@@ -149,7 +149,7 @@ class Header extends Component {
             </ExpansionPanelDetails>
           </ExpansionPanel>
           <SnackBarComponent
-            isOpen={ this.state.showSnackBar }
+            open={ this.state.showSnackBar }
             message={ this.state.message }
             handleClose={ this.handleHideSnackBar }
           />
@@ -186,7 +186,7 @@ class Header extends Component {
             </Toolbar>
           </AppBar>
           <SnackBarComponent
-            isOpen={ this.state.showSnackBar }
+            open={ this.state.showSnackBar }
             message={ this.state.message }
             handleClose={ this.handleHideSnackBar }
           />

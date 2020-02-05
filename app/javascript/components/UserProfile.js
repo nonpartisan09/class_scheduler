@@ -99,7 +99,6 @@ class UserProfile extends Component {
         review
       } = this.props;
       const { comments } = this.state;
-
       return (
         <div>
           { this.renderBackButton() }
@@ -184,24 +183,20 @@ class UserProfile extends Component {
   }
 
   renderBackButton() {
-    const { location: { state } } = this.props;
-
-    if (state && state.search) {
-      return (
-        <div className='userProfileBackButton'>
-          <FlatButton
-            primary
-            label={
-              <FormattedMessage
-                id='UserProfile.Back'
-                defaultMessage='Back to search results'
-              />
-            }
-            onClick={ this.handleViewProfileClick }
-          />
-        </div>
-      );
-    }
+    return (
+      <div className='userProfileBackButton'>
+        <FlatButton
+          primary
+          label={
+            <FormattedMessage
+              id='UserProfile.Back'
+              defaultMessage='Back to search results'
+            />
+          }
+          onClick={ this.handleViewProfileClick }
+        />
+      </div>
+    );
   }
 
   handleViewProfileClick() {
@@ -273,8 +268,6 @@ class UserProfile extends Component {
       );
     }
   }
-
-
 
   renderSnackBar() {
     if (this.state.showSnackBar) {

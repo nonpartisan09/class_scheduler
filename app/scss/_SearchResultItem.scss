@@ -1,4 +1,4 @@
-.searchResultItemRequest, .searchResultItemVisitProfile {
+.searchResultItemRequest {
     width: 45%;
 }
 
@@ -45,6 +45,11 @@
 
 .searchResultItemDetails {
     white-space: unset;
+}
+
+.message-buttons {
+  display: flex;
+  justify-content: space-evenly;
 }
 
 @media (min-width: 750px) {

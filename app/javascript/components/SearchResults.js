@@ -43,7 +43,6 @@ class SearchResults extends Component {
 
   render() {
     const { currentUser } = this.props;
-
     return (
       <div>
         <div className='searchResultsContainer'>
