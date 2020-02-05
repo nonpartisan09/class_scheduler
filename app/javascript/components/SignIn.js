@@ -87,6 +87,7 @@ class SignIn extends Component {
             onChange={ changeHandler('password') }
             onBlur={ validateHandler('password') }
             fullWidth
+            className='signUpEmailInputField'
           />
 
           <Checkbox
