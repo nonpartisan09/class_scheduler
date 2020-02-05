@@ -21,7 +21,6 @@ class SearchResultItem extends Component {
     return (
       <Card className='searchResultItemCard'>
         <CardHeader
-          style={ { height: '245px' } }
           title={ firstName }
           subtitle={ (
             <div className='searchResultItemDetails'>
@@ -45,7 +44,7 @@ class SearchResultItem extends Component {
                 averageRating={ averageRating }
               />
             </div>
-) }
+          ) }
           avatar={ this.renderAvatar() }
         />
         <MessageButtons
@@ -53,12 +52,14 @@ class SearchResultItem extends Component {
           newMessageRecipient={ urlSlug }
           locale={ locale }
           messageType={ MessageTypes.SEND }
+          handleViewProfileClick={ this.handleViewProfileClick }
         />
       </Card>
     );
   }
 
   handleViewProfileClick() {
+ 
     const { urlSlug: url_slug, search, history, volunteers, locale } = this.props;
 
     history.push(formatLink(`/profiles/${url_slug}`, locale), { ...{ search }, volunteers });
