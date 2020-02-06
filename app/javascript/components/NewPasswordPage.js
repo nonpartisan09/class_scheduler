@@ -58,7 +58,7 @@ class NewPasswordPage extends Component {
           <TextField
             name='email'
             value={ email }
-            className='signUpEmailInputField'
+            className='signInEmailInputField'
             hintText=''
             floatingLabelText={ <FormattedMessage id='NewPasswordPage.enterEmail' defaultMessage='Please enter your email to recover your password' /> }
             floatingLabelFixed
