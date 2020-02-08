@@ -165,7 +165,7 @@ class NewMessagePage extends Component {
   }
 
   handleRedirect() {
-    location.assign('/inbox');
+    location.assign(`/${this.props.locale}/inbox`);
   }
 
   handleHideSnackBar() {
