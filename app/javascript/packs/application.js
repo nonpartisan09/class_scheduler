@@ -105,7 +105,7 @@ const App = ({pathname, data}) => {
                 <Route exact path={ `/${locale}` } render={ (props) => <Homepage { ...data } { ...props } locale={language} /> } />
                 <Route exact path={ `/${locale}/inbox` } render={ (props) => <ConversationIndexPage { ...data } { ...props } /> } />
                 <Route exact path={ `/${locale}/inbox/:id` } render={ (props) => <ConversationPage { ...data } { ...props } /> } />
-                <Route exact path={ `/${locale}/messages/new` } render={ (props) => <NewMessagePage { ...data } { ...props } /> } />
+                <Route exact path={ `/${locale}/messages/new` } render={ (props) => <NewMessagePage { ...data } { ...props } locale={language}/> } />
                 <Route exact path={ `/${locale}/search` } render={ (props) => <SearchBar { ...data } { ...props } /> } />
                 <Route exact path={ `/${locale}/volunteers` } render={ (props) => <SearchResults { ...data } { ...props } /> } />
                 <Route exact path={ `/${locale}/my_profile` } render={ (props) => <MyProfile { ...data } { ...props } /> } />
@@ -125,7 +125,7 @@ const App = ({pathname, data}) => {
                 <Route exact path='/' render={ () => <Homepage { ...data } locale={language}/> } />
                 <Route exact path='/inbox' render={ (props) => <ConversationIndexPage { ...data } { ...props } /> } />
                 <Route exact path='/inbox/:id' render={ (props) => <ConversationPage { ...data } { ...props } /> } />
-                <Route exact path='/messages/new' render={ (props) => <NewMessagePage { ...data } { ...props } /> } />
+                <Route exact path='/messages/new' render={ (props) => <NewMessagePage { ...data } { ...props } locale={language}/> } />
                 <Route exact path='/search' render={ (props) => <SearchBar { ...data } { ...props } /> } />
                 <Route exact path='/volunteers' render={ (props) => <SearchResults { ...data } { ...props } /> } />
                 <Route exact path='/my_profile' render={ (props) => <MyProfile { ...data } { ...props } /> } />
