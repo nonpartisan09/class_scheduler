@@ -66,7 +66,7 @@ class SignIn extends Component {
           <TextField
             name='email'
             value={ email }
-            className='signUpEmailInputField'
+            className='signInEmailInputField'
             hintText=''
             floatingLabelText='Email'
             floatingLabelFixed
@@ -87,6 +87,7 @@ class SignIn extends Component {
             onChange={ changeHandler('password') }
             onBlur={ validateHandler('password') }
             fullWidth
+            className='signInEmailInputField'
           />
 
           <Checkbox

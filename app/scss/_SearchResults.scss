@@ -55,6 +55,12 @@
     text-decoration: none;
 }
 
+@media (max-width: 480px) {
+  .searchResultItemDetails > p {
+    text-align: left;
+  }
+}
+
 @media (min-width: 501px) {
     .pagination.hideOnMobile {
         display: block;
@@ -65,9 +71,7 @@
     }
 
     .searchResultsContainer {
-        max-width: 90%;
         text-align: center;
-        margin: -24px 0 0 36px;
     }
 
     .searchResultDropdown, .searchResultsHeader {
