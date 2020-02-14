@@ -174,7 +174,7 @@ class Homepage extends Component {
       signUpType: 'client',
       locale: localStorage.getItem('locale'),
       mapView: 'row',
-      clientsSelected: true,
+      clientsSelected: false,
       volunteersSelected: true,
     };
   }
@@ -658,13 +658,14 @@ class Homepage extends Component {
             id='Homepage.askForHelp'
           />
           { ' ' }
-          { <a href={ formatLink('/faq', this.state.languageChecked) }>
+          { 
+            <a href={ formatLink('/faq', this.state.languageChecked) }>
               <FormattedMessage
                 id='FAQPage'
                 defaultMessage='FAQ'
               />
             </a>
-          }.
+          }
         </p>
         <span className='needHelpLinks'>
           { this.renderContactButtons(70) }

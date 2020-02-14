@@ -7,6 +7,9 @@ class CitiesSerializer < ActiveModel::Serializer
 
   def features
     object.map do |city|
+      print '****'
+      print "this is object, #{object}"
+      print'***'
       CitySerializer.new(city)
     end
   end
