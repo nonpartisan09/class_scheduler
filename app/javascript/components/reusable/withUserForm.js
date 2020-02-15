@@ -170,7 +170,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
 
               <br />
 
-              <div className='userFormImage' >
+              <div className='userFormImage'>
                 <ImageInput
                   icon={ <PhotoIcon /> }
                   value={ thumbnail_image }
@@ -182,7 +182,13 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
               { this.renderMeetUpToggle() }
 
               <Badge
-                badgeContent={ <span onClick={ this.handleShowDialog } onKeyPress={ this.handleShowDialog }> <InfoIcon /> </span> }
+                badgeContent={ 
+                  (
+                    <span onClick={ this.handleShowDialog } onKeyPress={ this.handleShowDialog }> 
+                      <InfoIcon /> 
+                    </span> 
+                  )
+                }
                 badgeStyle={ { transform: 'translateY(18px)' } }
                 style={ { padding: '0' } }
               >
@@ -192,10 +198,12 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                   hintText=''
                   className='userFormInputField address'
                   floatingLabelText={
-                    <FormattedMessage
-                      id='UserForm.address'
-                      defaultMessage='Street Address'
-                    />
+                    (
+                      <FormattedMessage
+                        id='UserForm.address'
+                        defaultMessage='Street Address'
+                      />
+                    )
                   }
                   floatingLabelFixed
                   multiLine
@@ -212,10 +220,12 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                   hintText=''
                   className='userFormInputField city'
                   floatingLabelText={
-                    <FormattedMessage
-                      id='UserForm.city'
-                      defaultMessage='City/Town'
-                    />
+                    (
+                      <FormattedMessage
+                        id='UserForm.city'
+                        defaultMessage='City/Town'
+                      />
+                    )
                   }
                   floatingLabelFixed
                   errorText={ errors.city }
@@ -229,10 +239,12 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                   hintText=''
                   className='userFormInputField state'
                   floatingLabelText={
-                    <FormattedMessage
-                      id='UserForm.state'
-                      defaultMessage='State'
-                    />
+                    (
+                      <FormattedMessage
+                        id='UserForm.state'
+                        defaultMessage='State'
+                      />
+                    )
                   }
                   floatingLabelFixed
                   errorText={ errors.state }
@@ -246,10 +258,12 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                   hintText=''
                   className='userFormInputField country'
                   floatingLabelText={
-                    <FormattedMessage
-                      id='UserForm.country'
-                      defaultMessage='Country'
-                    />
+                    (
+                      <FormattedMessage
+                        id='UserForm.country'
+                        defaultMessage='Country'
+                      />
+                    )
                   }
                   floatingLabelFixed
                   errorText={ errors.country }
@@ -263,10 +277,12 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
               <SelectField
                 floatingLabelFixed
                 floatingLabelText={
-                  <FormattedMessage
-                    id='UserForm.timezone'
-                    defaultMessage='Select Timezone'
-                  />
+                  (
+                    <FormattedMessage
+                      id='UserForm.timezone'
+                      defaultMessage='Select Timezone'
+                    />
+                  )
                 }
                 value={ timezone }
                 className='userFormInputField timezones'
@@ -287,10 +303,12 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                 hintText=''
                 className='userFormInputField description'
                 floatingLabelText={
-                  <FormattedMessage
-                    id='UserForm.aboutMe'
-                    defaultMessage='About me (in 280 characters or less)'
-                  />
+                  (
+                    <FormattedMessage
+                      id='UserForm.aboutMe'
+                      defaultMessage='About me (in 280 characters or less)'
+                    />
+                  )
                 }
                 floatingLabelFixed
                 multiLine
@@ -301,10 +319,12 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
 
               <Checkbox
                 label={
-                  <FormattedMessage
-                    id='UserForm.emailNotification'
-                    defaultMessage='I would like to receive an email when I get a new message'
-                  />
+                  (
+                    <FormattedMessage
+                      id='UserForm.emailNotification'
+                      defaultMessage='I would like to receive an email when I get a new message'
+                    />
+                  )
                 }
                 checked={ email_notification }
                 className='userFormInputField emailNotification'
@@ -334,16 +354,19 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
       if (city || address || state) {
         return (
           <div className='userFormToggle'>
-           <FormattedMessage
-             id='UserForm.meetToggle'
-             defaultMessage='Willing to meet'
-           />:
+            <FormattedMessage
+              id='UserForm.meetToggle'
+              defaultMessage='Willing to meet'
+            />
+            :
             <Toggle
               label={
-                <FormattedMessage
-                  id='UserForm.meetingModeOne'
-                  defaultMessage='Face to face & Online'
-                />
+                (
+                  <FormattedMessage
+                    id='UserForm.meetingModeOne'
+                    defaultMessage='Face to face & Online'
+                  />
+                )
               }
               disabled
               style={ { color: 'green' } }
@@ -358,10 +381,12 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
             />
             <Toggle
               label={
-              <FormattedMessage
-                id='UserForm.meetingModeTwo'
-                defaultMessage='Exclusively Online'
-              />
+              (
+                <FormattedMessage
+                  id='UserForm.meetingModeTwo'
+                  defaultMessage='Exclusively Online'
+                />
+              )
             }
               disabled
             />
@@ -397,7 +422,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
               label={ wrappedProps.primaryButtonLabel }
               primary
               disabled
-              disabledBackgroundColor={ "#D3D4D7" }
+              disabledBackgroundColor="#D3D4D7"
             />
           </div>
         );
@@ -465,10 +490,12 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                 className='userFormProgramButton'
                 primary
                 label={
-                  <FormattedMessage
-                    id='UserForm.updatePrograms'
-                    defaultMessage='Update my programs'
-                  />
+                  (
+                    <FormattedMessage
+                      id='UserForm.updatePrograms'
+                      defaultMessage='Update my programs'
+                    />
+                  )
                 }
                 onClick={ this.handleShowPrograms }
               />
@@ -493,10 +520,12 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                 className='userFormLanguageButton'
                 primary
                 label={
-                  <FormattedMessage
-                    id='UserForm.myLanguages'
-                    defaultMessage='Update My Languages'
-                  />
+                  (
+                    <FormattedMessage
+                      id='UserForm.myLanguages'
+                      defaultMessage='Update My Languages'
+                    />
+                  )
                 }
                 onClick={ this.handleShowLanguages }
               />
@@ -517,10 +546,12 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
             <SelectField
               floatingLabelFixed
               floatingLabelText={
-                <FormattedMessage
-                  id='UserForm.languages'
-                  defaultMessage='Language(s) I can speak'
-                />
+                (
+                  <FormattedMessage
+                    id='UserForm.languages'
+                    defaultMessage='Language(s) I can speak'
+                  />
+                )
               }
               value={ userLanguages }
               className='userFormInputField languages'
@@ -565,10 +596,12 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                 className='userFormInputField current_password'
                 hintText=''
                 floatingLabelText={
-                  <FormattedMessage
-                    id='UserForm.currentPassword'
-                    defaultMessage='Current Password'
-                  />
+                  (
+                    <FormattedMessage
+                      id='UserForm.currentPassword'
+                      defaultMessage='Current Password'
+                    />
+                  )
                 }
                 floatingLabelFixed
                 errorText={ errors.password }
@@ -585,10 +618,12 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                 className='userFormInputField password'
                 hintText=''
                 floatingLabelText={
-                  <FormattedMessage
-                    id='UserForm.newPassword'
-                    defaultMessage='New Password'
-                  />
+                  (
+                    <FormattedMessage
+                      id='UserForm.newPassword'
+                      defaultMessage='New Password'
+                    />
+                  )
                 }
                 floatingLabelFixed
                 errorText={ errors.password }
@@ -605,10 +640,12 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                 className='userFormInputField passwordConfirmation'
                 hintText=''
                 floatingLabelText={
-                  <FormattedMessage
-                    id='UserForm.newPasswordConfirmation'
-                    defaultMessage='New Password Confirmation'
-                  />
+                  (
+                    <FormattedMessage
+                      id='UserForm.newPasswordConfirmation'
+                      defaultMessage='New Password Confirmation'
+                    />
+                  )
                 }
                 floatingLabelFixed
                 errorText={ errors.password_confirmation }
@@ -624,10 +661,12 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                 className='userFormPasswordButton'
                 primary
                 label={
-                  <FormattedMessage
-                    id='UserForm.updatePassword'
-                    defaultMessage='Update my password'
-                  />
+                  (
+                    <FormattedMessage
+                      id='UserForm.updatePassword'
+                      defaultMessage='Update my password'
+                    />
+                  )
                 }
                 onClick={ this.handleShowPassword }
               />
@@ -654,10 +693,12 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
               className='userFormInputField password'
               hintText=''
               floatingLabelText={
-                <FormattedMessage
-                  id='UserForm.password'
-                  defaultMessage='Password'
-                />
+                (
+                  <FormattedMessage
+                    id='UserForm.password'
+                    defaultMessage='Password'
+                  />
+                )
               }
               floatingLabelFixed
               errorText={ errors.password }
@@ -674,10 +715,12 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
               className='userFormInputField passwordConfirmation'
               hintText=''
               floatingLabelText={
-                <FormattedMessage
-                  id='UserForm.passwordConfirmation'
-                  defaultMessage='Password Confirmation'
-                />
+                (
+                  <FormattedMessage
+                    id='UserForm.passwordConfirmation'
+                    defaultMessage='Password Confirmation'
+                  />
+                )
               }
               floatingLabelFixed
               errorText={ errors.password_confirmation }
@@ -706,32 +749,37 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
 
       return (
         <div>
-        <SelectField
-          floatingLabelFixed
-          floatingLabelText={
-            <FormattedMessage
-              id='UserForm.howTheyFoundUs'
-              defaultMessage='How did you find out about us?'
-            />
-          }
-          value={ how_they_found_us }
-          className='userFormInputField howTheyFoundUs'
-          errorText={ errors.how_they_found_us }
-          onChange={ this.changeHowTheyFoundUsHandler }
-          onBlur={ validateHandler('how_they_found_us') }
-        >
-          {
-            _.map(how_they_found_us_options, ({ name, spanish_name, id }, index) =>
-            <MenuItem key={ name + id + index }
-              insetChildren
-              checked={ how_they_found_us === name }
-              value={ name }
-              primaryText={ <span> { this.props.match.params[0] === ENGLISH ? name : spanish_name } </span> }
-            />)
-          }
-        </SelectField>
+          <SelectField
+            floatingLabelFixed
+            floatingLabelText={
+              (
+                <FormattedMessage
+                  id='UserForm.howTheyFoundUs'
+                  defaultMessage='How did you find out about us?'
+                />
+              )
+            }
+            value={ how_they_found_us }
+            className='userFormInputField howTheyFoundUs'
+            errorText={ errors.how_they_found_us }
+            onChange={ this.changeHowTheyFoundUsHandler }
+            onBlur={ validateHandler('how_they_found_us') }
+          >
+            {
+              _.map(how_they_found_us_options, ({ name, spanish_name, id }, index) =>
+                (
+                  <MenuItem 
+                    key={ name + id + index }
+                    insetChildren
+                    checked={ how_they_found_us === name }
+                    value={ name }
+                    primaryText={ <span> { this.props.match.params[0] === ENGLISH ? name : spanish_name } </span> }
+                  />
+                ))
+            }
+          </SelectField>
 
-        <br />
+          <br />
         </div>
       );
     }
@@ -784,10 +832,12 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
               className='userFormInputField termsAndConditions'
               onCheck={ changeHandler('terms_and_conditions', { validate: true, strategy: useSecondArgument }) }
               label={
-                <FormattedMessage
-                  id='UserForm.termsAccept'
-                  defaultMessage='I accept tutoría’s terms of use'
-                />
+                (
+                  <FormattedMessage
+                    id='UserForm.termsAccept'
+                    defaultMessage='I accept tutoría’s terms of use'
+                  />
+                )
               }
             />
 
@@ -795,10 +845,12 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
 
             <Checkbox
               label={
-                <FormattedMessage
-                  id='UserForm.newsletterOptin'
-                  defaultMessage='I would like to be occasionally contacted about tutoría’s updates'
-                />
+                (
+                  <FormattedMessage
+                    id='UserForm.newsletterOptin'
+                    defaultMessage='I would like to be occasionally contacted about tutoría’s updates'
+                  />
+                )
               }
               checked={ contact_permission }
               className='userFormInputField contactPermission'
@@ -819,10 +871,12 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
           <SelectField
             floatingLabelFixed
             floatingLabelText={
-              <FormattedMessage
-                id='UserForm.locale'
-                defaultMessage='Preferred Website & Notification Language'
-              />
+              (
+                <FormattedMessage
+                  id='UserForm.locale'
+                  defaultMessage='Preferred Website & Notification Language'
+                />
+              )
             }
             value={ locale }
             className='userFormInputField locale'
@@ -865,10 +919,12 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
           <SelectField
             floatingLabelFixed
             floatingLabelText={
-              <FormattedMessage
-                id='UserForm.programs'
-                defaultMessage='Select program(s)'
-              />
+              (
+                <FormattedMessage
+                  id='UserForm.programs'
+                  defaultMessage='Select program(s)'
+                />
+              )
             }
             value={ userPrograms }
             className='userFormInputField programs'
@@ -944,7 +1000,8 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
             <FormattedMessage
               id='UserForm.helpingWith'
               defaultMessage='I am interested in helping with'
-            />:
+            />
+            :
           </h2>
         );
       } else if (role === 'client' || client ) {
@@ -953,7 +1010,8 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
             <FormattedMessage
               id='UserForm.helpedWith'
               defaultMessage='I am interested in help with'
-            />:
+            />
+            :
           </h2>
         );
       }
