@@ -934,8 +934,9 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
             errorText={ errors.programs }
             selectionRenderer={ this.selectionRenderer }
           >
-            { _.map(programs, ({ name, id }) => {
-              return <MenuItem key={ id } insetChildren checked={ _.indexOf(userPrograms, name) > -1 } value={ name } primaryText={ <span> { name } </span> } />;
+            { _.map(programs, ({ name, spanish_name, id }) => {
+              let programName = this.props.match.params[0] === ENGLISH ? name : spanish_name;
+              return <MenuItem key={ id } insetChildren checked={ _.indexOf(userPrograms, programName) > -1 } value={ programName } primaryText={ <span> { programName } </span> } />;
             })}
           </SelectField>
         </div>
