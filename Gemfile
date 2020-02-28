@@ -39,7 +39,7 @@ gem 'devise', '~> 4.6'
 # geolocate users
 gem 'geocoder', '~> 1.5'
 
-gem 'puma', '~> 3.12.2'
+gem 'puma', '~> 3.12.3'
 # image helper
 gem 'paperclip', '~> 6.1'
 
