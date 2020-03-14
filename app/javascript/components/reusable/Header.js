@@ -32,6 +32,8 @@ import formatLink from '../utils/Link';
 import SnackBarComponent from './SnackBarComponent';
 import NonChromeMessage from './NonChromeMessage';
 import contactInfo from '../../ContactInfo';
+import { gtag_click_conversion, gtag_formsent_conversion, opts } from './tracking'
+
 
 const menu = {
   LANGUAGE: 'LA',
@@ -341,12 +343,14 @@ class Header extends Component {
 
   renderContactElements() {
     const size = 20;
+    const { locale } = this.props;
 
     return(
       <div className='contactElements'>
         <SliderButton
           grey
           href={ 'tel:'+contactInfo.PHONE }
+          clickFunction={() => gtag_click_conversion('tel:'+contactInfo.PHONE, locale === 'en' ? opts.phone_en : opts.phone_es)}
         >
           <FaPhone
             size={ size }
@@ -362,6 +366,7 @@ class Header extends Component {
         <SliderButton
           grey
           href={ 'mailto:'+contactInfo.EMAIL }
+          clickFunction={() => gtag_click_conversion('mailto:'+contactInfo.EMAIL, locale === 'en' ? opts.email_en : opts.email_es)}
         >
           <FaEnvelope
             size={ size }
@@ -379,6 +384,7 @@ class Header extends Component {
           href={ contactInfo.FACEBOOK }
           target='_blank'
           rel='noopener noreferrer'
+          clickFunction={() => gtag_click_conversion(contactInfo.FACEBOOK, locale === 'en' ? opts.facebook_en : opts.facebook_es)}
         >
           <FaFacebookF
             size={ size }
@@ -391,6 +397,7 @@ class Header extends Component {
           href={ contactInfo.LINKEDIN }
           target='_blank'
           rel='noopener noreferrer'
+          clickFunction={() => gtag_click_conversion(contactInfo.LINKEDIN, locale === 'en' ? opts.linkedin_en : opts.linkedin_es)}
         >
           <FaLinkedin
             size={ size }
@@ -403,7 +410,7 @@ class Header extends Component {
   }
 
   renderSignedOutHeader() {
-    const { currentUser: { locale } } = this.props;
+    const { locale } = this.props;
 
     if (this.props.mobile) {
       return(
@@ -429,6 +436,7 @@ class Header extends Component {
             >
               <SliderButton
                 to={ formatLink('/sign_up/client', locale) }
+                clickFunction={() => gtag_formsent_conversion(locale === 'en' ? opts.signform_en : opts.signform_es)}
               >
                 <FormattedMessage
                   id='signUpClient'
@@ -482,7 +490,8 @@ class Header extends Component {
           >
             <SliderButton
               to={ formatLink('/sign_up/client', locale) }
-              onClick={ () => this.handleMenuClose('SU')  }
+              onClick={ () => {this.handleMenuClose('SU'); gtag_formsent_conversion(locale === 'en' ? opts.signform_en : opts.signform_es)} }
+              
             >
               <FormattedMessage
                 id='signUpClient'

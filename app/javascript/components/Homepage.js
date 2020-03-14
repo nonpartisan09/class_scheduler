@@ -50,6 +50,8 @@ import formatLink from './utils/Link';
 import SignUpSchema from './schema/SignUpSchema';
 import contactInfo from '../ContactInfo';
 import UserMap from './UserMap';
+import { gtag_click_conversion, gtag_formsent_conversion, opts } from './reusable/tracking'
+
 
 const pageContent = {
   testimonials: [
@@ -264,11 +266,13 @@ class Homepage extends Component {
   }
 
   renderContactButtons(size = 30) {
+    const { locale } = this.props;
 
     return(
       <div className='homepageContact'>
         <SliderButton
           href={ 'tel:'+contactInfo.PHONE }
+          clickFunction={() => gtag_click_conversion('tel:'+contactInfo.PHONE, locale === 'en' ? opts.phone_en : opts.phone_es)}
         >
           <FaPhone
             size={ size }
@@ -283,6 +287,7 @@ class Homepage extends Component {
         </SliderButton>
         <SliderButton
           href={ 'mailto:'+contactInfo.EMAIL }
+          clickFunction={() => gtag_click_conversion('mailto:'+contactInfo.EMAIL, locale === 'en' ? opts.email_en : opts.email_es)}
         >
           <FaEnvelope
             size={ size }
@@ -503,7 +508,7 @@ class Homepage extends Component {
   }
 
   renderJoinUsForm() {
-    const { errors, changeHandler, validateHandler } = this.props;
+    const { errors, changeHandler, validateHandler, locale } = this.props;
     const size = 30;
     return(
       <span className='joinUsForm'>
@@ -633,7 +638,11 @@ class Homepage extends Component {
                 }
               }
             } }
-            onClick={ (event) => { this.handleScroll(event, 0); this.handleSubmit; } }
+            onClick={ (event) => { 
+              this.handleScroll(event, 0); 
+              gtag_formsent_conversion(locale === 'en' ? opts.joinus_en : opts.joinus_es);
+              gtag_formsent_conversion(locale === 'en' ? opts.signform_en : opts.signform_es);
+            } }
             >
             <FormattedMessage
               id='Homepage.joinUsSubmit'

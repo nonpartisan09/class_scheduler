@@ -88,7 +88,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
 
       return (
         <div>
-          <WrappedComponent currentUser={ currentUser } />
+          <WrappedComponent currentUser={ currentUser }/>
 
           <DialogComponent
             title='Why do you need my street address and city?'

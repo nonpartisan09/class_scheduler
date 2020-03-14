@@ -66,14 +66,14 @@ class ContentWrapper extends Component {
 
         return (
           <div className='pageWrapper'>
-            <Header currentUser={ this.props.currentUser } mobile={ this.state.mobile } />
+            <Header currentUser={ this.props.currentUser } mobile={ this.state.mobile } locale={this.props.locale} />
             <div
               className='pageContent'
               ref={ (pagecontent) => this.pagecontent = pagecontent }
             >
               {childrenWithProps}
             </div>
-            <Footer style={ { position: this.calculateFooterPosition() } } currentUser={ this.props.currentUser } />
+            <Footer style={ { position: this.calculateFooterPosition() } } currentUser={ this.props.currentUser } locale={this.props.locale}  />
           </div>
         );
     }

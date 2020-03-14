@@ -89,13 +89,14 @@ const styles = {
 
   class SliderButton extends Component {
       render() {
-          const { classes, grey, children, to, ...other } = this.props;
+          const { classes, grey, children, to, clickFunction, ...other } = this.props;
           return(
             <span id='slider-button-container' className='sliderButtonContainer'>
               <Button
                 className={ grey ? classes.greyButton : classes.button }
                 href={ to }
                 disableFocusRipple
+                onClick={() => clickFunction()} 
                 { ...other }
                 >
                 <span
