@@ -16,6 +16,7 @@ import {
 import formatLink from '../utils/Link';
 import PaypalButton from '../PaypalButton';
 import contactInfo from '../../ContactInfo';
+import { gtag_click_conversion, opts } from './tracking'
 
 class Footer extends Component {
 
@@ -86,14 +87,19 @@ class Footer extends Component {
                 defaultMessage='Social Media'
               />
             </b>
-            <a href={ contactInfo.FACEBOOK } rel='noopener noreferrer' target='_blank'>
+            <a href={ contactInfo.FACEBOOK } onClick={
+            () => gtag_click_conversion(contactInfo.FACEBOOK, locale === 'en' ? opts.facebook_en : opts.facebook_es)
+            }
+            rel='noopener noreferrer' target='_blank'>
               <FaFacebookF
                 size={ size }
                 className='facebookIcon'
               />
               Facebook
             </a>
-            <a href={ contactInfo.LINKEDIN } rel='noopener noreferrer' target='_blank'>
+            <a href={ contactInfo.LINKEDIN }  onClick={
+            () => gtag_click_conversion(contactInfo.LINKEDIN, locale === 'en' ? opts.linkedin_en : opts.linkedin_es)
+            } rel='noopener noreferrer' target='_blank'>
               <FaLinkedin
                 size={ size }
                 className='linkedInIcon'
@@ -123,6 +129,9 @@ class Footer extends Component {
             </b>
             <a
               href={ 'tel:'+contactInfo.PHONE }
+              onClick={
+              () => gtag_click_conversion(contactInfo.PHONE, locale === 'en' ? opts.phone_en : opts.phone_es)
+              }
             >
               <FaPhone
                 size={ size }
@@ -137,6 +146,9 @@ class Footer extends Component {
             </a>
             <a
               href={ 'mailto:'+contactInfo.EMAIL }
+              onClick={
+              () => gtag_click_conversion(contactInfo.EMAIL, locale === 'en' ? opts.email_en : opts.email_es)
+              }
             >
               <FaEnvelope
                 size={ size }

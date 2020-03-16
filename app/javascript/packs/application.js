@@ -92,15 +92,13 @@ const App = ({pathname, data}) => {
   
   useEffect(() => setMessages(localeData[language]), [language])
 
-  console.log(language);
-  
   const locale = `(${ENGLISH}|${SPANISH})`;
 
   return ( 
     <IntlProvider locale={ language } key={ language }  messages={ messages }>
         <MuiThemeProvider muiTheme={ getMuiTheme(MuiTheme) }>
           <Router>
-            <ContentWrapper currentUser={ data.currentUser }>
+            <ContentWrapper currentUser={ data.currentUser } locale={ language }>
               <Switch>
                 <Route exact path={ `/${locale}` } render={ (props) => <Homepage { ...data } { ...props } locale={language} /> } />
                 <Route exact path={ `/${locale}/inbox` } render={ (props) => <ConversationIndexPage { ...data } { ...props } /> } />
