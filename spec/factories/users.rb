@@ -31,7 +31,7 @@ FactoryBot.define do
     url_slug
     active { true }
     terms_and_conditions { true }
-    timezone { 'UTC' }
+    timezone { 'Central Time (US & Canada)' }
     # programs = []
     # programs << FactoryBot.create(:program)
     # programs { programs }
