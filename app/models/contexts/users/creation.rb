@@ -48,10 +48,6 @@ module Contexts
 
           user_program = english_program ? english_program : spanish_program
           @user.programs << user_program
-
-          print "***"
-          print @user.programs
-          print "***"
         end
       end
 
