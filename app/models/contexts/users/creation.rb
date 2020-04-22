@@ -43,7 +43,11 @@ module Contexts
 
       def build_programs
         @programs.each do |program|
-          @user.programs << Program.find_by_name(program)
+          english_program = Program.find_by(name: program) 
+          spanish_program = Program.find_by(spanish_name: program) 
+
+          user_program = english_program ? english_program : spanish_program
+          @user.programs << user_program
         end
       end
 
