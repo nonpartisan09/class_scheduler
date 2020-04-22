@@ -47,7 +47,7 @@ function getData({ url, params='', jsonBody, method='GET', successCallBack, erro
 
 function postData({ url, params, attributes, method='POST', successCallBack, errorCallBack }) {
   const restUrl = params? `${url}?${params}` : url;
-
+ 
   const body = function(){
     if (_.size(attributes) > 0) {
       const body = new FormData();

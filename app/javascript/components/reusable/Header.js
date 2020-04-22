@@ -95,7 +95,7 @@ class Header extends Component {
     const localePattern = new RegExp(`(${ENGLISH}|${SPANISH})`);
     const currentGuestLocale = pathname[1] || '';
     const isGuestLocaleAsExpected = localePattern.test(currentGuestLocale);
-
+    
     if (isGuestLocaleAsExpected) {
       const newPathname = _.drop(pathname, 2).join('/');
       location.assign(formatLink(`/${newPathname}`, value));
