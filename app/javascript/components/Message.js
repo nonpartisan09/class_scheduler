@@ -162,6 +162,7 @@ Message.propTypes = {
   subject: PropTypes.string,
   unread: PropTypes.bool,
   divider: PropTypes.bool,
+  id: PropTypes.number,
 };
 
 Message.defaultProps = {
@@ -171,7 +172,8 @@ Message.defaultProps = {
   avatar: '',
   body: '',
   unread: false,
-  divider: false
+  divider: false,
+  id: 0,
 };
 
 export default Message;

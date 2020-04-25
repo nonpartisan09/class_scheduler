@@ -2,13 +2,11 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Paper from 'material-ui/Paper';
 import Parser from 'html-react-parser';
-
-import ChooseLanguage from './utils/ChooseLanguage';
-
+import { ENGLISH } from './utils/availableLocales';
 
 class CustomPage extends Component {
   render() {
-    const { page_content, currentUser, locale } = this.props;
+    const { page_content, locale } = this.props;
     const content = function(){
     
       if (locale && page_content) {
@@ -32,16 +30,17 @@ class CustomPage extends Component {
 }
 
 CustomPage.propTypes = {
-  currentUser: PropTypes.object.isRequired,
+  locale: PropTypes.string,
   page_content: PropTypes.shape({
     description: PropTypes.node,
-    spanish_description: PropTypes.node
+    spanish_description: PropTypes.node,
   })
 
 };
 
 CustomPage.defaultProps = {
-  page_content: { }
+  locale: ENGLISH,
+  page_content: { },
 };
 
 export default CustomPage;

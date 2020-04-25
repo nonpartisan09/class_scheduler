@@ -37,21 +37,20 @@ class SearchResults extends Component {
     const { location: { state } } = this.props;
 
     if (!state) {
-      location.assign('/search');
+      window.location.assign('/search');
     }
   }
 
   render() {
-    const { currentUser } = this.props;
     return (
       <div>
         <div className='searchResultsContainer'>
-          <PageHeader title={
+          <PageHeader title={ (
             <FormattedMessage
               id='SearchResults.header'
               defaultMessage='Available Volunteers'
             />
-            }
+          ) }
           />
           { this.renderSortDropDown() }
           <div className='searchResults'>
@@ -68,8 +67,8 @@ class SearchResults extends Component {
 
     if (isCurrentUserLocated(currentUser)) {
       return (
-        <div className='searchResultDropdown' >
-          <DropDownMenu value={ this.state.sortBy } onClose={ this.handleBlur } onChange={ this.handleChange } >
+        <div className='searchResultDropdown'>
+          <DropDownMenu value={ this.state.sortBy } onClose={ this.handleBlur } onChange={ this.handleChange }>
             <MenuItem value={ RECENT } primaryText='Recently Logged In' />
             <MenuItem value={ CLOSEST } primaryText='Closest' />
             <MenuItem value={ HIGHEST } primaryText='Highest Rating' />
@@ -79,8 +78,8 @@ class SearchResults extends Component {
       );
     } else {
       return (
-        <div className='searchResultDropdown' >
-          <DropDownMenu value={ this.state.sortBy } onClose={ this.handleBlur } onChange={ this.handleChange } >
+        <div className='searchResultDropdown'>
+          <DropDownMenu value={ this.state.sortBy } onClose={ this.handleBlur } onChange={ this.handleChange }>
             <MenuItem value={ RECENT } primaryText='Recently Logged In' />
             <MenuItem value={ HIGHEST } primaryText='Highest Rating' />
             <MenuItem value={ NEWEST } primaryText='Newly created' />
@@ -221,7 +220,9 @@ SearchResults.propTypes = {
   location: PropTypes.shape({
     state: PropTypes.shape({
       volunteers: PropTypes.array,
-      search: PropTypes.object
+      search: PropTypes.object,
+      page_count: PropTypes.number,
+      current_page: PropTypes.number
     })
   }),
   history: PropTypes.object
@@ -232,7 +233,7 @@ SearchResults.defaultProps = {
   location: {
     state: {
       volunteers: [],
-      search: {}
+      search: {},
     }
   },
   history: {}

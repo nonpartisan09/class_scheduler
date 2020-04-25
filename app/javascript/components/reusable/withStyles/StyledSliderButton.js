@@ -96,7 +96,7 @@ const styles = {
                 className={ grey ? classes.greyButton : classes.button }
                 href={ to }
                 disableFocusRipple
-                onClick={() => clickFunction()} 
+                onClick={ () => clickFunction() } 
                 { ...other }
                 >
                 <span
@@ -121,11 +121,13 @@ const styles = {
     children: PropTypes.any.isRequired,
     to: PropTypes.any,
     grey: PropTypes.bool,
+    clickFunction: PropTypes.func,
   };
 
   SliderButton.defaultProps = {
       to: '',
       grey: false,
+      clickFunction: () => {}
   };
   
   export default withStyles(styles)(SliderButton);
