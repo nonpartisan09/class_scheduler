@@ -27,12 +27,12 @@ import {
   ExpansionPanelSummary,
   Button,
   Radio,
-  Switch,
+  // Switch,
   RadioGroup,
   FormControlLabel,
-  FormGroup,
-  Grid,
-  ButtonGroup
+  // FormGroup,
+  // Grid,
+  // ButtonGroup
 } from '@material-ui/core';
 import {
   Link
@@ -49,7 +49,7 @@ import {
 import formatLink from './utils/Link';
 import SignUpSchema from './schema/SignUpSchema';
 import contactInfo from '../ContactInfo';
-import UserMap from './UserMap';
+// import UserMap from './UserMap';
 import { gtag_click_conversion, gtag_formsent_conversion, opts } from './reusable/tracking';
 
 
@@ -174,9 +174,9 @@ class Homepage extends Component {
     this.state = {
       languageChecked: ENGLISH,
       signUpType: 'client',
-      mapView: 'row',
-      clientsSelected: true,
-      volunteersSelected: true,
+      // mapView: 'row',
+      // clientsSelected: true,
+      // volunteersSelected: true,
     };
   }
 
@@ -405,7 +405,9 @@ class Homepage extends Component {
     });
     return cards;
   }
-
+  /*
+    Todo: Re-implement map for client view. 
+  */ 
   // renderWhereWeAre() {
   //   return(
   //     this.renderElementContainer(

@@ -1,4 +1,4 @@
-ActiveAdmin.register Language do
+ActiveAdmin.register Language, :as => "all_language" do
   permit_params :name,
       :url_slug,
       :created_at,
