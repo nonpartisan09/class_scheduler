@@ -17,16 +17,20 @@ import { postData } from './utils/sendData';
 import formatLink from './utils/Link';
 import PageHeader from './reusable/PageHeader';
 
+import {
+  ENGLISH,
+} from './utils/availableLocales';
+
 const schema = {
   email: Joi.string().email().required().options({
-  language: {
+    language: {
       any: {
-        allowOnly: 'Please enter a valid email.'
-      }
-    }
+        allowOnly: 'Please enter a valid email.',
+      },
+    },
   }),
   password: Joi.string().required(),
-  remember_me: Joi.boolean()
+  remember_me: Joi.boolean(),
 };
 
 class SignIn extends Component {
@@ -39,9 +43,10 @@ class SignIn extends Component {
 
     this.state = {
       showSnackBar: false,
-      message: ''
+      message: '',
     };
   }
+
   render() {
     const {
       errors, changeHandler, validateHandler,
@@ -49,26 +54,26 @@ class SignIn extends Component {
         password,
         email,
         remember_me,
-        locale
+        locale,
       },
     } = this.props;
 
     return (
       <div>
-        <PageHeader title={
+        <PageHeader title={ (
           <FormattedMessage
-            id='signIn'
-            defaultMessage='Sign In'
-           />
-         }
+            id="signIn"
+            defaultMessage="Sign In"
+          />
+          ) }
          />
-        <form className='signInContainer' onSubmit={ this.handleKeyDown }>
+        <form className="signInContainer" onSubmit={ this.handleKeyDown }>
           <TextField
-            name='email'
+            name="email"
             value={ email }
-            className='signUpEmailInputField'
-            hintText=''
-            floatingLabelText='Email'
+            className="signInEmailInputField"
+            hintText=""
+            floatingLabelText="Email"
             floatingLabelFixed
             errorText={ errors.email }
             onChange={ changeHandler('email') }
@@ -77,70 +82,71 @@ class SignIn extends Component {
           />
 
           <TextField
-            name='password'
+            name="password"
             value={ password }
-            type='password'
-            hintText=''
-            floatingLabelText='Password'
+            type="password"
+            hintText=""
+            floatingLabelText="Password"
             floatingLabelFixed
             errorText={ errors.password }
             onChange={ changeHandler('password') }
             onBlur={ validateHandler('password') }
             fullWidth
+            className="signInEmailInputField"
           />
 
           <Checkbox
             checked={ remember_me }
             onCheck={ changeHandler('remember_me') }
-            label='Remember me'
+            label="Remember me"
           />
 
           <RaisedButton
             primary
-            label={
+            label={ (
               <FormattedMessage
-                id='signIn'
-                defaultMessage='Sign In'
+                id="signIn"
+                defaultMessage="Sign In"
               />
-            }
+            ) }
             onClick={ this.handleSignIn }
-            className='signInLink'
+            className="signInLink"
           />
 
-          <div className='signInLinkSecondaryContainer'>
-            <a href={ formatLink('/password/new', locale) } className='signInLinkSecondary'>
+          <div className="signInLinkSecondaryContainer">
+            <a href={ formatLink('/password/new', locale) } className="signInLinkSecondary">
               <FlatButton
                 primary
-                label={
+                label={ (
                   <FormattedMessage
-                    id='SignIn.passwordRecovery'
-                    defaultMessage='Forgot your password?'
+                    id="SignIn.passwordRecovery"
+                    defaultMessage="Forgot your password?"
                   />
-                }
+                ) }
                 onClick={ this.handleForgotClick }
               />
             </a>
 
-            <a href={ formatLink('/sign_up/client', locale) } className='signInLinkSecondary'>
+            <a href={ formatLink('/sign_up/client', locale) } className="signInLinkSecondary">
               <FlatButton
                 primary
-                label={
+                label={ (
                   <FormattedMessage
-                    id='signUpClient'
+                    id="signUpClient"
                   />
-                }
+                ) }
               />
             </a>
 
-            <a href={ formatLink('/sign_up/volunteer', locale) } className='signInLinkSecondary'>
+            <a href={ formatLink('/sign_up/volunteer', locale) } className="signInLinkSecondary">
               <FlatButton
                 primary
-                label={
+                label={ (
                   <FormattedMessage
-                    id='signUpVolunteer'
-                    defaultMessage='Sign up as a volunteer'
+                    id="signUpVolunteer"
+                    defaultMessage="Sign up as a volunteer"
                   />
-                }
+                ) }
               />
             </a>
           </div>
@@ -161,41 +167,42 @@ class SignIn extends Component {
     if (this.state.showSnackBar) {
       return <SnackBarComponent open={ this.state.showSnackBar } message={ this.state.message } />;
     }
+    return (null);
   }
 
   handleSignIn() {
-    const { errors } = this.props;
+    const { errors, locale } = this.props;
 
-    if(_.size(errors) === 0) {
-
-      const { currentUser } = this.props;
-      const attributes = FormData.from({ user: currentUser });
+    if (_.size(errors) === 0) {
+      const cUser = this.props.currentUser;
+      const attributes = FormData.from({ user: cUser });
 
       const requestParams = {
-        url: '/sign_in',
+        url: `/${locale}/sign_in`,
         attributes,
         method: 'POST',
-        successCallBack: ({ currentUser: { locale } }) => {
-          location.assign(formatLink('/', locale));
+        successCallBack: ({ currentUser }) => {
+          window.location.assign(formatLink('/', currentUser.locale));
         },
-        errorCallBack: (message) => {
+        errorCallBack: (msg) => {
           this.setState({
             showSnackBar: true,
-            message: message
+            message: msg,
           });
 
           setTimeout(() => {
             this.handleHideSnackBar();
           }, 2000);
-        }
+        },
       };
       return postData(requestParams);
     }
+    return (null);
   }
 
   handleHideSnackBar() {
     this.setState({
-      showSnackBar: false
+      showSnackBar: false,
     });
   }
 }
@@ -205,10 +212,12 @@ SignIn.propTypes = {
   currentUser: PropTypes.shape({
     email: PropTypes.string,
     password: PropTypes.string,
-    remember_me: PropTypes.bool
+    remember_me: PropTypes.bool,
+    locale: PropTypes.string,
   }),
   changeHandler: PropTypes.func.isRequired,
   validateHandler: PropTypes.func.isRequired,
+  locale: PropTypes.string,
 };
 
 SignIn.defaultProps = {
@@ -216,17 +225,18 @@ SignIn.defaultProps = {
   currentUser: {
     email: '',
     password: '',
-    remember_me: false
+    remember_me: false,
   },
+  locale: ENGLISH,
 };
 
 SignIn.contextTypes = {
-  router: PropTypes.object
+  router: PropTypes.object,
 };
 
 const validationOptions = {
   joiSchema: schema,
-  only: 'currentUser'
+  only: 'currentUser',
 };
 
 export default validate(SignIn, validationOptions);

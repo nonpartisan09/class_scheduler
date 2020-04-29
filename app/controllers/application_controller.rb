@@ -13,7 +13,8 @@ class ApplicationController < ActionController::Base
 
     @data = {
         :currentUser => @user,
-        :programs => programs
+        :programs => programs,
+        :locale => I18n.locale.to_s
     }
 
     render :index
@@ -30,7 +31,8 @@ class ApplicationController < ActionController::Base
 
     @data = {
         :currentUser => @user,
-        :page_content => page_content
+        :page_content => page_content,
+        :locale => I18n.locale.to_s
     }
 
     render :custom_page
@@ -47,7 +49,8 @@ class ApplicationController < ActionController::Base
 
     @data = {
         :currentUser => @user,
-        :page_content => page_content
+        :page_content => page_content,
+        :locale => I18n.locale.to_s
     }
 
     render :custom_page
@@ -69,7 +72,8 @@ class ApplicationController < ActionController::Base
 
     @data = {
         :currentUser => @user,
-        :page_content => page_content
+        :page_content => page_content,
+        :locale => I18n.locale.to_s
     }
 
     render :custom_page
@@ -83,7 +87,8 @@ class ApplicationController < ActionController::Base
 
     @data = {
         :currentUser => @user,
-        :terms_and_conditions => terms_and_conditions
+        :terms_and_conditions => terms_and_conditions,
+        :locale => I18n.locale.to_s
     }
 
     render :t_and_c
@@ -93,13 +98,34 @@ class ApplicationController < ActionController::Base
     decorate_user_if_present
 
     @data = {
-        :currentUser => @user
+        :currentUser => @user,
+        :locale => I18n.locale.to_s
     }
+  end
+  
+  def sitemap
+    @pages = ["", "/about", "/faq" , "/sign_up/client", "/sign_up/volunteer", "/terms_of_use" ]
+    headers['Content-Type'] = 'application/xml'
+    @host = "#{request.protocol}#{request.host}"
   end
 
   def set_locale
+    @languages = ["", "en", "es"]
+    locale_extracted = "en" #default
+    browser_locale = extract_locale_from_headers
+    browser_locale.each do |loc| 
+      if @languages.include? loc
+        locale_extracted = loc
+        break
+      end
+    end
     params.permit(:locale)
-    I18n.locale = params[:locale] || I18n.default_locale
+    I18n.locale = params[:locale] || locale_extracted
+    
+  end
+  
+  def extract_locale_from_headers
+    request.env['HTTP_ACCEPT_LANGUAGE'].scan(/[a-z]{2}/).uniq 
   end
 
   protected

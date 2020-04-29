@@ -49,10 +49,12 @@ class NewMessagePage extends Component {
       <div>
         <Paper zDepth={ 1 } className='paperOverride' rounded={ false }>
           <PageHeader title={
-            <FormattedMessage
-              id='NewMessagePage.header'
-              defaultMessage='Send new message'
-            />
+            (
+              <FormattedMessage
+                id='NewMessagePage.header'
+                defaultMessage='Send new message'
+              />
+            )
             }
           />
 
@@ -64,10 +66,12 @@ class NewMessagePage extends Component {
               className='userFormInputField recipient'
               hintText=''
               floatingLabelText={
-                <FormattedMessage
-                  id='NewMessagePage.recipient'
-                  defaultMessage='Recipient'
-                />
+                (
+                  <FormattedMessage
+                    id='NewMessagePage.recipient'
+                    defaultMessage='Recipient'
+                  />
+                )
               }
               floatingLabelFixed
             />
@@ -78,10 +82,12 @@ class NewMessagePage extends Component {
               className='userFormInputField subject'
               hintText=''
               floatingLabelText={
-                <FormattedMessage
-                  id='NewMessagePage.subject'
-                  defaultMessage='Subject'
-                />
+                (
+                  <FormattedMessage
+                    id='NewMessagePage.subject'
+                    defaultMessage='Subject'
+                  />
+                )
               }
               floatingLabelFixed
               errorText={ errors.subject }
@@ -94,10 +100,12 @@ class NewMessagePage extends Component {
               className='userFormInputField body'
               hintText=''
               floatingLabelText={
-                <FormattedMessage
-                  id='NewMessagePage.messageBody'
-                  defaultMessage='Body'
-                />
+                (
+                  <FormattedMessage
+                    id='NewMessagePage.messageBody'
+                    defaultMessage='Body'
+                  />
+                )
               }
               floatingLabelFixed
               errorText={ errors.body }
@@ -165,7 +173,7 @@ class NewMessagePage extends Component {
   }
 
   handleRedirect() {
-    location.assign('/inbox');
+    location.assign(`/${this.props.locale}/inbox`);
   }
 
   handleHideSnackBar() {
@@ -199,6 +207,7 @@ NewMessagePage.propTypes = {
     password_confirmation: PropTypes.string,
     thumbnail_image: PropTypes.oneOfType([ PropTypes.string, PropTypes.object ]),
   }),
+  locale: PropTypes.string,
   changeHandler: PropTypes.func.isRequired,
   validateHandler: PropTypes.func.isRequired
 };
@@ -226,6 +235,7 @@ NewMessagePage.defaultProps = {
     password_confirmation: '',
     thumbnail_image: '',
   },
+  locale: 'en'
 };
 
 const validationOptions = {

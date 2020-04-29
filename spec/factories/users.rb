@@ -27,31 +27,33 @@ FactoryBot.define do
     first_name { generate :first_name }
     email { generate :email }
     last_sign_in_at { generate :last_sign_in_at }
-    password 'password'
+    password { 'password' }
     url_slug
-    active true
-    terms_and_conditions true
-    timezone 'UTC'
+    active { true }
+    terms_and_conditions { true }
+    timezone { 'UTC' }
     # programs = []
     # programs << FactoryBot.create(:program)
     # programs { programs }
     average_rating { generate :average_rating }
     rating_count { generate :rating_count }
-    country "USA"
-    city "Boston"
-  end
+    country { "USA" }
+    city { "Boston" }
 
-  trait :client do
-    # roles = []
-    # roles << Role.find_by_name('Client')
-    #
-    # roles { roles }
-  end
+    factory :client_user do      
+      roles { 
+        [
+          Role.find_or_create_by(name: 'Client')    
+        ]
+      }    
+    end 
 
-  trait :volunteer do
-    # roles = []
-    # roles << Role.find_by_name('Volunteer')
-    #
-    # roles { roles }
+    factory :volunteer_user do      
+      roles { 
+        [
+          Role.find_or_create_by(name: 'Volunteer')    
+        ]
+      }    
+    end 
   end
 end

@@ -8,8 +8,8 @@ FactoryBot.define do
       end
     end
 
-    subject "TestSubject"
-    body "TestBody"
+    subject { "TestSubject" }
+    body { "TestBody" }
     user { FactoryBot.create(:user) }
   end
 end

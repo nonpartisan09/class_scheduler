@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <% @pages.each do |page| %>
+    <% @languages.each do |lang| %>
+      <url>
+        <loc><%= lang.empty? ? "#{@host}#{page}" : "#{@host}/#{lang}#{page}"%></loc>
+          <xhtml:link rel="alternate" hreflang="x-default" href=<%= raw "\"#{@host}#{page}\""%>/>
+        <% @languages.each do |lang| %>
+          <% unless lang.empty? %>
+            <xhtml:link rel="alternate" hreflang=<%= raw "\"#{lang}\""%> href=<%= raw "\"#{@host}/#{lang}#{page}\""%>/>
+          <% end %>
+        <% end %> 
+      </url>
+    <% end %>
+  <% end %>
+
+</urlset>

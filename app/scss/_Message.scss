@@ -1,7 +1,12 @@
 .messageContainerBold {
-    font-weight: 700;
+    font-weight: 900;
 }
 
 .messageContainer {
     font-weight: 400;
+    color: gray;
+}
+
+.avatar {
+    object-fit: cover;
 }

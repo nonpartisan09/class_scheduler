@@ -8,6 +8,10 @@
     margin-top: 24px;
 }
 
+.signInEmailInputField > label {
+  color: #0099ff !important;
+}
+
 @media (max-width: 500px) {
     .signInLink, .signInLinkSecondary {
         margin: 12px 0;

@@ -122,7 +122,7 @@ class ConversationIndexPage extends Component {
         <ListItem
           onClick={ this.handleClick(id) }
           key={ conversee }
-          leftAvatar={ <Avatar src={ conversee_avatar } /> }
+          leftAvatar={ <Avatar className='avatar' src={ conversee_avatar } /> }
           primaryText={ this.renderNewMessage({ conversee, is_first_message_unread }) }
         />
       );

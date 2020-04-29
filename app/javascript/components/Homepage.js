@@ -27,12 +27,12 @@ import {
   ExpansionPanelSummary,
   Button,
   Radio,
-  Switch,
+  // Switch,
   RadioGroup,
   FormControlLabel,
-  FormGroup,
-  Grid,
-  ButtonGroup
+  // FormGroup,
+  // Grid,
+  // ButtonGroup
 } from '@material-ui/core';
 import {
   Link
@@ -49,7 +49,9 @@ import {
 import formatLink from './utils/Link';
 import SignUpSchema from './schema/SignUpSchema';
 import contactInfo from '../ContactInfo';
-import UserMap from './UserMap';
+// import UserMap from './UserMap';
+import { gtag_click_conversion, gtag_formsent_conversion, opts } from './reusable/tracking';
+
 
 const pageContent = {
   testimonials: [
@@ -164,7 +166,7 @@ class Homepage extends Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.handleScroll = this.handleScroll.bind(this);
-    this.handleMapView = this.handleMapView.bind(this);
+    // this.handleMapView = this.handleMapView.bind(this);
     this.handleUserToggle = this.handleUserToggle.bind(this);
 
     this.joinUsFormRef = React.createRef();
@@ -172,10 +174,9 @@ class Homepage extends Component {
     this.state = {
       languageChecked: ENGLISH,
       signUpType: 'client',
-      locale: localStorage.getItem('locale'),
-      mapView: 'row',
-      clientsSelected: true,
-      volunteersSelected: true,
+      // mapView: 'row',
+      // clientsSelected: true,
+      // volunteersSelected: true,
     };
   }
 
@@ -188,13 +189,13 @@ class Homepage extends Component {
     window.scrollTo(0, verticalScrollPosition);
   }
 
-  handleMapView() {
-    this.state.mapView === 'row'
-    ?
-    this.setState({ mapView: 'usa' })
-    :
-    this.setState({ mapView: 'row' });
-  }
+  // handleMapView() {
+  //   this.state.mapView === 'row'
+  //   ?
+  //   this.setState({ mapView: 'usa' })
+  //   :
+  //   this.setState({ mapView: 'row' });
+  // }
 
   handleUserToggle(stateToChange, prevState) {
     const newState = !prevState;
@@ -210,6 +211,7 @@ class Homepage extends Component {
         </span>
         { this.renderFeaturedPrograms() }
         { this.renderHowItWorks() }
+        {/* { this.renderWhereWeAre() } */}
         { this.renderJoinUs() }
         { this.renderNeedHelp() }
       </div>
@@ -264,11 +266,13 @@ class Homepage extends Component {
   }
 
   renderContactButtons(size = 30) {
+    const { locale } = this.props;
 
     return(
       <div className='homepageContact'>
         <SliderButton
           href={ 'tel:'+contactInfo.PHONE }
+          clickFunction={ () => gtag_click_conversion('tel:'+contactInfo.PHONE, locale === 'en' ? opts.phone_en : opts.phone_es) }
         >
           <FaPhone
             size={ size }
@@ -283,6 +287,7 @@ class Homepage extends Component {
         </SliderButton>
         <SliderButton
           href={ 'mailto:'+contactInfo.EMAIL }
+          clickFunction={() => gtag_click_conversion('mailto:'+contactInfo.EMAIL, locale === 'en' ? opts.email_en : opts.email_es)}
         >
           <FaEnvelope
             size={ size }
@@ -348,10 +353,10 @@ class Homepage extends Component {
             />
             <CardContent>
               <h2 className='programCardsHeader'>
-                { this.state.locale === 'es' ? element.spanish_name : element.name }
+                { this.props.locale === 'es' ? element.spanish_name : element.name }
               </h2>
               <p className='programCardsText'>
-                { this.state.locale === 'es' ? element.spanish_description : element.description }
+                { this.props.locale === 'es' ? element.spanish_description : element.description }
               </p>
             </CardContent>
           </Card>
@@ -400,95 +405,97 @@ class Homepage extends Component {
     });
     return cards;
   }
+  /*
+    Todo: Re-implement map for client view. 
+  */ 
+  // renderWhereWeAre() {
+  //   return(
+  //     this.renderElementContainer(
+  //       pageContent.whereWeAre,
+  //       this.renderWhereWeAreComponents()
+  //   ));
+  // }
 
-  renderWhereWeAre() {
-    return(
-      this.renderElementContainer(
-        pageContent.whereWeAre,
-        this.renderWhereWeAreComponents()
-    ));
-  }
-
-  renderWhereWeAreComponents() {
-    return(
-      <div className='whereWeAreComponentsContainer'>
-        <FormGroup>
-          <Grid item>
-            <ButtonGroup
-              variant="contained"
-              size="large"
-            >
-              <Button
-                className='userSelectClientsButton'
-                onClick={ () => this.handleUserToggle('clientsSelected', this.state.clientsSelected) }
-                style={ {
-                  backgroundColor: this.state.clientsSelected ? '#F1592A' : '',
-                  color: this.state.clientsSelected ? 'white' : '',
-                } }
-              >
-                <FormattedMessage
-                  id='HomePage.UserSelectClients'
-                  default='Clients'
-                />
-              </Button>
-              <Button
-                className='userSelectVolunteersButton'
-                onClick={ () => this.handleUserToggle('volunteersSelected', this.state.volunteersSelected) }
-                style={ {
-                  backgroundColor: this.state.volunteersSelected ? '#29AAE2' : '',
-                  color: this.state.volunteersSelected ? 'white' : '',
-                } }
-              >
-                <FormattedMessage
-                  id='HomePage.UserSelectVolunteers'
-                  default='Volunteers'
-                />
-              </Button>
-            </ButtonGroup>
-          </Grid>
-          <FormControlLabel
-            className='mapToggleLabel'
-            control={
-              (
-                <Switch
-                  checked={ this.state.mapView==='row' }
-                  onChange={ this.handleMapView }
-                  value={ this.state.mapView }
-                  color='primary'
-                  inputProps={ { 'aria-label': 'Map View Switch' } }
-                />
-              )
-            }
-            label={
-              (
-                this.state.mapView==='row'
-                ?
-                (
-                  <p>
-                    <FormattedMessage
-                      id='Homepage.MapViewROW'
-                      default='World'
-                    />
-                  </p>
-                )
-                :
-                (
-                  <p>
-                    <FormattedMessage
-                      id='Homepage.MapViewUSA'
-                      default='USA'
-                    />
-                  </p>
-                )
-              )
-            }
-            labelPlacement='end'
-          />
-        </FormGroup>
-        <UserMap view={ this.state.mapView } viewClients={ this.state.clientsSelected } viewVolunteers={ this.state.volunteersSelected } />
-      </div>
-    );
-  }
+  // renderWhereWeAreComponents() {
+  //   return(
+  //     <div className='whereWeAreComponentsContainer'>
+  //       <FormGroup>
+  //         <Grid item>
+  //           <ButtonGroup
+  //             variant="contained"
+  //             size="large"
+  //           >
+  //             <Button
+  //               className='userSelectClientsButton'
+  //               onClick={ () => this.handleUserToggle('clientsSelected', this.state.clientsSelected) }
+  //               style={ {
+  //                 backgroundColor: this.state.clientsSelected ? '#F1592A' : '',
+  //                 color: this.state.clientsSelected ? 'white' : '',
+  //               } }
+  //             >
+  //               <FormattedMessage
+  //                 id='HomePage.UserSelectClients'
+  //                 default='Clients'
+  //               />
+  //             </Button>
+  //             <Button
+  //               className='userSelectVolunteersButton'
+  //               onClick={ () => this.handleUserToggle('volunteersSelected', this.state.volunteersSelected) }
+  //               style={ {
+  //                 backgroundColor: this.state.volunteersSelected ? '#29AAE2' : '',
+  //                 color: this.state.volunteersSelected ? 'white' : '',
+  //               } }
+  //             >
+  //               <FormattedMessage
+  //                 id='HomePage.UserSelectVolunteers'
+  //                 default='Volunteers'
+  //               />
+  //             </Button>
+  //           </ButtonGroup>
+  //         </Grid>
+  //         <FormControlLabel
+  //           className='mapToggleLabel'
+  //           control={
+  //             (
+  //               <Switch
+  //                 checked={ this.state.mapView==='row' }
+  //                 onChange={ this.handleMapView }
+  //                 value={ this.state.mapView }
+  //                 color='primary'
+  //                 inputProps={ { 'aria-label': 'Map View Switch' } }
+  //               />
+  //             )
+  //           }
+  //           label={
+  //             (
+  //               this.state.mapView==='row'
+  //               ?
+  //               (
+  //                 <p>
+  //                   <FormattedMessage
+  //                     id='Homepage.MapViewROW'
+  //                     default='World'
+  //                   />
+  //                 </p>
+  //               )
+  //               :
+  //               (
+  //                 <p>
+  //                   <FormattedMessage
+  //                     id='Homepage.MapViewUSA'
+  //                     default='USA'
+  //                   />
+  //                 </p>
+  //               )
+  //             )
+  //           }
+  //           labelPlacement='end'
+  //         />
+  //       </FormGroup>
+  //       <UserMap view={ this.state.mapView } viewClients={ this.state.clientsSelected } viewVolunteers={ this.state.volunteersSelected } />
+  //     </div>
+  //   );
+  // }
 
   renderJoinUs() {
     return(
@@ -503,7 +510,7 @@ class Homepage extends Component {
   }
 
   renderJoinUsForm() {
-    const { errors, changeHandler, validateHandler } = this.props;
+    const { errors, changeHandler, validateHandler, locale } = this.props;
     const size = 30;
     return(
       <span className='joinUsForm'>
@@ -633,7 +640,11 @@ class Homepage extends Component {
                 }
               }
             } }
-            onClick={ (event) => { this.handleScroll(event, 0); this.handleSubmit; } }
+            onClick={ (event) => { 
+              this.handleScroll(event, 0); 
+              gtag_formsent_conversion(locale === 'en' ? opts.joinus_en : opts.joinus_es);
+              gtag_formsent_conversion(locale === 'en' ? opts.signform_en : opts.signform_es);
+            } }
             >
             <FormattedMessage
               id='Homepage.joinUsSubmit'
@@ -657,13 +668,14 @@ class Homepage extends Component {
             id='Homepage.askForHelp'
           />
           { ' ' }
-          { <a href={ formatLink('/faq', this.state.languageChecked) }>
+          {
+            <a href={ formatLink('/faq', this.state.languageChecked) }>
               <FormattedMessage
                 id='FAQPage'
                 defaultMessage='FAQ'
               />
             </a>
-          }.
+          }
         </p>
         <span className='needHelpLinks'>
           { this.renderContactButtons(70) }
@@ -680,12 +692,14 @@ Homepage.propTypes = {
   first_name: PropTypes.string,
   email: PropTypes.string,
   programs: PropTypes.array,
+  locale: PropTypes.string,
 };
 
 Homepage.defaultProps = {
   first_name: '',
   email: '',
   programs: [],
+  locale: 'en'
 };
 
 const validationOptions = {
@@ -693,5 +707,3 @@ const validationOptions = {
 };
 
 export default validate(Homepage, validationOptions);
-
-

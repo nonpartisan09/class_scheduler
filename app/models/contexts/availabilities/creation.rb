@@ -41,8 +41,7 @@ module Contexts
                                                           :end_time => @parsed_end_time,
                                                           :user_id => @current_user.id,
                                                       })
-
-        @new_availability = Availability.create!(new_availability_params)
+        @new_availability = Availability.find_or_create_by!(new_availability_params)
         @new_availability
 
         unless @new_availability
@@ -57,16 +56,19 @@ module Contexts
       private
 
       def check_if_overlaps?
-        Time.zone = @timezone
         existing_availabilities = @current_user.availabilities.where('day = ?', @day)
 
         if existing_availabilities.present?
-          current_range = @parsed_start_time..@parsed_end_time
+          current_range = { start_time: @parsed_start_time.beginning_of_minute, 
+                            end_time: @parsed_end_time.beginning_of_minute}
 
           overlaps = existing_availabilities.any? do |availability|
-            existing_range = availability[:start_time]..availability[:end_time]
+            start_time = availability[:start_time].beginning_of_minute
+            end_time = availability[:end_time].beginning_of_minute
 
-            current_range == existing_range
+            same = (current_range[:start_time] == start_time) && (current_range[:end_time] == end_time)
+            overlap = (current_range[:start_time] < end_time) && (current_range[:end_time] > start_time)
+            same || overlap
           end
 
           if overlaps
@@ -101,7 +103,7 @@ module Contexts
 
       def parse_time(time)
         t = Time.zone.parse(time)
-        Time.zone.parse(t.strftime("#{@day_index + 1} Jan 2001 %T"))
+        Time.zone.parse(t.strftime("#{@day_index + 1} Jan 2001 %R"))
       end
 
       def initialize_start_time

@@ -13,6 +13,7 @@ class MessagesController < ApplicationController
         recipient_id: @recipient.id)
     @message = current_user.messages.build(permitted_params.except(:recipient_id))
     @message.conversation_id = @conversation.id
+    @message.unread = true
     @message.save!
 
     send_message_to_recipient
@@ -22,10 +23,10 @@ class MessagesController < ApplicationController
 
   def update
     begin
-      @conversation = Conversation.find(permitted_update_params[:id])
-      @message = @conversation.messages.last
+      @message = Message.find(permitted_update_params[:id])
       @message.unread = false
       @message.save!
+      render json: { :message => @message }
     rescue Exception => e
       message = e.message
       status = :unprocessable_entity

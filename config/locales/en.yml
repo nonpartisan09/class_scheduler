@@ -5,10 +5,12 @@ en:
       body:
         first_line: 'you’ve got mail'
         second_line: 'has sent you a message'
-        third_line: 'To view the full message, please sign in'
+        third_line: 'To view the complete message and respond to '
         fourth_line: 'Have you worked with'
         fifth_line: 'Leave this person a review'
         sixth_line: 'Thanks and have a great day'
+        seventh_line: ' please login to the following website '
+        eighth_line: ' Do not reply to this email.'
     welcome_message:
       title: 'Welcome to Tutoría'
       body:
