@@ -67,7 +67,8 @@ MessageButtons.propTypes = {
     newMessageFirstName: PropTypes.oneOfType([ PropTypes.object, PropTypes.string ]),
     newMessageRecipient: PropTypes.any,
     locale: PropTypes.string,
-    messageType: PropTypes.object
+    messageType: PropTypes.object,
+    handleViewProfileClick: PropTypes.func,
 };
 
 MessageButtons.defaultProps = {
@@ -77,7 +78,8 @@ MessageButtons.defaultProps = {
     messageType: {
         id: MessageTypes.MESSAGE.id,
         default: MessageTypes.MESSAGE.default
-    }
+    },
+    handleViewProfileClick: () => {},
 };
 
 export default MessageButtons;

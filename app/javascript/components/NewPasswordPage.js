@@ -47,12 +47,12 @@ class NewPasswordPage extends Component {
     return (
       <div>
         <PageHeader
-          title={
+          title={ (
             <FormattedMessage
               id='NewPasswordPage.header'
               defaultMessage='New Password'
             />
-          }
+          ) }
         />
         <form className="signInContainer">
           <TextField
@@ -90,11 +90,11 @@ class NewPasswordPage extends Component {
     return (
       <RaisedButton
         primary
-        label={
+        label={ (
           <FormattedMessage
             id='resetPassword'
           />
-        }
+        ) }
         onClick={ this.handleForgotClick }
         className='signInLink'
       />
@@ -159,6 +159,7 @@ NewPasswordPage.propTypes = {
   errors: PropTypes.object,
   currentUser: PropTypes.shape({
     email: PropTypes.string,
+    locale: PropTypes.string,
   }),
   changeHandler: PropTypes.func.isRequired,
   validateHandler: PropTypes.func.isRequired,

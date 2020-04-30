@@ -88,7 +88,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
 
       return (
         <div>
-          <WrappedComponent currentUser={ currentUser }/>
+          <WrappedComponent currentUser={ currentUser } />
 
           <DialogComponent
             title='Why do you need my street address and city?'
@@ -290,7 +290,21 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                 onChange={ this.changeTimezoneHandler }
                 onBlur={ validateHandler('timezone') }
               >
-                { _.map(timezones, name => <MenuItem key={ name } insetChildren checked={ timezone === name } value={ name } primaryText={ <span> { name } </span> } />) }
+                { _.map(timezones, name => 
+                  (
+                    <MenuItem 
+                      key={ name } 
+                      insetChildren 
+                      checked={ timezone === name } 
+                      value={ name } 
+                      primaryText={ (
+                        <span>
+                          { name }
+                        </span> 
+                      ) } 
+                    />
+                  ) 
+                ) }
               </SelectField>
 
               <br />
@@ -562,7 +576,19 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
               selectionRenderer={ this.selectionRenderer }
             >
               { _.map(languages, ({ name, id }) => {
-                return <MenuItem key={ id } insetChildren checked={ _.indexOf(userLanguages, name) > -1 } value={ name } primaryText={ <span> { name } </span> } />;
+                return (
+                  <MenuItem 
+                    key={ id } 
+                    insetChildren 
+                    checked={ _.indexOf(userLanguages, name) > -1 } 
+                    value={ name } 
+                    primaryText={ (
+                      <span>
+                        { name } 
+                      </span> 
+                    ) } 
+                  />
+                );
               })}
             </SelectField>
           </div>
@@ -773,7 +799,11 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                     insetChildren
                     checked={ how_they_found_us === name }
                     value={ name }
-                    primaryText={ <span> { this.props.match.params[0] === ENGLISH ? name : spanish_name } </span> }
+                    primaryText={ (
+                      <span> 
+                        { this.props.match.params[0] === ENGLISH ? name : spanish_name } 
+                      </span> 
+                    ) }
                   />
                 ))
             }
@@ -936,7 +966,19 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
           >
             { _.map(programs, ({ name, spanish_name, id }) => {
               let programName = this.props.match.params[0] === ENGLISH ? name : spanish_name;
-              return <MenuItem key={ id } insetChildren checked={ _.indexOf(userPrograms, programName) > -1 } value={ programName } primaryText={ <span> { programName } </span> } />;
+              return (
+                <MenuItem 
+                  key={ id } 
+                  insetChildren 
+                  checked={ _.indexOf(userPrograms, programName) > -1 } 
+                  value={ programName } 
+                  primaryText={ (
+                    <span> 
+                      { programName } 
+                    </span> 
+                  ) } 
+                />
+);
             })}
           </SelectField>
         </div>
@@ -1107,7 +1149,11 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
       timezone: PropTypes.string,
       locale: PropTypes.string,
       description: PropTypes.string,
-      email_notification: PropTypes.bool
+      email_notification: PropTypes.bool,
+      average_rating: PropTypes.number,
+      rating_count: PropTypes.number,
+      client: PropTypes.bool,
+      volunteer: PropTypes.bool,
     }),
 
     match: PropTypes.shape({

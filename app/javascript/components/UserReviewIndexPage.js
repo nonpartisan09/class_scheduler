@@ -7,7 +7,7 @@ import PageHeader from './reusable/PageHeader';
 
 class UserReviewIndexPage extends Component {
   render() {
-    const { currentUser, reviewer } = this.props;
+    const { reviewer } = this.props;
       const title = function(){
         return [
           <FormattedMessage
@@ -15,8 +15,10 @@ class UserReviewIndexPage extends Component {
             defaultMessage='Most recent reviews by'
             key='reviewBy'
           />,
-          <span key='reviewer'> {reviewer}</span>
-        ]
+          <span key='reviewer'>
+            {reviewer}
+          </span>
+        ];
       }();
     return (
       <div>
@@ -38,7 +40,7 @@ class UserReviewIndexPage extends Component {
           <li key={ index } className='userReviewIndexPageContainerListItem'>
             <span>Posted { created_at } - </span>
             <span>about {reviewee } - </span>
-            <span> { this.renderComment(comment) }</span>
+            <span>{ this.renderComment(comment) }</span>
           </li>
         );
       });
@@ -71,13 +73,11 @@ class UserReviewIndexPage extends Component {
 UserReviewIndexPage.propTypes = {
   comments: PropTypes.array,
   reviewer: PropTypes.string,
-  currentUser: PropTypes.object
 };
 
 UserReviewIndexPage.defaultProps = {
   comments: [],
   reviewer: '',
-  currentUser: {}
 };
 
 export default UserReviewIndexPage;

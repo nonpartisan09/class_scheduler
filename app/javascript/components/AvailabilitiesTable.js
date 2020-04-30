@@ -93,9 +93,9 @@ class AvailabilitiesTable extends Component {
 
           { this.renderDeleteListContent(id) }
 
-         <div className='smallScreenAvailabilityTableDivider'>
-           <Divider />
-         </div>
+          <div className='smallScreenAvailabilityTableDivider'>
+            <Divider />
+          </div>
         </div>
       );
     });
@@ -104,10 +104,10 @@ class AvailabilitiesTable extends Component {
     return (
       <div>
         <div className='tableHideSmallScreen'>
-          <Table selectable={ false } >
+          <Table selectable={ false }>
             <TableHeader displaySelectAll={ false }>
               <TableRow>
-                <TableHeaderColumn key='day' >
+                <TableHeaderColumn key='day'>
                   <FormattedMessage
                     id='Availabilities.day'
                     defaultMessage='Day'
@@ -151,12 +151,12 @@ class AvailabilitiesTable extends Component {
             primary
             fullWidth
             onClick={ this.handleDelete(id) }
-            label={
+            label={ (
               <FormattedMessage
                 id='Delete'
                 defaultMessage='Delete'
               />
-            }
+              ) }
           />
         </li>
       );
@@ -167,16 +167,16 @@ class AvailabilitiesTable extends Component {
   renderDeleteRow(id) {
     if (this.props.deletable) {
       return (
-        <TableRowColumn >
+        <TableRowColumn>
           <FlatButton
             primary
             onClick={ this.handleDelete(id) }
-            label={
+            label={ (
               <FormattedMessage
                 id='Delete'
                 defaultMessage='Delete'
               />
-            }
+              ) }
           />
         </TableRowColumn>
       );

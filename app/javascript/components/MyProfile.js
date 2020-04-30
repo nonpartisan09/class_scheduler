@@ -95,7 +95,7 @@ function handleUpdateProfile() {
 class MyProfile extends Component {
   constructor(props, context) {
     super(props, context);
-
+    
     this.state = {
       user: props.currentUser
     };
@@ -103,8 +103,7 @@ class MyProfile extends Component {
 
   render() {
     return (
-      <div>
-      </div>
+      <div />
     );
   }
 }

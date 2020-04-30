@@ -12,17 +12,17 @@ import PageHeader from './reusable/PageHeader';
 
 class NotFoundPage extends Component {
   render() {
-    const { currentUser: { locale }, currentUser } = this.props;
+    const { currentUser: { locale } } = this.props;
     return (
       <div className='notFoundPageContainer'>
         <Paper zDepth={ 1 } className='paperOverride' rounded={ false }>
           <Logo />
-          <PageHeader title={
+          <PageHeader title={ (
             <FormattedMessage
               id='NotFoundPage.title'
               defaultMessage='Oops!'
             />
-            }
+          ) }
           />
 
           <div className='notFoundPageSection'>
@@ -34,11 +34,11 @@ class NotFoundPage extends Component {
           <a href={ formatLink('/', locale) }>
             <RaisedButton
               primary
-              label={
+              label={ (
                 <FormattedMessage
                   id='homeLink'
                 />
-              }
+              ) }
             />
           </a>
         </Paper>
