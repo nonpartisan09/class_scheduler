@@ -34,9 +34,9 @@ import {
   // Grid,
   // ButtonGroup
 } from '@material-ui/core';
-import {
-  Link
-} from 'react-router-dom';
+// import {
+//   Link
+// } from 'react-router-dom';
 import validate from 'react-joi-validation';
 import PropTypes from 'prop-types';
 
@@ -47,6 +47,7 @@ import {
   SPANISH
 } from './utils/availableLocales';
 import formatLink from './utils/Link';
+import SignUpSession from './utils/SignUpSession';
 import SignUpSchema from './schema/SignUpSchema';
 import contactInfo from '../ContactInfo';
 // import UserMap from './UserMap';
@@ -170,9 +171,12 @@ class Homepage extends Component {
     this.handleUserToggle = this.handleUserToggle.bind(this);
 
     this.joinUsFormRef = React.createRef();
+    
+    const { locale } = this.props;
 
     this.state = {
-      languageChecked: ENGLISH,
+      // languageChecked: ENGLISH,
+      languageChecked: locale,
       signUpType: 'client',
       // mapView: 'row',
       // clientsSelected: true,
@@ -629,19 +633,28 @@ class Homepage extends Component {
           <Fab
             className='submitButton'
             variant='extended'
-            component={ Link }
+            // component={ Link }
+            component='button'
             disabled={ !_.isEmpty(errors) }
-            to={ {
-              pathname: formatLink('/sign_up/'+this.state.signUpType, this.state.languageChecked),
-              state: {
-                currentUser: {
-                  first_name: this.props.first_name,
-                  email: this.props.email
-                }
-              }
-            } }
-            onClick={ (event) => { 
-              this.handleScroll(event, 0); 
+            href={ formatLink(
+              '/sign_up/'+this.state.signUpType, this.state.languageChecked
+             ) }
+            // to={ {
+            //   pathname: formatLink('/sign_up/'+this.state.signUpType, this.state.languageChecked),
+            //   state: {
+            //     currentUser: {
+            //       first_name: this.props.first_name,
+            //       email: this.props.email
+            //     }
+            //   }
+            // } }
+            onClick={ (/*event*/) => { 
+              // this.handleScroll(event, 0); 
+              SignUpSession.saveSession(
+                this.props.first_name,
+                this.props.email,
+                this.state.languageChecked
+              );
               gtag_formsent_conversion(locale === 'en' ? opts.joinus_en : opts.joinus_es);
               gtag_formsent_conversion(locale === 'en' ? opts.signform_en : opts.signform_es);
             } }

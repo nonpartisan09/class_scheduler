@@ -8,6 +8,7 @@ import UserFormConstants from './utils/UserFormConstants';
 import SignUpSchema from './schema/SignUpSchema';
 import { postData } from './utils/sendData';
 import formatLink from './utils/Link';
+import SignUpSession from './utils/SignUpSession';
 import PageHeader from './reusable/PageHeader';
 import { gtag_formsent_conversion, opts } from './reusable/tracking';
 
@@ -66,6 +67,23 @@ function handleUserSignUp() {
 }
 
 class SignUp extends Component {
+  constructor(props) {
+    super(props);
+
+    this.clearSignUpSession = this.clearSignUpSession.bind(this);
+  }
+  clearSignUpSession() {
+    if(SignUpSession.sessionExists()) {
+      SignUpSession.clearSession();
+    }
+  }
+  componentDidMount() {
+    // Clear any sign up session data if the user leaves the sign up page
+    window.addEventListener('beforeunload', this.clearSignUpSession);
+  }
+  componentWillUnmount() {
+    window.removeEventListener('beforeunload', this.clearSignUpSession);
+  }
   
   render() {
     return (
@@ -75,7 +93,7 @@ class SignUp extends Component {
             id='SignUp.signUpHeader'
             defaultMessage='Join Tutoría community: Step 1/2'
            />
-         ) }
+          ) }
          />
       </div>
     );
@@ -83,6 +101,11 @@ class SignUp extends Component {
 }
 
 const extraProps =  { type: SIGN_UP, primaryButtonAction: handleUserSignUp, primaryButtonLabel:'Next Step (2/2)' };
+
+if(SignUpSession.sessionExists()) {
+  extraProps.userData = SignUpSession.getSession();
+}
+
 
 export default withUserForm(SignUp, SignUpSchema, extraProps);
 
