@@ -16,7 +16,7 @@ import {
 import formatLink from '../utils/Link';
 import PaypalButton from '../PaypalButton';
 import contactInfo from '../../ContactInfo';
-import { gtag_click_conversion, opts } from './tracking'
+import { gtag_click_conversion, opts } from './tracking';
 
 class Footer extends Component {
 
@@ -87,19 +87,24 @@ class Footer extends Component {
                 defaultMessage='Social Media'
               />
             </b>
-            <a href={ contactInfo.FACEBOOK } onClick={
-            () => gtag_click_conversion(contactInfo.FACEBOOK, locale === 'en' ? opts.facebook_en : opts.facebook_es)
-            }
-            rel='noopener noreferrer' target='_blank'>
+            <a 
+              href={ contactInfo.FACEBOOK }
+              onClick={ () => gtag_click_conversion(contactInfo.FACEBOOK, locale === 'en' ? opts.facebook_en : opts.facebook_es) }
+              rel='noopener noreferrer' 
+              target='_blank'
+            >
               <FaFacebookF
                 size={ size }
                 className='facebookIcon'
               />
               Facebook
             </a>
-            <a href={ contactInfo.LINKEDIN }  onClick={
-            () => gtag_click_conversion(contactInfo.LINKEDIN, locale === 'en' ? opts.linkedin_en : opts.linkedin_es)
-            } rel='noopener noreferrer' target='_blank'>
+            <a 
+              href={ contactInfo.LINKEDIN }  
+              onClick={ () => gtag_click_conversion(contactInfo.LINKEDIN, locale === 'en' ? opts.linkedin_en : opts.linkedin_es) } 
+              rel='noopener noreferrer' 
+              target='_blank'
+            >
               <FaLinkedin
                 size={ size }
                 className='linkedInIcon'

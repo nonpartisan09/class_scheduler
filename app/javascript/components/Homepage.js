@@ -287,7 +287,7 @@ class Homepage extends Component {
         </SliderButton>
         <SliderButton
           href={ 'mailto:'+contactInfo.EMAIL }
-          clickFunction={() => gtag_click_conversion('mailto:'+contactInfo.EMAIL, locale === 'en' ? opts.email_en : opts.email_es)}
+          clickFunction={ () => gtag_click_conversion('mailto:'+contactInfo.EMAIL, locale === 'en' ? opts.email_en : opts.email_es) }
         >
           <FaEnvelope
             size={ size }

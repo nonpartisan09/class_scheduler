@@ -8,7 +8,7 @@ import { getData } from './utils/sendData';
 import formatLink from './utils/Link';
 
 import { LOWEST, HIGHEST, OLDEST, RECENT } from './SortFilter';
-
+import { ENGLISH } from './utils/availableLocales';
 
 class CommentContainer extends Component {
   constructor(props) {
@@ -19,7 +19,7 @@ class CommentContainer extends Component {
 
     this.state = {
       sortBy: 0,
-      message: '',
+      message: '', 
       ten_last_comments: props.comments && props.comments.ten_last_comments,
       count: props.comments && props.comments.count
     };
@@ -57,7 +57,7 @@ class CommentContainer extends Component {
           <h4 className='commentContainerTitleWithDropDown'>
             Comments
           </h4>
-          <DropDownMenu className='commentContainerDropdown' value={ this.state.sortBy } onClose={ this.handleBlur } onChange={ this.handleChange } >
+          <DropDownMenu className='commentContainerDropdown' value={ this.state.sortBy } onClose={ this.handleBlur } onChange={ this.handleChange }>
             <MenuItem value={ 0 } primaryText='Sort by' />
             <MenuItem value={ RECENT } primaryText='Most Recent' />
             <MenuItem value={ OLDEST } primaryText='Oldest' />
@@ -117,20 +117,22 @@ class CommentContainer extends Component {
           <li key={ index } className='commentContainerListItem'>
             <span>
               <FormattedMessage
-              id='CommentContainer.posted'
-              defaultMessage='Posted'
+                id='CommentContainer.posted'
+                defaultMessage='Posted'
             />
-            <span> { created_at } - </span>
-            <FormattedMessage
-              id='CommentContainer.postedBy'
-              defaultMessage='by'
+              <span> { created_at } - </span>
+              <FormattedMessage
+                id='CommentContainer.postedBy'
+                defaultMessage='by'
             />
-            <span> </span>
-            <a href={ formatLink(`/reviews/author/${reviewer_url_slug}`, locale) } className='slidingLink commentContainerLink'>
-              { reviewer_first_name }
-            </a>:
+              <span> </span>
+              <a href={ formatLink(`/reviews/author/${reviewer_url_slug}`, locale) } className='slidingLink commentContainerLink'>
+                { reviewer_first_name }
+              </a>:
             </span>
-            <span> { this.renderComment(comment) }</span>
+            <span> 
+              { this.renderComment(comment) }
+            </span>
           </li>
         );
       });
@@ -138,11 +140,11 @@ class CommentContainer extends Component {
       return (
         <li>
           <FormattedMessage
-           id='CommentContainer.noCommentAvailable'
+            id='CommentContainer.noCommentAvailable'
             defaultMessage='No comments available'
           />
         </li>
-      )
+      );
     }
   }
 
@@ -155,7 +157,7 @@ class CommentContainer extends Component {
           id='CommentContainer.unavailable'
           defaultMessage='Not available'
         />
-      )
+      );
     }
   }
 }
@@ -176,6 +178,7 @@ CommentContainer.propTypes = {
 };
 
 CommentContainer.defaultProps = {
+  locale: ENGLISH,
   comments: { },
   userId: ''
 };

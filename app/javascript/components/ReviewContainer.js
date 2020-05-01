@@ -28,7 +28,7 @@ class ReviewContainer extends Component {
 
     return (
       <div>
-        <div className='reviewContainerReview' >
+        <div className='reviewContainerReview'>
           { this.renderReview() }
         </div>
         <div className='reviewContainerComment'>
@@ -38,12 +38,12 @@ class ReviewContainer extends Component {
             hintText=''
             errorText={ this.state.error }
             errorStyle={ { float: 'left', margin: '-6px 0' } }
-            floatingLabelText={
+            floatingLabelText={ (
               <FormattedMessage
                 id='ReviewContainer.comment'
                 defaultMessage='Leave a comment'
               />
-            }
+            ) }
             onChange={ this.handleChangeComment }
             floatingLabelFixed
           />
@@ -52,12 +52,12 @@ class ReviewContainer extends Component {
         <RaisedButton
           primary
           className='reviewContainerSubmitButton'
-          label={
+          label={ (
             <FormattedMessage
               id='ReviewContainer.SubmitButton'
               defaultMessage='Submit Review'
             />
-          }
+          ) }
           onClick={ this.handleSubmit }
         />
       </div>

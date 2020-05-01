@@ -9,7 +9,7 @@ import SignUpSchema from './schema/SignUpSchema';
 import { postData } from './utils/sendData';
 import formatLink from './utils/Link';
 import PageHeader from './reusable/PageHeader';
-import { gtag_formsent_conversion, opts } from './reusable/tracking'
+import { gtag_formsent_conversion, opts } from './reusable/tracking';
 
 const { SIGN_UP } = UserFormConstants;
 
@@ -70,12 +70,12 @@ class SignUp extends Component {
   render() {
     return (
       <div>
-        <PageHeader title={
+        <PageHeader title={ (
           <FormattedMessage
             id='SignUp.signUpHeader'
             defaultMessage='Join Tutoría community: Step 1/2'
            />
-         }
+         ) }
          />
       </div>
     );

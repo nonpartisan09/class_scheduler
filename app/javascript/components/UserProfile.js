@@ -57,8 +57,6 @@ class UserProfile extends Component {
   }
 
   render() {
-    const { currentUser } = this.props;
-
     return (
       <div>
         <Paper zDepth={ 1 } className='paperOverride userProfilePaper' rounded={ false }>
@@ -105,20 +103,20 @@ class UserProfile extends Component {
           { this.renderProfilePicture() }
 
           <div className='userProfileButtonAndDetailsContainer'>
-            <Link to={ { pathname: '/messages/new', query: { recipient: url_slug, userName: first_name } } } className='userProfileLink' >
+            <Link to={ { pathname: '/messages/new', query: { recipient: url_slug, userName: first_name } } } className='userProfileLink'>
               <RaisedButton
                 className='userProfileMessageButton'
-                label={
+                label={ (
                   <FormattedMessage
                     id='UserProfile.messageUser'
                     defaultMessage='Message User'
                   />
-                }
+                ) }
                 primary
               />
             </Link>
 
-            <div className='userProfileReviewAndComment' >
+            <div className='userProfileReviewAndComment'>
               <ReviewContainer
                 review={ review }
                 onClick={ this.handleReviewSubmit }
@@ -132,7 +130,7 @@ class UserProfile extends Component {
                     id='UserProfile.firstName'
                     defaultMessage='First Name'
                   />:
-                  <span> { first_name }</span>
+                  <span>{ first_name }</span>
                 </div>
 
                 { this.renderLocation() }
@@ -171,7 +169,7 @@ class UserProfile extends Component {
 
             { this.renderAvailabilities() }
 
-            <Link className='userProfileSendEmail' to={ { pathname: '/messages/new', query: { recipient: url_slug, userName: first_name } } } >
+            <Link className='userProfileSendEmail' to={ { pathname: '/messages/new', query: { recipient: url_slug, userName: first_name } } }>
               <FloatingActionButton>
                 <EditIcon />
               </FloatingActionButton>
@@ -187,12 +185,12 @@ class UserProfile extends Component {
       <div className='userProfileBackButton'>
         <FlatButton
           primary
-          label={
+          label={ (
             <FormattedMessage
               id='UserProfile.Back'
               defaultMessage='Back to search results'
             />
-          }
+          ) }
           onClick={ this.handleViewProfileClick }
         />
       </div>
@@ -262,7 +260,7 @@ class UserProfile extends Component {
 
     if (!_.isEmpty(thumbnail_image) && !_.endsWith(thumbnail_image, 'missing.png')) {
       return (
-        <div className='userProfileImageContainer'  >
+        <div className='userProfileImageContainer'>
           <img src={ thumbnail_image } alt='User Profile' className='userProfileImage' />
         </div>
       );
@@ -360,6 +358,13 @@ UserProfile.propTypes = {
     first_name: PropTypes.string,
     thumbnail_url: PropTypes.string,
     url_slug: PropTypes.string,
+    last_logged_in: PropTypes.string,
+    city: PropTypes.string,
+    country: PropTypes.string,
+    state: PropTypes.string,
+    description: PropTypes.string,
+    thumbnail_image: PropTypes.string,
+    timezone: PropTypes.string,
   }),
   comments: PropTypes.shape({
     ten_last_comments: PropTypes.array,
