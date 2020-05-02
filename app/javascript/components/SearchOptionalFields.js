@@ -30,9 +30,7 @@ class SearchOptionalFields extends Component {
         <div className='searchBarStartTimeButton'>
           <FlatButton
             primary
-            label={ <FormattedMessage
-              id='startTime'
-            /> }
+            label={ <FormattedMessage id='startTime' /> }
             onClick={ this.handleToggleStartTime }
             fullWidth
           />
@@ -41,11 +39,7 @@ class SearchOptionalFields extends Component {
         <div className='searchBarEndTimeButton'>
           <FlatButton
             primary
-            label={
-              <FormattedMessage
-                id='endTime'
-              />
-            }
+            label={ <FormattedMessage id='endTime' /> }
             fullWidth
             onClick={ this.handleToggleEndTime }
           />
@@ -72,12 +66,12 @@ class SearchOptionalFields extends Component {
         <div className='searchBarDistanceButton'>
           <FlatButton
             primary
-            label={
+            label={ (
               <FormattedMessage
                 id='searchOptionalFields.distance'
                 defaultMessage='Distance'
               />
-            }
+            ) }
             onClick={ this.handleToggleDistance }
             fullWidth
           />
@@ -100,11 +94,7 @@ class SearchOptionalFields extends Component {
         <TimePicker
           className='searchBarStartTimePicker'
           format='24hr'
-          hintText={
-            <FormattedMessage
-              id='from'
-            />
-          }
+          hintText={  <FormattedMessage id='from' /> }
           value={ start_time }
           onChange={ onChange('start_time') }
           onBlur={ onBlur('start_time') }
@@ -127,11 +117,7 @@ class SearchOptionalFields extends Component {
         <TimePicker
           className='searchBarEndTimePicker'
           format='24hr'
-          hintText={
-            <FormattedMessage
-              id='to'
-            />
-          }
+          hintText={ <FormattedMessage id='to' /> }
           value={ end_time }
           onChange={ onChange('end_time') }
           onBlur={ onBlur('end_time') }
@@ -184,12 +170,12 @@ class SearchOptionalFields extends Component {
             checked={ distance === 0 }
             key={ 0 }
             value={ 0 }
-            primaryText={
+            primaryText={ (
               <FormattedMessage
                 id='SearchOptionalFields.any'
                 defaultMessage='Any'
               />
-            }
+            ) }
           />
           <MenuItem insetChildren checked={ distance === 5 } key={ 1 } value={ 5 } primaryText={ `5 ${UNIT}` } />
           <MenuItem insetChildren checked={ distance === 10 } key={ 2 } value={ 10 } primaryText={ `10 ${UNIT}` } />

@@ -39,7 +39,6 @@ class NewMessagePage extends Component {
       location: {
         query: { userName }
       },
-      currentUser,
       errors,
       changeHandler,
       validateHandler

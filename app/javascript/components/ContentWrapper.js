@@ -5,6 +5,8 @@ import { withRouter } from 'react-router-dom';
 import Header from './reusable/Header';
 import Footer from './reusable/Footer';
 
+import { ENGLISH } from './utils/availableLocales';
+
 class ContentWrapper extends Component {
     constructor(props) {
         super(props);
@@ -66,14 +68,14 @@ class ContentWrapper extends Component {
 
         return (
           <div className='pageWrapper'>
-            <Header currentUser={ this.props.currentUser } mobile={ this.state.mobile } locale={this.props.locale} />
+            <Header currentUser={ this.props.currentUser } mobile={ this.state.mobile } locale={ this.props.locale } />
             <div
               className='pageContent'
               ref={ (pagecontent) => this.pagecontent = pagecontent }
             >
               {childrenWithProps}
             </div>
-            <Footer style={ { position: this.calculateFooterPosition() } } currentUser={ this.props.currentUser } locale={this.props.locale}  />
+            <Footer style={ { position: this.calculateFooterPosition() } } currentUser={ this.props.currentUser } locale={ this.props.locale }  />
           </div>
         );
     }
@@ -83,11 +85,13 @@ ContentWrapper.propTypes = {
     children: PropTypes.any,
     currentUser: PropTypes.object,
     location: PropTypes.object.isRequired,
+    locale: PropTypes.string,
 };
   
 ContentWrapper.defaultProps = {
     children: {},
     currentUser: {},
+    locale: ENGLISH,
 };
 
 export default withRouter(ContentWrapper);

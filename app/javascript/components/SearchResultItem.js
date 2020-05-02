@@ -118,7 +118,7 @@ SearchResultItem.propTypes = {
   search: PropTypes.object,
   volunteers: PropTypes.array,
   history: PropTypes.object,
-  locale: PropTypes.string
+  locale: PropTypes.string,
 };
 
 SearchResultItem.defaultProps = {

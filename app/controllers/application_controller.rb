@@ -112,13 +112,16 @@ class ApplicationController < ActionController::Base
   def set_locale
     @languages = ["", "en", "es"]
     locale_extracted = "en" #default
-    browser_locale = extract_locale_from_headers
-    browser_locale.each do |loc| 
-      if @languages.include? loc
-        locale_extracted = loc
-        break
+    
+    if request.env['HTTP_ACCEPT_LANGUAGE']
+      browser_locale = extract_locale_from_headers
+      browser_locale.each do |loc| 
+        if @languages.include? loc
+          locale_extracted = loc
+          break
+        end
       end
-    end
+    end 
     params.permit(:locale)
     I18n.locale = params[:locale] || locale_extracted
     

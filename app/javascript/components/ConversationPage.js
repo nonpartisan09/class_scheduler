@@ -22,7 +22,7 @@ class ConversationPage extends Component {
       <div>
         <Paper zDepth={ 1 } className='paperOverride' rounded={ false }>
           { this.renderReceivedMessages() }
-          <br/>
+          <br />
           <MessageButtons
             newMessageFirstName={ conversee }
             newMessageRecipient={ conversee_url_slug }

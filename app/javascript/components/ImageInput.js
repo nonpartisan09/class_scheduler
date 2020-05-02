@@ -37,7 +37,7 @@ class ImageInput extends Component {
           onRequestClose={ this.handleShowDialog }
           open={ this.state.invalidFileDialog }
           actions={ [
-            <FlatButton key='close' primary onClick={ this.handleShowDialog } >
+            <FlatButton key='close' primary onClick={ this.handleShowDialog }>
               <FormattedMessage
                 id='close'
                 defaultMessage='Close'
@@ -76,7 +76,7 @@ class ImageInput extends Component {
 
     if (effectiveUrl) {
       return(
-        <div className='imageInputImageContainer'  >
+        <div className='imageInputImageContainer'>
           <img src={ effectiveUrl } alt='User Profile' className='imageInputImage' />
         </div>
       );
@@ -86,7 +86,7 @@ class ImageInput extends Component {
 
       if (icon && !dataUrl) {
         return (
-          <div className='imageInputImage' >
+          <div className='imageInputImage'>
             <div className='imageInputIcon'>
               { icon }
             </div>

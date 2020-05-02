@@ -47,12 +47,12 @@ class ResetPasswordPage extends Component {
             type='password'
             className='userFormInputField password'
             hintText=''
-            floatingLabelText={
+            floatingLabelText={ (
               <FormattedMessage
                 id='password'
                 defaultMessage='Password'
               />
-            }
+            ) }
             floatingLabelFixed
             errorText={ errors.password }
             onChange={ changeHandler('password') }
@@ -67,12 +67,12 @@ class ResetPasswordPage extends Component {
             type='password'
             className='userFormInputField passwordConfirmation'
             hintText=''
-            floatingLabelText={
+            floatingLabelText={ (
               <FormattedMessage
                 id='passwordConfirmation'
                 defaultMessage='Password Confirmation'
               />
-            }
+            ) }
             floatingLabelFixed
             errorText={ errors.password_confirmation }
             onChange={ changeHandler('password_confirmation') }
@@ -93,12 +93,12 @@ class ResetPasswordPage extends Component {
     return (
       <RaisedButton
         primary
-        label={
+        label={ (
           <FormattedMessage
             id='resetPassword'
             defaultMessage='Reset password'
           />
-        }
+        ) }
         onClick={ this.handleForgotClick }
         className='signInLink'
       />
@@ -137,7 +137,7 @@ class ResetPasswordPage extends Component {
         params: `reset_password_token=${searchParams['reset_password_token']}&password=${password}`,
         method: 'PUT',
         successCallBack: () => {
-         location.assign('/');
+         window.location.assign('/');
         },
         errorCallBack: (message) => {
           this.setState({

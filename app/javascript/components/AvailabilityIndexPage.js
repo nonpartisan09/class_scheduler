@@ -10,20 +10,20 @@ import AvailabilitiesTable from './AvailabilitiesTable';
 import formatLink from './utils/Link';
 
 import PageHeader from './reusable/PageHeader';
+import { ENGLISH } from './utils/availableLocales';
 
 class AvailabilityIndexPage extends Component {
   render() {
-    const { currentUser } = this.props;
-
     return (
       <div>
         <Paper zDepth={ 1 } className='paperOverride' rounded={ false }>
-          <PageHeader title={
+          <PageHeader title={ (
             <FormattedMessage
               id='AvailabilityIndexPage.Header'
               defaultMessage='My availabilities'
             />
-          } />
+            ) } 
+          />
 
           <div className='availabilityIndexContainer'>
             <FormattedMessage
@@ -42,11 +42,11 @@ class AvailabilityIndexPage extends Component {
   }
 
   renderAvailablePrograms() {
-    return _.map(this.props.programs, ({ name }) =>
+    return _.map(this.props.programs, ({ name }) => (
       <li key={ name } className='availabilityListItem'>
         <Chip key={ name }>{ name }</Chip>
       </li>
-    );
+      ));
   }
 
   renderAvailabilities() {
@@ -66,16 +66,16 @@ class AvailabilityIndexPage extends Component {
     } else {
       return (
         <div>
-          <a href={ formatLink('/availabilities/new', locale) } >
+          <a href={ formatLink('/availabilities/new', locale) }>
             <RaisedButton
               primary
               className='conversationButton'
-              label={
+              label={ (
                 <FormattedMessage
                   id='availabilityCreateNew'
                   defaultMessage='Create new availabilities'
                 />
-              }
+                ) }
             />
           </a>
         </div>
@@ -90,7 +90,8 @@ AvailabilityIndexPage.propTypes = {
   currentUser: PropTypes.shape({
     first_name: PropTypes.string,
     email: PropTypes.string,
-    timezone: PropTypes.string
+    timezone: PropTypes.string,
+    locale: PropTypes.string,
   })
 };
 
@@ -100,7 +101,8 @@ AvailabilityIndexPage.defaultProps = {
   currentUser: {
     first_name: '',
     email: '',
-    timezone: ''
+    timezone: '',
+    locale: ENGLISH,
   }
 };
 

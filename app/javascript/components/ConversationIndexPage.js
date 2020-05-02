@@ -28,12 +28,12 @@ class ConversationIndexPage extends Component {
     return (
       <div>
         <Paper zDepth={ 1 } className='paperOverride' rounded={ false }>
-          <PageHeader title={
+          <PageHeader title={ (
             <FormattedMessage
               id='ConversationIndexPage.header'
               defaultMessage='Inbox'
             />
-          } />
+            ) } />
           { this.renderAlertInfo() }
           <div className='conversationBox'>
             { this.renderInbox() }
@@ -69,38 +69,38 @@ class ConversationIndexPage extends Component {
       const button = function(){
         if (client) {
           return (
-            <a href={ formatLink('/search', locale) } >
+            <a href={ formatLink('/search', locale) }>
               <RaisedButton
                 primary
-                label={
+                label={ (
                   <FormattedMessage
                     id='ConversationIndexPage.Search'
                     defaultMessage='Search for volunteers'
                   />
-                }
+                  ) }
                 className='conversationButton'
               />
             </a>
           );
         } else if (volunteer) {
           return (
-            <a href={ formatLink('/availabilities/new', locale) } >
+            <a href={ formatLink('/availabilities/new', locale) }>
               <RaisedButton
                 primary
                 className='conversationButton'
-                label={
+                label={ (
                   <FormattedMessage
                     id='availabilityCreateNew'
                   />
-                }
+                ) }
               />
             </a>
           );
         }
       }();
       return (
-        <List >
-          <Subheader >
+        <List>
+          <Subheader>
             <FormattedMessage
               id='ConversationIndexPage.NoMessage'
               defaultMessage=' No Message Available'
@@ -171,6 +171,9 @@ ConversationIndexPage.propTypes = {
     password: PropTypes.string,
     password_confirmation: PropTypes.string,
     thumbnail_image: PropTypes.oneOfType([ PropTypes.string, PropTypes.object ]),
+    volunteer: PropTypes.bool,
+    client: PropTypes.bool,
+    locale: PropTypes.string,
   }),
 };
 
