@@ -34,9 +34,6 @@ import {
   // Grid,
   // ButtonGroup
 } from '@material-ui/core';
-// import {
-//   Link
-// } from 'react-router-dom';
 import validate from 'react-joi-validation';
 import PropTypes from 'prop-types';
 
@@ -175,7 +172,6 @@ class Homepage extends Component {
     const { locale } = this.props;
 
     this.state = {
-      // languageChecked: ENGLISH,
       languageChecked: locale,
       signUpType: 'client',
       // mapView: 'row',
@@ -633,23 +629,12 @@ class Homepage extends Component {
           <Fab
             className='submitButton'
             variant='extended'
-            // component={ Link }
             component='button'
             disabled={ !_.isEmpty(errors) }
             href={ formatLink(
               '/sign_up/'+this.state.signUpType, this.state.languageChecked
              ) }
-            // to={ {
-            //   pathname: formatLink('/sign_up/'+this.state.signUpType, this.state.languageChecked),
-            //   state: {
-            //     currentUser: {
-            //       first_name: this.props.first_name,
-            //       email: this.props.email
-            //     }
-            //   }
-            // } }
-            onClick={ (/*event*/) => { 
-              // this.handleScroll(event, 0); 
+            onClick={ () => { 
               SignUpSession.saveSession(
                 this.props.first_name,
                 this.props.email,
