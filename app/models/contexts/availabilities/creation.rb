@@ -16,40 +16,33 @@ module Contexts
           raise Availabilities::Errors::StartTimeMissing, message
         end
 
-        unless @availability[:end_time].present?  && @timezone.present?
+        unless @availability[:end_time].present? && @timezone.present?
           message = I18n.t('custom_errors.messages.missing_end_time')
           raise Availabilities::Errors::EndTimeMissing, message
         end
 
-        initialize_start_time
-        initialize_end_time
-
+        parse_times_utc
+        parse_times_user_tz
       end
 
       def execute
+        check_if_starts_before_ends?
         check_if_less_than_30_minutes?
-
         check_if_overlaps?
 
-        check_if_starts_before_ends?
-
-        Time.zone = 'UTC'
-
-        new_availability_params = @availability.merge({
-                                                          :day => @day,
-                                                          :start_time => @parsed_start_time,
-                                                          :end_time => @parsed_end_time,
-                                                          :user_id => @current_user.id,
-                                                      })
+        new_availability_params = @availability.merge(
+          day: @day,
+          start_time: @parsed_start_time_utc,
+          end_time: @parsed_end_time_utc,
+          user_id: @current_user.id
+        )
         @new_availability = Availability.find_or_create_by!(new_availability_params)
-        @new_availability
 
         unless @new_availability
           message = I18n.t('custom_errors.messages.unknown_error')
           raise Availabilities::Errors::UnknownAvailabilityError, message
         end
 
-        Time.zone = 'UTC'
         @new_availability
       end
 
@@ -57,45 +50,50 @@ module Contexts
 
       def check_if_overlaps?
         existing_availabilities = @current_user.availabilities.where('day = ?', @day)
+        return unless existing_availabilities.present?
 
-        if existing_availabilities.present?
-          current_range = { start_time: @parsed_start_time.beginning_of_minute, 
-                            end_time: @parsed_end_time.beginning_of_minute}
+        # Just compare hours and minutes
+        current_range = {
+          start_time: @parsed_user_start_time.strftime('%H:%M'),
+          end_time: @parsed_user_end_time.strftime('%H:%M')
+        }
+        overlaps = existing_availabilities.any? do |availability|
+          # db time is UTC and may span day.
+          # But in user local time, it won't span day
+          # so keeping it simple and going back to user local time.
+          start_time = availability[:start_time]
+                       .in_time_zone(@timezone).strftime('%H:%M')
+          end_time = availability[:end_time]
+                     .in_time_zone(@timezone).strftime('%H:%M')
+          same = (current_range[:start_time] == start_time) &&
+                 (current_range[:end_time] == end_time)
+          overlap = (current_range[:start_time] < end_time) &&
+                    (current_range[:end_time] > start_time)
+          same || overlap
+        end
 
-          overlaps = existing_availabilities.any? do |availability|
-            start_time = availability[:start_time].beginning_of_minute
-            end_time = availability[:end_time].beginning_of_minute
-
-            same = (current_range[:start_time] == start_time) && (current_range[:end_time] == end_time)
-            overlap = (current_range[:start_time] < end_time) && (current_range[:end_time] > start_time)
-            same || overlap
-          end
-
-          if overlaps
-            message = I18n.t('custom_errors.messages.overlapping_availability')
-            raise Availabilities::Errors::OverlappingAvailability, message
-          end
+        if overlaps
+          message = I18n.t('custom_errors.messages.overlapping_availability')
+          raise Availabilities::Errors::OverlappingAvailability, message
         end
       end
 
       def check_if_less_than_30_minutes?
-        minutes = ((@parsed_end_time.to_time - @parsed_start_time.to_time) / 1.minute).round
-        if minutes < 30 && !is_start_time_day_before? && !is_end_time_day_after?
+        # availabilities can't span user's day so just compare originals
+        minutes = (@parsed_user_end_time - @parsed_user_start_time) / 60
+        if minutes < 30
           message = I18n.t('custom_errors.messages.minimum_availability_required')
           raise Availabilities::Errors::ShortAvailability, message
         end
       end
 
       def check_if_starts_before_ends?
-        Time.zone = @timezone
-
-        if @parsed_end_time < @parsed_start_time && !is_start_time_day_before? && !is_end_time_day_after?
+        # availabilities can't span user's day so just compare originals
+        if @parsed_user_end_time < @parsed_user_start_time
           message = I18n.t('custom_errors.messages.end_time_after_start_time')
           raise Availabilities::Errors::ShortAvailability, message
         end
       end
-
-      private
 
       def day_month(index)
         "#{I18n.t('date.day_names')[@day_index]}, #{index + 1} Jan 2001"
@@ -106,31 +104,17 @@ module Contexts
         Time.zone.parse(t.strftime("#{@day_index + 1} Jan 2001 %R"))
       end
 
-      def initialize_start_time
-        @parsed_start_time = parse_time(@availability[:start_time])
-        return @parsed_start_time
-      end
-
-      def initialize_end_time
-        @parsed_end_time = parse_time(@availability[:end_time])
-        return @parsed_end_time
-      end
-
-      def is_start_time_day_before?
+      def parse_times_utc
         Time.zone = 'UTC'
-
-        Time.zone.parse(@availability[:start_time]).strftime("%H").to_i - offset <= 0
+        @parsed_start_time_utc = parse_time(@availability[:start_time])
+        @parsed_end_time_utc = parse_time(@availability[:end_time])
       end
 
-      def is_end_time_day_after?
-        Time.zone = 'UTC'
-
-        Time.zone.parse(@availability[:end_time]).strftime("%H").to_i + offset.abs >= 24
-      end
-
-      def offset
-        Time.zone = @timezone
-        Time.zone.utc_offset / 3600
+      def parse_times_user_tz
+        @parsed_user_start_time =
+          Time.zone.parse(@availability[:start_time]).change(sec: 0).in_time_zone(@timezone)
+        @parsed_user_end_time =
+          Time.zone.parse(@availability[:end_time]).change(sec: 0).in_time_zone(@timezone)
       end
     end
   end
