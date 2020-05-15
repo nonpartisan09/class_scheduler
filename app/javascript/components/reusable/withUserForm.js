@@ -62,8 +62,29 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
         user: props.currentUser
       };
 
+      const { location, changeValues } = this.props;   
+ 
+      // If the location.state contains a user data, then restore the values to the form
+      if(!_.isEmpty(location.state)) {
+        changeValues(
+          ['first_name', location.state.currentUser.first_name],
+          ['email', location.state.currentUser.email],
+        );        
+      }else if(wrappedProps && 'userData' in wrappedProps) {
+        //If there is data to show in the form for this user, restore the values to the form
+        const userData = wrappedProps['userData'];
+        changeValues( 
+          [
+            ['first_name', userData.firstName],
+            ['email', userData.email],
+            ['locale', userData.locale]
+          ] 
+        );
+      }
+     
       this.sortArrayProps(props);
     }
+    
 
     render() {
       const {
@@ -83,7 +104,6 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
         },
         currentUser,
         timezones,
-        location,
       } = this.props;
 
       return (
@@ -109,7 +129,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
 
               <TextField
                 name='email'
-                value={ _.isEmpty(location.state) ? email : location.state.currentUser.email }
+                value={ email }
                 className='userFormInputField email'
                 hintText=''
                 floatingLabelText={
@@ -151,7 +171,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
 
               <TextField
                 name='first_name'
-                value={ _.isEmpty(location.state) ? first_name : location.state.currentUser.first_name }
+                value={ first_name }
                 hintText=''
                 className='userFormInputField firstName'
                 floatingLabelText={
