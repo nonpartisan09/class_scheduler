@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Tutoría</title>
+    <% if @_request.env["PATH_INFO"].start_with? "/es" %>
+      <title>Tutoría: Tutores/as Gratuitos de Inglés, Ciudadanía y Más</title>
+    <% else %>
+      <title>Tutoría: Free Tutors for English, US Citizenship, and More</title>
+    <% end %>
     <%= csrf_meta_tags %>
     <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0" >
     <meta charset='utf-8' />
