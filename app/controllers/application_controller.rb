@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
   before_action :sign_out_if_inactive, if: -> { current_user.present? && !current_user.active }
 
   rescue_from ActionController::RoutingError, :with => :not_found
-  respond_to :json, :xml, :html
+  respond_to :json, :xml, :html, :plain
 
   def index
     decorate_user_if_present
@@ -106,6 +106,11 @@ class ApplicationController < ActionController::Base
   def sitemap
     @pages = ["", "/about", "/faq" , "/sign_up/client", "/sign_up/volunteer", "/terms_of_use" ]
     headers['Content-Type'] = 'application/xml'
+    @host = "#{request.protocol}#{request.host}"
+  end
+
+  def robots
+    headers['Content-Type'] = 'text/plain'
     @host = "#{request.protocol}#{request.host}"
   end
 
