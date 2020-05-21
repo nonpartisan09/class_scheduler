@@ -11,6 +11,7 @@ Rails.application.routes.draw do
     get 'faq' => 'application#faq_page'
     get 'volunteer_sign_up_completed' => 'application#volunteer_sign_up_completed_page'
     get '/sitemap.xml' => 'application#sitemap', :defaults => { format: 'xml' }
+    get '/robots.txt' => 'application#robots', :defaults => { format: 'plain' }
 
     resources :availabilities
     resources :conversations, only: %i[new create]

@@ -43,14 +43,22 @@ class AvailabilityDecorator
     Time.zone = @timezone
     @day ||= Time.zone.local_to_utc(@availability.start_time).strftime("%A")
   end
-
-  def start_time
+  
+  def get_time(time)
     Time.zone = @timezone
-    @start_time || Time.zone.parse(@availability.start_time.to_s).strftime("%H:%M")
+  
+    current_time = Time.zone.now 
+    offset = current_time.utc_offset/3600
+     
+    user_time = ActiveSupport::TimeZone[offset].parse(time.to_s)
+    user_time.strftime("%H:%M")
+  end 
+  
+  def start_time
+    @start_time || get_time(@availability.start_time)
   end
 
   def end_time
-    Time.zone = @timezone
-    @end_time || Time.zone.parse(@availability.end_time.to_s).strftime("%H:%M")
+    @end_time || get_time(@availability.end_time)
   end
 end

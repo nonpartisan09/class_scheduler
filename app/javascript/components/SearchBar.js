@@ -33,7 +33,7 @@ class SearchBar extends Component {
     this.state = {
       error: '',
       status: 0,
-      showSnackBar: false
+      showSnackBar: false,
     };
   }
 
@@ -132,7 +132,7 @@ class SearchBar extends Component {
       location: { state },
       validateAllHandler
     } = this.props;
-
+  
     return (
       <div>
         { this.renderTitle() }
@@ -316,14 +316,15 @@ class SearchBar extends Component {
   }
 
   selectionRendererDay(values) {
-    const { days } = this.props;
-
+    const { days, location: { state } } = this.props;
+    const allDays = days.length > 0 ? days : state.days;
+     
     if (_.size(values) > 1) {
       return _.trimEnd(_.map(values, (value) => {
-        return days[value];
-      }).join(', '), ', ');
+        return allDays[value];
+      }).join(', '), ', '); 
     } else if (_.size(values) === 1) {
-      return days[values];
+      return allDays[values];
     }
   }
 
