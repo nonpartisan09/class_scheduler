@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import QueryString from 'query-string';
 
 import validate from 'react-joi-validation';
 import { FormattedMessage } from 'react-intl';
@@ -258,8 +259,10 @@ class SearchBar extends Component {
 
   renderTitle() {
     const { location: { state }  } = this.props;
+    const urlQueries = QueryString.parse(location.search);
+    const isSignUp = (state && state.signUp) || (urlQueries.signup === 'true');
 
-    if (state && state.signUp) {
+    if (isSignUp) {
       return (
         <div className='signUpHeader'>
           <PageHeader
@@ -432,7 +435,8 @@ SearchBar.propTypes = {
     push: PropTypes.func.isRequired,
   }).isRequired,
   location: PropTypes.shape({
-    state: PropTypes.object
+    state: PropTypes.object,
+    search: PropTypes.string,
   })
 };
 

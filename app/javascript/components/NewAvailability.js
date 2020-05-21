@@ -2,6 +2,7 @@ import _ from 'lodash';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
+import QueryString from 'query-string';
 
 import Joi from 'joi-browser';
 import validate from 'react-joi-validation';
@@ -166,8 +167,10 @@ class NewAvailability extends Component {
 
   renderTitle() {
     const { location: { state }  } = this.props;
+    const urlQueries = QueryString.parse(location.search);
+    const isSignUp = (state && state.signUp) || (urlQueries.signup === 'true');
 
-    if (state && state.signUp) {
+    if (isSignUp) {
       return (
         <h1 className='signUpHeader'>
           <FormattedMessage
@@ -374,7 +377,8 @@ NewAvailability.propTypes = {
   validateAllHandler: PropTypes.func.isRequired,
   validateAll: PropTypes.func.isRequired,
   location: PropTypes.shape({
-    state: PropTypes.object
+    state: PropTypes.object,
+    search: PropTypes.string,
   })
 };
 
