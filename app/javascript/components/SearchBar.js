@@ -39,75 +39,39 @@ class SearchBar extends Component {
   }
 
   renderDays() {
-    const { errors, search: { day }, location: { state } } = this.props;
+    const { errors, search: { day }, days } = this.props;
 
-    if (state && state.days) {
-      return (
-        <SelectField
-          className='searchBarOption'
-          hintText={ (
-            <FormattedMessage
-              id='SearchBar.days'
-              defaultMessage='Day(s)'
-            />
-          ) }
-          value={ day }
-          errorText={ errors.day }
-          onChange={ this.changeHandlerDay }
-          multiple
-          selectionRenderer={ this.selectionRendererDay }
-        >
-          { _.map(state.days, (value, index) => 
-            (
-              <MenuItem 
-                key={ value + index } 
-                insetChildren 
-                checked={ _.indexOf(day, index) > -1 } 
-                value={ index } 
-                primaryText={ (
-                  <span> 
-                    { value }
-                  </span>
-                ) } 
-              />
-            ) 
-          ) }
-        </SelectField>
-      );
-    } else {
-      const { days } = this.props;
-
-      return (
-        <SelectField
-          className='searchBarOption'
-          hintText={ (
-            <FormattedMessage
-              id='SearchBar.days'
-              defaultMessage='Day(s)'
-            />
-          ) }
-          value={ day }
-          errorText={ errors.day }
-          onChange={ this.changeHandlerDay }
-          multiple
-          selectionRenderer={ this.selectionRendererDay }
-        >
-          { _.map(days, (value, index) => (
-            <MenuItem 
-              key={ value + index } 
-              insetChildren 
-              checked={ _.indexOf(day, index) > -1 } 
-              value={ index } 
-              primaryText={ (
-                <span> 
-                  { value } 
-                </span> 
-              ) } 
-            />
-          )) }
-        </SelectField>
-      );
-    }
+    return (
+      <SelectField
+        className='searchBarOption'
+        hintText={ (
+          <FormattedMessage
+            id='SearchBar.days'
+            defaultMessage='Day(s)'
+          />
+        ) }
+        value={ day }
+        errorText={ errors.day }
+        onChange={ this.changeHandlerDay }
+        multiple
+        selectionRenderer={ this.selectionRendererDay }
+      >
+        { _.map(days, (value, index) => (
+          <MenuItem 
+            key={ value + index } 
+            insetChildren 
+            checked={ _.indexOf(day, index) > -1 } 
+            value={ index } 
+            primaryText={ (
+              <span> 
+                { value } 
+              </span> 
+            ) } 
+          />
+        )) }
+      </SelectField>
+    );
+  
   }
 
   render() {
@@ -130,8 +94,7 @@ class SearchBar extends Component {
         timezone,
         locale
       },
-      location: { state },
-      validateAllHandler
+      validateAllHandler,
     } = this.props;
 
     return (
@@ -140,7 +103,7 @@ class SearchBar extends Component {
 
         <div className='searchBarContainer'>
           <TextField
-            value={ state && state.currentUser.timezone || timezone }
+            value={ timezone }
             className='searchBarTimezone'
             name='searchBarTimezone'
             disabled
@@ -258,11 +221,10 @@ class SearchBar extends Component {
   }
 
   renderTitle() {
-    const { location: { state }  } = this.props;
-    const urlQueries = QueryString.parse(location.search);
-    const isSignUp = (state && state.signUp) || (urlQueries.signup === 'true');
+    const { location: { search }  } = this.props;
+    const urlQueries = QueryString.parse(search);
 
-    if (isSignUp) {
+    if (urlQueries.signup === 'true') {
       return (
         <div className='signUpHeader'>
           <PageHeader
@@ -435,14 +397,13 @@ SearchBar.propTypes = {
     push: PropTypes.func.isRequired,
   }).isRequired,
   location: PropTypes.shape({
-    state: PropTypes.object,
     search: PropTypes.string,
   })
 };
 
 SearchBar.defaultProps = {
   location: {
-    state: {}
+    search: ''
   },
   days: [],
   errors: {},
