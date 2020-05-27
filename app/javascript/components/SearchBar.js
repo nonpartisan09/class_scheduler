@@ -1,7 +1,6 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import QueryString from 'query-string';
 
 import validate from 'react-joi-validation';
 import { FormattedMessage } from 'react-intl';
@@ -39,39 +38,75 @@ class SearchBar extends Component {
   }
 
   renderDays() {
-    const { errors, search: { day }, days } = this.props;
+    const { errors, search: { day }, location: { state } } = this.props;
 
-    return (
-      <SelectField
-        className='searchBarOption'
-        hintText={ (
-          <FormattedMessage
-            id='SearchBar.days'
-            defaultMessage='Day(s)'
-          />
-        ) }
-        value={ day }
-        errorText={ errors.day }
-        onChange={ this.changeHandlerDay }
-        multiple
-        selectionRenderer={ this.selectionRendererDay }
-      >
-        { _.map(days, (value, index) => (
-          <MenuItem 
-            key={ value + index } 
-            insetChildren 
-            checked={ _.indexOf(day, index) > -1 } 
-            value={ index } 
-            primaryText={ (
-              <span> 
-                { value } 
-              </span> 
-            ) } 
-          />
-        )) }
-      </SelectField>
-    );
-  
+    if (state && state.days) {
+      return (
+        <SelectField
+          className='searchBarOption'
+          hintText={ (
+            <FormattedMessage
+              id='SearchBar.days'
+              defaultMessage='Day(s)'
+            />
+          ) }
+          value={ day }
+          errorText={ errors.day }
+          onChange={ this.changeHandlerDay }
+          multiple
+          selectionRenderer={ this.selectionRendererDay }
+        >
+          { _.map(state.days, (value, index) => 
+            (
+              <MenuItem 
+                key={ value + index } 
+                insetChildren 
+                checked={ _.indexOf(day, index) > -1 } 
+                value={ index } 
+                primaryText={ (
+                  <span> 
+                    { value }
+                  </span>
+                ) } 
+              />
+            ) 
+          ) }
+        </SelectField>
+      );
+    } else {
+      const { days } = this.props;
+
+      return (
+        <SelectField
+          className='searchBarOption'
+          hintText={ (
+            <FormattedMessage
+              id='SearchBar.days'
+              defaultMessage='Day(s)'
+            />
+          ) }
+          value={ day }
+          errorText={ errors.day }
+          onChange={ this.changeHandlerDay }
+          multiple
+          selectionRenderer={ this.selectionRendererDay }
+        >
+          { _.map(days, (value, index) => (
+            <MenuItem 
+              key={ value + index } 
+              insetChildren 
+              checked={ _.indexOf(day, index) > -1 } 
+              value={ index } 
+              primaryText={ (
+                <span> 
+                  { value } 
+                </span> 
+              ) } 
+            />
+          )) }
+        </SelectField>
+      );
+    }
   }
 
   render() {
@@ -94,7 +129,8 @@ class SearchBar extends Component {
         timezone,
         locale
       },
-      validateAllHandler,
+      location: { state },
+      validateAllHandler
     } = this.props;
 
     return (
@@ -103,7 +139,7 @@ class SearchBar extends Component {
 
         <div className='searchBarContainer'>
           <TextField
-            value={ timezone }
+            value={ state && state.currentUser.timezone || timezone }
             className='searchBarTimezone'
             name='searchBarTimezone'
             disabled
@@ -221,10 +257,9 @@ class SearchBar extends Component {
   }
 
   renderTitle() {
-    const { location: { search }  } = this.props;
-    const urlQueries = QueryString.parse(search);
+    const { location: { state }  } = this.props;
 
-    if (urlQueries.signup === 'true') {
+    if (state && state.signUp) {
       return (
         <div className='signUpHeader'>
           <PageHeader
@@ -397,13 +432,13 @@ SearchBar.propTypes = {
     push: PropTypes.func.isRequired,
   }).isRequired,
   location: PropTypes.shape({
-    search: PropTypes.string,
+    state: PropTypes.object
   })
 };
 
 SearchBar.defaultProps = {
   location: {
-    search: ''
+    state: {}
   },
   days: [],
   errors: {},
