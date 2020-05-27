@@ -12,6 +12,7 @@ test:
  encoding: utf8
 
 before_install:
+ - gem install bundler
  - mysql -e 'CREATE DATABASE tutoria_test;'
 
 script:
