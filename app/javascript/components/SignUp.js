@@ -10,7 +10,6 @@ import { postData } from './utils/sendData';
 import formatLink from './utils/Link';
 import SignUpSession from './utils/SignUpSession';
 import PageHeader from './reusable/PageHeader';
-import { gtag_formsent_conversion, opts } from './reusable/tracking';
 
 const { SIGN_UP } = UserFormConstants;
 
@@ -19,7 +18,7 @@ const ignoredFields = [
 ];
 
 function handleUserSignUp() {
-  const { match: { params: { role } }, history } = this.props;
+  const { match: { params: { role } } } = this.props;
   const { currentUser, currentUser: { locale } } = this.props;
 
   const updatedUser =  _.reduce(currentUser, (memo, value, key) => {
@@ -37,7 +36,7 @@ function handleUserSignUp() {
     url: restfulUrl,
     attributes,
     method: 'POST',
-    successCallBack: ({ currentUser, days }) => {
+    successCallBack: () => {
       const userLocale = updatedUser.locale || '';
       let link = '';
 
@@ -45,9 +44,9 @@ function handleUserSignUp() {
         link = '/volunteer_sign_up_completed';
         window.location.href = formatLink(link, userLocale);
       } else if (role === 'client' ) {
-        gtag_formsent_conversion(locale === 'en' ? opts.signup_en : opts.signup_es);
         link = '/search';
-        history.push(formatLink(link, userLocale), { signUp: true, currentUser, days });
+        const signupQuery = '?signup=true';
+        window.location.href = formatLink(link + signupQuery, userLocale);
       }
     },
 
