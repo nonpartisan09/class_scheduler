@@ -12,6 +12,7 @@ test:
  encoding: utf8
 
 before_install:
+ - gem install bundler -v "$(grep -A 1 "BUNDLED WITH" Gemfile.lock | tail -n 1)"
  - mysql -e 'CREATE DATABASE tutoria_test;'
 
 script:
