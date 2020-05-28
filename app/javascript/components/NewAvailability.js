@@ -99,29 +99,18 @@ class NewAvailability extends Component {
     this.handleRemoveAvailability = this.handleRemoveAvailability.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
 
-    const days = props.location && props.location.state && props.location.state.days;
-
     this.state = {
       numberOfAvailabilities: 1,
       error: { },
-      days: days || props.days
+      days: props.days
     };
   }
 
   render() {
     const {
       validateAllHandler,
-      location: { state },
-      currentUser: user
+      currentUser,
     } = this.props;
-
-    const currentUser = function(){
-      if (state) {
-        return state.currentUser;
-      } else {
-        return user;
-      }
-    }();
 
       return (
         <div>
@@ -165,18 +154,6 @@ class NewAvailability extends Component {
   }
 
   renderTitle() {
-    const { location: { state }  } = this.props;
-
-    if (state && state.signUp) {
-      return (
-        <h1 className='signUpHeader'>
-          <FormattedMessage
-            id='signUpHeader'
-            defaultMessage='Join Tutoría community: Step 2/2'
-          />
-        </h1>
-      );
-    } else {
       return (
         <PageHeader title={ (
           <FormattedMessage
@@ -186,7 +163,6 @@ class NewAvailability extends Component {
           ) }
         />
       );
-    }
   }
 
   handleSubmit() {
@@ -374,14 +350,14 @@ NewAvailability.propTypes = {
   validateAllHandler: PropTypes.func.isRequired,
   validateAll: PropTypes.func.isRequired,
   location: PropTypes.shape({
-    state: PropTypes.object
+    search: PropTypes.string,
   })
 };
 
 NewAvailability.defaultProps = {
   currentUser: { },
   location: {
-    state: {}
+    search: ''
   },
   days: [],
   errors: {},
