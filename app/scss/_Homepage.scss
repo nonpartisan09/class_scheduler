@@ -18,15 +18,15 @@ p {
 }
 
 .splashObjects {
-    margin-left: 10pc;
-    margin-right: 10pc;
+    margin-left: 10%;
+    margin-right: 10%;
     display: flex;
     flex-flow: row;
 }
 
 .testimonialsContainer {
-    margin-top: 3pc;
-    margin-bottom: 3pc;
+    margin-top: 4em;
+    margin-bottom: 4em;
 }
 
 .testimonialsSubtitle {
@@ -43,19 +43,23 @@ p {
     font-weight: bold;
     font-family: 'Lato';
     font-size: 18px;
-    align-self: baseline;
 }
 
 .homepageContact {
     display: flex;
-    padding-bottom: 2pc;
+    padding-bottom: 2em;
+}
+
+.homepageContact > span {
+    margin-top: 2em;
+    margin-bottom: 2em;
 }
 
 .featuredProgramsContainer {
-    margin-left: 10pc;
-    margin-right: 10pc;
-    margin-top: 3pc;
-    margin-bottom: 3pc;
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-top: 3em;
+    margin-bottom: 3em;
     text-align: center;
 }
 
@@ -68,15 +72,15 @@ p {
 }
 
 .featuredProgramsContentContainer  > div {
-    padding: 2pc;
-    min-width: 20pc;
-    max-width: 20vw;
+    display: flex;
+    padding: 3em 3%;
+    width: 30%;
 }
 
 .featuredProgramsContentContainer > div > div {
     background-color: #004664;
     color: white;
-    padding: 1pc;
+    padding: 1em;
 }
 
 .featuredProgramsContentContainer > div > div > div {
@@ -95,8 +99,8 @@ p {
 }
 
 .howItWorksContainer {
-    margin-top: 3pc;
-    margin-bottom: 3pc;
+    margin-top: 4em;
+    margin-bottom: 4em;
     align-items: center;
     display: flex;
     flex-flow: column;
@@ -107,30 +111,25 @@ p {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    width: 80pc;
+    width: 80%;
+}
+
+.howItWorksContentContainer > div{
+    width: 35%;
+    display: flex;
+    flex-grow: 1;
+    margin: 3%;
 }
 
 .howItWorksContentContainer > div > div {
-    margin: 1pc;
-    width: 35pc;
-    height: 13pc;
-    justify-content: center;
     box-shadow: none;
     background-color: #FAFAFA;
 }
 
-.howItWorksContentContainer > div > div > div {
-    display: flex;
-    flex-flow: column;
-    height: stretch;
-    align-items: center;
-}
-
 .cardContent {
-    height: stretch;
     display: flex;
     align-content: center;
-    width: 20pc;
+    justify-content: flex-end;
 }
 
 .cardTextSpan {
@@ -179,8 +178,9 @@ p {
 }
 
 .joinUsContainer {
-    margin-top: 3pc;
-    margin-bottom: 3pc;
+    width: 100%;
+    margin-top: 3em;
+    margin-bottom: 3em;
     display: flex;
     flex-flow: column;
     align-items: center;
@@ -197,15 +197,15 @@ p {
 
 .joinUsForm {
     background-color: white;
-    width: 40pc;
-    padding: 5pc;
-    padding-bottom: 2pc;
-    margin: 2pc;
+    width: 50vw;
+    padding: 5em;
+    padding-bottom: 2em;
+    margin: 2em;
 }
 
 .joinUsForm > div {
-    margin-bottom: 2pc;
-    margin-top: 2pc;
+    margin-bottom: 2em;
+    margin-top: 2em;
 }
 
 .joinUsForm > div > div > input {
@@ -286,14 +286,13 @@ p {
 
 .splashContainer > button,
 .submitButtonContainer > a {
+    height: auto;
     text-transform: none;
     background-color: #004664;
     color: white;
-    text-transform: none;
     font-family: 'Lato';
     font-size: 18px;
-    padding-right: 3pc;
-    padding-left: 3pc;
+    padding: 0.5em 2em;
 }
 
 .splashContainer > button:hover,
@@ -304,6 +303,7 @@ p {
 .submitButtonContainer {
     display: flex;
     justify-content: center; 
+    text-align: center;
 }
 
 .needHelpContainer {
@@ -369,10 +369,6 @@ p {
         display: block;
     }
 
-    .testimonialsContainer {
-        height: 60vh
-    }
-
     .splashContainer .homepageContact,
     .splashObjects {
         flex-flow: column;
@@ -383,22 +379,51 @@ p {
         margin: auto;
     }
 
-    .howItWorksContentContainer {
+    .featuredProgramsContentContainer {
         flex-flow: column;
         align-items: center;
     }
 
+    .featuredProgramsContentContainer > div {
+        width: 80%;
+    }
+
+    .howItWorksContentContainer {
+        flex-flow: column;
+        align-items: center;
+    }
+    
+    .howItWorksContentContainer > div{
+        width: 95%;
+        justify-content: center;
+    }
+    .joinUsContainer {
+        width: 100%;
+    }
     .joinUsContentContainer {
-        width: stretch;
+        width: 100%;
     }
     
     .joinUsForm {
-        width: inherit;
+         width: 80%;
         padding: 1pc;
+    }
+
+    .joinUsSubtitle {
+        margin-left: 1em;
+        margin-right: 1em;
     }
 
     .needHelpLinks .homepageContact {
         flex-flow: column;
         justify-content: space-between;
     }
+}
+
+@media (max-width: 500px) {
+
+    .radioButtons > div {
+        flex-flow: column;
+    }
+
 }
