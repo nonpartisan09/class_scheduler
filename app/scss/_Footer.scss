@@ -34,11 +34,21 @@
     display: inline-flex;
 }
 
-.footerBody > span {
+.footerBody > div > span {
     display: flex;
     flex-flow: column;
     padding-right: 2pc;
     padding-left: 2pc;
+}
+
+.footerBody > div {
+    display: flex;
+    flex-flow: row nowrap;
+}
+
+.footerBody > div > span > p {
+    text-align: left;
+    margin: 0;
 }
 
 .copyrightAndLogo {
@@ -59,6 +69,29 @@
     padding-left: .2pc;
 }
 
+@media (max-width: 1130px) {
+    .footerBody {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .footerBody > div { 
+        flex-flow: column wrap;
+    }
+    
+    .footerBody > div:last-child {
+        text-align: right;
+    }
+
+    .footerBody > div > span {
+        padding: 1em 2em;
+    }
+
+    .leftElementsContainer {
+        flex-grow: 1;
+    }
+}
+
 @media (max-width: 901px) {
     .footerToolbar {
         flex-flow: column;
@@ -73,17 +106,35 @@
         width: 100%;
     }
 
-    .footerBody {
-        display: grid;
-        grid-template-columns: 50% 50%;
-        font-size: small;
-    }
-
-    .footerBody > span > a {
-        font-size: x-small;
-    }
-
     .footerBody > span {
         padding: none;
+    }
+
+    .footerBody > div > span > b {
+        font-size: 1.4em;
+        padding-bottom: 0.2em;
+    }
+
+    .footerBody > div > span > a,
+    .footerBody > div > span > p {
+       font-size: 1.2em;
+       padding-top: 0.5em;
+       padding-bottom: 0.5em;
+    }
+
+}
+
+@media (max-width: 560px) {
+    .footerBody {
+        flex-flow: column nowrap;
+    }
+
+    .footerBody > div:last-child {
+        text-align: left;
+    }
+
+    .footerBody > div > span {
+        padding-right: 0;
+        padding-left: 1em;
     }
 }
