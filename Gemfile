@@ -37,7 +37,7 @@ gem 'delayed_job', '~> 4.1'
 gem 'devise', '~> 4.6'
 
 # geolocate users
-gem 'geocoder', '~> 1.5'
+gem 'geocoder', '~> 1.6'
 
 gem 'puma', '~> 3.12.6'
 # image helper
