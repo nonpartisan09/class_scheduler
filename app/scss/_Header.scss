@@ -25,6 +25,9 @@
 .signedOutHeader {
     display: flex;
 }
+.signedOutHeader > span {
+    margin: auto;
+}
 
 .roleLinks > span {
     display: flex;
@@ -62,6 +65,17 @@
 
 .signedInHeader {
     display: flex;
+}
+
+@media (max-width: 1130px) {
+    .menuAppBarLower {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .rightElements {
+        min-height: 5em;
+    }
 }
 
 // Window.width < 900px Styles

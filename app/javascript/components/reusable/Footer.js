@@ -53,111 +53,117 @@ class Footer extends Component {
           </span>
         </h3>
         <span className='footerBody'>
-          <span className='footerLinks'>
-            <b>
-              <FormattedMessage
-                id='Footer.usefulLinks'
-                defaultMessage='Useful Links'
-              />
-            </b>
-            <a href={ formatLink('/about', locale) }>
-              <FormattedMessage
-                id='aboutPage'
-                defaultMessage='About'
-              />
-            </a>
-            <a href={ formatLink('/faq', locale) }>
-              <FormattedMessage
-                id='FAQPage'
-                defaultMessage='FAQ'
-              />
-            </a>
-            <a href={ formatLink('/terms_of_use', locale) }>
-              <FormattedMessage
-                id='Footer.TAC'
-                defaultMessage='Terms & Conditions'
-              />
-            </a>
-          </span>
-          <span className='socialMediaLinks'>
-            <b>
-              <FormattedMessage
-                id='Footer.socialMedia'
-                defaultMessage='Social Media'
-              />
-            </b>
-            <a 
-              href={ contactInfo.FACEBOOK }
-              rel='noopener noreferrer' 
-              target='_blank'
-            >
-              <FaFacebookF
-                size={ size }
-                className='facebookIcon'
-              />
-              Facebook
-            </a>
-            <a 
-              href={ contactInfo.LINKEDIN }  
-              rel='noopener noreferrer' 
-              target='_blank'
-            >
-              <FaLinkedin
-                size={ size }
-                className='linkedInIcon'
-              />
-              LinkedIn
-            </a>
-          </span>
-          <span className='footerAddress'>
-            <b>
-              <FormattedMessage
-                id='Footer.address'
-                defaultMessage='Address'
-              />
-            </b>
-            { 
-              '495a Henry Street #1020,\n'+
-              'Brooklyn, NY, 11231,\n'+
-              'United States of America'
-            }
-          </span>
-          <span className='footerContact'>
-            <b>
-              <FormattedMessage
-                id='Footer.contact'
-                defaultMessage='Contact Us'
-              />
-            </b>
-            <a
-              href={ 'tel:'+contactInfo.PHONE }
-            >
-              <FaPhone
-                size={ size }
-                label={ (
-                  <FormattedMessage
-                    id="UserForm.phoneNumber"
-                    defaultMessage="Phone Number"
-                  />
-                ) }
-              />
-              { ' '+contactInfo.PHONE }
-            </a>
-            <a
-              href={ 'mailto:'+contactInfo.EMAIL }
-            >
-              <FaEnvelope
-                size={ size }
-                label={ (
-                  <FormattedMessage
-                    id="UserForm.email"
-                    defaultMessage="Email address"
-                  />
-                ) }
-              />
-              { ' '+contactInfo.EMAIL }
-            </a>
-          </span>
+          <div>
+            <span className='footerLinks'>
+              <b>
+                <FormattedMessage
+                  id='Footer.usefulLinks'
+                  defaultMessage='Useful Links'
+                />
+              </b>
+              <a href={ formatLink('/about', locale) }>
+                <FormattedMessage
+                  id='aboutPage'
+                  defaultMessage='About'
+                />
+              </a>
+              <a href={ formatLink('/faq', locale) }>
+                <FormattedMessage
+                  id='FAQPage'
+                  defaultMessage='FAQ'
+                />
+              </a>
+              <a href={ formatLink('/terms_of_use', locale) }>
+                <FormattedMessage
+                  id='Footer.TAC'
+                  defaultMessage='Terms & Conditions'
+                />
+              </a>
+            </span>
+            <span className='socialMediaLinks'>
+              <b>
+                <FormattedMessage
+                  id='Footer.socialMedia'
+                  defaultMessage='Social Media'
+                />
+              </b>
+              <a 
+                href={ contactInfo.FACEBOOK }
+                rel='noopener noreferrer' 
+                target='_blank'
+              >
+                <FaFacebookF
+                  size={ size }
+                  className='facebookIcon'
+                />
+                Facebook
+              </a>
+              <a 
+                href={ contactInfo.LINKEDIN }  
+                rel='noopener noreferrer' 
+                target='_blank'
+              >
+                <FaLinkedin
+                  size={ size }
+                  className='linkedInIcon'
+                />
+                LinkedIn
+              </a>
+            </span>
+          </div>
+          <div>
+            <span className='footerAddress'>
+              <b>
+                <FormattedMessage
+                  id='Footer.address'
+                  defaultMessage='Address'
+                />
+              </b>
+              <p>
+                { 
+                  '495a Henry Street #1020,\n'+
+                  'Brooklyn, NY, 11231,\n'+
+                  'United States of America'
+                }
+              </p>
+            </span>
+            <span className='footerContact'>
+              <b>
+                <FormattedMessage
+                  id='Footer.contact'
+                  defaultMessage='Contact Us'
+                />
+              </b>
+              <a
+                href={ 'tel:'+contactInfo.PHONE }
+              >
+                <FaPhone
+                  size={ size }
+                  label={ (
+                    <FormattedMessage
+                      id="UserForm.phoneNumber"
+                      defaultMessage="Phone Number"
+                    />
+                  ) }
+                />
+                { ' '+contactInfo.PHONE }
+              </a>
+              <a
+                href={ 'mailto:'+contactInfo.EMAIL }
+              >
+                <FaEnvelope
+                  size={ size }
+                  label={ (
+                    <FormattedMessage
+                      id="UserForm.email"
+                      defaultMessage="Email address"
+                    />
+                  ) }
+                />
+                { ' '+contactInfo.EMAIL }
+              </a>
+            </span>
+          </div>
         </span>
       </span>
     );

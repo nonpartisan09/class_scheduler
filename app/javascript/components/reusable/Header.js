@@ -175,14 +175,10 @@ class Header extends Component {
             <Toolbar
               classes={ { root: 'menuAppBarLower' } }
             >
-              <span
-                classes={ { root: 'menuAppBarLowerLeftElements' } }
-              >
+              <span className='menuAppBarLowerLeftElements'>
                 { this.renderHomeButton() }
               </span>
-              <span
-                classes={ { root: 'menuAppBarLowerRightElements' } }
-              >
+              <span className='menuAppBarLowerRightElements'>
                 { this.renderRightElements() }
               </span>
             </Toolbar>

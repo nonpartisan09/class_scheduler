@@ -1,7 +1,7 @@
 @import '~video-react/styles/scss/video-react';
 
-$card_width: 20pc;
-$card_media_height: 20pc;
+$card_width: 18pc;
+$card_media_height: 22pc;
 $media_padding: 2pc;
 
 .cardCarouselContainer {
@@ -60,6 +60,7 @@ $media_padding: 2pc;
     position: absolute;
     top: -($card_media_height);
     text-align: center;
+    overflow: auto;
 }
 
 .cardCarouselMediaQuote > p {
@@ -89,7 +90,7 @@ $media_padding: 2pc;
     color: #004664;
 }
 
-@media (max-width: 901px) {
+@media (max-width: 920px) {
     $mobile_card_width: 13pc;
     $mobile_card_media_height: 15pc;
     $mobile_media_padding:1pc;
@@ -98,6 +99,11 @@ $media_padding: 2pc;
     .cardCarouselContainer {
         padding-left: $mobile_media_padding;
         padding-right: $mobile_media_padding;
+        height: auto;
+    }
+
+    .cardCarouselContainer > div:first-child {
+        position: static;
     }
 
     .cardCarouselContainer > div {
@@ -117,6 +123,49 @@ $media_padding: 2pc;
     }
 
     .cardCarouselMediaQuote {
+        top: -($mobile_card_media_height + 5.1);
+        font-size: $mobile_font_size;
+        width: ($mobile_card_width)-($mobile_media_padding*2);
+        height: ($mobile_card_media_height)-($mobile_media_padding*2);
+        padding: $mobile_media_padding;
+        transform: translateY(($mobile_card_media_height/2)-($mobile_media_padding*2)-($mobile_font_size/2))
+    }
+}
+
+@media (max-width: 350px) {
+    $mobile_card_width: 8pc;
+    $mobile_card_media_height: 15pc;
+    $mobile_media_padding:1pc;
+    $mobile_font_size: 12px;
+
+    .cardCarouselContainer {
+        padding-left: $mobile_media_padding;
+        padding-right: $mobile_media_padding;
+        height: auto;
+    }
+
+    .cardCarouselContainer > div:first-child {
+        width: $mobile_card_width;
+    }
+
+    .cardCarouselContainer > div {
+        width: $mobile_card_width;
+    }
+
+    .cardCarouselMedia {
+        height: $mobile_card_media_height;
+    }
+    
+    .cardCarouselMediaPlayer {
+        height: $mobile_card_media_height;
+    }
+
+    .caardCarouselVideoContainer > .cardCarouselContent {
+        padding: 4px; 
+    }
+
+    .cardCarouselMediaQuote {
+        top: -($mobile_card_media_height + 5.1);
         font-size: $mobile_font_size;
         width: ($mobile_card_width)-($mobile_media_padding*2);
         height: ($mobile_card_media_height)-($mobile_media_padding*2);
