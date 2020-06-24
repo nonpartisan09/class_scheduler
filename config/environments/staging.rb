@@ -32,7 +32,7 @@ Rails.application.configure do
 
   config.base_domain = ENV["DOMAIN_NAME"]
 
-  config.action_mailer.default_url_options = { :host => 'https://tutoria.io' }
+  config.action_mailer.default_url_options = { :host => 'https://staging.tutoria.io' }
   config.action_mailer.perform_caching = false
 
   # Eager load code on boot. This eager loads most of Rails and
