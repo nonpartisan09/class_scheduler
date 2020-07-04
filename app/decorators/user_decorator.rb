@@ -14,6 +14,7 @@ class UserDecorator
       :country => country,
       :email => email,
       :first_name => first_name,
+      :last_name => last_name,
       :languages => languages,
       :language_ids => language_ids,
       :last_logged_in => last_logged_in,
@@ -46,6 +47,7 @@ class UserDecorator
         :email_notification => email_notification,
         :phone_number => phone_number,
         :first_name => first_name,
+        :last_name => last_name,
         :thumbnail_image => picture,
         :description => description,
         :timezone => user_timezone,
@@ -75,6 +77,7 @@ class UserDecorator
         :description => description,
         :email => email,
         :first_name => first_name,
+        :last_name => last_name,
         :how_they_found_us => how_they_found_us,
         :languages => languages,
         :language_ids => language_ids,
@@ -130,6 +133,10 @@ class UserDecorator
 
   def first_name
     @user.first_name
+  end
+
+  def last_name
+    @user.last_name
   end
 
   def email

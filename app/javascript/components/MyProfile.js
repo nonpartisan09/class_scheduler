@@ -112,6 +112,7 @@ MyProfile.propTypes = {
   currentUser: PropTypes.shape({
     programs: PropTypes.array,
     first_name: PropTypes.string,
+    last_name: PropTypes.string,
     address: PropTypes.string,
     city: PropTypes.string,
     email: PropTypes.string,
@@ -128,6 +129,7 @@ MyProfile.defaultProps = {
     address: '',
     city: '',
     first_name: '',
+    last_name: '',
     email: '',
     password: '',
     password_confirmation: '',
