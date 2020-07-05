@@ -8,6 +8,10 @@
     "defaultMessage": "First Name"
   },
   {
+    "id": "UserProfile.lastName",
+    "defaultMessage": "Last Name"
+  },
+  {
     "id": "UserProfile.programsOffered",
     "defaultMessage": "Programs"
   },

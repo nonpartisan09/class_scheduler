@@ -42,6 +42,21 @@ const SignUpSchema = {
     }
   }),
 
+  last_name: Joi.string().required().regex(/^[ a-zA-Z\u00C0-\u017F]+$/).options({
+    language: {
+      any: {
+        required: 'Please enter your last name',
+        empty: 'Please enter your last name',
+      },
+      string: {
+        regex: {
+          base: 'Please enter a last name without invalid characters',
+          name: 'Please enter a last name without invalid characters',
+        }
+      }
+    }
+  }),
+
   description: Joi.string().allow('').max(280).options({
     language: {
       string: {

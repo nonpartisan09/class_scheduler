@@ -8,6 +8,10 @@
     "defaultMessage": "First Name"
   },
   {
+    "id" :"UserForm.lastName",
+    "defaultMessage": "Last Name"
+  },
+  {
     "id": "UserForm.address",
     "defaultMessage": "Street Address"
   },
