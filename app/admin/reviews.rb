@@ -14,6 +14,16 @@ ActiveAdmin.register Review do
 
   actions :all, :except => [:edit]
 
+  controller do
+    def action_methods
+      if current_user.owner?
+        super
+      else
+        super - ['destroy', 'new', 'edit']
+      end
+    end
+  end
+
   form do |f|
     f.inputs do
       f.semantic_errors *f.object.errors.keys

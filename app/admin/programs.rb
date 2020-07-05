@@ -8,6 +8,18 @@ ActiveAdmin.register Program do
       :created_at,
       :updated_at,
       :featured
+  
+  actions :all
+
+  controller do
+    def action_methods
+      if current_user.owner?
+        super
+      else
+        super - ['destroy', 'new', 'edit']
+      end
+    end
+  end
 
   index do
     selectable_column
