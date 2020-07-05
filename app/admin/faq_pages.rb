@@ -5,6 +5,18 @@ ActiveAdmin.register FaqPage do
       :updated_at,
       :id
 
+  actions :all
+
+  controller do
+    def action_methods
+      if current_user.owner?
+        super
+      else
+        super - ['destroy', 'new', 'edit']
+      end
+    end
+  end
+
   index do
     selectable_column
     id_column
