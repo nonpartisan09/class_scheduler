@@ -5,6 +5,14 @@ ActiveAdmin.register User do
       user.admin_user_creation!
       redirect_to(admin_user_path(user))
     end
+
+    def action_methods
+      if current_user.owner?
+        super
+      else
+        super - ['destroy', 'new', 'edit']
+      end
+    end
   end
 
   class ReadonlyInput < Formtastic::Inputs::StringInput
@@ -52,47 +60,58 @@ ActiveAdmin.register User do
   scope :volunteers, proc { User.volunteers }
   scope :clients, proc { User.clients }
   scope :admins, proc { User.admins }
+  scope :owners, proc { User.owners }
 
   member_action :impersonate, method: :put  do
-    sign_in(:user, resource, { :bypass => true })
-    redirect_to root_path
+    if current_user.owner?
+      sign_in(:user, resource, { :bypass => true })
+      redirect_to root_path
+    end
   end
 
   member_action :deactivate_user, method: :put do
-    resource.deactivate_account!
+    if current_user.owner? 
+      resource.deactivate_account!
 
-    redirect_to(admin_user_path(resource))
+      redirect_to(admin_user_path(resource))
+    end
   end
 
   member_action :delete_user_with_email, method: :put do
-    resource.delete_with_email!
+    if current_user.owner?
+      resource.delete_with_email!
 
-    redirect_to(admin_users_path)
+      redirect_to(admin_users_path)
+    end
   end
 
   member_action :reactivate_user, method: :put do
-    resource.activate_account!
-    redirect_to(admin_user_path(resource))
+    if current_user.owner?
+      resource.activate_account!
+      redirect_to(admin_user_path(resource))
+    end
   end
 
   config.add_action_item(:delete_user, only: :show) do
-    if resource.active
+    if resource.active && current_user.owner?
       link_to 'Delete User with email', delete_user_with_email_admin_user_path(resource), method: :put
     end
   end
 
 
   config.add_action_item(:impersonate, only: :show) do
-    if resource.active
+    if resource.active && current_user.owner?
       link_to 'Impersonate User', impersonate_admin_user_path(resource), method: :put
     end
   end
 
   config.add_action_item(:deactivate_user, only: :show) do
-    if resource.active
-      link_to 'Deactivate User', deactivate_user_admin_user_path(resource), method: :put
-    else
-      link_to 'Reactivate User', reactivate_user_admin_user_path(resource), method: :put
+    if current_user.owner?
+      if resource.active
+        link_to 'Deactivate User', deactivate_user_admin_user_path(resource), method: :put
+      else
+        link_to 'Reactivate User', reactivate_user_admin_user_path(resource), method: :put
+      end
     end
   end
 
