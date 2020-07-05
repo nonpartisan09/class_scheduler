@@ -7,10 +7,23 @@ ActiveAdmin.register User do
     end
 
     def action_methods
-      if current_user.owner?
-        super
-      else
+      user = ''
+      roles = []
+      if params[:id]
+        user = User.find(params[:id])
+        roles = user.roles.map{|r| r.name}
+      end
+      
+      if current_user.admins_readonly?
         super - ['destroy', 'new', 'edit']
+      elsif current_user.owner? == false
+        if roles.include?("Owner")
+          super - ['destroy', 'edit']
+        else
+          super
+        end
+      else
+        super
       end
     end
   end
@@ -60,58 +73,67 @@ ActiveAdmin.register User do
   scope :volunteers, proc { User.volunteers }
   scope :clients, proc { User.clients }
   scope :admins, proc { User.admins }
+  scope :admins_readonly, proc { User.admins_readonly }
   scope :owners, proc { User.owners }
 
   member_action :impersonate, method: :put  do
-    if current_user.owner?
-      sign_in(:user, resource, { :bypass => true })
-      redirect_to root_path
-    end
+    sign_in(:user, resource, { :bypass => true })
+    redirect_to root_path
   end
 
-  member_action :deactivate_user, method: :put do
-    if current_user.owner? 
-      resource.deactivate_account!
-
-      redirect_to(admin_user_path(resource))
-    end
+  member_action :deactivate_user, method: :put do 
+    resource.deactivate_account!
+    redirect_to(admin_user_path(resource))
   end
 
   member_action :delete_user_with_email, method: :put do
-    if current_user.owner?
+    roles = user.roles.map{|r| r.name}
+    if current_user.owner? == false && roles.include?('Owner')
+      nil
+    else 
       resource.delete_with_email!
-
       redirect_to(admin_users_path)
     end
   end
 
   member_action :reactivate_user, method: :put do
-    if current_user.owner?
-      resource.activate_account!
-      redirect_to(admin_user_path(resource))
-    end
+    resource.activate_account!
+    redirect_to(admin_user_path(resource))
   end
 
-  config.add_action_item(:delete_user, only: :show) do
-    if resource.active && current_user.owner?
-      link_to 'Delete User with email', delete_user_with_email_admin_user_path(resource), method: :put
+  config.add_action_item(:delete_user, only: :show) do 
+    roles = user.roles.map{|r| r.name}
+    if resource.active
+      if current_user.owner? == false && roles.include?('Owner')
+        nil
+      else 
+        link_to 'Delete User with email', delete_user_with_email_admin_user_path(resource), method: :put
+      end
     end
   end
 
 
   config.add_action_item(:impersonate, only: :show) do
-    if resource.active && current_user.owner?
-      link_to 'Impersonate User', impersonate_admin_user_path(resource), method: :put
+    roles = user.roles.map{|r| r.name}
+    if resource.active 
+      if current_user.owner? == false && roles.include?('Owner')
+        nil
+      else 
+        link_to 'Impersonate User', impersonate_admin_user_path(resource), method: :put
+      end
     end
   end
 
   config.add_action_item(:deactivate_user, only: :show) do
-    if current_user.owner?
-      if resource.active
+    roles = user.roles.map{|r| r.name}
+    if resource.active
+      if current_user.owner? == false && roles.include?('Owner')
+        nil 
+      else 
         link_to 'Deactivate User', deactivate_user_admin_user_path(resource), method: :put
-      else
-        link_to 'Reactivate User', reactivate_user_admin_user_path(resource), method: :put
-      end
+      end 
+    else
+      link_to 'Reactivate User', reactivate_user_admin_user_path(resource), method: :put
     end
   end
 
@@ -287,8 +309,12 @@ ActiveAdmin.register User do
       f.input :active, as: :readonly
       f.input :country, :as => :string
       f.input :timezone, collection: ActiveSupport::TimeZone.all.map(&:name), selected: resource.timezone
-      roles_collection = Role.all.collect{|role| [role.name, role.id, { checked: resource.roles.include?(role) } ]}
-      f.input :roles, as: :check_boxes, collection: roles_collection
+      roles_collection = Role.all.collect{|role| [role.name, role.id, { checked: resource.roles.include?(role) }]}
+      if current_user.admin? && current_user.owner? == false
+        f.input :roles, as: :check_boxes, collection: roles_collection, :disabled => ["Owner", 4, { checked: true }]
+      else 
+        f.input :roles, as: :check_boxes, collection: roles_collection
+      end
       languages_collection = Language.all.collect{|language| [language.name, language.id, { checked: resource.languages.include?(language) } ]}
       f.input :languages, as: :check_boxes, collection: languages_collection
       programs_collection = Program.all.collect{|program| [program.name, program.id, { checked: resource.programs.include?(program) } ]}
