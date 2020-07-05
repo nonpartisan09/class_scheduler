@@ -77,13 +77,17 @@ ActiveAdmin.register User do
   scope :owners, proc { User.owners }
 
   member_action :impersonate, method: :put  do
-    sign_in(:user, resource, { :bypass => true })
-    redirect_to root_path
+    if current_user.admins_readonly? == false 
+      sign_in(:user, resource, { :bypass => true })
+      redirect_to root_path
+    end 
   end
 
   member_action :deactivate_user, method: :put do 
-    resource.deactivate_account!
-    redirect_to(admin_user_path(resource))
+    if current_user.admins_readonly? == false 
+      resource.deactivate_account!
+      redirect_to(admin_user_path(resource))
+    end 
   end
 
   member_action :delete_user_with_email, method: :put do
@@ -91,8 +95,10 @@ ActiveAdmin.register User do
     if current_user.owner? == false && roles.include?('Owner')
       nil
     else 
-      resource.delete_with_email!
-      redirect_to(admin_users_path)
+      if current_user.admins_readonly? == false 
+        resource.delete_with_email!
+        redirect_to(admin_users_path)
+      end 
     end
   end
 
@@ -107,7 +113,9 @@ ActiveAdmin.register User do
       if current_user.owner? == false && roles.include?('Owner')
         nil
       else 
-        link_to 'Delete User with email', delete_user_with_email_admin_user_path(resource), method: :put
+        if current_user.admins_readonly? == false 
+          link_to 'Delete User with email', delete_user_with_email_admin_user_path(resource), method: :put
+        end 
       end
     end
   end
@@ -119,7 +127,9 @@ ActiveAdmin.register User do
       if current_user.owner? == false && roles.include?('Owner')
         nil
       else 
-        link_to 'Impersonate User', impersonate_admin_user_path(resource), method: :put
+        if current_user.admins_readonly? == false 
+          link_to 'Impersonate User', impersonate_admin_user_path(resource), method: :put
+        end
       end
     end
   end
@@ -130,7 +140,9 @@ ActiveAdmin.register User do
       if current_user.owner? == false && roles.include?('Owner')
         nil 
       else 
-        link_to 'Deactivate User', deactivate_user_admin_user_path(resource), method: :put
+        if current_user.admins_readonly? == false 
+          link_to 'Deactivate User', deactivate_user_admin_user_path(resource), method: :put
+        end
       end 
     else
       link_to 'Reactivate User', reactivate_user_admin_user_path(resource), method: :put
