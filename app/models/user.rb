@@ -49,6 +49,7 @@ class User < ActiveRecord::Base
   scope :clients, -> { includes(:roles).where(roles: { url_slug: 'client' }) }
   scope :admins, -> { includes(:roles).where(roles: { url_slug: 'admin' }) }
   scope :owners, -> { includes(:roles).where(roles: { url_slug: 'owner' }) }
+  scope :admins_readonly, -> { includes(:roles).where(roles: { url_slug: 'admin-readonly' }) }
   scope :with_availabilities, -> { includes(:availabilities).where.not(availabilities: { id: nil }) }
 
   scope :active, -> { where(active: true) }
@@ -63,6 +64,10 @@ class User < ActiveRecord::Base
 
   def admin?
     roles.where(url_slug: 'admin').present?
+  end
+
+  def admins_readonly?
+    roles.where(url_slug: 'admin-readonly').present?
   end
 
   def owner?
