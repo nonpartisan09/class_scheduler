@@ -11,10 +11,10 @@ ActiveAdmin.register Availability do
 
   controller do
     def action_methods
-      if current_user.owner?
-        super
-      else
+      if current_user.admins_readonly?
         super - ['destroy', 'new', 'edit']
+      else
+        super
       end
     end
   end
