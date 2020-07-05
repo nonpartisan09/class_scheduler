@@ -9,6 +9,16 @@ ActiveAdmin.register Conversation do
 
   actions :all, :except => [:edit]
 
+  controller do
+    def action_methods
+      if current_user.owner?
+        super
+      else
+        super - ['destroy', 'new', 'edit']
+      end
+    end
+  end
+
   show do
     tabs do
       tab 'Messages' do
