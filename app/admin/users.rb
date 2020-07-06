@@ -17,7 +17,7 @@ ActiveAdmin.register User do
       if current_user.admins_readonly?
         super - ['destroy', 'new', 'edit']
       elsif current_user.owner? == false
-        if roles.include?("Owner")
+        if roles.include?("Owner") || roles.include?("Admin")
           super - ['destroy', 'edit']
         else
           super
@@ -92,7 +92,7 @@ ActiveAdmin.register User do
 
   member_action :delete_user_with_email, method: :put do
     roles = user.roles.map{|r| r.name}
-    if current_user.owner? == false && roles.include?('Owner')
+    if current_user.owner? == false && (roles.include?('Owner') || roles.include?('Admin'))
       nil
     else 
       if current_user.admins_readonly? == false 
@@ -103,7 +103,7 @@ ActiveAdmin.register User do
   end
 
   member_action :reactivate_user, method: :put do
-    if current_user.owner?
+    if current_user.owner? || current_user.admin?
       resource.activate_account!
       redirect_to(admin_user_path(resource))
     end
@@ -112,7 +112,7 @@ ActiveAdmin.register User do
   config.add_action_item(:delete_user, only: :show) do 
     roles = user.roles.map{|r| r.name}
     if resource.active
-      if current_user.owner? == false && roles.include?('Owner')
+      if current_user.owner? == false && (roles.include?('Owner') || roles.include?('Admin'))
         nil
       else 
         if current_user.admins_readonly? == false 
@@ -126,7 +126,7 @@ ActiveAdmin.register User do
   config.add_action_item(:impersonate, only: :show) do
     roles = user.roles.map{|r| r.name}
     if resource.active 
-      if current_user.owner? == false && roles.include?('Owner')
+      if current_user.owner? == false && (roles.include?('Owner') || roles.include?('Admin'))
         nil
       else 
         if current_user.admins_readonly? == false 
@@ -139,7 +139,7 @@ ActiveAdmin.register User do
   config.add_action_item(:deactivate_user, only: :show) do
     roles = user.roles.map{|r| r.name}
     if resource.active
-      if current_user.owner? == false && roles.include?('Owner')
+      if current_user.owner? == false && (roles.include?('Owner') || roles.include?('Admin'))
         nil 
       else 
         if current_user.admins_readonly? == false 
