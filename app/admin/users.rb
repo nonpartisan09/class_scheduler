@@ -48,6 +48,7 @@ ActiveAdmin.register User do
       :description,
       :email_notification,
       :first_name,
+      :last_name,
       :how_they_found_us,
       :id,
       :last_name,
@@ -102,8 +103,10 @@ ActiveAdmin.register User do
   end
 
   member_action :reactivate_user, method: :put do
-    resource.activate_account!
-    redirect_to(admin_user_path(resource))
+    if current_user.owner?
+      resource.activate_account!
+      redirect_to(admin_user_path(resource))
+    end
   end
 
   config.add_action_item(:delete_user, only: :show) do 
@@ -201,7 +204,7 @@ ActiveAdmin.register User do
     column :sign_in_count
     column :created_at
     column :average_rating
-    actions
+    actions 
   end
 
   filter :email
@@ -322,7 +325,7 @@ ActiveAdmin.register User do
       f.input :timezone, collection: ActiveSupport::TimeZone.all.map(&:name), selected: resource.timezone
       roles_collection = Role.all.collect{|role| [role.name, role.id, { checked: resource.roles.include?(role) }]}
       if current_user.admin? && current_user.owner? == false
-        f.input :roles, as: :check_boxes, collection: roles_collection, :disabled => ["Owner", 4, { checked: true }]
+        f.input :roles, as: :check_boxes, collection: roles_collection, :disabled => ["Owner", 4, "Admin", 1]
       else 
         f.input :roles, as: :check_boxes, collection: roles_collection
       end
