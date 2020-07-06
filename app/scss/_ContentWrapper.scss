@@ -1,0 +1,13 @@
+.pageWrapper {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.pageWrapper > div:first-child, .pageWrapper > header:last-child {
+    flex-shrink: 0;
+}
+
+.pageContent {
+    flex-grow: 1;
+}
