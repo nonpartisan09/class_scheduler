@@ -128,13 +128,12 @@ class UserProfile extends Component {
               <div className='userProfileLeftDetails'>
                 <div className='userProfileField'>
                   <FormattedMessage
-                    id='UserProfile.firstName'
-                    defaultMessage='First Name'
+                    id='UserProfile.Name'
+                    defaultMessage='Name'
                   />
                   :
                   <span>
-                    { first_name } 
-                    { last_name }
+                    {`${ first_name } ${ last_name }`} 
                   </span>
                 </div>
 

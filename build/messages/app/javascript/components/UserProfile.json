@@ -12,6 +12,10 @@
     "defaultMessage": "Last Name"
   },
   {
+    "id": "UserProfile.Name",
+    "defaultMessage": "Name"
+  },
+  {
     "id": "UserProfile.programsOffered",
     "defaultMessage": "Programs"
   },
