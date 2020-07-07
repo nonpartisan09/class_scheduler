@@ -8,10 +8,6 @@ const States = [
       'abbreviation': 'AK'
   },
   {
-      'name': 'American Samoa',
-      'abbreviation': 'AS'
-  },
-  {
       'name': 'Arizona',
       'abbreviation': 'AZ'
   },
@@ -40,20 +36,12 @@ const States = [
       'abbreviation': 'DC'
   },
   {
-      'name': 'Federated States Of Micronesia',
-      'abbreviation': 'FM'
-  },
-  {
       'name': 'Florida',
       'abbreviation': 'FL'
   },
   {
       'name': 'Georgia',
       'abbreviation': 'GA'
-  },
-  {
-      'name': 'Guam',
-      'abbreviation': 'GU'
   },
   {
       'name': 'Hawaii',
@@ -90,10 +78,6 @@ const States = [
   {
       'name': 'Maine',
       'abbreviation': 'ME'
-  },
-  {
-      'name': 'Marshall Islands',
-      'abbreviation': 'MH'
   },
   {
       'name': 'Maryland',
@@ -156,10 +140,6 @@ const States = [
       'abbreviation': 'ND'
   },
   {
-      'name': 'Northern Mariana Islands',
-      'abbreviation': 'MP'
-  },
-  {
       'name': 'Ohio',
       'abbreviation': 'OH'
   },
@@ -172,16 +152,8 @@ const States = [
       'abbreviation': 'OR'
   },
   {
-      'name': 'Palau',
-      'abbreviation': 'PW'
-  },
-  {
       'name': 'Pennsylvania',
       'abbreviation': 'PA'
-  },
-  {
-      'name': 'Puerto Rico',
-      'abbreviation': 'PR'
   },
   {
       'name': 'Rhode Island',
@@ -210,10 +182,6 @@ const States = [
   {
       'name': 'Vermont',
       'abbreviation': 'VT'
-  },
-  {
-      'name': 'Virgin Islands',
-      'abbreviation': 'VI'
   },
   {
       'name': 'Virginia',
