@@ -27,6 +27,8 @@ import { ENGLISH, SPANISH } from '../utils/availableLocales';
 import formatLink from '../utils/Link';
 
 import ErrorField from './ErrorField';
+import Countries from './Countries';
+import States from './States';
 
 const { SIGN_UP, UPDATE_PROFILE } = UserFormConstants;
 
@@ -51,7 +53,9 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
       this.handleHideSnackBar = this.handleHideSnackBar.bind(this);
       this.handleClearValues = this.handleClearValues.bind(this);
       this.resetForm = this.resetForm.bind(this);
-
+      this.changeCountryHandler = this.changeCountryHandler.bind(this);
+      this.changeStateHandler = this.changeStateHandler.bind(this);
+      
       this.state = {
         message: '',
         showAddressDialog: false,
@@ -106,7 +110,9 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
         currentUser,
         timezones,
       } = this.props;
-
+      
+      const countries = Countries.map(c => c.countryName);
+      
       return (
         <div>
           <WrappedComponent currentUser={ currentUser } />
@@ -226,7 +232,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
               <Badge
                 badgeContent={ 
                   (
-                    <span onClick={ this.handleShowDialog } onKeyPress={ this.handleShowDialog }> 
+                    <span role="button" onClick={ this.handleShowDialog } onKeyPress={ this.handleShowDialog } tabIndex={ 0 }> 
                       <InfoIcon /> 
                     </span> 
                   )
@@ -275,43 +281,26 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                   onBlur={ validateHandler('city') }
                 />
 
-                <TextField
-                  name='state'
-                  value={ state }
-                  hintText=''
-                  className='userFormInputField state'
-                  floatingLabelText={
-                    (
-                      <FormattedMessage
-                        id='UserForm.state'
-                        defaultMessage='State'
-                      />
-                    )
-                  }
-                  floatingLabelFixed
-                  errorText={ errors.state }
-                  onChange={ changeHandler('state') }
-                  onBlur={ validateHandler('state') }
-                />
+                {this.renderUserRegion(country, state, validateHandler, errors )}
 
-                <TextField
-                  name='country'
-                  value={ country }
-                  hintText=''
-                  className='userFormInputField country'
+                <SelectField
+                  floatingLabelFixed
                   floatingLabelText={
                     (
                       <FormattedMessage
                         id='UserForm.country'
-                        defaultMessage='Country'
+                        defaultMessage='Select Country'
                       />
                     )
                   }
-                  floatingLabelFixed
+                  value={ country ? country : 'United States' }
+                  className='userFormInputField country'
                   errorText={ errors.country }
-                  onChange={ changeHandler('country') }
+                  onChange={ this.changeCountryHandler }
                   onBlur={ validateHandler('country') }
-                />
+                >
+                  { _.map(countries, name => <MenuItem key={ name } insetChildren checked={ country === name } value={ name } primaryText={ <span> { name } </span> } />) }
+                </SelectField>
               </Badge>
 
               <br />
@@ -402,6 +391,55 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
           { this.renderSnackBar() }
         </div>
       );
+    }
+
+    renderUserRegion(country, state, validateHandler, errors) {
+      if (!country || country === 'United States') {
+        return (
+          <SelectField
+            floatingLabelFixed
+            floatingLabelText={
+              (
+                <FormattedMessage
+                  id='UserForm.state'
+                  defaultMessage='Select State/Region'
+                />
+              )
+            }
+            value={ state }
+            className='userFormInputField state'
+            errorText={ errors.state }
+            onChange={ this.changeStateHandler }
+            onBlur={ validateHandler('state') }
+          >
+            { _.map(States, s => <MenuItem key={ s.abbreviation } insetChildren checked={ state === s.abbreviation } value={ s.abbreviation } primaryText={ <span>{ s.abbreviation }</span> } secondaryText={ <span>{ s.name } </span> } />) }
+          </SelectField>
+        );
+      } else {
+        const coun = Countries.find(c => c.countryName === country);
+        const regions = coun.regions.map(region => region.name );
+
+        return (
+          <SelectField
+            floatingLabelFixed
+            floatingLabelText={
+              (
+                <FormattedMessage
+                  id='UserForm.state'
+                  defaultMessage='Select State/Region'
+                />
+              )
+            }
+            value={ state }
+            className='userFormInputField state'
+            errorText={ errors.state }
+            onChange={ this.changeStateHandler }
+            onBlur={ validateHandler('state') }
+          >
+            { _.map(regions, region => <MenuItem key={ region } insetChildren checked={ state === region } value={ region } primaryText={ <span> { region } </span> } />) }
+          </SelectField>
+        );
+      }  
     }
 
     renderMeetUpToggle() {
@@ -1051,11 +1089,13 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
 
     changeHandlerLanguages(event, index, value) {
       const { changeValue } = this.props;
+      
       changeValue('languages', value);
     }
 
     changeHandlerPrograms(event, index, value) {
       const { changeValue } = this.props;
+      
       changeValue('programs', value);
     }
 
@@ -1069,6 +1109,17 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
       const { changeValue } = this.props;
 
       changeValue('timezone', value);
+    }
+
+    changeCountryHandler(proxy, index, value) {
+      const { changeValue } = this.props;
+
+      changeValue('country', value);
+    }
+
+    changeStateHandler(proxy, index, value) {
+      const { changeValue } = this.props;
+      changeValue('state', value);
     }
 
     changeHowTheyFoundUsHandler(proxy, index, value) {
@@ -1195,8 +1246,8 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
       email_notification: PropTypes.bool,
       average_rating: PropTypes.number,
       rating_count: PropTypes.number,
-      client: PropTypes.bool,
-      volunteer: PropTypes.bool,
+      client: PropTypes.string,
+      volunteer: PropTypes.string
     }),
 
     match: PropTypes.shape({
