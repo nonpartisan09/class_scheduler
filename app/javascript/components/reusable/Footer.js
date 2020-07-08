@@ -20,12 +20,10 @@ import contactInfo from '../../ContactInfo';
 class Footer extends Component {
 
   render() {
-    const { style } = this.props;
     return (
       <AppBar
         position='relative'
         classes={ { root: 'footerAppBar' } }
-        style={ style }
       >
         <Toolbar
           classes={ { root: 'footerToolbar' } }
@@ -173,7 +171,6 @@ class Footer extends Component {
 
 Footer.propTypes = {
   currentUser: PropTypes.object.isRequired,
-  style: PropTypes.object.isRequired,
 };
 
 export default Footer;

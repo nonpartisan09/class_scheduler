@@ -11,12 +11,9 @@ class ContentWrapper extends Component {
     constructor(props) {
         super(props);
 
-        this.setContentHeight = this.setContentHeight.bind(this);
         this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
-        this.calculateFooterPosition = this.calculateFooterPosition.bind(this);
 
         this.state = {
-            contentHeight: 0,
             mobile: false,
         };
     }
@@ -24,7 +21,6 @@ class ContentWrapper extends Component {
     componentDidMount() {
         this.updateWindowDimensions();
         window.addEventListener('resize', this.updateWindowDimensions);
-        this.setState({ contentHeight: this.pagecontent.offsetHeight });
     }
       
     componentWillUnmount() {
@@ -34,31 +30,15 @@ class ContentWrapper extends Component {
     componentDidUpdate(prevProps) {
         if(this.props.location !== prevProps.location) {
             this.updateWindowDimensions();
-            this.setContentHeight();
         }
     }
-
-    setContentHeight() {
-        this.setState({ contentHeight: this.pagecontent.offsetHeight });
-    }
-    
+  
     updateWindowDimensions() {
     if (window.innerWidth < 900) {
         this.setState({ mobile: true });
     } else {
         this.setState({ mobile: false });
     }
-    }
-
-    calculateFooterPosition() {
-        return(
-            this.state.contentHeight < (0.4*window.innerHeight)
-            && !this.state.mobile
-            ?
-            'absolute'
-            :
-            'relative'
-        );
     }
 
     render () {
@@ -69,13 +49,10 @@ class ContentWrapper extends Component {
         return (
           <div className='pageWrapper'>
             <Header currentUser={ this.props.currentUser } mobile={ this.state.mobile } locale={ this.props.locale } />
-            <div
-              className='pageContent'
-              ref={ (pagecontent) => this.pagecontent = pagecontent }
-            >
+            <div className='pageContent'>
               {childrenWithProps}
             </div>
-            <Footer style={ { position: this.calculateFooterPosition() } } currentUser={ this.props.currentUser } locale={ this.props.locale }  />
+            <Footer currentUser={ this.props.currentUser } locale={ this.props.locale }  />
           </div>
         );
     }

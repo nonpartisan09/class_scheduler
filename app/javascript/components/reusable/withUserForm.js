@@ -91,6 +91,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
         errors, changeHandler, validateHandler,
         currentUser: {
           first_name,
+          last_name,
           email,
           phone_number,
           address,
@@ -186,6 +187,27 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                 errorText={ errors.first_name }
                 onChange={ changeHandler('first_name') }
                 onBlur={ validateHandler('first_name') }
+              />
+
+              <br />
+
+              <TextField
+                name='last_name'
+                value={ last_name }
+                hintText=''
+                className='userFormInputField lastName'
+                floatingLabelText={
+                  (
+                    <FormattedMessage
+                      id='UserForm.lastName'
+                      defaultMessage='Last Name'
+                    />
+                  )
+                }
+                floatingLabelFixed
+                errorText={ errors.last_name }
+                onChange={ changeHandler('last_name') }
+                onBlur={ validateHandler('last_name') }
               />
 
               <br />
@@ -1152,6 +1174,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
     currentUser: PropTypes.shape({
       programs: PropTypes.array,
       first_name: PropTypes.string,
+      last_name: PropTypes.string,
       address: PropTypes.string,
       city: PropTypes.string,
       state: PropTypes.string,
@@ -1217,6 +1240,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
       state: '',
       country: '',
       first_name: '',
+      last_name: '',
       email: '',
       phone_number: '',
       password: '',

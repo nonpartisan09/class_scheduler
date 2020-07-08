@@ -91,6 +91,7 @@ class UserProfile extends Component {
         user: {
           url_slug,
           first_name,
+          last_name,
           programs
         },
         currentUser: { locale },
@@ -127,10 +128,13 @@ class UserProfile extends Component {
               <div className='userProfileLeftDetails'>
                 <div className='userProfileField'>
                   <FormattedMessage
-                    id='UserProfile.firstName'
-                    defaultMessage='First Name'
-                  />:
-                  <span>{ first_name }</span>
+                    id='UserProfile.Name'
+                    defaultMessage='Name'
+                  />
+                  :
+                  <span>
+                    {`${ first_name } ${ last_name }`} 
+                  </span>
                 </div>
 
                 { this.renderLocation() }
@@ -356,6 +360,7 @@ UserProfile.propTypes = {
   user: PropTypes.shape({
     programs: PropTypes.array,
     first_name: PropTypes.string,
+    last_name: PropTypes.string,
     thumbnail_url: PropTypes.string,
     url_slug: PropTypes.string,
     last_logged_in: PropTypes.string,
