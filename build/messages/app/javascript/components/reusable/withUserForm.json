@@ -21,7 +21,7 @@
   },
   {
     "id": "UserForm.state",
-    "defaultMessage": "State"
+    "defaultMessage": "Select State/Region"
   },
   {
     "id": "UserForm.country",
