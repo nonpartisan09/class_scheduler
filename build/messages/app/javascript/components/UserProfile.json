@@ -12,6 +12,13 @@
     "defaultMessage": "Last Name"
   },
   {
+<<<<<<< HEAD
+=======
+    "id": "UserProfile.Name",
+    "defaultMessage": "Name"
+  },
+  {
+>>>>>>> 2d4b71e9... added last name field to forms (#125)
     "id": "UserProfile.programsOffered",
     "defaultMessage": "Programs"
   },
