@@ -27,6 +27,7 @@ ActiveAdmin.register User do
       :description,
       :email_notification,
       :first_name,
+      :last_name,
       :how_they_found_us,
       :id,
       :last_name,
