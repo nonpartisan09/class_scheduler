@@ -21,6 +21,8 @@ module Contexts
           raise Availabilities::Errors::EndTimeMissing, message
         end
 
+        use_account_timezone(availability[:start_time], availability[:end_time])
+
         parse_times_utc
         parse_times_user_tz
       end
@@ -105,6 +107,19 @@ module Contexts
          
         user_time = ActiveSupport::TimeZone[offset].parse(time.to_s)
       end
+
+      def use_account_timezone (start_time, end_time)
+        @availability[:start_time] = parse_account_timezone(start_time)
+        @availability[:end_time] = parse_account_timezone(end_time)
+      end
+
+      def parse_account_timezone(time)
+        account_offset = Time.now.in_time_zone(@timezone).formatted_offset
+        parsed_time = Time.parse(time)
+        datetime_without_timezone = parsed_time.strftime("%Y-%m-%d %H:%M:%S ")
+    
+        with_account_timezone = datetime_without_timezone + account_offset
+      end 
 
       def parse_time(time)
         t = Time.zone.parse(time)
