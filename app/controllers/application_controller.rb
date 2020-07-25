@@ -142,7 +142,7 @@ class ApplicationController < ActionController::Base
     unless user_signed_in? || request.referer != new_user_session_path
       user = User.find_by_email!(params[:user][:email])
 
-      if user.admin?
+      if user.admin? || user.owner?
         authenticate_user!
       else
         redirect_to root_path and return
