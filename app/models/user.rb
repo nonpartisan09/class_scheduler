@@ -125,7 +125,11 @@ class User < ActiveRecord::Base
     self.terms_and_conditions = TermsAndConditions.last.id
     save!
 
-    UserMailer.welcome_email(self, generated_password).deliver_later
+    if client?
+      UserMailer.client_welcome_email(self, generated_password).deliver_later
+    elsif volunteer?
+      UserMailer.volunteer_welcome_email(self, generated_password).deliver_later
+    end 
 
     self
   end
