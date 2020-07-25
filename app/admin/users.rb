@@ -333,11 +333,16 @@ ActiveAdmin.register User do
       f.input :country, :as => :string
       f.input :timezone, collection: ActiveSupport::TimeZone.all.map(&:name), selected: resource.timezone
       roles_collection = Role.all.collect{|role| [role.name, role.id, { checked: resource.roles.include?(role) }]}
-      if current_user.admin? && current_user.owner? == false
+      user = User.find(params[:id])
+      
+      if current_user.id == user.id 
+        f.input :roles, as: :check_boxes, collection: roles_collection, :disabled => [ "Owner", 4]
+      elsif current_user.admin? && current_user.owner? == false
         f.input :roles, as: :check_boxes, collection: roles_collection, :disabled => ["Owner", 4, "Admin", 1]
       else 
         f.input :roles, as: :check_boxes, collection: roles_collection
       end
+      
       languages_collection = Language.all.collect{|language| [language.name, language.id, { checked: resource.languages.include?(language) } ]}
       f.input :languages, as: :check_boxes, collection: languages_collection
       programs_collection = Program.all.collect{|program| [program.name, program.id, { checked: resource.programs.include?(program) } ]}
