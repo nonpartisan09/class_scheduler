@@ -51,7 +51,7 @@ class AvailabilityDecorator
     offset = current_time.utc_offset/3600
      
     user_time = ActiveSupport::TimeZone[offset].parse(time.to_s)
-    user_time.strftime("%H:%M")
+    user_time.strftime("%H:%M") + ' ' + Time.zone.now.zone
   end 
   
   def start_time

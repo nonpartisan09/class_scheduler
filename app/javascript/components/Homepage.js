@@ -47,6 +47,7 @@ import formatLink from './utils/Link';
 import SignUpSession from './utils/SignUpSession';
 import SignUpSchema from './schema/SignUpSchema';
 import contactInfo from '../ContactInfo';
+import TutoriaVideo from './TutoriaVideo';
 import UserMap from './UserMap';
 
 const pageContent = {
@@ -207,6 +208,7 @@ class Homepage extends Component {
           { this.renderSplash() }
           { this.renderTestimonials() }
         </span>
+        <TutoriaVideo />
         { this.renderFeaturedPrograms() }
         { this.renderHowItWorks() }
         { this.renderWhereWeAre() }
