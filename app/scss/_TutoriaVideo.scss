@@ -1,6 +1,6 @@
 .video-responsive {
   text-align: center;
-  margin-top: 100px;
+  margin: 25px;
 }
 
 @media screen and (max-width: 760px) {
@@ -9,7 +9,9 @@
     padding-bottom: 56.25%;
     position: relative;
     height: 0;
+    width: 100%;
     padding-top: 25px;
+    margin: 5px 0 25px;
   }
   .video-responsive iframe {
     left: 0;
