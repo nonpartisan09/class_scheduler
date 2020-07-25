@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import _ from 'lodash';
 import {
   FaEnvelope,
-  FaPhone,
+  FaWhatsapp,
   FaComments,
   FaPeopleCarry,
   FaInbox,
@@ -208,7 +208,6 @@ class Homepage extends Component {
           { this.renderSplash() }
           { this.renderTestimonials() }
         </span>
-        <TutoriaVideo />
         { this.renderFeaturedPrograms() }
         { this.renderHowItWorks() }
         { this.renderWhereWeAre() }
@@ -271,9 +270,8 @@ class Homepage extends Component {
       <div className='homepageContact'>
         <SliderButton
           href={ 'tel:'+contactInfo.PHONE }
-          
         >
-          <FaPhone
+          <FaWhatsapp
             size={ size }
             label={ (
               <FormattedMessage
@@ -365,9 +363,25 @@ class Homepage extends Component {
     return cards;
   }
 
+  renderVideoElementContainer(content, children) {
+    return(
+      <div className={ content.name+'Container' }>
+        <h2 className={ content.name+'Header' }>
+          <FormattedMessage
+            id={ content.header }
+          />
+        </h2>
+        <TutoriaVideo />
+        <div className={ content.name+'ContentContainer' }>
+          { children }
+        </div>
+      </div>
+    );
+  }
+
   renderHowItWorks() {
     return(
-      this.renderElementContainer(
+      this.renderVideoElementContainer(
         pageContent.howItWorks,
         this.renderHowItWorksCards(pageContent.howItWorks.howItWorksStages)
       )

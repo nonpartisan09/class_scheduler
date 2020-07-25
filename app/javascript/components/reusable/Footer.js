@@ -133,7 +133,7 @@ class Footer extends Component {
                 />
               </b>
               <a
-                href={ 'tel:'+contactInfo.PHONE }
+                href={ 'tel: +1(929)-359-3985' }
               >
                 <FaPhone
                   size={ size }
@@ -144,7 +144,7 @@ class Footer extends Component {
                     />
                   ) }
                 />
-                { ' '+contactInfo.PHONE }
+                { '+1(929)-359-3985' }
               </a>
               <a
                 href={ 'mailto:'+contactInfo.EMAIL }

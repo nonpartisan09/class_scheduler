@@ -1,5 +1,5 @@
 const contactInfo = {
-  PHONE: '+1(929)-359-3985',
+  PHONE: '+1(929)-359-3986',
   EMAIL: 'admin@tutoria.io',
   FACEBOOK: 'https://www.facebook.com/tutoria.io/',
   LINKEDIN: 'https://www.linkedin.com/company/tutoria-io/'
