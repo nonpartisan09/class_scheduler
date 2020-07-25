@@ -14,14 +14,23 @@ ActiveAdmin.register User do
         roles = user.roles.map{|r| r.name}
       end
       
+      # An action must always be returned in if statements or an error will be thrown.
+      # All supers are needed.
       if current_user.admins_readonly?
         super - ['destroy', 'new', 'edit']
       elsif current_user.owner? == false
-        if roles.include?("Owner") || roles.include?("Admin")
-          super - ['destroy', 'edit']
-        else
-          super
-        end
+          #Check user's roles. 
+          if roles.length > 0
+             #Admin can edit/update their own profile
+            if current_user.id === user.id 
+              super 
+             #Then Admin can only read the profile if user is an Owner or Admin. 
+            elsif roles.include?("Owner") || roles.include?("Admin")
+              super - ['destroy', 'edit']
+            end
+          else 
+            super  
+          end 
       else
         super
       end
