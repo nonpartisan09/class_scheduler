@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import _ from 'lodash';
 import {
   FaEnvelope,
-  FaPhone,
+  FaWhatsapp,
   FaComments,
   FaPeopleCarry,
   FaInbox,
@@ -272,7 +272,7 @@ class Homepage extends Component {
           href={ 'tel:'+contactInfo.PHONE }
           
         >
-          <FaPhone
+          <FaWhatsapp
             size={ size }
             label={ (
               <FormattedMessage

@@ -13,7 +13,7 @@ import {
 } from '@material-ui/core';
 import {
   FaFacebookF,
-  FaPhone,
+  FaWhatsapp,
   FaEnvelope,
   FaChevronDown,
   FaBars,
@@ -347,7 +347,7 @@ class Header extends Component {
           grey
           href={ 'tel:'+contactInfo.PHONE }
         >
-          <FaPhone
+          <FaWhatsapp
             size={ size }
             label={ (
               <FormattedMessage
