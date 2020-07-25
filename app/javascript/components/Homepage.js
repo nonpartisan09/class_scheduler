@@ -48,6 +48,7 @@ import SignUpSession from './utils/SignUpSession';
 import SignUpSchema from './schema/SignUpSchema';
 import contactInfo from '../ContactInfo';
 // import UserMap from './UserMap';
+import TutoriaVideo from './TutoriaVideo';
 
 const pageContent = {
   testimonials: [
@@ -207,6 +208,7 @@ class Homepage extends Component {
           { this.renderSplash() }
           { this.renderTestimonials() }
         </span>
+        <TutoriaVideo />
         { this.renderFeaturedPrograms() }
         { this.renderHowItWorks() }
         {/* { this.renderWhereWeAre() } */}
