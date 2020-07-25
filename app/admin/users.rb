@@ -14,14 +14,23 @@ ActiveAdmin.register User do
         roles = user.roles.map{|r| r.name}
       end
       
+      # An action must always be returned in if statements or an error will be thrown.
+      # All supers are needed.
       if current_user.admins_readonly?
         super - ['destroy', 'new', 'edit']
       elsif current_user.owner? == false
-        if roles.include?("Owner") || roles.include?("Admin")
-          super - ['destroy', 'edit']
-        else
-          super
-        end
+          #Check user's roles. 
+          if roles.length > 0
+             #Admin can edit/update their own profile
+            if current_user.id === user.id 
+              super 
+             #Then Admin can only read the profile if user is an Owner or Admin. 
+            elsif roles.include?("Owner") || roles.include?("Admin")
+              super - ['destroy', 'edit']
+            end
+          else 
+            super  
+          end 
       else
         super
       end
@@ -324,11 +333,16 @@ ActiveAdmin.register User do
       f.input :country, :as => :string
       f.input :timezone, collection: ActiveSupport::TimeZone.all.map(&:name), selected: resource.timezone
       roles_collection = Role.all.collect{|role| [role.name, role.id, { checked: resource.roles.include?(role) }]}
-      if current_user.admin? && current_user.owner? == false
+      user = User.find(params[:id])
+      
+      if current_user.id == user.id 
+        f.input :roles, as: :check_boxes, collection: roles_collection, :disabled => [ "Owner", 4]
+      elsif current_user.admin? && current_user.owner? == false
         f.input :roles, as: :check_boxes, collection: roles_collection, :disabled => ["Owner", 4, "Admin", 1]
       else 
         f.input :roles, as: :check_boxes, collection: roles_collection
       end
+      
       languages_collection = Language.all.collect{|language| [language.name, language.id, { checked: resource.languages.include?(language) } ]}
       f.input :languages, as: :check_boxes, collection: languages_collection
       programs_collection = Program.all.collect{|program| [program.name, program.id, { checked: resource.programs.include?(program) } ]}

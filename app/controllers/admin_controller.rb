@@ -24,7 +24,7 @@ class AdminController < Devise::SessionsController
   end
 
   def redirect_if_not_admin
-    return unless current_user.admin? || current_user.admins_readonly?
+    return unless current_user.admin? || current_user.admins_readonly? || current_user.owner?
   end
 
   def permitted_params
