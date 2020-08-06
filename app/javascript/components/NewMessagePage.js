@@ -44,6 +44,8 @@ class NewMessagePage extends Component {
       validateHandler
     } = this.props;
 
+    let disabled = this.props.message.body && this.props.message.subject ? false : true
+
     return (
       <div>
         <Paper zDepth={ 1 } className='paperOverride' rounded={ false }>
@@ -113,7 +115,7 @@ class NewMessagePage extends Component {
             />
           </form>
 
-          <FloatingActionButton onClick={ this.handleSubmit } style={ { position: 'absolute', bottom: '-24px', right: '0' } }>
+          <FloatingActionButton onClick={this.handleSubmit} style={{ position: 'absolute', bottom: '-24px', right: '0' }} disabled={disabled}>
             <SendIcon />
           </FloatingActionButton>
 
