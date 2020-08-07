@@ -716,5 +716,3 @@ const validationOptions = {
 };
 
 export default validate(Homepage, validationOptions);
-
-
