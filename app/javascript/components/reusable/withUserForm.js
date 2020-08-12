@@ -25,6 +25,7 @@ import UserFormConstants from '../utils/UserFormConstants';
 import ReviewAsStars from '../ReviewAsStars';
 import { ENGLISH, SPANISH } from '../utils/availableLocales';
 import formatLink from '../utils/Link';
+import getLocalTimezoneFromMap from '../utils/TimeZoneMapping';
 
 import ErrorField from './ErrorField';
 import Countries from './Countries';
@@ -57,8 +58,14 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
       this.resetForm = this.resetForm.bind(this);
       this.changeCountryHandler = this.changeCountryHandler.bind(this);
       this.changeStateHandler = this.changeStateHandler.bind(this);
-      this.errorLanguageHandler = this.errorLanguageHandler.bind(this);
-      
+      this.errorLanguageHandler = this.errorLanguageHandler.bind(this);  
+      this.updateUserTimezone = this.updateUserTimezone.bind(this);
+      this.renderFindTimezoneButton = this.renderFindTimezoneButton.bind(this);
+
+      const { location, changeValues, timezone_map } = this.props;   
+      const usersTimezone = getLocalTimezoneFromMap(timezone_map);
+
+
       this.state = {
         message: '',
         showAddressDialog: false,
@@ -66,29 +73,40 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
         showPassword: false,
         showPrograms: false,
         showLanguages: false,
-        user: props.currentUser
+        user: props.currentUser,
+        localTimezone: usersTimezone,
       };
-
-      const { location, changeValues } = this.props;   
  
+      let fieldsToUpdate = [];
+
       // If the location.state contains a user data, then restore the values to the form
       if(!_.isEmpty(location.state)) {
-        changeValues(
+        fieldsToUpdate.push(
           ['first_name', location.state.currentUser.first_name],
           ['email', location.state.currentUser.email],
-        );        
+        );
+                
       }else if(wrappedProps && 'userData' in wrappedProps) {
         //If there is data to show in the form for this user, restore the values to the form
-        const userData = wrappedProps['userData'];
-        changeValues( 
-          [
+        const { userData } = wrappedProps;
+        fieldsToUpdate.push(
             ['first_name', userData.firstName],
             ['email', userData.email],
-            ['locale', userData.locale]
-          ] 
+            ['locale', userData.locale],
         );
       }
-     
+
+      const { type } = wrappedProps;
+      if (type === SIGN_UP) {      
+        if (typeof usersTimezone !== 'undefined') {
+          fieldsToUpdate.push(
+            ['timezone', usersTimezone],
+          );
+        }
+      }
+
+      changeValues(fieldsToUpdate);
+
       this.sortArrayProps(props);
     }
 
@@ -340,7 +358,8 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                   ) 
                 ) }
               </SelectField>
-
+           
+              { this. renderFindTimezoneButton() }
               <br />
 
               { this.renderHowTheyFoundUs() }
@@ -523,6 +542,33 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
             />
           </div>
         );
+      }
+    }
+
+
+    renderFindTimezoneButton() {
+      const { type } = wrappedProps;
+      const { localTimezone } = this.state;
+
+      if(type === UPDATE_PROFILE && typeof localTimezone !== 'undefined') {
+        return (
+          <>
+            <br />
+            <RaisedButton
+              label={ <FormattedMessage id='Profile.findTimezone' defaultMessage='Find my timezone' /> }
+              primary
+              onClick={ this.updateUserTimezone }
+            />          
+          </>
+        );
+      }
+    }
+
+    updateUserTimezone() {
+      const { localTimezone } = this.state;
+      const { changeValue } = this.props;
+      if (typeof localTimezone !== 'undefined') {
+        changeValue('timezone', localTimezone);
       }
     }
 
@@ -1260,8 +1306,8 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
       email_notification: PropTypes.bool,
       average_rating: PropTypes.number,
       rating_count: PropTypes.number,
-      client: PropTypes.string,
-      volunteer: PropTypes.string
+      client: PropTypes.bool,
+      volunteer: PropTypes.bool
     }),
 
     match: PropTypes.shape({
@@ -1272,6 +1318,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
     languages: PropTypes.array,
     programs: PropTypes.array,
     timezones: PropTypes.array,
+    timezone_map: PropTypes.object,
     how_they_found_us_options: PropTypes.array,
     changeHandler: PropTypes.func.isRequired,
     changeValue: PropTypes.func.isRequired,
@@ -1292,6 +1339,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
     languages: [],
     programs: [],
     timezones: [],
+    timezone_map: {},
     how_they_found_us_options: [],
     currentUser: {
       locale: 'en',
