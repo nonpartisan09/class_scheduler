@@ -27,6 +27,8 @@ ActiveAdmin.register User do
              #Then Admin can only read the profile if user is an Owner or Admin. 
             elsif roles.include?("Owner") || roles.include?("Admin")
               super - ['destroy', 'edit']
+            else 
+              super 
             end
           else 
             super  
