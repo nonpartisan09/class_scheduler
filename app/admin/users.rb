@@ -333,9 +333,9 @@ ActiveAdmin.register User do
       f.input :country, :as => :string
       f.input :timezone, collection: ActiveSupport::TimeZone.all.map(&:name), selected: resource.timezone
       roles_collection = Role.all.collect{|role| [role.name, role.id, { checked: resource.roles.include?(role) }]}
-      user = User.find(params[:id])
+      user = User.find(params[:id]) if params[:id]
       
-      if current_user.id == user.id 
+      if user && current_user.id == user.id 
         f.input :roles, as: :check_boxes, collection: roles_collection, :disabled => [ "Owner", 4]
       elsif current_user.admin? && current_user.owner? == false
         f.input :roles, as: :check_boxes, collection: roles_collection, :disabled => ["Owner", 4, "Admin", 1]
