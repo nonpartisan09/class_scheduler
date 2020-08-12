@@ -337,7 +337,7 @@ ActiveAdmin.register User do
       roles_collection = Role.all.collect{|role| [role.name, role.id, { checked: resource.roles.include?(role) }]}
       user = User.find(params[:id]) if params[:id]
       
-      if user && current_user.id == user.id 
+      if user && current_user.id == user.id && !current_user.owner?
         f.input :roles, as: :check_boxes, collection: roles_collection, :disabled => [ "Owner", 4]
       elsif current_user.admin? && current_user.owner? == false
         f.input :roles, as: :check_boxes, collection: roles_collection, :disabled => ["Owner", 4, "Admin", 1]
