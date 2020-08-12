@@ -1,4 +1,6 @@
 class RegistrationsController < Devise::RegistrationsController
+  include TimeZoneMap
+
   before_action :sign_up_params, only: [ :create ]
   before_action :account_update_params, :authenticate_user!, only: [ :update ]
 
@@ -11,12 +13,14 @@ class RegistrationsController < Devise::RegistrationsController
     programs = Program.all
     languages = Language.all
     timezones = ActiveSupport::TimeZone.all.map(&:name)
+    timezone_map = get_timezone_mapping
     how_they_found_us_options = @role_url_slug == 'volunteer' \
       ? HowTheyFoundUsOption.where(:for_volunteer => true) \
       : HowTheyFoundUsOption.where(:for_client => true)
     @data = {
       :programs => programs,
       :timezones => timezones,
+      :timezone_map => timezone_map,
       :languages => languages,
       :how_they_found_us_options => how_they_found_us_options
     }
