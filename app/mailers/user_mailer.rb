@@ -74,7 +74,7 @@ class UserMailer < ApplicationMailer
   end
 
   def url
-   "#{domain_name}/sign_in"
+   "#{domain_name}/#{@user.locale}/sign_in"
   end
 
   def admin_email
