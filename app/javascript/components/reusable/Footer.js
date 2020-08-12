@@ -10,7 +10,7 @@ import {
   FaRegCopyright,
   FaLinkedin,
   FaEnvelope,
-  FaPhone
+  FaWhatsapp
 } from 'react-icons/fa';
 
 import formatLink from '../utils/Link';
@@ -133,9 +133,9 @@ class Footer extends Component {
                 />
               </b>
               <a
-                href={ 'tel:'+contactInfo.PHONE }
+                href={ 'tel: +1(929)-359-3985' }
               >
-                <FaPhone
+                <FaWhatsapp
                   size={ size }
                   label={ (
                     <FormattedMessage
@@ -144,7 +144,9 @@ class Footer extends Component {
                     />
                   ) }
                 />
+
                 { ' +1(929)-359-3985' }
+
               </a>
               <a
                 href={ 'mailto:'+contactInfo.EMAIL }
