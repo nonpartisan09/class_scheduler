@@ -165,6 +165,8 @@ class Homepage extends Component {
     this.handleScroll = this.handleScroll.bind(this);
     this.handleMapView = this.handleMapView.bind(this);
     this.handleUserToggle = this.handleUserToggle.bind(this);
+    this.getVideoSize = this.getVideoSize.bind(this);
+    this.toggleVideoSize = this.toggleVideoSize.bind(this);
 
     this.joinUsFormRef = React.createRef();
     
@@ -173,6 +175,7 @@ class Homepage extends Component {
     this.state = {
       languageChecked: locale,
       signUpType: 'client',
+      enlargeVideo: false,
       mapView: 'row',
       clientsSelected: true,
       volunteersSelected: true,
@@ -363,6 +366,16 @@ class Homepage extends Component {
     return cards;
   }
 
+  getVideoSize() {
+    if (this.state.enlargeVideo) return <TutoriaVideo w='960' h='639' />; 
+    
+    return <TutoriaVideo />;
+  }
+
+  toggleVideoSize() {
+    this.state.enlargeVideo ? this.setState({ enlargeVideo: false }) : this.setState({ enlargeVideo: true })
+  }
+
   renderVideoElementContainer(content, children) {
     return(
       <div className={ content.name+'Container' }>
@@ -371,7 +384,16 @@ class Homepage extends Component {
             id={ content.header }
           />
         </h2>
-        <TutoriaVideo />
+
+        <button
+          className='youtube-button'
+          onClick={ this.toggleVideoSize }
+          type='button'
+        >
+          { this.state.enlargeVideo ? 'Click to Shrink' : 'Click to Enlarge' }
+        </button>
+        { this.getVideoSize() }
+
         <div className={ content.name+'ContentContainer' }>
           { children }
         </div>
