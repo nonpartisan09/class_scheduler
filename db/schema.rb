@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_18_064232) do
+ActiveRecord::Schema.define(version: 2020_08_12_173457) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -122,13 +122,13 @@ ActiveRecord::Schema.define(version: 2019_08_18_064232) do
 
   create_table "programs", force: :cascade do |t|
     t.string "name"
-    t.string "spanish_name"
     t.string "url_slug"
     t.text "description"
-    t.text "spanish_description"
     t.boolean "featured", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "spanish_name"
+    t.text "spanish_description"
   end
 
   create_table "reviews", force: :cascade do |t|
@@ -157,10 +157,23 @@ ActiveRecord::Schema.define(version: 2019_08_18_064232) do
     t.index ["user_id"], name: "index_roles_users_on_user_id"
   end
 
+  create_table "suspensions", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_suspensions_on_user_id"
+  end
+
   create_table "terms_and_conditions", force: :cascade do |t|
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "timeouts", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.boolean "timed_out", default: true
+    t.index ["user_id"], name: "index_timeouts_on_user_id", unique: true
   end
 
   create_table "users", force: :cascade do |t|
@@ -197,7 +210,7 @@ ActiveRecord::Schema.define(version: 2019_08_18_064232) do
     t.string "last_sign_in_ip"
     t.string "thumbnail_image_file_name"
     t.string "thumbnail_image_content_type"
-    t.integer "thumbnail_image_file_size"
+    t.bigint "thumbnail_image_file_size"
     t.datetime "thumbnail_image_updated_at"
     t.string "phone_number"
     t.string "how_they_found_us"

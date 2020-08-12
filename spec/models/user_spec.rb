@@ -62,3 +62,38 @@ RSpec.describe User, type: :model do
     expect(subject).to_not be_valid
   end
 end
+
+describe User::active, type: :association do 
+  before(:example) do
+    @user1 = User.create!({
+        first_name: "Ben", last_name: "Franklin", terms_and_conditions: 2, password: 'password', password_confirmation: 'password',
+        address: "100 1st Avenue", city: "New York", timezone: "Eastern Time (US & Canada)",
+        state: "Ny", country: "usa", active: true, generated_password: false, locale: "en", 
+        email_notification: true, email: "ben@domain.com"
+    })
+    @user2 = User.create!({
+        first_name: "Allie", last_name: "Franklin", terms_and_conditions: 2, password: 'password', password_confirmation: 'password',
+        address: "100 1st Avenue", city: "New York", timezone: "Eastern Time (US & Canada)",
+        state: "Ny", country: "usa", active: true, generated_password: false, locale: "en", 
+        email_notification: true, email: "allie@domain.com"
+    })
+    @user3 = User.create!({
+        first_name: "Skoots", last_name: "Franklin", terms_and_conditions: 2, password: 'password', password_confirmation: 'password',
+        address: "100 1st Avenue", city: "New York", timezone: "Eastern Time (US & Canada)",
+        state: "Ny", country: "usa", active: true, generated_password: false, locale: "en", 
+        email_notification: true, email: "skoots@domain.com"
+    })
+  end
+  it "returns active associations with no suspensions" do
+    expect(User.active.select(:first_name).map(&:first_name)).to eq(["Ben","Allie","Skoots"]) 
+  end
+  it "returns active association with suspensions set to false" do
+    Suspension.create({user_id: @user2.id})
+    expect(User.active.select(:first_name).map(&:first_name)).to eq(["Ben","Skoots"]) 
+  end
+  it "returns active only association with suspensions set to false and no suspensions" do
+    Suspension.create({user_id: @user2.id})
+    Suspension.create({user_id: @user3.id})
+    expect(User.active.select(:first_name).map(&:first_name)).to eq(["Ben"]) 
+  end
+end

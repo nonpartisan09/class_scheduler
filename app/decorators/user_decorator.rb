@@ -29,7 +29,9 @@ class UserDecorator
       :timezone => user_timezone,
       :url_slug => url_slug,
       :volunteer => @user.volunteer?,
-      :city => city
+      :city => city,
+      :suspended => @user.suspended?
+      :can_unsuspend => @user.can_unsuspend?
     }.merge(availabilities_hash)
   end
 
@@ -53,7 +55,9 @@ class UserDecorator
         :timezone => user_timezone,
         :languages => languages,
         :rating_count => rating_count,
-        :average_rating => average_rating
+        :average_rating => average_rating,
+        :suspended => @user.suspended?,
+        :can_unsuspend => @user.can_unsuspend?
     }
   end
 
@@ -91,7 +95,9 @@ class UserDecorator
         :thumbnail_image => picture,
         :timezone => user_timezone,
         :url_slug => url_slug,
-        :volunteer => @user.volunteer?
+        :volunteer => @user.volunteer?,
+        :suspended => @user.suspended?,
+        :can_unsuspend => @user.can_unsuspend?
     }.merge(availabilities_hash)
   end
 

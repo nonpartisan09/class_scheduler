@@ -20,6 +20,7 @@ Rails.application.routes.draw do
     resources :sessions
     resource :users do
       get 'cities', on: :collection
+      resources :suspensions, only: %i[create, destroy]
     end
 
     get 'reviews', to: 'reviews#index'

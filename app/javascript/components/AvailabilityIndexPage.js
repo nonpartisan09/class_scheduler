@@ -14,6 +14,7 @@ import { ENGLISH } from './utils/availableLocales';
 
 class AvailabilityIndexPage extends Component {
   render() {
+    const { can_unsuspend, suspended } = this.props.currentUser;
     return (
       <div>
         <Paper zDepth={ 1 } className='paperOverride' rounded={ false }>
@@ -29,7 +30,11 @@ class AvailabilityIndexPage extends Component {
             <FormattedMessage
               id='AvailabilityIndexPage.Help'
               defaultMessage='I can help with'
-            />:
+            />
+            :
+            <button type="button" disabled={ !can_unsuspend }>
+              { suspended ? 'Reactivate Account' : 'Pause Account' }
+            </button>
             <ul className='availabilityIndexProgramsContainer'>
               { this.renderAvailablePrograms() }
             </ul>
@@ -92,6 +97,8 @@ AvailabilityIndexPage.propTypes = {
     email: PropTypes.string,
     timezone: PropTypes.string,
     locale: PropTypes.string,
+    can_unsuspend: PropTypes.bool,
+    suspended: PropTypes.bool
   })
 };
 
@@ -103,6 +110,8 @@ AvailabilityIndexPage.defaultProps = {
     email: '',
     timezone: '',
     locale: ENGLISH,
+    can_unsuspend: false,
+    suspended: false
   }
 };
 
