@@ -333,6 +333,7 @@ ActiveAdmin.register User do
       f.input :country, :as => :string
       f.input :timezone, collection: ActiveSupport::TimeZone.all.map(&:name), selected: resource.timezone
       roles_collection = Role.all.collect{|role| [role.name, role.id, { checked: resource.roles.include?(role) }]}
+
       user = User.find(params[:id]) if params[:id]
       
       if user && current_user.id == user.id 
