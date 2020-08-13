@@ -67,6 +67,15 @@ class UserMailer < ApplicationMailer
     mail(to: @user.email, subject: 'Tutoría Password Updated')
   end
 
+  def account_suspended(volunteer, client, conversation)
+    @volunteer, @client, @conversation = volunteer, client, conversation
+    @url = "https://tutoria.io/#{@volunteer.locale}/inbox/#{@conversation.id}"
+    mail(to: @volunteer.email, subject: 'You have missed messages in Tutoría')
+
+    # @url = "https://tutoria.io/#{@client.locale}/inbox/#{@conversation.id}"
+    # mail(to: @volunteer.email, subject: 'You have missed messages in Tutoría')
+  end
+
   private
 
   def domain_name

@@ -1,0 +1,11 @@
+<%= @volunteer.first_name %>,
+===============================================
+You have received a request for volunteer assistance from <%= @client.first_name + " " + @client.last_name %> on <%= @conversation.created_at.to_formatted_s(:long_ordinal) %>.
+
+To create the best possible experience for you and our clients, we have temporarily restricted your Tutoría account with username <%= @volunteer.email %> from appearing in further search results. In order to reactivate your account, please just respond to the message from <%= @client.first_name %> using the link above at your earliest convenience. 
+
+If you have any questions, please email <%= @admin_email %>.
+
+Thank you for your time and contributions to our community!
+
+Team Tutoría

@@ -30,8 +30,9 @@ class UserDecorator
       :url_slug => url_slug,
       :volunteer => @user.volunteer?,
       :city => city,
-      :suspended => @user.suspended?
-      :can_unsuspend => @user.can_unsuspend?
+      :suspended => @user.suspended?,
+      :can_unsuspend => @user.can_unsuspend?,
+      :id => @user.id
     }.merge(availabilities_hash)
   end
 
@@ -57,7 +58,8 @@ class UserDecorator
         :rating_count => rating_count,
         :average_rating => average_rating,
         :suspended => @user.suspended?,
-        :can_unsuspend => @user.can_unsuspend?
+        :can_unsuspend => @user.can_unsuspend?,
+        :id => @user.id
     }
   end
 
@@ -97,7 +99,8 @@ class UserDecorator
         :url_slug => url_slug,
         :volunteer => @user.volunteer?,
         :suspended => @user.suspended?,
-        :can_unsuspend => @user.can_unsuspend?
+        :can_unsuspend => @user.can_unsuspend?,
+        :id => @user.id
     }.merge(availabilities_hash)
   end
 

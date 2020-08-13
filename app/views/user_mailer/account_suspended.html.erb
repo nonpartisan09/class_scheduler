@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+</head>
+<body>
+<%= image_tag attachments['logo.png'].url %>
+<h1><%= @volunteer.first_name %>,</h1>
+<p>
+  You have received a request for volunteer assistance from <%= @client.first_name + " " + @client.last_name %> on <%= @conversation.created_at.to_formatted_s(:long_ordinal) %>.
+</p>
+<p>
+  Please visit your inbox and respond to <%= @client.first_name %>:
+  <a href=<%= @url %>><%= @url %></a>
+</p>
+
+<p>
+  To create the best possible experience for you and our clients, we have temporarily restricted your Tutoría account with username <%= @volunteer.email %> from appearing in further search results. In order to reactivate your account, please just respond to the message from <%= @client.first_name %> using the link above at your earliest convenience and then you unpause your account on the availabilities page.
+</p>
+<p>
+  If you have any questions, please email <%= @admin_email %>.
+</p>
+<p>Thank you for your time and contributions to our community!</p>
+<p>Team Tutoría</p>
+</body>
+</html>

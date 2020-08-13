@@ -20,8 +20,10 @@ Rails.application.routes.draw do
     resources :sessions
     resource :users do
       get 'cities', on: :collection
-      resources :suspensions, only: %i[create, destroy]
     end
+
+    post '/users/:user_id/suspensions', to: 'suspensions#create'
+    delete '/users/:user_id/suspensions', to: 'suspensions#destroy'
 
     get 'reviews', to: 'reviews#index'
 

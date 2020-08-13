@@ -6,6 +6,8 @@ import RaisedButton from 'material-ui/RaisedButton';
 import Chip from 'material-ui/Chip';
 import { FormattedMessage } from 'react-intl';
 
+import { postData } from './utils/sendData';
+
 import AvailabilitiesTable from './AvailabilitiesTable';
 import formatLink from './utils/Link';
 
@@ -13,11 +15,12 @@ import PageHeader from './reusable/PageHeader';
 import { ENGLISH } from './utils/availableLocales';
 
 class AvailabilityIndexPage extends Component {
+
   render() {
     const { can_unsuspend, suspended } = this.props.currentUser;
     return (
       <div>
-        <Paper zDepth={ 1 } className='paperOverride' rounded={ false }>
+        <Paper zDepth={ 1 } className={ suspended ? 'paperOverride suspended' : 'paperOverride' } rounded={ false }>
           <PageHeader title={ (
             <FormattedMessage
               id='AvailabilityIndexPage.Header'
@@ -26,15 +29,20 @@ class AvailabilityIndexPage extends Component {
             ) } 
           />
 
+          <button
+            type="button"
+            disabled={ !can_unsuspend }
+            onClick={ () => suspended ? this.suspensionClick('DELETE') : this.suspensionClick('POST') }
+          >
+            {suspended ? 'Reactivate Account' : 'Pause Account'}
+          </button>
+
           <div className='availabilityIndexContainer'>
             <FormattedMessage
               id='AvailabilityIndexPage.Help'
               defaultMessage='I can help with'
             />
             :
-            <button type="button" disabled={ !can_unsuspend }>
-              { suspended ? 'Reactivate Account' : 'Pause Account' }
-            </button>
             <ul className='availabilityIndexProgramsContainer'>
               { this.renderAvailablePrograms() }
             </ul>
@@ -87,6 +95,24 @@ class AvailabilityIndexPage extends Component {
       );
     }
   }
+
+  suspensionClick(type){
+
+    const { id, locale } = this.props.currentUser;
+
+    const requestParams = {
+      url: `/users/${id}/suspensions`,
+        method: type,
+        successCallBack: () => location.assign(formatLink('/availabilities', locale)),
+        errorCallBack: (message) =>  console.log(message)
+    };
+
+    return postData(requestParams);
+
+
+
+  }
+
 }
 
 AvailabilityIndexPage.propTypes = {
@@ -98,7 +124,8 @@ AvailabilityIndexPage.propTypes = {
     timezone: PropTypes.string,
     locale: PropTypes.string,
     can_unsuspend: PropTypes.bool,
-    suspended: PropTypes.bool
+    suspended: PropTypes.bool,
+    id: PropTypes.number
   })
 };
 
@@ -111,7 +138,8 @@ AvailabilityIndexPage.defaultProps = {
     timezone: '',
     locale: ENGLISH,
     can_unsuspend: false,
-    suspended: false
+    suspended: false,
+    id: 0
   }
 };
 

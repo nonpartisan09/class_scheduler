@@ -9,8 +9,10 @@ class MessagesController < ApplicationController
   end
 
   def create
-    @conversation ||= Conversation.create(author_id: current_user.id,
-        recipient_id: @recipient.id)
+    if !@conversation 
+      @conversation = Conversation.create(author_id: current_user.id, recipient_id: @recipient.id)
+      Delayed::Job.enqueue(SuspensionJob.new(@conversation, @recipient, current_user), 0, 1.minutes.from_now)
+    end
     @message = current_user.messages.build(permitted_params.except(:recipient_id))
     @message.conversation_id = @conversation.id
     @message.unread = true

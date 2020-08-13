@@ -30,4 +30,5 @@ class Conversation < ApplicationRecord
   def participates?(user)
     author == user || recipient == user
   end
+
 end
