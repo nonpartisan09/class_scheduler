@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Map, TileLayer, CircleMarker, Popup } from 'react-leaflet';
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
-import { v4 as uuid } from 'uuid';
+import uuid from 'uuid/v4';
 
 export default class UserMap extends Component {
   constructor (props) {
