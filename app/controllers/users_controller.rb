@@ -46,9 +46,13 @@ class UsersController < ApplicationController
     # TODO: please improve
     availabilities = []
     @availabilities.each do |availability|
-      Time.zone = current_user.timezone
-      first_day = availability.start_time.strftime('%A')
-      second_day = availability.end_time.strftime('%A')
+      # parse time with user's currenet utc offset (including daylight savings time)
+      # to catch when dst causes availability period to span into the next day
+      start_time = AvailabilityDecorator.parse_time_users_offset(availability.start_time, current_user.timezone)
+      end_time = AvailabilityDecorator.parse_time_users_offset(availability.end_time, current_user.timezone)
+      
+      first_day = start_time.strftime('%A')
+      second_day = end_time.strftime('%A')
 
       if first_day != second_day
         split_availability = AvailabilityDecorator.new(availability,

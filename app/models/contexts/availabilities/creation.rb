@@ -129,7 +129,16 @@ module Contexts
       def parse_times_utc
         Time.zone = 'UTC'
         @parsed_start_time_utc = parse_time(@availability[:start_time])
-        @parsed_end_time_utc = parse_time(@availability[:end_time])
+        @parsed_end_time_utc = end_date_time_utc(@parsed_start_time_utc, parse_time(@availability[:end_time]))
+      end
+
+      def end_date_time_utc(start_time, end_time)
+        # Use the difference in time between the start and end to find the correct end day
+        # when the end time in utc spans to the next day
+        start_hour_min = Time.parse(@availability[:start_time]).change(sec: 0)
+        end_hour_min = Time.parse(@availability[:end_time]).change(sec: 0)
+        duration = (end_hour_min - start_hour_min) / 1.seconds
+        actual_end_day = start_time + duration.seconds
       end
 
       def parse_times_user_tz
