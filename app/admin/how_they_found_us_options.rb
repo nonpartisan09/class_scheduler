@@ -8,6 +8,18 @@ ActiveAdmin.register HowTheyFoundUsOption do
     actions
   end
 
+  actions :all
+
+  controller do
+    def action_methods
+      if current_user.admins_readonly?
+        super - ['destroy', 'new', 'edit']
+      else
+        super
+      end
+    end
+  end
+
   filter :name
   filter :spanish_name
   filter :for_volunteer

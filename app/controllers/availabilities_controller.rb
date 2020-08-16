@@ -1,4 +1,6 @@
 class AvailabilitiesController < ApplicationController
+  include AvailabilitiesSorter
+
   before_action :authenticate_user!
   before_action :check_if_volunteer?, except: [:search]
   before_action :check_if_client?, only: [:search]
@@ -72,13 +74,15 @@ class AvailabilitiesController < ApplicationController
   def index
     user = UserDecorator.new(current_user).simple_decorate
     programs = current_user.programs
-    availabilities = Availability.where(:user => current_user).collect{ |n|
+    availabilities_unsorted = Availability.where(:user => current_user).collect{ |n|
       AvailabilityDecorator.new(n, {
           :timezone => current_user_timezone,
           :user_timezone => current_user_timezone
       }).self_decorate
     }
 
+    availabilities = sort_availabilities(availabilities_unsorted)
+    
     @data = {
         :currentUser => user,
         :programs => programs,
@@ -123,4 +127,5 @@ class AvailabilitiesController < ApplicationController
         :end_time
     )
   end
+
 end
