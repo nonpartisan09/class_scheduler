@@ -27,12 +27,12 @@ import {
   ExpansionPanelSummary,
   Button,
   Radio,
-  // Switch,
+  Switch,
   RadioGroup,
   FormControlLabel,
-  // FormGroup,
-  // Grid,
-  // ButtonGroup
+  FormGroup,
+  Grid,
+  ButtonGroup
 } from '@material-ui/core';
 import validate from 'react-joi-validation';
 import PropTypes from 'prop-types';
@@ -48,6 +48,8 @@ import SignUpSession from './utils/SignUpSession';
 import SignUpSchema from './schema/SignUpSchema';
 import contactInfo from '../ContactInfo';
 // import UserMap from './UserMap';
+import TutoriaVideo from './TutoriaVideo';
+
 
 const pageContent = {
   testimonials: [
@@ -162,8 +164,11 @@ class Homepage extends Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.handleScroll = this.handleScroll.bind(this);
-    // this.handleMapView = this.handleMapView.bind(this);
+    this.handleMapView = this.handleMapView.bind(this);
     this.handleUserToggle = this.handleUserToggle.bind(this);
+    this.getVideoSize = this.getVideoSize.bind(this);
+    this.toggleVideoSize = this.toggleVideoSize.bind(this);
+    this.getButtonLanguage = this.getButtonLanguage.bind(this);
 
     this.joinUsFormRef = React.createRef();
     
@@ -175,6 +180,8 @@ class Homepage extends Component {
       // mapView: 'row',
       // clientsSelected: true,
       // volunteersSelected: true,
+      enlargeVideo: false,
+
     };
   }
 
@@ -187,13 +194,13 @@ class Homepage extends Component {
     window.scrollTo(0, verticalScrollPosition);
   }
 
-  // handleMapView() {
-  //   this.state.mapView === 'row'
-  //   ?
-  //   this.setState({ mapView: 'usa' })
-  //   :
-  //   this.setState({ mapView: 'row' });
-  // }
+  handleMapView() {
+    this.state.mapView === 'row'
+    ?
+    this.setState({ mapView: 'usa' })
+    :
+    this.setState({ mapView: 'row' });
+  }
 
   handleUserToggle(stateToChange, prevState) {
     const newState = !prevState;
@@ -209,7 +216,7 @@ class Homepage extends Component {
         </span>
         { this.renderFeaturedPrograms() }
         { this.renderHowItWorks() }
-        {/* { this.renderWhereWeAre() } */}
+        { this.renderWhereWeAre() }
         { this.renderJoinUs() }
         { this.renderNeedHelp() }
       </div>
@@ -264,13 +271,11 @@ class Homepage extends Component {
   }
 
   renderContactButtons(size = 30) {
-    const { locale } = this.props;
 
     return(
       <div className='homepageContact'>
         <SliderButton
           href={ 'tel:'+contactInfo.PHONE }
-          
         >
           <FaWhatsapp
             size={ size }
@@ -364,9 +369,53 @@ class Homepage extends Component {
     return cards;
   }
 
+  getVideoSize() {
+    if (this.state.enlargeVideo) return <TutoriaVideo w='960' h='639' />; 
+    
+    return <TutoriaVideo />;
+  }
+
+  toggleVideoSize() {
+    this.state.enlargeVideo ? this.setState({ enlargeVideo: false }) : this.setState({ enlargeVideo: true })
+  }
+
+  getButtonLanguage(locale) {
+    const { enlargeVideo } = this.state;
+    if (locale === 'es') {
+      return enlargeVideo ? 'Haga clic para encoger' : 'Click para agrandar';
+    }
+
+    return enlargeVideo ? 'Click to Shrink' : 'Click to Enlarge';
+  }
+
+  renderVideoElementContainer(content, children) {
+    return(
+      <div className={ content.name+'Container' }>
+        <h2 className={ content.name+'Header' }>
+          <FormattedMessage
+            id={ content.header }
+          />
+        </h2>
+
+        <button
+          className='youtube-button'
+          onClick={ this.toggleVideoSize }
+          type='button'
+        >
+          { this.getButtonLanguage(this.props.locale) }
+        </button>
+        { this.getVideoSize() }
+
+        <div className={ content.name+'ContentContainer' }>
+          { children }
+        </div>
+      </div>
+    );
+  }
+
   renderHowItWorks() {
     return(
-      this.renderElementContainer(
+      this.renderVideoElementContainer(
         pageContent.howItWorks,
         this.renderHowItWorksCards(pageContent.howItWorks.howItWorksStages)
       )
@@ -406,94 +455,94 @@ class Homepage extends Component {
   /*
     Todo: Re-implement map for client view. 
   */ 
-  // renderWhereWeAre() {
-  //   return(
-  //     this.renderElementContainer(
-  //       pageContent.whereWeAre,
-  //       this.renderWhereWeAreComponents()
-  //   ));
-  // }
+  renderWhereWeAre() {
+    return(
+      this.renderElementContainer(
+        pageContent.whereWeAre,
+        this.renderWhereWeAreComponents()
+    ));
+  }
 
-  // renderWhereWeAreComponents() {
-  //   return(
-  //     <div className='whereWeAreComponentsContainer'>
-  //       <FormGroup>
-  //         <Grid item>
-  //           <ButtonGroup
-  //             variant="contained"
-  //             size="large"
-  //           >
-  //             <Button
-  //               className='userSelectClientsButton'
-  //               onClick={ () => this.handleUserToggle('clientsSelected', this.state.clientsSelected) }
-  //               style={ {
-  //                 backgroundColor: this.state.clientsSelected ? '#F1592A' : '',
-  //                 color: this.state.clientsSelected ? 'white' : '',
-  //               } }
-  //             >
-  //               <FormattedMessage
-  //                 id='HomePage.UserSelectClients'
-  //                 default='Clients'
-  //               />
-  //             </Button>
-  //             <Button
-  //               className='userSelectVolunteersButton'
-  //               onClick={ () => this.handleUserToggle('volunteersSelected', this.state.volunteersSelected) }
-  //               style={ {
-  //                 backgroundColor: this.state.volunteersSelected ? '#29AAE2' : '',
-  //                 color: this.state.volunteersSelected ? 'white' : '',
-  //               } }
-  //             >
-  //               <FormattedMessage
-  //                 id='HomePage.UserSelectVolunteers'
-  //                 default='Volunteers'
-  //               />
-  //             </Button>
-  //           </ButtonGroup>
-  //         </Grid>
-  //         <FormControlLabel
-  //           className='mapToggleLabel'
-  //           control={
-  //             (
-  //               <Switch
-  //                 checked={ this.state.mapView==='row' }
-  //                 onChange={ this.handleMapView }
-  //                 value={ this.state.mapView }
-  //                 color='primary'
-  //                 inputProps={ { 'aria-label': 'Map View Switch' } }
-  //               />
-  //             )
-  //           }
-  //           label={
-  //             (
-  //               this.state.mapView==='row'
-  //               ?
-  //               (
-  //                 <p>
-  //                   <FormattedMessage
-  //                     id='Homepage.MapViewROW'
-  //                     default='World'
-  //                   />
-  //                 </p>
-  //               )
-  //               :
-  //               (
-  //                 <p>
-  //                   <FormattedMessage
-  //                     id='Homepage.MapViewUSA'
-  //                     default='USA'
-  //                   />
-  //                 </p>
-  //               )
-  //             )
-  //           }
-  //           labelPlacement='end'
-  //         />
-  //       </FormGroup>
-  //       <UserMap view={ this.state.mapView } viewClients={ this.state.clientsSelected } viewVolunteers={ this.state.volunteersSelected } />
-  //     </div>
-  //   );
-  // }
+  renderWhereWeAreComponents() {
+    return(
+      <div className='whereWeAreComponentsContainer'>
+        <FormGroup>
+          <Grid item>
+            <ButtonGroup
+              variant="contained"
+              size="large"
+            >
+              <Button
+                className='userSelectClientsButton'
+                onClick={ () => this.handleUserToggle('clientsSelected', this.state.clientsSelected) }
+                style={ {
+                  backgroundColor: this.state.clientsSelected ? '#F1592A' : '',
+                  color: this.state.clientsSelected ? 'white' : '',
+                } }
+              >
+                <FormattedMessage
+                  id='HomePage.UserSelectClients'
+                  default='Clients'
+                />
+              </Button>
+              <Button
+                className='userSelectVolunteersButton'
+                onClick={ () => this.handleUserToggle('volunteersSelected', this.state.volunteersSelected) }
+                style={ {
+                  backgroundColor: this.state.volunteersSelected ? '#29AAE2' : '',
+                  color: this.state.volunteersSelected ? 'white' : '',
+                } }
+              >
+                <FormattedMessage
+                  id='HomePage.UserSelectVolunteers'
+                  default='Volunteers'
+                />
+              </Button>
+            </ButtonGroup>
+          </Grid>
+          <FormControlLabel
+            className='mapToggleLabel'
+            control={
+              (
+                <Switch
+                  checked={ this.state.mapView==='row' }
+                  onChange={ this.handleMapView }
+                  value={ this.state.mapView }
+                  color='primary'
+                  inputProps={ { 'aria-label': 'Map View Switch' } }
+                />
+              )
+            }
+            label={
+              (
+                this.state.mapView==='row'
+                ?
+                (
+                  <p>
+                    <FormattedMessage
+                      id='Homepage.MapViewROW'
+                      default='World'
+                    />
+                  </p>
+                )
+                :
+                (
+                  <p>
+                    <FormattedMessage
+                      id='Homepage.MapViewUSA'
+                      default='USA'
+                    />
+                  </p>
+                )
+              )
+            }
+            labelPlacement='end'
+          />
+        </FormGroup>
+        <UserMap view={ this.state.mapView } viewClients={ this.state.clientsSelected } viewVolunteers={ this.state.volunteersSelected } />
+      </div>
+    );
+  }
 
   renderJoinUs() {
     return(
@@ -508,7 +557,7 @@ class Homepage extends Component {
   }
 
   renderJoinUsForm() {
-    const { errors, changeHandler, validateHandler, locale } = this.props;
+    const { errors, changeHandler, validateHandler } = this.props;
     const size = 30;
     return(
       <span className='joinUsForm'>

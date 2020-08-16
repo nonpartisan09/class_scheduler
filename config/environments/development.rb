@@ -36,7 +36,7 @@ Rails.application.configure do
       port: '5000'
   }
 
-  config.base_domain = ENV["DOMAIN_NAME"]
+  config.base_domain = ENV["DOMAIN_NAME"] || "localhost:5000"
 
   config.action_mailer.perform_caching = false
 
