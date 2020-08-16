@@ -144,9 +144,7 @@ class Footer extends Component {
                     />
                   ) }
                 />
-
                 { ' +1(929)-359-3985' }
-
               </a>
               <a
                 href={ 'mailto:'+contactInfo.EMAIL }
