@@ -167,7 +167,7 @@ class Homepage extends Component {
     this.handleUserToggle = this.handleUserToggle.bind(this);
     this.getVideoSize = this.getVideoSize.bind(this);
     this.toggleVideoSize = this.toggleVideoSize.bind(this);
-
+    this.getButtonLanguage = this.getButtonLanguage.bind(this);
     this.joinUsFormRef = React.createRef();
     
     const { locale } = this.props;
@@ -377,6 +377,15 @@ class Homepage extends Component {
     this.state.enlargeVideo ? this.setState({ enlargeVideo: false }) : this.setState({ enlargeVideo: true })
   }
 
+  getButtonLanguage(locale) {
+    const { enlargeVideo } = this.state;
+    if (locale === 'es') {
+      return enlargeVideo ? 'Haga clic para encoger' : 'Click para agrandar';
+    }
+
+    return enlargeVideo ? 'Click to Shrink' : 'Click to Enlarge';
+  }
+
   renderVideoElementContainer(content, children) {
     return(
       <div className={ content.name+'Container' }>
@@ -390,7 +399,7 @@ class Homepage extends Component {
           onClick={ this.toggleVideoSize }
           type='button'
         >
-          { this.state.enlargeVideo ? 'Click to Shrink' : 'Click to Enlarge' }
+          { this.getButtonLanguage(this.props.locale) }
         </button>
         { this.getVideoSize() }
         <div className={ content.name+'ContentContainer' }>
