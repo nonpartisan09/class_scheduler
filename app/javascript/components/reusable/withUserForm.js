@@ -60,7 +60,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
       this.changeStateHandler = this.changeStateHandler.bind(this);
 
       this.errorLanguageHandler = this.errorLanguageHandler.bind(this);  
-
+      
       this.updateUserTimezone = this.updateUserTimezone.bind(this);
       this.renderFindTimezoneButton = this.renderFindTimezoneButton.bind(this);
 
