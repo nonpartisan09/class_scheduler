@@ -5,6 +5,38 @@ ActiveAdmin.register User do
       user.admin_user_creation!
       redirect_to(admin_user_path(user))
     end
+
+    def action_methods
+      user = ''
+      roles = []
+      if params[:id]
+        user = User.find(params[:id])
+        roles = user.roles.map{|r| r.name}
+      end
+      
+      # An action must always be returned in if statements or an error will be thrown.
+      # All supers are needed.
+      if current_user.admins_readonly?
+        super - ['destroy', 'new', 'edit']
+      elsif current_user.owner? == false
+          #Check user's roles. 
+          if roles.length > 0
+             #Admin can edit/update their own profile
+            if current_user.id === user.id 
+              super 
+             #Then Admin can only read the profile if user is an Owner or Admin. 
+            elsif roles.include?("Owner") || roles.include?("Admin")
+              super - ['destroy', 'edit']
+            else 
+              super 
+            end
+          else 
+            super  
+          end 
+      else
+        super
+      end
+    end
   end
 
   class ReadonlyInput < Formtastic::Inputs::StringInput
@@ -52,45 +84,79 @@ ActiveAdmin.register User do
   scope :volunteers, proc { User.volunteers }
   scope :clients, proc { User.clients }
   scope :admins, proc { User.admins }
+  scope :admins_readonly, proc { User.admins_readonly }
+  scope :owners, proc { User.owners }
 
   member_action :impersonate, method: :put  do
-    sign_in(:user, resource, { :bypass => true })
-    redirect_to root_path
+    if current_user.admins_readonly? == false 
+      sign_in(:user, resource, { :bypass => true })
+      redirect_to root_path
+    end 
   end
 
-  member_action :deactivate_user, method: :put do
-    resource.deactivate_account!
-
-    redirect_to(admin_user_path(resource))
+  member_action :deactivate_user, method: :put do 
+    if current_user.admins_readonly? == false 
+      resource.deactivate_account!
+      redirect_to(admin_user_path(resource))
+    end 
   end
 
   member_action :delete_user_with_email, method: :put do
-    resource.delete_with_email!
-
-    redirect_to(admin_users_path)
+    roles = user.roles.map{|r| r.name}
+    if current_user.owner? == false && (roles.include?('Owner') || roles.include?('Admin'))
+      nil
+    else 
+      if current_user.admins_readonly? == false 
+        resource.delete_with_email!
+        redirect_to(admin_users_path)
+      end 
+    end
   end
 
   member_action :reactivate_user, method: :put do
-    resource.activate_account!
-    redirect_to(admin_user_path(resource))
+    if current_user.owner? || current_user.admin?
+      resource.activate_account!
+      redirect_to(admin_user_path(resource))
+    end
   end
 
-  config.add_action_item(:delete_user, only: :show) do
+  config.add_action_item(:delete_user, only: :show) do 
+    roles = user.roles.map{|r| r.name}
     if resource.active
-      link_to 'Delete User with email', delete_user_with_email_admin_user_path(resource), method: :put
+      if current_user.owner? == false && (roles.include?('Owner') || roles.include?('Admin'))
+        nil
+      else 
+        if current_user.admins_readonly? == false 
+          link_to 'Delete User with email', delete_user_with_email_admin_user_path(resource), method: :put
+        end 
+      end
     end
   end
 
 
   config.add_action_item(:impersonate, only: :show) do
-    if resource.active
-      link_to 'Impersonate User', impersonate_admin_user_path(resource), method: :put
+    roles = user.roles.map{|r| r.name}
+    if resource.active 
+      if current_user.owner? == false && (roles.include?('Owner') || roles.include?('Admin'))
+        nil
+      else 
+        if current_user.admins_readonly? == false 
+          link_to 'Impersonate User', impersonate_admin_user_path(resource), method: :put
+        end
+      end
     end
   end
 
   config.add_action_item(:deactivate_user, only: :show) do
+    roles = user.roles.map{|r| r.name}
     if resource.active
-      link_to 'Deactivate User', deactivate_user_admin_user_path(resource), method: :put
+      if current_user.owner? == false && (roles.include?('Owner') || roles.include?('Admin'))
+        nil 
+      else 
+        if current_user.admins_readonly? == false 
+          link_to 'Deactivate User', deactivate_user_admin_user_path(resource), method: :put
+        end
+      end 
     else
       link_to 'Reactivate User', reactivate_user_admin_user_path(resource), method: :put
     end
@@ -149,7 +215,7 @@ ActiveAdmin.register User do
     column :sign_in_count
     column :created_at
     column :average_rating
-    actions
+    actions 
   end
 
   filter :email
@@ -268,8 +334,19 @@ ActiveAdmin.register User do
       f.input :active, as: :readonly
       f.input :country, :as => :string
       f.input :timezone, collection: ActiveSupport::TimeZone.all.map(&:name), selected: resource.timezone
-      roles_collection = Role.all.collect{|role| [role.name, role.id, { checked: resource.roles.include?(role) } ]}
-      f.input :roles, as: :check_boxes, collection: roles_collection
+      roles_collection = Role.all.collect{|role| [role.name, role.id, { checked: resource.roles.include?(role) }]}
+
+      user = User.find(params[:id]) if params[:id]
+      
+      if user && current_user.id == user.id && !current_user.owner?
+
+        f.input :roles, as: :check_boxes, collection: roles_collection, :disabled => [ "Owner", 4]
+      elsif current_user.admin? && current_user.owner? == false
+        f.input :roles, as: :check_boxes, collection: roles_collection, :disabled => ["Owner", 4, "Admin", 1]
+      else 
+        f.input :roles, as: :check_boxes, collection: roles_collection
+      end
+      
       languages_collection = Language.all.collect{|language| [language.name, language.id, { checked: resource.languages.include?(language) } ]}
       f.input :languages, as: :check_boxes, collection: languages_collection
       programs_collection = Program.all.collect{|program| [program.name, program.id, { checked: resource.programs.include?(program) } ]}
