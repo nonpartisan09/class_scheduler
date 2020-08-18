@@ -17,7 +17,7 @@ class UserDecorator
       :last_name => last_name,
       :languages => languages,
       :language_ids => language_ids,
-      :last_logged_in => last_logged_in,
+      :last_logged_in => current_sign_in,
       :current_sign_in => current_sign_in,
       :locale => locale,
       :phone_number => phone_number,
