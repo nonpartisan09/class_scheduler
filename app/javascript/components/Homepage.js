@@ -169,7 +169,6 @@ class Homepage extends Component {
     this.getVideoSize = this.getVideoSize.bind(this);
     this.toggleVideoSize = this.toggleVideoSize.bind(this);
     this.getButtonLanguage = this.getButtonLanguage.bind(this);
-
     this.joinUsFormRef = React.createRef();
     
     const { locale } = this.props;
