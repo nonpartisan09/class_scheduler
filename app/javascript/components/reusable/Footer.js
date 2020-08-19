@@ -133,7 +133,7 @@ class Footer extends Component {
                 />
               </b>
               <a
-                href={ 'tel:+1(929)-359-3985' }
+                href={ 'tel: +1(929)-359-3985' }
               >
                 <FaWhatsapp
                   size={ size }
