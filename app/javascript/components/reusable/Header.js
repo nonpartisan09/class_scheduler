@@ -375,7 +375,7 @@ class Header extends Component {
           />
           { contactInfo.EMAIL }
         </SliderButton>
-        {/* focus below */}
+
         <SliderButton
           grey
           href={ contactInfo.FACEBOOK }
@@ -427,7 +427,7 @@ class Header extends Component {
           />
           LinkedIn
         </SliderButton>
-        {/* focus above */}
+
       </div>
     );
   }
