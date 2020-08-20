@@ -76,16 +76,20 @@ export default class UserMap extends Component {
     // assign helper methods based on view selected
     let getColor = null;
     let popUp = null;
+    let radius = null;
 
     if (this.props.viewClients && !this.props.viewVolunteers) {
       getColor = this.clientColor;
       popUp = this.clientPopUp;
+      radius = calculateRadius("CLIENT")
     } else if (this.props.viewVolunteers && !this.props.viewClients) {
       getColor = this.volunteerColor;
       popUp = this.volunteerPopUp;
+      radius = calculateRadius("VOLUNTEER")
     } else if (this.props.viewVolunteers && this.props.viewClients) {
       getColor = this.allColor;
       popUp = this.allPopUp;
+      radius = calculateRadius("ALL")
     }
 
     return (
@@ -128,7 +132,7 @@ export default class UserMap extends Component {
                 color={ getColor(city) }
                 fillColor={ getColor(city) }
                 fillOpacity={ 0.5 }
-                radius={ 5 }
+                radius={ radius }
               >
                 <Popup>
                   <h4>{name}</h4>
