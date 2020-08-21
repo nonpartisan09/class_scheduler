@@ -9,14 +9,20 @@ export default class UserMap extends Component {
     super(props);
     this.state = {
       cities: [],
+      counts: {} 
     };
   }
 
   componentDidMount = () => {
+    // Include fetch for cities and counts for active roles
     fetch(window.location.origin + '/users/cities')
       .then(res => res.json())
-      .then(data => {
-        this.setState({ cities: data.cities });
+      .then( citiesData => {
+         fetch(window.location.origin + '/users/counts')
+        .then(res => res.json())
+        .then(countsData => {
+          this.setState({ cities: citiesData.cities, counts: countsData.counts });
+        });
       });
   }
 
@@ -63,6 +69,19 @@ export default class UserMap extends Component {
     );
   }
 
+ calculateRadius = (type, city) => {
+   let {counts} = this.state;
+   debugger
+   switch(type) {
+     case 'volunteers':
+      return city.volunteer_count / counts.volunteer_count;
+     case 'clients':
+      return city.client_count / counts.client_count;
+    default:
+      return (city.client_count + city.volunteer_count) / counts.all_count;
+   }
+ }
+
   clientColor = () => '#F1592A';
   volunteerColor = () => '#29AAE2';
   allColor = ({client_count, volunteer_count}) => {
@@ -76,20 +95,19 @@ export default class UserMap extends Component {
     // assign helper methods based on view selected
     let getColor = null;
     let popUp = null;
-    let radius = null;
-
+    let type = null;
     if (this.props.viewClients && !this.props.viewVolunteers) {
       getColor = this.clientColor;
       popUp = this.clientPopUp;
-      radius = calculateRadius("CLIENT")
+      type = 'clients';
     } else if (this.props.viewVolunteers && !this.props.viewClients) {
       getColor = this.volunteerColor;
       popUp = this.volunteerPopUp;
-      radius = calculateRadius("VOLUNTEER")
+      type = 'volunteer';
     } else if (this.props.viewVolunteers && this.props.viewClients) {
       getColor = this.allColor;
       popUp = this.allPopUp;
-      radius = calculateRadius("ALL")
+      type = 'all';
     }
 
     return (
@@ -132,7 +150,7 @@ export default class UserMap extends Component {
                 color={ getColor(city) }
                 fillColor={ getColor(city) }
                 fillOpacity={ 0.5 }
-                radius={ radius }
+                radius={ Math.floor(this.calculateRadius(type, city) * 100) }
               >
                 <Popup>
                   <h4>{name}</h4>
