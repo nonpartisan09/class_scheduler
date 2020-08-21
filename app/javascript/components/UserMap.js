@@ -119,6 +119,7 @@ export default class UserMap extends Component {
           zoom={ this.props.view === 'row' ? 1.5 : 4 }
           style={ { height: '50vh', width: '70vw' } }
           minZoom={ 1.5 }
+          maxZoom={ 10 }
           maxBounds={
             this.props.view === 'row'
               ? [
