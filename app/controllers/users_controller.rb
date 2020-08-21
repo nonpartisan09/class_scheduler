@@ -38,6 +38,11 @@ class UsersController < ApplicationController
     render json: { cities: cities }, status: :ok
   end
 
+  def counts
+    counts = User.active_user_counts
+    render json: { counts: counts }, status: :ok
+  end
+
   private
 
   def normalize_for_current_user
