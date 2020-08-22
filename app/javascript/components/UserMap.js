@@ -71,7 +71,6 @@ export default class UserMap extends Component {
 
  calculateRadius = (type, city) => {
    let {counts} = this.state;
-   debugger
    switch(type) {
      case 'volunteers':
       return city.volunteer_count / counts.volunteer_count;
