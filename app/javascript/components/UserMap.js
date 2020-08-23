@@ -9,14 +9,20 @@ export default class UserMap extends Component {
     super(props);
     this.state = {
       cities: [],
+      counts: {} 
     };
   }
 
   componentDidMount = () => {
+    // Include fetch for cities and counts for active roles
     fetch(window.location.origin + '/users/cities')
       .then(res => res.json())
-      .then(data => {
-        this.setState({ cities: data.cities });
+      .then( citiesData => {
+         fetch(window.location.origin + '/users/counts')
+        .then(res => res.json())
+        .then(countsData => {
+          this.setState({ cities: citiesData.cities, counts: countsData.counts });
+        });
       });
   }
 
@@ -63,6 +69,18 @@ export default class UserMap extends Component {
     );
   }
 
+ calculateRadius = (type, city) => {
+   let {counts} = this.state;
+   switch(type) {
+     case 'volunteers':
+      return city.volunteer_count / counts.volunteer_count;
+     case 'clients':
+      return city.client_count / counts.client_count;
+    default:
+      return (city.client_count + city.volunteer_count) / counts.all_count;
+   }
+ }
+
   clientColor = () => '#F1592A';
   volunteerColor = () => '#29AAE2';
   allColor = ({client_count, volunteer_count}) => {
@@ -76,16 +94,19 @@ export default class UserMap extends Component {
     // assign helper methods based on view selected
     let getColor = null;
     let popUp = null;
-
+    let type = null;
     if (this.props.viewClients && !this.props.viewVolunteers) {
       getColor = this.clientColor;
       popUp = this.clientPopUp;
+      type = 'clients';
     } else if (this.props.viewVolunteers && !this.props.viewClients) {
       getColor = this.volunteerColor;
       popUp = this.volunteerPopUp;
+      type = 'volunteer';
     } else if (this.props.viewVolunteers && this.props.viewClients) {
       getColor = this.allColor;
       popUp = this.allPopUp;
+      type = 'all';
     }
 
     return (
@@ -97,6 +118,7 @@ export default class UserMap extends Component {
           zoom={ this.props.view === 'row' ? 1.5 : 4 }
           style={ { height: '50vh', width: '70vw' } }
           minZoom={ 1.5 }
+          maxZoom={ 10 }
           maxBounds={
             this.props.view === 'row'
               ? [
@@ -128,7 +150,7 @@ export default class UserMap extends Component {
                 color={ getColor(city) }
                 fillColor={ getColor(city) }
                 fillOpacity={ 0.5 }
-                radius={ 5 }
+                radius={ Math.floor(this.calculateRadius(type, city) * 100) }
               >
                 <Popup>
                   <h4>{name}</h4>

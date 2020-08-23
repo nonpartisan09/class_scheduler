@@ -47,7 +47,7 @@ import formatLink from './utils/Link';
 import SignUpSession from './utils/SignUpSession';
 import SignUpSchema from './schema/SignUpSchema';
 import contactInfo from '../ContactInfo';
-// import UserMap from './UserMap';
+import UserMap from './UserMap';
 import TutoriaVideo from './TutoriaVideo';
 
 
@@ -164,7 +164,7 @@ class Homepage extends Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.handleScroll = this.handleScroll.bind(this);
-    // this.handleMapView = this.handleMapView.bind(this);
+    this.handleMapView = this.handleMapView.bind(this);
     this.handleUserToggle = this.handleUserToggle.bind(this);
     this.getVideoSize = this.getVideoSize.bind(this);
     this.toggleVideoSize = this.toggleVideoSize.bind(this);
@@ -176,9 +176,9 @@ class Homepage extends Component {
     this.state = {
       languageChecked: locale,
       signUpType: 'client',
-      // mapView: 'row',
-      // clientsSelected: true,
-      // volunteersSelected: true,
+      mapView: 'row',
+      clientsSelected: true,
+      volunteersSelected: true,
       enlargeVideo: false,
 
     };
@@ -193,13 +193,13 @@ class Homepage extends Component {
     window.scrollTo(0, verticalScrollPosition);
   }
 
-  // handleMapView() {
-  //   this.state.mapView === 'row'
-  //   ?
-  //   this.setState({ mapView: 'usa' })
-  //   :
-  //   this.setState({ mapView: 'row' });
-  // }
+  handleMapView() {
+    this.state.mapView === 'row'
+    ?
+    this.setState({ mapView: 'usa' })
+    :
+    this.setState({ mapView: 'row' });
+  }
 
   handleUserToggle(stateToChange, prevState) {
     const newState = !prevState;
@@ -215,7 +215,7 @@ class Homepage extends Component {
         </span>
         { this.renderFeaturedPrograms() }
         { this.renderHowItWorks() }
-        {/* { this.renderWhereWeAre() } */}
+        { this.renderWhereWeAre() }
         { this.renderJoinUs() }
         { this.renderNeedHelp() }
       </div>
@@ -451,97 +451,96 @@ class Homepage extends Component {
     });
     return cards;
   }
-  /*
-    Todo: Re-implement map for client view. 
-  */ 
-  // renderWhereWeAre() {
-  //   return(
-  //     this.renderElementContainer(
-  //       pageContent.whereWeAre,
-  //       this.renderWhereWeAreComponents()
-  //   ));
-  // }
+  
+  
+  renderWhereWeAre() {
+    return(
+      this.renderElementContainer(
+        pageContent.whereWeAre,
+        this.renderWhereWeAreComponents()
+    ));
+  }
 
-  // renderWhereWeAreComponents() {
-  //   return(
-  //     <div className='whereWeAreComponentsContainer'>
-  //       <FormGroup>
-  //         <Grid item>
-  //           <ButtonGroup
-  //             variant="contained"
-  //             size="large"
-  //           >
-  //             <Button
-  //               className='userSelectClientsButton'
-  //               onClick={ () => this.handleUserToggle('clientsSelected', this.state.clientsSelected) }
-  //               style={ {
-  //                 backgroundColor: this.state.clientsSelected ? '#F1592A' : '',
-  //                 color: this.state.clientsSelected ? 'white' : '',
-  //               } }
-  //             >
-  //               <FormattedMessage
-  //                 id='HomePage.UserSelectClients'
-  //                 default='Clients'
-  //               />
-  //             </Button>
-  //             <Button
-  //               className='userSelectVolunteersButton'
-  //               onClick={ () => this.handleUserToggle('volunteersSelected', this.state.volunteersSelected) }
-  //               style={ {
-  //                 backgroundColor: this.state.volunteersSelected ? '#29AAE2' : '',
-  //                 color: this.state.volunteersSelected ? 'white' : '',
-  //               } }
-  //             >
-  //               <FormattedMessage
-  //                 id='HomePage.UserSelectVolunteers'
-  //                 default='Volunteers'
-  //               />
-  //             </Button>
-  //           </ButtonGroup>
-  //         </Grid>
-  //         <FormControlLabel
-  //           className='mapToggleLabel'
-  //           control={
-  //             (
-  //               <Switch
-  //                 checked={ this.state.mapView==='row' }
-  //                 onChange={ this.handleMapView }
-  //                 value={ this.state.mapView }
-  //                 color='primary'
-  //                 inputProps={ { 'aria-label': 'Map View Switch' } }
-  //               />
-  //             )
-  //           }
-  //           label={
-  //             (
-  //               this.state.mapView==='row'
-  //               ?
-  //               (
-  //                 <p>
-  //                   <FormattedMessage
-  //                     id='Homepage.MapViewROW'
-  //                     default='World'
-  //                   />
-  //                 </p>
-  //               )
-  //               :
-  //               (
-  //                 <p>
-  //                   <FormattedMessage
-  //                     id='Homepage.MapViewUSA'
-  //                     default='USA'
-  //                   />
-  //                 </p>
-  //               )
-  //             )
-  //           }
-  //           labelPlacement='end'
-  //         />
-  //       </FormGroup>
-  //       <UserMap view={ this.state.mapView } viewClients={ this.state.clientsSelected } viewVolunteers={ this.state.volunteersSelected } />
-  //     </div>
-  //   );
-  // }
+  renderWhereWeAreComponents() {
+    return(
+      <div className='whereWeAreComponentsContainer'>
+        <FormGroup>
+          <Grid item>
+            <ButtonGroup
+              variant="contained"
+              size="large"
+            >
+              <Button
+                className='userSelectClientsButton'
+                onClick={ () => this.handleUserToggle('clientsSelected', this.state.clientsSelected) }
+                style={ {
+                  backgroundColor: this.state.clientsSelected ? '#F1592A' : '',
+                  color: this.state.clientsSelected ? 'white' : '',
+                } }
+              >
+                <FormattedMessage
+                  id='HomePage.UserSelectClients'
+                  default='Clients'
+                />
+              </Button>
+              <Button
+                className='userSelectVolunteersButton'
+                onClick={ () => this.handleUserToggle('volunteersSelected', this.state.volunteersSelected) }
+                style={ {
+                  backgroundColor: this.state.volunteersSelected ? '#29AAE2' : '',
+                  color: this.state.volunteersSelected ? 'white' : '',
+                } }
+              >
+                <FormattedMessage
+                  id='HomePage.UserSelectVolunteers'
+                  default='Volunteers'
+                />
+              </Button>
+            </ButtonGroup>
+          </Grid>
+          <FormControlLabel
+            className='mapToggleLabel'
+            control={
+              (
+                <Switch
+                  checked={ this.state.mapView==='row' }
+                  onChange={ this.handleMapView }
+                  value={ this.state.mapView }
+                  color='primary'
+                  inputProps={ { 'aria-label': 'Map View Switch' } }
+                />
+              )
+            }
+            label={
+              (
+                this.state.mapView==='row'
+                ?
+                (
+                  <p>
+                    <FormattedMessage
+                      id='Homepage.MapViewROW'
+                      default='World'
+                    />
+                  </p>
+                )
+                :
+                (
+                  <p>
+                    <FormattedMessage
+                      id='Homepage.MapViewUSA'
+                      default='USA'
+                    />
+                  </p>
+                )
+              )
+            }
+            labelPlacement='end'
+          />
+        </FormGroup>
+        <UserMap view={ this.state.mapView } viewClients={ this.state.clientsSelected } viewVolunteers={ this.state.volunteersSelected } />
+      </div>
+    );
+  }
 
   renderJoinUs() {
     return(

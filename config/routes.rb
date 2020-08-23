@@ -20,6 +20,7 @@ Rails.application.routes.draw do
     resources :sessions
     resource :users do
       get 'cities', on: :collection
+      get 'counts', on: :collection
     end
 
     get 'reviews', to: 'reviews#index'
