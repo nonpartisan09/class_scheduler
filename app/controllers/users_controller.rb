@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
-  before_action :authenticate_user!, except: :cities
-  before_action :permitted_params, except: :cities
+  before_action :authenticate_user!, except: [:cities, :counts]
+  before_action :permitted_params, except: [:cities, :counts]
 
   def show
     redirect_to root_path && return unless current_user
