@@ -50,6 +50,7 @@ import contactInfo from '../ContactInfo';
 import UserMap from './UserMap';
 import TutoriaVideo from './TutoriaVideo';
 
+
 const pageContent = {
   testimonials: [
     {
@@ -179,6 +180,7 @@ class Homepage extends Component {
       clientsSelected: true,
       volunteersSelected: true,
       enlargeVideo: false,
+
     };
   }
 
@@ -268,7 +270,6 @@ class Homepage extends Component {
   }
 
   renderContactButtons(size = 30) {
-    const { locale } = this.props;
 
     return(
       <div className='homepageContact'>
@@ -394,6 +395,7 @@ class Homepage extends Component {
             id={ content.header }
           />
         </h2>
+
         <button
           className='youtube-button'
           onClick={ this.toggleVideoSize }
@@ -402,6 +404,7 @@ class Homepage extends Component {
           { this.getButtonLanguage(this.props.locale) }
         </button>
         { this.getVideoSize() }
+
         <div className={ content.name+'ContentContainer' }>
           { children }
         </div>
@@ -552,7 +555,7 @@ class Homepage extends Component {
   }
 
   renderJoinUsForm() {
-    const { errors, changeHandler, validateHandler, locale } = this.props;
+    const { errors, changeHandler, validateHandler } = this.props;
     const size = 30;
     return(
       <span className='joinUsForm'>
