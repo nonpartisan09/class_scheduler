@@ -11,7 +11,9 @@ class MessagesController < ApplicationController
   def create
     if !@conversation 
       @conversation = Conversation.create(author_id: current_user.id, recipient_id: @recipient.id)
-      Delayed::Job.enqueue(SuspensionJob.new(@conversation, @recipient, current_user), 0, 1.minutes.from_now)
+      program = current_user.programs.first
+      suspension_job = SuspensionJob.new(@conversation, @recipient, current_user, program)
+      Delayed::Job.enqueue(suspension_job, 0, 2.days.from_now)
     end
     @message = current_user.messages.build(permitted_params.except(:recipient_id))
     @message.conversation_id = @conversation.id

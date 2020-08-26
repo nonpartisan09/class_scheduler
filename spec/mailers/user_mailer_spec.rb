@@ -104,4 +104,94 @@ RSpec.describe UserMailer, type: :mailer do
       expect(mail.body.encoded).to include("Your password has been updated.")
     end
   end
+
+  describe 'When a volunteer user is suspended, the volunteer receives an email' do
+    let(:volunteer) { FactoryBot.create(:user) }
+    let(:client) { FactoryBot.create(:user) }
+    let(:program) { FactoryBot.create(:program) }
+    let(:conversation) { FactoryBot.build(:conversation, {author_id: client.id, recipient_id: volunteer.id}) }
+    let(:mail) { UserMailer.account_suspended(volunteer, client, conversation, program) }
+
+    it 'renders the headers' do
+      expect(mail.subject).to eq('Untimely response to client message - Tutoría')
+      expect(mail.to).to eq([volunteer.email])
+      expect(mail.from).to eq(['no-reply@tutoria.io'])
+    end
+
+    it 'renders the body' do
+      expect(mail.body.encoded).to include('we have deactivated your availabilities')
+    end
+
+    it 'renders the correct client name' do
+      expect(mail.body.encoded).to include(client.first_name)
+    end
+
+    it 'renders the correct volunteer name' do
+      expect(mail.body.encoded).to include(volunteer.first_name)
+    end
+
+    it 'renders the correct program name' do
+      expect(mail.body.encoded).to include(program.name)
+    end
+  end
+
+  describe 'When a volunteer user is suspended, the client receives this email in english' do
+    let(:volunteer) { FactoryBot.create(:user) }
+    let(:client) { FactoryBot.create(:user) }
+    let(:program) { FactoryBot.create(:program) }
+    let(:conversation) { FactoryBot.build(:conversation, {author_id: client.id, recipient_id: volunteer.id}) }
+    let(:mail) { UserMailer.client_suspended_notification_eng(volunteer, client, conversation, program) }
+
+    it 'renders the headers' do
+      expect(mail.subject).to eq('Volunteer Unavailable - Tutoría')
+      expect(mail.to).to eq([client.email])
+      expect(mail.from).to eq(['no-reply@tutoria.io'])
+    end
+
+    it 'renders the body' do
+      expect(mail.body.encoded).to include('We apologize for the inconvenience.')
+    end
+
+    it 'renders the correct client name' do
+      expect(mail.body.encoded).to include(client.first_name)
+    end
+
+    it 'renders the correct volunteer name' do
+      expect(mail.body.encoded).to include(volunteer.first_name)
+    end
+
+    it 'renders the correct program name' do
+      expect(mail.body.encoded).to include(program.name)
+    end
+  end
+
+  describe 'When a volunteer user is suspended, the client receives this email in spanish' do
+    let(:volunteer) { FactoryBot.create(:user) }
+    let(:client) { FactoryBot.create(:user) }
+    let(:program) { FactoryBot.create(:program) }
+    let(:conversation) { FactoryBot.build(:conversation, {author_id: client.id, recipient_id: volunteer.id}) }
+    let(:mail) { UserMailer.client_suspended_notification_esp(volunteer, client, conversation, program) }
+
+    it 'renders the headers' do
+      expect(mail.subject).to eq('Voluntario/a no disponible - Tutoría')
+      expect(mail.to).to eq([client.email])
+      expect(mail.from).to eq(['no-reply@tutoria.io'])
+    end
+
+    it 'renders the body' do
+      expect(mail.body.encoded).to include('Lamentamos el inconveniente y le ofrecemos las siguientes')
+    end
+
+    it 'renders the correct client name' do
+      expect(mail.body.encoded).to include(client.first_name)
+    end
+
+    it 'renders the correct volunteer name' do
+      expect(mail.body.encoded).to include(volunteer.first_name)
+    end
+
+    it 'renders the correct program name' do
+      expect(mail.body.encoded).to include(program.name)
+    end
+  end
 end
