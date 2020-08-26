@@ -65,7 +65,6 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
       const { location, changeValues, timezone_map } = this.props;   
       const usersTimezone = getLocalTimezoneFromMap(timezone_map);
 
-
       this.state = {
         message: '',
         showAddressDialog: false,

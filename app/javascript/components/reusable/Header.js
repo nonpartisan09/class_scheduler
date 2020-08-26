@@ -345,7 +345,7 @@ class Header extends Component {
       <div className='contactElements'>
         <SliderButton
           grey
-          href={ 'tel:'+contactInfo.PHONE }
+          href={ 'tel: +1(929)-359-3985' }
         >
           <FaWhatsapp
             size={ size }
@@ -356,7 +356,7 @@ class Header extends Component {
               />
             ) }
           />
-          { contactInfo.PHONE }
+          { '+1(929)-359-3985' }
         </SliderButton>
         <SliderButton
           grey

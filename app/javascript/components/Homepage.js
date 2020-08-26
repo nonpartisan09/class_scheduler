@@ -47,8 +47,8 @@ import formatLink from './utils/Link';
 import SignUpSession from './utils/SignUpSession';
 import SignUpSchema from './schema/SignUpSchema';
 import contactInfo from '../ContactInfo';
+// import UserMap from './UserMap';
 import TutoriaVideo from './TutoriaVideo';
-import UserMap from './UserMap';
 
 const pageContent = {
   testimonials: [
@@ -165,7 +165,9 @@ class Homepage extends Component {
     this.handleScroll = this.handleScroll.bind(this);
     this.handleMapView = this.handleMapView.bind(this);
     this.handleUserToggle = this.handleUserToggle.bind(this);
-
+    this.getVideoSize = this.getVideoSize.bind(this);
+    this.toggleVideoSize = this.toggleVideoSize.bind(this);
+    this.getButtonLanguage = this.getButtonLanguage.bind(this);
     this.joinUsFormRef = React.createRef();
     
     const { locale } = this.props;
@@ -173,9 +175,10 @@ class Homepage extends Component {
     this.state = {
       languageChecked: locale,
       signUpType: 'client',
-      mapView: 'row',
-      clientsSelected: true,
-      volunteersSelected: true,
+      // mapView: 'row',
+      // clientsSelected: true,
+      // volunteersSelected: true,
+      enlargeVideo: false,
     };
   }
 
@@ -363,6 +366,25 @@ class Homepage extends Component {
     return cards;
   }
 
+  getVideoSize() {
+    if (this.state.enlargeVideo) return <TutoriaVideo w='960' h='639' />; 
+    
+    return <TutoriaVideo />;
+  }
+
+  toggleVideoSize() {
+    this.state.enlargeVideo ? this.setState({ enlargeVideo: false }) : this.setState({ enlargeVideo: true })
+  }
+
+  getButtonLanguage(locale) {
+    const { enlargeVideo } = this.state;
+    if (locale === 'es') {
+      return enlargeVideo ? 'Haga clic para encoger' : 'Click para agrandar';
+    }
+
+    return enlargeVideo ? 'Click to Shrink' : 'Click to Enlarge';
+  }
+
   renderVideoElementContainer(content, children) {
     return(
       <div className={ content.name+'Container' }>
@@ -371,7 +393,14 @@ class Homepage extends Component {
             id={ content.header }
           />
         </h2>
-        <TutoriaVideo />
+        <button
+          className='youtube-button'
+          onClick={ this.toggleVideoSize }
+          type='button'
+        >
+          { this.getButtonLanguage(this.props.locale) }
+        </button>
+        { this.getVideoSize() }
         <div className={ content.name+'ContentContainer' }>
           { children }
         </div>

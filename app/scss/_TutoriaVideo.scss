@@ -3,6 +3,16 @@
   margin: 25px;
 }
 
+.youtube-button {
+  border: none;
+  background-color: white;
+  cursor: pointer;
+  outline: none;
+  &:hover {
+    color: rgb(241, 89, 42);
+  }
+}
+
 @media screen and (max-width: 760px) {
   .video-responsive {
     overflow: hidden;
@@ -20,4 +30,11 @@
     width: 100%;
     position: absolute;
   }
+<<<<<<< HEAD
+=======
+
+  .youtube-button {
+    display: none;
+  }
+>>>>>>> 6480600b440398fcd096377287ffba7ae906170d
 }
