@@ -104,6 +104,10 @@ class User < ActiveRecord::Base
     if client?
       UserMailer.account_reactivated(self).deliver_later
     else
+      if self.availabilities && !self.availabilities.first
+        availability_job = AvailabilityJob.new(self)
+        Delayed::Job.enqueue(availability_job, 0, 3.days.from_now)
+      end
       UserMailer.account_activated(self).deliver_later
     end
   end
