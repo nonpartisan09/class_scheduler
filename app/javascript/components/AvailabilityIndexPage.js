@@ -28,15 +28,6 @@ class AvailabilityIndexPage extends Component {
             />
             ) } 
           />
-
-          <button
-            type="button"
-            disabled={ !can_unsuspend }
-            onClick={ () => suspended ? this.suspensionClick('DELETE') : this.suspensionClick('POST') }
-          >
-            {suspended ? 'Reactivate Account' : 'Pause Account'}
-          </button>
-
           <div className='availabilityIndexContainer'>
             <FormattedMessage
               id='AvailabilityIndexPage.Help'
@@ -46,7 +37,27 @@ class AvailabilityIndexPage extends Component {
             <ul className='availabilityIndexProgramsContainer'>
               { this.renderAvailablePrograms() }
             </ul>
-
+            <div className='activeAvailabilities'>
+              <div>
+                Availabilities are currently&nbsp;
+                {suspended ? 'inactive.' : 'active.'}
+                <span className='reinstateAvailabilityText'>
+                  {can_unsuspend ? '' : ' To re-enable availabilities, please respond to all client volunteer requests that are more than two days old and then click the "Reactivate Abilitites" button.'}
+                </span>
+              </div>
+              &nbsp;&nbsp;
+              <RaisedButton
+                primary
+                disabled={ !can_unsuspend }
+                onClick={ () => suspended ? this.suspensionClick('DELETE') : this.suspensionClick('POST') }
+                label={ (
+                  <FormattedMessage
+                    id='Suspend'
+                    defaultMessage={ suspended ? 'Reactivate Availabilities' : 'Deactivate Availabilites' }
+                  />
+                ) }
+              />
+            </div>
             { this.renderAvailabilities() }
           </div>
         </Paper>
@@ -63,7 +74,7 @@ class AvailabilityIndexPage extends Component {
   }
 
   renderAvailabilities() {
-    const { availabilities, currentUser: { timezone, locale } } = this.props;
+    const { availabilities, currentUser: { timezone, locale, suspended } } = this.props;
 
     if ( _.size(availabilities) > 0 ) {
       return (
@@ -73,6 +84,7 @@ class AvailabilityIndexPage extends Component {
             timezone={ timezone }
             locale={ locale }
             deletable
+            suspended={ suspended }
           />
         </ul>
       );

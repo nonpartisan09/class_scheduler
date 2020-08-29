@@ -18,6 +18,17 @@
     margin-right: 6px;
 }
 
+.activeAvailabilities{
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 3rem;
+}
+.reinstateAvailabilityText{
+    color: lightcoral;
+}
+
 @media (max-width: 650px)  {
     .availabilityIndexProgramsContainer {
         margin: 12px 0;

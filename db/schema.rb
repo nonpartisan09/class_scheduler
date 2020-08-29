@@ -1,4 +1,4 @@
-delay# This file is auto-generated from the current state of the database. Instead
+# This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
 #
@@ -10,7 +10,7 @@ delay# This file is auto-generated from the current state of the database. Inste
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_12_173457) do
+ActiveRecord::Schema.define(version: 2020_08_29_144417) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -168,12 +168,6 @@ ActiveRecord::Schema.define(version: 2020_08_12_173457) do
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "timeouts", force: :cascade do |t|
-    t.integer "user_id", null: false
-    t.boolean "timed_out", default: true
-    t.index ["user_id"], name: "index_timeouts_on_user_id", unique: true
   end
 
   create_table "users", force: :cascade do |t|
