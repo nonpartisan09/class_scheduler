@@ -31,6 +31,8 @@ import ErrorField from './ErrorField';
 import Countries from './Countries';
 import States from './States';
 
+import data from '../../../../build/locales/data.json';
+
 const { SIGN_UP, UPDATE_PROFILE } = UserFormConstants;
 
 const withUserForm = (WrappedComponent, schema, wrappedProps) => {
@@ -56,11 +58,13 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
       this.resetForm = this.resetForm.bind(this);
       this.changeCountryHandler = this.changeCountryHandler.bind(this);
       this.changeStateHandler = this.changeStateHandler.bind(this);
+      this.errorLanguageHandler = this.errorLanguageHandler.bind(this);  
       this.updateUserTimezone = this.updateUserTimezone.bind(this);
       this.renderFindTimezoneButton = this.renderFindTimezoneButton.bind(this);
 
       const { location, changeValues, timezone_map } = this.props;   
       const usersTimezone = getLocalTimezoneFromMap(timezone_map);
+
 
       this.state = {
         message: '',
@@ -105,7 +109,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
 
       this.sortArrayProps(props);
     }
-    
+
 
     render() {
       const {
@@ -129,7 +133,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
       } = this.props;
       
       const countries = Countries.map(c => c.countryName);
-      
+
       return (
         <div>
           <WrappedComponent currentUser={ currentUser } />
@@ -165,7 +169,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                   )
                 }
                 floatingLabelFixed
-                errorText={ errors.email }
+                errorText={ this.errorLanguageHandler('email') }
                 onChange={ changeHandler('email') }
                 onBlur={ validateHandler('email') }
               />
@@ -186,7 +190,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                   )
                 }
                 floatingLabelFixed
-                errorText={ errors.phone_number }
+                errorText={ this.errorLanguageHandler('phone_number') }
                 onChange={ changeHandler('phone_number') }
                 onBlur={ validateHandler('phone_number') }
               />
@@ -207,7 +211,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                   )
                 }
                 floatingLabelFixed
-                errorText={ errors.first_name }
+                errorText={ this.errorLanguageHandler('first_name') }
                 onChange={ changeHandler('first_name') }
                 onBlur={ validateHandler('first_name') }
               />
@@ -228,7 +232,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                   )
                 }
                 floatingLabelFixed
-                errorText={ errors.last_name }
+                errorText={ this.errorLanguageHandler('last_name') }
                 onChange={ changeHandler('last_name') }
                 onBlur={ validateHandler('last_name') }
               />
@@ -272,7 +276,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                   }
                   floatingLabelFixed
                   multiLine
-                  errorText={ errors.address }
+                  errorText={ this.errorLanguageHandler('address') }
                   onChange={ changeHandler('address') }
                   onBlur={ validateHandler('address') }
                 />
@@ -293,7 +297,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                     )
                   }
                   floatingLabelFixed
-                  errorText={ errors.city }
+                  errorText={ this.errorLanguageHandler('city') }
                   onChange={ changeHandler('city') }
                   onBlur={ validateHandler('city') }
                 />
@@ -312,7 +316,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                   }
                   value={ country ? country : 'United States' }
                   className='userFormInputField country'
-                  errorText={ errors.country }
+                  errorText={ this.errorLanguageHandler('country') }
                   onChange={ this.changeCountryHandler }
                   onBlur={ validateHandler('country') }
                 >
@@ -334,7 +338,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                 }
                 value={ timezone }
                 className='userFormInputField timezones'
-                errorText={ errors.timezone }
+                errorText={ this.errorLanguageHandler('timezone') }
                 onChange={ this.changeTimezoneHandler }
                 onBlur={ validateHandler('timezone') }
               >
@@ -375,7 +379,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                 }
                 floatingLabelFixed
                 multiLine
-                errorText={ errors.description }
+                errorText={ this.errorLanguageHandler('description') }
                 onChange={ changeHandler('description') }
                 onBlur={ validateHandler('description') }
               />
@@ -426,7 +430,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
             }
             value={ state }
             className='userFormInputField state'
-            errorText={ errors.state }
+            errorText={ this.errorLanguageHandler('state') }
             onChange={ this.changeStateHandler }
             onBlur={ validateHandler('state') }
           >
@@ -450,7 +454,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
             }
             value={ state }
             className='userFormInputField state'
-            errorText={ errors.state }
+            errorText={ this.errorLanguageHandler('state') }
             onChange={ this.changeStateHandler }
             onBlur={ validateHandler('state') }
           >
@@ -697,7 +701,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
               onChange={ this.changeHandlerLanguages }
               onBlur={ validateHandler('languages') }
               multiple
-              errorText={ errors.languages }
+              errorText={ this.errorLanguageHandler('languages') }
               selectionRenderer={ this.selectionRenderer }
             >
               { _.map(languages, ({ name, id }) => {
@@ -755,7 +759,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                   )
                 }
                 floatingLabelFixed
-                errorText={ errors.password }
+                errorText={ this.errorLanguageHandler('password') }
                 onChange={ changeHandler('current_password') }
                 onBlur={ validateHandler('current_password') }
               />
@@ -777,7 +781,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                   )
                 }
                 floatingLabelFixed
-                errorText={ errors.password }
+                errorText={ this.errorLanguageHandler('password') }
                 onChange={ changeHandler('password') }
                 onBlur={ validateHandler('password') }
               />
@@ -799,7 +803,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                   )
                 }
                 floatingLabelFixed
-                errorText={ errors.password_confirmation }
+                errorText={ this.errorLanguageHandler('password_confirmation') }
                 onChange={ changeHandler('password_confirmation') }
                 onBlur={ validateHandler('password_confirmation') }
               />
@@ -852,7 +856,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                 )
               }
               floatingLabelFixed
-              errorText={ errors.password }
+              errorText={ this.errorLanguageHandler('password') }
               onChange={ changeHandler('password') }
               onBlur={ validateHandler('password') }
             />
@@ -874,7 +878,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                 )
               }
               floatingLabelFixed
-              errorText={ errors.password_confirmation }
+              errorText={ this.errorLanguageHandler('password_confirmation') }
               onChange={ changeHandler('password_confirmation') }
               onBlur={ validateHandler('password_confirmation') }
             />
@@ -912,7 +916,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
             }
             value={ how_they_found_us }
             className='userFormInputField howTheyFoundUs'
-            errorText={ errors.how_they_found_us }
+            errorText={ this.errorLanguageHandler('how_they_found_us') }
             onChange={ this.changeHowTheyFoundUsHandler }
             onBlur={ validateHandler('how_they_found_us') }
           >
@@ -996,7 +1000,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
               }
             />
 
-            <ErrorField error={ errors.terms_and_conditions } />
+            <ErrorField error={ this.errorLanguageHandler('terms_and_conditions') } />
 
             <Checkbox
               label={
@@ -1035,7 +1039,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
             }
             value={ locale }
             className='userFormInputField locale'
-            errorText={ errors.locale }
+            errorText={ this.errorLanguageHandler('locale') }
             onChange={ this.changeLocaleHandler }
             onBlur={ validateHandler('locale') }
           >
@@ -1086,7 +1090,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
             onChange={ this.changeHandlerPrograms }
             onBlur={ validateHandler('programs') }
             multiple
-            errorText={ errors.programs }
+            errorText={ this.errorLanguageHandler('programs') }
             selectionRenderer={ this.selectionRenderer }
           >
             { _.map(programs, ({ name, spanish_name, id }) => {
@@ -1103,7 +1107,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                     </span> 
                   ) } 
                 />
-);
+              );
             })}
           </SelectField>
         </div>
@@ -1171,6 +1175,17 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
       const { changeValue } = this.props;
 
       changeValue('how_they_found_us', value);
+    }
+
+    errorLanguageHandler(inputName){
+      let errorEn = this.props.errors[inputName];
+      let key = _.findKey(data.en, el => el == errorEn);
+      switch (this.props.locale){
+        case 'en': return errorEn;
+        case 'es':
+          if (key) return data.es[key];
+          return errorEn;
+      }
     }
 
     renderProgramLabel() {
