@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :set_locale
   before_action :sign_out_if_inactive, if: -> { current_user.present? && !current_user.active }
-
+  
   rescue_from ActionController::RoutingError, :with => :not_found
   respond_to :json, :xml, :html, :plain
 
@@ -142,7 +142,7 @@ class ApplicationController < ActionController::Base
     unless user_signed_in? || request.referer != new_user_session_path
       user = User.find_by_email!(params[:user][:email])
 
-      if user.admin?
+      if user.admin? || user.owner?
         authenticate_user!
       else
         redirect_to root_path and return
