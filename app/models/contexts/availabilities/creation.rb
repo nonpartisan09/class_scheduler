@@ -83,10 +83,21 @@ module Contexts
       def check_if_less_than_30_minutes?
         # availabilities can't span user's day so just compare originals
         minutes = (@parsed_user_end_time - @parsed_user_start_time) / 60
-        if minutes < 30
+        if minutes < 30 && !is_last_availability_slot
           message = I18n.t('custom_errors.messages.minimum_availability_required')
           raise Availabilities::Errors::ShortAvailability, message
         end
+      end
+
+      def is_last_availability_slot
+        time_format = "%H:%M"
+        last_end_time = "23:59"
+        last_start_time = "23:30"
+  
+        is_last_start_slot = @parsed_user_start_time.strftime(time_format) == last_start_time
+        is_last_end_slot = @parsed_user_end_time.strftime(time_format) == last_end_time
+
+        is_last_start_slot && is_last_end_slot
       end
 
       def check_if_starts_before_ends?

@@ -29,11 +29,11 @@
   },
   {
     "id": "NewAvailability.selectStartTime",
-    "defaultMessage": "Start Time - 24Hr Format"
+    "defaultMessage": "Start Time"
   },
   {
     "id": "NewAvailability.selectEndTime",
-    "defaultMessage": "End Time - 24Hr Format"
+    "defaultMessage": "End Time"
   },
   {
     "id": "NewAvailability.addAvailability",

@@ -1,5 +1,6 @@
 class AvailabilitiesController < ApplicationController
   include AvailabilitiesSorter
+  include AvailabilityTimesGenerator
 
   before_action :authenticate_user!
   before_action :check_if_volunteer?, except: [:search]
@@ -32,12 +33,16 @@ class AvailabilitiesController < ApplicationController
     timezones = ActiveSupport::TimeZone.all.map(&:name)
     days = I18n.translate 'date.day_names'
 
+    availabilityOptions = ValidAvailabilityTimes.new(current_user_timezone)
+    
     @data = {
         :availabilities => { },
         :currentUser => user,
         :programs => programs,
         :timezones => timezones,
-        :days => days
+        :days => days,
+        :availability_start_times => availabilityOptions.get_availability_start_time_options,
+        :availability_end_times => availabilityOptions.get_availability_end_time_options
     }
 
     render :new
