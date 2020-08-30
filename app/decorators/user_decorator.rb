@@ -30,8 +30,8 @@ class UserDecorator
       :url_slug => url_slug,
       :volunteer => @user.volunteer?,
       :city => city,
-      :suspended => @user.suspended?,
-      :can_unsuspend => @user.can_unsuspend?,
+      :untimely_responses => @user.untimely_responses?,
+      :timely_responses => @user.timely_responses,
       :id => @user.id
     }.merge(availabilities_hash)
   end
@@ -57,8 +57,8 @@ class UserDecorator
         :languages => languages,
         :rating_count => rating_count,
         :average_rating => average_rating,
-        :suspended => @user.suspended?,
-        :can_unsuspend => @user.can_unsuspend?,
+        :untimely_responses => @user.untimely_responses?,
+        :timely_responses => @user.timely_responses,
         :id => @user.id
     }
   end
@@ -98,8 +98,8 @@ class UserDecorator
         :timezone => user_timezone,
         :url_slug => url_slug,
         :volunteer => @user.volunteer?,
-        :suspended => @user.suspended?,
-        :can_unsuspend => @user.can_unsuspend?,
+        :untimely_responses => @user.untimely_responses?,
+        :timely_responses => @user.timely_responses,
         :id => @user.id
     }.merge(availabilities_hash)
   end

@@ -105,12 +105,12 @@ RSpec.describe UserMailer, type: :mailer do
     end
   end
 
-  describe 'When a volunteer user is suspended, the volunteer receives an email' do
+  describe 'When a volunteer user has an untimely response, the volunteer receives an email' do
     let(:volunteer) { FactoryBot.create(:user) }
     let(:client) { FactoryBot.create(:user) }
     let(:program) { FactoryBot.create(:program) }
     let(:conversation) { FactoryBot.build(:conversation, {author_id: client.id, recipient_id: volunteer.id}) }
-    let(:mail) { UserMailer.account_suspended(volunteer, client, conversation, program) }
+    let(:mail) { UserMailer.untimely_response(volunteer, client, conversation, program) }
 
     it 'renders the headers' do
       expect(mail.subject).to eq('Untimely response to client message - Tutoría')
@@ -135,12 +135,12 @@ RSpec.describe UserMailer, type: :mailer do
     end
   end
 
-  describe 'When a volunteer user is suspended, the client receives this email in english' do
+  describe 'When a volunteer user is has an untimely response, the client receives this email in english' do
     let(:volunteer) { FactoryBot.create(:user) }
     let(:client) { FactoryBot.create(:user) }
     let(:program) { FactoryBot.create(:program) }
     let(:conversation) { FactoryBot.build(:conversation, {author_id: client.id, recipient_id: volunteer.id}) }
-    let(:mail) { UserMailer.client_suspended_notification_eng(volunteer, client, conversation, program) }
+    let(:mail) { UserMailer.client_untimely_response_eng(volunteer, client, conversation, program) }
 
     it 'renders the headers' do
       expect(mail.subject).to eq('Volunteer Unavailable - Tutoría')
@@ -165,12 +165,12 @@ RSpec.describe UserMailer, type: :mailer do
     end
   end
 
-  describe 'When a volunteer user is suspended, the client receives this email in spanish' do
+  describe 'When a volunteer user has an untimely response, the client receives this email in spanish' do
     let(:volunteer) { FactoryBot.create(:user) }
     let(:client) { FactoryBot.create(:user) }
     let(:program) { FactoryBot.create(:program) }
     let(:conversation) { FactoryBot.build(:conversation, {author_id: client.id, recipient_id: volunteer.id}) }
-    let(:mail) { UserMailer.client_suspended_notification_esp(volunteer, client, conversation, program) }
+    let(:mail) { UserMailer.client_untimely_response_esp(volunteer, client, conversation, program) }
 
     it 'renders the headers' do
       expect(mail.subject).to eq('Voluntario/a no disponible - Tutoría')

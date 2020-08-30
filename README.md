@@ -13,10 +13,10 @@ volunteers.
 
 - `$ bundle install`
 - `$ yarn install`
-- `$ rake db:create RAILS_ENV=development`
-- `$ rake db:migrate RAILS_ENV=development`
-- `$ rake db:seed`
-- `$ rake assets:precompile`
+- `$ bundle exec rake db:create RAILS_ENV=development`
+- `$ bundle exec rake db:migrate RAILS_ENV=development`
+- `$ bundle exec rake db:seed`
+- `$ bundle exec rake assets:precompile`
 - `$ foreman start`
 
 ## SSL certificates

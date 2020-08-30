@@ -17,10 +17,14 @@ import { ENGLISH } from './utils/availableLocales';
 class AvailabilityIndexPage extends Component {
 
   render() {
-    const { can_unsuspend, suspended } = this.props.currentUser;
+    const { currentUser: { untimely_responses, timely_responses } } = this.props;
+    const canReactivate = !untimely_responses;
+    const isDeactivated = !!timely_responses.length;
+    const isActive = canReactivate || isDeactivated;
+
     return (
       <div>
-        <Paper zDepth={ 1 } className={ suspended ? 'paperOverride suspended' : 'paperOverride' } rounded={ false }>
+        <Paper zDepth={ 1 } className={ isDeactivated ? 'paperOverride untimelyResponses' : 'paperOverride' } rounded={ false }>
           <PageHeader title={ (
             <FormattedMessage
               id='AvailabilityIndexPage.Header'
@@ -40,20 +44,20 @@ class AvailabilityIndexPage extends Component {
             <div className='activeAvailabilities'>
               <div>
                 Availabilities are currently&nbsp;
-                {suspended ? 'inactive.' : 'active.'}
+                { isActive ? 'active.' : 'inactive.' }
                 <span className='reinstateAvailabilityText'>
-                  {can_unsuspend ? '' : ' To re-enable availabilities, please respond to all client volunteer requests that are more than two days old and then click the "Reactivate Abilitites" button.'}
+                  { canReactivate ? '' : ' To re-enable availabilities, please respond to all client volunteer requests that are more than two days old and then click the "Reactivate Availablities" button.'}
                 </span>
               </div>
               &nbsp;&nbsp;
               <RaisedButton
                 primary
-                disabled={ !can_unsuspend }
-                onClick={ () => suspended ? this.suspensionClick('DELETE') : this.suspensionClick('POST') }
+                disabled={ !canReactivate }
+                onClick={ timely_responses.length ? () => this.toggleAvailabilities('DELETE') : () =>this.toggleAvailabilities('POST') }
                 label={ (
                   <FormattedMessage
-                    id='Suspend'
-                    defaultMessage={ suspended ? 'Reactivate Availabilities' : 'Deactivate Availabilites' }
+                    id='UntimelyResponses'
+                    defaultMessage={ timely_responses.length ? 'Reactivate Availabilities' : 'Deactivate Availabilities' }
                   />
                 ) }
               />
@@ -74,7 +78,7 @@ class AvailabilityIndexPage extends Component {
   }
 
   renderAvailabilities() {
-    const { availabilities, currentUser: { timezone, locale, suspended } } = this.props;
+    const { availabilities, currentUser: { timezone, locale, timely_responses } } = this.props;
 
     if ( _.size(availabilities) > 0 ) {
       return (
@@ -84,7 +88,7 @@ class AvailabilityIndexPage extends Component {
             timezone={ timezone }
             locale={ locale }
             deletable
-            suspended={ suspended }
+            timely_responses={ timely_responses }
           />
         </ul>
       );
@@ -108,20 +112,26 @@ class AvailabilityIndexPage extends Component {
     }
   }
 
-  suspensionClick(type){
+  toggleAvailabilities(type){
+    const { currentUser: { locale, timely_responses } } = this.props;
+    console.log(timely_responses);
+    console.log(locale);
+    let url;
 
-    const { id, locale } = this.props.currentUser;
+    if (type === 'DELETE'){
+      url = '/timely_responses/' + timely_responses[0].id;
+    } else {
+      url = '/timely_responses';
+    }
 
     const requestParams = {
-      url: `/users/${id}/suspensions`,
-        method: type,
-        successCallBack: () => location.assign(formatLink('/availabilities', locale)),
-        errorCallBack: (message) =>  console.log(message)
+      url: url,
+      method: type,
+      successCallBack: () => location.assign(formatLink('/availabilities', locale)),
+      errorCallBack: (message) =>  console.log(message)
     };
 
     return postData(requestParams);
-
-
 
   }
 
@@ -131,12 +141,12 @@ AvailabilityIndexPage.propTypes = {
   availabilities: PropTypes.array,
   programs: PropTypes.array,
   currentUser: PropTypes.shape({
+    timely_responses: PropTypes.array,
     first_name: PropTypes.string,
     email: PropTypes.string,
     timezone: PropTypes.string,
     locale: PropTypes.string,
-    can_unsuspend: PropTypes.bool,
-    suspended: PropTypes.bool,
+    untimely_responses: PropTypes.bool,
     id: PropTypes.number
   })
 };
@@ -145,12 +155,12 @@ AvailabilityIndexPage.defaultProps = {
   availabilities: [],
   programs: [],
   currentUser: {
+    timely_responses: [],
     first_name: '',
     email: '',
     timezone: '',
     locale: ENGLISH,
-    can_unsuspend: false,
-    suspended: false,
+    untimely_responses: false,
     id: 0
   }
 };

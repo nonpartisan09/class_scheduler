@@ -1,7 +1,7 @@
 # Preview all emails at http://localhost:3000/rails/mailers/user_mailer
 class UserMailerPreview < ActionMailer::Preview
-  def account_suspended
-    UserMailer.account_suspended(
+  def untimely_response
+    UserMailer.untimely_response(
         User.first, 
         User.first, 
         Conversation.first, 
@@ -9,8 +9,8 @@ class UserMailerPreview < ActionMailer::Preview
     )
   end
 
-  def client_suspended_notification_eng
-    UserMailer.client_suspended_notification_eng(
+  def client_untimely_response_eng
+    UserMailer.client_untimely_response_eng(
       User.first,
       User.first,
       Conversation.first,
@@ -18,8 +18,8 @@ class UserMailerPreview < ActionMailer::Preview
     )
   end
 
-  def client_suspended_notification_esp
-    UserMailer.client_suspended_notification_esp(
+  def client_untimely_response_esp
+    UserMailer.client_untimely_response_esp(
       User.first,
       User.first,
       Conversation.first,
