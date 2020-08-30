@@ -67,19 +67,19 @@ class UserMailer < ApplicationMailer
     mail(to: @user.email, subject: 'Tutoría Password Updated')
   end
 
-  def account_suspended(volunteer, client, conversation, program)
+  def untimely_response(volunteer, client, conversation, program)
     @volunteer, @client, @conversation, @program = volunteer, client, conversation, program
     @url = "https://tutoria.io/#{@volunteer.locale}/inbox/#{@conversation.id}"
     mail(to: @volunteer.email, subject: 'Untimely response to client message - Tutoría')
   end
 
-  def client_suspended_notification_eng(volunteer, client, conversation, program)
+  def client_untimely_response_eng(volunteer, client, conversation, program)
     @volunteer, @client, @conversation, @program = volunteer, client, conversation, program
     @url = "https://tutoria.io/#{@volunteer.locale}/inbox/#{@conversation.id}"
     mail(to: @client.email, subject: 'Volunteer Unavailable - Tutoría')
   end
 
-  def client_suspended_notification_esp(volunteer, client, conversation, program)
+  def client_untimely_response_esp(volunteer, client, conversation, program)
     @volunteer, @client, @conversation, @program = volunteer, client, conversation, program
     @url = "https://tutoria.io/#{@volunteer.locale}/inbox/#{@conversation.id}"
     mail(to: @client.email, subject: 'Voluntario/a no disponible - Tutoría')

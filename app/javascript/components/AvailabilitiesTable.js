@@ -34,11 +34,11 @@ class AvailabilitiesTable extends Component {
   }
 
   render() {
-    const { availabilities, timezone, suspended } = this.props;
+    const { availabilities, timezone, timely_responses } = this.props;
 
     const tableContent =  _.map(availabilities, ({ day, start_time, end_time, id }) => {
       return(
-        <TableRow className={ suspended ? 'availabilitiesTableRow suspendedRow' : 'availabilitiesTableRow' } key={ 'body' + day + start_time + end_time }>
+        <TableRow className={ timely_responses.length > 0 ? 'availabilitiesTableRow untimelyRow' : 'availabilitiesTableRow' } key={ 'body' + day + start_time + end_time }>
           <TableRowColumn>
             { day }
           </TableRowColumn>
@@ -57,7 +57,7 @@ class AvailabilitiesTable extends Component {
       return(
         <div 
           key={ 'list' + day + start_time + end_time + timezone } 
-          className={ suspended ? 'suspendedRow availabilityTableItemContainer' : 'availabilityTableItemContainer' }>
+          className={ timely_responses.length > 0 ? 'untimelyRow availabilityTableItemContainer' : 'availabilityTableItemContainer' }>
           <li>
             <span>
               <FormattedMessage
@@ -249,7 +249,7 @@ AvailabilitiesTable.propTypes = {
   timezone: PropTypes.string,
   locale: PropTypes.string,
   deletable: PropTypes.bool,
-  suspended: PropTypes.bool
+  timely_responses: PropTypes.array
 };
 
 AvailabilitiesTable.defaultProps = {
@@ -257,7 +257,7 @@ AvailabilitiesTable.defaultProps = {
   timezone: '',
   locale: '',
   deletable: false,
-  suspended: false
+  timely_responses: []
 };
 
 export default AvailabilitiesTable;

@@ -21,7 +21,7 @@ class User < ActiveRecord::Base
 
   has_many :availabilities, dependent: :destroy
 
-  has_one :suspension, dependent: :destroy
+  has_many :timely_responses, dependent: :destroy
 
   has_many :received_conversations, class_name: 'Conversation', foreign_key: 'recipient_id'
 
@@ -57,8 +57,8 @@ class User < ActiveRecord::Base
   scope :with_availabilities, -> { includes(:availabilities).where.not(availabilities: { id: nil }) }
 
   scope :active, -> { 
-    joins('FULL OUTER JOIN "suspensions" ON "suspensions"."user_id" = "users"."id"')
-      .where('"suspensions"."user_id" IS NULL AND "users"."active" IS TRUE') 
+    joins('FULL OUTER JOIN "timely_responses" ON "timely_responses"."user_id" = "users"."id"')
+      .where('"timely_responses"."user_id" IS NULL AND "users"."active" IS TRUE') 
   }
 
   def self.authentication_keys
@@ -93,11 +93,11 @@ class User < ActiveRecord::Base
     true
   end
 
-  def suspended?
-    !!self.suspension
+  def untimely_responses?
+    !self.timely_responses?
   end
 
-  def can_unsuspend?
+  def timely_responses?
     self.received_conversations.includes(:messages).all? do |convo| 
       time_difference = (Time.now - convo.created_at)/3600
       has_responded = convo.messages.any?{|msg| msg.user_id == self.id}

@@ -84,16 +84,16 @@ describe User::active, type: :association do
         email_notification: true, email: "skoots@domain.com"
     })
   end
-  it "returns active associations with no suspensions" do
+  it "returns active associations with no untimely responses" do
     expect(User.active.select(:first_name).map(&:first_name)).to eq(["Ben","Allie","Skoots"]) 
   end
-  it "returns active association with suspensions set to false" do
-    Suspension.create({user_id: @user2.id})
+  it "returns active association with no untimely responses" do
+    TimelyResponse.create({user_id: @user2.id, conversation_id: 1})
     expect(User.active.select(:first_name).map(&:first_name)).to eq(["Ben","Skoots"]) 
   end
-  it "returns active only association with suspensions set to false and no suspensions" do
-    Suspension.create({user_id: @user2.id})
-    Suspension.create({user_id: @user3.id})
+  it "returns active only association with no untimely responses" do
+    TimelyResponse.create({user_id: @user2.id, conversation_id: 1})
+    TimelyResponse.create({user_id: @user3.id, conversation_id: 2})
     expect(User.active.select(:first_name).map(&:first_name)).to eq(["Ben"]) 
   end
 end

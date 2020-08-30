@@ -18,12 +18,10 @@ Rails.application.routes.draw do
     resources :messages, only: %i[new create]
     resources :reviews, only: %i[create update destroy]
     resources :sessions
+    resources :timely_responses
     resource :users do
       get 'cities', on: :collection
     end
-
-    post '/users/:user_id/suspensions', to: 'suspensions#create'
-    delete '/users/:user_id/suspensions', to: 'suspensions#destroy'
 
     get 'reviews', to: 'reviews#index'
 
