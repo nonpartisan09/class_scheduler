@@ -10,7 +10,9 @@ import {
   FaRegCopyright,
   FaLinkedin,
   FaEnvelope,
-  FaPhone
+  FaWhatsapp,
+  FaYoutube,
+  FaInstagram
 } from 'react-icons/fa';
 
 import formatLink from '../utils/Link';
@@ -96,6 +98,33 @@ class Footer extends Component {
                 />
                 Facebook
               </a>
+
+              <a 
+                href={ contactInfo.INSTAGRAM }
+                rel='noopener noreferrer' 
+                target='_blank'
+              >
+                <FaInstagram
+                  size={ size }
+                  className='instagramIcon'
+                />
+                Instagram
+              </a>
+
+              <a 
+                href={ contactInfo.YOUTUBE }
+                rel='noopener noreferrer' 
+                target='_blank'
+              >
+                <FaYoutube
+                  size={ size }
+                  className='youtubeIcon'
+                />
+                Youtube
+              </a>
+
+
+
               <a 
                 href={ contactInfo.LINKEDIN }  
                 rel='noopener noreferrer' 
@@ -133,9 +162,9 @@ class Footer extends Component {
                 />
               </b>
               <a
-                href={ 'tel:'+contactInfo.PHONE }
+                href={ 'tel: +1(929)-359-3985' }
               >
-                <FaPhone
+                <FaWhatsapp
                   size={ size }
                   label={ (
                     <FormattedMessage
