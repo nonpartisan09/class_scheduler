@@ -58,14 +58,13 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
       this.resetForm = this.resetForm.bind(this);
       this.changeCountryHandler = this.changeCountryHandler.bind(this);
       this.changeStateHandler = this.changeStateHandler.bind(this);
-
       this.errorLanguageHandler = this.errorLanguageHandler.bind(this);  
-
       this.updateUserTimezone = this.updateUserTimezone.bind(this);
       this.renderFindTimezoneButton = this.renderFindTimezoneButton.bind(this);
 
       const { location, changeValues, timezone_map } = this.props;   
       const usersTimezone = getLocalTimezoneFromMap(timezone_map);
+
 
       this.state = {
         message: '',
