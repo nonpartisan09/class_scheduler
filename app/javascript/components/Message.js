@@ -52,7 +52,6 @@ class Message extends Component {
             title={ this.renderSubject() }
           />
           <CardText expandable style={ styles }>
-            { body }
             <Linkify tagName="div">{ body }</Linkify>
           </CardText>
         </Card>
