@@ -23,29 +23,10 @@ class Message extends Component {
     this.state = {
       expanded: false,
       unread: this.props.unread,
-      // message: '',
+      message: '',
     };
 
     this.setStyle = this.setStyle.bind(this);
-    this.linkifyDefaultOptions = {
-      attributes: null,
-      className: 'linkified',
-      defaultProtocol: 'http',
-      events: null,
-      format: function (value, type) {
-        return value;
-      },
-      formatHref: function (href, type) {
-        return href;
-      },
-      ignoreTags: [],
-      nl2br: false,
-      tagName: 'a',
-      target: {
-        url: '_blank'
-      },
-      validate: true
-    };
   }
 
   setStyle() {
@@ -71,7 +52,8 @@ class Message extends Component {
             title={ this.renderSubject() }
           />
           <CardText expandable style={ styles }>
-            <Linkify tagName="div" options={ this.linkifyDefaultOptions }>{ body }</Linkify>
+            { body }
+            <Linkify tagName="div">{ body }</Linkify>
           </CardText>
         </Card>
         { this.renderDivider() }
