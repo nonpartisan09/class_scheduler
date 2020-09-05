@@ -423,6 +423,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
           <article className="userFormInputFieldLocationContainer">
 
             <SelectField
+              style={{ 'min-width': 250 + 'px' } }
               floatingLabelFixed
               floatingLabelText={
                 (
@@ -432,17 +433,18 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                   />
                 )
               }
-              value={country ? country : 'United States'}
+              value={ country ? country : 'United States' }
               className='userFormInputField country'
-              errorText={this.errorLanguageHandler('country')}
-              onChange={this.changeCountryHandler}
-              onBlur={validateHandler('country')}
+              errorText={ this.errorLanguageHandler('country') }
+              onChange={ this.changeCountryHandler }
+              onBlur={ validateHandler('country') }
             >
-              {_.map(countries, name => <MenuItem key={name} insetChildren checked={country === name} value={name} primaryText={<span> {name} </span>} />)}
+              {_.map(countries, name => <MenuItem key={ name } insetChildren checked={ country === name } value={ name } primaryText={ <span> { name } </span> } />) }
             </SelectField>
 
 
             <SelectField
+              style={{ 'min-width': 250 + 'px' } }
               floatingLabelFixed
               floatingLabelText={
                 (
@@ -473,6 +475,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
           <article className="userFormInputFieldLocationContainer">
             
             <SelectField
+              style={{ 'min-width': 250 + 'px' } }
               floatingLabelFixed
               floatingLabelText={
                 (
@@ -492,6 +495,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
             </SelectField>
 
             <SelectField
+              style={{ 'min-width': 250 + 'px' } }
               floatingLabelFixed
               floatingLabelText={
                 (

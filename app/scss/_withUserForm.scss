@@ -40,7 +40,9 @@
 
 .userFormInputFieldLocationContainer {
     display: flex;
+    width: 500px;
 }
+
 
 .userFormInputField {
     min-width: 500px;
@@ -74,6 +76,7 @@
     .userFormInputField {
         min-width: 100%;
     }
+
 
    .userFormPasswordButton, .userFormProgramButton, .userFormLanguageButton, .userFormSaveButton {
        min-width: 100%;
