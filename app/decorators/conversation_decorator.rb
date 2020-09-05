@@ -11,7 +11,8 @@ class ConversationDecorator
         :conversee_avatar => conversee_avatar,
         :id => id,
         :is_first_message_unread => is_first_message_unread,
-        :conversee => conversee
+        :conversee => conversee,
+        :is_timely => conversation.is_timely?
     }
   end
 
@@ -22,7 +23,8 @@ class ConversationDecorator
         :id => id,
         :is_first_message_unread => is_first_message_unread,
         :conversee_avatar => conversee_avatar,
-        :conversee_url_slug => conversee_url_slug
+        :conversee_url_slug => conversee_url_slug,
+        :is_timely => conversation.is_timely?
     }
   end
 

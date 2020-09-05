@@ -17,7 +17,8 @@ class TimelyResponseJob < Struct.new(:conversation, :volunteer, :client, :progra
     if !volunteer.timely_responses?
       client_email
       volunteer_email
-      volunteer.create_timely_response({user_id: volunteer.id, conversation_id: conversation.id})
+
+      conversation.create_timely_response({user_id: volunteer.id, conversation_id: conversation.id})
     end
 
   end

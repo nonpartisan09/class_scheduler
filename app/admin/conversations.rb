@@ -19,6 +19,18 @@ ActiveAdmin.register Conversation do
     end
   end
 
+  index do
+    id_column
+    column :author_id
+    column :recipient_id
+    column :updated_at
+    column :created_at
+    column :is_timely? do |conversation|
+      conversation.is_timely?
+    end
+    actions
+  end
+
   show do
     tabs do
       tab 'Messages' do

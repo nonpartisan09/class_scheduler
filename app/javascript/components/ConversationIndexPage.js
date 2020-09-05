@@ -113,13 +113,14 @@ class ConversationIndexPage extends Component {
   }
 
   renderConversations() {
-    const { conversations } = this.props;
+    const { conversations, currentUser } = this.props;
 
     return _.map(conversations, (conversation) => {
-      const { conversee, id, conversee_avatar, is_first_message_unread } = conversation;
+      const { conversee, id, conversee_avatar, is_first_message_unread, is_timely } = conversation;
 
       return (
         <ListItem
+          className={ is_timely && !currentUser.volunteer ? '' : 'untimely-conversation' }
           onClick={ this.handleClick(id) }
           key={ conversee }
           leftAvatar={ <Avatar className='avatar' src={ conversee_avatar } /> }
@@ -139,13 +140,15 @@ class ConversationIndexPage extends Component {
     if (is_first_message_unread) {
       return (
         <span className='conversationIndexPageUnread'>
-          Conversation with { conversee }
+          Conversation with 
+          { conversee }
         </span>
       );
     } else {
       return (
         <span>
-          Conversation with { conversee }
+          Conversation with 
+          { conversee }
         </span>
       );
     }

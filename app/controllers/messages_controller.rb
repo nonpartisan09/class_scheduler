@@ -13,7 +13,7 @@ class MessagesController < ApplicationController
       @conversation = Conversation.create(author_id: current_user.id, recipient_id: @recipient.id)
       program = current_user.programs.first
       timely_response_job = TimelyResponseJob.new(@conversation, @recipient, current_user, program)
-      Delayed::Job.enqueue(timely_response_job, 0, 2.days.from_now)
+      Delayed::Job.enqueue(timely_response_job, 0, 2.minutes.from_now)
     end
     @message = current_user.messages.build(permitted_params.except(:recipient_id))
     @message.conversation_id = @conversation.id

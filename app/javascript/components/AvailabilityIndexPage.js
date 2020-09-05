@@ -17,10 +17,10 @@ import { ENGLISH } from './utils/availableLocales';
 class AvailabilityIndexPage extends Component {
 
   render() {
-    const { currentUser: { untimely_responses, timely_responses } } = this.props;
+    const { currentUser: { untimely_responses, timely_responses }, availabilities: availabilities } = this.props;
     const canReactivate = !untimely_responses;
     const isDeactivated = !!timely_responses.length;
-    const isActive = canReactivate || isDeactivated;
+    const isActive = canReactivate && !isDeactivated;
 
     return (
       <div>
@@ -50,17 +50,21 @@ class AvailabilityIndexPage extends Component {
                 </span>
               </div>
               &nbsp;&nbsp;
-              <RaisedButton
-                primary
-                disabled={ !canReactivate }
-                onClick={ timely_responses.length ? () => this.toggleAvailabilities('DELETE') : () =>this.toggleAvailabilities('POST') }
-                label={ (
-                  <FormattedMessage
-                    id='UntimelyResponses'
-                    defaultMessage={ timely_responses.length ? 'Reactivate Availabilities' : 'Deactivate Availabilities' }
+              {
+                !!availabilities.length && (
+                  <RaisedButton
+                    primary
+                    disabled={ !canReactivate }
+                    onClick={ timely_responses.length ? () => this.toggleAvailabilities('DELETE') : () =>this.toggleAvailabilities('POST') }
+                    label={ (
+                      <FormattedMessage
+                        id='UntimelyResponses'
+                        defaultMessage={ timely_responses.length ? 'Reactivate Availabilities' : 'Deactivate Availabilities' }
+                      />
+                    ) }
                   />
-                ) }
-              />
+                )
+              }
             </div>
             { this.renderAvailabilities() }
           </div>

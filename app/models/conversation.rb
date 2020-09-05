@@ -6,7 +6,11 @@ class Conversation < ApplicationRecord
   validates_uniqueness_of :author_id, scope: :recipient_id
 
   has_many :messages, -> { order(created_at: :asc) }, dependent: :destroy
-  has_many :timely_responses, dependent: :destroy
+  has_one :timely_response, dependent: :destroy
+
+  def is_timely?
+    !self.timely_response
+  end
   
   scope :participating, -> (user) do
     includes(:messages).where("(conversations.author_id = ? OR conversations.recipient_id = ?)", user.id, user.id)
