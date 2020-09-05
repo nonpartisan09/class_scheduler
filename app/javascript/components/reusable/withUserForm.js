@@ -420,45 +420,45 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
         const countries = Countries.map(c => c.countryName);
 
         return (
-          <article>
+          <article className="userFormInputFieldLocationContainer">
 
             <SelectField
-            floatingLabelFixed
-            floatingLabelText={
-              (
-                <FormattedMessage
-                  id='UserForm.state'
-                  defaultMessage='Select State/Region'
-                />
-              )
-            }
-            value={ state }
-            className='userFormInputField state'
-            errorText={ this.errorLanguageHandler('state') }
-            onChange={ this.changeStateHandler }
-            onBlur={ validateHandler('state') }
+              floatingLabelFixed
+              floatingLabelText={
+                (
+                  <FormattedMessage
+                    id='UserForm.state'
+                    defaultMessage='Select State/Region'
+                  />
+                )
+              }
+              value={ state }
+              className='userFormInputField state'
+              errorText={ this.errorLanguageHandler('state') }
+              onChange={ this.changeStateHandler }
+              onBlur={ validateHandler('state') }
           >
-            { _.map(States, s => <MenuItem key={ s.abbreviation } insetChildren checked={ state === s.abbreviation } value={ s.abbreviation } primaryText={ <span>{ s.abbreviation }</span> } secondaryText={ <span>{ s.name } </span> } />) }
-          </SelectField>
+              { _.map(States, s => <MenuItem key={ s.abbreviation } insetChildren checked={ state === s.abbreviation } value={ s.abbreviation } primaryText={ <span>{ s.abbreviation }</span> } secondaryText={ <span>{ s.name } </span> } />) }
+            </SelectField>
 
-          <SelectField
-            floatingLabelFixed
-            floatingLabelText={
-              (
-                <FormattedMessage
-                  id='UserForm.country'
-                  defaultMessage='Select Country'
-                />
-              )
-            }
-            value={country ? country : 'United States'}
-            className='userFormInputField country'
-            errorText={this.errorLanguageHandler('country')}
-            onChange={this.changeCountryHandler}
-            onBlur={validateHandler('country')}
-          >
-            {_.map(countries, name => <MenuItem key={name} insetChildren checked={country === name} value={name} primaryText={<span> {name} </span>} />)}
-          </SelectField>
+            <SelectField
+              floatingLabelFixed
+              floatingLabelText={
+                (
+                  <FormattedMessage
+                    id='UserForm.country'
+                    defaultMessage='Select Country'
+                  />
+                )
+              }
+              value={ country ? country : 'United States' }
+              className='userFormInputField country'
+              errorText={ this.errorLanguageHandler('country') }
+              onChange={ this.changeCountryHandler }
+              onBlur={ validateHandler('country') }
+            >
+              {_.map(countries, name => <MenuItem key= {name } insetChildren checked={ country === name } value={ name } primaryText={<span> {name} </span>} />)}
+            </SelectField>
           </article>
           
         );
@@ -468,44 +468,44 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
         const regions = coun.regions.map(region => region.name );
 
         return (
-          <article>
+          <article className="userFormInputFieldLocationContainer">
             <SelectField
-            floatingLabelFixed
-            floatingLabelText={
-              (
-                <FormattedMessage
-                  id='UserForm.state'
-                  defaultMessage='Select State/Region'
-                />
-              )
-            }
-            value={ state }
-            className='userFormInputField state'
-            errorText={ this.errorLanguageHandler('state') }
-            onChange={ this.changeStateHandler }
-            onBlur={ validateHandler('state') }
+              floatingLabelFixed
+              floatingLabelText={
+                (
+                  <FormattedMessage
+                    id='UserForm.state'
+                    defaultMessage='Select State/Region'
+                  />
+                )
+              }
+              value={ state }
+              className='userFormInputField state'
+              errorText={ this.errorLanguageHandler('state') }
+              onChange={ this.changeStateHandler }
+              onBlur={ validateHandler('state') }
           >
-            { _.map(regions, region => <MenuItem key={ region } insetChildren checked={ state === region } value={ region } primaryText={ <span> { region } </span> } />) }
-          </SelectField>
+              { _.map(regions, region => <MenuItem key={ region } insetChildren checked={ state === region } value={ region } primaryText={ <span> { region } </span> } />) }
+            </SelectField>
 
-          <SelectField
-            floatingLabelFixed
-            floatingLabelText={
-              (
-                <FormattedMessage
-                  id='UserForm.country'
-                  defaultMessage='Select Country'
-                />
-              )
-            }
-            value={country ? country : 'United States'}
-            className='userFormInputField country'
-            errorText={this.errorLanguageHandler('country')}
-            onChange={this.changeCountryHandler}
-            onBlur={validateHandler('country')}
-          >
-            {_.map(countries, name => <MenuItem key={name} insetChildren checked={country === name} value={name} primaryText={<span> {name} </span>} />)}
-          </SelectField>
+            <SelectField
+              floatingLabelFixed
+              floatingLabelText={
+                (
+                  <FormattedMessage
+                    id='UserForm.country'
+                    defaultMessage='Select Country'
+                  />
+                )
+              }
+              value={ country ? country : 'United States' }
+              className='userFormInputField country'
+              errorText={ this.errorLanguageHandler('country') }
+              onChange={ this.changeCountryHandler }
+              onBlur={ validateHandler('country') }
+            >
+              {_.map(countries, name => <MenuItem key={ name } insetChildren checked={ country === name } value={ name } primaryText={ <span> { name } </span> } />)}
+            </SelectField>
           </article>
           
         );
