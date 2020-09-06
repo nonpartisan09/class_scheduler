@@ -75,13 +75,13 @@ class UserMailer < ApplicationMailer
 
   def client_untimely_response_eng(volunteer, client, conversation, program)
     @volunteer, @client, @conversation, @program = volunteer, client, conversation, program
-    @url = "https://tutoria.io/#{@volunteer.locale}/inbox/#{@conversation.id}"
+    @url = "https://tutoria.io/#{@client.locale}/inbox/#{@conversation.id}"
     mail(to: @client.email, subject: 'Volunteer Unavailable - Tutoría')
   end
 
   def client_untimely_response_esp(volunteer, client, conversation, program)
     @volunteer, @client, @conversation, @program = volunteer, client, conversation, program
-    @url = "https://tutoria.io/#{@volunteer.locale}/inbox/#{@conversation.id}"
+    @url = "https://tutoria.io/#{@client.locale}/inbox/#{@conversation.id}"
     mail(to: @client.email, subject: 'Voluntario/a no disponible - Tutoría')
   end
 

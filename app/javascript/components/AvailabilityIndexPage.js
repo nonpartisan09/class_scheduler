@@ -43,11 +43,15 @@ class AvailabilityIndexPage extends Component {
             </ul>
             <div className='activeAvailabilities'>
               <div>
-                Availabilities are currently&nbsp;
-                { isActive ? 'active.' : 'inactive.' }
-                <span className='reinstateAvailabilityText'>
-                  { canReactivate ? '' : ' To re-enable availabilities, please respond to all client volunteer requests that are more than two days old and then click the "Reactivate Availablities" button.'}
-                </span>
+                <FormattedMessage 
+                  defaultMessage={ 'Availabilities are currently ' + isActive ? 'active.' : 'inactive.' }
+                  id={ isActive ? 'AvailabilityIndexPage.ActiveAvailabilities' : 'AvailabilityIndexPage.InactiveAvailabilities' }
+                />
+                <FormattedMessage 
+                  className='reinstateAvailabilityText'
+                  id={ canReactivate ? 'AvailabilityIndexPage.NoDisabledAvailabilitiesMessage' : 'AvailabilityIndexPage.DisabledAvailabilitiesMessage' }
+                  defaultMessage={ canReactivate ? '' : ' To re-enable availabilities, please respond to all client volunteer requests that are more than two days old and then click the "Reactivate Availablities" button.' }
+                />
               </div>
               &nbsp;&nbsp;
               {
@@ -58,7 +62,7 @@ class AvailabilityIndexPage extends Component {
                     onClick={ timely_responses.length ? () => this.toggleAvailabilities('DELETE') : () =>this.toggleAvailabilities('POST') }
                     label={ (
                       <FormattedMessage
-                        id='UntimelyResponses'
+                        id={ timely_responses.length ? 'AvailabilityIndexPage.InactiveAvailabilitiesButton': 'AvailabilityIndexPage.ActiveAvailabilitiesButton' }
                         defaultMessage={ timely_responses.length ? 'Reactivate Availabilities' : 'Deactivate Availabilities' }
                       />
                     ) }
@@ -118,8 +122,6 @@ class AvailabilityIndexPage extends Component {
 
   toggleAvailabilities(type){
     const { currentUser: { locale, timely_responses } } = this.props;
-    console.log(timely_responses);
-    console.log(locale);
     let url;
 
     if (type === 'DELETE'){

@@ -140,7 +140,7 @@ class ConversationIndexPage extends Component {
     if (is_first_message_unread) {
       return (
         <span className='conversationIndexPageUnread'>
-          Conversation with 
+          Conversation with &nbsp;
           { conversee }
         </span>
       );

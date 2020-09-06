@@ -89,7 +89,7 @@ class User < ActiveRecord::Base
 
   def timely_responses?
     self.received_conversations.includes(:messages).all? do |convo| 
-      time_difference = (Time.now - convo.created_at)/3600
+      time_difference = (Time.now.utc - convo.created_at)/3600
       has_responded = convo.messages.any?{|msg| msg.user_id == self.id}
       has_responded || time_difference < 48
     end
