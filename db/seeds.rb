@@ -21,20 +21,6 @@ Role.create(
   displayable: true
 )
 
-Role.create(
-  name: 'Owner',
-  url_slug: 'owner',
-  description: 'An owner with read and writ access to the admin panel',
-  displayable: false
-)
-
-Role.create(
-  name: 'Admin-ReadOnly',
-  url_slug: 'admin-readonly',
-  description: 'An admin with read-only entitlements',
-  displayable: false
-)
-
 TermsAndConditions.create(
   description: 'some text'
 )

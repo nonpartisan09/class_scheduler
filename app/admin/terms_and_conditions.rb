@@ -4,18 +4,6 @@ ActiveAdmin.register TermsAndConditions do
       :updated_at,
       :id
 
-  actions :all
-
-  controller do
-    def action_methods
-      if current_user.admins_readonly?
-        super - ['destroy', 'new', 'edit']
-      else
-        super
-      end
-    end
-  end
-
   index do
     selectable_column
     id_column

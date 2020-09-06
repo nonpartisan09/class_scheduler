@@ -8,18 +8,6 @@ ActiveAdmin.register Program do
       :created_at,
       :updated_at,
       :featured
-  
-  actions :all
-
-  controller do
-    def action_methods
-      if current_user.admins_readonly?
-        super - ['destroy', 'new', 'edit']
-      else
-        super
-      end
-    end
-  end
 
   index do
     selectable_column
