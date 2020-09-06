@@ -6,7 +6,7 @@ class TimelyResponsesController < ApplicationController
     end
 
     def destroy
-        timely_response = TimelyResponse.find(params[:id])
-        timely_response.destroy!
+        timely_response = TimelyResponse.where(user_id: params[:id])
+        timely_response.each(&:destroy!)
     end
 end
