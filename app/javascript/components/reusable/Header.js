@@ -17,9 +17,7 @@ import {
   FaEnvelope,
   FaChevronDown,
   FaBars,
-  FaLinkedin,
-  FaInstagram,
-  FaYoutube,
+  FaLinkedin
 } from 'react-icons/fa';
 
 import {
@@ -387,35 +385,6 @@ class Header extends Component {
           />
           Facebook
         </SliderButton>
-
-        <SliderButton
-          grey
-          href={ contactInfo.INSTAGRAM }
-          target='_blank'
-          rel='noopener noreferrer'
-        >
-          <FaInstagram
-            size={ size }
-            label='Instagram'
-          />
-          Instagram
-        </SliderButton>
-
-        <SliderButton
-          grey
-          href={ contactInfo.YOUTUBE }
-          target='_blank'
-          rel='noopener noreferrer'
-        >
-          <FaYoutube
-            size={ size }
-            label='Youtube'
-          />
-          Youtube
-        </SliderButton>
-
-
-
         <SliderButton
           grey
           href={ contactInfo.LINKEDIN }
