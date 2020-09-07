@@ -9,7 +9,8 @@ export default class UserMap extends Component {
     super(props);
     this.state = {
       cities: [],
-      counts: {} 
+      counts: {},
+      mapZoom: 2 
     };
   }
 
@@ -92,6 +93,11 @@ export default class UserMap extends Component {
   }
  }
 
+ handleViewportChange = viewport =>{
+   console.log("Zoom level: "+ viewport.zoom );
+    this.setState({ mapZoom: viewport.zoom });
+ }
+
   clientColor = () => '#F1592A';
   volunteerColor = () => '#29AAE2';
   allColor = ({client_count, volunteer_count}) => {
@@ -123,9 +129,7 @@ export default class UserMap extends Component {
     return (
       <div className='userMapContainer'>
         <Map
-        onViewportChanged = {(viewport => {
-          console.log("Zoom level: "+viewport.zoom);
-        })}
+        onViewportChanged={this.handleViewportChange}
           center={
             this.props.view === 'row' ? [40.4637, -3.7492] : [37.0902, -95.7129]
           }
@@ -164,7 +168,7 @@ export default class UserMap extends Component {
                 color={ getColor(city) }
                 fillColor={ getColor(city) }
                 fillOpacity={ 0.5 }
-                radius={ Math.floor(this.calculateRadius(type, city) * 100) }
+                radius={ this.state.mapZoom >= 6 ? Math.floor(this.calculateRadius(type, city) * 100) : 2 }
               >
                 <Popup>
                   <h4>{name}</h4>
