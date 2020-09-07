@@ -72,13 +72,24 @@ export default class UserMap extends Component {
  calculateRadius = (type, city) => {
    let {counts} = this.state;
    switch(type) {
-     case 'volunteers':
+     case 'volunteer':
       return city.volunteer_count / counts.volunteer_count;
-     case 'clients':
+     case 'client':
       return city.client_count / counts.client_count;
     default:
       return (city.client_count + city.volunteer_count) / counts.all_count;
    }
+ }
+
+ isValidCount = (type, city) => {
+  switch(type) {
+    case 'volunteer':
+     return city.volunteer_count !== 0;
+    case 'client':
+     return city.client_count !== 0;
+     default:
+      return true;
+  }
  }
 
   clientColor = () => '#F1592A';
@@ -98,7 +109,7 @@ export default class UserMap extends Component {
     if (this.props.viewClients && !this.props.viewVolunteers) {
       getColor = this.clientColor;
       popUp = this.clientPopUp;
-      type = 'clients';
+      type = 'client';
     } else if (this.props.viewVolunteers && !this.props.viewClients) {
       getColor = this.volunteerColor;
       popUp = this.volunteerPopUp;
@@ -112,6 +123,9 @@ export default class UserMap extends Component {
     return (
       <div className='userMapContainer'>
         <Map
+        onViewportChanged = {(viewport => {
+          console.log("Zoom level: "+viewport.zoom);
+        })}
           center={
             this.props.view === 'row' ? [40.4637, -3.7492] : [37.0902, -95.7129]
           }
@@ -141,8 +155,8 @@ export default class UserMap extends Component {
               city.coordinates[0],
               city.coordinates[1]
             ];
-            if (!getColor) return null;
-            return (
+            if (!getColor || !this.isValidCount(type, city)) return null;
+            return ( 
               <CircleMarker
                 key={ uuid() }
                 className='circle'
