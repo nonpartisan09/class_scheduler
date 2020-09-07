@@ -59,6 +59,12 @@ class User < ActiveRecord::Base
       .where('"timely_responses"."user_id" IS NULL AND "users"."active" IS TRUE') 
   }
 
+  def self.active_users
+    User.all.select do |user|
+      user.timely_responses?
+    end
+  end
+
   def self.authentication_keys
     [:email]
   end

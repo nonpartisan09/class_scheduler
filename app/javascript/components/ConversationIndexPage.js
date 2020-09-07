@@ -120,7 +120,7 @@ class ConversationIndexPage extends Component {
 
       return (
         <ListItem
-          className={ is_timely && !currentUser.volunteer ? '' : 'untimely-conversation' }
+          className={ is_timely || !currentUser.volunteer ? '' : 'untimely-conversation' }
           onClick={ this.handleClick(id) }
           key={ conversee }
           leftAvatar={ <Avatar className='avatar' src={ conversee_avatar } /> }
@@ -129,7 +129,7 @@ class ConversationIndexPage extends Component {
       );
     });
   }
-
+ 
   handleClick(id) {
     return () => {
       window.location.assign(`inbox/${id}`);
