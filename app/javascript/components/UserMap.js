@@ -72,14 +72,19 @@ export default class UserMap extends Component {
 
  calculateRadius = (type, city) => {
    let {counts} = this.state;
+   let result = 0;
    switch(type) {
      case 'volunteer':
-      return city.volunteer_count / counts.volunteer_count;
+      result =  city.volunteer_count / counts.volunteer_count;
+      break;
      case 'client':
-      return city.client_count / counts.client_count;
+      result = city.client_count / counts.client_count;
+      break;
     default:
-      return (city.client_count + city.volunteer_count) / counts.all_count;
+      result = (city.client_count + city.volunteer_count) / counts.all_count;
    }
+
+   return Math.floor(result * 100);
  }
 
  isValidCount = (type, city) => {
@@ -168,7 +173,7 @@ export default class UserMap extends Component {
                 color={ getColor(city) }
                 fillColor={ getColor(city) }
                 fillOpacity={ 0.5 }
-                radius={ this.state.mapZoom >= 6 ? Math.floor(this.calculateRadius(type, city) * 100) : 2 }
+                radius={ this.state.mapZoom >= 6 ? this.calculateRadius(type, city) : 2 }
               >
                 <Popup>
                   <h4>{name}</h4>
