@@ -71,22 +71,23 @@ export default class UserMap extends Component {
   }
  
  calculateRadius = (type, city) => {
-   let {counts} = this.state;
-   let result = 0;
+   let { counts } = this.state;
+   let radiusResult = 0;
    switch(type) {
      case 'volunteer':
-      result =  city.volunteer_count / counts.volunteer_count;
+      radiusResult =  city.volunteer_count / counts.volunteer_count;
       break;
      case 'client':
-      result = city.client_count / counts.client_count;
+      radiusResult = city.client_count / counts.client_count;
       break;
     default:
-      result = (city.client_count + city.volunteer_count) / counts.all_count;
-      console.log(`Result: ${Math.floor(result * 100)}, City ${JSON.stringify(city)}`);
-   }x 
-
-   result = Math.floor(result * 100);
-   return result === 0 ? 5 : result + 5;
+      radiusResult = (city.client_count + city.volunteer_count) / counts.all_count;
+   }
+   
+   radiusResult = Math.floor(radiusResult * 100);
+   
+   // Set default radius to 5 if radiusResult floor to 0
+   return radiusResult === 0 ? 5 : radiusResult + 5;
  }
 
  isValidCount = (type, city) => {
@@ -95,13 +96,12 @@ export default class UserMap extends Component {
      return city.volunteer_count !== 0;
     case 'client':
      return city.client_count !== 0;
-     default:
-      return city.volunteer_count + city.client_count !== 0 ;
+    default:
+     return city.volunteer_count + city.client_count !== 0 ;
   }
  }
 
- handleViewportChange = viewport =>{
-   console.log("Zoom level: "+ viewport.zoom );
+ handleViewportChange = viewport => {
     this.setState({ mapZoom: viewport.zoom });
  }
 
@@ -115,8 +115,6 @@ export default class UserMap extends Component {
   };
 
   render () {
-    console.log(`ALL Count: ${this.state.counts.all_count}`);
-
     // assign helper methods based on view selected
     let getColor = null;
     let popUp = null;
@@ -177,6 +175,7 @@ export default class UserMap extends Component {
                 color={ getColor(city) }
                 fillColor={ getColor(city) }
                 fillOpacity={ 0.5 }
+                // Keep dots uniform until zoom level reaches 9
                 radius={ this.state.mapZoom >= 9 ? this.calculateRadius(type, city) : 2 }
               >
                 <Popup>
