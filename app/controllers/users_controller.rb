@@ -58,17 +58,22 @@ class UsersController < ApplicationController
                                                        timezone: current_user.timezone,
                                                        user_timezone: @user.timezone,
                                                        day: first_day,
-                                                       end_time: '23:59').decorate
+                                                       end_time: '23:59 ' + Time.zone.now.zone).decorate
 
-        availabilities << split_availability
+        if start_and_end_times_differ(split_availability)  
+          availabilities << split_availability
+        end
 
         split_availability_2 = AvailabilityDecorator.new(availability,
                                                          timezone: current_user.timezone,
                                                          user_timezone: @user.timezone,
                                                          day: second_day,
-                                                         start_time: '00:00').decorate
+                                                         start_time: '00:00 '  + Time.zone.now.zone).decorate
 
-        availabilities << split_availability_2
+        if start_and_end_times_differ(split_availability_2)  
+          availabilities << split_availability_2
+        end
+
       else
         availability = AvailabilityDecorator.new(availability,
                                                  timezone: current_user.timezone,
@@ -77,7 +82,7 @@ class UsersController < ApplicationController
         availabilities << availability
       end
     end
-    @availabilities = availabilities
+    @availabilities = sort_availabilities(availabilities)
   end
 
   def get_ten_last_comments
@@ -96,5 +101,9 @@ class UsersController < ApplicationController
 
   def permitted_params
     params.permit(:url_slug)
+  end
+
+  def start_and_end_times_differ(availability) 
+    availability[:start_time] != availability[:end_time]
   end
 end
