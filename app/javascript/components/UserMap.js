@@ -69,7 +69,7 @@ export default class UserMap extends Component {
       </React.Fragment>
     );
   }
-
+ 
  calculateRadius = (type, city) => {
    let {counts} = this.state;
    let result = 0;
@@ -82,9 +82,11 @@ export default class UserMap extends Component {
       break;
     default:
       result = (city.client_count + city.volunteer_count) / counts.all_count;
-   }
+      console.log(`Result: ${Math.floor(result * 100)}, City ${JSON.stringify(city)}`);
+   }x 
 
-   return Math.floor(result * 100);
+   result = Math.floor(result * 100);
+   return result === 0 ? 5 : result + 5;
  }
 
  isValidCount = (type, city) => {
@@ -94,7 +96,7 @@ export default class UserMap extends Component {
     case 'client':
      return city.client_count !== 0;
      default:
-      return true;
+      return city.volunteer_count + city.client_count !== 0 ;
   }
  }
 
@@ -113,6 +115,8 @@ export default class UserMap extends Component {
   };
 
   render () {
+    console.log(`ALL Count: ${this.state.counts.all_count}`);
+
     // assign helper methods based on view selected
     let getColor = null;
     let popUp = null;
@@ -173,7 +177,7 @@ export default class UserMap extends Component {
                 color={ getColor(city) }
                 fillColor={ getColor(city) }
                 fillOpacity={ 0.5 }
-                radius={ this.state.mapZoom >= 6 ? this.calculateRadius(type, city) : 2 }
+                radius={ this.state.mapZoom >= 9 ? this.calculateRadius(type, city) : 2 }
               >
                 <Popup>
                   <h4>{name}</h4>
