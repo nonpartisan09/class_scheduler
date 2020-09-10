@@ -304,24 +304,6 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
 
                 {this.renderUserRegion(country, state, validateHandler, errors )}
 
-                {/* <SelectField
-                  floatingLabelFixed
-                  floatingLabelText={
-                    (
-                      <FormattedMessage
-                        id='UserForm.country'
-                        defaultMessage='Select Country'
-                      />
-                    )
-                  }
-                  value={ country ? country : 'United States' }
-                  className='userFormInputField country'
-                  errorText={ this.errorLanguageHandler('country') }
-                  onChange={ this.changeCountryHandler }
-                  onBlur={ validateHandler('country') }
-                >
-                  { _.map(countries, name => <MenuItem key={ name } insetChildren checked={ country === name } value={ name } primaryText={ <span> { name } </span> } />) }
-                </SelectField> */}
               </Badge>
 
               <br />
