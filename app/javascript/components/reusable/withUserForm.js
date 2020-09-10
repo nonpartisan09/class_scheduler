@@ -420,7 +420,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
         const countries = Countries.map(c => c.countryName);
 
         return (
-          <article className="userFormInputFieldLocationContainer">
+          <section className="userFormInputFieldLocationContainer">
 
             <SelectField
               style={{ 'min-width': 250 + 'px' } }
@@ -463,7 +463,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
               { _.map(States, s => <MenuItem key={ s.abbreviation } insetChildren checked={ state === s.abbreviation } value={ s.abbreviation } primaryText={ <span>{ s.abbreviation }</span> } secondaryText={ <span>{ s.name } </span> } />) }
             </SelectField>
 
-          </article>
+          </section>
           
         );
       } else {
@@ -472,7 +472,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
         const regions = coun.regions.map(region => region.name );
 
         return (
-          <article className="userFormInputFieldLocationContainer">
+          <section className="userFormInputFieldLocationContainer">
             
             <SelectField
               style={{ 'min-width': 250 + 'px' } }
@@ -513,7 +513,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
             >
               {_.map(regions, region => <MenuItem key={ region } insetChildren checked={ state === region } value={ region } primaryText={ <span> { region } </span> } />) }
             </SelectField>
-          </article>
+          </section>
           
         );
       }  
