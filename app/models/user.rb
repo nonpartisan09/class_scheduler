@@ -204,7 +204,8 @@ class User < ActiveRecord::Base
   end
   
   def self.total_user_count
-    User.where(active:true).count
+    User.where(active:true)
+    .joins(:roles).where("roles.name = 'Client' OR roles.name = 'Volunteer'").count
   end
 
   def self.city_coordinates(city, state)
