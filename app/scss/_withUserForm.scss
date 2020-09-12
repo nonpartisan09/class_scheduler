@@ -69,6 +69,14 @@
         padding: 0;
     }
 
+    // .userFormInputField.country, .userFormInputField.state {
+    //     min-width: 25vw;
+    // }
+    .userFormInputFieldLocationContainer {
+        flex-wrap: wrap;
+        width: 100%;
+    }
+
     .userForm {
         margin-left: 0;
     }

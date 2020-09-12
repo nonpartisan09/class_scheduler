@@ -405,7 +405,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
           <section className="userFormInputFieldLocationContainer">
 
             <SelectField
-              style={{ 'min-width': 250 + 'px' } }
+
               floatingLabelFixed
               floatingLabelText={
                 (
@@ -426,7 +426,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
 
 
             <SelectField
-              style={{ 'min-width': 250 + 'px' } }
+
               floatingLabelFixed
               floatingLabelText={
                 (
