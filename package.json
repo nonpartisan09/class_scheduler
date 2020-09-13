@@ -61,8 +61,8 @@
     "glob": "^7.1.4",
     "mini-css-extract-plugin": "^0.7.0",
     "mkdirp": "^0.5.1",
+    "uuid": "^8.2.0",
     "webpack": "^4.33.0",
-    "webpack-dev-server": "^3.11.0",
-    "uuid": "^8.2.0"
+    "webpack-dev-server": "^3.11.0"
   }
 }
