@@ -62,6 +62,10 @@
     margin: 24px 0 12px;
 }
 
+.userFormInputField.country, .userFormInputField.state {
+        min-width: 250px;
+    }
+
 @media (max-width: 500px)  {
     .userFormInnerButton, .userFormSecondButton, .userFormOuterButton {
         display: block;
@@ -69,9 +73,7 @@
         padding: 0;
     }
 
-    // .userFormInputField.country, .userFormInputField.state {
-    //     min-width: 25vw;
-    // }
+    
     .userFormInputFieldLocationContainer {
         flex-wrap: wrap;
         width: 100%;
