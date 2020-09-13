@@ -63,10 +63,9 @@ module Contexts
           # db time is UTC and may span day.
           # But in user local time, it won't span day
           # so keeping it simple and going back to user local time.
-          start_time = availability[:start_time]
-                       .in_time_zone(@timezone).strftime('%H:%M')
-          end_time = availability[:end_time]
-                     .in_time_zone(@timezone).strftime('%H:%M')
+          start_time = parse_time_user_offset(availability[:start_time]).strftime('%H:%M')
+          end_time = parse_time_user_offset(availability[:end_time]).strftime('%H:%M')
+
           same = (current_range[:start_time] == start_time) &&
                  (current_range[:end_time] == end_time)
           overlap = (current_range[:start_time] < end_time) &&
@@ -124,6 +123,14 @@ module Contexts
     
         with_account_timezone = datetime_without_timezone + account_offset
       end 
+
+      def parse_time_user_offset(time) 
+        Time.zone = @timezone  
+        current_time = Time.zone.now 
+        offset = current_time.utc_offset/3600
+         
+        user_time = ActiveSupport::TimeZone[offset].parse(time.to_s)
+      end
 
       def parse_time(time)
         t = Time.zone.parse(time)
