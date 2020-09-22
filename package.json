@@ -69,7 +69,8 @@
     "webpack-dev-server": "^3.8.0"
   },
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "testWatch": "jest --watch"
   },
   "type": "module"
 }
