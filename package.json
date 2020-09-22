@@ -63,7 +63,7 @@
     "webpack": "^4.33.0",
     "webpack-dev-server": "^3.8.0"
   },
-  "script": {
-    "test": "jest --watch"
+  "scripts": {
+    "test": "jest"
   }
 }
