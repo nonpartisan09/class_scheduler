@@ -66,5 +66,12 @@
   },
   "scripts": {
     "test": "jest"
-  }
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.js?$": "babel-jest"
+    }
+  },
+  "type": "module"
+
 }

@@ -1,7 +1,7 @@
 // For a detailed explanation regarding each configuration property, visit:
 // https://jestjs.io/docs/en/configuration.html
 
-module.exports = {
+const jestConfig = {
   // All imported modules in your tests should be mocked automatically
   // automock: false,
 
@@ -75,7 +75,8 @@ module.exports = {
   //   "jsx",
   //   "ts",
   //   "tsx",
-  //   "node"
+  //   "node",
+  //   "test.js"
   // ],
 
   // A map from regular expressions to module names or to arrays of module names that allow to stub out resources with a single module
@@ -174,11 +175,10 @@ module.exports = {
   // transform: undefined,
 
   // An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation
-  // transformIgnorePatterns: [
-  //   '/node_modules/',
-  //   '\\.pnp\\.[^\\/]+$',
-  //   // '/test.js/'
-  // ],
+  transformIgnorePatterns: [
+    '/node_modules/',
+    '\\.pnp\\.[^\\/]+$',
+  ],
 
   // An array of regexp pattern strings that are matched against all modules before the module loader will automatically return a mock for them
   // unmockedModulePathPatterns: undefined,
@@ -192,3 +192,5 @@ module.exports = {
   // Whether to use watchman for file crawling
   // watchman: true,
 };
+
+export default jestConfig;
