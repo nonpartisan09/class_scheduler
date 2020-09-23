@@ -8,7 +8,8 @@ Enzyme.configure({ adapter: new Adapter() });
 // eslint-disable-next-line no-undef
 test('renders without error', () => {
   const wrapper = Enzyme.shallow(<App />);
-
+  
+  // eslint-disable-next-line no-undef
   expect(wrapper).toBeTruthy();
 }); 
 
