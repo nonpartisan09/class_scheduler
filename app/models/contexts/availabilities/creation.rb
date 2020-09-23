@@ -4,27 +4,52 @@ module Contexts
       def initialize(availability, current_user)
         I18n.locale = :en
 
-        @availability = availability
         @current_user = current_user
         @timezone = current_user[:timezone]
 
-        @day_index = @availability[:day].to_i
-        @day = I18n.t('date.day_names')[@day_index]
+        unless availability[:day].present? && @timezone.present?
+          message = I18n.t('custom_errors.messages.missing_day')
+          raise Availabilities::Errors::DayMissing, message
+        end
 
-        unless @availability[:start_time].present? && @timezone.present?
+        unless availability[:start_time].present? && @timezone.present?
           message = I18n.t('custom_errors.messages.missing_start_time')
           raise Availabilities::Errors::StartTimeMissing, message
         end
 
-        unless @availability[:end_time].present? && @timezone.present?
+        unless validTime(availability[:start_time])
+          message = I18n.t('custom_errors.messages.wrong_format_start_time')
+          raise Availabilities::Errors::StartTimeWrongFormat, message
+        end
+
+        unless availability[:end_time].present? && @timezone.present?
           message = I18n.t('custom_errors.messages.missing_end_time')
           raise Availabilities::Errors::EndTimeMissing, message
         end
 
-        use_account_timezone(availability[:start_time], availability[:end_time])
+        unless validTime(availability[:end_time])
+          message = I18n.t('custom_errors.messages.wrong_format_end_time')
+          raise Availabilities::Errors::EndTimeWrongFormat, message
+        end
+
+        @day_index = availability[:day].to_i
+        @day = I18n.t('date.day_names')[@day_index]
+
+        @availability = generate_user_datetimes(availability)
 
         parse_times_utc
-        parse_times_user_tz
+      end
+
+      def validTime(time_parameter)
+        #accepted format: HH:MM
+        if time_parameter.match(/\A[0-2][0-9]:[0-5][0-9]\Z/)
+          values = time_parameter.split(":").map(&:to_i)
+          isValidTime(values[0], values[1])
+        end
+      end
+
+      def isValidTime(hour, minute)
+        hour >= 0 && hour <= 23 && minute >= 0 && minute <= 59
       end
 
       def execute
@@ -56,8 +81,8 @@ module Contexts
 
         # Just compare hours and minutes
         current_range = {
-          start_time: @parsed_user_start_time.strftime('%H:%M'),
-          end_time: @parsed_user_end_time.strftime('%H:%M')
+          start_time: @availability[:start_time].strftime('%H:%M'),
+          end_time: @availability[:end_time].strftime('%H:%M')
         }
         overlaps = existing_availabilities.any? do |availability|
           # db time is UTC and may span day.
@@ -81,7 +106,7 @@ module Contexts
 
       def check_if_less_than_30_minutes?
         # availabilities can't span user's day so just compare originals
-        minutes = (@parsed_user_end_time - @parsed_user_start_time) / 60
+        minutes = (@availability[:end_time] - @availability[:start_time]) / 60
         if minutes < 30 && !is_last_availability_slot
           message = I18n.t('custom_errors.messages.minimum_availability_required')
           raise Availabilities::Errors::ShortAvailability, message
@@ -93,15 +118,15 @@ module Contexts
         last_end_time = "23:59"
         last_start_time = "23:30"
   
-        is_last_start_slot = @parsed_user_start_time.strftime(time_format) == last_start_time
-        is_last_end_slot = @parsed_user_end_time.strftime(time_format) == last_end_time
+        is_last_start_slot = @availability[:start_time].strftime(time_format) == last_start_time
+        is_last_end_slot = @availability[:end_time].strftime(time_format) == last_end_time
 
         is_last_start_slot && is_last_end_slot
       end
 
       def check_if_starts_before_ends?
         # availabilities can't span user's day so just compare originals
-        if @parsed_user_end_time < @parsed_user_start_time
+        if @availability[:end_time] < @availability[:start_time]
           message = I18n.t('custom_errors.messages.end_time_after_start_time')
           raise Availabilities::Errors::ShortAvailability, message
         end
@@ -111,30 +136,22 @@ module Contexts
         "#{I18n.t('date.day_names')[@day_index]}, #{index + 1} Jan 2001"
       end
 
-      def parse_time_user_offset(time) 
-        Time.zone = @timezone  
-        current_time = Time.zone.now 
-        offset = current_time.utc_offset/3600
-         
-        user_time = ActiveSupport::TimeZone[offset].parse(time.to_s)
-      end
+      def generate_user_datetimes(availabilities) 
+        Time.zone = @timezone
+        t = Time.now
+        start_datetime = Time.parse(t.strftime("%Y-%m-%d #{availabilities[:start_time]} %Z"))
+        end_datetime = Time.parse(t.strftime("%Y-%m-%d #{availabilities[:end_time]} %Z"))
 
-      def use_account_timezone (start_time, end_time)
-        @availability[:start_time] = parse_account_timezone(start_time)
-        @availability[:end_time] = parse_account_timezone(end_time)
+        Hash[{
+          day: availabilities[:day],
+          start_time: start_datetime,
+          end_time: end_datetime,
+        }]
       end
-
-      def parse_account_timezone(time)
-        account_offset = Time.now.in_time_zone(@timezone).formatted_offset
-        parsed_time = Time.parse(time)
-        datetime_without_timezone = parsed_time.strftime("%Y-%m-%d %H:%M:%S ")
-    
-        with_account_timezone = datetime_without_timezone + account_offset
-      end 
 
       def parse_time(time)
-        t = Time.zone.parse(time)
-        Time.zone.parse(t.strftime("#{@day_index + 1} Jan 2001 %R"))
+        Time.zone = @timezone
+        Time.zone.parse(time.strftime("#{@day_index + 1} Jan 2001 %R"))
       end
 
       def parse_times_utc
@@ -152,12 +169,6 @@ module Contexts
         actual_end_day = start_time + duration.seconds
       end
 
-      def parse_times_user_tz
-        @parsed_user_start_time =
-          Time.zone.parse(@availability[:start_time]).change(sec: 0).in_time_zone(@timezone)
-        @parsed_user_end_time =
-          Time.zone.parse(@availability[:end_time]).change(sec: 0).in_time_zone(@timezone)
-      end
     end
   end
 end

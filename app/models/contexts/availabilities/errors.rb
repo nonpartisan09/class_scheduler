@@ -7,7 +7,15 @@ module Contexts::Availabilities::Errors
 
   end
 
+  class StartTimeWrongFormat < RuntimeError
+  
+  end
+
   class EndTimeMissing < RuntimeError
+
+  end
+
+  class EndTimeWrongFormat < RuntimeError
 
   end
 

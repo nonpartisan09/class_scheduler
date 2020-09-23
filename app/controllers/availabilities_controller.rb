@@ -61,8 +61,11 @@ class AvailabilitiesController < ApplicationController
             @availability = creation.execute
           rescue Contexts::Availabilities::Errors::UnknownAvailabilityError,
               Contexts::Availabilities::Errors::OverlappingAvailability,
+              Contexts::Availabilities::Errors::DayMissing,
               Contexts::Availabilities::Errors::StartTimeMissing,
+              Contexts::Availabilities::Errors::StartTimeWrongFormat,
               Contexts::Availabilities::Errors::EndTimeMissing,
+              Contexts::Availabilities::Errors::EndTimeWrongFormat,
               Contexts::Availabilities::Errors::ShortAvailability => e
             message << e.message
             status = :unprocessable_entity
