@@ -202,4 +202,4 @@ const jestConfig = {
   // watchman: true,
 };
 
-export default jestConfig;
+module.exports = jestConfig;
