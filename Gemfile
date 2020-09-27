@@ -62,6 +62,10 @@ group :development, :test do
   gem 'rspec-rails', '~> 3.8'
 
   gem 'awesome_print', '~> 1.8'
+
+  # Add support for debugging in VSCode
+  gem 'ruby-debug-ide', '0.7.2'
+  gem 'debase', '0.2.4.1'
 end
 
 group :development do
