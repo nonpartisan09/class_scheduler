@@ -21,6 +21,8 @@ module Contexts
           raise Availabilities::Errors::EndTimeMissing, message
         end
 
+        use_account_timezone(availability[:start_time], availability[:end_time])
+
         parse_times_utc
         parse_times_user_tz
       end
@@ -106,6 +108,19 @@ module Contexts
         user_time = ActiveSupport::TimeZone[offset].parse(time.to_s)
       end
 
+      def use_account_timezone (start_time, end_time)
+        @availability[:start_time] = parse_account_timezone(start_time)
+        @availability[:end_time] = parse_account_timezone(end_time)
+      end
+
+      def parse_account_timezone(time)
+        account_offset = Time.now.in_time_zone(@timezone).formatted_offset
+        parsed_time = Time.parse(time)
+        datetime_without_timezone = parsed_time.strftime("%Y-%m-%d %H:%M:%S ")
+    
+        with_account_timezone = datetime_without_timezone + account_offset
+      end 
+
       def parse_time(time)
         t = Time.zone.parse(time)
         Time.zone.parse(t.strftime("#{@day_index + 1} Jan 2001 %R"))
@@ -114,7 +129,16 @@ module Contexts
       def parse_times_utc
         Time.zone = 'UTC'
         @parsed_start_time_utc = parse_time(@availability[:start_time])
-        @parsed_end_time_utc = parse_time(@availability[:end_time])
+        @parsed_end_time_utc = end_date_time_utc(@parsed_start_time_utc, parse_time(@availability[:end_time]))
+      end
+
+      def end_date_time_utc(start_time, end_time)
+        # Use the difference in time between the start and end to find the correct end day
+        # when the end time in utc spans to the next day
+        start_hour_min = Time.parse(@availability[:start_time]).change(sec: 0)
+        end_hour_min = Time.parse(@availability[:end_time]).change(sec: 0)
+        duration = (end_hour_min - start_hour_min) / 1.seconds
+        actual_end_day = start_time + duration.seconds
       end
 
       def parse_times_user_tz
