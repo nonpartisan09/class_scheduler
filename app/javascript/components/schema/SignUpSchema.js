@@ -72,7 +72,7 @@ const SignUpSchema = {
   state: Joi.string().allow(''),
   country: Joi.string().required().options({
     language: {
-      any: {
+    any: {
         empty: 'Please select a country',
       }
     }

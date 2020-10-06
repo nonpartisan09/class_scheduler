@@ -135,9 +135,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
       } = this.props;
       
       const countries = Countries.map(c => c.countryName);
-      if(country.length === 0){
-        this.props.changeValue("country", 'United States');
-      }
+      
       return (
         <div>
           <WrappedComponent currentUser={ currentUser } />
@@ -318,7 +316,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                       />
                     )
                   }
-                  value={ country ? country : 'United States' }
+                  value={ country }
                   className='userFormInputField country'
                   errorText={ this.errorLanguageHandler('country') }
                   onChange={ this.changeCountryHandler }
@@ -1355,7 +1353,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
       address: '',
       city: '',
       state: '',
-      country: '',
+      country: 'United States',
       first_name: '',
       last_name: '',
       email: '',
@@ -1375,7 +1373,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
     allowUnknown: true
   };
 
-  return validate(UserForm, validationOptions);
+return validate(UserForm, validationOptions);
 };
 
 export default withUserForm;
