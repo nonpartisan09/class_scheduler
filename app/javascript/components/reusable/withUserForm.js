@@ -135,7 +135,9 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
       } = this.props;
       
       const countries = Countries.map(c => c.countryName);
-
+      if(country.length === 0){
+        this.props.changeValue("country", 'United States');
+      }
       return (
         <div>
           <WrappedComponent currentUser={ currentUser } />
