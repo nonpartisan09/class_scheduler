@@ -63,10 +63,9 @@ module Contexts
           # db time is UTC and may span day.
           # But in user local time, it won't span day
           # so keeping it simple and going back to user local time.
-          start_time = availability[:start_time]
-                       .in_time_zone(@timezone).strftime('%H:%M')
-          end_time = availability[:end_time]
-                     .in_time_zone(@timezone).strftime('%H:%M')
+          start_time = parse_time_user_offset(availability[:start_time]).strftime('%H:%M')
+          end_time = parse_time_user_offset(availability[:end_time]).strftime('%H:%M')
+
           same = (current_range[:start_time] == start_time) &&
                  (current_range[:end_time] == end_time)
           overlap = (current_range[:start_time] < end_time) &&
@@ -101,6 +100,14 @@ module Contexts
         "#{I18n.t('date.day_names')[@day_index]}, #{index + 1} Jan 2001"
       end
 
+      def parse_time_user_offset(time) 
+        Time.zone = @timezone  
+        current_time = Time.zone.now 
+        offset = current_time.utc_offset/3600
+         
+        user_time = ActiveSupport::TimeZone[offset].parse(time.to_s)
+      end
+
       def use_account_timezone (start_time, end_time)
         @availability[:start_time] = parse_account_timezone(start_time)
         @availability[:end_time] = parse_account_timezone(end_time)
@@ -122,7 +129,16 @@ module Contexts
       def parse_times_utc
         Time.zone = 'UTC'
         @parsed_start_time_utc = parse_time(@availability[:start_time])
-        @parsed_end_time_utc = parse_time(@availability[:end_time])
+        @parsed_end_time_utc = end_date_time_utc(@parsed_start_time_utc, parse_time(@availability[:end_time]))
+      end
+
+      def end_date_time_utc(start_time, end_time)
+        # Use the difference in time between the start and end to find the correct end day
+        # when the end time in utc spans to the next day
+        start_hour_min = Time.parse(@availability[:start_time]).change(sec: 0)
+        end_hour_min = Time.parse(@availability[:end_time]).change(sec: 0)
+        duration = (end_hour_min - start_hour_min) / 1.seconds
+        actual_end_day = start_time + duration.seconds
       end
 
       def parse_times_user_tz
