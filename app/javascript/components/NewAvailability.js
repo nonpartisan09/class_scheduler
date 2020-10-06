@@ -18,6 +18,8 @@ import ErrorField from './reusable/ErrorField';
 import { postData } from './utils/sendData';
 import PageHeader from './reusable/PageHeader';
 
+import AvailabilitySelector from './AvailabilitySelector';
+
 const styles = {
   selectLabelEnabled: {
     color: 'black'
@@ -146,17 +148,34 @@ class NewAvailability extends Component {
       if (_.size(errors) === 0) {
         const { availabilities, currentUser: { locale } } = this.props;
 
-        const attributes = FormData.from({ availabilities });
+        
+       const attributes2 = FormData.from({ availabilities });
+
+        const attributes = {
+          availabilities: [
+            {
+              day: 1,
+              start_hour: 8,
+              start_minute: 30,
+              end_hour: 10,
+              end_minute: 45,
+            }
+          ]
+        };
 
         console.warn('attributes:');
+        console.warn(attributes2);
+
+        console.warn('new attributes:');
         console.warn(attributes);
+
 
         const requestParams = {
           url: '/availabilities',
           attributes,
           method: 'POST',
           successCallBack: () => {
-            location.assign(formatLink('/availabilities', locale));
+            //location.assign(formatLink('/availabilities', locale));
           },
           errorCallBack: (message) => {
             this.setState({
@@ -169,6 +188,12 @@ class NewAvailability extends Component {
       }
     });
 
+  }
+
+  inputChangeHandler = (newTime) => {
+    console.log("InputChangeHandler");
+    console.log("New time is: ");
+    console.log(newTime);
   }
 
   renderAvailabilities() {
@@ -201,8 +226,7 @@ class NewAvailability extends Component {
             errorText={ _.get(errors, `${index}.day`) }
             onChange={ changeHandler(`${index}.day`, { validate: true }) }
             onBlur={ validateAllHandler }
-            fullWidth
-          >
+             >
             { _.map(days, (value, index) => (
               <MenuItem
                 key={ value + index }
@@ -218,65 +242,9 @@ class NewAvailability extends Component {
             )) }
           </SelectField>
 
-          <SelectField
-            floatingLabelStyle={ styles.selectLabelEnabled }
-            floatingLabelText={ (
-              <FormattedMessage
-                id='NewAvailability.selectStartTime'
-                defaultMessage='select Start Time'
-              />
-              ) }        
-            value={ currentAvailability? start_time : '' }
-            errorText={ _.get(errors, `${index}.start_time`) }
-            onChange={ this.handleStartTimePickerChange(index) }
-            onBlur={ validateAllHandler }
-            fullWidth
-          >
-            { _.map(Object.keys(availability_start_times), (value, index) => (
-              <MenuItem
-                key={ value + index }
-                insetChildren
-                value={ availability_start_times[value] }
-                primaryText={ (
-                  <span> 
-                    { value }
-                  </span>
-              ) } 
-              />
-            )) }
+          <AvailabilitySelector  />
 
-          </SelectField>
-
-          <SelectField
-            floatingLabelStyle={ endTimePickerDisabled ? styles.selectLabelDisabled : styles.selectLabelEnabled }
-            floatingLabelText={ (
-              <FormattedMessage
-                id='NewAvailability.selectEndTime'
-                defaultMessage='Select End Time'
-              />
-              ) }        
-            value={ currentAvailability? end_time : '' }
-            errorText={ _.get(errors, `${index}.end_time`) }
-            onChange={ this.handleEndTimePickerChange(index) }
-            onBlur={ validateAllHandler }
-            fullWidth
-            disabled={ endTimePickerDisabled }
-          >
-            { _.map(Object.keys(endAvailabilities[index] ? endAvailabilities[index] : {} ), (value, index) => (
-              <MenuItem
-                key={ value + index }
-                insetChildren
-                value={ availability_end_times[value] }
-                primaryText={ (
-                  <span> 
-                    { value }
-                  </span>
-              ) } 
-              />
-            )) }
-
-          </SelectField>
-
+          
           <FlatButton
             primary
             label={ (

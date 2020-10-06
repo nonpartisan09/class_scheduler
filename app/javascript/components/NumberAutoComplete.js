@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import AutoComplete from 'material-ui/AutoComplete';
 
-class InputAutoComplete extends Component {
+class NumberAutoComplete extends Component {
   constructor(props) {
     super(props);
 
@@ -38,7 +38,7 @@ class InputAutoComplete extends Component {
     const emptyString = input.length === 0;
 
     const partialMatchFound =  dataOptions.some( item => {
-      return item.startsWith(input);
+      return item.includes(input);
     });
 
     return partialMatchFound || emptyString;
@@ -48,8 +48,9 @@ class InputAutoComplete extends Component {
     const { hintText, dataOptions, isDisabled } = this.props;
 
     return (
-      <div style={ { width: '3em' } }> 
+      <div style={ { width: '4em', display: 'inline-block' } }> 
         <AutoComplete
+          listStyle={ { maxHeight: 200, overflow: 'auto' } }
           inputStyle={ { textAlign: 'center' } }
           hintStyle={ { textAlign: 'center', width: '100%' } }
           hintText={ hintText }
@@ -60,7 +61,7 @@ class InputAutoComplete extends Component {
           filter={ AutoComplete.caseInsensitiveFilter }
           openOnFocus
           fullWidth
-          disabled={ isDisabled }
+          disabled={ isDisabled }          
         />
       </div>
     );
@@ -69,17 +70,17 @@ class InputAutoComplete extends Component {
 
 }
 
-InputAutoComplete.propTypes = {
+NumberAutoComplete.propTypes = {
   dataOptions: PropTypes.array,
   onChange: PropTypes.func,
   isDisabled: PropTypes.bool,
   hintText: PropTypes.string.isRequired
 };
 
-InputAutoComplete.defaultProps = {
+NumberAutoComplete.defaultProps = {
   dataOptions: [],
   onChange: () => {},
   isDisabled: false,
 };
 
-export default InputAutoComplete;
+export default NumberAutoComplete;
