@@ -214,35 +214,9 @@ class NewAvailability extends Component {
             <ErrorField error={ error && error[index] } />
           </div>
 
-          <SelectField
-            floatingLabelStyle={ styles.selectLabelEnabled }
-            floatingLabelText={ (
-              <FormattedMessage
-                id='NewAvailability.selectDay'
-                defaultMessage='Select Day'
-              />
-              ) }
-            value={ currentAvailability? day: '' }
-            errorText={ _.get(errors, `${index}.day`) }
-            onChange={ changeHandler(`${index}.day`, { validate: true }) }
-            onBlur={ validateAllHandler }
-             >
-            { _.map(days, (value, index) => (
-              <MenuItem
-                key={ value + index }
-                insetChildren
-                checked={ availabilities[index] && availabilities[index].day === value }
-                value={ index }
-                primaryText={ (
-                  <span> 
-                    { value }
-                  </span>
-              ) } 
-              />
-            )) }
-          </SelectField>
 
-          <AvailabilitySelector  />
+
+          <AvailabilitySelector days={ days } />
 
           
           <FlatButton

@@ -1,9 +1,12 @@
+import _ from 'lodash';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
 
 import Checkbox from 'material-ui/Checkbox';
 
 import TimeSelector from './TimeSelector';
+import DaysMultipleSelect from './DaysMultipleSelect';
 
 const FIRST_HOUR = '00';
 const FIRST_MINUTE = '00';
@@ -23,9 +26,11 @@ class AvailabilitySelector extends Component {
       endTime: {
         hour: '',
         minute: '',
-      }
+      },
+      day: [],
     };
   }
+  
   getTimes = (max) => {
     const list = new Array(max);
 
@@ -37,8 +42,6 @@ class AvailabilitySelector extends Component {
     }
     return list;
   }
-
-  
 
   handleAllDayChange = (event, isAllDay ) => {
     this.setState({
@@ -78,39 +81,43 @@ class AvailabilitySelector extends Component {
   }
 
   render() {
-    const { isAllDay } = this.state;
+    const { days } = this.props;
 
     const hours = this.getTimes(24);
     const minutes = this.getTimes(60);
 
-    const { startTime, endTime } = this.state;
+    const { startTime, endTime, isAllDay } = this.state;
 
     return (
-      <div style={ {display: 'flex', alignItems: 'center'} }>
-        <TimeSelector 
-          hoursList={ hours }
-          minutesList={ minutes }
-          onChange={ this.updateStartTimeHandler }
-          labelText=" From "
-          disabled={ isAllDay }
-          hour={ startTime.hour }
-          minute={ startTime.minute }
-        />
-        <TimeSelector 
-          hoursList={ hours }
-          minutesList={ minutes }
-          onChange={ this.updateEndTimeHandler }
-          labelText=" To "
-          disabled={ isAllDay }
-          hour={ endTime.hour }
-          minute={ endTime.minute }
-        />
-        <Checkbox
-          style={ {paddingLeft: '2em'} }
-          checked={ this.state.isAllDay }
-          label="All Day"
-          onCheck={ this.handleAllDayChange }
-        />
+      <div>
+        <DaysMultipleSelect days={ days } />
+
+        <div style={ {display: 'flex', alignItems: 'center'} }>
+          <TimeSelector 
+            hoursList={ hours }
+            minutesList={ minutes }
+            onChange={ this.updateStartTimeHandler }
+            labelText=" From "
+            disabled={ isAllDay }
+            hour={ startTime.hour }
+            minute={ startTime.minute }
+          />
+          <TimeSelector 
+            hoursList={ hours }
+            minutesList={ minutes }
+            onChange={ this.updateEndTimeHandler }
+            labelText=" To "
+            disabled={ isAllDay }
+            hour={ endTime.hour }
+            minute={ endTime.minute }
+          />
+          <Checkbox
+            style={ {paddingLeft: '2em'} }
+            checked={ this.state.isAllDay }
+            label="All Day"
+            onCheck={ this.handleAllDayChange }
+          />
+        </div>
       </div>
     );
   }
