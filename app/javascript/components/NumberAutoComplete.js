@@ -4,13 +4,6 @@ import PropTypes from 'prop-types';
 import AutoComplete from 'material-ui/AutoComplete';
 
 class NumberAutoComplete extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      input: ''
-    };
-  }
 
   handleNewRequest = (input) => {
     this.updateInputValue(input);
@@ -21,17 +14,6 @@ class NumberAutoComplete extends Component {
       this.updateInputValue(input);
     }
   };
-
-  updateInputValue = (newInput) => {
-    const { onChange } = this.props;
-
-    this.setState({
-      input: newInput,
-    });
-
-    onChange(newInput);
-  }
-
   isValidInput = (input) => {
     const { dataOptions } = this.props;
 
@@ -43,9 +25,14 @@ class NumberAutoComplete extends Component {
 
     return partialMatchFound || emptyString;
   }
+  
+  updateInputValue = (newInput) => {
+    const { onChange } = this.props;
+    onChange(newInput);
+  }
 
   render() {
-    const { hintText, dataOptions, isDisabled } = this.props;
+    const {value,  hintText, dataOptions, disabled } = this.props;
 
     return (
       <div style={ { width: '4em', display: 'inline-block' } }> 
@@ -54,33 +41,33 @@ class NumberAutoComplete extends Component {
           inputStyle={ { textAlign: 'center' } }
           hintStyle={ { textAlign: 'center', width: '100%' } }
           hintText={ hintText }
-          searchText={ this.state.input }
+          searchText={ value }
           onUpdateInput={ this.handleUpdateInput }
           onNewRequest={ this.handleNewRequest }
           dataSource={ dataOptions }
-          filter={ AutoComplete.caseInsensitiveFilter }
+          filter={ AutoComplete.noFilter }
           openOnFocus
           fullWidth
-          disabled={ isDisabled }          
+          disabled={ disabled }        
         />
       </div>
     );
   }
-
-
 }
 
 NumberAutoComplete.propTypes = {
   dataOptions: PropTypes.array,
   onChange: PropTypes.func,
-  isDisabled: PropTypes.bool,
-  hintText: PropTypes.string.isRequired
+  disabled: PropTypes.bool,
+  hintText: PropTypes.string.isRequired,
+  value: PropTypes.string,
 };
 
 NumberAutoComplete.defaultProps = {
   dataOptions: [],
   onChange: () => {},
-  isDisabled: false,
+  disabled: false,
+  value: '',
 };
 
 export default NumberAutoComplete;
