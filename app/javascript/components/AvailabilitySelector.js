@@ -29,6 +29,7 @@ class AvailabilitySelector extends Component {
       },
       selectedDays: props.selectedDays
     };
+  
   }
   
   getTimes = (max) => {
@@ -44,12 +45,13 @@ class AvailabilitySelector extends Component {
   }
 
   handleAllDayChange = (event, isAllDay ) => {
+    const { selectedDays } = this.state;
     this.setState({
         isAllDay: isAllDay,
     });
 
     if (isAllDay) {
-      const starTime = {
+      const startTime = {
         hour: FIRST_HOUR,
         minute: FIRST_MINUTE,
       };
@@ -59,55 +61,63 @@ class AvailabilitySelector extends Component {
         minute: LAST_MINUTE,
       };
 
-      this.updateStartTimeHandler(starTime);
-      this.updateEndTimeHandler(endTime);
+      this.setState({
+        startTime: startTime,
+      });
+      this.setState({
+        endTime: endTime,
+      });
 
+      this.notifyChangeHandler(selectedDays, startTime, endTime);
     }
   }
 
   updateStartTimeHandler = (startTime) => {
-    const { onChange } = this.props;
     const { selectedDays, endTime} = this.state;
 
     this.setState({
       startTime: startTime,
     });
 
-    onChange({
-      startTime: startTime,
-      endTime: endTime,
-      days: selectedDays,
-    });
+    this.notifyChangeHandler(selectedDays, startTime, endTime);
   }
 
   updateEndTimeHandler = (endTime) => {
-    const { onChange } = this.props;
     const { startTime, selectedDays} = this.state;
 
     this.setState({
       endTime: endTime,
     });
 
-    onChange({
-      startTime: startTime,
-      endTime: endTime,
-      days: selectedDays,
-    });
+    this.notifyChangeHandler(selectedDays, startTime, endTime);
   }
   updateDaysHandler = (days) => {
-    const { onChange } = this.props;
     const { startTime, endTime} = this.state;
 
     this.setState({
       selectedDays: days,
     });
 
-    onChange({
-      startTime: startTime,
-      endTime: endTime,
-      days: days,
-    });
+    this.notifyChangeHandler(days, startTime, endTime);
   }
+
+  getTimeString = (time) => {
+      return time.hour + ':' + time.minute;
+  }
+
+  notifyChangeHandler = (days, start, end) => {
+    const { onChange } = this.props;
+
+    const availabilities = days.map((day) => {
+      return {
+        day: day,
+        start_time: this.getTimeString(start),
+        end_time: this.getTimeString(end),
+      };
+    });
+    onChange(availabilities);
+  }
+
 
   render() {
     const { days } = this.props;

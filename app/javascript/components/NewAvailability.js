@@ -27,7 +27,7 @@ const styles = {
   }
 };
 
-const schema = Joi.object({}).pattern(/[0-9]+/, Joi.object({
+const schema = Joi.array().items(Joi.object({}).pattern(/[0-9]+/, Joi.object({
     day: Joi.number().required().options({
       language: {
         number: {
@@ -55,7 +55,7 @@ const schema = Joi.object({}).pattern(/[0-9]+/, Joi.object({
         }
       }
     })
-}));
+})));
 
 class NewAvailability extends Component {
   constructor (props, context) {
@@ -145,29 +145,17 @@ class NewAvailability extends Component {
 
       if (_.size(errors) === 0) {
         const { availabilities, currentUser: { locale } } = this.props;
-
-        
-       const attributes2 = FormData.from({ availabilities });
-
-        const attributes = {
-          availabilities: [
-            {
-              day: 1,
-              start_hour: 8,
-              start_minute: 30,
-              end_hour: 10,
-              end_minute: 45,
-            }
-          ]
-        };
+      
+       const attributes = FormData.from({ availabilities });
 
         console.warn('attributes:');
-        console.warn(attributes2);
-
-        console.warn('new attributes:');
         console.warn(attributes);
 
-
+        //TODO flatten the 2d array of availabilities        
+        // console.log("New availabilities flattened:");
+        // console.log(newAvailabilities.flat());
+        console.log("flattened attributes: ");
+        console.log(attributes);
         const requestParams = {
           url: '/availabilities',
           attributes,
@@ -183,15 +171,19 @@ class NewAvailability extends Component {
           }
         };
 
-        return postData(requestParams);
+        //return postData(requestParams);
       }
     });
 
   }
 
-  inputChangeHandler = (newAvailability) => {
+  inputChangeHandler = ( index ) => (newAvailabilities) => {
+    const { changeValue } = this.props;
+
     console.log("InputChangeHandler: ");
-    console.log(newAvailability);
+    console.log(newAvailabilities);
+
+    changeValue(`${index}`, newAvailabilities);
   }
 
   renderAvailabilities() {
@@ -214,7 +206,7 @@ class NewAvailability extends Component {
 
 
 
-          <AvailabilitySelector days={ days } onChange={ this.inputChangeHandler } />
+          <AvailabilitySelector days={ days } onChange={ this.inputChangeHandler(index) } />
 
           
           <FlatButton
@@ -325,11 +317,7 @@ NewAvailability.propTypes = {
   }),
 
   availabilities: PropTypes.shape({
-    0: PropTypes.shape({
-      start_time: PropTypes.string,
-      end_time: PropTypes.string,
-      day: PropTypes.number,
-    })
+    0: PropTypes.array,
   }),
   days: PropTypes.array,
   changeHandler: PropTypes.func.isRequired,
@@ -352,11 +340,11 @@ NewAvailability.defaultProps = {
   days: [],
   errors: {},
   availabilities: {
-    0: {
+    0: [{
       start_time: null,
       end_time: null,
       day: null,
-    }
+    }]
   },
   availability_start_times: {},
   availability_end_times: {},
