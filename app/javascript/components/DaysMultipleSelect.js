@@ -9,21 +9,10 @@ import MenuItem from 'material-ui/MenuItem';
 
 
 class DaysMultipleSelect extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      day: []
-    };
+  handleDaysSelection = (event, index, values) => {
+    const { onChange } = this.props;
+    onChange(values);    
   }
-
-changeHandlerDay = (event, index, values) => {
-    this.setState({
-      day: values
-    });
-  }
-
-  handleChange = (event, index, values) => this.setState({values});
 
   selectionRendererDay = (values) => {
     const { days } = this.props;
@@ -38,16 +27,38 @@ changeHandlerDay = (event, index, values) => {
     }
   }
 
+render() {
+    const { errors, selectedDays } = this.props;
+
+    return (
+      <SelectField
+        hintText={ (
+          <FormattedMessage
+            id='SearchBar.days'
+            defaultMessage='Day(s)'
+          />
+        ) }
+        value={ selectedDays }
+        errorText={ errors.days }
+        onChange={ this.handleDaysSelection }
+        multiple
+        selectionRenderer={ this.selectionRendererDay }
+        fullWidth
+      >
+        { this.getDaysMenuItems() }
+      </SelectField>
+    );
+  }
+
   getDaysMenuItems = () => {
-    const { days } = this.props;
-    const { day } = this.state;
-    
+    const { days, selectedDays } = this.props;
+   
     return (
       _.map(days, (value, index) => (
         <MenuItem 
           key={ value + index } 
           insetChildren 
-          checked={ _.indexOf(day, index) > -1 } 
+          checked={ _.indexOf(selectedDays, index) > -1 } 
           value={ index } 
           primaryText={ (
             <span> 
@@ -58,44 +69,23 @@ changeHandlerDay = (event, index, values) => {
       ))
     );
   }
-
-render() {
-    const { errors } = this.props;
-    const { day } = this.state;
-
-    return (
-      <SelectField
-        hintText={ (
-          <FormattedMessage
-            id='SearchBar.days'
-            defaultMessage='Day(s)'
-          />
-        ) }
-        value={ day }
-        errorText={ errors.days }
-        onChange={ this.changeHandlerDay }
-        multiple
-        selectionRenderer={ this.selectionRendererDay }
-        fullWidth
-      >
-        { this.getDaysMenuItems() }
-      </SelectField>
-    );
-  }
 }
 
 DaysMultipleSelect.propTypes = {
-  days: PropTypes.array,
+  days: PropTypes.array.isRequired,
+  selectedDays: PropTypes.array,
   errors: PropTypes.shape({
     days: PropTypes.string
-  })  
+  }),
+  onChange: PropTypes.func,  
 };
 
 DaysMultipleSelect.defaultProps = {
-  days: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+  selectedDays: [],
   errors: {
     days: ''
   },
+  onChange: () => {},
 };
 
 export default DaysMultipleSelect;

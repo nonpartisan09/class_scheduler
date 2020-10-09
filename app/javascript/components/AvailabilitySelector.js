@@ -27,7 +27,7 @@ class AvailabilitySelector extends Component {
         hour: '',
         minute: '',
       },
-      day: [],
+      selectedDays: props.selectedDays
     };
   }
   
@@ -66,17 +66,46 @@ class AvailabilitySelector extends Component {
   }
 
   updateStartTimeHandler = (startTime) => {
-    console.log("The new start time is: ");
-    console.log(startTime);
+    const { onChange } = this.props;
+    const { selectedDays, endTime} = this.state;
 
     this.setState({
       startTime: startTime,
     });
+
+    onChange({
+      startTime: startTime,
+      endTime: endTime,
+      days: selectedDays,
+    });
   }
 
   updateEndTimeHandler = (endTime) => {
+    const { onChange } = this.props;
+    const { startTime, selectedDays} = this.state;
+
     this.setState({
       endTime: endTime,
+    });
+
+    onChange({
+      startTime: startTime,
+      endTime: endTime,
+      days: selectedDays,
+    });
+  }
+  updateDaysHandler = (days) => {
+    const { onChange } = this.props;
+    const { startTime, endTime} = this.state;
+
+    this.setState({
+      selectedDays: days,
+    });
+
+    onChange({
+      startTime: startTime,
+      endTime: endTime,
+      days: days,
     });
   }
 
@@ -86,11 +115,15 @@ class AvailabilitySelector extends Component {
     const hours = this.getTimes(24);
     const minutes = this.getTimes(60);
 
-    const { startTime, endTime, isAllDay } = this.state;
+    const { startTime, endTime, isAllDay, selectedDays } = this.state;
 
     return (
-      <div>
-        <DaysMultipleSelect days={ days } />
+      <div style={ { width: '100%', textAlign: 'left' } }>
+        <DaysMultipleSelect 
+          days={ days } 
+          selectedDays={ selectedDays }
+          onChange={ this.updateDaysHandler }
+        />
 
         <div style={ {display: 'flex', alignItems: 'center'} }>
           <TimeSelector 
@@ -102,7 +135,8 @@ class AvailabilitySelector extends Component {
             hour={ startTime.hour }
             minute={ startTime.minute }
           />
-          <TimeSelector 
+          <TimeSelector
+            style={ {paddingLeft: '1em'} }
             hoursList={ hours }
             minutesList={ minutes }
             onChange={ this.updateEndTimeHandler }
@@ -112,7 +146,7 @@ class AvailabilitySelector extends Component {
             minute={ endTime.minute }
           />
           <Checkbox
-            style={ {paddingLeft: '2em'} }
+            style={ {paddingLeft: '2em', textAlign: 'left' } }
             checked={ this.state.isAllDay }
             label="All Day"
             onCheck={ this.handleAllDayChange }
@@ -125,11 +159,15 @@ class AvailabilitySelector extends Component {
 
 AvailabilitySelector.propTypes = {
   isAllDay: PropTypes.bool,
-
+  days: PropTypes.array.isRequired,
+  onChange: PropTypes.func,
+  selectedDays: PropTypes.array,
 };
 
 AvailabilitySelector.defaultProps = {
   isAllDay: false,
+  onChange: () => {},
+  selectedDays: []
 };
 
 export default AvailabilitySelector;

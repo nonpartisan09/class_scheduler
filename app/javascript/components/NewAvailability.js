@@ -8,8 +8,6 @@ import validate from 'react-joi-validation';
 
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
-import SelectField from 'material-ui/SelectField';
-import MenuItem from 'material-ui/MenuItem';
 import TextField from 'material-ui/TextField';
 
 import FormData from './utils/FormData';
@@ -175,6 +173,7 @@ class NewAvailability extends Component {
           attributes,
           method: 'POST',
           successCallBack: () => {
+            //TODO
             //location.assign(formatLink('/availabilities', locale));
           },
           errorCallBack: (message) => {
@@ -190,10 +189,9 @@ class NewAvailability extends Component {
 
   }
 
-  inputChangeHandler = (newTime) => {
-    console.log("InputChangeHandler");
-    console.log("New time is: ");
-    console.log(newTime);
+  inputChangeHandler = (newAvailability) => {
+    console.log("InputChangeHandler: ");
+    console.log(newAvailability);
   }
 
   renderAvailabilities() {
@@ -216,7 +214,7 @@ class NewAvailability extends Component {
 
 
 
-          <AvailabilitySelector days={ days } />
+          <AvailabilitySelector days={ days } onChange={ this.inputChangeHandler } />
 
           
           <FlatButton

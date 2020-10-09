@@ -28,10 +28,10 @@ class TimeSelector extends Component {
 
   render() {
     const { labelText, hoursList, minutesList, errorText } = this.props;
-    const { disabled, hour, minute } = this.props;
+    const { disabled, hour, minute, style } = this.props;
 
     return (
-      <div style={ {display:'inline-block'} }>
+      <div style={ {display:'inline-block',  ...style } }>
         <div style={ {display: 'flex', alignItems: 'center'} }>
           <span style={ {fontSize:'1.2em'} }>{ labelText }</span>
           <NumberAutoComplete 
@@ -66,6 +66,7 @@ TimeSelector.propTypes = {
   errorText: PropTypes.string,
   hour: PropTypes.string,
   minute: PropTypes.string,
+  style: PropTypes.object
 };
 
 TimeSelector.defaultProps = {
@@ -75,7 +76,8 @@ TimeSelector.defaultProps = {
   disabled: false,
   errorText: '',
   hour: '',
-  minute: ''
+  minute: '',
+  style: {}
 };
 
 export default TimeSelector;

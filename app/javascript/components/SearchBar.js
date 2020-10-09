@@ -19,6 +19,8 @@ import SnackBarComponent from './reusable/SnackBarComponent';
 import SearchUrl from './utils/SearchUrl';
 import PageHeader from './reusable/PageHeader';
 
+import AvailabilitySelector from './AvailabilitySelector';
+
 class SearchBar extends Component {
   constructor(props) {
     super(props);
@@ -26,7 +28,6 @@ class SearchBar extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.selectionRendererProgram = this.selectionRendererProgram.bind(this);
     this.selectionRendererLanguage = this.selectionRendererLanguage.bind(this);
-    this.selectionRendererDay = this.selectionRendererDay.bind(this);
     this.changeHandlerProgram = this.changeHandlerProgram.bind(this);
     this.changeHandlerLanguage = this.changeHandlerLanguage.bind(this);
     this.changeHandlerDay = this.changeHandlerDay.bind(this);
@@ -37,43 +38,6 @@ class SearchBar extends Component {
       showSnackBar: false,
     };
   }
-
-  renderDays() {
-    const { errors, search: { day }, days } = this.props;
-
-    return (
-      <SelectField
-        className='searchBarOption'
-        hintText={ (
-          <FormattedMessage
-            id='SearchBar.days'
-            defaultMessage='Day(s)'
-          />
-        ) }
-        value={ day }
-        errorText={ errors.day }
-        onChange={ this.changeHandlerDay }
-        multiple
-        selectionRenderer={ this.selectionRendererDay }
-      >
-        { _.map(days, (value, index) => (
-          <MenuItem 
-            key={ value + index } 
-            insetChildren 
-            checked={ _.indexOf(day, index) > -1 } 
-            value={ index } 
-            primaryText={ (
-              <span> 
-                { value } 
-              </span> 
-            ) } 
-          />
-        )) }
-      </SelectField>
-    );
-  
-  }
-
   render() {
     const {
       programs,
@@ -87,7 +51,8 @@ class SearchBar extends Component {
         program,
         language,
         start_time,
-        end_time
+        end_time,
+        day,
       },
       currentUser: {
         city,
@@ -95,6 +60,7 @@ class SearchBar extends Component {
         locale
       },
       validateAllHandler,
+      days,
     } = this.props;
   
     return (
@@ -180,14 +146,12 @@ class SearchBar extends Component {
             })}
           </SelectField>
 
-          { this.renderDays() }
+          <AvailabilitySelector days={ days } selectedDays={ day } />
 
           <SearchOptionalFields
             onChange={ changeHandler }
             changeValue={ changeValue }
             onBlur={ validateHandler }
-            start_time={ start_time }
-            end_time={ end_time }
             distance={ distance }
             city={ city }
             errors={ errors }
@@ -278,19 +242,6 @@ class SearchBar extends Component {
   changeHandlerDay(event, index, value) {
     const { changeValue } = this.props;
     changeValue('day', value, { validate: true });
-  }
-
-  selectionRendererDay(values) {
-    const { days, location: { state } } = this.props;
-    const allDays = days.length > 0 ? days : state.days;
-     
-    if (_.size(values) > 1) {
-      return _.trimEnd(_.map(values, (value) => {
-        return allDays[value];
-      }).join(', '), ', '); 
-    } else if (_.size(values) === 1) {
-      return allDays[values];
-    }
   }
 
   selectionRendererProgram(values) {
