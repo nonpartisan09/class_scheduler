@@ -198,7 +198,7 @@ class SearchBar extends Component {
             className='searchBarOption searchBarButton'
             label={ (
               <FormattedMessage
-                id='search'
+                id='Search for Volunteers'
               /> 
             ) }
             primary
