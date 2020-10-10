@@ -13,6 +13,7 @@
     "jason-form": "^1.0.0",
     "joi-browser": "^13.4.0",
     "leaflet": "^1.5.1",
+    "linkifyjs": "^2.1.9",
     "lodash": "^4.17.19",
     "material-ui": "^0.20.1",
     "moment": "^2.24.0",

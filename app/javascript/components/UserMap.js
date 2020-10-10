@@ -88,12 +88,11 @@ export default class UserMap extends Component {
       popUp = this.allPopUp;
     }
 
+
     return (
       <div className='userMapContainer'>
         <Map
-          center={
-            this.props.view === 'row' ? [40.4637, -3.7492] : [37.0902, -95.7129]
-          }
+          center={ this.props.view === 'row' ? [40.4637, -3.7492] : [37.0902, -95.7129] }
           zoom={ this.props.view === 'row' ? 1.5 : 4 }
           style={ { height: '50vh', width: '70vw' } }
           minZoom={ 1.5 }
