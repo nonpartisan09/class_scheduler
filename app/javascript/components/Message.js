@@ -8,6 +8,7 @@ import {
   CardHeader,
   CardText
 } from 'material-ui';
+import Linkify from 'linkifyjs/react';
 import { postData } from './utils/sendData';
 import FormData from './utils/FormData';
 import METHODS from './utils/RestConstants';
@@ -51,7 +52,7 @@ class Message extends Component {
             title={ this.renderSubject() }
           />
           <CardText expandable style={ styles }>
-            { body }
+            <Linkify tagName='div'>{ body }</Linkify> 
           </CardText>
         </Card>
         { this.renderDivider() }

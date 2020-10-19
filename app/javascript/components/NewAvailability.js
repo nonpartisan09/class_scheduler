@@ -10,7 +10,6 @@ import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
-import TimePicker from 'material-ui/TimePicker';
 import TextField from 'material-ui/TextField';
 
 import FormData from './utils/FormData';
@@ -19,9 +18,14 @@ import ErrorField from './reusable/ErrorField';
 import { postData } from './utils/sendData';
 import PageHeader from './reusable/PageHeader';
 
-const nowDate = new Date();
-const DEFAULT_START = _.toString(new Date(nowDate.setHours(0, 0)));
-const DEFAULT_END = _.toString(new Date(nowDate.setHours(23, 59)));
+const styles = {
+  selectLabelEnabled: {
+    color: 'black'
+  },
+  selectLabelDisabled: {
+    color: 'gray'
+  }
+};
 
 const schema = Joi.object({}).pattern(/[0-9]+/, Joi.object({
     day: Joi.number().required().options({
@@ -33,62 +37,25 @@ const schema = Joi.object({}).pattern(/[0-9]+/, Joi.object({
         }
       }
     }),
-    start_time: Joi.date().default(DEFAULT_START).options({
+    start_time: Joi.string().required().options({
       language: {
-        date: {
-          timestamp: {
-            javascript: 'Please select a start time'
-          }
+        string: {
+          base:'Please select a start time',
+          any:'Please select a start time',
+          empty:'Please select a start time'
         }
       }
     }),
-    end_time: Joi.date().default(DEFAULT_END).options({
+    end_time: Joi.string().required().options({
       language: {
-        date: {
-          timestamp: {
-            javascript: 'Please select an end time'
-          }
+        string: {
+          base:'Please select an end time',
+          any:'Please select an end time',
+          empty:'Please select an end time'
         }
       }
     })
 }));
-
-function validateTimes({ values, errors }, callback){
-  _.each(values, (item, index) => {
-
-    if (item.start_time && item.end_time) {
-      const endTimeIsBeforeStartTime = item.end_time < item.start_time;
-      const startTimeError =
-        (
-          <FormattedMessage
-            id='NewAvailability.startTimeError'
-            defaultMessage='Please select a start time chronologically before end time'
-          />
-        );
-
-        const endTimeError =
-          (
-            <FormattedMessage
-              id='NewAvailability.endTimeError'
-              defaultMessage='Please select an end time chronologically after start time'
-            />
-          );
-
-      if (endTimeIsBeforeStartTime) {
-         _.set(errors, `${index}.start_time`, startTimeError);
-         _.set(errors, `${index}.end_time`, endTimeError);
-      }
-    }
-
-    if (item.start_time && !item.end_time) {
-      return item.end_time = new Date(nowDate.setHours(23, 59));
-    } else if (item.end_time && !item.start_time) {
-      return item.start_time = new Date(nowDate.setHours(0, 0));
-    }
-  });
-
-  callback({ values, errors });
-}
 
 class NewAvailability extends Component {
   constructor (props, context) {
@@ -98,11 +65,16 @@ class NewAvailability extends Component {
     this.handleAddAvailability = this.handleAddAvailability.bind(this);
     this.handleRemoveAvailability = this.handleRemoveAvailability.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleStartTimePickerChange = this.handleStartTimePickerChange.bind(this);
+    this.handleEndTimePickerChange = this.handleEndTimePickerChange.bind(this);
+    this.endTimePickerIsDisabled = this.endTimePickerIsDisabled.bind(this);
+    this.generateEndTimeOptions = this. generateEndTimeOptions.bind(this);
 
     this.state = {
       numberOfAvailabilities: 1,
       error: { },
-      days: props.days
+      days: props.days,
+      endAvailabilities: [],
     };
   }
 
@@ -204,10 +176,12 @@ class NewAvailability extends Component {
     const { changeHandler, validateAllHandler } = this.props;
 
     return _.times(numberOfAvailabilities, (index) => {
-      const { availabilities, errors } = this.props;
+      const { availabilities, errors, availability_start_times, availability_end_times } = this.props;
       const currentAvailability = availabilities[index] || { };
       const { day, start_time, end_time } = currentAvailability;
-      const { error, days } = this.state;
+      const { error, days, endAvailabilities } = this.state;
+
+      const endTimePickerDisabled = this.endTimePickerIsDisabled(index);
 
       return (
         <div key={ index } className='availabilitiesContainer'>
@@ -216,7 +190,8 @@ class NewAvailability extends Component {
           </div>
 
           <SelectField
-            hintText={ (
+            floatingLabelStyle={ styles.selectLabelEnabled }
+            floatingLabelText={ (
               <FormattedMessage
                 id='NewAvailability.selectDay'
                 defaultMessage='Select Day'
@@ -243,37 +218,64 @@ class NewAvailability extends Component {
             )) }
           </SelectField>
 
-          <TimePicker
-            format='24hr'
-            hintText={ (
+          <SelectField
+            floatingLabelStyle={ styles.selectLabelEnabled }
+            floatingLabelText={ (
               <FormattedMessage
                 id='NewAvailability.selectStartTime'
-                defaultMessage='Start Time - 24Hr Format'
+                defaultMessage='select Start Time'
               />
-            ) }
-            value={ currentAvailability? start_time : { } }
+              ) }        
+            value={ currentAvailability? start_time : '' }
             errorText={ _.get(errors, `${index}.start_time`) }
-            onChange={ changeHandler(`${index}.start_time`, {  validate: true }) }
-            onDismiss={ validateAllHandler }
-            autoOk
+            onChange={ this.handleStartTimePickerChange(index) }
+            onBlur={ validateAllHandler }
             fullWidth
-          />
+          >
+            { _.map(Object.keys(availability_start_times), (value, index) => (
+              <MenuItem
+                key={ value + index }
+                insetChildren
+                value={ availability_start_times[value] }
+                primaryText={ (
+                  <span> 
+                    { value }
+                  </span>
+              ) } 
+              />
+            )) }
 
-          <TimePicker
-            format='24hr'
-            hintText={ (
+          </SelectField>
+
+          <SelectField
+            floatingLabelStyle={ endTimePickerDisabled ? styles.selectLabelDisabled : styles.selectLabelEnabled }
+            floatingLabelText={ (
               <FormattedMessage
                 id='NewAvailability.selectEndTime'
-                defaultMessage='End Time - 24Hr Format'
+                defaultMessage='Select End Time'
               />
-            ) }
-            value={ currentAvailability? end_time : { } }
+              ) }        
+            value={ currentAvailability? end_time : '' }
             errorText={ _.get(errors, `${index}.end_time`) }
-            onChange={ changeHandler(`${index}.end_time`, {  validate: true }) }
-            onDismiss={ validateAllHandler }
-            autoOk
+            onChange={ this.handleEndTimePickerChange(index) }
+            onBlur={ validateAllHandler }
             fullWidth
-          />
+            disabled={ endTimePickerDisabled }
+          >
+            { _.map(Object.keys(endAvailabilities[index] ? endAvailabilities[index] : {} ), (value, index) => (
+              <MenuItem
+                key={ value + index }
+                insetChildren
+                value={ availability_end_times[value] }
+                primaryText={ (
+                  <span> 
+                    { value }
+                  </span>
+              ) } 
+              />
+            )) }
+
+          </SelectField>
 
           <FlatButton
             primary
@@ -295,6 +297,51 @@ class NewAvailability extends Component {
             ) }
         </div>
       );
+    });
+  }
+
+  handleStartTimePickerChange(availabilityIndex) {
+    return (event, index, value) => {
+      const { changeValues } = this.props;
+      changeValues( [
+        [`${availabilityIndex}.start_time`, value],
+        [`${availabilityIndex}.end_time`, null]
+      ] );
+
+      this.generateEndTimeOptions(index, availabilityIndex);
+    };
+  }
+
+  handleEndTimePickerChange(availabilityIndex) {
+    return (event, index, value) => {
+      const { changeValue } = this.props;
+      changeValue(`${availabilityIndex}.end_time`, value);
+    };
+  }
+
+  endTimePickerIsDisabled(index) {
+    const { endAvailabilities } = this.state;
+    return (!endAvailabilities || _.isEmpty(endAvailabilities[index]) );
+  }
+
+  generateEndTimeOptions(startIndex, availabilityIndex) {
+    const { availability_end_times } = this.props;
+
+    // Skip the next 15 mintue block, because the minimum session time is 30 minutes
+    const first_end_availability = startIndex + 2;
+    const validEndAvailabilities = {};
+
+    Object.keys(availability_end_times).forEach( (availability, index) => {
+      if (index >= first_end_availability) {
+        validEndAvailabilities[availability] = availability_end_times[availability];
+      }
+    });
+    
+    this.setState((prevState) => {
+      const newEndAvailabilities = prevState.endAvailabilities;
+      newEndAvailabilities[availabilityIndex] = validEndAvailabilities;
+
+      return { endAvailabilities: newEndAvailabilities };
     });
   }
 
@@ -339,19 +386,22 @@ NewAvailability.propTypes = {
 
   availabilities: PropTypes.shape({
     0: PropTypes.shape({
-      start_time: PropTypes.object,
-      end_time: PropTypes.object,
+      start_time: PropTypes.string,
+      end_time: PropTypes.string,
       day: PropTypes.number,
     })
   }),
   days: PropTypes.array,
   changeHandler: PropTypes.func.isRequired,
   changeValue: PropTypes.func.isRequired,
+  changeValues: PropTypes.func.isRequired,
   validateAllHandler: PropTypes.func.isRequired,
   validateAll: PropTypes.func.isRequired,
   location: PropTypes.shape({
     search: PropTypes.string,
-  })
+  }),
+  availability_start_times: PropTypes.object,
+  availability_end_times: PropTypes.object,
 };
 
 NewAvailability.defaultProps = {
@@ -363,11 +413,13 @@ NewAvailability.defaultProps = {
   errors: {},
   availabilities: {
     0: {
-      start_time: {},
-      end_time: {},
+      start_time: null,
+      end_time: null,
       day: null,
     }
   },
+  availability_start_times: {},
+  availability_end_times: {},
 };
 
 NewAvailability.contextTypes = {
@@ -378,7 +430,6 @@ const validationOptions = {
   joiSchema: schema,
   only: 'availabilities',
   allowUnknown: true,
-  validator: validateTimes
 };
 
 export default validate(NewAvailability, validationOptions);

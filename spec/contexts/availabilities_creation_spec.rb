@@ -149,7 +149,7 @@ describe Contexts::Availabilities::Creation do
         short_availabilities = [
           { start: timestring('17:45:17'), end: timestring('18:10:19') },
           { start: timestring('00:00:17'), end: timestring('00:01:19') },
-          { start: timestring('23:30:17'), end: timestring('23:59:19') }
+          { start: timestring('23:31:17'), end: timestring('23:59:19') }
         ]
         short_availabilities.each do |availability|
           test_availability = Contexts::Availabilities::Creation.new(

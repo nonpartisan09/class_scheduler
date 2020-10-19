@@ -133,6 +133,7 @@ export default class UserMap extends Component {
       type = 'all';
     }
 
+
     return (
       <div className='userMapContainer'>
         <Map

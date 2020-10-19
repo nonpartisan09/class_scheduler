@@ -67,6 +67,11 @@ class UserMailer < ApplicationMailer
     mail(to: @user.email, subject: 'Tutoría Password Updated')
   end
 
+  def account_inactive(user)
+    @user = user
+    mail(to: @user.email, subject: 'New account inactive - Tutoría')
+  end
+
   private
 
   def domain_name
