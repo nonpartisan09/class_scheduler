@@ -132,8 +132,8 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
         timezones,
       } = this.props;
       
-
-
+      const countries = Countries.map(c => c.countryName);
+      
       return (
         <div>
           <WrappedComponent currentUser={ currentUser } />
@@ -304,6 +304,24 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
 
                 {this.renderUserRegion(country, state, validateHandler, errors )}
 
+                <SelectField
+                  floatingLabelFixed
+                  floatingLabelText={
+                    (
+                      <FormattedMessage
+                        id='UserForm.country'
+                        defaultMessage='Select Country'
+                      />
+                    )
+                  }
+                  value={ country }
+                  className='userFormInputField country'
+                  errorText={ this.errorLanguageHandler('country') }
+                  onChange={ this.changeCountryHandler }
+                  onBlur={ validateHandler('country') }
+                >
+                  { _.map(countries, name => <MenuItem key={ name } insetChildren checked={ country === name } value={ name } primaryText={ <span> { name } </span> } />) }
+                </SelectField>
               </Badge>
 
               <br />
@@ -1388,7 +1406,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
       address: '',
       city: '',
       state: '',
-      country: '',
+      country: 'United States',
       first_name: '',
       last_name: '',
       email: '',
@@ -1408,7 +1426,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
     allowUnknown: true
   };
 
-  return validate(UserForm, validationOptions);
+return validate(UserForm, validationOptions);
 };
 
 export default withUserForm;

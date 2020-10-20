@@ -70,7 +70,13 @@ const SignUpSchema = {
   address: Joi.string().allow(''),
   city: Joi.string().allow(''),
   state: Joi.string().allow(''),
-  country: Joi.string().allow(''),
+  country: Joi.string().required().options({
+    language: {
+    any: {
+        empty: 'Please select a country',
+      }
+    }
+  }),
 
   email: Joi.string().email().required().options({
     language: {

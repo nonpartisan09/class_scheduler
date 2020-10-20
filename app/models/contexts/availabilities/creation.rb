@@ -111,6 +111,14 @@ module Contexts
         "#{I18n.t('date.day_names')[@day_index]}, #{index + 1} Jan 2001"
       end
 
+      def parse_time_user_offset(time) 
+        Time.zone = @timezone  
+        current_time = Time.zone.now 
+        offset = current_time.utc_offset/3600
+         
+        user_time = ActiveSupport::TimeZone[offset].parse(time.to_s)
+      end
+
       def use_account_timezone (start_time, end_time)
         @availability[:start_time] = parse_account_timezone(start_time)
         @availability[:end_time] = parse_account_timezone(end_time)
