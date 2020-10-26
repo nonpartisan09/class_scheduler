@@ -17,6 +17,7 @@ import { postData } from './utils/sendData';
 import PageHeader from './reusable/PageHeader';
 
 import AvailabilitySelector from './AvailabilitySelector';
+import AvailabilitiesMapping from './utils/AvailabilitiesMapping';
 
 const styles = {
   selectLabelEnabled: {
@@ -151,9 +152,6 @@ class NewAvailability extends Component {
         console.warn('attributes:');
         console.warn(attributes);
 
-        //TODO flatten the 2d array of availabilities        
-        // console.log("New availabilities flattened:");
-        // console.log(newAvailabilities.flat());
         console.log("flattened attributes: ");
         console.log(attributes);
         const requestParams = {
@@ -176,6 +174,8 @@ class NewAvailability extends Component {
     });
 
   }
+
+
 
   inputChangeHandler = ( index ) => (newAvailabilities) => {
     const { changeValue } = this.props;
