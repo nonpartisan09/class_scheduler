@@ -26,28 +26,31 @@ class AvailabilityMapping {
   }
 
   getFlattenedAvailabilities() {
-    const allEntries = Object.values(this.availabilitiesRaw);
-    return allEntries.flat();  
+    const availabilities = {};
+    const allEntries = Object.values(this.availabilitiesRaw).flat();
+    allEntries.forEach((availability, index) => {
+      availabilities[index] = availability;
+    });
+
+    return { availabilities }; 
+  }
+
+  getErrorsCorrectIndices(errors) {
+    const messages = [];
+    errors.forEach( (message, index) => {
+      const originalIndex = this.getOriginalIndex(index);
+      const messageProcessed = (message === null) ? '' : message;
+      const indexEmpty = (typeof messages[originalIndex] === 'undefined') || (messages[originalIndex] === null);
+
+      if (indexEmpty) {
+        messages[originalIndex] = message;
+      } else {
+        messages[originalIndex] += '\n' + messageProcessed;
+      }
+    });
+
+    return messages;
   }
 }
-
-
-//TODO
-// var SAMPLE = {
-//   0: [
-//     {day: 1, end_time: '01:00', start_time:'00:02'},
-//     {day: 2, end_time: '01:00', start_time:'00:02'}
-//   ],
-//   1: [
-//     {day: 2, end_time: '02:45', start_time:'01:30'},
-//     {day: 3, end_time: '02:45', start_time:'01:30'}
-//   ],
-//   2: [
-//     {day: 6, end_time: '12:00', start_time:'10:00'}
-//   ]
-// };
-
-//const testObj = new AvailabilityMapping(SAMPLE);
-// console.log(testObj.getFlattenedAvailabilities());
 
 export default AvailabilityMapping;

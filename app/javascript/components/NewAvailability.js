@@ -146,30 +146,28 @@ class NewAvailability extends Component {
 
       if (_.size(errors) === 0) {
         const { availabilities, currentUser: { locale } } = this.props;
-      
-       const attributes = FormData.from({ availabilities });
+        
+        const availabilityMapping = new AvailabilitiesMapping(availabilities);
+        const attributes = FormData.from( availabilityMapping.getFlattenedAvailabilities() );
 
         console.warn('attributes:');
         console.warn(attributes);
 
-        console.log("flattened attributes: ");
-        console.log(attributes);
         const requestParams = {
           url: '/availabilities',
           attributes,
           method: 'POST',
           successCallBack: () => {
-            //TODO
-            //location.assign(formatLink('/availabilities', locale));
+            location.assign(formatLink('/availabilities', locale));
           },
           errorCallBack: (message) => {
             this.setState({
-              error: message
+              error: availabilityMapping.getErrorsCorrectIndices(message)
             });
           }
         };
 
-        //return postData(requestParams);
+        return postData(requestParams);
       }
     });
 
