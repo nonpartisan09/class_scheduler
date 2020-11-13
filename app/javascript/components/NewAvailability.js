@@ -19,43 +19,35 @@ import PageHeader from './reusable/PageHeader';
 import AvailabilitySelector from './AvailabilitySelector';
 import AvailabilitiesMapping from './utils/AvailabilitiesMapping';
 
-const styles = {
-  selectLabelEnabled: {
-    color: 'black'
-  },
-  selectLabelDisabled: {
-    color: 'gray'
-  }
-};
-
-const schema = Joi.array().items(Joi.object({}).pattern(/[0-9]+/, Joi.object({
-    day: Joi.number().required().options({
-      language: {
-        number: {
-          base: 'Please select a day',
-          any: 'Please select a day',
-          empty: 'Please select a day'
-        }
+const schema = Joi.object({}).pattern(/^[0-9]+$/, Joi.array().required().items(
+  Joi.object({
+  day: Joi.number().required().min(0).max(6).options({
+    language: {
+      number: {
+        base: 'Please select a day',
+        any: 'Please select a day',
+        empty: 'Please select a day'
       }
-    }),
-    start_time: Joi.string().required().options({
-      language: {
-        string: {
-          base:'Please select a start time',
-          any:'Please select a start time',
-          empty:'Please select a start time'
-        }
+    }
+  }),
+  start_time: Joi.string().required().regex(/^[0-2][0-9]:[0-5][0-9]$/).options({
+    language: {
+      string: {
+        base:'Please select a start time',
+        any:'Please select a start time',
+        empty:'Please select a start time'
       }
-    }),
-    end_time: Joi.string().required().options({
-      language: {
-        string: {
-          base:'Please select an end time',
-          any:'Please select an end time',
-          empty:'Please select an end time'
-        }
+    }
+  }),
+  end_time: Joi.string().required().regex(/^[0-2][0-9]:[0-5][0-9]$/).options({
+    language: {
+      string: {
+        base:'Please select an end time',
+        any:'Please select an end time',
+        empty:'Please select an end time'
       }
-    })
+    }
+  })  
 })));
 
 class NewAvailability extends Component {
@@ -66,16 +58,11 @@ class NewAvailability extends Component {
     this.handleAddAvailability = this.handleAddAvailability.bind(this);
     this.handleRemoveAvailability = this.handleRemoveAvailability.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleStartTimePickerChange = this.handleStartTimePickerChange.bind(this);
-    this.handleEndTimePickerChange = this.handleEndTimePickerChange.bind(this);
-    this.endTimePickerIsDisabled = this.endTimePickerIsDisabled.bind(this);
-    this.generateEndTimeOptions = this. generateEndTimeOptions.bind(this);
 
     this.state = {
       numberOfAvailabilities: 1,
       error: { },
-      days: props.days,
-      endAvailabilities: [],
+      days: props.days
     };
   }
 
@@ -173,28 +160,17 @@ class NewAvailability extends Component {
 
   }
 
-
-
-  inputChangeHandler = ( index ) => (newAvailabilities) => {
+  availabilityChangeHandler = ( index ) => (newAvailabilities) => {
     const { changeValue } = this.props;
 
-    console.log("InputChangeHandler: ");
-    console.log(newAvailabilities);
-
-    changeValue(`${index}`, newAvailabilities);
+    changeValue(`${index}`, newAvailabilities, { validate: true });
   }
 
   renderAvailabilities() {
     const { numberOfAvailabilities } = this.state;
-    const { changeHandler, validateAllHandler } = this.props;
 
     return _.times(numberOfAvailabilities, (index) => {
-      const { availabilities, errors, availability_start_times, availability_end_times } = this.props;
-      const currentAvailability = availabilities[index] || { };
-      const { day, start_time, end_time } = currentAvailability;
-      const { error, days, endAvailabilities } = this.state;
-
-      const endTimePickerDisabled = this.endTimePickerIsDisabled(index);
+      const { error, days } = this.state;
 
       return (
         <div key={ index } className='availabilitiesContainer'>
@@ -202,11 +178,11 @@ class NewAvailability extends Component {
             <ErrorField error={ error && error[index] } />
           </div>
 
+          <AvailabilitySelector 
+            days={ days } 
+            onChange={ this.availabilityChangeHandler(index) } 
+          />
 
-
-          <AvailabilitySelector days={ days } onChange={ this.inputChangeHandler(index) } />
-
-          
           <FlatButton
             primary
             label={ (
@@ -227,51 +203,6 @@ class NewAvailability extends Component {
             ) }
         </div>
       );
-    });
-  }
-
-  handleStartTimePickerChange(availabilityIndex) {
-    return (event, index, value) => {
-      const { changeValues } = this.props;
-      changeValues( [
-        [`${availabilityIndex}.start_time`, value],
-        [`${availabilityIndex}.end_time`, null]
-      ] );
-
-      this.generateEndTimeOptions(index, availabilityIndex);
-    };
-  }
-
-  handleEndTimePickerChange(availabilityIndex) {
-    return (event, index, value) => {
-      const { changeValue } = this.props;
-      changeValue(`${availabilityIndex}.end_time`, value);
-    };
-  }
-
-  endTimePickerIsDisabled(index) {
-    const { endAvailabilities } = this.state;
-    return (!endAvailabilities || _.isEmpty(endAvailabilities[index]) );
-  }
-
-  generateEndTimeOptions(startIndex, availabilityIndex) {
-    const { availability_end_times } = this.props;
-
-    // Skip the next 15 mintue block, because the minimum session time is 30 minutes
-    const first_end_availability = startIndex + 2;
-    const validEndAvailabilities = {};
-
-    Object.keys(availability_end_times).forEach( (availability, index) => {
-      if (index >= first_end_availability) {
-        validEndAvailabilities[availability] = availability_end_times[availability];
-      }
-    });
-    
-    this.setState((prevState) => {
-      const newEndAvailabilities = prevState.endAvailabilities;
-      newEndAvailabilities[availabilityIndex] = validEndAvailabilities;
-
-      return { endAvailabilities: newEndAvailabilities };
     });
   }
 
@@ -355,7 +286,8 @@ NewAvailability.contextTypes = {
 const validationOptions = {
   joiSchema: schema,
   only: 'availabilities',
-  allowUnknown: true,
+  // allowUnknown: true,
+  // validator: validateAvailabilities
 };
 
 export default validate(NewAvailability, validationOptions);

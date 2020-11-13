@@ -1,17 +1,19 @@
-import _ from 'lodash';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
 
 import Checkbox from 'material-ui/Checkbox';
 
 import TimeSelector from './TimeSelector';
 import DaysMultipleSelect from './DaysMultipleSelect';
 
-const FIRST_HOUR = '00';
-const FIRST_MINUTE = '00';
-const LAST_HOUR = '23';
-const LAST_MINUTE = '59';
+const EARLIEST_TIME = {
+  hour: '00',
+  minute: '00'
+};
+const LATEST_TIME = {
+  hour: '23',
+  minute: '59'
+};
 
 class AvailabilitySelector extends Component {
   constructor(props) {
@@ -19,14 +21,8 @@ class AvailabilitySelector extends Component {
 
     this.state = {
       isAllDay: props.isAllDay,
-      startTime: {
-        hour: '',
-        minute: '',
-      },
-      endTime: {
-        hour: '',
-        minute: '',
-      },
+      startTime: props.startTime,
+      endTime: props.endTime,
       selectedDays: props.selectedDays
     };
   
@@ -51,24 +47,14 @@ class AvailabilitySelector extends Component {
     });
 
     if (isAllDay) {
-      const startTime = {
-        hour: FIRST_HOUR,
-        minute: FIRST_MINUTE,
-      };
-
-      const endTime = {
-        hour: LAST_HOUR,
-        minute: LAST_MINUTE,
-      };
-
       this.setState({
-        startTime: startTime,
+        startTime: EARLIEST_TIME,
       });
       this.setState({
-        endTime: endTime,
+        endTime: LATEST_TIME,
       });
 
-      this.notifyChangeHandler(selectedDays, startTime, endTime);
+      this.notifyChangeHandler(selectedDays, EARLIEST_TIME, LATEST_TIME);
     }
   }
 
@@ -172,12 +158,22 @@ AvailabilitySelector.propTypes = {
   days: PropTypes.array.isRequired,
   onChange: PropTypes.func,
   selectedDays: PropTypes.array,
+  startTime: PropTypes.shape({
+    hour: PropTypes.string,
+    minute: PropTypes.string,
+  }),
+  endTime: PropTypes.shape({
+    hour: PropTypes.string,
+    minute: PropTypes.string,
+  }),
 };
 
 AvailabilitySelector.defaultProps = {
   isAllDay: false,
   onChange: () => {},
-  selectedDays: []
+  selectedDays: [],
+  startTime: '',
+  endTime: '',
 };
 
 export default AvailabilitySelector;
