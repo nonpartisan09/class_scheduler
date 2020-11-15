@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 
 import NumberAutoComplete from './NumberAutoComplete';
 
-
 const HINT_TEXT_HOURS = 'HH';
 const HINT_TEXT_MINUTES = 'MM';
 
@@ -27,7 +26,7 @@ class TimeSelector extends Component {
   }
 
   render() {
-    const { labelText, hoursList, minutesList, errorText } = this.props;
+    const { labelText, hoursList, minutesList } = this.props;
     const { disabled, hour, minute, style } = this.props;
 
     return (
@@ -49,8 +48,6 @@ class TimeSelector extends Component {
             disabled={ disabled }
             value={ minute }
           />
-          <br />
-          <span>{ errorText }</span>
         </div>
       </div>
     );
@@ -63,7 +60,6 @@ TimeSelector.propTypes = {
   disabled: PropTypes.bool,
   onChange: PropTypes.func,
   labelText: PropTypes.string.isRequired,
-  errorText: PropTypes.string,
   hour: PropTypes.string,
   minute: PropTypes.string,
   style: PropTypes.object
@@ -74,7 +70,6 @@ TimeSelector.defaultProps = {
   minutesList: [],
   onChange: () => {},
   disabled: false,
-  errorText: '',
   hour: '',
   minute: '',
   style: {}

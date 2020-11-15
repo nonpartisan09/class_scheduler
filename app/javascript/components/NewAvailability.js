@@ -171,11 +171,12 @@ class NewAvailability extends Component {
 
     return _.times(numberOfAvailabilities, (index) => {
       const { error, days } = this.state;
+      const { errors } = this.props;
 
       return (
         <div key={ index } className='availabilitiesContainer'>
           <div className='newAvailabilityErrorField'>
-            <ErrorField error={ error && error[index] } />
+            <ErrorField error={ (error && error[index]) } />
           </div>
 
           <AvailabilitySelector 

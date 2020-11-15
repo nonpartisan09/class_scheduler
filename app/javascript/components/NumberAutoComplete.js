@@ -16,9 +16,7 @@ class NumberAutoComplete extends Component {
   };
   isValidInput = (input) => {
     const { dataOptions } = this.props;
-
     const emptyString = input.length === 0;
-
     const partialMatchFound =  dataOptions.some( item => {
       return item.includes(input);
     });
@@ -32,7 +30,7 @@ class NumberAutoComplete extends Component {
   }
 
   render() {
-    const {value,  hintText, dataOptions, disabled } = this.props;
+    const {value,  hintText, dataOptions } = this.props;
 
     return (
       <div style={ { width: '4em', display: 'inline-block' } }> 
@@ -47,8 +45,7 @@ class NumberAutoComplete extends Component {
           dataSource={ dataOptions }
           filter={ AutoComplete.noFilter }
           openOnFocus
-          fullWidth
-          disabled={ disabled }        
+          fullWidth    
         />
       </div>
     );
@@ -58,7 +55,6 @@ class NumberAutoComplete extends Component {
 NumberAutoComplete.propTypes = {
   dataOptions: PropTypes.array,
   onChange: PropTypes.func,
-  disabled: PropTypes.bool,
   hintText: PropTypes.string.isRequired,
   value: PropTypes.string,
 };
@@ -66,7 +62,6 @@ NumberAutoComplete.propTypes = {
 NumberAutoComplete.defaultProps = {
   dataOptions: [],
   onChange: () => {},
-  disabled: false,
   value: '',
 };
 
