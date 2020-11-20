@@ -55,6 +55,7 @@ class AvailabilitiesController < ApplicationController
 
       Availability.transaction do
         permitted_params.each do |key, value|
+          puts ['availability.transaction','key', key, 'value', value];
           creation = Contexts::Availabilities::Creation.new(permit_nested(value), current_user)
 
           begin
