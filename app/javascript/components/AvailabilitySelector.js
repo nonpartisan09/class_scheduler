@@ -36,74 +36,43 @@ class AvailabilitySelector extends Component {
   }
   
   handleAllDayChange = (event, isAllDay ) => {
-    const { selectedDays } = this.state;
+    const { selectedDays } = this.props;
     this.setState({
         isAllDay: isAllDay,
     });
-
-    if (isAllDay) {
-      this.setState({
-        startTime: EARLIEST_TIME,
-      });
-      this.setState({
-        endTime: LATEST_TIME,
-      });
-
-      this.notifyChangeHandler(selectedDays, EARLIEST_TIME, LATEST_TIME);
-    }
+    this.notifyChangeHandler(selectedDays, EARLIEST_TIME, LATEST_TIME);
   }
 
   updateStartTimeHandler = (startTime) => {
-    const { selectedDays, endTime} = this.state;
-
-    this.setState({
-      startTime: startTime,
-    });
-
+    const { selectedDays, endTime} = this.props;
     this.notifyChangeHandler(selectedDays, startTime, endTime);
   }
 
   updateEndTimeHandler = (endTime) => {
-    const { startTime, selectedDays} = this.state;
-
-    this.setState({
-      endTime: endTime,
-    });
-
+    const { startTime, selectedDays} = this.props;
     this.notifyChangeHandler(selectedDays, startTime, endTime);
   }
   updateDaysHandler = (days) => {
-    const { startTime, endTime} = this.state;
-
-    this.setState({
-      selectedDays: days,
-    });
-
+    const { startTime, endTime} = this.props;
     this.notifyChangeHandler(days, startTime, endTime);
   }
 
   notifyChangeHandler = (days, start, end) => {
     const { onChange } = this.props;
+    const availability = {
+      days: days,
+      startTime: start,
+      endTime: end,
+    };
 
-    const availabilities = days.map((day) => {
-      return {
-        day: day,
-        start_time: this.getTimeString(start),
-        end_time: this.getTimeString(end),
-      };
-    });
-    onChange(availabilities);
+    onChange(availability);
   }
  
-  getTimeString = (time) => {
-    return time.hour + ':' + time.minute;
-  }
-
   render() {
-    const { days } = this.props;
+    const { days, selectedDays, startTime, endTime } = this.props;
     const { hoursList, minutesList } = this.state;
-
-    const { startTime, endTime, isAllDay, selectedDays } = this.state;
+    const { isAllDay } = this.state;
+    //const { startTime, endTime, isAllDay, selectedDays } = this.state;
 
     return (
       <div style={ { width: '100%', textAlign: 'left' } }>
@@ -164,8 +133,14 @@ AvailabilitySelector.defaultProps = {
   isAllDay: false,
   onChange: () => {},
   selectedDays: [],
-  startTime: '',
-  endTime: '',
+  startTime: {
+    hour:'',
+    minute:'',
+  },
+  endTime: {
+    hour:'',
+    minute:'',
+  },
 };
 
 export default AvailabilitySelector;

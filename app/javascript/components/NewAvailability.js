@@ -19,9 +19,21 @@ import PageHeader from './reusable/PageHeader';
 import AvailabilitySelector from './AvailabilitySelector';
 import AvailabilitiesMapping from './utils/AvailabilitiesMapping';
 
-const schema = Joi.object({}).pattern(/^[0-9]+$/, Joi.array().required().items(
-  Joi.object({
-  day: Joi.number().required().min(0).max(6).options({
+const TIME_STRING_PATTERN = /^[0-2][0-9]:[0-5][0-9]$/;
+const DEFAULT_AVAILABILITY = {
+  startTime: {
+    minute: '',
+    hour: ''
+  },
+  endTime: {
+    minute: '',
+    hour: ''
+  },
+  day: [],
+};
+
+const schema = Joi.object({}).pattern(/^availabilities$/, Joi.array().required().min(1).items(Joi.object({
+  days: Joi.array().required().items(Joi.number().required().min(0).max(6)).options({
     language: {
       number: {
         base: 'Please select a day',
@@ -30,37 +42,57 @@ const schema = Joi.object({}).pattern(/^[0-9]+$/, Joi.array().required().items(
       }
     }
   }),
-  start_time: Joi.string().required().regex(/^[0-2][0-9]:[0-5][0-9]$/).options({
-    language: {
-      string: {
-        base:'Please select a start time',
-        any:'Please select a start time',
-        empty:'Please select a start time'
+  startTime: Joi.object({
+    hour: Joi.string().required().regex(/^[0-2][0-9]$/).options({
+      language: {
+        string: {
+          base:'Please select an hour for the start time',
+          any:'Please select an hour for the start time',
+          empty:'Please select an hour for the start time'
+        }
       }
-    }
+    }),
+    minute: Joi.string().required().regex(/^[0-5][0-9]$/).options({
+      language: {
+        string: {
+          base:'Please select a minute for the start time',
+          any:'Please select a minute for the start time',
+          empty:'Please select a minute for the start time'
+        }
+      }
+    }),      
   }),
-  end_time: Joi.string().required().regex(/^[0-2][0-9]:[0-5][0-9]$/).options({
-    language: {
-      string: {
-        base:'Please select an end time',
-        any:'Please select an end time',
-        empty:'Please select an end time'
+  endTime: Joi.object({
+    hour: Joi.string().required().regex(/^[0-2][0-9]$/).options({
+      language: {
+        string: {
+          base:'Please select an hour for the end time',
+          any:'Please select an hour for the end time',
+          empty:'Please select an hour for the end time'
+        }
       }
-    }
-  })  
+    }),
+    minute: Joi.string().required().regex(/^[0-5][0-9]$/).options({
+      language: {
+        string: {
+          base:'Please select a minute for the end time',
+          any:'Please select a minute for the end time',
+          empty:'Please select a minute for the end time'
+        }
+      }
+    }),      
+  }) 
 })));
 
 class NewAvailability extends Component {
   constructor (props, context) {
     super(props, context);
 
-    this.changeDayHandler = this.changeDayHandler.bind(this);
     this.handleAddAvailability = this.handleAddAvailability.bind(this);
     this.handleRemoveAvailability = this.handleRemoveAvailability.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
 
     this.state = {
-      numberOfAvailabilities: 1,
       error: { },
       days: props.days
     };
@@ -132,10 +164,11 @@ class NewAvailability extends Component {
       const { errors } = this.props;
 
       if (_.size(errors) === 0) {
-        const { availabilities, currentUser: { locale } } = this.props;
-        
+        const { currentUser: { locale } } = this.props;
+        const { availabilities } = this.props.data;
+
         const availabilityMapping = new AvailabilitiesMapping(availabilities);
-        const attributes = FormData.from( availabilityMapping.getFlattenedAvailabilities() );
+        const attributes = FormData.from( availabilityMapping.getExpandedAvailabilities() );
 
         console.warn('attributes:');
         console.warn(attributes);
@@ -160,29 +193,46 @@ class NewAvailability extends Component {
 
   }
 
-  availabilityChangeHandler = ( index ) => (newAvailabilities) => {
+  availabilityChangeHandler = ( elementIndex ) => (newAvailability) => {
     const { changeValue } = this.props;
+    const { availabilities } = this.props.data;
+    const updatedAvailabilities = availabilities.map(
+      (availability, index) => index === elementIndex ? newAvailability: availability);
 
-    changeValue(`${index}`, newAvailabilities, { validate: true });
+    changeValue('availabilities', updatedAvailabilities, { validate: true } );
   }
 
+  renderErrorMessageList = (errors) => {
+    if(!Array.isArray(errors)) {
+      return '';
+    }
+    return errors.map((error, index) => <ErrorField key={ index } error={ error } /> );
+  };
+
+
   renderAvailabilities() {
-    const { numberOfAvailabilities } = this.state;
+    const { availabilities } = this.props.data;
+    const numberOfAvailabilities = availabilities.length;
 
     return _.times(numberOfAvailabilities, (index) => {
       const { error, days } = this.state;
       const { errors } = this.props;
+      const availability = availabilities[index];
 
       return (
         <div key={ index } className='availabilitiesContainer'>
-          <div className='newAvailabilityErrorField'>
-            <ErrorField error={ (error && error[index]) } />
-          </div>
-
           <AvailabilitySelector 
-            days={ days } 
+            days={ days }
+            selectedDays={ availability.days } 
+            startTime={ availability.startTime }
+            endTime={ availability.endTime } 
             onChange={ this.availabilityChangeHandler(index) } 
           />
+          
+          <div className='newAvailabilityErrorField'>
+            <ErrorField error={  (error && error[index]) } />
+            {errors[index] ? this.renderErrorMessageList(Object.values(errors[index][0])) : null }
+          </div>
 
           <FlatButton
             primary
@@ -199,7 +249,7 @@ class NewAvailability extends Component {
               <FlatButton
                 primary
                 label={ <FormattedMessage id='NewAvailability.removeAvailability' defaultMessage='Remove availability' /> }
-                onClick={ this.handleRemoveAvailability }
+                onClick={ () => this.handleRemoveAvailability(index) }
               />
             ) }
         </div>
@@ -208,32 +258,17 @@ class NewAvailability extends Component {
   }
 
   handleAddAvailability() {
-    const { errors } = this.props;
-
-    if (_.size(errors) === 0) {
-      const { numberOfAvailabilities } = this.state;
-
-      this.setState({
-        numberOfAvailabilities: numberOfAvailabilities+1
-      });
-    }
+    const { pushValue } = this.props;
+    pushValue('availabilities', DEFAULT_AVAILABILITY);
   }
 
-  handleRemoveAvailability() {
-    const { numberOfAvailabilities } = this.state;
-
-    this.setState({
-      numberOfAvailabilities: numberOfAvailabilities-1
-    });
-  }
-
-  changeDayHandler(path) {
-
-    return (proxy, index, value) => {
-      const { changeValue } = this.props;
-
-      changeValue(`${path}.day`, value);
-    };
+  handleRemoveAvailability = ( indexToRemove ) => {
+    const { changeValue } = this.props;
+    const { availabilities } = this.props.data;
+    const updatedAvailabilities = availabilities.filter( 
+      (availability, index) => index !== indexToRemove
+    );
+    changeValue('availabilities', updatedAvailabilities );
   }
 }
 
@@ -245,9 +280,8 @@ NewAvailability.propTypes = {
     timezone: PropTypes.string,
     locale: PropTypes.string,
   }),
-
-  availabilities: PropTypes.shape({
-    0: PropTypes.array,
+  data: PropTypes.shape({
+    availabilities: PropTypes.array
   }),
   days: PropTypes.array,
   changeHandler: PropTypes.func.isRequired,
@@ -269,12 +303,8 @@ NewAvailability.defaultProps = {
   },
   days: [],
   errors: {},
-  availabilities: {
-    0: [{
-      start_time: null,
-      end_time: null,
-      day: null,
-    }]
+  data: {
+    availabilities: [ DEFAULT_AVAILABILITY ]
   },
   availability_start_times: {},
   availability_end_times: {},
@@ -286,8 +316,7 @@ NewAvailability.contextTypes = {
 
 const validationOptions = {
   joiSchema: schema,
-  only: 'availabilities',
-  // allowUnknown: true,
+  only: 'data',
   // validator: validateAvailabilities
 };
 

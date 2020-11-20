@@ -1,38 +1,54 @@
 class AvailabilityMapping {
-  constructor(availabilitiesObj) {
-    this.availabilitiesRaw = availabilitiesObj;
+  constructor(availabilities) {
+    this.availabilitiesMinimized = availabilities;
   }
 
-  generateFlattenedIndexMapping() {
-    const entries = Object.values(this.availabilitiesRaw);
-    return entries.reduce((map, entry)=>{
-      if(map.length === 0) {
-        const entrysLastIndex = entry.length - 1;
-        map.push(entrysLastIndex);
-      }else {
-        const previousMaxIndex = map[map.length - 1];
-        map.push(entry.length + previousMaxIndex);
+  //Each availablity contains an array of days
+  //Store the highest index value for each availability if the arrays for days
+  // were a flat array
+  generateeExpandedIndexMapping() {
+    return this.availabilitiesMinimized.reduce((maxIndexList, entry)=>{
+      if(maxIndexList.length === 0) {
+        const entrysLastIndex = entry.days.length - 1;
+        maxIndexList.push(entrysLastIndex);
+      }else if (typeof availability != 'undefined') {
+        const previousMaxIndex = maxIndexList[maxIndexList.length - 1];
+        maxIndexList.push(entry.days.length + previousMaxIndex);
       }     
-      return map;
+      return maxIndexList;
     }, []);
+
   }
     
   getOriginalIndex(flattenedIndex) {
     if (typeof this.indexMapping === 'undefined') {
-      this.indexMapping = this.generateFlattenedIndexMapping();
+      this.indexMapping = this.generateeExpandedIndexMapping();
     }
     const index = this.indexMapping.findIndex(entryMaxIndex => flattenedIndex <= entryMaxIndex);
     return index;
   }
 
-  getFlattenedAvailabilities() {
-    const availabilities = {};
-    const allEntries = Object.values(this.availabilitiesRaw).flat();
-    allEntries.forEach((availability, index) => {
-      availabilities[index] = availability;
+  getTimeString = (time) => {
+    return time.hour + ':' + time.minute;
+  }
+
+  getExpandedAvailabilities() {
+    //To match format accepted by server, convert array to an object
+    const expandedAvailabilities = {};
+  
+    let lastIndex = 0;
+    this.availabilitiesMinimized.forEach( (availability) => {
+      availability.days.forEach(day => {
+        expandedAvailabilities[`${lastIndex}`] = {
+          day: day,
+          start_time: this.getTimeString(availability.startTime),
+          end_time: this.getTimeString(availability.endTime),
+        };
+        lastIndex++;
+      });
     });
 
-    return { availabilities }; 
+    return { availabilities: expandedAvailabilities };
   }
 
   getErrorsCorrectIndices(errors) {
