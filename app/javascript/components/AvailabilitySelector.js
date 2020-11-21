@@ -26,9 +26,6 @@ class AvailabilitySelector extends Component {
 
     this.state = {
       isAllDay: props.isAllDay,
-      startTime: props.startTime,
-      endTime: props.endTime,
-      selectedDays: props.selectedDays,
       hoursList: hoursList,
       minutesList: minutesList,
     };
