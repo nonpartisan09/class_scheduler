@@ -19,7 +19,6 @@ import PageHeader from './reusable/PageHeader';
 import AvailabilitySelector from './AvailabilitySelector';
 import AvailabilitiesMapping from './utils/AvailabilitiesMapping';
 
-const TIME_STRING_PATTERN = /^[0-2][0-9]:[0-5][0-9]$/;
 const DEFAULT_AVAILABILITY = {
   startTime: {
     minute: '',
@@ -29,16 +28,18 @@ const DEFAULT_AVAILABILITY = {
     minute: '',
     hour: ''
   },
-  day: [],
+  days: [],
 };
 
 const schema = Joi.object({}).pattern(/^availabilities$/, Joi.array().required().min(1).items(Joi.object({
-  days: Joi.array().required().items(Joi.number().required().min(0).max(6)).options({
+  days: Joi.array().required().min(1).items(Joi.number().min(0).max(6)).options({
     language: {
-      number: {
-        base: 'Please select a day',
-        any: 'Please select a day',
-        empty: 'Please select a day'
+      array: {
+        min: 'Please select 1 or more days',
+        items: {
+          base: 'Please select 1 or more days',
+          any: 'Please select 1 or more days'
+        }
       }
     }
   }),
@@ -46,18 +47,22 @@ const schema = Joi.object({}).pattern(/^availabilities$/, Joi.array().required()
     hour: Joi.string().required().regex(/^[0-2][0-9]$/).options({
       language: {
         string: {
-          base:'Please select an hour for the start time',
-          any:'Please select an hour for the start time',
-          empty:'Please select an hour for the start time'
+          regex: {
+            base:'Please select an hour for the start time',
+            any:'Please select an hour for the start time',
+            empty:'Please select an hour for the start time'
+          }
         }
       }
     }),
     minute: Joi.string().required().regex(/^[0-5][0-9]$/).options({
       language: {
         string: {
-          base:'Please select a minute for the start time',
-          any:'Please select a minute for the start time',
-          empty:'Please select a minute for the start time'
+          regex: {
+            base:'Please select a minute for the start time',
+            any:'Please select a minute for the start time',
+            empty:'Please select a minute for the start time'
+          }
         }
       }
     }),      
@@ -66,18 +71,22 @@ const schema = Joi.object({}).pattern(/^availabilities$/, Joi.array().required()
     hour: Joi.string().required().regex(/^[0-2][0-9]$/).options({
       language: {
         string: {
-          base:'Please select an hour for the end time',
-          any:'Please select an hour for the end time',
-          empty:'Please select an hour for the end time'
+          regex: {
+            base:'Please select an hour for the end time',
+            any:'Please select an hour for the end time',
+            empty:'Please select an hour for the end time'
+          }
         }
       }
     }),
     minute: Joi.string().required().regex(/^[0-5][0-9]$/).options({
       language: {
         string: {
-          base:'Please select a minute for the end time',
-          any:'Please select a minute for the end time',
-          empty:'Please select a minute for the end time'
+          regex: {
+            base:'Please select a minute for the end time',
+            any:'Please select a minute for the end time',
+            empty:'Please select a minute for the end time'
+          }
         }
       }
     }),      
@@ -201,14 +210,19 @@ class NewAvailability extends Component {
 
     changeValue('availabilities', updatedAvailabilities, { validate: true } );
   }
-
-  renderErrorMessageList = (errors) => {
-    if(!Array.isArray(errors)) {
-      return '';
-    }
-    return errors.map((error, index) => <ErrorField key={ index } error={ error } /> );
+  getAvailabilityErrorsFlattened = (errors) => {
+    const errorsFlat = [];
+    Object.values(errors).forEach(error => {
+      if (typeof error === 'string') {
+        errorsFlat.push(error);
+      }else {
+        Object.values(error).forEach(error => {
+          errorsFlat.push(error);
+        });
+      }
+    });
+    return errorsFlat.join('\n');
   };
-
 
   renderAvailabilities() {
     const { availabilities } = this.props.data;
@@ -218,6 +232,7 @@ class NewAvailability extends Component {
       const { error, days } = this.state;
       const { errors } = this.props;
       const availability = availabilities[index];
+      const availabilityErrors = errors['availabilities'] && errors['availabilities'][index];
 
       return (
         <div key={ index } className='availabilitiesContainer'>
@@ -230,8 +245,8 @@ class NewAvailability extends Component {
           />
           
           <div className='newAvailabilityErrorField'>
-            <ErrorField error={  (error && error[index]) } />
-            {errors[index] ? this.renderErrorMessageList(Object.values(errors[index][0])) : null }
+            <ErrorField error={ (error && error[index]) } />
+            <ErrorField error={ availabilityErrors && this.getAvailabilityErrorsFlattened(availabilityErrors) } />
           </div>
 
           <FlatButton

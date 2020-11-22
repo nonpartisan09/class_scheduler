@@ -1,11 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+const renderErrorLines = (errors) => {
+  return errors.map((error, index) => <p key={ index } className='errorField'>{ error }</p>);
+};
+
 const ErrorField = ({ error })=> {
    if (error) {
+     const errorsSplit = error.split('\n');
      return (
-       <div className='errorField'>
-         { error }
+       <div>
+         { renderErrorLines(errorsSplit) }
        </div>
      );
    } else {

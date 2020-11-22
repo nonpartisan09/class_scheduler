@@ -69,7 +69,6 @@ class AvailabilitySelector extends Component {
     const { days, selectedDays, startTime, endTime } = this.props;
     const { hoursList, minutesList } = this.state;
     const { isAllDay } = this.state;
-    //const { startTime, endTime, isAllDay, selectedDays } = this.state;
 
     return (
       <div style={ { width: '100%', textAlign: 'left' } }>

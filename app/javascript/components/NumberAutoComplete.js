@@ -38,7 +38,7 @@ class NumberAutoComplete extends Component {
     return dataOptions.find(item => Number(item) === Number(input));
   };
 
-  setTextToExactMatch = () => {
+  updateTextToExactMatch = () => {
     const { value } = this.props;
     this.handleNewRequest(value);
   };
@@ -58,7 +58,7 @@ class NumberAutoComplete extends Component {
           onNewRequest={ this.handleNewRequest }
           dataSource={ dataOptions }
           filter={ AutoComplete.noFilter }
-          onBlur={ this.setTextToExactMatch }
+          onBlur={ this.updateTextToExactMatch }
           openOnFocus
           fullWidth    
           disabled={ disabled }
