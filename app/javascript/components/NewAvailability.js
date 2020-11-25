@@ -204,12 +204,9 @@ class NewAvailability extends Component {
 
   availabilityChangeHandler = ( elementIndex ) => (newAvailability) => {
     const { changeValue } = this.props;
-    const { availabilities } = this.props.data;
-    const updatedAvailabilities = availabilities.map(
-      (availability, index) => index === elementIndex ? newAvailability: availability);
-
-    changeValue('availabilities', updatedAvailabilities, { validate: true } );
+    changeValue(`availabilities[${elementIndex}]`, newAvailability, { validate: true } );
   }
+  
   getAvailabilityErrorsFlattened = (errors) => {
     const errorsFlat = [];
     Object.values(errors).forEach(error => {
