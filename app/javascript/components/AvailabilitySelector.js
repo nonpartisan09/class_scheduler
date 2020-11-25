@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
 
 import Checkbox from 'material-ui/Checkbox';
 
@@ -83,7 +84,12 @@ class AvailabilitySelector extends Component {
             hoursList={ hoursList }
             minutesList={ minutesList }
             onChange={ this.updateStartTimeHandler }
-            labelText=" From "
+            label={ (
+              <FormattedMessage
+                id='AvailabilitySelector.startLabel'
+                defaultMessage='From'
+              />
+            ) }
             disabled={ isAllDay }
             hour={ startTime.hour }
             minute={ startTime.minute }
@@ -93,7 +99,12 @@ class AvailabilitySelector extends Component {
             hoursList={ hoursList }
             minutesList={ minutesList }
             onChange={ this.updateEndTimeHandler }
-            labelText=" To "
+            label={ (
+              <FormattedMessage
+                id='AvailabilitySelector.endLabel'
+                defaultMessage='To'
+              />
+            ) }
             disabled={ isAllDay }
             hour={ endTime.hour }
             minute={ endTime.minute }
@@ -101,7 +112,12 @@ class AvailabilitySelector extends Component {
           <Checkbox
             style={ {paddingLeft: '2em', textAlign: 'left' } }
             checked={ this.state.isAllDay }
-            label="All Day"
+            label={ (
+              <FormattedMessage
+                id='AvailabilitySelector.allDay'
+                defaultMessage='all day'
+              />
+            ) }
             onCheck={ this.handleAllDayChange }
           />
         </div>

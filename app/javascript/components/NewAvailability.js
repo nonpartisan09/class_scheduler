@@ -35,10 +35,10 @@ const schema = Joi.object({}).pattern(/^availabilities$/, Joi.array().required()
   days: Joi.array().required().min(1).items(Joi.number().min(0).max(6)).options({
     language: {
       array: {
-        min: 'Please select 1 or more days',
+        min: 'NewAvailability.selectDayError',
         items: {
-          base: 'Please select 1 or more days',
-          any: 'Please select 1 or more days'
+          base: 'NewAvailability.selectDayError',
+          any: 'NewAvailability.selectDayError'
         }
       }
     }
@@ -48,9 +48,9 @@ const schema = Joi.object({}).pattern(/^availabilities$/, Joi.array().required()
       language: {
         string: {
           regex: {
-            base:'Please select an hour for the start time',
-            any:'Please select an hour for the start time',
-            empty:'Please select an hour for the start time'
+            base:'NewAvailability.startTimeBlank',
+            any:'NewAvailability.startTimeBlank',
+            empty:'NewAvailability.startTimeBlank'
           }
         }
       }
@@ -59,9 +59,9 @@ const schema = Joi.object({}).pattern(/^availabilities$/, Joi.array().required()
       language: {
         string: {
           regex: {
-            base:'Please select a minute for the start time',
-            any:'Please select a minute for the start time',
-            empty:'Please select a minute for the start time'
+            base:'NewAvailability.startTimeBlank',
+            any:'NewAvailability.startTimeBlank',
+            empty:'NewAvailability.startTimeBlank'
           }
         }
       }
@@ -72,9 +72,9 @@ const schema = Joi.object({}).pattern(/^availabilities$/, Joi.array().required()
       language: {
         string: {
           regex: {
-            base:'Please select an hour for the end time',
-            any:'Please select an hour for the end time',
-            empty:'Please select an hour for the end time'
+            base:'NewAvailability.endTimeBlank',
+            any:'NewAvailability.endTimeBlank',
+            empty:'NewAvailability.endTimeBlank'
           }
         }
       }
@@ -83,9 +83,9 @@ const schema = Joi.object({}).pattern(/^availabilities$/, Joi.array().required()
       language: {
         string: {
           regex: {
-            base:'Please select a minute for the end time',
-            any:'Please select a minute for the end time',
-            empty:'Please select a minute for the end time'
+            base:'NewAvailability.endTimeBlank',
+            any:'NewAvailability.endTimeBlank',
+            empty:'NewAvailability.endTimeBlank'
           }
         }
       }
@@ -208,17 +208,33 @@ class NewAvailability extends Component {
   }
   
   getAvailabilityErrorsFlattened = (errors) => {
-    const errorsFlat = [];
+    const errorsFlat = new Set();
     Object.values(errors).forEach(error => {
       if (typeof error === 'string') {
-        errorsFlat.push(error);
+        errorsFlat.add(error);
       }else {
         Object.values(error).forEach(error => {
-          errorsFlat.push(error);
+          errorsFlat.add(error);
         });
       }
     });
-    return errorsFlat.join('\n');
+
+    return Array.from(errorsFlat);
+  };
+
+  renderAvailabilityErrors = (errors) => {
+    const errorsList = this.getAvailabilityErrorsFlattened(errors);
+    return errorsList.map((error) => (
+      <ErrorField 
+        key={ error } 
+        error={ (
+          <FormattedMessage
+            id={ error }
+            defaultMessage={ error }
+          /> 
+        ) } 
+      />
+    ));
   };
 
   renderAvailabilities() {
@@ -243,7 +259,7 @@ class NewAvailability extends Component {
           
           <div className='newAvailabilityErrorField'>
             <ErrorField error={ (error && error[index]) } />
-            <ErrorField error={ availabilityErrors && this.getAvailabilityErrorsFlattened(availabilityErrors) } />
+            { availabilityErrors ? this.renderAvailabilityErrors(availabilityErrors) : null }
           </div>
 
           <FlatButton

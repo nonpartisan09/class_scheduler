@@ -26,13 +26,13 @@ class TimeSelector extends Component {
   }
 
   render() {
-    const { labelText, hoursList, minutesList } = this.props;
+    const { label, hoursList, minutesList } = this.props;
     const { disabled, hour, minute, style } = this.props;
 
     return (
       <div style={ {display:'inline-block',  ...style } }>
         <div style={ {display: 'flex', alignItems: 'center'} }>
-          <span style={ {fontSize:'1.2em'} }>{ labelText }</span>
+          <p style={ {display: 'inline-block', paddingRight: '1em', fontSize:'1.2em'} }>{ label }</p>
           <NumberAutoComplete 
             dataOptions={ hoursList } 
             hintText={ HINT_TEXT_HOURS }
@@ -59,7 +59,7 @@ TimeSelector.propTypes = {
   minutesList: PropTypes.array,
   disabled: PropTypes.bool,
   onChange: PropTypes.func,
-  labelText: PropTypes.string.isRequired,
+  label: PropTypes.object.isRequired,
   hour: PropTypes.string,
   minute: PropTypes.string,
   style: PropTypes.object
