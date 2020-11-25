@@ -183,7 +183,7 @@ class NewAvailability extends Component {
         console.warn(attributes);
 
         const requestParams = {
-          url: '/availabilities',
+          url: `/${locale}/availabilities`,
           attributes,
           method: 'POST',
           successCallBack: () => {
@@ -203,8 +203,12 @@ class NewAvailability extends Component {
   }
 
   availabilityChangeHandler = ( elementIndex ) => (newAvailability) => {
-    const { changeValue } = this.props;
-    changeValue(`availabilities[${elementIndex}]`, newAvailability, { validate: true } );
+    const { changeValue, errors } = this.props;
+
+    // Only validate when value changes after an error was found. This will 
+    // remove the errors as the user fixes them
+    const validate = _.isEmpty(errors) ? false : true;
+    changeValue(`availabilities[${elementIndex}]`, newAvailability, { validate: validate } );
   }
   
   getAvailabilityErrorsFlattened = (errors) => {
