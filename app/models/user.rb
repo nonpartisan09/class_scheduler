@@ -21,6 +21,8 @@ class User < ActiveRecord::Base
 
   has_many :availabilities, dependent: :destroy
 
+  has_many :received_conversations, class_name: 'Conversation', foreign_key: 'recipient_id'
+
   geocoded_by :full_address
   after_validation :geocode, if: ->(obj) { obj.full_address.present? }
 
@@ -165,6 +167,36 @@ class User < ActiveRecord::Base
     known_cities
   end
 
+  # Added as a class method to avoid n+1 query when performing User::responsive? for each
+  # user from ResponsiveUsersJob
+  def self.all_responsive?
+    users = User.all.includes(received_conversations: :messages)
+    User.audit_conversations(users)
+  end
+  
+  # `User::responsive?` checks if any conversations older than 48 hours have no volunteer 
+  # response by iterateing through every message of every conversation for the user.
+  # “Premature optimization is the root of all evil”
+  def responsive?
+    User.audit_conversations([self])[0]
+  end
+
+  # creates a timeout and send email for use when volunteers is unresponsive
+  def create_timeout(conversation)
+    return if timeout # no need to send email or update record if already timed out
+
+    self.update!(timeout: true)
+    client = conversation.author
+    program = client.programs.first # currenttly we are not saving the program selected to conversation, this is a stopgap measure
+
+    UserMailer.unresponsive_volunteer(self, client, conversation, program).deliver_later
+    if client.locale == "en"
+      UserMailer.unresponsive_client_eng(self, client, conversation, program).deliver_later
+    elsif client.locale == "es"
+      UserMailer.unresponsive_client_esp(self, client, conversation, program).deliver_later
+    end
+  end
+
   private
 
   def self.city_client_count(city, state)
@@ -188,5 +220,26 @@ class User < ActiveRecord::Base
                       .limit(1)
                       .pluck('latitude', 'longitude')
     coordinates[0]
+  end
+
+  def self.audit_conversations(users)
+    res = users.map do |user|
+      conversation = nil
+
+      responsive = user.received_conversations.all? do |convo, idx| 
+        time_difference = (Time.now.utc - convo.created_at)/3600 # converted to hours
+        messages = convo.messages
+        has_responded = messages.any?{|msg| msg.user_id == user.id} # check if the volunteer has any sent messages in the conversation
+        conversation = convo #all loop breaks when expression is false, so conversation will be saved as the last 'delinquent' conversation checked
+        
+        has_responded || time_difference < 48 # no response is ok if the conversation was started less than 48 hours ago
+      end
+
+      # timeout the volunteer and send out an email to client and user with an update
+      user.create_timeout(conversation) if !responsive
+      responsive
+    end
+
+    res
   end
 end
