@@ -132,4 +132,7 @@ Rails.application.configure do
           s3_region: ENV.fetch('AWS_REGION'),
       },
   }
+
+  # start looping background job checking for unresponsive at midnight every day
+  ResponsiveUsersJob.set(wait: 5.minutes).perform_later
 end

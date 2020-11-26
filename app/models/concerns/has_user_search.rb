@@ -9,6 +9,7 @@ module HasUserSearch
         .who_can_help_with(params[:program])
         .who_can_speak(params[:language])
         .is_available(params, timezone)
+        .has_no_timeouts
         .based_on_distance(params, current_full_address)
         .paginate_results(params[:page])
         .by_order(params, current_full_address)
@@ -16,6 +17,12 @@ module HasUserSearch
 
     scope :join_tables, proc {
       includes(:programs, :availabilities)
+    }
+
+    scope :has_no_timeouts, proc {
+      volunteers.active.where({
+        :timeout => false
+      })
     }
 
     scope :who_can_help_with, proc { |program|
