@@ -32,7 +32,7 @@ module Contexts
           raise Availabilities::Errors::EndTimeWrongFormat, message
         end
 
-        # The English names for the days of the week is stored in the database
+        # The English names for the days of the week are stored in the database
         # This section ensures that the English days of the week are returned.
         # However, Locale is reset to the user's locale to ensure any error messages 
         # are returned in the correct langauge

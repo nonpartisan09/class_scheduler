@@ -90,7 +90,8 @@ class AvailabilitiesController < ApplicationController
       }).self_decorate
     }
 
-    availabilities = sort_availabilities(availabilities_unsorted)
+    # availabilities = useI18nWeekDays(sort_availabilities(availabilities_unsorted), current_user[:locale])
+    availabilities = sort_availabilities(useI18nWeekDays(availabilities_unsorted, current_user[:locale]))
     
     @data = {
         :currentUser => user,
@@ -107,6 +108,23 @@ class AvailabilitiesController < ApplicationController
   end
 
   private
+
+  # Work around to convert the db's English days of the week to the user's locale
+  def useI18nWeekDays(availabilities, locale)
+    translatedAvailabilities = availabilities.map { |availability| 
+      # Get index of the English day of week stored in the db
+      I18n.locale = :en
+      day_index = I18n.t('date.day_names').index((availability[:day]))
+
+      # Get the name for the day of the week based on the user's locale
+      I18n.locale = locale
+      day_name = I18n.t('date.day_names')[day_index]     
+
+      availability[:day] = day_name
+      availability
+    }
+    translatedAvailabilities
+  end
 
   def current_user_timezone
     return current_user[:timezone] if current_user[:timezone].present?
