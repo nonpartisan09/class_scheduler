@@ -43,6 +43,10 @@ class NumberAutoComplete extends Component {
     this.handleNewRequest(value);
   };
 
+  selectAll = (event) => {
+    event.target.select();
+  };
+
   render() {
     const {value,  hintText, dataOptions, disabled } = this.props;
 
@@ -59,6 +63,7 @@ class NumberAutoComplete extends Component {
           dataSource={ dataOptions }
           filter={ AutoComplete.noFilter }
           onBlur={ this.updateTextToExactMatch }
+          onFocus={ this.selectAll }
           openOnFocus
           fullWidth    
           disabled={ disabled }
