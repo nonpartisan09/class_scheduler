@@ -4,27 +4,26 @@ class AvailabilityMapping {
   }
 
   //Each availablity contains an array of days
-  //Store the highest index value for each availability if the arrays for days
+  //Store the highest index value for each availability as if the arrays for days
   // were a flat array
   generateeExpandedIndexMapping() {
     return this.availabilitiesMinimized.reduce((maxIndexList, entry)=>{
       if(maxIndexList.length === 0) {
         const entrysLastIndex = entry.days.length - 1;
         maxIndexList.push(entrysLastIndex);
-      }else if (typeof availability != 'undefined') {
+      }else {
         const previousMaxIndex = maxIndexList[maxIndexList.length - 1];
         maxIndexList.push(entry.days.length + previousMaxIndex);
       }     
       return maxIndexList;
     }, []);
-
   }
     
   getOriginalIndex(flattenedIndex) {
     if (typeof this.indexMapping === 'undefined') {
       this.indexMapping = this.generateeExpandedIndexMapping();
     }
-    const index = this.indexMapping.findIndex(entryMaxIndex => flattenedIndex <= entryMaxIndex);
+    const index = this.indexMapping.findIndex(entryMaxIndex => (flattenedIndex <= entryMaxIndex) );
     return index;
   }
 
@@ -56,14 +55,12 @@ class AvailabilityMapping {
     errors.forEach( (message, index) => {
       const originalIndex = this.getOriginalIndex(index);
       const messageProcessed = (message === null) ? '' : message;
-      const indexEmpty = (typeof messages[originalIndex] === 'undefined') || (messages[originalIndex] === null);
 
-      if (indexEmpty) {
-        messages[originalIndex] = message;
-      } else {
-        messages[originalIndex] += '\n' + messageProcessed;
-      }
+      messages[originalIndex] = messageProcessed;
     });
+
+    console.log("getErrorsCorrectIndices");
+    console.log(messages);
 
     return messages;
   }

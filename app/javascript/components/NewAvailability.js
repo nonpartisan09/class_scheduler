@@ -18,80 +18,83 @@ import PageHeader from './reusable/PageHeader';
 
 import AvailabilitySelector from './AvailabilitySelector';
 import AvailabilitiesMapping from './utils/AvailabilitiesMapping';
-
-const DEFAULT_AVAILABILITY = {
-  startTime: {
-    minute: '',
-    hour: ''
-  },
-  endTime: {
-    minute: '',
-    hour: ''
-  },
-  days: [],
-};
+import Availability from './utils/Availability';
 
 const schema = Joi.object({}).pattern(/^availabilities$/, Joi.array().required().min(1).items(Joi.object({
   days: Joi.array().required().min(1).items(Joi.number().min(0).max(6)).options({
     language: {
       array: {
         min: 'NewAvailability.selectDayError',
-        items: {
-          base: 'NewAvailability.selectDayError',
-          any: 'NewAvailability.selectDayError'
-        }
       }
     }
   }),
   startTime: Joi.object({
-    hour: Joi.string().required().regex(/^[0-2][0-9]$/).options({
+    hour: Joi.string().required().regex(Availability.getHourPattern()).options({
       language: {
         string: {
           regex: {
             base:'NewAvailability.startTimeBlank',
-            any:'NewAvailability.startTimeBlank',
-            empty:'NewAvailability.startTimeBlank'
           }
         }
       }
     }),
-    minute: Joi.string().required().regex(/^[0-5][0-9]$/).options({
+    minute: Joi.string().required().regex(Availability.getMinutePattern()).options({
       language: {
         string: {
           regex: {
             base:'NewAvailability.startTimeBlank',
-            any:'NewAvailability.startTimeBlank',
-            empty:'NewAvailability.startTimeBlank'
           }
         }
       }
     }),      
   }),
   endTime: Joi.object({
-    hour: Joi.string().required().regex(/^[0-2][0-9]$/).options({
+    hour: Joi.string().required().regex(Availability.getHourPattern()).options({
       language: {
         string: {
           regex: {
             base:'NewAvailability.endTimeBlank',
-            any:'NewAvailability.endTimeBlank',
-            empty:'NewAvailability.endTimeBlank'
           }
         }
       }
     }),
-    minute: Joi.string().required().regex(/^[0-5][0-9]$/).options({
+    minute: Joi.string().required().regex(Availability.getMinutePattern()).options({
       language: {
         string: {
           regex: {
             base:'NewAvailability.endTimeBlank',
-            any:'NewAvailability.endTimeBlank',
-            empty:'NewAvailability.endTimeBlank'
           }
         }
       }
     }),      
   }) 
 })));
+
+function validateTimes({ values, errors }, callback){
+  if (values['availabilities']) {
+    values['availabilities'].forEach((availability, index) => {
+      const startTimeIsValid = Availability.timeIsValid(availability.startTime);
+      const endTimeIsValid = Availability.timeIsValid(availability.endTime);
+      if(startTimeIsValid && endTimeIsValid)  {
+        const sameTime = Availability.timesAreIdentical(availability.startTime, availability.endTime);
+        const endTooEarly = Availability.endTimeIsBeforeStartTime(availability.startTime, availability.endTime);
+
+        // If errors are found and the availabilities errors array has not yet been defined
+        if(!errors['availabilities'] && (sameTime || endTooEarly)) {
+          errors['availabilities'] = [];
+        }
+        if(sameTime) {
+          const error = 'NewAvailability.startTimeMatchesEndTimeError';
+          _.set(errors, `availabilities[${index}].endTime`, error);
+        } else if(endTooEarly) {
+         const error = 'NewAvailability.endTimeIsBeforeStartTimeError';
+          _.set(errors, `availabilities[${index}].endTime`, error);
+        } 
+      }
+    });
+  }
+  callback({ values, errors });
+}
 
 class NewAvailability extends Component {
   constructor (props, context) {
@@ -190,6 +193,8 @@ class NewAvailability extends Component {
             location.assign(formatLink('/availabilities', locale));
           },
           errorCallBack: (message) => {
+            console.log("errors message: ");
+            console.log(message);
             this.setState({
               error: availabilityMapping.getErrorsCorrectIndices(message)
             });
@@ -204,6 +209,13 @@ class NewAvailability extends Component {
 
   availabilityChangeHandler = ( elementIndex ) => (newAvailability) => {
     const { changeValue, errors } = this.props;
+    const { error } = this.state;
+
+    // If any errors were found when attempting to aubmit them, clear the errors
+    // After user chanages the avilability time
+    if (!_.isEmpty(error)) {
+      this.setState({ error: { } });
+    }
 
     // Only validate when value changes after an error was found. This will 
     // remove the errors as the user fixes them
@@ -291,7 +303,7 @@ class NewAvailability extends Component {
 
   handleAddAvailability() {
     const { pushValue } = this.props;
-    pushValue('availabilities', DEFAULT_AVAILABILITY);
+    pushValue('availabilities', Availability.getDefaultAvailability());
   }
 
   handleRemoveAvailability = ( indexToRemove ) => {
@@ -336,7 +348,7 @@ NewAvailability.defaultProps = {
   days: [],
   errors: {},
   data: {
-    availabilities: [ DEFAULT_AVAILABILITY ]
+    availabilities: [ Availability.getDefaultAvailability() ]
   },
   availability_start_times: {},
   availability_end_times: {},
@@ -349,7 +361,7 @@ NewAvailability.contextTypes = {
 const validationOptions = {
   joiSchema: schema,
   only: 'data',
-  // validator: validateAvailabilities
+  validator: validateTimes
 };
 
 export default validate(NewAvailability, validationOptions);
