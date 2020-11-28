@@ -1,0 +1,20 @@
+.availability-selector-container {
+    width: 100%;
+    text-align: left;
+}
+
+.availability-selector-container > div {
+    display: flex;
+    align-items: center;
+}
+
+// Checkbox styling
+.availability-selector-container > div > div:nth-child(3) {
+    margin-left: 1em;
+    text-align: left;
+    width: auto !important;
+}
+
+.availability-selector-container > div > div:nth-child(3) > div > label {
+    width: auto !important;
+}

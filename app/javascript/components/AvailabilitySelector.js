@@ -72,14 +72,14 @@ class AvailabilitySelector extends Component {
     const { isAllDay } = this.state;
 
     return (
-      <div style={ { width: '100%', textAlign: 'left' } }>
+      <div className='availability-selector-container'>
         <DaysMultipleSelect 
           days={ days } 
           selectedDays={ selectedDays }
           onChange={ this.updateDaysHandler }
         />
 
-        <div style={ {display: 'flex', alignItems: 'center'} }>
+        <div>
           <TimeSelector 
             hoursList={ hoursList }
             minutesList={ minutesList }
@@ -95,7 +95,6 @@ class AvailabilitySelector extends Component {
             minute={ startTime.minute }
           />
           <TimeSelector
-            style={ {paddingLeft: '1em'} }
             hoursList={ hoursList }
             minutesList={ minutesList }
             onChange={ this.updateEndTimeHandler }
@@ -110,7 +109,7 @@ class AvailabilitySelector extends Component {
             minute={ endTime.minute }
           />
           <Checkbox
-            style={ {paddingLeft: '2em', textAlign: 'left' } }
+            className='test'
             checked={ this.state.isAllDay }
             label={ (
               <FormattedMessage
@@ -120,6 +119,7 @@ class AvailabilitySelector extends Component {
             ) }
             onCheck={ this.handleAllDayChange }
           />
+          
         </div>
       </div>
     );

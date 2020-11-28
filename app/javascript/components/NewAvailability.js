@@ -193,8 +193,6 @@ class NewAvailability extends Component {
             location.assign(formatLink('/availabilities', locale));
           },
           errorCallBack: (message) => {
-            console.log("errors message: ");
-            console.log(message);
             this.setState({
               error: availabilityMapping.getErrorsCorrectIndices(message)
             });
@@ -212,12 +210,12 @@ class NewAvailability extends Component {
     const { error } = this.state;
 
     // If any errors were found when attempting to aubmit them, clear the errors
-    // After user chanages the avilability time
+    // after user chanages the avilability time
     if (!_.isEmpty(error)) {
       this.setState({ error: { } });
     }
 
-    // Only validate when value changes after an error was found. This will 
+    // Only validate new values after an error was found. This will 
     // remove the errors as the user fixes them
     const validate = _.isEmpty(errors) ? false : true;
     changeValue(`availabilities[${elementIndex}]`, newAvailability, { validate: validate } );
