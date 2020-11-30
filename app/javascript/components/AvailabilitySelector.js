@@ -79,12 +79,12 @@ class AvailabilitySelector extends Component {
   }
  
   render() {
-    const { days, selectedDays, startTime, endTime } = this.props;
-    const { hoursList, minutesList } = this.state;
-    const { isAllDay } = this.state;
-
+    const { days, selectedDays, startTime, endTime, className } = this.props;
+    const { hoursList, minutesList, isAllDay } = this.state;
+    const defaultCSSClass = 'availabilitySelectorContainer';
+    const classes = className ? `${defaultCSSClass} ${className}` : defaultCSSClass; 
     return (
-      <div className='availability-selector-container'>
+      <div className={ classes }>
         <DaysMultipleSelect 
           days={ days } 
           selectedDays={ selectedDays }
@@ -151,6 +151,7 @@ AvailabilitySelector.propTypes = {
     hour: PropTypes.string,
     minute: PropTypes.string,
   }),
+  className: PropTypes.string,
 };
 
 AvailabilitySelector.defaultProps = {
@@ -165,6 +166,7 @@ AvailabilitySelector.defaultProps = {
     hour:'',
     minute:'',
   },
+  className: '',
 };
 
 export default AvailabilitySelector;

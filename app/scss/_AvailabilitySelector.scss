@@ -1,20 +1,33 @@
-.availability-selector-container {
+.availabilitySelectorContainer {
     width: 100%;
     text-align: left;
 }
 
-.availability-selector-container > div {
+.availabilitySelectorContainer > div {
     display: flex;
     align-items: center;
+    flex-direction: row;
 }
 
 // Checkbox styling
-.availability-selector-container > div > div:nth-child(3) {
+.availabilitySelectorContainer > div > div:nth-child(3) {
     margin-left: 1em;
     text-align: left;
     width: auto !important;
 }
 
-.availability-selector-container > div > div:nth-child(3) > div > label {
+.availabilitySelectorContainer > div > div:nth-child(3) > div > label {
     width: auto !important;
+}
+
+@media (max-width: 700px) {
+    .availabilitySelectorContainer > div {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    // Checkbox styling
+    .availabilitySelectorContainer > div > div:nth-child(3) {
+        margin-left: 0em;
+    }
 }

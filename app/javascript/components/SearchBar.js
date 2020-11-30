@@ -152,6 +152,7 @@ class SearchBar extends Component {
             startTime={ start_time }
             endTime={ end_time }
             onChange={ this.changeHandlerAvailability }
+            className='searchAvailabilityContainer'
             isAllDay
           />
 

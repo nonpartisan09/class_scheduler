@@ -51,7 +51,7 @@ class NumberAutoComplete extends Component {
     const {value,  hintText, dataOptions, disabled } = this.props;
 
     return (
-      <div className='autocomplete-container'> 
+      <div className='autocompleteContainer'> 
         <AutoComplete
           listStyle={ { maxHeight: 200, overflow: 'auto' } }
           hintText={ hintText }

@@ -85,7 +85,6 @@ class AvailabilitiesController < ApplicationController
       }).self_decorate
     }
 
-    # availabilities = useI18nWeekDays(sort_availabilities(availabilities_unsorted), current_user[:locale])
     availabilities = sort_availabilities(useI18nWeekDays(availabilities_unsorted, current_user[:locale]))
     
     @data = {

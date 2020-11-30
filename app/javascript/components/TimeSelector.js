@@ -30,7 +30,7 @@ class TimeSelector extends Component {
     const { disabled, hour, minute, style } = this.props;
  
     return (
-      <div className='time-selector-container' style={ {...style } }>
+      <div className='timeSelectorContainer' style={ {...style } }>
         <div>
           <p>{ label }</p>
           <NumberAutoComplete 
