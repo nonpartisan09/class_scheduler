@@ -55,6 +55,13 @@ class Availability {
 
     return endDate < startDate;
   }
+  
+  static endTimeIsMidnight(time) {
+    if(this.timeIsValid(time)) {
+      return time.hour === '00' && time.minute === '00';
+    }
+    return false;
+  }
 
   static getDate(date, time) {
     const newDate = new Date(date.getTime());

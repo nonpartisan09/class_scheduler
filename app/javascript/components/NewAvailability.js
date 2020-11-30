@@ -214,6 +214,11 @@ class NewAvailability extends Component {
     if (!_.isEmpty(error)) {
       this.setState({ error: { } });
     }
+    
+    // Force end times of 00:00 to 23:59
+    if (Availability.endTimeIsMidnight(newAvailability.endTime)) {
+      newAvailability.endTime = {hour: '23', minute: '59'};
+    }
 
     // Only validate new values after an error was found. This will 
     // remove the errors as the user fixes them
