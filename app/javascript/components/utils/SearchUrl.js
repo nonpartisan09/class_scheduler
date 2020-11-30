@@ -1,18 +1,6 @@
 import _ from 'lodash';
 import Availability from './Availability';
 
-function getTime(timestamp) {
-  const minutes = function(){
-    const getMinutes = timestamp.getMinutes().toString();
-    if(getMinutes.length === 1) {
-      return '0' + getMinutes;
-    } else {
-      return getMinutes;
-    }
-  }();
-  return `${timestamp.getHours()}:${minutes}`;
-}
-
 function SearchUrl({ day, program, language, start_time, end_time, distance, order, page, locale }) {
   const startParam = Availability.timeIsValid(start_time) ? `&start_time=${Availability.getTimeString(start_time)}` : '';
   const endParam = Availability.timeIsValid(end_time) ? `&end_time=${Availability.getTimeString(end_time)}`: '';

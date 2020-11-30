@@ -20,7 +20,6 @@ import SearchUrl from './utils/SearchUrl';
 import PageHeader from './reusable/PageHeader';
 
 import AvailabilitySelector from './AvailabilitySelector';
-import Availability from './utils/Availability';
 
 class SearchBar extends Component {
   constructor(props) {

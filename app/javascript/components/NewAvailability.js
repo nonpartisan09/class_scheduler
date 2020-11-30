@@ -326,16 +326,13 @@ NewAvailability.propTypes = {
     availabilities: PropTypes.array
   }),
   days: PropTypes.array,
-  changeHandler: PropTypes.func.isRequired,
   changeValue: PropTypes.func.isRequired,
-  changeValues: PropTypes.func.isRequired,
+  pushValue: PropTypes.func.isRequired,
   validateAllHandler: PropTypes.func.isRequired,
   validateAll: PropTypes.func.isRequired,
   location: PropTypes.shape({
     search: PropTypes.string,
   }),
-  availability_start_times: PropTypes.object,
-  availability_end_times: PropTypes.object,
 };
 
 NewAvailability.defaultProps = {
@@ -348,8 +345,6 @@ NewAvailability.defaultProps = {
   data: {
     availabilities: [ Availability.getDefaultAvailability() ]
   },
-  availability_start_times: {},
-  availability_end_times: {},
 };
 
 NewAvailability.contextTypes = {
