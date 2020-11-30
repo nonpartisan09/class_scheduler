@@ -1,3 +1,5 @@
+import Availability from './Availability';
+
 class AvailabilityMapping {
   constructor(availabilities) {
     this.availabilitiesMinimized = availabilities;
@@ -27,10 +29,6 @@ class AvailabilityMapping {
     return index;
   }
 
-  getTimeString = (time) => {
-    return time.hour + ':' + time.minute;
-  }
-
   getExpandedAvailabilities() {
     //To match format accepted by server, convert array to an object
     const expandedAvailabilities = {};
@@ -40,8 +38,8 @@ class AvailabilityMapping {
       availability.days.forEach(day => {
         expandedAvailabilities[`${lastIndex}`] = {
           day: day,
-          start_time: this.getTimeString(availability.startTime),
-          end_time: this.getTimeString(availability.endTime),
+          start_time: Availability.getTimeString(availability.startTime),
+          end_time: Availability.getTimeString(availability.endTime),
         };
         lastIndex++;
       });
@@ -58,9 +56,6 @@ class AvailabilityMapping {
 
       messages[originalIndex] = messageProcessed;
     });
-
-    console.log("getErrorsCorrectIndices");
-    console.log(messages);
 
     return messages;
   }

@@ -7,15 +7,19 @@ class Availability {
     };
     return defaultAvailability;
   }
+  
   static getHourPattern() {
     return /^[0-2][0-9]$/;
   }
+  
   static getMinutePattern() {
     return /^[0-5][0-9]$/;
   }
+  
   static timeIsValid(time) {
     return time && this.hourIsValid(time.hour) && this.minuteIsValid(time.minute);
   }
+  
   static hourIsValid(hour) {
     if(typeof hour !== 'string' || !hour.match(this.getHourPattern())) {
       return false;
@@ -23,12 +27,17 @@ class Availability {
     const value = Number(hour);
     return value >= 0 && value <= 23;
   }
+  
   static minuteIsValid(minute) {
     if(typeof minute !== 'string' || !minute.match(this.getMinutePattern())) {
       return false;
     }
     const value = Number(minute);
     return value >= 0 && value <= 59;
+  }
+  
+  static getTimeString(time) {
+      return time.hour + ':' + time.minute;
   }
 
   static timesAreIdentical(startTime, endTime) {
@@ -38,6 +47,7 @@ class Availability {
 
     return startDate.valueOf() === endDate.valueOf();
   }
+  
   static endTimeIsBeforeStartTime(startTime, endTime) {
     const date = new Date();
     const startDate = this.getDate(date, startTime);

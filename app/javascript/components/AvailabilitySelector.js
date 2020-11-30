@@ -24,20 +24,32 @@ class AvailabilitySelector extends Component {
 
     const hoursList = getTimesValuesList(Number(EARLIEST_TIME.hour), Number(LATEST_TIME.hour));
     const minutesList = getTimesValuesList(Number(EARLIEST_TIME.minute), Number(LATEST_TIME.minute));
+    const isAllDay = props.isAllDay;
 
     this.state = {
-      isAllDay: props.isAllDay,
+      isAllDay: isAllDay,
       hoursList: hoursList,
       minutesList: minutesList,
     };
+
+    if (isAllDay) {
+      this.setAllDay();
+    }
   
   }
   
   handleAllDayChange = (event, isAllDay ) => {
-    const { selectedDays } = this.props;
     this.setState({
         isAllDay: isAllDay,
     });
+
+    if(isAllDay) {
+      this.setAllDay();
+    }
+  }
+
+  setAllDay = () => {
+    const { selectedDays } = this.props;
     this.notifyChangeHandler(selectedDays, EARLIEST_TIME, LATEST_TIME);
   }
 

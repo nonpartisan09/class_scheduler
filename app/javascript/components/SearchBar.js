@@ -20,6 +20,7 @@ import SearchUrl from './utils/SearchUrl';
 import PageHeader from './reusable/PageHeader';
 
 import AvailabilitySelector from './AvailabilitySelector';
+import Availability from './utils/Availability';
 
 class SearchBar extends Component {
   constructor(props) {
@@ -146,7 +147,14 @@ class SearchBar extends Component {
             })}
           </SelectField>
 
-          <AvailabilitySelector days={ days } selectedDays={ day } />
+          <AvailabilitySelector 
+            days={ days } 
+            selectedDays={ day } 
+            startTime={ start_time }
+            endTime={ end_time }
+            onChange={ this.changeHandlerAvailability }
+            isAllDay
+          />
 
           <SearchOptionalFields
             onChange={ changeHandler }
@@ -244,6 +252,16 @@ class SearchBar extends Component {
     changeValue('day', value, { validate: true });
   }
 
+  changeHandlerAvailability = (availability) => {
+    const { changeValues } = this.props;
+
+    changeValues([ 
+      ['day', availability.days],
+      ['start_time', availability.startTime],
+      ['end_time', availability.endTime]
+    ] );
+  }
+
   selectionRendererProgram(values) {
     const { programs } = this.props;
     if (_.size(values) > 1) {
@@ -338,13 +356,20 @@ SearchBar.propTypes = {
     program: PropTypes.array,
     language: PropTypes.array,
     distance: PropTypes.number,
-    start_time: PropTypes.instanceOf(Date),
-    end_time: PropTypes.instanceOf(Date),
+    start_time: PropTypes.shape({
+      hour: PropTypes.string,
+      minute: PropTypes.string
+    }),
+    end_time: PropTypes.shape({
+      hour: PropTypes.string,
+      minute: PropTypes.string
+    }),
   }),
   validateAllHandler: PropTypes.func.isRequired,
   validateHandler: PropTypes.func.isRequired,
   changeHandler: PropTypes.func.isRequired,
   changeValue: PropTypes.func.isRequired,
+  changeValues: PropTypes.func.isRequired,
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
