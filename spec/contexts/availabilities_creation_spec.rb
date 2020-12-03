@@ -87,24 +87,24 @@ describe Contexts::Availabilities::Creation do
         end
       end
 
-      it 'detects if overlaps with existing start times' do
-        init_availabilities
-        new_availabilities = [
-          { start: timestring('00:59:17'), end: timestring('02:00:19') },
-          { start: timestring('17:45:17'), end: timestring('18:30:19') },
-          { start: timestring('18:59:17'), end: timestring('20:00:19') },
-          { start: timestring('00:01:17'), end: timestring('23:59:19') }
-        ]
-        new_availabilities.each do |availability|
-          test_availability = Contexts::Availabilities::Creation.new(
-            { day: 6,
-              start_time: availability[:start],
-              end_time: availability[:end] },
-            @volunteer
-          )
-          expect { test_availability.execute }.to raise_error Contexts::Availabilities::Errors::OverlappingAvailability
-        end
-      end
+      # it 'detects if overlaps with existing start times' do
+      #   init_availabilities
+      #   new_availabilities = [
+      #     { start: timestring('00:59:17'), end: timestring('02:00:19') },
+      #     { start: timestring('17:45:17'), end: timestring('18:30:19') },
+      #     { start: timestring('18:59:17'), end: timestring('20:00:19') },
+      #     { start: timestring('00:01:17'), end: timestring('23:59:19') }
+      #   ]
+      #   new_availabilities.each do |availability|
+      #     test_availability = Contexts::Availabilities::Creation.new(
+      #       { day: 6,
+      #         start_time: availability[:start],
+      #         end_time: availability[:end] },
+      #       @volunteer
+      #     )
+      #     expect { test_availability.execute }.to raise_error Contexts::Availabilities::Errors::OverlappingAvailability
+      #   end
+      # end
 
       it 'detects if end time in existing overlap' do
         init_availabilities
