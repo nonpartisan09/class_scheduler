@@ -559,8 +559,8 @@ class Header extends Component {
               to={ formatLink('/search', locale) }
             >
               <FormattedMessage
-                id='SearchBar.searchTitle'
-                defaultMessage='Search for Volunteers'
+                id='search'
+                defaultMessage='Search'
               />
             </SliderButton>
           )
