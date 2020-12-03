@@ -1,0 +1,13 @@
+.autocompleteContainer {
+    width: 4em;
+    display: inline-block;
+}
+
+.autocompleteContainer > div > div > div {
+    text-align: center;
+    width: 100%;
+}
+
+.autocompleteContainer > div > div > input {
+    text-align: center;
+}

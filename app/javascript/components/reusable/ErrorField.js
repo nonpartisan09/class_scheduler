@@ -14,11 +14,14 @@ const ErrorField = ({ error })=> {
 };
 
 ErrorField.propTypes = {
-  error: PropTypes.string
+  error: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.object
+  ]),
 };
 
 ErrorField.defaultProps = {
-  error: ''
+  error: '',
 };
 
 export default ErrorField;
