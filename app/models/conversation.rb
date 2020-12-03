@@ -30,4 +30,12 @@ class Conversation < ApplicationRecord
   def participates?(user)
     author == user || recipient == user
   end
+
+  def is_timely?
+    return true if created_at > Time.now - 2.days
+
+    messages.any? do |message|
+      message.user_id != author_id
+    end
+  end
 end

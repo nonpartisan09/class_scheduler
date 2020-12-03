@@ -939,6 +939,15 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
         how_they_found_us_options
       } = this.props;
 
+      let how_they_found_us_options_english = [...how_they_found_us_options].sort((a, b) => (a.name > b.name) ? 1 : -1);
+      let otherIndex = _.findIndex(how_they_found_us_options_english, {name: 'Other'});
+      how_they_found_us_options_english.push(how_they_found_us_options_english.splice(otherIndex, 1)[0]);
+
+      let how_they_found_us_options_spanish = [...how_they_found_us_options].sort((a, b) => (a.spanish_name > b.spanish_name) ? 1 : -1);
+      otherIndex = _.findIndex(how_they_found_us_options_spanish, {spanish_name: 'Otro'});
+      how_they_found_us_options_spanish.push(how_they_found_us_options_spanish.splice(otherIndex, 1)[0]);
+
+
       return (
         <div>
           <SelectField
@@ -958,7 +967,21 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
             onBlur={ validateHandler('how_they_found_us') }
           >
             {
-              _.map(how_they_found_us_options, ({ name, spanish_name, id }, index) =>
+              this.props.match.params[0] === ENGLISH ? _.map(how_they_found_us_options_english, ({ name, id }, index) =>
+                  (
+                    <MenuItem 
+                      key={ name + id + index }
+                      insetChildren
+                      checked={ how_they_found_us === name }
+                      value={ name }
+                      primaryText={ (
+                        <span> 
+                          { name } 
+                        </span> 
+                      ) }
+                    />
+                  )
+                ) : _.map(how_they_found_us_options_spanish, ({ name, spanish_name, id }, index) =>
                 (
                   <MenuItem 
                     key={ name + id + index }
@@ -967,11 +990,12 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                     value={ name }
                     primaryText={ (
                       <span> 
-                        { this.props.match.params[0] === ENGLISH ? name : spanish_name } 
+                        { spanish_name } 
                       </span> 
                     ) }
                   />
-                ))
+                )
+              )
             }
           </SelectField>
 
