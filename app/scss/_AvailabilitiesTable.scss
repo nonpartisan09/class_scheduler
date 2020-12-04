@@ -22,6 +22,21 @@
     display: block;
 }
 
+.timeFormatToggleContainer {
+    margin-top: 2em;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.timeFormatToggleContainer > span {
+    margin-right: 0.5em;
+}
+
+.timeFormatToggleContainer > div {
+    width: auto !important;
+}
+
 @media (max-width: 650px)  {
    .tableHideSmallScreen {
        display: none;
@@ -37,6 +52,11 @@
 
     .availabilitiesTableButton {
         margin: 12px 0;
+    }
+
+    .timeFormatToggleContainer {
+        margin-bottom: 2em;
+        justify-content: flex-start;
     }
 }
 
