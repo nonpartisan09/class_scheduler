@@ -71,6 +71,7 @@ ActiveAdmin.register User do
       :timezone,
       :updated_at,
       :url_slug,
+      :timeout,
       language_ids: [],
       languages: [ :id, :name ],
       program_ids: [],

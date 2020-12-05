@@ -60,10 +60,10 @@ class ApplicationController < ActionController::Base
     decorate_user_if_present
 
     page_content_en = <<-EOF
-<p>Thank you for completing the first part of volunteer signup. We just emailed you with next steps. If you didn't receive our email, please let us know at <a href="mailto:admin@tutoria.io">admin@tutoria.io</a>.</p>
+<p>Thank you for completing the first part of volunteer signup. We just emailed you with next steps. If you didn't receive our email, please let us know at <a href="mailto:volunteer@tutoria.io">volunteer@tutoria.io</a>.</p>
     EOF
     page_content_es = <<-EOF
-<p>Gracias por completar la primera parte de su registración como voluntario/a. Le acabamos de enviar un correo electrónico con los pasos a seguir. Si usted no ha recibido nuestro correo electrónico todavía, por favor déjenoslo saber escribiéndonos a <a href="mailto:admin@tutoria.io">admin@tutoria.io</a>.</p>
+<p>Gracias por completar la primera parte de su registración como voluntario/a. Le acabamos de enviar un correo electrónico con los pasos a seguir. Si usted no ha recibido nuestro correo electrónico todavía, por favor déjenoslo saber escribiéndonos a <a href="mailto:volunteer@tutoria.io">volunteer@tutoria.io</a>.</p>
     EOF
     page_content = {
         :en => page_content_en,
