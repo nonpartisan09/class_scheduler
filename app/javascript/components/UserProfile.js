@@ -289,7 +289,7 @@ class UserProfile extends Component {
 
   handleReviewSubmit(value, comment) {
     const { user: { url_slug }, review: { id }, currentUser: { locale } } = this.props;
-    const { id: stateId } = this.state;
+    const { id: stateId  } = this.state;
 
     const attributes = FormData.from({ review: _.toNumber(value), comment, user_id: url_slug, id });
     const method = id || this.state.id ? METHODS.PUT : METHODS.POST;

@@ -1241,7 +1241,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
     errorLanguageHandler(inputName){
       let errorEn = this.props.errors[inputName];
       let key = _.findKey(data.en, el => el == errorEn);
-      switch (this.props.locale){
+      switch (this.props.currentUser.locale){
         case 'en': return errorEn;
         case 'es':
           if (key) return data.es[key];
