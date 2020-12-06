@@ -4,6 +4,7 @@ import _ from 'lodash';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
 import Divider from 'material-ui/Divider';
+import Toggle from 'material-ui/Toggle';
 
 import { FormattedMessage } from 'react-intl';
 
@@ -20,40 +21,52 @@ import { postData } from './utils/sendData';
 import SnackBarComponent from './reusable/SnackBarComponent';
 
 import formatLink from './utils/Link';
+import AvailabilityTimeFormatPrefs from './utils/AvailabilityTimeFormatPrefs';
 
+const styles = {
+  thumbOff: {
+    backgroundColor: '#ffd6cc',
+  },
+  trackOff: {
+    backgroundColor: '#ffb39c',
+  },
+};
 class AvailabilitiesTable extends Component {
   constructor(props, context) {
     super(props, context);
 
     this.handleHideSnackBar = this.handleHideSnackBar.bind(this);
+    this.handleTimeFormatToggle = this.handleTimeFormatToggle.bind(this);
 
     this.state = {
       showSnackBar: false,
-      message: ''
+      message: '',
+      show12HourFormat: AvailabilityTimeFormatPrefs.use12HourFormat(),
     };
   }
 
   render() {
     const { availabilities, timezone, timeout } = this.props;
+    const { show12HourFormat } = this.state;
 
-    const tableContent =  _.map(availabilities, ({ day, start_time, end_time, id }) => {
+    const tableContent =  _.map(availabilities, ({ day, start_time, end_time, id, start_time_12_hour, end_time_12_hour  }) => {
       return(
         <TableRow className={ timeout ? 'availabilitiesTableRow untimelyRow' : 'availabilitiesTableRow' } key={ 'body' + day + start_time + end_time }>
           <TableRowColumn>
             { day }
           </TableRowColumn>
           <TableRowColumn>
-            { start_time }
+            { show12HourFormat ? start_time_12_hour : start_time }
           </TableRowColumn>
           <TableRowColumn>
-            { end_time }
+            { show12HourFormat ? end_time_12_hour : end_time }
           </TableRowColumn>
           { this.renderDeleteRow(id) }
         </TableRow>
       );
     });
 
-    const listContent =  _.map(availabilities, ({ day, start_time, end_time, id }) => {
+    const listContent =  _.map(availabilities, ({ day, start_time, end_time, id, start_time_12_hour, end_time_12_hour }) => {
       return(
         <div 
           key={ 'list' + day + start_time + end_time + timezone } 
@@ -64,7 +77,7 @@ class AvailabilitiesTable extends Component {
                 id='Availabilities.listDay'
                 defaultMessage='Day'
               />
-              :
+              : 
               { day }
             </span>
           </li>
@@ -75,8 +88,8 @@ class AvailabilitiesTable extends Component {
                 id='Availabilities.from'
                 defaultMessage='From'
               />
-              :
-              { start_time }
+              : 
+              { show12HourFormat ? start_time_12_hour : start_time }
             </span>
           </li>
           <li>
@@ -85,8 +98,8 @@ class AvailabilitiesTable extends Component {
                 id='Availabilities.to'
                 defaultMessage='To'
               />
-              :
-              { end_time }
+              : 
+              { show12HourFormat ? end_time_12_hour : end_time }
             </span>
           </li>
 
@@ -96,7 +109,7 @@ class AvailabilitiesTable extends Component {
                 id='Availabilities.timezone'
                 defaultMessage='Timezone'
               />
-              :
+              : 
               { timezone }
             </span>
           </li>
@@ -113,6 +126,28 @@ class AvailabilitiesTable extends Component {
 
     return (
       <div>
+        <div className='timeFormatToggleContainer'>
+          <span>
+            <FormattedMessage
+              id='AvailabilityTable.24HourFormat'
+              defaultMessage='24-Hour'
+            />
+          </span>
+          <Toggle
+            label={ (                  
+              <FormattedMessage
+                id='AvailabilityTable.12HourFormat'
+                defaultMessage='12-Hour'
+              /> 
+            ) }
+            thumbStyle={ styles.thumbOff }
+            trackStyle={ styles.trackOff }
+            labelPosition="right"
+            onToggle={ this.handleTimeFormatToggle }
+            toggled={ show12HourFormat }
+          />
+        </div>
+
         <div className='tableHideSmallScreen'>
           <Table selectable={ false }>
             <TableHeader displaySelectAll={ false }>
@@ -240,6 +275,14 @@ class AvailabilitiesTable extends Component {
   handleHideSnackBar() {
     this.setState({
       showSnackBar: false
+    });
+  }
+  
+  handleTimeFormatToggle() {
+    this.setState((prevState) => {
+      const using12Hour = prevState.show12HourFormat;
+      AvailabilityTimeFormatPrefs.toggleTimePref(using12Hour);
+      return { show12HourFormat: !using12Hour };      
     });
   }
 }
