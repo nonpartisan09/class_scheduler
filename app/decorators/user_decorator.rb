@@ -31,8 +31,7 @@ class UserDecorator
       :volunteer => @user.volunteer?,
       :city => city,
       :timeout => timeout,
-      :responsive => responsive,
-      :id => user.id
+      :responsive => responsive
     }.merge(availabilities_hash)
   end
 
@@ -56,8 +55,7 @@ class UserDecorator
         :timezone => user_timezone,
         :languages => languages,
         :rating_count => rating_count,
-        :average_rating => average_rating,
-        :id => user.id
+        :average_rating => average_rating
     }
   end
 
@@ -97,8 +95,7 @@ class UserDecorator
         :url_slug => url_slug,
         :volunteer => @user.volunteer?,
         :timeout => timeout,
-        :responsive => responsive,
-        :id => user.id
+        :responsive => responsive
     }.merge(availabilities_hash)
   end
 

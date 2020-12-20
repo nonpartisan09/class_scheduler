@@ -113,14 +113,13 @@ class ConversationIndexPage extends Component {
   }
 
   renderConversations() {
-    const { conversations, currentUser } = this.props;
+    const { conversations } = this.props;
 
     return _.map(conversations, (conversation) => {
-      const { conversee, id, conversee_avatar, is_first_message_unread, is_timely } = conversation;
+      const { conversee, id, conversee_avatar, is_first_message_unread } = conversation;
 
       return (
         <ListItem
-          className={ is_timely || !currentUser.volunteer ? '' : 'untimely-conversation' }
           onClick={ this.handleClick(id) }
           key={ conversee }
           leftAvatar={ <Avatar className='avatar' src={ conversee_avatar } /> }

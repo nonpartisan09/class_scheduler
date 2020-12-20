@@ -6,8 +6,6 @@ import RaisedButton from 'material-ui/RaisedButton';
 import Chip from 'material-ui/Chip';
 import { FormattedMessage } from 'react-intl';
 
-import { postData } from './utils/sendData';
-
 import AvailabilitiesTable from './AvailabilitiesTable';
 import formatLink from './utils/Link';
 
@@ -15,14 +13,10 @@ import PageHeader from './reusable/PageHeader';
 import { ENGLISH } from './utils/availableLocales';
 
 class AvailabilityIndexPage extends Component {
-
   render() {
-    const { currentUser: { timeout, responsive }, availabilities: availabilities } = this.props;
-    const isActive = responsive && !timeout;
-
     return (
       <div>
-        <Paper zDepth={ 1 } className={ timeout || !responsive ? 'paperOverride untimelyResponses' : 'paperOverride' } rounded={ false }>
+        <Paper zDepth={ 1 } className='paperOverride' rounded={ false }>
           <PageHeader title={ (
             <FormattedMessage
               id='AvailabilityIndexPage.Header'
@@ -35,39 +29,11 @@ class AvailabilityIndexPage extends Component {
             <FormattedMessage
               id='AvailabilityIndexPage.Help'
               defaultMessage='I can help with'
-            />
-            :
+            />:
             <ul className='availabilityIndexProgramsContainer'>
               { this.renderAvailablePrograms() }
             </ul>
-            <div className={ isActive ? 'activeAvailabilities' : 'inactiveAvailabilities' }>
-              <div>
-                <FormattedMessage 
-                  defaultMessage={ 'Availabilities are currently ' + isActive ? 'active.' : 'inactive.' }
-                  id={ isActive ? 'AvailabilityIndexPage.ActiveAvailabilities' : 'AvailabilityIndexPage.InactiveAvailabilities' }
-                />
-                <FormattedMessage 
-                  id={ responsive ? 'AvailabilityIndexPage.NoDisabledAvailabilitiesMessage' : 'AvailabilityIndexPage.DisabledAvailabilitiesMessage' }
-                  defaultMessage={ responsive ? '' : ' To re-enable availabilities, please respond to all client volunteer requests that are more than two days old.' }
-                />
-              </div>
-              &nbsp;&nbsp;
-              {
-                !!availabilities.length && (
-                  <RaisedButton
-                    primary
-                    disabled={ !responsive }
-                    onClick={ timeout || !responsive ? () => this.toggleAvailabilities(false) : () =>this.toggleAvailabilities(true) }
-                    label={ (
-                      <FormattedMessage
-                        id={ timeout || !responsive ? 'AvailabilityIndexPage.InactiveAvailabilitiesButton': 'AvailabilityIndexPage.ActiveAvailabilitiesButton' }
-                        defaultMessage={ timeout || !responsive ? 'Reactivate Availabilities' : 'Deactivate Availabilities' }
-                      />
-                    ) }
-                  />
-                )
-              }
-            </div>
+
             { this.renderAvailabilities() }
           </div>
         </Paper>
@@ -84,7 +50,7 @@ class AvailabilityIndexPage extends Component {
   }
 
   renderAvailabilities() {
-    const { availabilities, currentUser: { timezone, locale, timeout } } = this.props;
+    const { availabilities, currentUser: { timezone, locale } } = this.props;
 
     if ( _.size(availabilities) > 0 ) {
       return (
@@ -94,7 +60,6 @@ class AvailabilityIndexPage extends Component {
             timezone={ timezone }
             locale={ locale }
             deletable
-            timeout={ timeout }
           />
         </ul>
       );
@@ -117,24 +82,6 @@ class AvailabilityIndexPage extends Component {
       );
     }
   }
-
-  toggleAvailabilities(timeout){
-    const { currentUser: { locale, id } } = this.props;
-    let url;
-
-    url = `/${locale}/users?id=${id}&timeout=${timeout}`;
-
-    const requestParams = {
-      url: url,
-      method: 'PUT',
-      successCallBack: () => location.assign(formatLink('/availabilities', locale)),
-      errorCallBack: (message) =>  console.log(message)
-    };
-
-    return postData(requestParams);
-
-  }
-
 }
 
 AvailabilityIndexPage.propTypes = {
@@ -145,9 +92,6 @@ AvailabilityIndexPage.propTypes = {
     email: PropTypes.string,
     timezone: PropTypes.string,
     locale: PropTypes.string,
-    responsive: PropTypes.bool,
-    timeout: PropTypes.bool,
-    id: PropTypes.number
   })
 };
 
@@ -159,9 +103,6 @@ AvailabilityIndexPage.defaultProps = {
     email: '',
     timezone: '',
     locale: ENGLISH,
-    responsive: true,
-    timeout: false,
-    id: 0
   }
 };
 
