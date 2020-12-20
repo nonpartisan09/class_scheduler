@@ -415,7 +415,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                   />
                 )
               }
-              value={ country ? country : 'United States' }
+              value={ country ? country : '' }
               className='userFormInputField country'
               errorText={ this.errorLanguageHandler('country') }
               onChange={ this.changeCountryHandler }
@@ -1412,7 +1412,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
       address: '',
       city: '',
       state: '',
-      country: '',
+      country: 'United States',
       first_name: '',
       last_name: '',
       email: '',

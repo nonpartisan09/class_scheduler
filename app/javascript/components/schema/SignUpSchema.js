@@ -70,7 +70,13 @@ const SignUpSchema = {
   address: Joi.string().allow(''),
   city: Joi.string().allow(''),
   state: Joi.string().allow(''),
-  country: Joi.string().allow(''),
+  country: Joi.string().required().options({
+    language: {
+      any: {
+        empty: 'Please select a country'
+      },
+    }
+  }),
 
   email: Joi.string().email().required().options({
     language: {
@@ -92,7 +98,13 @@ const SignUpSchema = {
     }
   }),
   contact_permission: Joi.boolean(),
-  how_they_found_us: Joi.string().required(),
+  how_they_found_us: Joi.string().required().options({
+    language: {
+      any: {
+        empty: 'Please select an option for how you found us'
+      },
+    }
+  }),
 
   terms_and_conditions: Joi.boolean().valid(true).options({
     language: {
