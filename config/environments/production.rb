@@ -132,6 +132,4 @@ Rails.application.configure do
       },
   }
 
-  # start looping background job checking for unresponsive at midnight every day
-  ResponsiveUsersJob.set(wait: 5.minutes).perform_later
 end

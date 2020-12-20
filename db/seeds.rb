@@ -97,14 +97,12 @@ if Rails.env.development?
       first_name: 'Thomas', last_name: 'Jefferson',
       address: '10 1st Avenue', city: 'New York',
       state: 'Ny', country: 'usa',
-      locale: 'en', timezone: 'Eastern Time (US & Canada)',
-      active: true, terms_and_conditions: 1 },
+      locale: 'en', timezone: 'Eastern Time (US & Canada)' },
     { email: 'ben@domain.com', role: 'volunteer',
       first_name: 'Ben', last_name: 'Franklin',
       address: '100 1st Avenue', city: 'New York',
       state: 'Ny', country: 'usa',
-      locale: 'en', timezone: 'Eastern Time (US & Canada)',
-      active: true, terms_and_conditions: 1 },
+      locale: 'en', timezone: 'Eastern Time (US & Canada)' },
     { email: 'george@domain.com', role: 'client',
       first_name: 'George', last_name: 'Washington',
       address: '100 2nd Avenue', city: 'New York',
@@ -119,14 +117,12 @@ if Rails.env.development?
       first_name: 'Betsy', last_name: 'Ross',
       address: '100 Market St', city: 'Philadelphia',
       state: 'Pa', country: 'usa',
-      locale: 'en', timezone: 'Eastern Time (US & Canada)',
-      active: true, terms_and_conditions: 1 },
+      locale: 'en', timezone: 'Eastern Time (US & Canada)' },
     { email: 'dolly@domain.com', role: 'volunteer',
       first_name: 'Dolly', last_name: 'Madison',
       address: '100 Broad St', city: 'Philadelphia',
       state: 'Pa', country: 'usa',
-      locale: 'en', timezone: 'Eastern Time (US & Canada)',
-      active: true, terms_and_conditions: 1 },
+      locale: 'en', timezone: 'Eastern Time (US & Canada)' },
     { email: 'kap@domain.com', role: 'volunteer',
       first_name: 'Kapiolani', last_name: 'Alii',
       address: '100 Queen St', city: 'Honolulu',
@@ -146,8 +142,7 @@ if Rails.env.development?
       first_name: 'Duane', last_name: 'Johnson',
       address: '99 unknown St', city: 'Honolulu',
       state: 'Hi', country: 'usa',
-      locale: 'en', timezone: 'Hawaii',
-      active: true, terms_and_conditions: 1 },
+      locale: 'en', timezone: 'Hawaii' },
     { email: 'groucho@domain.com', role: 'client',
       first_name: 'Groucho', last_name: 'Marx',
       address: '', city: '', state: '', country: '',
@@ -182,56 +177,5 @@ if Rails.env.development?
                         timezone: u[:timezone], locale: u[:locale])
     user.roles << Role.find_by_url_slug(u[:role])
     user.save!
-
-    active_user_ids = User.volunteers.where(active: true).pluck(:id)
-
-    availabilities = [
-      { day: "Monday", start_time: "2001-01-06 05:00:00",
-        end_time: "2001-01-07 04:59:00", user_id: active_user_ids[0]
-      },
-      { day: "Tuesday", start_time: "2001-01-06 05:00:00",
-        end_time: "2001-01-07 04:59:00", user_id: active_user_ids[1]
-      },
-      { day: "Wednesday", start_time: "2001-01-06 05:00:00",
-        end_time: "2001-01-07 04:59:00", user_id: active_user_ids[2]
-      },
-      { day: "Thursday", start_time: "2001-01-06 05:00:00",
-        end_time: "2001-01-07 04:59:00", user_id: active_user_ids[3]
-      },
-      { day: "Friday", start_time: "2001-01-06 05:00:00",
-        end_time: "2001-01-07 04:59:00", user_id: active_user_ids[4]
-      }
-    ]
-
-    availabilities.each{|params| Availability.create(params)}
-
-    program_ids = Program.all.pluck(:id)
-
-    enrollments = [
-      { user_id: active_user_ids[0], program_id: program_ids[0] },
-      { user_id: active_user_ids[0], program_id: program_ids[1] },
-      { user_id: active_user_ids[0], program_id: program_ids[2] },
-      { user_id: active_user_ids[1], program_id: program_ids[0] },
-      { user_id: active_user_ids[1], program_id: program_ids[1] },
-      { user_id: active_user_ids[1], program_id: program_ids[2] },
-      { user_id: active_user_ids[2], program_id: program_ids[0] },
-      { user_id: active_user_ids[2], program_id: program_ids[1] },
-      { user_id: active_user_ids[2], program_id: program_ids[2] },
-      { user_id: active_user_ids[3], program_id: program_ids[0] },
-      { user_id: active_user_ids[3], program_id: program_ids[1] },
-      { user_id: active_user_ids[3], program_id: program_ids[2] },
-      { user_id: active_user_ids[4], program_id: program_ids[0] },
-      { user_id: active_user_ids[4], program_id: program_ids[1] },
-      { user_id: active_user_ids[4], program_id: program_ids[2] }
-    ]
-
-    enrollments.each{|params| Enrollment.create(params)}
-    languages = Language.all
-
-    User.volunteers.each do |volunteer|
-      languages.each do |language|
-        volunteer.languages << language
-      end
-    end
   end
 end

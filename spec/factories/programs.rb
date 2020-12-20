@@ -5,7 +5,7 @@ FactoryBot.define do
       if proxy.name.present?
         program.name = proxy.name
       else
-        program.name = 'ENG1'
+        program.name = 'TestProgram'
       end
     end
   end

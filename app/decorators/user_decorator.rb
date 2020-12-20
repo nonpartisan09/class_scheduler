@@ -29,9 +29,7 @@ class UserDecorator
       :timezone => user_timezone,
       :url_slug => url_slug,
       :volunteer => @user.volunteer?,
-      :city => city,
-      :timeout => timeout,
-      :responsive => responsive
+      :city => city
     }.merge(availabilities_hash)
   end
 
@@ -93,9 +91,7 @@ class UserDecorator
         :thumbnail_image => picture,
         :timezone => user_timezone,
         :url_slug => url_slug,
-        :volunteer => @user.volunteer?,
-        :timeout => timeout,
-        :responsive => responsive
+        :volunteer => @user.volunteer?
     }.merge(availabilities_hash)
   end
 
@@ -193,14 +189,6 @@ class UserDecorator
 
   def available_days
     availabilities.pluck(:day)
-  end
-
-  def responsive
-    @user.responsive?
-  end
-
-  def timeout
-    @user.timeout ||= false
   end
 
   def last_logged_in
