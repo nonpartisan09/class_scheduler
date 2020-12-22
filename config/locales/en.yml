@@ -55,6 +55,8 @@ en:
       missing_start_time: 'Start time is required.'
       overlapping_availability: 'This would overlap with some of your existing availabilities. You might want to delete them and try again.'
       unknown_error: 'An unknown error happened. Thanks for contacting us.'
+      wrong_format_start_time: 'The start time must be in the format: HH:MM'
+      wrong_format_end_time: 'The end time must be in the format: HH:MM'
   custom_success:
     messages:
       review_created: 'Success, review created'

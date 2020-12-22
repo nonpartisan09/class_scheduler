@@ -1,4 +1,6 @@
 class AvailabilitiesController < ApplicationController
+  include AvailabilitiesSorter
+
   before_action :authenticate_user!
   before_action :check_if_volunteer?, except: [:search]
   before_action :check_if_client?, only: [:search]
@@ -29,7 +31,7 @@ class AvailabilitiesController < ApplicationController
     programs = Program.all
     timezones = ActiveSupport::TimeZone.all.map(&:name)
     days = I18n.translate 'date.day_names'
-
+    
     @data = {
         :availabilities => { },
         :currentUser => user,
@@ -48,14 +50,18 @@ class AvailabilitiesController < ApplicationController
 
       Availability.transaction do
         permitted_params.each do |key, value|
+          puts ['availability.transaction','key', key, 'value', value];
           creation = Contexts::Availabilities::Creation.new(permit_nested(value), current_user)
 
           begin
             @availability = creation.execute
           rescue Contexts::Availabilities::Errors::UnknownAvailabilityError,
               Contexts::Availabilities::Errors::OverlappingAvailability,
+              Contexts::Availabilities::Errors::DayMissing,
               Contexts::Availabilities::Errors::StartTimeMissing,
+              Contexts::Availabilities::Errors::StartTimeWrongFormat,
               Contexts::Availabilities::Errors::EndTimeMissing,
+              Contexts::Availabilities::Errors::EndTimeWrongFormat,
               Contexts::Availabilities::Errors::ShortAvailability => e
             message << e.message
             status = :unprocessable_entity
@@ -72,13 +78,15 @@ class AvailabilitiesController < ApplicationController
   def index
     user = UserDecorator.new(current_user).simple_decorate
     programs = current_user.programs
-    availabilities = Availability.where(:user => current_user).collect{ |n|
+    availabilities_unsorted = Availability.where(:user => current_user).collect{ |n|
       AvailabilityDecorator.new(n, {
           :timezone => current_user_timezone,
           :user_timezone => current_user_timezone
       }).self_decorate
     }
 
+    availabilities = sort_availabilities(useI18nWeekDays(availabilities_unsorted, current_user[:locale]))
+    
     @data = {
         :currentUser => user,
         :programs => programs,
@@ -94,6 +102,23 @@ class AvailabilitiesController < ApplicationController
   end
 
   private
+
+  # Work around to convert the db's English days of the week to the user's locale
+  def useI18nWeekDays(availabilities, locale)
+    translatedAvailabilities = availabilities.map { |availability| 
+      # Get index of the English day of week stored in the db
+      I18n.locale = :en
+      day_index = I18n.t('date.day_names').index((availability[:day]))
+
+      # Get the name for the day of the week based on the user's locale
+      I18n.locale = locale
+      day_name = I18n.t('date.day_names')[day_index]     
+
+      availability[:day] = day_name
+      availability
+    }
+    translatedAvailabilities
+  end
 
   def current_user_timezone
     return current_user[:timezone] if current_user[:timezone].present?
@@ -123,4 +148,5 @@ class AvailabilitiesController < ApplicationController
         :end_time
     )
   end
+
 end

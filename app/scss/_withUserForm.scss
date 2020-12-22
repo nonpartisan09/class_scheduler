@@ -38,6 +38,12 @@
     margin: 24px 0;
 }
 
+.userFormInputFieldLocationContainer {
+    display: flex;
+    width: 500px;
+}
+
+
 .userFormInputField {
     min-width: 500px;
 }
@@ -56,11 +62,21 @@
     margin: 24px 0 12px;
 }
 
+.userFormInputField.country, .userFormInputField.state {
+        min-width: 250px;
+    }
+
 @media (max-width: 500px)  {
     .userFormInnerButton, .userFormSecondButton, .userFormOuterButton {
         display: block;
         margin: 12px 0;
         padding: 0;
+    }
+
+    
+    .userFormInputFieldLocationContainer {
+        flex-wrap: wrap;
+        width: 100%;
     }
 
     .userForm {
@@ -70,6 +86,7 @@
     .userFormInputField {
         min-width: 100%;
     }
+
 
    .userFormPasswordButton, .userFormProgramButton, .userFormLanguageButton, .userFormSaveButton {
        min-width: 100%;

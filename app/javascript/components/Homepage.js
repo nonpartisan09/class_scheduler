@@ -448,9 +448,7 @@ class Homepage extends Component {
     });
     return cards;
   }
-  /*
-    Todo: Re-implement map for client view. 
-  */ 
+  
   // renderWhereWeAre() {
   //   return(
   //     this.renderElementContainer(

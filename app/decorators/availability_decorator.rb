@@ -17,7 +17,9 @@ class AvailabilityDecorator
         :start_time => start_time,
         :end_time => end_time,
         :timezone => @user_timezone,
-        :id => id
+        :id => id,
+        :start_time_12_hour =>  time_12_hour(@availability.start_time),
+        :end_time_12_hour => time_12_hour(@availability.end_time)
     }
   end
 
@@ -26,6 +28,8 @@ class AvailabilityDecorator
         :day => current_user_day,
         :start_time => start_time,
         :end_time => end_time,
+        :start_time_12_hour =>  time_12_hour(@availability.start_time),
+        :end_time_12_hour => time_12_hour(@availability.end_time),
         :timezone => @user_timezone,
         :id => id
     }
@@ -40,18 +44,21 @@ class AvailabilityDecorator
   end
 
   def current_user_day
-    Time.zone = @timezone
-    @day ||= Time.zone.local_to_utc(@availability.start_time).strftime("%A")
+    @day ||= AvailabilityDecorator.parse_time_users_offset(@availability.start_time, @timezone).strftime("%A")
   end
-  
-  def get_time(time)
-    Time.zone = @timezone
+
+  def self.parse_time_users_offset(time, timezone)
+    Time.zone = timezone
   
     current_time = Time.zone.now 
     offset = current_time.utc_offset/3600
-     
-    user_time = ActiveSupport::TimeZone[offset].parse(time.to_s)
-    user_time.strftime("%H:%M")
+    
+    ActiveSupport::TimeZone[offset].parse(time.to_s)
+  end
+ 
+  def get_time(time)
+    user_time = AvailabilityDecorator.parse_time_users_offset(time, @timezone)
+    user_time.strftime("%H:%M") + ' ' + Time.zone.now.zone
   end 
   
   def start_time
@@ -60,5 +67,10 @@ class AvailabilityDecorator
 
   def end_time
     @end_time || get_time(@availability.end_time)
+  end
+
+  def time_12_hour(time)
+    user_time = AvailabilityDecorator.parse_time_users_offset(time, @timezone)
+    user_time.strftime("%I:%M %p") + ' ' + Time.zone.now.zone
   end
 end
