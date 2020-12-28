@@ -70,7 +70,7 @@ class UserMailer < ApplicationMailer
   def unresponsive_volunteer(volunteer, client, conversation, program)
     @volunteer, @client, @conversation, @program = volunteer, client, conversation, program
     @url = "https://tutoria.io/#{@volunteer.locale}/inbox/#{@conversation.id}"
-    mail(to: @volunteer.email, subject: 'Unresponsive to client message - Tutoría')
+    mail(to: @volunteer.email, subject: 'Untimely response to client message')
   end
 
   def unresponsive_client_eng(volunteer, client, conversation, program)
