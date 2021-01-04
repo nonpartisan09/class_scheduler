@@ -67,6 +67,24 @@ class UserMailer < ApplicationMailer
     mail(to: @user.email, subject: 'Tutoría Password Updated')
   end
 
+  def unresponsive_volunteer(volunteer, client, conversation, program)
+    @volunteer, @client, @conversation, @program = volunteer, client, conversation, program
+    @url = "https://tutoria.io/#{@volunteer.locale}/inbox/#{@conversation.id}"
+    mail(to: @volunteer.email, subject: 'Untimely response to client message')
+  end
+
+  def unresponsive_client_eng(volunteer, client, conversation, program)
+    @volunteer, @client, @conversation, @program = volunteer, client, conversation, program
+    @url = "https://tutoria.io/#{@client.locale}/inbox/#{@conversation.id}"
+    mail(to: @client.email, subject: 'Volunteer Unavailable - Tutoría')
+  end
+
+  def unresponsive_client_esp(volunteer, client, conversation, program)
+    @volunteer, @client, @conversation, @program = volunteer, client, conversation, program
+    @url = "https://tutoria.io/#{@client.locale}/inbox/#{@conversation.id}"
+    mail(to: @client.email, subject: 'Voluntario/a no disponible - Tutoría')
+  end
+  
   private
 
   def domain_name
