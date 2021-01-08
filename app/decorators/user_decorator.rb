@@ -136,7 +136,7 @@ class UserDecorator
   end
 
   def last_name
-    @user.last_name
+    @user.last_name ||= ''
   end
 
   def email

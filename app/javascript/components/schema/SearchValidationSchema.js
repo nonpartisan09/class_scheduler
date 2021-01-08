@@ -1,4 +1,5 @@
 import Joi from 'joi-browser';
+import Availability from '../utils/Availability';
 
 const SearchValidationSchema = {
   day: Joi.array().min(1).required().options({
@@ -23,21 +24,46 @@ const SearchValidationSchema = {
     }
   }),
   distance: Joi.number(),
-
-  start_time: Joi.date().timestamp().options({
-    language: {
-      any: {
-        allowOnly: 'Please select a start time'
+  start_time: Joi.object({
+    hour: Joi.string().required().regex(Availability.getHourPattern()).options({
+      language: {
+        string: {
+          regex: {
+            base:'NewAvailability.startTimeBlank',
+          }
+        }
       }
-    }
+    }),
+    minute: Joi.string().required().regex(Availability.getMinutePattern()).options({
+      language: {
+        string: {
+          regex: {
+            base:'NewAvailability.startTimeBlank',
+          }
+        }
+      }
+    }),      
   }),
-  end_time: Joi.date().timestamp().options({
-    language: {
-      any: {
-        allowOnly: 'Please enter an end time'
+  end_time: Joi.object({
+    hour: Joi.string().required().regex(Availability.getHourPattern()).options({
+      language: {
+        string: {
+          regex: {
+            base:'NewAvailability.endTimeBlank',
+          }
+        }
       }
-    }
-  })
+    }),
+    minute: Joi.string().required().regex(Availability.getMinutePattern()).options({
+      language: {
+        string: {
+          regex: {
+            base:'NewAvailability.endTimeBlank',
+          }
+        }
+      }
+    }),
+  }),  
 };
 
 export default SearchValidationSchema;

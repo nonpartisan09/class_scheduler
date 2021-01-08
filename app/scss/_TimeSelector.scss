@@ -1,0 +1,20 @@
+.timeSelectorContainer {
+    display: inline-block;
+    padding-right: 1em;
+}
+
+.timeSelectorContainer > div {
+    display: flex;
+    align-items: center;
+}
+
+.timeSelectorContainer > div > p {
+    display: inline-block;
+    padding-right: 1em;
+    font-size: 1.2em;
+}
+
+.timeSelectorContainer > div > span {
+    font-weight: bold;
+    font-size: 1.3em;
+}

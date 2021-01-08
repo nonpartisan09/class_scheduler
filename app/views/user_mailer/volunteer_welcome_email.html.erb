@@ -7,7 +7,8 @@
 <%= image_tag attachments['logo.png'].url %>
 <h1>Welcome to <%= @domain %>, <%= @user.first_name %></h1>
 <p>
-  You have successfully created a <%= @role %> account on <%= @domain %>.  This is the first step in the registration process.
+  You have successfully created a <%= @role %> account on <%= @domain %>.  
+  This is the first step in the registration process.
 </p>
 <p>
   Your username is: <%= @user.email %>.
@@ -27,29 +28,39 @@
   Here are the last steps required to become active on our platform:
 </p>
 <ol>
-  <li>
+  <li style="margin-bottom:0.5em;">
     <p>
-      <b>Screening Interview:</b> To ensure a safe and productive environment for our clients and volunteers,
-      we ask that our volunteers undergo a brief screening interview by video. This interview requires no preparation.
+      <b>Screening Interview:</b> To ensure a safe and productive environment for our clients and volunteers, 
+      we ask that our volunteers undergo a brief screening interview by video. This interview requires no preparation. 
       Feel free to call, text, or email our Volunteer Support Team to schedule. Their contact details are below:
-    </p>
-    <a href="mailto:<%= ENV['SCREENING_EMAIL_ADDRESS'] %>"><%= ENV['SCREENING_EMAIL_ADDRESS'] %></a><br>
-    <a href="tel:<%= ENV['SCREENING_PHONE_NUMBER_ATTRIBUTE'] %>"><%= ENV['SCREENING_PHONE_NUMBER_DISPLAY'] %></a>
+      </p>
+      <p>
+        <a href="mailto:<%= ENV['SCREENING_EMAIL_ADDRESS'] %>"><%= ENV['SCREENING_EMAIL_ADDRESS'] %></a><br>
+        <a href="tel:<%= ENV['SCREENING_PHONE_NUMBER_ATTRIBUTE'] %>"><%= ENV['SCREENING_PHONE_NUMBER_DISPLAY'] %></a>
+      </p>
+  </li>
+  <li style="margin-bottom:0.5em;">
     <p>
-      At the end of the screening interview, confirm with the team that they will activate your account.
-      Once done, you can proceed to Step 2 below.
+      <b>Background Check:</b>  As mentioned on our FAQ page, all new volunteers must pass a criminal background 
+      check at their expense. As of December 2020, our partner, Sterling Volunteers, charges &#36;12 USD for volunteers based 
+      in the United States and &#36;30 USD for non-US volunteers. (Pricing may change, so free to reach out to the Volunteer 
+      Support Team for an update.) Our Volunteer Support Team will walk you through the process. After the check, if 
+      there are no issues, the team will activate your account. You can then proceed to Step 3 below.
     </p>
   </li>
-  <li>
-    <b>Availabilities:</b> Please enter your availabilities so you appear in clients' search results.
-    Once logged in, this can be done from the Availabilities menu option.
+  <li style="margin-bottom:0.5em;">
+    <p>
+      <b>Availabilities:</b> Please enter your availabilities so you appear in clients' search results. Once logged 
+      in, this can be done from the Availabilities menu option.
+    </p>
   </li>
 </ol>
 <p>
-  Once Step 2 is complete, clients will be able to reach out to you for help.
+  Once Step 3 is complete, clients will be able to reach out to you for help.
 </p>
 <p>
-  If you have any questions, check out our <a href="https://<%= @domain %>/faq">FAQ page</a> or contact us at <a href="mailto:volunteer@<%= @domain %>">volunteer@<%= @domain %></a>. Thanks for dedicating your time to clients in need!
+  If you have any questions, check out our <a href="https://<%= @domain %>/faq">FAQ page</a> or contact us at 
+  <a href="mailto:volunteer@<%= @domain %>">volunteer@<%= @domain %></a>. Thanks for dedicating your time to clients in need!
 </p>
 
 <p>Yours in service,</p>

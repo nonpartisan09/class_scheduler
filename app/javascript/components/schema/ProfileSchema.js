@@ -65,6 +65,8 @@ const ProfileSchema = {
   state: Joi.string().allow(''),
   country: Joi.string().allow(''),
 
+  id: Joi.number(),
+
   email: Joi.string().email().required().options({
     language: {
       any: {

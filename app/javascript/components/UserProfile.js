@@ -143,22 +143,29 @@ class UserProfile extends Component {
                   <FormattedMessage
                     id='UserProfile.programsOffered'
                     defaultMessage='Programs'
-                  />: { programs? programs.join(', ') : '' }
+                  />
+                  : 
+                  { programs? programs.join(', ') : '' }
                 </div>
 
                 <div className='userProfileField'>
                   <FormattedMessage
                     id='UserProfile.lastLogIn'
                     defaultMessage='Last logged in'
-                  />: { user.last_logged_in}
+                  />
+                  : 
+                  { user.last_logged_in}
                 </div>
 
                 <div className='userProfileField'>
                   <FormattedMessage
                     id='UserProfile.moreInformation'
                     defaultMessage='A bit more information'
-                  />:
-                  <span> { this.renderUserDescription() } </span>
+                  />
+                  :
+                  <span> 
+                    { this.renderUserDescription() }
+                  </span>
                 </div>
               </div>
 
@@ -223,8 +230,11 @@ class UserProfile extends Component {
           <FormattedMessage
             id='UserProfile.location'
             defaultMessage='Location'
-          />:
-          <span> { this.renderUserLocation() }</span>
+          />
+          :
+          <span> 
+            { this.renderUserLocation() }
+          </span>
         </div>
       );
     }
@@ -279,7 +289,7 @@ class UserProfile extends Component {
 
   handleReviewSubmit(value, comment) {
     const { user: { url_slug }, review: { id }, currentUser: { locale } } = this.props;
-    const { id: stateId } = this.state;
+    const { id: stateId  } = this.state;
 
     const attributes = FormData.from({ review: _.toNumber(value), comment, user_id: url_slug, id });
     const method = id || this.state.id ? METHODS.PUT : METHODS.POST;
