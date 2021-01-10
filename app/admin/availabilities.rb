@@ -40,6 +40,10 @@ ActiveAdmin.register Availability do
   filter :updated_at
   filter :created_at
 
+  scope :timed_out
+  scope :not_timed_out
+
+
   form do |f|
     f.inputs do
       f.input :user_id, as: :select, collection: User.all.pluck(:email, :id)
