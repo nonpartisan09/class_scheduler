@@ -1,20 +1,18 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
-import FlatButton from 'material-ui/FlatButton';
-import RaisedButton from 'material-ui/RaisedButton';
-import Divider from 'material-ui/Divider';
+import Button from '@material-ui/core/Button';
+import Divider from '@material-ui/core/Divider';
 
 import { FormattedMessage } from 'react-intl';
 
 import {
   Table,
   TableBody,
-  TableHeader,
-  TableHeaderColumn,
+  TableHead,
   TableRow,
-  TableRowColumn,
-} from 'material-ui/Table';
+  TableCell
+} from '@material-ui/core';
 
 import { postData } from './utils/sendData';
 import SnackBarComponent from './reusable/SnackBarComponent';
@@ -39,15 +37,15 @@ class AvailabilitiesTable extends Component {
     const tableContent =  _.map(availabilities, ({ day, start_time, end_time, id }) => {
       return(
         <TableRow className='availabilitiesTableRow' key={ 'body' + day + start_time + end_time }>
-          <TableRowColumn>
+          <TableCell>
             { day }
-          </TableRowColumn>
-          <TableRowColumn>
+          </TableCell>
+          <TableCell>
             { start_time }
-          </TableRowColumn>
-          <TableRowColumn>
+          </TableCell>
+          <TableCell>
             { end_time }
-          </TableRowColumn>
+          </TableCell>
           { this.renderDeleteRow(id) }
         </TableRow>
       );
@@ -105,29 +103,29 @@ class AvailabilitiesTable extends Component {
       <div>
         <div className='tableHideSmallScreen'>
           <Table selectable={ false }>
-            <TableHeader displaySelectAll={ false }>
+            <TableHead displaySelectAll={ false }>
               <TableRow>
-                <TableHeaderColumn key='day'>
+                <TableCell key='day'>
                   <FormattedMessage
                     id='Availabilities.day'
                     defaultMessage='Day'
                   />
-                </TableHeaderColumn>
-                <TableHeaderColumn key='start_time'>
+                </TableCell>
+                <TableCell key='start_time'>
                   <FormattedMessage
                     id='startTime'
                     defaultMessage='Start Time'
                   />
-                </TableHeaderColumn>
-                <TableHeaderColumn key='end_time'>
+                </TableCell>
+                <TableCell key='end_time'>
                   <FormattedMessage
                     id='endTime'
                     defaultMessage='End Time'
                   />
-                </TableHeaderColumn>
+                </TableCell>
                 { this.renderDeleteColumn() }
               </TableRow>
-            </TableHeader>
+            </TableHead>
 
             <TableBody displayRowCheckbox={ false }>
               { tableContent }
@@ -147,7 +145,8 @@ class AvailabilitiesTable extends Component {
     if (this.props.deletable) {
       return (
         <li className='availabilitiesTableButton'>
-          <RaisedButton
+          <Button
+            variant="contained"
             primary
             fullWidth
             onClick={ this.handleDelete(id) }
@@ -167,8 +166,8 @@ class AvailabilitiesTable extends Component {
   renderDeleteRow(id) {
     if (this.props.deletable) {
       return (
-        <TableRowColumn>
-          <FlatButton
+        <TableCell>
+          <Button
             primary
             onClick={ this.handleDelete(id) }
             label={ (
@@ -178,7 +177,7 @@ class AvailabilitiesTable extends Component {
               />
               ) }
           />
-        </TableRowColumn>
+        </TableCell>
       );
     }
 
@@ -186,12 +185,12 @@ class AvailabilitiesTable extends Component {
   renderDeleteColumn() {
     if (this.props.deletable) {
       return (
-        <TableHeaderColumn key='delete'>
+        <TableCell key='delete'>
           <FormattedMessage
             id='Delete'
             defaultMessage='Delete'
           />
-        </TableHeaderColumn>
+        </TableCell>
       );
     }
   }
