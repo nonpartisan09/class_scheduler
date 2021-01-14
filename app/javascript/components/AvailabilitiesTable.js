@@ -146,7 +146,7 @@ class AvailabilitiesTable extends Component {
       return (
         <li className='availabilitiesTableButton'>
           <Button
-            variant="contained"
+            variant='contained'
             primary
             fullWidth
             onClick={ this.handleDelete(id) }

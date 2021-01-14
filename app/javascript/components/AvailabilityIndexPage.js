@@ -1,9 +1,9 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Paper from 'material-ui/Paper';
-import RaisedButton from 'material-ui/RaisedButton';
-import Chip from 'material-ui/Chip';
+import Paper from '@material-ui/core/Paper';
+import Button from '@material-ui/core/Button';
+import Chip from '@material-ui/core/Chip';
 import { FormattedMessage } from 'react-intl';
 
 import AvailabilitiesTable from './AvailabilitiesTable';
@@ -67,7 +67,8 @@ class AvailabilityIndexPage extends Component {
       return (
         <div>
           <a href={ formatLink('/availabilities/new', locale) }>
-            <RaisedButton
+            <Button
+              variant='contained'
               primary
               className='conversationButton'
               label={ (
