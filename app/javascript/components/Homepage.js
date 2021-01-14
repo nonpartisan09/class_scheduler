@@ -33,7 +33,7 @@ import {
   // FormGroup,
   // Grid,
   // ButtonGroup
-} from '@material-ui/core';
+} from '@@material-ui/core/core';
 import validate from 'react-joi-validation';
 import PropTypes from 'prop-types';
 

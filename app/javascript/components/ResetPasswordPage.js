@@ -6,8 +6,8 @@ import Joi from 'joi-browser';
 import validate from 'react-joi-validation';
 import { FormattedMessage } from 'react-intl';
 
-import RaisedButton from 'material-ui/RaisedButton';
-import TextField from 'material-ui/TextField';
+import RaisedButton from '@material-ui/core/RaisedButton';
+import TextField from '@material-ui/core/TextField';
 
 import SnackBarComponent from './reusable/SnackBarComponent';
 import { getData } from './utils/sendData';

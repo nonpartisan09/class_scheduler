@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import FlatButton from 'material-ui/FlatButton';
+import FlatButton from '@material-ui/core/FlatButton';
 import { FormattedMessage } from 'react-intl';
-import { CardActions } from 'material-ui/Card';
+import { CardActions } from '@material-ui/core/Card';
 import { Link } from 'react-router-dom';
-import RaisedButton from 'material-ui/RaisedButton';
-import EmailIcon from 'material-ui/svg-icons/communication/email';
+import RaisedButton from '@material-ui/core/RaisedButton';
+import EmailIcon from '@material-ui/core/svg-icons/communication/email';
 
 import formatLink from '../utils/Link';
 

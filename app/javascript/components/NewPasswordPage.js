@@ -6,9 +6,9 @@ import { FormattedMessage } from 'react-intl';
 import Joi from 'joi-browser';
 import validate from 'react-joi-validation';
 
-import RaisedButton from 'material-ui/RaisedButton';
-import FlatButton from 'material-ui/FlatButton';
-import TextField from 'material-ui/TextField';
+import RaisedButton from '@material-ui/core/RaisedButton';
+import FlatButton from '@material-ui/core/FlatButton';
+import TextField from '@material-ui/core/TextField';
 
 import FormData from './utils/FormData';
 import SnackBarComponent from './reusable/SnackBarComponent';

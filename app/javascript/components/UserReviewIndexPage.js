@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
-import Paper from 'material-ui/Paper';
+import Paper from '@material-ui/core/Paper';
 import { FormattedMessage } from 'react-intl';
 import PageHeader from './reusable/PageHeader';
 

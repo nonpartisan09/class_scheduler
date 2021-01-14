@@ -6,12 +6,12 @@ import { FormattedMessage } from 'react-intl';
 import Joi from 'joi-browser';
 import validate from 'react-joi-validation';
 
-import FlatButton from 'material-ui/FlatButton';
-import RaisedButton from 'material-ui/RaisedButton';
-import SelectField from 'material-ui/SelectField';
-import MenuItem from 'material-ui/MenuItem';
-import TimePicker from 'material-ui/TimePicker';
-import TextField from 'material-ui/TextField';
+import FlatButton from '@material-ui/core/FlatButton';
+import RaisedButton from '@material-ui/core/RaisedButton';
+import SelectField from '@material-ui/core/SelectField';
+import MenuItem from '@material-ui/core/MenuItem';
+import TimePicker from '@material-ui/core/TimePicker';
+import TextField from '@material-ui/core/TextField';
 
 import FormData from './utils/FormData';
 import formatLink from './utils/Link';

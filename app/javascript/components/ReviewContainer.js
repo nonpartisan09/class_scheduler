@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 
-import RaisedButton from 'material-ui/RaisedButton';
-import TextField from 'material-ui/TextField';
+import RaisedButton from '@material-ui/core/RaisedButton';
+import TextField from '@material-ui/core/TextField';
 import { FormattedMessage } from 'react-intl';
 
 class ReviewContainer extends Component {

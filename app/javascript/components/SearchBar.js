@@ -6,10 +6,10 @@ import QueryString from 'query-string';
 import validate from 'react-joi-validation';
 import { FormattedMessage } from 'react-intl';
 
-import TextField from 'material-ui/TextField';
-import SelectField from 'material-ui/SelectField';
-import MenuItem from 'material-ui/MenuItem';
-import RaisedButton from 'material-ui/RaisedButton';
+import TextField from '@material-ui/core/TextField';
+import SelectField from '@material-ui/core/SelectField';
+import MenuItem from '@material-ui/core/MenuItem';
+import RaisedButton from '@material-ui/core/RaisedButton';
 
 import SearchValidationSchema from './schema/SearchValidationSchema';
 import { getData } from './utils/sendData';

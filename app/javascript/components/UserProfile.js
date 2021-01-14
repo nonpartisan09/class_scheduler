@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import { Link } from 'react-router-dom';
-import Paper from 'material-ui/Paper';
-import RaisedButton from 'material-ui/RaisedButton';
-import FlatButton from 'material-ui/FlatButton';
-import RefreshIndicator from 'material-ui/RefreshIndicator';
+import Paper from '@material-ui/core/Paper';
+import RaisedButton from '@material-ui/core/RaisedButton';
+import FlatButton from '@material-ui/core/FlatButton';
+import RefreshIndicator from '@material-ui/core/RefreshIndicator';
 
 import { FormattedMessage } from 'react-intl';
-import FloatingActionButton from 'material-ui/FloatingActionButton';
-import EditIcon from 'material-ui/svg-icons/image/edit';
+import FloatingActionButton from '@material-ui/core/FloatingActionButton';
+import EditIcon from '@material-ui/core/svg-icons/image/edit';
 import METHODS from './utils/RestConstants';
 
 import { postData } from './utils/sendData';

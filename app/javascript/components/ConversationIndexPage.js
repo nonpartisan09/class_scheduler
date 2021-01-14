@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
 import PropTypes from 'prop-types';
-import Paper from 'material-ui/Paper';
-import Subheader from 'material-ui/Subheader';
-import CloseIcon from 'material-ui/svg-icons/navigation/close';
+import Paper from '@material-ui/core/Paper';
+import Subheader from '@material-ui/core/Subheader';
+import CloseIcon from '@material-ui/core/svg-icons/navigation/close';
 import { FormattedMessage } from 'react-intl';
-import Avatar from 'material-ui/Avatar';
+import Avatar from '@material-ui/core/Avatar';
 
-import { List, ListItem } from 'material-ui/List';
-import RaisedButton from 'material-ui/RaisedButton';
+import { List, ListItem } from '@material-ui/core/List';
+import RaisedButton from '@material-ui/core/RaisedButton';
 
 import formatLink from './utils/Link';
 import PageHeader from './reusable/PageHeader';

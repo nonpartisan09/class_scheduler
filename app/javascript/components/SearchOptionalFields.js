@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import TimePicker from 'material-ui/TimePicker';
-import MenuItem from 'material-ui/MenuItem';
-import SelectField from 'material-ui/SelectField';
-import FlatButton from 'material-ui/FlatButton';
+import TimePicker from '@material-ui/core/TimePicker';
+import MenuItem from '@material-ui/core/MenuItem';
+import SelectField from '@material-ui/core/SelectField';
+import FlatButton from '@material-ui/core/FlatButton';
 import { FormattedMessage } from 'react-intl';
 
 const UNIT = 'miles';

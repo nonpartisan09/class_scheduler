@@ -5,10 +5,10 @@ import { FormattedMessage } from 'react-intl';
 
 import validate from 'react-joi-validation';
 
-import Paper from 'material-ui/Paper';
-import TextField from 'material-ui/TextField';
-import FloatingActionButton from 'material-ui/FloatingActionButton';
-import SendIcon from 'material-ui/svg-icons/content/send';
+import Paper from '@material-ui/core/Paper';
+import TextField from '@material-ui/core/TextField';
+import FloatingActionButton from '@material-ui/core/FloatingActionButton';
+import SendIcon from '@material-ui/core/svg-icons/content/send';
 
 import MessageSchema from './schema/MessageSchema';
 import FormData from './utils/FormData';

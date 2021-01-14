@@ -2,17 +2,17 @@ import React, { Component } from 'react';
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 
-import Badge from 'material-ui/Badge';
-import Paper from 'material-ui/Paper';
-import TextField from 'material-ui/TextField';
-import Checkbox from 'material-ui/Checkbox';
-import RaisedButton from 'material-ui/RaisedButton';
-import FlatButton from 'material-ui/FlatButton';
-import MenuItem from 'material-ui/MenuItem';
-import SelectField from 'material-ui/SelectField';
-import PhotoIcon from 'material-ui/svg-icons/image/photo';
-import InfoIcon from 'material-ui/svg-icons/action/info';
-import Toggle from 'material-ui/Toggle';
+import Badge from '@material-ui/core/Badge';
+import Paper from '@material-ui/core/Paper';
+import TextField from '@material-ui/core/TextField';
+import Checkbox from '@material-ui/core/Checkbox';
+import RaisedButton from '@material-ui/core/RaisedButton';
+import FlatButton from '@material-ui/core/FlatButton';
+import MenuItem from '@material-ui/core/MenuItem';
+import SelectField from '@material-ui/core/SelectField';
+import PhotoIcon from '@material-ui/core/svg-icons/image/photo';
+import InfoIcon from '@material-ui/core/svg-icons/action/info';
+import Toggle from '@material-ui/core/Toggle';
 import validate, { useSecondArgument } from 'react-joi-validation';
 
 import { FormattedMessage } from 'react-intl';

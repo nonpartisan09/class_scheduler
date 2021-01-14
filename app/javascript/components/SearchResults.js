@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 import ReactPaginate from 'react-paginate';
 import { FormattedMessage } from 'react-intl';
 
-import DropDownMenu from 'material-ui/DropDownMenu';
-import MenuItem from 'material-ui/MenuItem';
+import DropDownMenu from '@material-ui/core/DropDownMenu';
+import MenuItem from '@material-ui/core/MenuItem';
 import SearchResultItem from './SearchResultItem';
 import { HIGHEST, RECENT, CLOSEST, NEWEST } from './SortFilter';
 import { getData } from './utils/sendData';
