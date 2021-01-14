@@ -7,7 +7,8 @@ import CloseIcon from '@material-ui/core/svg-icons/navigation/close';
 import { FormattedMessage } from 'react-intl';
 import Avatar from '@material-ui/core/Avatar';
 
-import { List, ListItem } from '@material-ui/core/List';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
 import RaisedButton from '@material-ui/core/RaisedButton';
 
 import formatLink from './utils/Link';
