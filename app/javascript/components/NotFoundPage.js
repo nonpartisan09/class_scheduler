@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Paper from '@material-ui/core/Paper';
 
 import { FormattedMessage } from 'react-intl';
-import RaisedButton from '@material-ui/core/RaisedButton';
+import Button from '@material-ui/core/Button';
 import './utils/CheckMobile';
 import Logo from './reusable/Logo';
 
@@ -32,7 +32,8 @@ class NotFoundPage extends Component {
             />
           </div>
           <a href={ formatLink('/', locale) }>
-            <RaisedButton
+            <Button
+              variant='contained'
               primary
               label={ (
                 <FormattedMessage
