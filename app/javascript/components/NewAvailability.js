@@ -6,11 +6,8 @@ import { FormattedMessage } from 'react-intl';
 import Joi from 'joi-browser';
 import validate from 'react-joi-validation';
 
-import Button from '@material-ui/core/Button';
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
-import TimePicker from '@material-ui/pickers/TimePicker';
-import TextField from '@material-ui/core/TextField';
+import Button from 'material-ui/Button';
+import TextField from 'material-ui/TextField';
 
 import FormData from './utils/FormData';
 import formatLink from './utils/Link';
@@ -18,74 +15,83 @@ import ErrorField from './reusable/ErrorField';
 import { postData } from './utils/sendData';
 import PageHeader from './reusable/PageHeader';
 
-const nowDate = new Date();
-const DEFAULT_START = _.toString(new Date(nowDate.setHours(0, 0)));
-const DEFAULT_END = _.toString(new Date(nowDate.setHours(23, 59)));
+import AvailabilitySelector from './AvailabilitySelector';
+import AvailabilitiesMapping from './utils/AvailabilitiesMapping';
+import Availability from './utils/Availability';
 
-const schema = Joi.object({}).pattern(/[0-9]+/, Joi.object({
-    day: Joi.number().required().options({
-      language: {
-        number: {
-          base: 'Please select a day',
-          any: 'Please select a day',
-          empty: 'Please select a day'
-        }
+const schema = Joi.object({}).pattern(/^availabilities$/, Joi.array().required().min(1).items(Joi.object({
+  days: Joi.array().required().min(1).items(Joi.number().min(0).max(6)).options({
+    language: {
+      array: {
+        min: 'NewAvailability.selectDayError',
       }
-    }),
-    start_time: Joi.date().default(DEFAULT_START).options({
+    }
+  }),
+  startTime: Joi.object({
+    hour: Joi.string().required().regex(Availability.getHourPattern()).options({
       language: {
-        date: {
-          timestamp: {
-            javascript: 'Please select a start time'
+        string: {
+          regex: {
+            base:'NewAvailability.startTimeBlank',
           }
         }
       }
     }),
-    end_time: Joi.date().default(DEFAULT_END).options({
+    minute: Joi.string().required().regex(Availability.getMinutePattern()).options({
       language: {
-        date: {
-          timestamp: {
-            javascript: 'Please select an end time'
+        string: {
+          regex: {
+            base:'NewAvailability.startTimeBlank',
           }
         }
       }
-    })
-}));
+    }),      
+  }),
+  endTime: Joi.object({
+    hour: Joi.string().required().regex(Availability.getHourPattern()).options({
+      language: {
+        string: {
+          regex: {
+            base:'NewAvailability.endTimeBlank',
+          }
+        }
+      }
+    }),
+    minute: Joi.string().required().regex(Availability.getMinutePattern()).options({
+      language: {
+        string: {
+          regex: {
+            base:'NewAvailability.endTimeBlank',
+          }
+        }
+      }
+    }),      
+  }) 
+})));
 
 function validateTimes({ values, errors }, callback){
-  _.each(values, (item, index) => {
+  if (values['availabilities']) {
+    values['availabilities'].forEach((availability, index) => {
+      const startTimeIsValid = Availability.timeIsValid(availability.startTime);
+      const endTimeIsValid = Availability.timeIsValid(availability.endTime);
+      if(startTimeIsValid && endTimeIsValid)  {
+        const sameTime = Availability.timesAreIdentical(availability.startTime, availability.endTime);
+        const endTooEarly = Availability.endTimeIsBeforeStartTime(availability.startTime, availability.endTime);
 
-    if (item.start_time && item.end_time) {
-      const endTimeIsBeforeStartTime = item.end_time < item.start_time;
-      const startTimeError =
-        (
-          <FormattedMessage
-            id='NewAvailability.startTimeError'
-            defaultMessage='Please select a start time chronologically before end time'
-          />
-        );
-
-        const endTimeError =
-          (
-            <FormattedMessage
-              id='NewAvailability.endTimeError'
-              defaultMessage='Please select an end time chronologically after start time'
-            />
-          );
-
-      if (endTimeIsBeforeStartTime) {
-         _.set(errors, `${index}.start_time`, startTimeError);
-         _.set(errors, `${index}.end_time`, endTimeError);
+        // If errors are found and the availabilities errors array has not yet been defined
+        if(!errors['availabilities'] && (sameTime || endTooEarly)) {
+          errors['availabilities'] = [];
+        }
+        if(sameTime) {
+          const error = 'NewAvailability.startTimeMatchesEndTimeError';
+          _.set(errors, `availabilities[${index}].endTime`, error);
+        } else if(endTooEarly) {
+         const error = 'NewAvailability.endTimeIsBeforeStartTimeError';
+          _.set(errors, `availabilities[${index}].endTime`, error);
+        } 
       }
-    }
-
-    if (item.start_time && !item.end_time) {
-      return item.end_time = new Date(nowDate.setHours(23, 59));
-    } else if (item.end_time && !item.start_time) {
-      return item.start_time = new Date(nowDate.setHours(0, 0));
-    }
-  });
-
+    });
+  }
   callback({ values, errors });
 }
 
@@ -93,13 +99,11 @@ class NewAvailability extends Component {
   constructor (props, context) {
     super(props, context);
 
-    this.changeDayHandler = this.changeDayHandler.bind(this);
     this.handleAddAvailability = this.handleAddAvailability.bind(this);
     this.handleRemoveAvailability = this.handleRemoveAvailability.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
 
     this.state = {
-      numberOfAvailabilities: 1,
       error: { },
       days: props.days
     };
@@ -172,15 +176,17 @@ class NewAvailability extends Component {
       const { errors } = this.props;
 
       if (_.size(errors) === 0) {
-        const { availabilities, currentUser: { locale } } = this.props;
+        const { currentUser: { locale } } = this.props;
+        const { availabilities } = this.props.data;
 
-        const attributes = FormData.from({ availabilities });
+        const availabilityMapping = new AvailabilitiesMapping(availabilities);
+        const attributes = FormData.from( availabilityMapping.getExpandedAvailabilities() );
 
         console.warn('attributes:');
         console.warn(attributes);
 
         const requestParams = {
-          url: '/availabilities',
+          url: `/${locale}/availabilities`,
           attributes,
           method: 'POST',
           successCallBack: () => {
@@ -188,7 +194,7 @@ class NewAvailability extends Component {
           },
           errorCallBack: (message) => {
             this.setState({
-              error: message
+              error: availabilityMapping.getErrorsCorrectIndices(message)
             });
           }
         };
@@ -199,83 +205,81 @@ class NewAvailability extends Component {
 
   }
 
+  availabilityChangeHandler = ( elementIndex ) => (newAvailability) => {
+    const { changeValue, errors } = this.props;
+    const { error } = this.state;
+
+    // If any errors were found when attempting to aubmit them, clear the errors
+    // after user chanages the avilability time
+    if (!_.isEmpty(error)) {
+      this.setState({ error: { } });
+    }
+    
+    // Force end times of 00:00 to 23:59
+    if (Availability.endTimeIsMidnight(newAvailability.endTime)) {
+      newAvailability.endTime = {hour: '23', minute: '59'};
+    }
+
+    // Only validate new values after an error was found. This will 
+    // remove the errors as the user fixes them
+    const validate = _.isEmpty(errors) ? false : true;
+    changeValue(`availabilities[${elementIndex}]`, newAvailability, { validate: validate } );
+  }
+  
+  getAvailabilityErrorsFlattened = (errors) => {
+    const errorsFlat = new Set();
+    Object.values(errors).forEach(error => {
+      if (typeof error === 'string') {
+        errorsFlat.add(error);
+      }else {
+        Object.values(error).forEach(error => {
+          errorsFlat.add(error);
+        });
+      }
+    });
+
+    return Array.from(errorsFlat);
+  };
+
+  renderAvailabilityErrors = (errors) => {
+    const errorsList = this.getAvailabilityErrorsFlattened(errors);
+    return errorsList.map((error) => (
+      <ErrorField 
+        key={ error } 
+        error={ (
+          <FormattedMessage
+            id={ error }
+            defaultMessage={ error }
+          /> 
+        ) } 
+      />
+    ));
+  };
+
   renderAvailabilities() {
-    const { numberOfAvailabilities } = this.state;
-    const { changeHandler, validateAllHandler } = this.props;
+    const { availabilities } = this.props.data;
+    const numberOfAvailabilities = availabilities.length;
 
     return _.times(numberOfAvailabilities, (index) => {
-      const { availabilities, errors } = this.props;
-      const currentAvailability = availabilities[index] || { };
-      const { day, start_time, end_time } = currentAvailability;
       const { error, days } = this.state;
+      const { errors } = this.props;
+      const availability = availabilities[index];
+      const availabilityErrors = errors['availabilities'] && errors['availabilities'][index];
 
       return (
         <div key={ index } className='availabilitiesContainer'>
+          <AvailabilitySelector 
+            days={ days }
+            selectedDays={ availability.days } 
+            startTime={ availability.startTime }
+            endTime={ availability.endTime } 
+            onChange={ this.availabilityChangeHandler(index) } 
+          />
+          
           <div className='newAvailabilityErrorField'>
-            <ErrorField error={ error && error[index] } />
+            <ErrorField error={ (error && error[index]) } />
+            { availabilityErrors ? this.renderAvailabilityErrors(availabilityErrors) : null }
           </div>
-
-          <Select
-            hintText={ (
-              <FormattedMessage
-                id='NewAvailability.selectDay'
-                defaultMessage='Select Day'
-              />
-              ) }
-            value={ currentAvailability? day: '' }
-            errorText={ _.get(errors, `${index}.day`) }
-            onChange={ changeHandler(`${index}.day`, { validate: true }) }
-            onBlur={ validateAllHandler }
-            fullWidth
-          >
-            { _.map(days, (value, index) => (
-              <MenuItem
-                key={ value + index }
-                insetChildren
-                checked={ availabilities[index] && availabilities[index].day === value }
-                value={ index }
-                primaryText={ (
-                  <span> 
-                    { value }
-                  </span>
-              ) } 
-              />
-            )) }
-          </Select>
-
-          <TimePicker
-            format='24hr'
-            ampm={ false }
-            hintText={ (
-              <FormattedMessage
-                id='NewAvailability.selectStartTime'
-                defaultMessage='Start Time - 24Hr Format'
-              />
-            ) }
-            value={ currentAvailability? start_time : { } }
-            errorText={ _.get(errors, `${index}.start_time`) }
-            onChange={ changeHandler(`${index}.start_time`, {  validate: true }) }
-            onDismiss={ validateAllHandler }
-            autoOk
-            fullWidth
-          />
-
-          <TimePicker
-            format='24hr'
-            ampm={ false }
-            hintText={ (
-              <FormattedMessage
-                id='NewAvailability.selectEndTime'
-                defaultMessage='End Time - 24Hr Format'
-              />
-            ) }
-            value={ currentAvailability? end_time : { } }
-            errorText={ _.get(errors, `${index}.end_time`) }
-            onChange={ changeHandler(`${index}.end_time`, {  validate: true }) }
-            onDismiss={ validateAllHandler }
-            autoOk
-            fullWidth
-          />
 
           <Button
             primary
@@ -292,7 +296,7 @@ class NewAvailability extends Component {
               <Button
                 primary
                 label={ <FormattedMessage id='NewAvailability.removeAvailability' defaultMessage='Remove availability' /> }
-                onClick={ this.handleRemoveAvailability }
+                onClick={ () => this.handleRemoveAvailability(index) }
               />
             ) }
         </div>
@@ -301,32 +305,17 @@ class NewAvailability extends Component {
   }
 
   handleAddAvailability() {
-    const { errors } = this.props;
-
-    if (_.size(errors) === 0) {
-      const { numberOfAvailabilities } = this.state;
-
-      this.setState({
-        numberOfAvailabilities: numberOfAvailabilities+1
-      });
-    }
+    const { pushValue } = this.props;
+    pushValue('availabilities', Availability.getDefaultAvailability());
   }
 
-  handleRemoveAvailability() {
-    const { numberOfAvailabilities } = this.state;
-
-    this.setState({
-      numberOfAvailabilities: numberOfAvailabilities-1
-    });
-  }
-
-  changeDayHandler(path) {
-
-    return (proxy, index, value) => {
-      const { changeValue } = this.props;
-
-      changeValue(`${path}.day`, value);
-    };
+  handleRemoveAvailability = ( indexToRemove ) => {
+    const { changeValue } = this.props;
+    const { availabilities } = this.props.data;
+    const updatedAvailabilities = availabilities.filter( 
+      (availability, index) => index !== indexToRemove
+    );
+    changeValue('availabilities', updatedAvailabilities );
   }
 }
 
@@ -338,22 +327,17 @@ NewAvailability.propTypes = {
     timezone: PropTypes.string,
     locale: PropTypes.string,
   }),
-
-  availabilities: PropTypes.shape({
-    0: PropTypes.shape({
-      start_time: PropTypes.object,
-      end_time: PropTypes.object,
-      day: PropTypes.number,
-    })
+  data: PropTypes.shape({
+    availabilities: PropTypes.array
   }),
   days: PropTypes.array,
-  changeHandler: PropTypes.func.isRequired,
   changeValue: PropTypes.func.isRequired,
+  pushValue: PropTypes.func.isRequired,
   validateAllHandler: PropTypes.func.isRequired,
   validateAll: PropTypes.func.isRequired,
   location: PropTypes.shape({
     search: PropTypes.string,
-  })
+  }),
 };
 
 NewAvailability.defaultProps = {
@@ -363,12 +347,8 @@ NewAvailability.defaultProps = {
   },
   days: [],
   errors: {},
-  availabilities: {
-    0: {
-      start_time: {},
-      end_time: {},
-      day: null,
-    }
+  data: {
+    availabilities: [ Availability.getDefaultAvailability() ]
   },
 };
 
@@ -378,8 +358,7 @@ NewAvailability.contextTypes = {
 
 const validationOptions = {
   joiSchema: schema,
-  only: 'availabilities',
-  allowUnknown: true,
+  only: 'data',
   validator: validateTimes
 };
 

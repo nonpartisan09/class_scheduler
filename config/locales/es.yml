@@ -56,6 +56,8 @@ es:
       missing_start_time: 'La hora de comienzo es obligatoria.'
       overlapping_availability: 'Esto se superpondría con algunas de sus disponibilidades existentes. Es posible que desee eliminarlos y intentar de nuevo.'
       unknown_error: 'Ocurrió un error desconocido. Gracias por contactarnos.'
+      wrong_format_start_time: 'La hora de inicio debe estar el formato: HH:MM'
+      wrong_format_end_time: 'La hora de finalización debe estar el formato: HH:MM'
   custom_success:
     messages:
       review_created: 'Success, review created'

@@ -27,31 +27,7 @@ class SearchOptionalFields extends Component {
   render() {
     return (
       <div className='searchBarOptionalFieldContainer'>
-        <div className='searchBarStartTimeButton'>
-          <FlatButton
-            primary
-            label={ <FormattedMessage id='startTime' /> }
-            onClick={ this.handleToggleStartTime }
-            fullWidth
-          />
-        </div>
-
-        <div className='searchBarEndTimeButton'>
-          <FlatButton
-            primary
-            label={ <FormattedMessage id='endTime' /> }
-            fullWidth
-            onClick={ this.handleToggleEndTime }
-          />
-        </div>
-        <div className='searchBarStartTimePickerContainer'>
-          { this.renderStartTime() }
-        </div>
-        <div className='searchBarEndTimePickerContainer'>
-          { this.renderEndTime() }
-        </div>
-
-        { this.renderDistanceButton() }
+         { this.renderDistanceButton() }
 
         { this.renderDistance() }
       </div>
