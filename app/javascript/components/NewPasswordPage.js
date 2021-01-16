@@ -6,8 +6,7 @@ import { FormattedMessage } from 'react-intl';
 import Joi from 'joi-browser';
 import validate from 'react-joi-validation';
 
-import RaisedButton from '@material-ui/core/RaisedButton';
-import FlatButton from '@material-ui/core/FlatButton';
+import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 
 import FormData from './utils/FormData';
@@ -72,11 +71,11 @@ class NewPasswordPage extends Component {
 
           <div className='signInLinkSecondaryContainer'>
             <a href={ formatLink('/sign_up/client', locale) } className='signInLinkSecondary'>
-              <FlatButton primary label={ <FormattedMessage id='signUpClient' /> } />
+              <Button primary label={ <FormattedMessage id='signUpClient' /> } />
             </a>
 
             <a href={ formatLink('/sign_up/volunteer', locale) } className='signInLinkSecondary'>
-              <FlatButton primary label={ <FormattedMessage id='signUpVolunteer' /> } />
+              <Button primary label={ <FormattedMessage id='signUpVolunteer' /> } />
             </a>
           </div>
 
@@ -88,7 +87,8 @@ class NewPasswordPage extends Component {
 
   renderSubmitButton() {
     return (
-      <RaisedButton
+      <Button
+        variant='contained'
         primary
         label={ (
           <FormattedMessage
