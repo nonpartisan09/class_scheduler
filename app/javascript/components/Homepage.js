@@ -33,7 +33,7 @@ import {
   // FormGroup,
   // Grid,
   // ButtonGroup
-} from '@@material-ui/core/core';
+} from '@material-ui/core/';
 import validate from 'react-joi-validation';
 import PropTypes from 'prop-types';
 
@@ -374,7 +374,7 @@ class Homepage extends Component {
   }
 
   toggleVideoSize() {
-    this.state.enlargeVideo ? this.setState({ enlargeVideo: false }) : this.setState({ enlargeVideo: true })
+    this.state.enlargeVideo ? this.setState({ enlargeVideo: false }) : this.setState({ enlargeVideo: true });
   }
 
   getButtonLanguage(locale) {
