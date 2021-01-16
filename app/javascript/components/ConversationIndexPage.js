@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import Paper from '@material-ui/core/Paper';
-import Subheader from '@material-ui/core/Subheader';
-import CloseIcon from '@material-ui/core/svg-icons/navigation/close';
+import ListSubheader from '@material-ui/core/ListSubheader';
+import CloseIcon from '@material-ui/icons/Close';
 import { FormattedMessage } from 'react-intl';
 import Avatar from '@material-ui/core/Avatar';
 
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import RaisedButton from '@material-ui/core/RaisedButton';
+import Button from '@material-ui/core/Button';
 
 import formatLink from './utils/Link';
 import PageHeader from './reusable/PageHeader';
@@ -21,7 +21,7 @@ class ConversationIndexPage extends Component {
     this.handleClose = this.handleClose.bind(this);
 
     this.state = {
-        showAlert: localStorage.getItem('showAlertInfo')
+      showAlert: localStorage.getItem('showAlertInfo')
     };
   }
 
@@ -34,10 +34,10 @@ class ConversationIndexPage extends Component {
               id='ConversationIndexPage.header'
               defaultMessage='Inbox'
             />
-            ) } />
-          { this.renderAlertInfo() }
+          ) } />
+          {this.renderAlertInfo()}
           <div className='conversationBox'>
-            { this.renderInbox() }
+            {this.renderInbox()}
           </div>
         </Paper>
       </div>
@@ -45,40 +45,41 @@ class ConversationIndexPage extends Component {
   }
 
   renderAlertInfo() {
-    if (localStorage.getItem('showAlertInfo') !== 'hidden' || this.state.showAlert !== 'hidden' ) {
-        return (
-          <div className='alert alertInfo'>
-            <FormattedMessage
-              id='ConversationIndexPage.alertInfo'
-              defaultMessage=' Please note messages older than a month are automatically deleted.'
-                />
-            <span className='alertCloseButton' onClick={ this.handleClose }>
-              <CloseIcon color='#0c5460' style={ { width: '20x', height: '20px' } } />
-            </span>
-          </div>
-        );
+    if (localStorage.getItem('showAlertInfo') !== 'hidden' || this.state.showAlert !== 'hidden') {
+      return (
+        <div className='alert alertInfo'>
+          <FormattedMessage
+            id='ConversationIndexPage.alertInfo'
+            defaultMessage=' Please note messages older than a month are automatically deleted.'
+          />
+          <span className='alertCloseButton' onClick={this.handleClose}>
+            <CloseIcon color='#0c5460' style={{ width: '20x', height: '20px' }} />
+          </span>
+        </div>
+      );
     }
   }
 
   renderInbox() {
     const { conversations } = this.props;
 
-    if (_.size(conversations) > 0 ) {
+    if (_.size(conversations) > 0) {
       return this.renderConversations();
     } else {
       const { currentUser: { volunteer, client, locale } } = this.props;
-      const button = function(){
+      const button = function () {
         if (client) {
           return (
             <a href={ formatLink('/search', locale) }>
-              <RaisedButton
+              <Button
+                variant='contained'
                 primary
                 label={ (
                   <FormattedMessage
                     id='ConversationIndexPage.Search'
                     defaultMessage='Search for volunteers'
                   />
-                  ) }
+                ) }
                 className='conversationButton'
               />
             </a>
@@ -86,10 +87,11 @@ class ConversationIndexPage extends Component {
         } else if (volunteer) {
           return (
             <a href={ formatLink('/availabilities/new', locale) }>
-              <RaisedButton
+              <Button
+                variant='contained'
                 primary
                 className='conversationButton'
-                label={ (
+                label={(
                   <FormattedMessage
                     id='availabilityCreateNew'
                   />
@@ -101,13 +103,13 @@ class ConversationIndexPage extends Component {
       }();
       return (
         <List>
-          <Subheader>
+          <ListSubheader>
             <FormattedMessage
               id='ConversationIndexPage.NoMessage'
               defaultMessage=' No Message Available'
             />
-          </Subheader>
-          { button }
+          </ListSubheader>
+          { button}
         </List>
       );
     }
@@ -162,7 +164,7 @@ class ConversationIndexPage extends Component {
 }
 
 ConversationIndexPage.propTypes = {
-  conversations: PropTypes.oneOfType([ PropTypes.array, PropTypes.object ]),
+  conversations: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
   currentUser: PropTypes.shape({
     courses: PropTypes.array,
     first_name: PropTypes.string,
@@ -171,7 +173,7 @@ ConversationIndexPage.propTypes = {
     email: PropTypes.string,
     password: PropTypes.string,
     password_confirmation: PropTypes.string,
-    thumbnail_image: PropTypes.oneOfType([ PropTypes.string, PropTypes.object ]),
+    thumbnail_image: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
     volunteer: PropTypes.bool,
     client: PropTypes.bool,
     locale: PropTypes.string,
