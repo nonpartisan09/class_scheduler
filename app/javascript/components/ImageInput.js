@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
-import FlatButton from '@material-ui/core/FlatButton';
+import Button from '@material-ui/core/Button';
 import { FormattedMessage } from 'react-intl';
 
 import FileInput from 'react-simple-file-input';
@@ -37,12 +37,12 @@ class ImageInput extends Component {
           onRequestClose={ this.handleShowDialog }
           open={ this.state.invalidFileDialog }
           actions={ [
-            <FlatButton key='close' primary onClick={ this.handleShowDialog }>
+            <Button key='close' primary onClick={ this.handleShowDialog }>
               <FormattedMessage
                 id='close'
                 defaultMessage='Close'
               />
-            </FlatButton> ]
+            </Button> ]
           }
           text={ this.renderDialogText() }
         />
