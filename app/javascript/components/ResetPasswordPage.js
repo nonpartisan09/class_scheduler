@@ -6,7 +6,7 @@ import Joi from 'joi-browser';
 import validate from 'react-joi-validation';
 import { FormattedMessage } from 'react-intl';
 
-import RaisedButton from '@material-ui/core/RaisedButton';
+import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 
 import SnackBarComponent from './reusable/SnackBarComponent';
@@ -91,7 +91,8 @@ class ResetPasswordPage extends Component {
 
   renderSubmitButton() {
     return (
-      <RaisedButton
+      <Button
+        variant='contained'
         primary
         label={ (
           <FormattedMessage
