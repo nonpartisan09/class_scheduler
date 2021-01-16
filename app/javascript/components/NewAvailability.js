@@ -6,8 +6,8 @@ import { FormattedMessage } from 'react-intl';
 import Joi from 'joi-browser';
 import validate from 'react-joi-validation';
 
-import Button from 'material-ui/Button';
-import TextField from 'material-ui/TextField';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
 
 import FormData from './utils/FormData';
 import formatLink from './utils/Link';

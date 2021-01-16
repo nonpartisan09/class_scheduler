@@ -3,8 +3,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
-import SelectField from 'material-ui/SelectField';
-import MenuItem from 'material-ui/MenuItem';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
 
 
 
@@ -31,7 +31,7 @@ render() {
     const { errors, selectedDays } = this.props;
 
     return (
-      <SelectField
+      <Select
         hintText={ (
           <FormattedMessage
             id='SearchBar.days'
@@ -46,7 +46,7 @@ render() {
         fullWidth
       >
         { this.getDaysMenuItems() }
-      </SelectField>
+      </Select>
     );
   }
 
