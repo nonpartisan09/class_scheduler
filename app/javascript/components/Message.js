@@ -6,7 +6,7 @@ import Divider from '@material-ui/core/Divider';
 import {
   Card,
   CardHeader,
-  CardText
+  CardContent
 } from '@material-ui/core';
 import Linkify from 'linkifyjs/react';
 import { postData } from './utils/sendData';
@@ -51,9 +51,9 @@ class Message extends Component {
             avatar={ this.renderAvatar() }
             title={ this.renderSubject() }
           />
-          <CardText expandable style={ styles }>
+          <CardContent expandable style={ styles }>
             <Linkify tagName='div'>{ body }</Linkify> 
-          </CardText>
+          </CardContent>
         </Card>
         { this.renderDivider() }
       </div>
