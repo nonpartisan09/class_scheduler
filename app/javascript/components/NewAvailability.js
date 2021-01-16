@@ -6,11 +6,10 @@ import { FormattedMessage } from 'react-intl';
 import Joi from 'joi-browser';
 import validate from 'react-joi-validation';
 
-import FlatButton from '@material-ui/core/FlatButton';
-import RaisedButton from '@material-ui/core/RaisedButton';
-import SelectField from '@material-ui/core/SelectField';
+import Button from '@material-ui/core/Button';
+import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
-import TimePicker from '@material-ui/core/TimePicker';
+import TimePicker from '@material-ui/pickers/TimePicker';
 import TextField from '@material-ui/core/TextField';
 
 import FormData from './utils/FormData';
@@ -134,7 +133,8 @@ class NewAvailability extends Component {
                 </a>
               </div>
 
-              <RaisedButton
+              <Button
+                variant='contained'
                 className='addAvailabilitiesButton'
                 label={ (
                   <FormattedMessage
@@ -215,7 +215,7 @@ class NewAvailability extends Component {
             <ErrorField error={ error && error[index] } />
           </div>
 
-          <SelectField
+          <Select
             hintText={ (
               <FormattedMessage
                 id='NewAvailability.selectDay'
@@ -241,10 +241,11 @@ class NewAvailability extends Component {
               ) } 
               />
             )) }
-          </SelectField>
+          </Select>
 
           <TimePicker
             format='24hr'
+            ampm={ false }
             hintText={ (
               <FormattedMessage
                 id='NewAvailability.selectStartTime'
@@ -261,6 +262,7 @@ class NewAvailability extends Component {
 
           <TimePicker
             format='24hr'
+            ampm={ false }
             hintText={ (
               <FormattedMessage
                 id='NewAvailability.selectEndTime'
@@ -275,7 +277,7 @@ class NewAvailability extends Component {
             fullWidth
           />
 
-          <FlatButton
+          <Button
             primary
             label={ (
               <FormattedMessage
@@ -287,7 +289,7 @@ class NewAvailability extends Component {
           />
           { index === 0 ?
             null : (
-              <FlatButton
+              <Button
                 primary
                 label={ <FormattedMessage id='NewAvailability.removeAvailability' defaultMessage='Remove availability' /> }
                 onClick={ this.handleRemoveAvailability }
