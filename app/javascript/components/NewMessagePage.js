@@ -7,8 +7,8 @@ import validate from 'react-joi-validation';
 
 import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
-import FloatingActionButton from '@material-ui/core/FloatingActionButton';
-import SendIcon from '@material-ui/core/svg-icons/content/send';
+import Fab from '@material-ui/core/Fab';
+import SendIcon from '@material-ui/icons/Send';
 
 import MessageSchema from './schema/MessageSchema';
 import FormData from './utils/FormData';
@@ -44,7 +44,7 @@ class NewMessagePage extends Component {
       validateHandler
     } = this.props;
 
-    let disabled = this.props.message.body && this.props.message.subject ? false : true
+    let disabled = this.props.message.body && this.props.message.subject ? false : true;
 
     return (
       <div>
@@ -115,9 +115,9 @@ class NewMessagePage extends Component {
             />
           </form>
 
-          <FloatingActionButton disabled={disabled} onClick={ this.handleSubmit } style={ { position: 'absolute', bottom: '-24px', right: '0' } }>
+          <Fab disabled={ disabled } onClick={ this.handleSubmit } style={ { position: 'absolute', bottom: '-24px', right: '0' } }>
             <SendIcon />
-          </FloatingActionButton>
+          </Fab>
 
           { this.renderSnackBar() }
         </Paper>
