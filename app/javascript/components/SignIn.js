@@ -6,8 +6,7 @@ import Joi from 'joi-browser';
 import validate from 'react-joi-validation';
 import { FormattedMessage } from 'react-intl';
 
-import RaisedButton from '@material-ui/core/RaisedButton';
-import FlatButton from '@material-ui/core/FlatButton';
+import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Checkbox from '@material-ui/core/Checkbox';
 
@@ -101,7 +100,8 @@ class SignIn extends Component {
             label="Remember me"
           />
 
-          <RaisedButton
+          <Button
+            variant='contained'
             primary
             label={ (
               <FormattedMessage
@@ -115,7 +115,7 @@ class SignIn extends Component {
 
           <div className="signInLinkSecondaryContainer">
             <a href={ formatLink('/password/new', locale) } className="signInLinkSecondary">
-              <FlatButton
+              <Button
                 primary
                 label={ (
                   <FormattedMessage
@@ -128,7 +128,7 @@ class SignIn extends Component {
             </a>
 
             <a href={ formatLink('/sign_up/client', locale) } className="signInLinkSecondary">
-              <FlatButton
+              <Button
                 primary
                 label={ (
                   <FormattedMessage
@@ -139,7 +139,7 @@ class SignIn extends Component {
             </a>
 
             <a href={ formatLink('/sign_up/volunteer', locale) } className="signInLinkSecondary">
-              <FlatButton
+              <Button
                 primary
                 label={ (
                   <FormattedMessage
