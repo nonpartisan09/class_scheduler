@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 
-import RaisedButton from '@material-ui/core/RaisedButton';
+import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import { FormattedMessage } from 'react-intl';
 
@@ -49,7 +49,8 @@ class ReviewContainer extends Component {
           />
         </div>
 
-        <RaisedButton
+        <Button
+          variant='contained'
           primary
           className='reviewContainerSubmitButton'
           label={ (
