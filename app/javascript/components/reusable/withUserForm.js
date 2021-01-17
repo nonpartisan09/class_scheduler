@@ -6,13 +6,12 @@ import Badge from '@material-ui/core/Badge';
 import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 import Checkbox from '@material-ui/core/Checkbox';
-import RaisedButton from '@material-ui/core/RaisedButton';
-import FlatButton from '@material-ui/core/FlatButton';
+import Button from '@material-ui/core/Button';
 import MenuItem from '@material-ui/core/MenuItem';
-import SelectField from '@material-ui/core/SelectField';
-import PhotoIcon from '@material-ui/core/svg-icons/image/photo';
-import InfoIcon from '@material-ui/core/svg-icons/action/info';
-import Toggle from '@material-ui/core/Toggle';
+import Select from '@material-ui/core/Select';
+import PhotoIcon from '@material-ui/icons/Photo';
+import InfoIcon from '@material-ui/icons/Info';
+import Switch from '@material-ui/core/Switch';
 import validate, { useSecondArgument } from 'react-joi-validation';
 
 import { FormattedMessage } from 'react-intl';
@@ -142,7 +141,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
             title='Why do you need my street address and city?'
             onRequestClose={ this.handleShowDialog }
             open={ this.state.showAddressDialog }
-            actions={ [ <FlatButton key='close' label='Close' primary onClick={ this.handleShowDialog } /> ] }
+            actions={ [ <Button key='close' label='Close' primary onClick={ this.handleShowDialog } /> ] }
             text={ this.renderDialogText() }
           />
 
@@ -308,7 +307,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
 
               <br />
 
-              <SelectField
+              <Select
                 floatingLabelFixed
                 floatingLabelText={
                   (
@@ -339,7 +338,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                     />
                   ) 
                 ) }
-              </SelectField>
+              </Select>
            
               { this. renderFindTimezoneButton() }
               <br />
@@ -404,7 +403,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
         return (
           <section className="userFormInputFieldLocationContainer">
 
-            <SelectField
+            <Select
 
               floatingLabelFixed
               floatingLabelText={
@@ -422,10 +421,10 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
               onBlur={ validateHandler('country') }
             >
               {_.map(countries, name => <MenuItem key={ name } insetChildren checked={ country === name } value={ name } primaryText={ <span> { name } </span> } />) }
-            </SelectField>
+            </Select>
 
 
-            <SelectField
+            <Select
 
               floatingLabelFixed
               floatingLabelText={
@@ -443,7 +442,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
               onBlur={ validateHandler('state') }
           >
               { _.map(States, s => <MenuItem key={ s.abbreviation } insetChildren checked={ state === s.abbreviation } value={ s.abbreviation } primaryText={ <span>{ s.abbreviation }</span> } secondaryText={ <span>{ s.name } </span> } />) }
-            </SelectField>
+            </Select>
 
           </section>
           
@@ -456,7 +455,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
         return (
           <section className="userFormInputFieldLocationContainer">
             
-            <SelectField
+            <Select
               style={{ 'min-width': 250 + 'px' } }
               floatingLabelFixed
               floatingLabelText={
@@ -474,9 +473,9 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
               onBlur={ validateHandler('country') }
             >
               {_.map(countries, name => <MenuItem key={ name } insetChildren checked={ country === name } value={ name } primaryText={ <span> { name } </span> } />)}
-            </SelectField>
+            </Select>
 
-            <SelectField
+            <Select
               style={{ 'min-width': 250 + 'px' } }
               floatingLabelFixed
               floatingLabelText={
@@ -494,7 +493,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
               onBlur={ validateHandler('state') }
             >
               {_.map(regions, region => <MenuItem key={ region } insetChildren checked={ state === region } value={ region } primaryText={ <span> { region } </span> } />) }
-            </SelectField>
+            </Select>
           </section>
           
         );
@@ -512,7 +511,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
               defaultMessage='Willing to meet'
             />
             :
-            <Toggle
+            <Switch
               label={
                 (
                   <FormattedMessage
@@ -532,7 +531,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
             <FormattedMessage
               id='UserForm.meetToggle'
             />
-            <Toggle
+            <Switch
               label={
               (
                 <FormattedMessage
@@ -559,8 +558,9 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
 
         return (
           <div className='userFormOuterButton'>
-            <RaisedButton
+            <Button
               className='userFormSaveButton'
+              variant='contained'
               label={ wrappedProps.primaryButtonLabel }
               onClick={ validateAllHandler(this.handleSubmit) }
               primary
@@ -570,8 +570,9 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
       } else {
         return (
           <div className='userFormOuterButton'>
-            <RaisedButton
+            <Button
               className='userFormSaveButton'
+              variant='contained'
               label={ wrappedProps.primaryButtonLabel }
               primary
               disabled
@@ -591,7 +592,8 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
         return (
           <>
             <br />
-            <RaisedButton
+            <Button
+              variant='contained'
               label={ <FormattedMessage id='Profile.findTimezone' defaultMessage='Find my timezone' /> }
               primary
               onClick={ this.updateUserTimezone }
@@ -666,7 +668,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
         } else {
           return (
             <div className='userFormInnerButton userFormSecondButton'>
-              <FlatButton
+              <Button
                 className='userFormProgramButton'
                 primary
                 label={
@@ -696,7 +698,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
         } else {
           return (
             <div className='userFormInnerButton userFormSecondButton'>
-              <FlatButton
+              <Button
                 className='userFormLanguageButton'
                 primary
                 label={
@@ -723,7 +725,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
 
         return (
           <div>
-            <SelectField
+            <Select
               floatingLabelFixed
               floatingLabelText={
                 (
@@ -756,7 +758,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                   />
                 );
               })}
-            </SelectField>
+            </Select>
           </div>
         );
       }
@@ -849,7 +851,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
         } else {
           return (
             <div className='userFormInnerButton'>
-              <FlatButton
+              <Button
                 className='userFormPasswordButton'
                 primary
                 label={
@@ -950,7 +952,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
 
       return (
         <div>
-          <SelectField
+          <Select
             floatingLabelFixed
             floatingLabelText={
               (
@@ -997,7 +999,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                 )
               )
             }
-          </SelectField>
+          </Select>
 
           <br />
         </div>
@@ -1088,7 +1090,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
 
       return (
         <div>
-          <SelectField
+          <Select
             floatingLabelFixed
             floatingLabelText={
               (
@@ -1106,7 +1108,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
           >
             <MenuItem key={ ENGLISH } insetChildren checked={ ENGLISH === locale } value={ ENGLISH } primaryText={ <span>English</span> } />
             <MenuItem key={ SPANISH } insetChildren checked={ SPANISH === locale } value={ SPANISH } primaryText={ <span>Español</span> } />
-          </SelectField>
+          </Select>
         </div>
       );
     }
@@ -1136,7 +1138,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
         <div>
           { this.renderProgramLabel() }
 
-          <SelectField
+          <Select
             floatingLabelFixed
             floatingLabelText={
               (
@@ -1170,7 +1172,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                 />
               );
             })}
-          </SelectField>
+          </Select>
         </div>
       );
     }
