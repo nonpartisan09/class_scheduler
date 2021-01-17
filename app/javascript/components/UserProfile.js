@@ -3,13 +3,12 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 import { Link } from 'react-router-dom';
 import Paper from '@material-ui/core/Paper';
-import RaisedButton from '@material-ui/core/RaisedButton';
-import FlatButton from '@material-ui/core/FlatButton';
-import RefreshIndicator from '@material-ui/core/RefreshIndicator';
+import Button from '@material-ui/core/Button';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import { FormattedMessage } from 'react-intl';
-import FloatingActionButton from '@material-ui/core/FloatingActionButton';
-import EditIcon from '@material-ui/core/svg-icons/image/edit';
+import Fab from '@material-ui/core/Fab';
+import EditIcon from '@material-ui/icons/Edit';
 import METHODS from './utils/RestConstants';
 
 import { postData } from './utils/sendData';
@@ -75,11 +74,11 @@ class UserProfile extends Component {
         <div>
           { this.renderBackButton() }
           <div className='userProfileRefreshIndicator'>
-            <RefreshIndicator
+            <CircularProgress
               size={ 50 }
               top={ 0 }
               left={ 0 }
-              loadingColor="#FF9800"
+              color="#FF9800"
               status='loading'
             />
           </div>
@@ -105,7 +104,8 @@ class UserProfile extends Component {
 
           <div className='userProfileButtonAndDetailsContainer'>
             <Link to={ { pathname: '/messages/new', query: { recipient: url_slug, userName: first_name } } } className='userProfileLink'>
-              <RaisedButton
+              <Button
+                variant='contained'
                 className='userProfileMessageButton'
                 label={ (
                   <FormattedMessage
@@ -181,9 +181,9 @@ class UserProfile extends Component {
             { this.renderAvailabilities() }
 
             <Link className='userProfileSendEmail' to={ { pathname: '/messages/new', query: { recipient: url_slug, userName: first_name } } }>
-              <FloatingActionButton>
+              <Fab>
                 <EditIcon />
-              </FloatingActionButton>
+              </Fab>
             </Link>
           </div>
         </div>
@@ -194,7 +194,7 @@ class UserProfile extends Component {
   renderBackButton() {
     return (
       <div className='userProfileBackButton'>
-        <FlatButton
+        <Button
           primary
           label={ (
             <FormattedMessage
