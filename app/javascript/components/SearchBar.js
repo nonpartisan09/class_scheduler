@@ -7,9 +7,9 @@ import validate from 'react-joi-validation';
 import { FormattedMessage } from 'react-intl';
 
 import TextField from '@material-ui/core/TextField';
-import SelectField from '@material-ui/core/SelectField';
+import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
-import RaisedButton from '@material-ui/core/RaisedButton';
+import Button from '@material-ui/core/Button';
 
 import SearchValidationSchema from './schema/SearchValidationSchema';
 import { getData } from './utils/sendData';
@@ -84,7 +84,7 @@ class SearchBar extends Component {
             </a>
           </div>
 
-          <SelectField
+          <Select
             className='searchBarOption'
             hintText={ (
               <FormattedMessage
@@ -113,9 +113,9 @@ class SearchBar extends Component {
                 />
               );
             })}
-          </SelectField>
+          </Select>
 
-          <SelectField
+          <Select
             className='searchBarOption'
             hintText={ (
               <FormattedMessage
@@ -144,7 +144,7 @@ class SearchBar extends Component {
                 />
               );
             })}
-          </SelectField>
+          </Select>
 
           <AvailabilitySelector 
             days={ days } 
@@ -165,7 +165,8 @@ class SearchBar extends Component {
             errors={ errors }
           />
 
-          <RaisedButton
+          <Button
+            variant='contained'
             onClick={ validateAllHandler(this.handleSubmit) }
             className='searchBarOption searchBarButton'
             label={ (
