@@ -129,9 +129,11 @@ class RegistrationsController < Devise::RegistrationsController
         :terms_and_conditions,
         :thumbnail_image,
         :timezone,
+        :is_over_18,
+        :consented_to_background_check,
         :programs => '',
         :languages => '',
-        :role_ids => []
+        :role_ids => [],
     )
   end
 
@@ -156,6 +158,8 @@ class RegistrationsController < Devise::RegistrationsController
         :state,
         :thumbnail_image,
         :timezone,
+        :is_over_18,
+        :consented_to_background_check,
         :languages => [],
         :programs => []
     )

@@ -71,6 +71,8 @@ ActiveAdmin.register User do
       :timezone,
       :updated_at,
       :url_slug,
+      :is_over_18,
+      :consented_to_background_check,
       language_ids: [],
       languages: [ :id, :name ],
       program_ids: [],
@@ -244,6 +246,8 @@ ActiveAdmin.register User do
               link_to "Agreed upon T&Cs", admin_terms_and_condition_path(resource.terms_and_conditions)
             end
           end
+          row :is_over_18
+          row :consented_to_background_check
           row :active
           row :locale
           row :contact_permission
@@ -319,6 +323,8 @@ ActiveAdmin.register User do
   form do |f|
     f.inputs do
       f.semantic_errors *f.object.errors.keys
+      f.input :is_over_18
+      f.input :consented_to_background_check
       f.input :email
       f.input :phone_number
       f.input :first_name
