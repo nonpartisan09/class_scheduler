@@ -1,12 +1,13 @@
 module Contexts
   module Users
     class Creation
-      def initialize(user, resource_name, role_id, programs, languages)
+      def initialize(user, resource_name, role_id, programs, languages, main_goals)
         @user = user
         @resource_name = resource_name
         @role_id = role_id
         @programs = programs
         @languages = languages
+        @main_goals = main_goals
 
         if check_if_email_exists?
           message = I18n.t('custom_errors.messages.email_in_use')
@@ -29,6 +30,8 @@ module Contexts
         build_programs
 
         build_languages
+
+        build_main_goals(role.url_slug)
 
         @user.save!
 
@@ -55,6 +58,36 @@ module Contexts
         @languages.each do |language|
           @user.languages << Language.find_by_name(language)
         end
+      end
+
+      def build_main_goals(role)
+        @main_goals.each do |main_goal|
+          goal = main_goal.titlecase
+          english_goal = MainGoal.find_by(name: goal, for_volunteer: isVolunteer(role), for_client: isClient(role)) 
+          spanish_goal = MainGoal.find_by(spanish_name: goal, for_volunteer: isVolunteer(role), for_client: isClient(role))
+
+          
+          # If value is not found in
+          unless english_goal || spanish_goal
+            # create main goal record in db
+            @user.main_goals.new(
+              name: goal,
+              spanish_name: goal, 
+              for_volunteer: isVolunteer(role), 
+              for_client: isClient(role), 
+              displayable: false )
+          else
+            user_goal = english_goal ? english_goal : spanish_goal
+            @user.main_goals << user_goal
+          end
+        end
+      end
+
+      def isVolunteer(role) 
+        role == 'volunteer'
+      end
+      def isClient(role)
+        role == 'client'
       end
 
       def send_welcome_email

@@ -17,12 +17,16 @@ class RegistrationsController < Devise::RegistrationsController
     how_they_found_us_options = @role_url_slug == 'volunteer' \
       ? HowTheyFoundUsOption.where(:for_volunteer => true) \
       : HowTheyFoundUsOption.where(:for_client => true)
+    main_goals_options = @role_url_slug == 'volunteer' \
+    ? MainGoal.where(:for_volunteer => true, :displayable => true) \
+    : MainGoal.where(:for_client => true,  :displayable => true)
     @data = {
       :programs => programs,
       :timezones => timezones,
       :timezone_map => timezone_map,
       :languages => languages,
-      :how_they_found_us_options => how_they_found_us_options
+      :how_they_found_us_options => how_they_found_us_options,
+      :main_goals_optoins => main_goals_options
     }
 
     respond_with(resource, render: :new)
@@ -34,10 +38,11 @@ class RegistrationsController < Devise::RegistrationsController
 
       programs = params[:user][:programs]
       languages = params[:user][:languages]
+      main_goals = params[:user][:main_goals]
 
       build_resource(sign_up_params)
 
-      @registration = Contexts::Users::Creation.new(resource, resource_name, @role_id, programs, languages)
+      @registration = Contexts::Users::Creation.new(resource, resource_name, @role_id, programs, languages, main_goals)
 
       @registration.execute
       user = UserDecorator.new(@user).simple_decorate
@@ -134,6 +139,8 @@ class RegistrationsController < Devise::RegistrationsController
         :programs => '',
         :languages => '',
         :role_ids => [],
+        :main_goals => ''
+        
     )
   end
 
@@ -161,7 +168,7 @@ class RegistrationsController < Devise::RegistrationsController
         :is_over_18,
         :consented_to_background_check,
         :languages => [],
-        :programs => []
+        :programs => [],
     )
   end
 

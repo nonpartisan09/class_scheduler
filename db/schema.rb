@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_17_225101) do
+ActiveRecord::Schema.define(version: 2021_01_27_053228) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -108,6 +108,16 @@ ActiveRecord::Schema.define(version: 2021_01_17_225101) do
     t.index ["user_id", "language_id"], name: "index_languages_users_on_user_id_and_language_id"
   end
 
+  create_table "main_goals", force: :cascade do |t|
+    t.string "name"
+    t.string "spanish_name"
+    t.boolean "for_volunteer"
+    t.boolean "for_client"
+    t.boolean "displayable", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "messages", force: :cascade do |t|
     t.text "body"
     t.text "subject"
@@ -161,6 +171,15 @@ ActiveRecord::Schema.define(version: 2021_01_17_225101) do
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "user_main_goals", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "main_goal_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["main_goal_id"], name: "index_user_main_goals_on_main_goal_id"
+    t.index ["user_id"], name: "index_user_main_goals_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|

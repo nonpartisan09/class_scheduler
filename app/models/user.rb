@@ -7,6 +7,9 @@ class User < ActiveRecord::Base
   include HasUrlSlug
   include Warden
 
+  has_many :user_main_goals
+  has_many :main_goals, through: :user_main_goals
+
   has_and_belongs_to_many :roles
   accepts_nested_attributes_for :roles
 
@@ -189,4 +192,5 @@ class User < ActiveRecord::Base
                       .pluck('latitude', 'longitude')
     coordinates[0]
   end
+
 end

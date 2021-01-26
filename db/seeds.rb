@@ -83,7 +83,7 @@ HowTheyFoundUsOption.create(
 
 if Rails.env.development?
   user = User.create!(email: 'admin@example.com', first_name: 'Admin', last_name: 'Admin', password: 'password', password_confirmation: 'password')
-  owner =  User.create!(email: 'ownern@example.com', first_name: 'Owner', last_name: 'Owner', password: 'password', password_confirmation: 'password')
+  owner =  User.create!(email: 'owner@example.com', first_name: 'Owner', last_name: 'Owner', password: 'password', password_confirmation: 'password')
 end
 
 if user.present?
@@ -105,6 +105,65 @@ FaqPage.create(
   description: 'FAQ page in English',
   spanish_description: 'FAQ page in Spanish'
 )
+
+MainGoal.create(
+  name: 'Strengthen resumé for work',
+  spanish_name: 'Mejorar mi currículo para trabajar',	
+  for_volunteer: true,
+  for_client: false,
+  displayable: true
+)
+MainGoal.create(
+  name: 'Strengthen resumé for college',
+  spanish_name: 'Mejorar mi currículo para trabajar',	
+  for_volunteer: true,
+  for_client: false,
+  displayable: true
+)
+MainGoal.create(
+  name: 'Make a difference in the world',
+  spanish_name: 'Hacer la diferencia en el mundo',	
+  for_volunteer: true,
+  for_client: false,
+  displayable: true
+)
+MainGoal.create(
+  name: 'Other',
+  spanish_name: 'Otra',	
+  for_volunteer: true,
+  for_client: false,
+  displayable: true
+)
+
+MainGoal.create(
+  name: 'Get a job or perform better at work',
+  spanish_name: 'Consiguir un trabajo o rindir mejor en el trabajo',	
+  for_volunteer: false,
+  for_client: true,
+  displayable: true
+)
+MainGoal.create(
+  name: 'Get a GED or into college',
+  spanish_name: 'Obtener un GED o ingresar a la universidad',	
+  for_volunteer: false,
+  for_client: true,
+  displayable: true
+)
+MainGoal.create(
+  name: 'Pass the US citizenship exam',
+  spanish_name: 'Aprobar el examen de ciudadanía estadounidense',	
+  for_volunteer: false,
+  for_client: true,
+  displayable: true
+)
+MainGoal.create(
+  name: 'Other',
+  spanish_name: 'Otro',	
+  for_volunteer: false,
+  for_client: true,
+  displayable: true
+)
+
 
 # More users (for dev)
 if Rails.env.development?

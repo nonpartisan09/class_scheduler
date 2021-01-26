@@ -79,7 +79,9 @@ ActiveAdmin.register User do
       programs: [ :id, :name ],
       reviews: [ :id, :description, :review ],
       role_ids: [],
-      roles: [ :id, :name ]
+      roles: [ :id, :name ],
+      main_goal_ids: [],
+      main_goals: [ :id, :name ]
 
   scope :all, default: true
   scope :active, proc { User.active }
@@ -206,6 +208,12 @@ ActiveAdmin.register User do
         program[:name]
       end
     end
+
+    column :main_goals do |user|
+      user.main_goals.each do |goal|
+        goal[:name]
+      end
+    end
   end
 
   index do
@@ -287,6 +295,13 @@ ActiveAdmin.register User do
             end
             end
           end
+
+          row :main_goals, div do |user|
+            ul do user.main_goals.each do |main_goal|
+              li link_to main_goal[:name]
+            end
+            end
+          end
         end
       end
 
@@ -350,11 +365,22 @@ ActiveAdmin.register User do
       else 
         f.input :roles, as: :check_boxes, collection: roles_collection
       end
-      
+    
       languages_collection = Language.all.collect{|language| [language.name, language.id, { checked: resource.languages.include?(language) } ]}
       f.input :languages, as: :check_boxes, collection: languages_collection
       programs_collection = Program.all.collect{|program| [program.name, program.id, { checked: resource.programs.include?(program) } ]}
       f.input :programs, as: :check_boxes, collection: programs_collection
+
+      if resource.volunteer?
+        main_goals_collection = MainGoal.where(for_volunteer: true).collect{|goal| [goal.name, goal.id, { checked: resource.main_goals.include?(goal) } ]}
+      elsif resource.client?
+        main_goals_collection = MainGoal.where(for_client: true).collect{|goal| [goal.name, goal.id, { checked: resource.main_goals.include?(goal) } ]}
+      else
+        main_goals_collection = MainGoal.all.order('displayable DESC, for_client DESC, name').collect{|goal| [goal.type + goal.name, goal.id, { checked: resource.main_goals.include?(goal) }]}
+      end
+      
+      f.input :main_goals, as: :select, input_html: { multiple: true }, collection: main_goals_collection
+
     end
     f.actions
   end
