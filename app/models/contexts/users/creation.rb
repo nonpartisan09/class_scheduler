@@ -1,13 +1,14 @@
 module Contexts
   module Users
     class Creation
-      def initialize(user, resource_name, role_id, programs, languages, main_goals)
+      def initialize(user, resource_name, role_id, programs, languages, main_goals, meeting_options)
         @user = user
         @resource_name = resource_name
         @role_id = role_id
         @programs = programs
         @languages = languages
         @main_goals = main_goals
+        @meeting_options = meeting_options
 
         if check_if_email_exists?
           message = I18n.t('custom_errors.messages.email_in_use')
@@ -32,6 +33,8 @@ module Contexts
         build_languages
 
         build_main_goals(role.url_slug)
+
+        build_meeting_options
 
         @user.save!
 
@@ -79,6 +82,26 @@ module Contexts
           else
             user_goal = english_goal ? english_goal : spanish_goal
             @user.main_goals << user_goal
+          end
+        end
+      end
+
+      def build_meeting_options
+        @meeting_options.each do |option|
+          option = option.titlecase
+          english_option = MeetingOption.find_by(name: option)
+          spanish_option = MeetingOption.find_by(spanish_name: option)
+          
+          # If value is not found in
+          unless english_option || spanish_option
+            # create main goal record in db
+            @user.meeting_options.new(
+              name: option,
+              spanish_name: option, 
+               displayable: false )
+          else
+            user_option = english_option ? english_option : spanish_option
+            @user.meeting_options << user_option
           end
         end
       end

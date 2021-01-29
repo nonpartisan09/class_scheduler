@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_27_053228) do
+ActiveRecord::Schema.define(version: 2021_01_29_193643) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -114,6 +114,14 @@ ActiveRecord::Schema.define(version: 2021_01_27_053228) do
     t.boolean "for_volunteer"
     t.boolean "for_client"
     t.boolean "displayable", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "meeting_options", force: :cascade do |t|
+    t.string "name"
+    t.string "spanish_name"
+    t.boolean "displayable"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -224,6 +232,15 @@ ActiveRecord::Schema.define(version: 2021_01_27_053228) do
     t.boolean "consented_to_background_check", default: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  end
+
+  create_table "users_meeting_options", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "meeting_option_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["meeting_option_id"], name: "index_users_meeting_options_on_meeting_option_id"
+    t.index ["user_id"], name: "index_users_meeting_options_on_user_id"
   end
 
   add_foreign_key "messages", "conversations"

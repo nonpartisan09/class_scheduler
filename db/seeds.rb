@@ -164,6 +164,17 @@ MainGoal.create(
   displayable: true
 )
 
+MeetingOption.create(
+  name: 'Google Meet',
+  spanish_name: 'Google Meet',
+  displayable: true
+)
+
+MeetingOption.create(
+  name: 'Phone Calls',
+  spanish_name: 'Llamadas Telefónicas',
+  displayable: true
+)
 
 # More users (for dev)
 if Rails.env.development?

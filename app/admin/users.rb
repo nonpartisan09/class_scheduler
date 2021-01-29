@@ -81,7 +81,9 @@ ActiveAdmin.register User do
       role_ids: [],
       roles: [ :id, :name ],
       main_goal_ids: [],
-      main_goals: [ :id, :name ]
+      main_goals: [ :id, :name ],
+      meeting_option_ids: [],
+      meeting_options: [ :id, :name ]
 
   scope :all, default: true
   scope :active, proc { User.active }
@@ -214,6 +216,12 @@ ActiveAdmin.register User do
         goal[:name]
       end
     end
+
+    column :meeting_options do |user|
+      user.meeting_options.each do |option|
+        option[:name]
+      end
+    end
   end
 
   index do
@@ -302,6 +310,13 @@ ActiveAdmin.register User do
             end
             end
           end
+          row :meeting_options, div do |user|
+            ul do user.meeting_options.each do |option|
+              li link_to option[:name]
+            end
+            end
+          end
+
         end
       end
 
@@ -376,10 +391,13 @@ ActiveAdmin.register User do
       elsif resource.client?
         main_goals_collection = MainGoal.where(for_client: true).collect{|goal| [goal.name, goal.id, { checked: resource.main_goals.include?(goal) } ]}
       else
-        main_goals_collection = MainGoal.all.order('displayable DESC, for_client DESC, name').collect{|goal| [goal.type + goal.name, goal.id, { checked: resource.main_goals.include?(goal) }]}
+        main_goals_collection = MainGoal.all.order('displayable DESC, for_client DESC, name').collect{|goal| [goal.type.titlecase + goal.name, goal.id, { checked: resource.main_goals.include?(goal) }]}
       end
       
       f.input :main_goals, as: :select, input_html: { multiple: true }, collection: main_goals_collection
+
+      meeting_options_collection = MeetingOption.all.collect{|option| [option.name, option.id, { checked: resource.meeting_options.include?(option) } ]}
+      f.input :meeting_options, as: :select, input_html: { multiple: true }, collection: meeting_options_collection
 
     end
     f.actions
