@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+</head>
+<body>
+<%= image_tag attachments['logo.png'].url %>
+<h1>Dear <%= @volunteer.first_name %>,</h1>
+<p>
+  You have received a client message from <%= @client.first_name %> for help with <%= @program.name %>. Unfortunately, you have not responded within 48 hours as requested by Tutoria when you agreed to be a volunteer.
+</p>
+
+<p>
+  As a result, we have deactivated your availabilities and you will no longer receive further client messages. You can still respond to <%= @client.first_name %>'s message. If you do so you will be able to reactivate your availabilities by following these steps:
+</p>
+
+<ol>
+  <li> <a href='https:/tutoria.io/en/sign_in'>Sign in</a> to Tutoria </li>
+  <br>
+  <li> Reactivate availabilities by going to the Availabilities page.</li>
+  <br>
+  <li> On the availabilities page, click the "Reactivate" button to reactivate your availabilities.</li>
+</ol>
+<p>
+  If you have any questions, please email <a href='mailto:community.manager@tutoria.io'>community.manager@tutoria.io</a> or contact +1(929)359-3986 by phone or WhatsApp
+</p>
+
+<p>Thank you,</p>
+
+<br>
+<br>
+<br>
+
+<p>Team Tutoría</p>
+</body>
+</html>

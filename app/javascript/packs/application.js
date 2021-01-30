@@ -168,3 +168,5 @@ document.addEventListener('DOMContentLoaded', () => {
     <App pathname={ window.location.pathname } data={ data } />, container,
   );
 });
+
+export default App;
