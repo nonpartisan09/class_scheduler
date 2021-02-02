@@ -20,8 +20,8 @@ class RegistrationsController < Devise::RegistrationsController
     main_goals_options = @role_url_slug == 'volunteer' \
     ? MainGoal.where(:for_volunteer => true, :displayable => true) \
     : MainGoal.where(:for_client => true,  :displayable => true)
-
-    meeting_options = MeetingOtion.where(:displayable => true)
+    meeting_options = MeetingOption.where(:displayable => true)
+    gender_identities = GenderIdentity.where(:displayable => true)
 
     @data = {
       :programs => programs,
@@ -29,8 +29,9 @@ class RegistrationsController < Devise::RegistrationsController
       :timezone_map => timezone_map,
       :languages => languages,
       :how_they_found_us_options => how_they_found_us_options,
-      :main_goals_optoins => main_goals_options,
-      :meeting_options => meeting_options
+      :main_goals_options => main_goals_options,
+      :meeting_options => meeting_options,
+      :gender_identities => gender_identities
     }
 
     respond_with(resource, render: :new)
@@ -44,10 +45,19 @@ class RegistrationsController < Devise::RegistrationsController
       languages = params[:user][:languages]
       main_goals = params[:user][:main_goals]
       meeting_options = params[:user][:meeting_options]
+      gender_identities = params[:user][:gender_identities]
 
       build_resource(sign_up_params)
 
-      @registration = Contexts::Users::Creation.new(resource, resource_name, @role_id, programs, languages, main_goals, meeting_options)
+      @registration = Contexts::Users::Creation.new(
+        resource, 
+        resource_name, 
+        @role_id, programs, 
+        languages, 
+        main_goals, 
+        meeting_options,
+        gender_identities
+      )
 
       @registration.execute
       user = UserDecorator.new(@user).simple_decorate
@@ -145,7 +155,8 @@ class RegistrationsController < Devise::RegistrationsController
         :languages => '',
         :role_ids => [],
         :main_goals => '',
-        :meeting_options => ''        
+        :meeting_options => '',
+        :gender_identities => ''          
     )
   end
 
@@ -175,7 +186,8 @@ class RegistrationsController < Devise::RegistrationsController
         :languages => [],
         :programs => [],
         :main_goals => [],
-        :meeting_options => []
+        :meeting_options => [],
+        :gender_identities => []
     )
   end
 

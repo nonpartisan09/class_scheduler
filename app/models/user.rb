@@ -7,6 +7,9 @@ class User < ActiveRecord::Base
   include HasUrlSlug
   include Warden
 
+  has_many :users_gender_identities, dependent: :destroy
+  has_many :gender_identities, through: :users_gender_identities
+
   has_many :users_meeting_options, dependent: :destroy
   has_many :meeting_options, through: :users_meeting_options
 

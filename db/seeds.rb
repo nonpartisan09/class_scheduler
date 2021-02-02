@@ -176,6 +176,24 @@ MeetingOption.create(
   displayable: true
 )
 
+GenderIdentity.create(
+  name: 'Female',
+  spanish_name: 'Femenino',
+  displayable: true
+)
+
+GenderIdentity.create(
+  name: 'Male',
+  spanish_name: 'Masculino',
+  displayable: true
+)
+
+GenderIdentity.create(
+  name: 'Other',
+  spanish_name: 'Otra',
+  displayable: true
+)
+
 # More users (for dev)
 if Rails.env.development?
   test_users = [

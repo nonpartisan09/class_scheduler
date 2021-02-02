@@ -1,7 +1,7 @@
 module Contexts
   module Users
     class Creation
-      def initialize(user, resource_name, role_id, programs, languages, main_goals, meeting_options)
+      def initialize(user, resource_name, role_id, programs, languages, main_goals, meeting_options, gender_identities)
         @user = user
         @resource_name = resource_name
         @role_id = role_id
@@ -9,6 +9,7 @@ module Contexts
         @languages = languages
         @main_goals = main_goals
         @meeting_options = meeting_options
+        @gender_identities = gender_identities
 
         if check_if_email_exists?
           message = I18n.t('custom_errors.messages.email_in_use')
@@ -34,7 +35,8 @@ module Contexts
 
         build_main_goals(role.url_slug)
 
-        build_meeting_options
+        build_options(@meeting_options, MeetingOption, @user.meeting_options)
+        build_options(@gender_identities, GenderIdentity, @user.gender_identities)
 
         @user.save!
 
@@ -86,22 +88,22 @@ module Contexts
         end
       end
 
-      def build_meeting_options
-        @meeting_options.each do |option|
+      def build_options(selected_options, model, user_options)
+        selected_options.each do |option|
           option = option.titlecase
-          english_option = MeetingOption.find_by(name: option)
-          spanish_option = MeetingOption.find_by(spanish_name: option)
-          
-          # If value is not found in
-          unless english_option || spanish_option
-            # create main goal record in db
-            @user.meeting_options.new(
+          english_name = model.find_by(name: option)
+          spanish_name = model.find_by(spanish_name: option)
+
+          # If value is not found in existing records,
+          # then create a new record for the value
+          unless english_name || spanish_name
+            user_options.new(
               name: option,
               spanish_name: option, 
-               displayable: false )
+              displayable: false )
           else
-            user_option = english_option ? english_option : spanish_option
-            @user.meeting_options << user_option
+            user_option = english_name ? english_name : spanish_name
+            user_options << user_option
           end
         end
       end

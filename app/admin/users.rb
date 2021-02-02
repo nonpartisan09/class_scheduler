@@ -83,7 +83,9 @@ ActiveAdmin.register User do
       main_goal_ids: [],
       main_goals: [ :id, :name ],
       meeting_option_ids: [],
-      meeting_options: [ :id, :name ]
+      meeting_options: [ :id, :name ],
+      gender_identity_ids: [],
+      gender_identities: [ :id, :name ]
 
   scope :all, default: true
   scope :active, proc { User.active }
@@ -222,6 +224,12 @@ ActiveAdmin.register User do
         option[:name]
       end
     end
+
+    column :gender_identities do |user|
+      user.gender_identities.each do |gender|
+        gender[:name]
+      end
+    end
   end
 
   index do
@@ -317,6 +325,13 @@ ActiveAdmin.register User do
             end
           end
 
+          row :gender_identities, div do |user|
+            ul do user.gender_identities.each do |gender|
+              li link_to gender[:name]
+            end
+            end
+          end
+
         end
       end
 
@@ -398,6 +413,9 @@ ActiveAdmin.register User do
 
       meeting_options_collection = MeetingOption.all.collect{|option| [option.name, option.id, { checked: resource.meeting_options.include?(option) } ]}
       f.input :meeting_options, as: :select, input_html: { multiple: true }, collection: meeting_options_collection
+
+      gender_identities_collection = GenderIdentity.all.collect{|gender| [gender.name, gender.id, { checked: resource.gender_identities.include?(gender) } ]}
+      f.input :gender_identities, as: :select, input_html: { multiple: true }, collection: gender_identities_collection
 
     end
     f.actions
