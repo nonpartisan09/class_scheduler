@@ -12,6 +12,10 @@ import Select from '@material-ui/core/Select';
 import PhotoIcon from '@material-ui/icons/Photo';
 import InfoIcon from '@material-ui/icons/Info';
 import Switch from '@material-ui/core/Switch';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormControl from '@material-ui/core/FormControl';
+import ListItemText from '@material-ui/core/ListItemText';
 import validate, { useSecondArgument } from 'react-joi-validation';
 
 import { FormattedMessage } from 'react-intl';
@@ -141,11 +145,11 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
             title='Why do you need my street address and city?'
             onRequestClose={ this.handleShowDialog }
             open={ this.state.showAddressDialog }
-            actions={ [ <Button key='close' label='Close' primary onClick={ this.handleShowDialog } /> ] }
+            actions={ [<Button key='close' color='primary' onClick={ this.handleShowDialog }>Close</Button>] }
             text={ this.renderDialogText() }
           />
 
-          <Paper zDepth={ 1 } className='paperOverride' rounded={ false }>
+          <Paper elevation={ 1 } className='paperOverride' square>
             <form className='userForm'>
               { this.renderSignUpPrograms() }
 
@@ -157,9 +161,8 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
               <TextField
                 name='email'
                 value={ email }
-                className='userFormInputField email'
-                hintText=''
-                floatingLabelText={
+                className='userFormInputField email'                
+                label={
                   (
                     <FormattedMessage
                       id='UserForm.email'
@@ -167,8 +170,10 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                     />
                   )
                 }
-                floatingLabelFixed
-                errorText={ this.errorLanguageHandler('email') }
+                InputLabelProps={ {
+                  shrink: true,
+                } } 
+                helperText={ this.errorLanguageHandler('email') }
                 onChange={ changeHandler('email') }
                 onBlur={ validateHandler('email') }
               />
@@ -178,9 +183,8 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
               <TextField
                 name='phone_number'
                 value={ phone_number }
-                className='userFormInputField phoneNumber'
-                hintText=''
-                floatingLabelText={
+                className='userFormInputField phoneNumber'                
+                label={
                   (
                     <FormattedMessage
                       id='UserForm.phoneNumber'
@@ -188,8 +192,10 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                     />
                   )
                 }
-                floatingLabelFixed
-                errorText={ this.errorLanguageHandler('phone_number') }
+                InputLabelProps={ {
+                  shrink: true,
+                } } 
+                helperText={ this.errorLanguageHandler('phone_number') }
                 onChange={ changeHandler('phone_number') }
                 onBlur={ validateHandler('phone_number') }
               />
@@ -198,19 +204,20 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
 
               <TextField
                 name='first_name'
-                value={ first_name }
-                hintText=''
+                value={ first_name }                
                 className='userFormInputField firstName'
-                floatingLabelText={
+                label={
                   (
                     <FormattedMessage
                       id='UserForm.firstName'
                       defaultMessage='First Name'
                     />
                   )
-                }
-                floatingLabelFixed
-                errorText={ this.errorLanguageHandler('first_name') }
+                }    
+                InputLabelProps={ {
+                  shrink: true,
+                } }            
+                helperText={ this.errorLanguageHandler('first_name') }
                 onChange={ changeHandler('first_name') }
                 onBlur={ validateHandler('first_name') }
               />
@@ -219,10 +226,9 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
 
               <TextField
                 name='last_name'
-                value={ last_name }
-                hintText=''
+                value={ last_name }                
                 className='userFormInputField lastName'
-                floatingLabelText={
+                label={
                   (
                     <FormattedMessage
                       id='UserForm.lastName'
@@ -230,8 +236,10 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                     />
                   )
                 }
-                floatingLabelFixed
-                errorText={ this.errorLanguageHandler('last_name') }
+                InputLabelProps={ {
+                  shrink: true,
+                } } 
+                helperText={ this.errorLanguageHandler('last_name') }
                 onChange={ changeHandler('last_name') }
                 onBlur={ validateHandler('last_name') }
               />
@@ -257,15 +265,14 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                     </span> 
                   )
                 }
-                badgeStyle={ { transform: 'translateY(18px)' } }
+                classes={ { badge: 'userFormBadge' } }
                 style={ { padding: '0' } }
               >
                 <TextField
                   name='address'
-                  value={ address }
-                  hintText=''
+                  value={ address }                  
                   className='userFormInputField address'
-                  floatingLabelText={
+                  label={
                     (
                       <FormattedMessage
                         id='UserForm.address'
@@ -273,21 +280,23 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                       />
                     )
                   }
-                  floatingLabelFixed
-                  multiLine
-                  errorText={ this.errorLanguageHandler('address') }
+                  InputLabelProps={ {
+                    shrink: true,
+                  } } 
+                  multiline
+                  helperText={ this.errorLanguageHandler('address') }
                   onChange={ changeHandler('address') }
                   onBlur={ validateHandler('address') }
                 />
+              </Badge>
 
-                <br />
+              <br />
 
-                <TextField
-                  name='city'
-                  value={ city }
-                  hintText=''
-                  className='userFormInputField city'
-                  floatingLabelText={
+              <TextField
+                name='city'
+                value={ city }                  
+                className='userFormInputField city'
+                label={
                     (
                       <FormattedMessage
                         id='UserForm.city'
@@ -295,21 +304,21 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                       />
                     )
                   }
-                  floatingLabelFixed
-                  errorText={ this.errorLanguageHandler('city') }
-                  onChange={ changeHandler('city') }
-                  onBlur={ validateHandler('city') }
+                InputLabelProps={ {
+                    shrink: true,
+                  } } 
+                helperText={ this.errorLanguageHandler('city') }
+                onChange={ changeHandler('city') }
+                onBlur={ validateHandler('city') }
                 />
 
-                {this.renderUserRegion(country, state, validateHandler, errors )}
-
-              </Badge>
+              {this.renderUserRegion(country, state, validateHandler, errors )}          
 
               <br />
 
-              <Select
-                floatingLabelFixed
-                floatingLabelText={
+              <div className='userFormInputField timezones'>
+                <InputLabel>
+                  {
                   (
                     <FormattedMessage
                       id='UserForm.timezone'
@@ -317,67 +326,70 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                     />
                   )
                 }
-                value={ timezone }
-                className='userFormInputField timezones'
-                errorText={ this.errorLanguageHandler('timezone') }
-                onChange={ this.changeTimezoneHandler }
-                onBlur={ validateHandler('timezone') }
+                </InputLabel>
+                <Select                
+                  value={ timezone }
+                  className='userFormInputField timezones'
+                  // helperText={ this.errorLanguageHandler('timezone') }
+                  onChange={ this.changeTimezoneHandler }
+                  onBlur={ validateHandler('timezone') }
               >
-                { _.map(timezones, name => 
+                  { _.map(timezones, name => 
                   (
                     <MenuItem 
                       key={ name } 
-                      insetChildren 
                       checked={ timezone === name } 
-                      value={ name } 
-                      primaryText={ (
-                        <span>
-                          { name }
-                        </span> 
-                      ) } 
-                    />
+                      value={ name }  
+                    >
+                      { name }
+                    </MenuItem>
                   ) 
                 ) }
-              </Select>
+                </Select>
            
-              { this. renderFindTimezoneButton() }
+                { this. renderFindTimezoneButton() }
+              </div>
               <br />
 
               { this.renderHowTheyFoundUs() }
 
               <TextField
                 name='description'
-                value={ description }
-                hintText=''
+                value={ description }                
                 className='userFormInputField description'
-                floatingLabelText={
+                label={
                   (
                     <FormattedMessage
                       id='UserForm.aboutMe'
                       defaultMessage='About me (in 280 characters or less)'
                     />
                   )
-                }
-                floatingLabelFixed
-                multiLine
-                errorText={ this.errorLanguageHandler('description') }
+                }          
+                InputLabelProps={ {
+                  shrink: true,
+                } }       
+                multiline
+                helperText={ this.errorLanguageHandler('description') }
                 onChange={ changeHandler('description') }
                 onBlur={ validateHandler('description') }
               />
-
-              <Checkbox
-                label={
-                  (
-                    <FormattedMessage
-                      id='UserForm.emailNotification'
-                      defaultMessage='I would like to receive an email when I get a new message'
-                    />
-                  )
-                }
-                checked={ email_notification }
-                className='userFormInputField emailNotification'
-                onCheck={ changeHandler('email_notification', { validate: true, strategy: useSecondArgument }) }
+              <FormControlLabel
+                control={ (
+                  <Checkbox               
+                    checked={ email_notification }
+                    name='emailNotification'
+                    onChange={ changeHandler('email_notification', { validate: true, strategy: useSecondArgument }) }
+                    color='primary'
               />
+                ) }
+                label={
+                (
+                  <FormattedMessage
+                    id='UserForm.emailNotification'
+                    defaultMessage='I would like to receive an email when I get a new message'
+                  />
+                )
+              } />              
 
               <div>
                 { this.renderPasswordFields() }
@@ -402,11 +414,9 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
 
         return (
           <section className="userFormInputFieldLocationContainer">
-
-            <Select
-
-              floatingLabelFixed
-              floatingLabelText={
+            <FormControl className='userFormInputField country'>
+              <InputLabel>
+                {
                 (
                   <FormattedMessage
                     id='UserForm.country'
@@ -414,20 +424,28 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                   />
                 )
               }
-              value={ country ? country : '' }
-              className='userFormInputField country'
-              errorText={ this.errorLanguageHandler('country') }
-              onChange={ this.changeCountryHandler }
-              onBlur={ validateHandler('country') }
-            >
-              {_.map(countries, name => <MenuItem key={ name } insetChildren checked={ country === name } value={ name } primaryText={ <span> { name } </span> } />) }
-            </Select>
-
-
-            <Select
-
-              floatingLabelFixed
-              floatingLabelText={
+              </InputLabel>
+              <Select              
+                value={ country ? country : '' }
+                className='userFormInputField country'
+              // helperText={ this.errorLanguageHandler('country') }
+                onChange={ this.changeCountryHandler }
+                onBlur={ validateHandler('country') }
+              >
+                {_.map(countries, name => (
+                  <MenuItem
+                    key={ name }
+                    checked={ country === name }
+                    value={ name }
+                  >
+                    { name }
+                  </MenuItem>
+              )) }
+              </Select>
+            </FormControl>
+            <FormControl className='userFormInputField state'>
+              <InputLabel>
+                {
                 (
                   <FormattedMessage
                     id='UserForm.state'
@@ -435,15 +453,25 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                   />
                 )
               }
-              value={ state }
-              className='userFormInputField state'
-              errorText={ this.errorLanguageHandler('state') }
-              onChange={ this.changeStateHandler }
-              onBlur={ validateHandler('state') }
-          >
-              { _.map(States, s => <MenuItem key={ s.abbreviation } insetChildren checked={ state === s.abbreviation } value={ s.abbreviation } primaryText={ <span>{ s.abbreviation }</span> } secondaryText={ <span>{ s.name } </span> } />) }
-            </Select>
-
+              </InputLabel>
+              <Select              
+                value={ state }
+                className='userFormInputField state'
+              // helperText={ this.errorLanguageHandler('state') }
+                onChange={ this.changeStateHandler }
+                onBlur={ validateHandler('state') }
+              >
+                { _.map(States, s => (
+                  <MenuItem
+                    key={ s.abbreviation }
+                    checked={ state === s.abbreviation }
+                    value={ s.abbreviation }
+                  > 
+                    { s.abbreviation + ' ' + s.name }
+                  </MenuItem>
+                  )) }
+              </Select>
+            </FormControl>
           </section>
           
         );
@@ -456,9 +484,8 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
           <section className="userFormInputFieldLocationContainer">
             
             <Select
-              style={{ 'min-width': 250 + 'px' } }
-              floatingLabelFixed
-              floatingLabelText={
+              style={ { 'min-width': 250 + 'px' } }              
+              label={
                 (
                   <FormattedMessage
                     id='UserForm.country'
@@ -468,17 +495,28 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
               }
               value={ country ? country : 'United States' }
               className='userFormInputField country'
-              errorText={ this.errorLanguageHandler('country') }
+              // helperText={ this.errorLanguageHandler('country') }
               onChange={ this.changeCountryHandler }
               onBlur={ validateHandler('country') }
             >
-              {_.map(countries, name => <MenuItem key={ name } insetChildren checked={ country === name } value={ name } primaryText={ <span> { name } </span> } />)}
+              {_.map(countries, name => (
+                <MenuItem
+                  key={ name }
+                  checked={ country === name }
+                  value={ name }
+                  primaryText={ (
+                    <span> 
+                      {' '}
+                      { name }
+                      {' '}
+                    </span>
+                  ) } />
+              ))}
             </Select>
 
             <Select
-              style={{ 'min-width': 250 + 'px' } }
-              floatingLabelFixed
-              floatingLabelText={
+              style={ { 'min-width': 250 + 'px' } }              
+              label={
                 (
                   <FormattedMessage
                     id='UserForm.state'
@@ -488,14 +526,25 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
               }
               value={ state }
               className='userFormInputField state'
-              errorText={ this.errorLanguageHandler('state') }
+              // helperText={ this.errorLanguageHandler('state') }
               onChange={ this.changeStateHandler }
               onBlur={ validateHandler('state') }
             >
-              {_.map(regions, region => <MenuItem key={ region } insetChildren checked={ state === region } value={ region } primaryText={ <span> { region } </span> } />) }
+              {_.map(regions, region => (
+                <MenuItem
+                  key={ region }
+                  checked={ state === region }
+                  value={ region }
+                  primaryText={ (
+                    <span> 
+                      {' '}
+                      { region }
+                      {' '}
+                    </span>
+                  ) } />
+              )) }
             </Select>
-          </section>
-          
+          </section>          
         );
       }  
     }
@@ -563,8 +612,10 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
               variant='contained'
               label={ wrappedProps.primaryButtonLabel }
               onClick={ validateAllHandler(this.handleSubmit) }
-              primary
-            />
+              color='primary'
+            >
+              { wrappedProps.primaryButtonLabel }
+            </Button>
           </div>
         );
       } else {
@@ -574,10 +625,11 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
               className='userFormSaveButton'
               variant='contained'
               label={ wrappedProps.primaryButtonLabel }
-              primary
+              color='primary'
               disabled
-              disabledBackgroundColor="#D3D4D7"
-            />
+            >
+              { wrappedProps.primaryButtonLabel }
+            </Button>
           </div>
         );
       }
@@ -724,30 +776,30 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
         const { errors, validateHandler, currentUser: { languages: userLanguages } } = this.props;
 
         return (
-          <div>
+          <div className='userFormInputField languages'>
+            <InputLabel>
+              {
+              (
+                <FormattedMessage
+                  id='UserForm.languages'
+                  defaultMessage='Language(s) I can speak'
+                />
+              )
+            }
+            </InputLabel>
             <Select
-              floatingLabelFixed
-              floatingLabelText={
-                (
-                  <FormattedMessage
-                    id='UserForm.languages'
-                    defaultMessage='Language(s) I can speak'
-                  />
-                )
-              }
               value={ userLanguages }
               className='userFormInputField languages'
               onChange={ this.changeHandlerLanguages }
               onBlur={ validateHandler('languages') }
               multiple
-              errorText={ this.errorLanguageHandler('languages') }
-              selectionRenderer={ this.selectionRenderer }
+              // helperText={ this.errorLanguageHandler('languages') }
+              renderValue={ this.selectionRenderer }
             >
               { _.map(languages, ({ name, id }) => {
                 return (
                   <MenuItem 
-                    key={ id } 
-                    insetChildren 
+                    key={ id }  
                     checked={ _.indexOf(userLanguages, name) > -1 } 
                     value={ name } 
                     primaryText={ (
@@ -788,8 +840,8 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                 value={ current_password }
                 type='password'
                 className='userFormInputField current_password'
-                hintText=''
-                floatingLabelText={
+                
+                label={
                   (
                     <FormattedMessage
                       id='UserForm.currentPassword'
@@ -797,8 +849,8 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                     />
                   )
                 }
-                floatingLabelFixed
-                errorText={ this.errorLanguageHandler('password') }
+                
+                helperText={ this.errorLanguageHandler('password') }
                 onChange={ changeHandler('current_password') }
                 onBlur={ validateHandler('current_password') }
               />
@@ -810,8 +862,8 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                 value={ password }
                 type='password'
                 className='userFormInputField password'
-                hintText=''
-                floatingLabelText={
+                
+                label={
                   (
                     <FormattedMessage
                       id='UserForm.newPassword'
@@ -819,8 +871,8 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                     />
                   )
                 }
-                floatingLabelFixed
-                errorText={ this.errorLanguageHandler('password') }
+                
+                helperText={ this.errorLanguageHandler('password') }
                 onChange={ changeHandler('password') }
                 onBlur={ validateHandler('password') }
               />
@@ -832,8 +884,8 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                 value={ password_confirmation }
                 type='password'
                 className='userFormInputField passwordConfirmation'
-                hintText=''
-                floatingLabelText={
+                
+                label={
                   (
                     <FormattedMessage
                       id='UserForm.newPasswordConfirmation'
@@ -841,8 +893,8 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                     />
                   )
                 }
-                floatingLabelFixed
-                errorText={ this.errorLanguageHandler('password_confirmation') }
+                
+                helperText={ this.errorLanguageHandler('password_confirmation') }
                 onChange={ changeHandler('password_confirmation') }
                 onBlur={ validateHandler('password_confirmation') }
               />
@@ -885,8 +937,8 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
               value={ password }
               type='password'
               className='userFormInputField password'
-              hintText=''
-              floatingLabelText={
+              
+              label={
                 (
                   <FormattedMessage
                     id='UserForm.password'
@@ -894,8 +946,8 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                   />
                 )
               }
-              floatingLabelFixed
-              errorText={ this.errorLanguageHandler('password') }
+              
+              helperText={ this.errorLanguageHandler('password') }
               onChange={ changeHandler('password') }
               onBlur={ validateHandler('password') }
             />
@@ -907,8 +959,8 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
               value={ password_confirmation }
               type='password'
               className='userFormInputField passwordConfirmation'
-              hintText=''
-              floatingLabelText={
+              
+              label={
                 (
                   <FormattedMessage
                     id='UserForm.passwordConfirmation'
@@ -916,8 +968,8 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                   />
                 )
               }
-              floatingLabelFixed
-              errorText={ this.errorLanguageHandler('password_confirmation') }
+              
+              helperText={ this.errorLanguageHandler('password_confirmation') }
               onChange={ changeHandler('password_confirmation') }
               onBlur={ validateHandler('password_confirmation') }
             />
@@ -951,10 +1003,9 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
 
 
       return (
-        <div>
-          <Select
-            floatingLabelFixed
-            floatingLabelText={
+        <div className='userFormInputField howTheyFoundUs'>
+          <InputLabel>
+            {
               (
                 <FormattedMessage
                   id='UserForm.howTheyFoundUs'
@@ -962,9 +1013,11 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                 />
               )
             }
+          </InputLabel>
+          <Select
             value={ how_they_found_us }
             className='userFormInputField howTheyFoundUs'
-            errorText={ this.errorLanguageHandler('how_they_found_us') }
+            // helperText={ this.errorLanguageHandler('how_they_found_us') }
             onChange={ this.changeHowTheyFoundUsHandler }
             onBlur={ validateHandler('how_they_found_us') }
           >
@@ -973,7 +1026,6 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                   (
                     <MenuItem 
                       key={ name + id + index }
-                      insetChildren
                       checked={ how_they_found_us === name }
                       value={ name }
                       primaryText={ (
@@ -987,7 +1039,6 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                 (
                   <MenuItem 
                     key={ name + id + index }
-                    insetChildren
                     checked={ how_they_found_us === name }
                     value={ name }
                     primaryText={ (
@@ -1048,37 +1099,46 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                 />
               </a>
             </div>
-
-            <Checkbox
-              checked={ terms_and_conditions }
-              className='userFormInputField termsAndConditions'
-              onCheck={ changeHandler('terms_and_conditions', { validate: true, strategy: useSecondArgument }) }
+            <FormControlLabel
+              control={ (
+                <Checkbox
+                  checked={ terms_and_conditions }
+                  name='termsAndConditions'
+                  onChange={ changeHandler('terms_and_conditions', { validate: true, strategy: useSecondArgument }) }   
+                  color='primary'           
+                />
+                ) }
               label={
-                (
-                  <FormattedMessage
-                    id='UserForm.termsAccept'
-                    defaultMessage='I accept tutoría’s terms of use'
-                  />
-                )
-              }
-            />
+                  (
+                    <FormattedMessage
+                      id='UserForm.termsAccept'
+                      defaultMessage='I accept tutoría’s terms of use'
+                    />
+                  )
+                } 
+            />            
 
             <ErrorField error={ this.errorLanguageHandler('terms_and_conditions') } />
-
-            <Checkbox
+            <br />
+            <FormControlLabel
+              control={ (
+                <Checkbox                
+                  checked={ contact_permission }
+                  name='contactPermission'
+                  onChange={ changeHandler('contact_permission', { validate: true, strategy: useSecondArgument }) }
+                  color='primary'
+                />
+                ) }
               label={
-                (
-                  <FormattedMessage
-                    id='UserForm.newsletterOptin'
-                    defaultMessage='I would like to be occasionally contacted about tutoría’s updates'
-                  />
-                )
-              }
-              checked={ contact_permission }
-              className='userFormInputField contactPermission'
-              onCheck={ changeHandler('contact_permission', { validate: true, strategy: useSecondArgument }) }
+                  (
+                    <FormattedMessage
+                      id='UserForm.newsletterOptin'
+                      defaultMessage='I would like to be occasionally contacted about tutoría’s updates'
+                    />
+                  )
+                } 
             />
-
+           
             <br />
           </div>
         );
@@ -1089,10 +1149,9 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
       const { errors, validateHandler, currentUser: { locale } } = this.props;
 
       return (
-        <div>
-          <Select
-            floatingLabelFixed
-            floatingLabelText={
+        <div className='userFormInputField locale'>
+          <InputLabel>
+            {
               (
                 <FormattedMessage
                   id='UserForm.locale'
@@ -1100,14 +1159,16 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                 />
               )
             }
+          </InputLabel>
+          <Select
             value={ locale }
             className='userFormInputField locale'
-            errorText={ this.errorLanguageHandler('locale') }
+            // helperText={ this.errorLanguageHandler('locale') }
             onChange={ this.changeLocaleHandler }
             onBlur={ validateHandler('locale') }
           >
-            <MenuItem key={ ENGLISH } insetChildren checked={ ENGLISH === locale } value={ ENGLISH } primaryText={ <span>English</span> } />
-            <MenuItem key={ SPANISH } insetChildren checked={ SPANISH === locale } value={ SPANISH } primaryText={ <span>Español</span> } />
+            <MenuItem key={ ENGLISH } checked={ ENGLISH === locale } value={ ENGLISH } primaryText={ <span>English</span> } />
+            <MenuItem key={ SPANISH } checked={ SPANISH === locale } value={ SPANISH } primaryText={ <span>Español</span> } />
           </Select>
         </div>
       );
@@ -1132,15 +1193,13 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
     }
 
     renderPrograms() {
-      const { validateHandler, errors, programs, currentUser: { programs: userPrograms } } = this.props;
+      const { validateHandler, errors, programs, currentUser: { programs: userPrograms=[] } } = this.props;
 
       return (
-        <div>
+        <div className='userFormInputField programs'>
           { this.renderProgramLabel() }
-
-          <Select
-            floatingLabelFixed
-            floatingLabelText={
+          <InputLabel>
+            {
               (
                 <FormattedMessage
                   id='UserForm.programs'
@@ -1148,28 +1207,26 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                 />
               )
             }
+          </InputLabel>
+          <Select
             value={ userPrograms }
             className='userFormInputField programs'
             onChange={ this.changeHandlerPrograms }
             onBlur={ validateHandler('programs') }
             multiple
-            errorText={ this.errorLanguageHandler('programs') }
-            selectionRenderer={ this.selectionRenderer }
+            // helperText={ this.errorLanguageHandler('programs') }
+            renderValue={ this.selectionRenderer }
           >
-            { _.map(programs, ({ name, spanish_name, id }) => {
+            { programs.map( ({ name, spanish_name, id }) => {
               let programName = this.props.match.params[0] === ENGLISH ? name : spanish_name;
               return (
                 <MenuItem 
-                  key={ id } 
-                  insetChildren 
-                  checked={ _.indexOf(userPrograms, programName) > -1 } 
+                  key={ id }                     
                   value={ programName } 
-                  primaryText={ (
-                    <span> 
-                      { programName } 
-                    </span> 
-                  ) } 
-                />
+                > 
+                  <Checkbox checked={ userPrograms.indexOf(programName) > -1 } />
+                  <ListItemText primary={ programName } />
+                </MenuItem>
               );
             })}
           </Select>
@@ -1288,50 +1345,55 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
 
       if (role === 'volunteer' || volunteer ) {
         return (
-          <div>
-            <p>
-              <FormattedMessage
-                id='UserForm.addressVolunteerDialog1'
-                defaultMessage=' Your location will only be used to help clients find volunteers in their area.'
+          <>
+            <FormattedMessage
+              id='UserForm.addressVolunteerDialog1'
+              defaultMessage=' Your location will only be used to help clients find volunteers in their area.'
               />
-            </p>
+          
             <br />
-            <p>
-              <FormattedMessage
-                id='UserForm.addressVolunteerDialog2'
-                defaultMessage='Your street address will not be shown to other users. Only your town/city and country.'
+            <br />
+
+            <FormattedMessage
+              id='UserForm.addressVolunteerDialog2'
+              defaultMessage='Your street address will not be shown to other users. Only your town/city and country.'
               />
-            </p>
-            <p>
-              <FormattedMessage
-                id='UserForm.addressVolunteerDialog3'
-                defaultMessage='This info is not required unless you would like to allow clients to ask for face to face sessions.'
+
+            <br />
+            <br />
+
+            <FormattedMessage
+              id='UserForm.addressVolunteerDialog3'
+              defaultMessage='This info is not required unless you would like to allow clients to ask for face to face sessions.'
               />
-            </p>
-          </div>
+          </>
+          
         );
       } else if (role === 'client' || client) {
         return (
-          <div>
-            <p>
-              <FormattedMessage
-                id='UserForm.addressClientDialog1'
-                defaultMessage='Your location will only be used to help find volunteers in your area.'
+          <>
+            <FormattedMessage
+              id='UserForm.addressClientDialog1'
+              defaultMessage='Your location will only be used to help find volunteers in your area.'
               />
-            </p>
-            <p>
-              <FormattedMessage
-                id='UserForm.addressClientDialog2'
-                defaultMessage='Your street address will not be shown to other users. Only your town/city and country.'
+
+            <br />
+            <br />
+
+            <FormattedMessage
+              id='UserForm.addressClientDialog2'
+              defaultMessage='Your street address will not be shown to other users. Only your town/city and country.'
               />
-            </p>
-            <p>
-              <FormattedMessage
-                id='UserForm.addressClientDialog3'
-                defaultMessage='This info is not required unless you would like to use the location feature.'
+
+            <br />
+            <br />
+
+            <FormattedMessage
+              id='UserForm.addressClientDialog3'
+              defaultMessage='This info is not required unless you would like to use the location feature.'
               />
-            </p>
-          </div>
+            
+          </>
         );
       }
     }

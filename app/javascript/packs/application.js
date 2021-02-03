@@ -20,7 +20,7 @@ import {
   Redirect,
 
 } from 'react-router-dom';
-import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
+import { ThemeProvider as MuiThemeProvider } from '@material-ui/core/styles';
 import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
 
 /* localization */
@@ -91,7 +91,7 @@ const App = ({ data }) => {
 
   return ( 
     <IntlProvider locale={ language } key={ language } messages={ messages }>
-      <MuiThemeProvider muiTheme={ createMuiTheme(MuiTheme) }>
+      <MuiThemeProvider theme={ createMuiTheme(MuiTheme) }>
         <Router>
           <ContentWrapper currentUser={ data.currentUser } locale={ language }>
             <Switch>

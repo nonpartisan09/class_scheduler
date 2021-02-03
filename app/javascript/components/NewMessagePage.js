@@ -66,7 +66,7 @@ class NewMessagePage extends Component {
               value={ userName }
               className='userFormInputField recipient'
               hintText=''
-              floatingLabelText={
+              label={
                 (
                   <FormattedMessage
                     id='NewMessagePage.recipient'
@@ -74,7 +74,7 @@ class NewMessagePage extends Component {
                   />
                 )
               }
-              floatingLabelFixed
+              
             />
 
             <TextField
@@ -82,7 +82,7 @@ class NewMessagePage extends Component {
               value={ subject }
               className='userFormInputField subject'
               hintText=''
-              floatingLabelText={
+              label={
                 (
                   <FormattedMessage
                     id='NewMessagePage.subject'
@@ -90,7 +90,7 @@ class NewMessagePage extends Component {
                   />
                 )
               }
-              floatingLabelFixed
+              
               errorText={ errors.subject }
               onChange={ changeHandler('subject') }
               onBlur={ validateHandler('subject') }
@@ -100,7 +100,7 @@ class NewMessagePage extends Component {
               value={ body }
               className='userFormInputField body'
               hintText=''
-              floatingLabelText={
+              label={
                 (
                   <FormattedMessage
                     id='NewMessagePage.messageBody'
@@ -108,7 +108,7 @@ class NewMessagePage extends Component {
                   />
                 )
               }
-              floatingLabelFixed
+              
               errorText={ errors.body }
               onChange={ changeHandler('body') }
               onBlur={ validateHandler('body') }

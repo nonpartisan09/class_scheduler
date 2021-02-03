@@ -47,13 +47,13 @@ class ResetPasswordPage extends Component {
             type='password'
             className='userFormInputField password'
             hintText=''
-            floatingLabelText={ (
+            label={ (
               <FormattedMessage
                 id='password'
                 defaultMessage='Password'
               />
             ) }
-            floatingLabelFixed
+            
             errorText={ errors.password }
             onChange={ changeHandler('password') }
             onBlur={ validateHandler('password') }
@@ -67,13 +67,13 @@ class ResetPasswordPage extends Component {
             type='password'
             className='userFormInputField passwordConfirmation'
             hintText=''
-            floatingLabelText={ (
+            label={ (
               <FormattedMessage
                 id='passwordConfirmation'
                 defaultMessage='Password Confirmation'
               />
             ) }
-            floatingLabelFixed
+            
             errorText={ errors.password_confirmation }
             onChange={ changeHandler('password_confirmation') }
             onBlur={ validateHandler('password_confirmation') }

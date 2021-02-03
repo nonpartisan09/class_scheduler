@@ -72,8 +72,8 @@ class SignIn extends Component {
             value={ email }
             className="signInEmailInputField"
             hintText=""
-            floatingLabelText="Email"
-            floatingLabelFixed
+            label="Email"
+            
             errorText={ errors.email }
             onChange={ changeHandler('email') }
             onBlur={ validateHandler('email') }
@@ -85,8 +85,8 @@ class SignIn extends Component {
             value={ password }
             type="password"
             hintText=""
-            floatingLabelText="Password"
-            floatingLabelFixed
+            label="Password"
+            
             errorText={ errors.password }
             onChange={ changeHandler('password') }
             onBlur={ validateHandler('password') }

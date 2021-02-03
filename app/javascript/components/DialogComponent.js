@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import Dialog from '@material-ui/core/Dialog';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogActions from '@material-ui/core/DialogActions';
 
 class DialogComponent extends Component {
   render() {
@@ -9,13 +13,16 @@ class DialogComponent extends Component {
 
     return (
       <Dialog
-        title={ title }
-        actions={ this.renderActions() }
-        modal
         open={ open }
-        onRequestClose={ onRequestClose }
+        onClose={ onRequestClose }
       >
-        { text }
+        <DialogTitle>{ title }</DialogTitle>
+        <DialogContent>
+          <DialogContentText>{ text }</DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          { this.renderActions() }
+        </DialogActions>
       </Dialog>
     );
   }

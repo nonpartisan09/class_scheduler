@@ -38,14 +38,14 @@ class ReviewContainer extends Component {
             hintText=''
             errorText={ this.state.error }
             errorStyle={ { float: 'left', margin: '-6px 0' } }
-            floatingLabelText={ (
+            label={ (
               <FormattedMessage
                 id='ReviewContainer.comment'
                 defaultMessage='Leave a comment'
               />
             ) }
             onChange={ this.handleChangeComment }
-            floatingLabelFixed
+            
           />
         </div>
 

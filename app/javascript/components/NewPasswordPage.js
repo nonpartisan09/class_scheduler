@@ -59,8 +59,8 @@ class NewPasswordPage extends Component {
             value={ email }
             className='signInEmailInputField'
             hintText=''
-            floatingLabelText={ <FormattedMessage id='NewPasswordPage.enterEmail' defaultMessage='Please enter your email to recover your password' /> }
-            floatingLabelFixed
+            label={ <FormattedMessage id='NewPasswordPage.enterEmail' defaultMessage='Please enter your email to recover your password' /> }
+            
             errorText={ errors.email }
             onChange={ changeHandler('email') }
             onBlur={ validateHandler('email') }
