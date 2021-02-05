@@ -1,7 +1,9 @@
 module Contexts
   module Users
     class Creation
-      def initialize(user, resource_name, role_id, programs, languages, main_goals, meeting_options, gender_identities)
+      def initialize(user, resource_name, role_id, programs, 
+        languages, main_goals, meeting_options, gender_identities, ethnicity_races)
+
         @user = user
         @resource_name = resource_name
         @role_id = role_id
@@ -10,6 +12,7 @@ module Contexts
         @main_goals = main_goals
         @meeting_options = meeting_options
         @gender_identities = gender_identities
+        @ethnicity_races = ethnicity_races
 
         if check_if_email_exists?
           message = I18n.t('custom_errors.messages.email_in_use')
@@ -37,6 +40,7 @@ module Contexts
 
         build_options(@meeting_options, MeetingOption, @user.meeting_options)
         build_options(@gender_identities, GenderIdentity, @user.gender_identities)
+        build_options(@ethnicity_races, EthnicityRace, @user.ethnicity_races)
 
         @user.save!
 

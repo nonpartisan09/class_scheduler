@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_02_184149) do
+ActiveRecord::Schema.define(version: 2021_02_05_055804) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -76,6 +76,14 @@ ActiveRecord::Schema.define(version: 2021_02_02_184149) do
     t.datetime "updated_at", null: false
     t.index ["program_id"], name: "index_enrollments_on_program_id"
     t.index ["user_id"], name: "index_enrollments_on_user_id"
+  end
+
+  create_table "ethnicity_races", force: :cascade do |t|
+    t.string "name"
+    t.string "spanish_name"
+    t.boolean "displayable"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "faq_pages", force: :cascade do |t|
@@ -240,6 +248,15 @@ ActiveRecord::Schema.define(version: 2021_02_02_184149) do
     t.boolean "consented_to_background_check", default: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  end
+
+  create_table "users_ethnicity_races", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "ethnicity_race_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["ethnicity_race_id"], name: "index_users_ethnicity_races_on_ethnicity_race_id"
+    t.index ["user_id"], name: "index_users_ethnicity_races_on_user_id"
   end
 
   create_table "users_gender_identities", force: :cascade do |t|

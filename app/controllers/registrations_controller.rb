@@ -22,6 +22,7 @@ class RegistrationsController < Devise::RegistrationsController
     : MainGoal.where(:for_client => true,  :displayable => true)
     meeting_options = MeetingOption.where(:displayable => true)
     gender_identities = GenderIdentity.where(:displayable => true)
+    ethnicity_races = EthnicityRace.where(:displayable => true)
 
     @data = {
       :programs => programs,
@@ -31,7 +32,8 @@ class RegistrationsController < Devise::RegistrationsController
       :how_they_found_us_options => how_they_found_us_options,
       :main_goals_options => main_goals_options,
       :meeting_options => meeting_options,
-      :gender_identities => gender_identities
+      :gender_identities => gender_identities,
+      :ethnicity_races => ethnicity_races
     }
 
     respond_with(resource, render: :new)
@@ -46,6 +48,7 @@ class RegistrationsController < Devise::RegistrationsController
       main_goals = params[:user][:main_goals]
       meeting_options = params[:user][:meeting_options]
       gender_identities = params[:user][:gender_identities]
+      ethnicity_races = params[:user][:ethnicity_races]
 
       build_resource(sign_up_params)
 
@@ -56,7 +59,8 @@ class RegistrationsController < Devise::RegistrationsController
         languages, 
         main_goals, 
         meeting_options,
-        gender_identities
+        gender_identities,
+        ethnicity_races
       )
 
       @registration.execute
@@ -156,7 +160,8 @@ class RegistrationsController < Devise::RegistrationsController
         :role_ids => [],
         :main_goals => '',
         :meeting_options => '',
-        :gender_identities => ''          
+        :gender_identities => '',
+        :ethnicity_races => ''          
     )
   end
 
@@ -187,7 +192,8 @@ class RegistrationsController < Devise::RegistrationsController
         :programs => [],
         :main_goals => [],
         :meeting_options => [],
-        :gender_identities => []
+        :gender_identities => [],
+        :ethnicity_races => []
     )
   end
 

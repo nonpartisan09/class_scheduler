@@ -7,6 +7,9 @@ class User < ActiveRecord::Base
   include HasUrlSlug
   include Warden
 
+  has_many :users_ethnicity_races, dependent: :destroy
+  has_many :ethnicity_races, through: :users_ethnicity_races
+
   has_many :users_gender_identities, dependent: :destroy
   has_many :gender_identities, through: :users_gender_identities
 

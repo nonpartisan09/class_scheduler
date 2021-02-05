@@ -194,6 +194,24 @@ GenderIdentity.create(
   displayable: true
 )
 
+EthnicityRace.create(
+  name: 'Hispanic / Latino / Spanish Origin',
+  spanish_name: 'Hispano / Latino',
+  displayable: true
+)
+
+EthnicityRace.create(
+  name: 'White',
+  spanish_name: 'Blanco',
+  displayable: true
+)
+
+EthnicityRace.create(
+  name: 'Other',
+  spanish_name: 'Otra',
+  displayable: true
+)
+
 # More users (for dev)
 if Rails.env.development?
   test_users = [
