@@ -212,6 +212,15 @@ EthnicityRace.create(
   displayable: true
 )
 
+AgeRangeOption.create(
+  name: '18-24',
+  spanish_name: '18-24'
+)
+AgeRangeOption.create(
+  name: '25-34',
+  spanish_name: '25-34'
+)
+
 # More users (for dev)
 if Rails.env.development?
   test_users = [

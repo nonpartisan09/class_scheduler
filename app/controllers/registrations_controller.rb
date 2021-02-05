@@ -23,6 +23,7 @@ class RegistrationsController < Devise::RegistrationsController
     meeting_options = MeetingOption.where(:displayable => true)
     gender_identities = GenderIdentity.where(:displayable => true)
     ethnicity_races = EthnicityRace.where(:displayable => true)
+    age_range_options = AgeRangeOption.all
 
     @data = {
       :programs => programs,
@@ -33,7 +34,8 @@ class RegistrationsController < Devise::RegistrationsController
       :main_goals_options => main_goals_options,
       :meeting_options => meeting_options,
       :gender_identities => gender_identities,
-      :ethnicity_races => ethnicity_races
+      :ethnicity_races => ethnicity_races,
+      :age_range_options => age_range_options
     }
 
     respond_with(resource, render: :new)
@@ -155,6 +157,7 @@ class RegistrationsController < Devise::RegistrationsController
         :timezone,
         :is_over_18,
         :consented_to_background_check,
+        :age_range, 
         :programs => '',
         :languages => '',
         :role_ids => [],
@@ -188,6 +191,7 @@ class RegistrationsController < Devise::RegistrationsController
         :timezone,
         :is_over_18,
         :consented_to_background_check,
+        :age_range,
         :languages => [],
         :programs => [],
         :main_goals => [],

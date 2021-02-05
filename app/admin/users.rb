@@ -73,6 +73,7 @@ ActiveAdmin.register User do
       :url_slug,
       :is_over_18,
       :consented_to_background_check,
+      :age_range,
       language_ids: [],
       languages: [ :id, :name ],
       program_ids: [],
@@ -285,6 +286,7 @@ ActiveAdmin.register User do
           row :contact_permission
           row :email_notification
           row :how_they_found_us
+          row :age_range
           row :address
           row :city
           row :description
@@ -402,6 +404,7 @@ ActiveAdmin.register User do
       f.input :timezone, collection: ActiveSupport::TimeZone.all.map(&:name), selected: resource.timezone
       roles_collection = Role.all.collect{|role| [role.name, role.id, { checked: resource.roles.include?(role) }]}
       user = User.find(params[:id]) if params[:id]
+      f.input :age_range
       
       if user && current_user.id == user.id && !current_user.owner?
         f.input :roles, as: :check_boxes, collection: roles_collection, :disabled => [ "Owner", 4]
