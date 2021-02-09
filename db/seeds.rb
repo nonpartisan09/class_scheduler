@@ -61,7 +61,7 @@ Program.create(
   name: 'Legal Aid',
   url_slug: 'legalaid',
   featured: false,
-  spanish_name: 'Ingles',
+  spanish_name: 'Assistencia Legal',
 )
 
 Language.create(

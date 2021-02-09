@@ -394,7 +394,8 @@ ActiveAdmin.register User do
       f.input :description
       f.input :email_notification
       f.input :contact_permission
-      f.input :how_they_found_us
+      f.input :how_they_found_us, 
+        :as => :select, :collection => HowTheyFoundUsOption.all.order('name').map{|option| [option.name]}
       f.input :address
       f.input :locale
       f.input :city
