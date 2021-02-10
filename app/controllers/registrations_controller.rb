@@ -158,6 +158,7 @@ class RegistrationsController < Devise::RegistrationsController
         :is_over_18,
         :consented_to_background_check,
         :age_range, 
+        :education,
         :programs => '',
         :languages => '',
         :role_ids => [],

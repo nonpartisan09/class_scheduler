@@ -221,6 +221,15 @@ AgeRangeOption.create(
   spanish_name: '25-34'
 )
 
+EducationOption.create(
+  name: 'High School Diploma Or Ged',
+  spanish_name: 'Bachillerato'
+)
+EducationOption.create(
+  name: 'Bachelor\'s Degree (B.A., B. S., Etc)',
+  spanish_name: 'Licenciatura'
+)
+
 # More users (for dev)
 if Rails.env.development?
   test_users = [

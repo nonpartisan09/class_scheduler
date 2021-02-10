@@ -74,6 +74,7 @@ ActiveAdmin.register User do
       :is_over_18,
       :consented_to_background_check,
       :age_range,
+      :education,
       language_ids: [],
       languages: [ :id, :name ],
       program_ids: [],
@@ -183,6 +184,7 @@ ActiveAdmin.register User do
     column :contact_permission
     column :email_notification
     column :how_they_found_us
+    column :education
     column :address
     column :city
     column :locale
@@ -239,6 +241,7 @@ ActiveAdmin.register User do
         race[:name]
       end
     end
+    
   end
 
   index do
@@ -286,6 +289,7 @@ ActiveAdmin.register User do
           row :contact_permission
           row :email_notification
           row :how_they_found_us
+          row :education
           row :age_range
           row :address
           row :city
@@ -396,6 +400,8 @@ ActiveAdmin.register User do
       f.input :contact_permission
       f.input :how_they_found_us, 
         :as => :select, :collection => HowTheyFoundUsOption.all.order('name').map{|option| [option.name]}
+      f.input :education, 
+        :as => :select, :collection => EducationOption.all.order('id ASC').map{|option| [option.name]}
       f.input :address
       f.input :locale
       f.input :city
