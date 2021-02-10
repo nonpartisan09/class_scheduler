@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe UserMainGoal, type: :model do
   it { is_expected.to belong_to(:user) }
-  it { is_expected.to belong_to(:maing_goal) }
+  it { is_expected.to belong_to(:main_goal) }
 
   it { is_expected.to have_db_column(:user_id).of_type(:integer) }
   it { is_expected.to have_db_column(:main_goal_id).of_type(:integer) }

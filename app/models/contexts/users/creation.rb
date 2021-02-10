@@ -36,11 +36,21 @@ module Contexts
 
         build_languages
 
-        build_main_goals(role.url_slug)
+        if @main_goals
+          build_main_goals(role.url_slug)
+        end
 
-        build_options(@meeting_options, MeetingOption, @user.meeting_options)
-        build_options(@gender_identities, GenderIdentity, @user.gender_identities)
-        build_options(@ethnicity_races, EthnicityRace, @user.ethnicity_races)
+        if @meeting_options
+          build_options(@meeting_options, MeetingOption, @user.meeting_options)
+        end
+
+        if @gender_identities
+          build_options(@gender_identities, GenderIdentity, @user.gender_identities)
+        end
+
+        if @ethnicity_races
+          build_options(@ethnicity_races, EthnicityRace, @user.ethnicity_races)
+        end 
 
         @user.save!
 
