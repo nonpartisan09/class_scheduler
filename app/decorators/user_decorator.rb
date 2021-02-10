@@ -30,7 +30,10 @@ class UserDecorator
       :url_slug => url_slug,
       :volunteer => @user.volunteer?,
       :city => city,
-      :main_goals => main_goals
+      :main_goals => main_goals,
+      :timeout => timeout,
+      :responsive => responsive,
+      :id => user.id
     }.merge(availabilities_hash)
   end
 
@@ -55,7 +58,8 @@ class UserDecorator
         :languages => languages,
         :rating_count => rating_count,
         :average_rating => average_rating,
-        :main_goals => main_goals
+        :main_goals => main_goals,
+        :id => user.id
     }
   end
 
@@ -94,7 +98,10 @@ class UserDecorator
         :timezone => user_timezone,
         :url_slug => url_slug,
         :volunteer => @user.volunteer?,
-        :main_goals => main_goals
+        :main_goals => main_goals,
+        :timeout => timeout,
+        :responsive => responsive,
+        :id => user.id
     }.merge(availabilities_hash)
   end
 
@@ -208,6 +215,14 @@ class UserDecorator
 
   def available_days
     availabilities.pluck(:day)
+  end
+
+  def responsive
+    @user.responsive?
+  end
+
+  def timeout
+    @user.timeout ||= false
   end
 
   def last_logged_in

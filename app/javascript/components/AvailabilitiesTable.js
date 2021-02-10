@@ -46,12 +46,12 @@ class AvailabilitiesTable extends Component {
   }
 
   render() {
-    const { availabilities, timezone } = this.props;
+    const { availabilities, timezone, timeout } = this.props;
     const { show12HourFormat } = this.state;
 
     const tableContent =  _.map(availabilities, ({ day, start_time, end_time, id, start_time_12_hour, end_time_12_hour  }) => {
       return(
-        <TableRow className='availabilitiesTableRow' key={ 'body' + day + start_time + end_time }>
+        <TableRow className={ timeout ? 'availabilitiesTableRow untimelyRow' : 'availabilitiesTableRow' } key={ 'body' + day + start_time + end_time }>
           <TableRowColumn>
             { day }
           </TableRowColumn>
@@ -68,7 +68,9 @@ class AvailabilitiesTable extends Component {
 
     const listContent =  _.map(availabilities, ({ day, start_time, end_time, id, start_time_12_hour, end_time_12_hour }) => {
       return(
-        <div key={ 'list' + day + start_time + end_time + timezone } className='availabilityTableItemContainer'>
+        <div 
+          key={ 'list' + day + start_time + end_time + timezone } 
+          className={ timeout ? 'untimelyRow availabilityTableItemContainer' : 'availabilityTableItemContainer' }>
           <li>
             <span>
               <FormattedMessage
@@ -289,14 +291,16 @@ AvailabilitiesTable.propTypes = {
   availabilities: PropTypes.oneOfType([ PropTypes.array, PropTypes.object ]),
   timezone: PropTypes.string,
   locale: PropTypes.string,
-  deletable: PropTypes.bool
+  deletable: PropTypes.bool,
+  timeout: PropTypes.bool
 };
 
 AvailabilitiesTable.defaultProps = {
   availabilities: {},
   timezone: '',
   locale: '',
-  deletable: false
+  deletable: false,
+  timeout: false
 };
 
 export default AvailabilitiesTable;

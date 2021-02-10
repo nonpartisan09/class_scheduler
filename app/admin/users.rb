@@ -78,6 +78,7 @@ ActiveAdmin.register User do
       :household_income,
       :occupation_type,
       :occupation,
+      :timeout,
       language_ids: [],
       languages: [ :id, :name ],
       program_ids: [],

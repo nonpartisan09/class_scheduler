@@ -279,6 +279,7 @@ ActiveRecord::Schema.define(version: 2021_02_10_041030) do
     t.string "household_income"
     t.string "occupation_type"
     t.string "occupation"
+    t.boolean "timeout", default: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

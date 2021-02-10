@@ -64,4 +64,23 @@ RSpec.describe User, type: :model do
     subject.password = nil
     expect(subject).to_not be_valid
   end
+
+  describe 'User::responsive?' do
+    let(:volunteer) { FactoryBot.create(:volunteer_user) }
+    let(:client) { FactoryBot.create(:client_user) }
+    
+    it 'returns false if user has not replied in time to a message' do
+      conversation = volunteer.received_conversations.create({author_id: client.id})
+      conversation.messages.create({body: "this is a test", user_id: client.id})
+      conversation.update({created_at: "2001-01-06 05:00:00"})
+      expect(volunteer.responsive?).to eq(false)
+    end
+    
+    it 'returns true if user has replied in time to all messages' do
+      conversation = volunteer.received_conversations.create({author_id: client.id})
+      conversation.messages.create({body: "this is a test", user_id: client.id})
+      expect(volunteer.responsive?).to eq(true)
+    end
+  end
+
 end
