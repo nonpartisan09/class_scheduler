@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_10_031132) do
+ActiveRecord::Schema.define(version: 2021_02_10_041030) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -175,6 +175,13 @@ ActiveRecord::Schema.define(version: 2021_02_10_031132) do
     t.index ["user_id"], name: "index_messages_on_user_id"
   end
 
+  create_table "occupation_type_options", force: :cascade do |t|
+    t.string "name"
+    t.string "spanish_name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "programs", force: :cascade do |t|
     t.string "name"
     t.string "url_slug"
@@ -270,6 +277,8 @@ ActiveRecord::Schema.define(version: 2021_02_10_031132) do
     t.string "age_range"
     t.string "education"
     t.string "household_income"
+    t.string "occupation_type"
+    t.string "occupation"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

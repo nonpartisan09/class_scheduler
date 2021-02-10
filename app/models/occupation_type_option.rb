@@ -1,0 +1,2 @@
+class OccupationTypeOption < ApplicationRecord
+end

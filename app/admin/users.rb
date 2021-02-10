@@ -76,6 +76,8 @@ ActiveAdmin.register User do
       :age_range,
       :education,
       :household_income,
+      :occupation_type,
+      :occupation,
       language_ids: [],
       languages: [ :id, :name ],
       program_ids: [],
@@ -187,6 +189,8 @@ ActiveAdmin.register User do
     column :how_they_found_us
     column :education
     column :household_income
+    column :occupation_type
+    column :occupation
     column :address
     column :city
     column :locale
@@ -293,6 +297,8 @@ ActiveAdmin.register User do
           row :how_they_found_us
           row :education
           row :household_income
+          row :occupation_type
+          row('Occupation / Studying'){ |user| user.occupation }
           row :age_range
           row :address
           row :city
@@ -407,6 +413,9 @@ ActiveAdmin.register User do
         :as => :select, :collection => EducationOption.all.order('id ASC').map{|option| [option.name]}
       f.input :household_income, 
         :as => :select, :collection => HouseholdIncomeOption.all.order('name ASC').map{|option| [option.name]}
+      f.input :occupation_type,
+        :as => :select, :collection => OccupationTypeOption.all.order('id ASC').map{|option| [option.name]}
+      f.input :occupation,  :label => 'Occupation / Studying'
       f.input :address
       f.input :locale
       f.input :city

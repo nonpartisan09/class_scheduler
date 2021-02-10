@@ -240,6 +240,21 @@ HouseholdIncomeOption.create(
   spanish_name: '$150,000 O Mas'
 )
 
+OccupationTypeOption.create(
+  name: 'Working',
+  spanish_name: 'Trabajando'
+)
+
+OccupationTypeOption.create(
+  name: 'In School',
+  spanish_name: 'Estudiando'
+)
+
+OccupationTypeOption.create(
+  name: 'Neither',
+  spanish_name: 'Ninguno'
+)
+
 # More users (for dev)
 if Rails.env.development?
   test_users = [

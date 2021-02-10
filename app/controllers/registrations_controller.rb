@@ -26,6 +26,7 @@ class RegistrationsController < Devise::RegistrationsController
     age_range_options = AgeRangeOption.all
     education_optons = EducationOption.all
     household_income_options = HouseholdIncomeOption.all
+    occupation_type_options = OccupationTypeOption.all
 
     @data = {
       :programs => programs,
@@ -39,7 +40,8 @@ class RegistrationsController < Devise::RegistrationsController
       :ethnicity_races => ethnicity_races,
       :age_range_options => age_range_options,
       :education_optons => education_optons,
-      :household_income_options => household_income_options
+      :household_income_options => household_income_options,
+      :occupation_type_options => occupation_type_options
     }
 
     respond_with(resource, render: :new)
@@ -164,6 +166,8 @@ class RegistrationsController < Devise::RegistrationsController
         :age_range, 
         :education,
         :household_income,
+        :occupation_type,
+        :occupation,
         :programs => '',
         :languages => '',
         :role_ids => [],
@@ -200,6 +204,8 @@ class RegistrationsController < Devise::RegistrationsController
         :age_range,
         :education,
         :household_income,
+        :occupation_type,
+        :occupation,
         :languages => [],
         :programs => [],
         :main_goals => [],
