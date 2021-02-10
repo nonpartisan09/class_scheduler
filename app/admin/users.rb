@@ -75,6 +75,7 @@ ActiveAdmin.register User do
       :consented_to_background_check,
       :age_range,
       :education,
+      :household_income,
       language_ids: [],
       languages: [ :id, :name ],
       program_ids: [],
@@ -185,6 +186,7 @@ ActiveAdmin.register User do
     column :email_notification
     column :how_they_found_us
     column :education
+    column :household_income
     column :address
     column :city
     column :locale
@@ -290,6 +292,7 @@ ActiveAdmin.register User do
           row :email_notification
           row :how_they_found_us
           row :education
+          row :household_income
           row :age_range
           row :address
           row :city
@@ -402,6 +405,8 @@ ActiveAdmin.register User do
         :as => :select, :collection => HowTheyFoundUsOption.all.order('name').map{|option| [option.name]}
       f.input :education, 
         :as => :select, :collection => EducationOption.all.order('id ASC').map{|option| [option.name]}
+      f.input :household_income, 
+        :as => :select, :collection => HouseholdIncomeOption.all.order('name ASC').map{|option| [option.name]}
       f.input :address
       f.input :locale
       f.input :city
