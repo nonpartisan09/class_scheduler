@@ -17,12 +17,31 @@ class RegistrationsController < Devise::RegistrationsController
     how_they_found_us_options = @role_url_slug == 'volunteer' \
       ? HowTheyFoundUsOption.where(:for_volunteer => true) \
       : HowTheyFoundUsOption.where(:for_client => true)
+    main_goals_options = @role_url_slug == 'volunteer' \
+    ? MainGoal.where(:for_volunteer => true, :displayable => true) \
+    : MainGoal.where(:for_client => true,  :displayable => true)
+    meeting_options = MeetingOption.where(:displayable => true)
+    gender_identities = GenderIdentity.where(:displayable => true)
+    ethnicity_races = EthnicityRace.where(:displayable => true)
+    age_range_options = AgeRangeOption.all
+    education_optons = EducationOption.all
+    household_income_options = HouseholdIncomeOption.all
+    occupation_type_options = OccupationTypeOption.all
+
     @data = {
       :programs => programs,
       :timezones => timezones,
       :timezone_map => timezone_map,
       :languages => languages,
-      :how_they_found_us_options => how_they_found_us_options
+      :how_they_found_us_options => how_they_found_us_options,
+      :main_goals_options => main_goals_options,
+      :meeting_options => meeting_options,
+      :gender_identities => gender_identities,
+      :ethnicity_races => ethnicity_races,
+      :age_range_options => age_range_options,
+      :education_optons => education_optons,
+      :household_income_options => household_income_options,
+      :occupation_type_options => occupation_type_options
     }
 
     respond_with(resource, render: :new)
@@ -34,10 +53,23 @@ class RegistrationsController < Devise::RegistrationsController
 
       programs = params[:user][:programs]
       languages = params[:user][:languages]
+      main_goals = params[:user][:main_goals]
+      meeting_options = params[:user][:meeting_options]
+      gender_identities = params[:user][:gender_identities]
+      ethnicity_races = params[:user][:ethnicity_races]
 
       build_resource(sign_up_params)
 
-      @registration = Contexts::Users::Creation.new(resource, resource_name, @role_id, programs, languages)
+      @registration = Contexts::Users::Creation.new(
+        resource, 
+        resource_name, 
+        @role_id, programs, 
+        languages, 
+        main_goals, 
+        meeting_options,
+        gender_identities,
+        ethnicity_races
+      )
 
       @registration.execute
       user = UserDecorator.new(@user).simple_decorate
@@ -129,9 +161,20 @@ class RegistrationsController < Devise::RegistrationsController
         :terms_and_conditions,
         :thumbnail_image,
         :timezone,
+        :is_over_18,
+        :consented_to_background_check,
+        :age_range, 
+        :education,
+        :household_income,
+        :occupation_type,
+        :occupation,
         :programs => '',
         :languages => '',
-        :role_ids => []
+        :role_ids => [],
+        :main_goals => '',
+        :meeting_options => '',
+        :gender_identities => '',
+        :ethnicity_races => ''          
     )
   end
 
@@ -156,8 +199,19 @@ class RegistrationsController < Devise::RegistrationsController
         :state,
         :thumbnail_image,
         :timezone,
+        :is_over_18,
+        :consented_to_background_check,
+        :age_range,
+        :education,
+        :household_income,
+        :occupation_type,
+        :occupation,
         :languages => [],
-        :programs => []
+        :programs => [],
+        :main_goals => [],
+        :meeting_options => [],
+        :gender_identities => [],
+        :ethnicity_races => []
     )
   end
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_26_140413) do
+ActiveRecord::Schema.define(version: 2021_02_10_041030) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,6 +34,13 @@ ActiveRecord::Schema.define(version: 2020_11_26_140413) do
     t.index ["author_type", "author_id"], name: "index_active_admin_comments_on_author_type_and_author_id"
     t.index ["namespace"], name: "index_active_admin_comments_on_namespace"
     t.index ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id"
+  end
+
+  create_table "age_range_options", force: :cascade do |t|
+    t.string "name"
+    t.string "spanish_name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "availabilities", force: :cascade do |t|
@@ -69,6 +76,13 @@ ActiveRecord::Schema.define(version: 2020_11_26_140413) do
     t.index ["priority", "run_at"], name: "delayed_jobs_priority"
   end
 
+  create_table "education_options", force: :cascade do |t|
+    t.string "name"
+    t.string "spanish_name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "enrollments", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "program_id"
@@ -78,9 +92,32 @@ ActiveRecord::Schema.define(version: 2020_11_26_140413) do
     t.index ["user_id"], name: "index_enrollments_on_user_id"
   end
 
+  create_table "ethnicity_races", force: :cascade do |t|
+    t.string "name"
+    t.string "spanish_name"
+    t.boolean "displayable"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "faq_pages", force: :cascade do |t|
     t.text "description"
     t.text "spanish_description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "gender_identities", force: :cascade do |t|
+    t.string "name"
+    t.string "spanish_name"
+    t.boolean "displayable"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "household_income_options", force: :cascade do |t|
+    t.string "name"
+    t.string "spanish_name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -108,6 +145,24 @@ ActiveRecord::Schema.define(version: 2020_11_26_140413) do
     t.index ["user_id", "language_id"], name: "index_languages_users_on_user_id_and_language_id"
   end
 
+  create_table "main_goals", force: :cascade do |t|
+    t.string "name"
+    t.string "spanish_name"
+    t.boolean "for_volunteer"
+    t.boolean "for_client"
+    t.boolean "displayable", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "meeting_options", force: :cascade do |t|
+    t.string "name"
+    t.string "spanish_name"
+    t.boolean "displayable"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "messages", force: :cascade do |t|
     t.text "body"
     t.text "subject"
@@ -118,6 +173,13 @@ ActiveRecord::Schema.define(version: 2020_11_26_140413) do
     t.datetime "updated_at", null: false
     t.index ["conversation_id"], name: "index_messages_on_conversation_id"
     t.index ["user_id"], name: "index_messages_on_user_id"
+  end
+
+  create_table "occupation_type_options", force: :cascade do |t|
+    t.string "name"
+    t.string "spanish_name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "programs", force: :cascade do |t|
@@ -163,6 +225,15 @@ ActiveRecord::Schema.define(version: 2020_11_26_140413) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "user_main_goals", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "main_goal_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["main_goal_id"], name: "index_user_main_goals_on_main_goal_id"
+    t.index ["user_id"], name: "index_user_main_goals_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "first_name"
     t.string "last_name"
@@ -201,9 +272,43 @@ ActiveRecord::Schema.define(version: 2020_11_26_140413) do
     t.datetime "thumbnail_image_updated_at"
     t.string "phone_number"
     t.string "how_they_found_us"
+    t.boolean "is_over_18"
+    t.boolean "consented_to_background_check", default: false
+    t.string "age_range"
+    t.string "education"
+    t.string "household_income"
+    t.string "occupation_type"
+    t.string "occupation"
     t.boolean "timeout", default: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  end
+
+  create_table "users_ethnicity_races", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "ethnicity_race_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["ethnicity_race_id"], name: "index_users_ethnicity_races_on_ethnicity_race_id"
+    t.index ["user_id"], name: "index_users_ethnicity_races_on_user_id"
+  end
+
+  create_table "users_gender_identities", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "gender_identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["gender_identity_id"], name: "index_users_gender_identities_on_gender_identity_id"
+    t.index ["user_id"], name: "index_users_gender_identities_on_user_id"
+  end
+
+  create_table "users_meeting_options", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "meeting_option_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["meeting_option_id"], name: "index_users_meeting_options_on_meeting_option_id"
+    t.index ["user_id"], name: "index_users_meeting_options_on_user_id"
   end
 
   add_foreign_key "messages", "conversations"

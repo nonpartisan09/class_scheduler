@@ -71,6 +71,13 @@ ActiveAdmin.register User do
       :timezone,
       :updated_at,
       :url_slug,
+      :is_over_18,
+      :consented_to_background_check,
+      :age_range,
+      :education,
+      :household_income,
+      :occupation_type,
+      :occupation,
       :timeout,
       language_ids: [],
       languages: [ :id, :name ],
@@ -78,7 +85,15 @@ ActiveAdmin.register User do
       programs: [ :id, :name ],
       reviews: [ :id, :description, :review ],
       role_ids: [],
-      roles: [ :id, :name ]
+      roles: [ :id, :name ],
+      main_goal_ids: [],
+      main_goals: [ :id, :name ],
+      meeting_option_ids: [],
+      meeting_options: [ :id, :name ],
+      gender_identity_ids: [],
+      gender_identities: [ :id, :name ],
+      ethnicity_race_ids: [],
+      ethnicity_races: [ :id, :name ]
 
   scope :all, default: true
   scope :active, proc { User.active }
@@ -173,6 +188,10 @@ ActiveAdmin.register User do
     column :contact_permission
     column :email_notification
     column :how_they_found_us
+    column :education
+    column :household_income
+    column :occupation_type
+    column :occupation
     column :address
     column :city
     column :locale
@@ -205,6 +224,31 @@ ActiveAdmin.register User do
         program[:name]
       end
     end
+
+    column :main_goals do |user|
+      user.main_goals.each do |goal|
+        goal[:name]
+      end
+    end
+
+    column :meeting_options do |user|
+      user.meeting_options.each do |option|
+        option[:name]
+      end
+    end
+
+    column :gender_identities do |user|
+      user.gender_identities.each do |gender|
+        gender[:name]
+      end
+    end
+
+    column :ethnicity_races do |user|
+      user.ethnicity_races.each do |race|
+        race[:name]
+      end
+    end
+    
   end
 
   index do
@@ -245,11 +289,18 @@ ActiveAdmin.register User do
               link_to "Agreed upon T&Cs", admin_terms_and_condition_path(resource.terms_and_conditions)
             end
           end
+          row :is_over_18
+          row :consented_to_background_check
           row :active
           row :locale
           row :contact_permission
           row :email_notification
           row :how_they_found_us
+          row :education
+          row :household_income
+          row :occupation_type
+          row('Occupation / Studying'){ |user| user.occupation }
+          row :age_range
           row :address
           row :city
           row :description
@@ -284,6 +335,34 @@ ActiveAdmin.register User do
             end
             end
           end
+
+          row :main_goals, div do |user|
+            ul do user.main_goals.each do |main_goal|
+              li link_to main_goal[:name]
+            end
+            end
+          end
+          row :meeting_options, div do |user|
+            ul do user.meeting_options.each do |option|
+              li link_to option[:name]
+            end
+            end
+          end
+
+          row :gender_identities, div do |user|
+            ul do user.gender_identities.each do |gender|
+              li link_to gender[:name]
+            end
+            end
+          end
+
+          row :ethnicity_races, div do |user|
+            ul do user.ethnicity_races.each do |race|
+              li link_to race[:name]
+            end
+            end
+          end
+
         end
       end
 
@@ -320,6 +399,8 @@ ActiveAdmin.register User do
   form do |f|
     f.inputs do
       f.semantic_errors *f.object.errors.keys
+      f.input :is_over_18
+      f.input :consented_to_background_check
       f.input :email
       f.input :phone_number
       f.input :first_name
@@ -327,7 +408,15 @@ ActiveAdmin.register User do
       f.input :description
       f.input :email_notification
       f.input :contact_permission
-      f.input :how_they_found_us
+      f.input :how_they_found_us, 
+        :as => :select, :collection => HowTheyFoundUsOption.all.order('name').map{|option| [option.name]}
+      f.input :education, 
+        :as => :select, :collection => EducationOption.all.order('id ASC').map{|option| [option.name]}
+      f.input :household_income, 
+        :as => :select, :collection => HouseholdIncomeOption.all.order('name ASC').map{|option| [option.name]}
+      f.input :occupation_type,
+        :as => :select, :collection => OccupationTypeOption.all.order('id ASC').map{|option| [option.name]}
+      f.input :occupation,  :label => 'Occupation / Studying'
       f.input :address
       f.input :locale
       f.input :city
@@ -337,6 +426,7 @@ ActiveAdmin.register User do
       f.input :timezone, collection: ActiveSupport::TimeZone.all.map(&:name), selected: resource.timezone
       roles_collection = Role.all.collect{|role| [role.name, role.id, { checked: resource.roles.include?(role) }]}
       user = User.find(params[:id]) if params[:id]
+      f.input :age_range
       
       if user && current_user.id == user.id && !current_user.owner?
         f.input :roles, as: :check_boxes, collection: roles_collection, :disabled => [ "Owner", 4]
@@ -345,11 +435,30 @@ ActiveAdmin.register User do
       else 
         f.input :roles, as: :check_boxes, collection: roles_collection
       end
-      
+    
       languages_collection = Language.all.collect{|language| [language.name, language.id, { checked: resource.languages.include?(language) } ]}
       f.input :languages, as: :check_boxes, collection: languages_collection
       programs_collection = Program.all.collect{|program| [program.name, program.id, { checked: resource.programs.include?(program) } ]}
       f.input :programs, as: :check_boxes, collection: programs_collection
+
+      if resource.volunteer?
+        main_goals_collection = MainGoal.where(for_volunteer: true).collect{|goal| [goal.name, goal.id, { checked: resource.main_goals.include?(goal) } ]}
+      elsif resource.client?
+        main_goals_collection = MainGoal.where(for_client: true).collect{|goal| [goal.name, goal.id, { checked: resource.main_goals.include?(goal) } ]}
+      else
+        main_goals_collection = MainGoal.all.order('displayable DESC, for_client DESC, name').collect{|goal| [goal.type.titlecase + goal.name, goal.id, { checked: resource.main_goals.include?(goal) }]}
+      end
+      
+      f.input :main_goals, as: :select, input_html: { multiple: true }, collection: main_goals_collection
+
+      meeting_options_collection = MeetingOption.all.collect{|option| [option.name, option.id, { checked: resource.meeting_options.include?(option) } ]}
+      f.input :meeting_options, as: :select, input_html: { multiple: true }, collection: meeting_options_collection
+
+      gender_identities_collection = GenderIdentity.all.collect{|gender| [gender.name, gender.id, { checked: resource.gender_identities.include?(gender) } ]}
+      f.input :gender_identities, as: :select, input_html: { multiple: true }, collection: gender_identities_collection
+
+      ethnicity_races_collection = EthnicityRace.all.collect{|race| [race.name, race.id, { checked: resource.ethnicity_races.include?(race) } ]}
+      f.input :ethnicity_races, as: :select, input_html: { multiple: true }, collection: ethnicity_races_collection
     end
     f.actions
   end

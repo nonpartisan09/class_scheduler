@@ -113,7 +113,7 @@ RSpec.describe UserMailer, type: :mailer do
     let(:mail) { UserMailer.unresponsive_volunteer(volunteer, client, conversation, program) }
 
     it 'renders the headers' do
-      expect(mail.subject).to eq('Unresponsive to client message - Tutoría')
+      expect(mail.subject).to eq('Untimely response to client message')
       expect(mail.to).to eq([volunteer.email])
       expect(mail.from).to eq(['no-reply@tutoria.io'])
     end

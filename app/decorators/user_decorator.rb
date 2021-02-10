@@ -30,6 +30,7 @@ class UserDecorator
       :url_slug => url_slug,
       :volunteer => @user.volunteer?,
       :city => city,
+      :main_goals => main_goals,
       :timeout => timeout,
       :responsive => responsive,
       :id => user.id
@@ -57,6 +58,7 @@ class UserDecorator
         :languages => languages,
         :rating_count => rating_count,
         :average_rating => average_rating,
+        :main_goals => main_goals,
         :id => user.id
     }
   end
@@ -96,6 +98,7 @@ class UserDecorator
         :timezone => user_timezone,
         :url_slug => url_slug,
         :volunteer => @user.volunteer?,
+        :main_goals => main_goals,
         :timeout => timeout,
         :responsive => responsive,
         :id => user.id
@@ -126,6 +129,14 @@ class UserDecorator
     @user.languages.pluck(:id)
   end
 
+  def main_goals
+    @user.main_goals.pluck(:name)
+  end
+
+  def main_goals_ids
+    @user.main_goals.pluck(:id)
+  end
+
   def user_timezone
     @user.timezone
   end
@@ -152,6 +163,14 @@ class UserDecorator
 
   def phone_number
     @user.phone_number
+  end
+
+  def is_over_18
+    @user.is_over_18 ||= ''
+  end
+
+  def consented_to_background_check
+    @user.consented_to_background_check ||= ''
   end
 
   def picture

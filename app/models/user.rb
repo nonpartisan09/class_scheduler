@@ -7,13 +7,25 @@ class User < ActiveRecord::Base
   include HasUrlSlug
   include Warden
 
+  has_many :users_ethnicity_races, dependent: :destroy
+  has_many :ethnicity_races, through: :users_ethnicity_races
+
+  has_many :users_gender_identities, dependent: :destroy
+  has_many :gender_identities, through: :users_gender_identities
+
+  has_many :users_meeting_options, dependent: :destroy
+  has_many :meeting_options, through: :users_meeting_options
+
+  has_many :user_main_goals, dependent: :destroy
+  has_many :main_goals, through: :user_main_goals
+
   has_and_belongs_to_many :roles
   accepts_nested_attributes_for :roles
 
   has_and_belongs_to_many :languages
   accepts_nested_attributes_for :languages
 
-  has_many :enrollments
+  has_many :enrollments, dependent: :destroy
   has_many :programs, through: :enrollments
 
   has_many :authored_reviews, class_name: 'Review', foreign_key: 'author_id', dependent: :destroy

@@ -55,6 +55,9 @@ RSpec.describe User, type: :model do
   it { is_expected.to have_db_column(:created_at).of_type(:datetime) }
   it { is_expected.to have_db_column(:updated_at).of_type(:datetime) }
 
+  it { is_expected.to have_db_column(:is_over_18).of_type(:boolean) }
+  it { is_expected.to have_db_column(:consented_to_background_check).of_type(:boolean) }
+
   it { is_expected.to have_db_index(:email) }
 
   it 'is not valid without a password' do

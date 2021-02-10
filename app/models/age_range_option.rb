@@ -1,0 +1,2 @@
+class AgeRangeOption < ApplicationRecord
+end
