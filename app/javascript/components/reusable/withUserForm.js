@@ -484,7 +484,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
           <section className="userFormInputFieldLocationContainer">
             
             <Select
-              style={ { 'min-width': 250 + 'px' } }              
+              style={ { 'minWidth': 250 + 'px' } }              
               label={
                 (
                   <FormattedMessage
@@ -504,18 +504,17 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                   key={ name }
                   checked={ country === name }
                   value={ name }
-                  primaryText={ (
-                    <span> 
-                      {' '}
-                      { name }
-                      {' '}
-                    </span>
-                  ) } />
+                  > 
+                  {' '}
+                  { name }
+                  {' '}
+ 
+                </MenuItem>
               ))}
             </Select>
 
             <Select
-              style={ { 'min-width': 250 + 'px' } }              
+              style={ { 'minWidth': 250 + 'px' } }              
               label={
                 (
                   <FormattedMessage
@@ -535,13 +534,12 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                   key={ region }
                   checked={ state === region }
                   value={ region }
-                  primaryText={ (
-                    <span> 
-                      {' '}
-                      { region }
-                      {' '}
-                    </span>
-                  ) } />
+                  > 
+                  {' '}
+                  { region }
+                  {' '}
+ 
+                </MenuItem>
               )) }
             </Select>
           </section>          
@@ -771,10 +769,10 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
 
     renderLanguages() {
       const { languages } = this.props;
-
+      
       if (_.size(languages) > 0) {
         const { errors, validateHandler, currentUser: { languages: userLanguages } } = this.props;
-
+        
         return (
           <div className='userFormInputField languages'>
             <InputLabel>
@@ -801,13 +799,10 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                   <MenuItem 
                     key={ id }  
                     checked={ _.indexOf(userLanguages, name) > -1 } 
-                    value={ name } 
-                    primaryText={ (
-                      <span>
-                        { name } 
-                      </span> 
-                    ) } 
-                  />
+                    value={ name }                     
+                  >
+                    { name }
+                  </MenuItem>
                 );
               })}
             </Select>
@@ -1028,25 +1023,25 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                       key={ name + id + index }
                       checked={ how_they_found_us === name }
                       value={ name }
-                      primaryText={ (
-                        <span> 
-                          { name } 
-                        </span> 
-                      ) }
-                    />
+                    > 
+                      {' '}
+                      { name }
+                      {' '}
+ 
+                    </MenuItem>
                   )
                 ) : _.map(how_they_found_us_options_spanish, ({ name, spanish_name, id }, index) =>
                 (
                   <MenuItem 
                     key={ name + id + index }
                     checked={ how_they_found_us === name }
-                    value={ name }
-                    primaryText={ (
-                      <span> 
-                        { spanish_name } 
-                      </span> 
-                    ) }
-                  />
+                    value={ name }                    
+                  > 
+                    {' '}
+                    { spanish_name }
+                    {' '}
+ 
+                  </MenuItem>
                 )
               )
             }
@@ -1167,8 +1162,8 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
             onChange={ this.changeLocaleHandler }
             onBlur={ validateHandler('locale') }
           >
-            <MenuItem key={ ENGLISH } checked={ ENGLISH === locale } value={ ENGLISH } primaryText={ <span>English</span> } />
-            <MenuItem key={ SPANISH } checked={ SPANISH === locale } value={ SPANISH } primaryText={ <span>Español</span> } />
+            <MenuItem key={ ENGLISH } checked={ ENGLISH === locale } value={ ENGLISH }>English</MenuItem>
+            <MenuItem key={ SPANISH } checked={ SPANISH === locale } value={ SPANISH }>Español</MenuItem>
           </Select>
         </div>
       );
@@ -1256,45 +1251,45 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
       });
     }
 
-    changeHandlerLanguages(event, index, value) {
+    changeHandlerLanguages(event) {
       const { changeValue } = this.props;
       
-      changeValue('languages', value);
+      changeValue('languages', event.target.value);
     }
 
-    changeHandlerPrograms(event, index, value) {
+    changeHandlerPrograms(event) {
       const { changeValue } = this.props;
       
-      changeValue('programs', value);
+      changeValue('programs', event.target.value);
     }
 
-    changeLocaleHandler(proxy, index, value) {
+    changeLocaleHandler(event) {
       const { changeValue } = this.props;
 
-      changeValue('locale', value);
+      changeValue('locale', event.target.value);
     }
 
-    changeTimezoneHandler(proxy, index, value) {
+    changeTimezoneHandler(event) {
       const { changeValue } = this.props;
 
-      changeValue('timezone', value);
+      changeValue('timezone', event.target.value);
     }
 
-    changeCountryHandler(proxy, index, value) {
+    changeCountryHandler(event) {
       const { changeValue } = this.props;
 
-      changeValue('country', value);
+      changeValue('country', event.target.value);
     }
 
-    changeStateHandler(proxy, index, value) {
+    changeStateHandler(event) {
       const { changeValue } = this.props;
-      changeValue('state', value);
+      changeValue('state', event.target.value);
     }
 
-    changeHowTheyFoundUsHandler(proxy, index, value) {
+    changeHowTheyFoundUsHandler(event) {
       const { changeValue } = this.props;
 
-      changeValue('how_they_found_us', value);
+      changeValue('how_they_found_us', event.target.value);
     }
 
     errorLanguageHandler(inputName){

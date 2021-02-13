@@ -6,8 +6,9 @@ import { FormattedMessage } from 'react-intl';
 import Joi from 'joi-browser';
 import validate from 'react-joi-validation';
 
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
+import FlatButton from 'material-ui/FlatButton';
+import RaisedButton from 'material-ui/RaisedButton';
+import TextField from 'material-ui/TextField';
 
 import FormData from './utils/FormData';
 import formatLink from './utils/Link';
@@ -114,6 +115,15 @@ class NewAvailability extends Component {
       validateAllHandler,
       currentUser,
     } = this.props;
+    const { availabilities } = this.props.data;
+    
+    const emptyAvailabilites =  
+      availabilities[0].days.length === 0 || 
+      availabilities[0].endTime.minute === '' || 
+      availabilities[0].endTime.hour === '' || 
+      availabilities[0].startTime.minute === '' || 
+      availabilities[0].startTime.hour === '';
+    
 
       return (
         <div>
@@ -136,21 +146,22 @@ class NewAvailability extends Component {
                 />
                 </a>
               </div>
-
-              <Button
-                variant='contained'
+              
+              { this.renderAvailabilities() }
+              
+              <RaisedButton
                 className='addAvailabilitiesButton'
                 label={ (
                   <FormattedMessage
                     id='NewAvailability.addAvailabilities'
-                    defaultMessage='Create All Availabilities'
+                    defaultMessage='Save All Availabilities'
                   />
                   ) }
-                primary
+                color="primary"
+                disabled={ emptyAvailabilites }
                 onClick={ validateAllHandler(this.handleSubmit) }
               />
 
-              { this.renderAvailabilities() }
             </form>
           </div>
         </div>
@@ -281,8 +292,8 @@ class NewAvailability extends Component {
             { availabilityErrors ? this.renderAvailabilityErrors(availabilityErrors) : null }
           </div>
 
-          <Button
-            primary
+          <FlatButton
+            color="primary"
             label={ (
               <FormattedMessage
                 id='NewAvailability.addAvailability'
@@ -293,8 +304,8 @@ class NewAvailability extends Component {
           />
           { index === 0 ?
             null : (
-              <Button
-                primary
+              <FlatButton
+                color="primary"
                 label={ <FormattedMessage id='NewAvailability.removeAvailability' defaultMessage='Remove availability' /> }
                 onClick={ () => this.handleRemoveAvailability(index) }
               />
