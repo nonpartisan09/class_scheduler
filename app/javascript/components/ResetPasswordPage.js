@@ -93,16 +93,15 @@ class ResetPasswordPage extends Component {
     return (
       <Button
         variant='contained'
-        primary
-        label={ (
-          <FormattedMessage
-            id='resetPassword'
-            defaultMessage='Reset password'
-          />
-        ) }
+        color='primary'
         onClick={ this.handleForgotClick }
         className='signInLink'
-      />
+      >
+        <FormattedMessage
+          id='resetPassword'
+          defaultMessage='Reset password'
+        />
+      </Button>
     );
   }
 

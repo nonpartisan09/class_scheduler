@@ -10,6 +10,7 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Checkbox from '@material-ui/core/Checkbox';
 
+import { FormControlLabel } from '@material-ui/core';
 import FormData from './utils/FormData';
 import SnackBarComponent from './reusable/SnackBarComponent';
 import { postData } from './utils/sendData';
@@ -71,7 +72,6 @@ class SignIn extends Component {
             name="email"
             value={ email }
             className="signInEmailInputField"
-            hintText=""
             label="Email"
             
             errorText={ errors.email }
@@ -84,7 +84,6 @@ class SignIn extends Component {
             name="password"
             value={ password }
             type="password"
-            hintText=""
             label="Password"
             
             errorText={ errors.password }
@@ -93,61 +92,53 @@ class SignIn extends Component {
             fullWidth
             className="signInEmailInputField"
           />
-
-          <Checkbox
-            checked={ remember_me }
-            onCheck={ changeHandler('remember_me') }
+          <FormControlLabel
+            control={ (
+              <Checkbox
+                checked={ remember_me }
+                onChange={ changeHandler('remember_me') }            
+              />
+            ) }
             label="Remember me"
           />
 
           <Button
             variant='contained'
-            primary
-            label={ (
-              <FormattedMessage
-                id="signIn"
-                defaultMessage="Sign In"
-              />
-            ) }
+            color="primary"
             onClick={ this.handleSignIn }
             className="signInLink"
-          />
+          >
+            <FormattedMessage
+              id="signIn"
+              defaultMessage="Sign In"
+            />
+          </Button>
 
           <div className="signInLinkSecondaryContainer">
             <a href={ formatLink('/password/new', locale) } className="signInLinkSecondary">
-              <Button
-                primary
-                label={ (
-                  <FormattedMessage
-                    id="SignIn.passwordRecovery"
-                    defaultMessage="Forgot your password?"
+              <Button color="primary" onClick={ this.handleForgotClick }>
+                <FormattedMessage
+                  id="SignIn.passwordRecovery"
+                  defaultMessage="Forgot your password?"
                   />
-                ) }
-                onClick={ this.handleForgotClick }
-              />
+              </Button>
             </a>
 
             <a href={ formatLink('/sign_up/client', locale) } className="signInLinkSecondary">
-              <Button
-                primary
-                label={ (
-                  <FormattedMessage
-                    id="signUpClient"
-                  />
-                ) }
-              />
+              <Button color="primary">
+                <FormattedMessage
+                  id="signUpClient"
+                />
+              </Button>
             </a>
 
             <a href={ formatLink('/sign_up/volunteer', locale) } className="signInLinkSecondary">
-              <Button
-                primary
-                label={ (
-                  <FormattedMessage
-                    id="signUpVolunteer"
-                    defaultMessage="Sign up as a volunteer"
-                  />
-                ) }
-              />
+              <Button color="primary"> 
+                <FormattedMessage
+                  id="signUpVolunteer"
+                  defaultMessage="Sign up as a volunteer"
+                />
+              </Button>
             </a>
           </div>
 

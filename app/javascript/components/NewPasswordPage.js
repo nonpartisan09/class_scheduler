@@ -58,10 +58,8 @@ class NewPasswordPage extends Component {
             name='email'
             value={ email }
             className='signInEmailInputField'
-            hintText=''
             label={ <FormattedMessage id='NewPasswordPage.enterEmail' defaultMessage='Please enter your email to recover your password' /> }
-            
-            errorText={ errors.email }
+            // errorText={ errors.email }
             onChange={ changeHandler('email') }
             onBlur={ validateHandler('email') }
             fullWidth
@@ -71,14 +69,14 @@ class NewPasswordPage extends Component {
 
           <div className='signInLinkSecondaryContainer'>
             <a href={ formatLink('/sign_up/client', locale) } className='signInLinkSecondary'>
-              <Button primary label={ <FormattedMessage id='signUpClient' /> } />
+              <Button color='primary'><FormattedMessage id='signUpClient' /></Button>
             </a>
 
             <a href={ formatLink('/sign_up/volunteer', locale) } className='signInLinkSecondary'>
-              <Button primary label={ <FormattedMessage id='signUpVolunteer' /> } />
+              <Button color='primary'><FormattedMessage id='signUpVolunteer' /></Button>
             </a>
           </div>
-
+          
           { this.renderSnackBar() }
         </form>
       </div>
@@ -89,15 +87,14 @@ class NewPasswordPage extends Component {
     return (
       <Button
         variant='contained'
-        primary
-        label={ (
-          <FormattedMessage
-            id='resetPassword'
-          />
-        ) }
+        color='primary'
         onClick={ this.handleForgotClick }
         className='signInLink'
-      />
+      >
+        <FormattedMessage
+          id='resetPassword'
+        />
+      </Button>
     );
   }
 

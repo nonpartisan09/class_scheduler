@@ -333,15 +333,16 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                   // helperText={ this.errorLanguageHandler('timezone') }
                   onChange={ this.changeTimezoneHandler }
                   onBlur={ validateHandler('timezone') }
-              >
+                  renderValue={ (selected) => selected }
+                >
                   { _.map(timezones, name => 
                   (
                     <MenuItem 
-                      key={ name } 
-                      checked={ timezone === name } 
+                      key={ name }  
                       value={ name }  
                     >
-                      { name }
+                      <Checkbox checked={ timezone === name } />
+                      <ListItemText primary={ name } />
                     </MenuItem>
                   ) 
                 ) }
@@ -431,14 +432,15 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
               // helperText={ this.errorLanguageHandler('country') }
                 onChange={ this.changeCountryHandler }
                 onBlur={ validateHandler('country') }
+                renderValue={ (selected) => selected }
               >
                 {_.map(countries, name => (
                   <MenuItem
                     key={ name }
-                    checked={ country === name }
                     value={ name }
                   >
-                    { name }
+                    <Checkbox checked={ country === name } />
+                    <ListItemText primary={ name } />
                   </MenuItem>
               )) }
               </Select>
@@ -460,14 +462,15 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
               // helperText={ this.errorLanguageHandler('state') }
                 onChange={ this.changeStateHandler }
                 onBlur={ validateHandler('state') }
+                renderValue={ (selected) => selected }
               >
                 { _.map(States, s => (
                   <MenuItem
                     key={ s.abbreviation }
-                    checked={ state === s.abbreviation }
                     value={ s.abbreviation }
                   > 
-                    { s.abbreviation + ' ' + s.name }
+                    <Checkbox checked={ state === s.abbreviation } />
+                    <ListItemText primary={ s.abbreviation + ' ' + s.name } />
                   </MenuItem>
                   )) }
               </Select>
@@ -498,17 +501,15 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
               // helperText={ this.errorLanguageHandler('country') }
               onChange={ this.changeCountryHandler }
               onBlur={ validateHandler('country') }
+              renderValue={ (selected) => selected }
             >
               {_.map(countries, name => (
                 <MenuItem
                   key={ name }
-                  checked={ country === name }
                   value={ name }
-                  > 
-                  {' '}
-                  { name }
-                  {' '}
- 
+                > 
+                  <Checkbox checked={ country === name } />
+                  <ListItemText primary={ name } /> 
                 </MenuItem>
               ))}
             </Select>
@@ -528,17 +529,15 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
               // helperText={ this.errorLanguageHandler('state') }
               onChange={ this.changeStateHandler }
               onBlur={ validateHandler('state') }
+              renderValue={ (selected) => selected }
             >
               {_.map(regions, region => (
                 <MenuItem
                   key={ region }
-                  checked={ state === region }
                   value={ region }
-                  > 
-                  {' '}
-                  { region }
-                  {' '}
- 
+                > 
+                  <Checkbox checked={ state === region } />
+                  <ListItemText primary={ region } /> 
                 </MenuItem>
               )) }
             </Select>
@@ -798,10 +797,10 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                 return (
                   <MenuItem 
                     key={ id }  
-                    checked={ _.indexOf(userLanguages, name) > -1 } 
                     value={ name }                     
                   >
-                    { name }
+                    <Checkbox checked={ _.indexOf(userLanguages, name) > -1  } />
+                    <ListItemText primary={ name } />
                   </MenuItem>
                 );
               })}
@@ -1015,32 +1014,27 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
             // helperText={ this.errorLanguageHandler('how_they_found_us') }
             onChange={ this.changeHowTheyFoundUsHandler }
             onBlur={ validateHandler('how_they_found_us') }
+            renderValue={ (selected) => selected }
           >
             {
               this.props.match.params[0] === ENGLISH ? _.map(how_they_found_us_options_english, ({ name, id }, index) =>
                   (
                     <MenuItem 
                       key={ name + id + index }
-                      checked={ how_they_found_us === name }
                       value={ name }
                     > 
-                      {' '}
-                      { name }
-                      {' '}
- 
+                      <Checkbox checked={ how_they_found_us === name } />
+                      <ListItemText primary={ name } /> 
                     </MenuItem>
                   )
                 ) : _.map(how_they_found_us_options_spanish, ({ name, spanish_name, id }, index) =>
                 (
                   <MenuItem 
                     key={ name + id + index }
-                    checked={ how_they_found_us === name }
                     value={ name }                    
                   > 
-                    {' '}
-                    { spanish_name }
-                    {' '}
- 
+                    <Checkbox checked={ how_they_found_us === name } />
+                    <ListItemText primary={ spanish_name } /> 
                   </MenuItem>
                 )
               )
@@ -1161,9 +1155,16 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
             // helperText={ this.errorLanguageHandler('locale') }
             onChange={ this.changeLocaleHandler }
             onBlur={ validateHandler('locale') }
+            renderValue={ (selected) => selected === 'en' ? 'English' : 'Español' }
           >
-            <MenuItem key={ ENGLISH } checked={ ENGLISH === locale } value={ ENGLISH }>English</MenuItem>
-            <MenuItem key={ SPANISH } checked={ SPANISH === locale } value={ SPANISH }>Español</MenuItem>
+            <MenuItem key={ ENGLISH } value={ ENGLISH }>
+              <Checkbox checked={ ENGLISH === locale } />
+              <ListItemText primary="English" />
+            </MenuItem>
+            <MenuItem key={ SPANISH } value={ SPANISH }>
+              <Checkbox checked={ SPANISH === locale } />
+              <ListItemText primary="Español" />
+            </MenuItem>
           </Select>
         </div>
       );
