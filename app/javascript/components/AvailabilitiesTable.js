@@ -191,16 +191,15 @@ class AvailabilitiesTable extends Component {
         <li className='availabilitiesTableButton'>
           <Button
             variant='contained'
-            primary
+            color='primary'
             fullWidth
             onClick={ this.handleDelete(id) }
-            label={ (
-              <FormattedMessage
-                id='Delete'
-                defaultMessage='Delete'
-              />
-              ) }
-          />
+          >
+            <FormattedMessage
+              id='Delete'
+              defaultMessage='Delete'
+            />
+          </Button>
         </li>
       );
     }
@@ -212,15 +211,14 @@ class AvailabilitiesTable extends Component {
       return (
         <TableCell>
           <Button
-            primary
+            color='primary'
             onClick={ this.handleDelete(id) }
-            label={ (
-              <FormattedMessage
-                id='Delete'
-                defaultMessage='Delete'
-              />
-              ) }
-          />
+          >
+            <FormattedMessage
+              id='Delete'
+              defaultMessage='Delete'
+            />
+          </Button>
         </TableCell>
       );
     }

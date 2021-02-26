@@ -69,5 +69,5 @@ export default {
         main: accentColor,
         dark: accentColor        
       }
-    }
+    },
   };

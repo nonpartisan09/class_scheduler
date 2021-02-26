@@ -54,17 +54,17 @@ class AvailabilityIndexPage extends Component {
               &nbsp;&nbsp;
               {
                 !!availabilities.length && (
-                  <RaisedButton
-                    primary
+                  <Button
+                    variant='contained'
+                    color='primary'
                     disabled={ !responsive }
                     onClick={ timeout || !responsive ? () => this.toggleAvailabilities(false) : () =>this.toggleAvailabilities(true) }
-                    label={ (
-                      <FormattedMessage
-                        id={ timeout || !responsive ? 'AvailabilityIndexPage.InactiveAvailabilitiesButton': 'AvailabilityIndexPage.ActiveAvailabilitiesButton' }
-                        defaultMessage={ timeout || !responsive ? 'Reactivate Availabilities' : 'Deactivate Availabilities' }
-                      />
-                    ) }
-                  />
+                  >
+                    <FormattedMessage
+                      id={ timeout || !responsive ? 'AvailabilityIndexPage.InactiveAvailabilitiesButton': 'AvailabilityIndexPage.ActiveAvailabilitiesButton' }
+                      defaultMessage={ timeout || !responsive ? 'Reactivate Availabilities' : 'Deactivate Availabilities' }
+                    />
+                  </Button>
                 )
               }
             </div>
@@ -104,15 +104,14 @@ class AvailabilityIndexPage extends Component {
           <a href={ formatLink('/availabilities/new', locale) }>
             <Button
               variant='contained'
-              primary
+              color='primary'
               className='conversationButton'
-              label={ (
-                <FormattedMessage
-                  id='availabilityCreateNew'
-                  defaultMessage='Create new availabilities'
-                />
-                ) }
-            />
+            >
+              <FormattedMessage
+                id='availabilityCreateNew'
+                defaultMessage='Create new availabilities'
+              />
+            </Button>
           </a>
         </div>
       );

@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
 import Checkbox from '@material-ui/core/Checkbox';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import TextField from '@material-ui/core/TextField';
 
 import TimeSelector from './TimeSelector';
 import DaysMultipleSelect from './DaysMultipleSelect';
@@ -92,7 +94,52 @@ class AvailabilitySelector extends Component {
         />
 
         <div>
-          <TimeSelector 
+          <FormControlLabel
+            control={ (
+              <TextField
+                id="time"
+                onChange={ this.updateStartTimeHandler }
+                type="time"
+                defaultValue="07:30"
+                disabled={ isAllDay }
+                inputProps={ {
+                  step: 300, // 5 min
+                } }
+              />
+            ) }
+            label={ (
+              <FormattedMessage
+                id='AvailabilitySelector.startLabel'
+                defaultMessage='From'
+              />
+            ) }
+            classes={ {root: 'timePickerLabel', label: 'timePickerLabel'} }
+            labelPlacement='start'
+          />
+          
+          <FormControlLabel
+            control={ (
+              <TextField
+                id="time"
+                onChange={ this.updateEndTimeHandler }
+                type="time"
+                defaultValue="07:30"
+                disabled={ isAllDay }
+                inputProps={ {
+                  step: 300, // 5 min
+                } }
+              />
+            ) }
+            label={ (
+              <FormattedMessage
+                id='AvailabilitySelector.endLabel'
+                defaultMessage='To'
+              />
+            ) }
+            classes={ {root: 'timePickerLabel', label: 'timePickerLabel'} }
+            labelPlacement='start'
+          />
+          {/* <TimeSelector 
             hoursList={ hoursList }
             minutesList={ minutesList }
             onChange={ this.updateStartTimeHandler }
@@ -105,8 +152,8 @@ class AvailabilitySelector extends Component {
             disabled={ isAllDay }
             hour={ startTime.hour }
             minute={ startTime.minute }
-          />
-          <TimeSelector
+          /> */}
+          {/* <TimeSelector
             hoursList={ hoursList }
             minutesList={ minutesList }
             onChange={ this.updateEndTimeHandler }
@@ -119,19 +166,22 @@ class AvailabilitySelector extends Component {
             disabled={ isAllDay }
             hour={ endTime.hour }
             minute={ endTime.minute }
-          />
-          <Checkbox
-            className='test'
-            checked={ this.state.isAllDay }
+          /> */}
+          <FormControlLabel
+            control={ (
+              <Checkbox
+                className='test'
+                checked={ this.state.isAllDay }
+                onChange={ this.handleAllDayChange }
+              />
+            ) }
             label={ (
               <FormattedMessage
                 id='AvailabilitySelector.allDay'
                 defaultMessage='all day'
               />
             ) }
-            onCheck={ this.handleAllDayChange }
-          />
-          
+          />         
         </div>
       </div>
     );

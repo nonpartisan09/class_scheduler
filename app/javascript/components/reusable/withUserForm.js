@@ -318,14 +318,10 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
 
               <div className='userFormInputField timezones'>
                 <InputLabel>
-                  {
-                  (
-                    <FormattedMessage
-                      id='UserForm.timezone'
-                      defaultMessage='Select Timezone'
+                  <FormattedMessage
+                    id='UserForm.timezone'
+                    defaultMessage='Select Timezone'
                     />
-                  )
-                }
                 </InputLabel>
                 <Select                
                   value={ timezone }
@@ -417,14 +413,10 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
           <section className="userFormInputFieldLocationContainer">
             <FormControl className='userFormInputField country'>
               <InputLabel>
-                {
-                (
-                  <FormattedMessage
-                    id='UserForm.country'
-                    defaultMessage='Select Country'
+                <FormattedMessage
+                  id='UserForm.country'
+                  defaultMessage='Select Country'
                   />
-                )
-              }
               </InputLabel>
               <Select              
                 value={ country ? country : '' }
@@ -447,14 +439,10 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
             </FormControl>
             <FormControl className='userFormInputField state'>
               <InputLabel>
-                {
-                (
-                  <FormattedMessage
-                    id='UserForm.state'
-                    defaultMessage='Select State/Region'
+                <FormattedMessage
+                  id='UserForm.state'
+                  defaultMessage='Select State/Region'
                   />
-                )
-              }
               </InputLabel>
               <Select              
                 value={ state }
@@ -775,14 +763,10 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
         return (
           <div className='userFormInputField languages'>
             <InputLabel>
-              {
-              (
-                <FormattedMessage
-                  id='UserForm.languages'
-                  defaultMessage='Language(s) I can speak'
+              <FormattedMessage
+                id='UserForm.languages'
+                defaultMessage='Language(s) I can speak'
                 />
-              )
-            }
             </InputLabel>
             <Select
               value={ userLanguages }
@@ -999,14 +983,10 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
       return (
         <div className='userFormInputField howTheyFoundUs'>
           <InputLabel>
-            {
-              (
-                <FormattedMessage
-                  id='UserForm.howTheyFoundUs'
-                  defaultMessage='How did you find out about us?'
+            <FormattedMessage
+              id='UserForm.howTheyFoundUs'
+              defaultMessage='How did you find out about us?'
                 />
-              )
-            }
           </InputLabel>
           <Select
             value={ how_they_found_us }
@@ -1140,14 +1120,10 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
       return (
         <div className='userFormInputField locale'>
           <InputLabel>
-            {
-              (
-                <FormattedMessage
-                  id='UserForm.locale'
-                  defaultMessage='Preferred Website & Notification Language'
+            <FormattedMessage
+              id='UserForm.locale'
+              defaultMessage='Preferred Website & Notification Language'
                 />
-              )
-            }
           </InputLabel>
           <Select
             value={ locale }
@@ -1195,14 +1171,10 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
         <div className='userFormInputField programs'>
           { this.renderProgramLabel() }
           <InputLabel>
-            {
-              (
-                <FormattedMessage
-                  id='UserForm.programs'
-                  defaultMessage='Select program(s)'
+            <FormattedMessage
+              id='UserForm.programs'
+              defaultMessage='Select program(s)'
                 />
-              )
-            }
           </InputLabel>
           <Select
             value={ userPrograms }
