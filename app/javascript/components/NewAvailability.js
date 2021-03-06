@@ -115,6 +115,15 @@ class NewAvailability extends Component {
       validateAllHandler,
       currentUser,
     } = this.props;
+    const { availabilities } = this.props.data;
+    
+    const emptyAvailabilites =  
+      availabilities[0].days.length === 0 || 
+      availabilities[0].endTime.minute === '' || 
+      availabilities[0].endTime.hour === '' || 
+      availabilities[0].startTime.minute === '' || 
+      availabilities[0].startTime.hour === '';
+    
 
       return (
         <div>
@@ -137,20 +146,22 @@ class NewAvailability extends Component {
                 />
                 </a>
               </div>
-
+              
+              { this.renderAvailabilities() }
+              
               <RaisedButton
                 className='addAvailabilitiesButton'
                 label={ (
                   <FormattedMessage
                     id='NewAvailability.addAvailabilities'
-                    defaultMessage='Create All Availabilities'
+                    defaultMessage='Save All Availabilities'
                   />
                   ) }
                 primary
+                disabled={ emptyAvailabilites }
                 onClick={ validateAllHandler(this.handleSubmit) }
               />
 
-              { this.renderAvailabilities() }
             </form>
           </div>
         </div>
