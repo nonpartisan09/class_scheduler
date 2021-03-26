@@ -8,7 +8,7 @@ git_source(:github) do |repo_name|
 end
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.2.2.1'
+gem 'rails', '~> 5.2.5'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
@@ -64,8 +64,8 @@ group :development, :test do
   gem 'awesome_print', '~> 1.8'
 
   # Add support for debugging in VSCode
-  gem 'ruby-debug-ide', '0.7.2'
-  gem 'debase', '0.2.4.1'
+  # gem 'ruby-debug-ide', '0.7.2'
+  # gem 'debase', '0.2.4.1'
 end
 
 group :development do
