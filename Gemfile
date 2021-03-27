@@ -19,7 +19,7 @@ gem 'activeadmin', '~> 1.3'
 gem 'uglifier', '~> 4.1', require: false
 
 # needed for Heroku
-gem 'delayed_job_active_record', '~> 4.1'
+# gem 'delayed_job_active_record', '~> 4.1'
 
 # Use React for views
 gem 'webpacker', '~> 4.0'

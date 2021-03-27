@@ -4,7 +4,12 @@ class UsersController < ApplicationController
   include AvailabilitiesSorter
   
   before_action :authenticate_user!, except: :cities
-  before_action :permitted_params, except: :cities
+  # before_action :permitted_params, except: :cities
+  
+  def update
+    user = User.find(params[:id])
+    user.update!(timeout: params[:timeout])
+  end
 
   def show
     redirect_to root_path && return unless current_user
