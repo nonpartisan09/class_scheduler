@@ -71,6 +71,7 @@ ActiveAdmin.register User do
       :timezone,
       :updated_at,
       :url_slug,
+      :timeout,
       language_ids: [],
       languages: [ :id, :name ],
       program_ids: [],
@@ -262,6 +263,8 @@ ActiveAdmin.register User do
           row :last_sign_in_at
           row :created_at
           row :updated_at
+          row :timeout
+
 
           row :roles, div do |user|
             ul do user.roles.each do |role|
@@ -336,6 +339,7 @@ ActiveAdmin.register User do
       f.input :timezone, collection: ActiveSupport::TimeZone.all.map(&:name), selected: resource.timezone
       roles_collection = Role.all.collect{|role| [role.name, role.id, { checked: resource.roles.include?(role) }]}
       user = User.find(params[:id]) if params[:id]
+      f.input :timeout
       
       if user && current_user.id == user.id && !current_user.owner?
         f.input :roles, as: :check_boxes, collection: roles_collection, :disabled => [ "Owner", 4]
