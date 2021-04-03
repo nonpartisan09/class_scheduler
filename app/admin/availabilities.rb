@@ -30,7 +30,24 @@ ActiveAdmin.register Availability do
     column :end_time
     column :updated_at
     column :created_at
+    column "timeout" do |availability| 
+      User.find(availability.user_id).timeout
+    end
     actions
+  end
+
+  csv do
+    column "id" do |availability|
+      availability[:user_id]
+    end
+    column "email" do |availability|
+      User.find(availability[:user_id]).email
+    end
+    column :day
+    column :start_time
+    column :end_time
+    column :updated_at
+    column :created_at
   end
 
   filter :user_id, as: :select, collection: proc { User.volunteers.order(email: :asc).pluck(:email, :id) }
@@ -40,6 +57,10 @@ ActiveAdmin.register Availability do
   filter :updated_at
   filter :created_at
 
+  scope :timed_out
+  scope :not_timed_out
+
+
   form do |f|
     f.inputs do
       f.input :user_id, as: :select, collection: User.all.pluck(:email, :id)
@@ -48,5 +69,18 @@ ActiveAdmin.register Availability do
       f.input :end_time
     end
     f.actions
+  end
+
+  csv do
+    column :id
+    column :day
+    column :start_time
+    column :end_time
+    column :updated_at
+    column :created_at
+    column :user_id
+    column "timeout" do |availability| 
+      User.find(availability.user_id).timeout
+    end
   end
 end
