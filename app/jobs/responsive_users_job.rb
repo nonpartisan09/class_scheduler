@@ -4,7 +4,7 @@ class ResponsiveUsersJob < ApplicationJob
     def perform()
         Thread.new do
             User.all_responsive?
-            ResponsiveUsersJob.set(wait_until: Date.tomorrow.midnight).perform_later
+            ResponsiveUsersJob.set(wait_until: DateTime.now + 5.minutes).perform_later
         end
     end
 end 
