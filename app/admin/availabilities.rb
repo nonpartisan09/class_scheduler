@@ -58,14 +58,21 @@ ActiveAdmin.register Availability do
   end
 
   csv do
-    column :id
+    column "Availability Id" do |availability|
+      availability.id
+    end
+    column "User Id" do |availability|
+      availability.user_id
+    end
+    column "email" do |availability|
+      User.find(availability[:user_id]).email
+    end
     column :day
     column :start_time
     column :end_time
     column :updated_at
     column :created_at
-    column :user_id
-    column "timeout" do |availability| 
+    column "Timeout" do |availability| 
       User.find(availability.user_id).timeout
     end
   end
