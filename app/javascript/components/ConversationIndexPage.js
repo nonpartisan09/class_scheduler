@@ -37,7 +37,7 @@ class ConversationIndexPage extends Component {
           { this.renderAlertInfo() }
           <div className='conversationBox'>
             { this.renderInbox() }
-            <p className="untimely-warning">{ this.untimelyConversation ? '* conversations outlined in red have messages requiring a response *' : ''}</p>
+            <p className="untimely-warning">{this.untimelyConversation ? '* Conversations outlined in red have messages received 48 hours ago and require a response.' : ''}</p>
           </div>
         </Paper>
       </div>
@@ -118,7 +118,7 @@ class ConversationIndexPage extends Component {
 
     return _.map(conversations, (conversation) => {
       const { conversee, id, conversee_avatar, is_first_message_unread, is_timely } = conversation;
-      if (!is_timely) this.untimelyConversation = true;
+      if (!is_timely && currentUser.volunteer) this.untimelyConversation = true;
       return (
         <ListItem
           className={ is_timely || !currentUser.volunteer ? '' : 'untimely-conversation' }
