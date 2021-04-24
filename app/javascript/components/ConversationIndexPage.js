@@ -118,7 +118,7 @@ class ConversationIndexPage extends Component {
 
     return _.map(conversations, (conversation) => {
       const { conversee, id, conversee_avatar, is_first_message_unread, is_timely } = conversation;
-      if (!is_timely) this.untimelyConversation = true;
+      if (!is_timely && currentUser.volunteer) this.untimelyConversation = true;
       return (
         <ListItem
           className={ is_timely || !currentUser.volunteer ? '' : 'untimely-conversation' }
