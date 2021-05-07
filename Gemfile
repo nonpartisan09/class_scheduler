@@ -39,7 +39,10 @@ gem 'devise', '~> 4.6'
 # geolocate users
 gem 'geocoder', '~> 1.6'
 
+# webservers
+gem 'passenger'
 gem 'puma', '~> 3.12.6'
+
 # image helper
 gem 'paperclip', '~> 6.1'
 
@@ -69,7 +72,6 @@ group :development, :test do
 end
 
 group :development do
-  gem 'gem_bench', '~> 1.0', :require => false, :group => :development
   gem 'guard-rspec', '~> 4.7', require: false
   gem 'listen', '~> 3.1'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
