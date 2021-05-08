@@ -39,10 +39,6 @@ gem 'devise', '~> 4.6'
 # geolocate users
 gem 'geocoder', '~> 1.6'
 
-# webservers
-gem 'passenger'
-gem 'puma', '~> 3.12.6'
-
 # image helper
 gem 'paperclip', '~> 6.1'
 
@@ -55,6 +51,9 @@ gem 'ffi', '~> 1.11'
 gem 'active_model_serializers', '~> 0.10.0'
 
 group :development, :test do
+  # elastic beanstalk has a globally installed version of puma
+  gem 'puma', '~> 3.12.6'
+
 	gem 'factory_bot_rails', '~> 4.8'
 
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

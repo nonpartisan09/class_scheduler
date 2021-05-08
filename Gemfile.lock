@@ -1279,9 +1279,6 @@ GEM
       mime-types
       mimemagic (~> 0.3.0)
       terrapin (~> 0.6.0)
-    passenger (6.0.8)
-      rack
-      rake (>= 0.8.1)
     pg (1.2.3)
     pry (0.14.0)
       coderay (~> 1.1)
@@ -1440,7 +1437,6 @@ DEPENDENCIES
   listen (~> 3.1)
   newrelic_rpm (~> 6.5)
   paperclip (~> 6.1)
-  passenger
   pg (~> 1.1)
   puma (~> 3.12.6)
   rails (~> 5.2.5)
