@@ -68,8 +68,7 @@ RSpec.describe User, type: :model do
     
     it 'returns false if user has not replied in time to a message' do
       conversation = volunteer.received_conversations.create({author_id: client.id})
-      conversation.messages.create({body: "this is a test", user_id: client.id})
-      conversation.update({created_at: "2001-01-06 05:00:00"})
+      conversation.messages.create({body: "this is a test", user_id: client.id, created_at: "2001-01-06 05:00:00"})
       expect(volunteer.responsive?).to eq(false)
     end
     
