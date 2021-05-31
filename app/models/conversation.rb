@@ -23,6 +23,9 @@ class Conversation < ApplicationRecord
     where(author_id: sender_id, recipient_id: recipient_id).or(where(author_id: recipient_id, recipient_id: sender_id)).limit(1)
   end
 
+  scope :timely, -> { joins(:recipient).where("users.timeout=false") }
+  scope :untimely, -> { joins(:recipient).where("users.timeout=true") }
+
   def with(current_user)
     author == current_user ? recipient : author
   end

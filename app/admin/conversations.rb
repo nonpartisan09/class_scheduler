@@ -7,7 +7,10 @@ ActiveAdmin.register Conversation do
   filter :updated_at
   filter :created_at
   actions :all, :except => [:edit]
-  
+
+  scope "timely users", :timely
+  scope "untimely users", :untimely
+
   index do
     selectable_column
     id_column
