@@ -32,10 +32,9 @@ class Conversation < ApplicationRecord
   end
 
   def is_timely?
-    return true if created_at > Time.now - 2.days
+    last_message = messages.first
+    time_since_last_message = DateTime.now.to_i - last_message.created_at.to_i
 
-    messages.any? do |message|
-      message.user_id != author_id
-    end
+    return last_message.user.volunteer? || time_since_last_message < 2.days
   end
 end

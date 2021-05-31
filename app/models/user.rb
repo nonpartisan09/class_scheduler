@@ -178,7 +178,8 @@ class User < ActiveRecord::Base
   # response by iterateing through every message of every conversation for the user.
   # “Premature optimization is the root of all evil”
   def responsive?
-    User.audit_conversations([self])[0]
+    User.audit_conversations([self])
+    !timeout
   end
 
   # creates a timeout and send email for use when volunteers is unresponsive
@@ -223,23 +224,22 @@ class User < ActiveRecord::Base
   end
 
   def self.audit_conversations(users)
-    res = users.map do |user|
-      conversation = nil
+    users.each do |user|
+      user.received_conversations.order(created_at: :asc).each_with_index do |convo, idx| 
+        last_message = convo.messages.first
+        puts "last_message.body: #{last_message.body}"
+        puts "last_message.user_id: #{last_message.user_id}"
+        puts "user.id: #{user.id}"
+        next if last_message.user_id == user.id # return if the last message is from our volunteer
 
-      responsive = user.received_conversations.all? do |convo, idx| 
-        time_difference = (Time.now.utc - convo.created_at)/3600 # converted to hours
-        messages = convo.messages
-        has_responded = messages.any?{|msg| msg.user_id == user.id} # check if the volunteer has any sent messages in the conversation
-        conversation = convo #all loop breaks when expression is false, so conversation will be saved as the last 'delinquent' conversation checked
-        
-        has_responded || time_difference < 48 # no response is ok if the conversation was started less than 48 hours ago
+        time_difference = (Time.now.utc - last_message.created_at)/3600 # converted to hours
+        puts "time_difference #{time_difference}"
+        if time_difference > 48
+          return user.create_timeout(convo)
+        end
       end
 
-      # timeout the volunteer and send out an email to client and user with an update
-      user.create_timeout(conversation) if !responsive
-      responsive
+      user.update(timeout: false)
     end
-
-    res
   end
 end
