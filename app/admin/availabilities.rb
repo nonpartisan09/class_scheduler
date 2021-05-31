@@ -30,7 +30,7 @@ ActiveAdmin.register Availability do
     column :end_time
     column :updated_at
     column :created_at
-    column "timeout" do |availability| 
+    column "Active" do |availability| 
       User.find(availability.user_id).timeout
     end
     actions
@@ -72,7 +72,7 @@ ActiveAdmin.register Availability do
     column :end_time
     column :updated_at
     column :created_at
-    column "Timeout" do |availability| 
+    column "Active" do |availability| 
       User.find(availability.user_id).timeout
     end
   end

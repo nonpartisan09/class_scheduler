@@ -62,7 +62,7 @@ ActiveAdmin.register Conversation do
     column :recipient_id do |conversation|
       User.find(conversation[:recipient_id]).email
     end
-    column "timeout" do |conversation| 
+    column "timely" do |conversation| 
       User.find(conversation.recipient_id).timeout
     end
     column :updated_at
