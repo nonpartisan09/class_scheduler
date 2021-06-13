@@ -178,8 +178,17 @@ class User < ActiveRecord::Base
   # response by iterateing through every message of every conversation for the user.
   # “Premature optimization is the root of all evil”
   def responsive?
-    User.audit_conversations([self])
-    !timeout
+    self.received_conversations.order(created_at: :asc).each_with_index do |convo, idx| 
+      last_message = convo.messages.first
+      next if last_message.user_id == self.id # return if the last message is from our volunteer
+
+      time_difference = (Time.now.utc - last_message.created_at)/3600 # converted to hours
+      if time_difference > 48
+        return false
+      end
+    end
+
+    return true
   end
 
   # creates a timeout and send email for use when volunteers is unresponsive
@@ -225,21 +234,7 @@ class User < ActiveRecord::Base
 
   def self.audit_conversations(users)
     users.each do |user|
-      user.received_conversations.order(created_at: :asc).each_with_index do |convo, idx| 
-        last_message = convo.messages.first
-        puts "last_message.body: #{last_message.body}"
-        puts "last_message.user_id: #{last_message.user_id}"
-        puts "user.id: #{user.id}"
-        next if last_message.user_id == user.id # return if the last message is from our volunteer
-
-        time_difference = (Time.now.utc - last_message.created_at)/3600 # converted to hours
-        puts "time_difference #{time_difference}"
-        if time_difference > 48
-          return user.create_timeout(convo)
-        end
-      end
-
-      user.update(timeout: false)
+      user.update(timeout: user.responsive?)
     end
   end
 end
