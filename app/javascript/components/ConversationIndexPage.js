@@ -37,7 +37,7 @@ class ConversationIndexPage extends Component {
           { this.renderAlertInfo() }
           <div className='conversationBox'>
             { this.renderInbox() }
-            <p className="untimely-warning">{this.untimelyConversation ? '* Conversations outlined in red have messages received 48 hours ago and require a response.' : ''}</p>
+            <p className="untimely-warning">{this.untimelyConversation ? ConversationIndexPage.DeactivatedError : ''}</p>
           </div>
         </Paper>
       </div>
