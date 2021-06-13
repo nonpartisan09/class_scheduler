@@ -141,13 +141,21 @@ class ConversationIndexPage extends Component {
     if (is_first_message_unread) {
       return (
         <span className='conversationIndexPageUnread'>
-          Conversation with { conversee }
+          <FormattedMessage
+            id='ConversationIndexPage.NewMessage'
+            defaultMessage='Conversation with '
+          />
+          { conversee }
         </span>
       );
     } else {
       return (
         <span>
-          Conversation with { conversee }
+          <FormattedMessage
+            id='ConversationIndexPage.NewMessage'
+            defaultMessage='Conversation with '
+          />
+          { conversee }
         </span>
       );
     }
