@@ -99,6 +99,7 @@ class NewMessagePage extends Component {
               name='body'
               value={ body }
               className='userFormInputField body'
+              multiLine
               hintText=''
               floatingLabelText={
                 (
@@ -115,7 +116,7 @@ class NewMessagePage extends Component {
             />
           </form>
 
-          <FloatingActionButton disabled={disabled} onClick={ this.handleSubmit } style={ { position: 'absolute', bottom: '-24px', right: '0' } }>
+          <FloatingActionButton disabled={ disabled } onClick={ this.handleSubmit } style={ { position: 'absolute', bottom: '-24px', right: '0' } }>
             <SendIcon />
           </FloatingActionButton>
 

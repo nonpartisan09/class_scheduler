@@ -9,10 +9,11 @@ const MessageSchema = {
       }
     }
   }),
-  body: Joi.string().allow('').max(248).options({
+  body: Joi.string().required().options({
     language: {
-      string: {
-        max: 'Please keep your message under 248 characters'
+      any: {
+        required: 'Please enter a message',
+        empty: 'Please enter a message',
       }
     }
   }),
