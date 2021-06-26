@@ -55,6 +55,7 @@ class User < ActiveRecord::Base
   scope :with_availabilities, -> { includes(:availabilities).where.not(availabilities: { id: nil }) }
 
   scope :active, -> { where(active: true) }
+  scope :timed_out, -> { where(timeout: true) }
 
   def self.authentication_keys
     [:email]
@@ -234,7 +235,7 @@ class User < ActiveRecord::Base
 
   def self.audit_conversations(users)
     users.each do |user|
-      user.update(timeout: user.responsive?)
+      user.update(timeout: !user.responsive?)
     end
   end
 end

@@ -82,6 +82,7 @@ ActiveAdmin.register User do
 
   scope :all, default: true
   scope :active, proc { User.active }
+  scope :timed_out, proc { User.timed_out }
   scope :volunteers, proc { User.volunteers }
   scope :clients, proc { User.clients }
   scope :admins, proc { User.admins }
@@ -170,6 +171,7 @@ ActiveAdmin.register User do
     column :last_name
     column :url_slug
     column :active
+    column :timeout
     column :contact_permission
     column :email_notification
     column :how_they_found_us
@@ -212,6 +214,7 @@ ActiveAdmin.register User do
     id_column
     column :email
     column :active
+    column :timeout
     column :current_sign_in_at
     column :sign_in_count
     column :created_at
