@@ -55,13 +55,17 @@ class AvailabilitySelector extends Component {
     this.notifyChangeHandler(selectedDays, EARLIEST_TIME, LATEST_TIME);
   }
 
-  updateStartTimeHandler = (startTime) => {
+  updateStartTimeHandler = (startTimeStr) => {
     const { selectedDays, endTime} = this.props;
+    const startTimeArr = startTimeStr.split(':');
+    const startTime = {hour: startTimeArr[0], minute: startTimeArr[1]};
     this.notifyChangeHandler(selectedDays, startTime, endTime);
   }
 
-  updateEndTimeHandler = (endTime) => {
+  updateEndTimeHandler = (endTimeStr) => {
     const { startTime, selectedDays} = this.props;
+    const endTimeArr = endTimeStr.split(':');
+    const endTime = {hour: endTimeArr[0], minute: endTimeArr[1]};
     this.notifyChangeHandler(selectedDays, startTime, endTime);
   }
   updateDaysHandler = (days) => {
@@ -76,7 +80,6 @@ class AvailabilitySelector extends Component {
       startTime: start,
       endTime: end,
     };
-
     onChange(availability);
   }
  
@@ -98,7 +101,7 @@ class AvailabilitySelector extends Component {
             control={ (
               <TextField
                 id="time"
-                onChange={ this.updateStartTimeHandler }
+                onChange={ (event) => this.updateStartTimeHandler(event.target.value) }
                 type="time"
                 defaultValue="07:30"
                 disabled={ isAllDay }
@@ -121,7 +124,7 @@ class AvailabilitySelector extends Component {
             control={ (
               <TextField
                 id="time"
-                onChange={ this.updateEndTimeHandler }
+                onChange={ (event) => this.updateEndTimeHandler(event.target.value) }
                 type="time"
                 defaultValue="07:30"
                 disabled={ isAllDay }

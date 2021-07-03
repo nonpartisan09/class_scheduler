@@ -42,6 +42,7 @@ render() {
         //     defaultMessage='Day(s)'
         //   />
         // ) }
+        className="userFormInputField"
         value={ selectedDays }
         // errorText={ errors.days }
         onChange={ this.handleDaysSelection }
