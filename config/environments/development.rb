@@ -65,5 +65,5 @@ Rails.application.configure do
   config.active_job.queue_adapter = :async
 
   # start looping background job checking for unresponsive at midnight every day
-  ResponsiveUsersJob.set(wait: 5.minutes).perform_later
+  ResponsiveUsersJob.set(wait: 5.minutes).perform_now
 end
