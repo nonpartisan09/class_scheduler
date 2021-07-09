@@ -175,21 +175,9 @@ class User < ActiveRecord::Base
     User.audit_conversations(users)
   end
   
-  # `User::responsive?` checks if any conversations older than 48 hours have no volunteer 
-  # response by iterateing through every message of every conversation for the user.
   # “Premature optimization is the root of all evil”
   def responsive?
-    self.received_conversations.order(created_at: :asc).each_with_index do |convo, idx| 
-      last_message = convo.messages.first
-      next if last_message.user_id == self.id # return if the last message is from our volunteer
-
-      time_difference = (Time.now.utc - last_message.created_at)/3600 # converted to hours
-      if time_difference > 48
-        return false
-      end
-    end
-
-    return true
+    self.received_conversations.all? { |convo| convo.is_timely? }
   end
 
   # creates a timeout and send email for use when volunteers is unresponsive
@@ -235,7 +223,9 @@ class User < ActiveRecord::Base
 
   def self.audit_conversations(users)
     users.each do |user|
-      user.update(timeout: !user.responsive?)
+      user.received_conversations.each do |convo| 
+        user.create_timeout(convo) unless convo.is_timely?
+      end
     end
   end
 end
