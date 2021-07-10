@@ -103,7 +103,6 @@ class AvailabilitySelector extends Component {
                 id="time"
                 onChange={ (event) => this.updateStartTimeHandler(event.target.value) }
                 type="time"
-                defaultValue="07:30"
                 disabled={ isAllDay }
                 inputProps={ {
                   step: 300, // 5 min
@@ -126,7 +125,6 @@ class AvailabilitySelector extends Component {
                 id="time"
                 onChange={ (event) => this.updateEndTimeHandler(event.target.value) }
                 type="time"
-                defaultValue="07:30"
                 disabled={ isAllDay }
                 inputProps={ {
                   step: 300, // 5 min

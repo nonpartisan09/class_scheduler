@@ -180,11 +180,12 @@ class NewAvailability extends Component {
 
   handleSubmit() {
     const { validateAll } = this.props;
-
+    console.log('trying');
     validateAll(() => {
       const { errors } = this.props;
 
       if (_.size(errors) === 0) {
+        console.log('in if');
         const { currentUser: { locale } } = this.props;
         const { availabilities } = this.props.data;
 
@@ -251,6 +252,7 @@ class NewAvailability extends Component {
   };
 
   renderAvailabilityErrors = (errors) => {
+    console.log(errors);
     const errorsList = this.getAvailabilityErrorsFlattened(errors);
     return errorsList.map((error) => (
       <ErrorField 
