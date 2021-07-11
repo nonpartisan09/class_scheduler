@@ -59,10 +59,11 @@ class NewPasswordPage extends Component {
             value={ email }
             className='signInEmailInputField'
             label={ <FormattedMessage id='NewPasswordPage.enterEmail' defaultMessage='Please enter your email to recover your password' /> }
-            // errorText={ errors.email }
+            error={ !_.isEmpty(errors) }
             onChange={ changeHandler('email') }
             onBlur={ validateHandler('email') }
             fullWidth
+            helperText={ errors.email }
           />
 
           { this.renderSubmitButton() }

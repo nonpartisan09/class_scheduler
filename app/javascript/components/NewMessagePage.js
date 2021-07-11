@@ -81,7 +81,7 @@ class NewMessagePage extends Component {
               name='subject'
               value={ subject }
               className='userFormInputField subject'
-              hintText=''
+              hintText={ errors.subject }
               label={
                 (
                   <FormattedMessage
@@ -89,9 +89,8 @@ class NewMessagePage extends Component {
                     defaultMessage='Subject'
                   />
                 )
-              }
-              
-              errorText={ errors.subject }
+              }              
+              error={ _.has(errors, 'subject') }
               onChange={ changeHandler('subject') }
               onBlur={ validateHandler('subject') }
             />
@@ -99,7 +98,7 @@ class NewMessagePage extends Component {
               name='body'
               value={ body }
               className='userFormInputField body'
-              hintText=''
+              hintText={ errors.body }
               label={
                 (
                   <FormattedMessage
@@ -107,9 +106,8 @@ class NewMessagePage extends Component {
                     defaultMessage='Body'
                   />
                 )
-              }
-              
-              errorText={ errors.body }
+              }              
+              error={ _.has(errors, 'body') }
               onChange={ changeHandler('body') }
               onBlur={ validateHandler('body') }
             />

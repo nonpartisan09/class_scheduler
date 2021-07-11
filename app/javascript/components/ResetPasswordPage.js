@@ -46,7 +46,6 @@ class ResetPasswordPage extends Component {
             value={ password }
             type='password'
             className='userFormInputField password'
-            hintText=''
             label={ (
               <FormattedMessage
                 id='password'
@@ -66,7 +65,6 @@ class ResetPasswordPage extends Component {
             value={ password_confirmation }
             type='password'
             className='userFormInputField passwordConfirmation'
-            hintText=''
             label={ (
               <FormattedMessage
                 id='passwordConfirmation'

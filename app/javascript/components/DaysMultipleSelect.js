@@ -83,17 +83,11 @@ render() {
 DaysMultipleSelect.propTypes = {
   days: PropTypes.array.isRequired,
   selectedDays: PropTypes.array,
-  errors: PropTypes.shape({
-    days: PropTypes.string
-  }),
   onChange: PropTypes.func,  
 };
 
 DaysMultipleSelect.defaultProps = {
   selectedDays: [],
-  errors: {
-    days: ''
-  },
   onChange: () => {},
 };
 
