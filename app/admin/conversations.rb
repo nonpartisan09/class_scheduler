@@ -7,7 +7,7 @@ ActiveAdmin.register Conversation do
   filter :updated_at
   filter :created_at
   actions :all, :except => [:edit]
-  
+
   index do
     selectable_column
     id_column
@@ -17,7 +17,7 @@ ActiveAdmin.register Conversation do
     column :recipient_id do |conversation|
       link_to User.find(conversation[:recipient_id]).email, admin_user_path(conversation[:recipient_id])
     end
-    column "timely" do |conversation|
+    column "Timely" do |conversation|
       conversation.is_timely?
     end
     column :updated_at
@@ -62,7 +62,7 @@ ActiveAdmin.register Conversation do
     column :recipient_id do |conversation|
       User.find(conversation[:recipient_id]).email
     end
-    column "timeout" do |conversation| 
+    column "timely" do |conversation| 
       User.find(conversation.recipient_id).timeout
     end
     column :updated_at

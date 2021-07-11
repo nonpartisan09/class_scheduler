@@ -55,6 +55,7 @@ class User < ActiveRecord::Base
   scope :with_availabilities, -> { includes(:availabilities).where.not(availabilities: { id: nil }) }
 
   scope :active, -> { where(active: true) }
+  scope :timed_out, -> { where(timeout: true) }
 
   def self.authentication_keys
     [:email]
@@ -178,7 +179,17 @@ class User < ActiveRecord::Base
   # response by iterateing through every message of every conversation for the user.
   # “Premature optimization is the root of all evil”
   def responsive?
-    User.audit_conversations([self])[0]
+    self.received_conversations.order(created_at: :asc).each_with_index do |convo, idx| 
+      last_message = convo.messages.first
+      next if last_message.user_id == self.id # return if the last message is from our volunteer
+
+      time_difference = (Time.now.utc - last_message.created_at)/3600 # converted to hours
+      if time_difference > 48
+        return false
+      end
+    end
+
+    return true
   end
 
   # creates a timeout and send email for use when volunteers is unresponsive
@@ -223,23 +234,8 @@ class User < ActiveRecord::Base
   end
 
   def self.audit_conversations(users)
-    res = users.map do |user|
-      conversation = nil
-
-      responsive = user.received_conversations.all? do |convo, idx| 
-        time_difference = (Time.now.utc - convo.created_at)/3600 # converted to hours
-        messages = convo.messages
-        has_responded = messages.any?{|msg| msg.user_id == user.id} # check if the volunteer has any sent messages in the conversation
-        conversation = convo #all loop breaks when expression is false, so conversation will be saved as the last 'delinquent' conversation checked
-        
-        has_responded || time_difference < 48 # no response is ok if the conversation was started less than 48 hours ago
-      end
-
-      # timeout the volunteer and send out an email to client and user with an update
-      user.create_timeout(conversation) if !responsive
-      responsive
+    users.each do |user|
+      user.update(timeout: !user.responsive?)
     end
-
-    res
   end
 end

@@ -178,7 +178,7 @@ class UserProfile extends Component {
               </div>
             </div>
 
-            { this.renderAvailabilities() }
+            { !user.timeout && this.renderAvailabilities() }
 
             <Link className='userProfileSendEmail' to={ { pathname: '/messages/new', query: { recipient: url_slug, userName: first_name } } }>
               <Fab>

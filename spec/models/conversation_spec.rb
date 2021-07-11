@@ -21,8 +21,7 @@ RSpec.describe Conversation, type: :model do
     let(:conversation) { FactoryBot.create(:conversation) }
     
     it 'returns false if volunteer has not responded for more than 48 hours' do
-      conversation.messages.create({body: "this is a test", user_id: conversation.author_id})
-      conversation.update({created_at: "2001-01-06 05:00:00"})
+      conversation.messages.create({body: "this is a test", user_id: conversation.author_id, created_at: "2001-01-06 05:00:00"})
       expect(conversation.is_timely?).to eq(false)
     end
     

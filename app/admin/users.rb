@@ -82,6 +82,7 @@ ActiveAdmin.register User do
 
   scope :all, default: true
   scope :active, proc { User.active }
+  scope :timed_out, proc { User.timed_out }
   scope :volunteers, proc { User.volunteers }
   scope :clients, proc { User.clients }
   scope :admins, proc { User.admins }
@@ -170,6 +171,7 @@ ActiveAdmin.register User do
     column :last_name
     column :url_slug
     column :active
+    column :timeout
     column :contact_permission
     column :email_notification
     column :how_they_found_us
@@ -212,6 +214,7 @@ ActiveAdmin.register User do
     id_column
     column :email
     column :active
+    column :timeout
     column :current_sign_in_at
     column :sign_in_count
     column :created_at
@@ -263,6 +266,8 @@ ActiveAdmin.register User do
           row :last_sign_in_at
           row :created_at
           row :updated_at
+          row :timeout
+
 
           row :roles, div do |user|
             ul do user.roles.each do |role|
@@ -337,6 +342,7 @@ ActiveAdmin.register User do
       f.input :timezone, collection: ActiveSupport::TimeZone.all.map(&:name), selected: resource.timezone
       roles_collection = Role.all.collect{|role| [role.name, role.id, { checked: resource.roles.include?(role) }]}
       user = User.find(params[:id]) if params[:id]
+      f.input :timeout
       
       if user && current_user.id == user.id && !current_user.owner?
         f.input :roles, as: :check_boxes, collection: roles_collection, :disabled => [ "Owner", 4]

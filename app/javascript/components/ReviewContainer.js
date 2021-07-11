@@ -113,7 +113,11 @@ class ReviewContainer extends Component {
       this.setState({
         error: 'Please leave a rating'
       });
-    } else {
+    } else if (!review) {
+      this.setState({
+        error: 'Minimum 1 star rating required'
+      });
+    }else {
       onClick(review, comment);
     }
   }

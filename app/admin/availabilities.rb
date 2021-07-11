@@ -30,8 +30,8 @@ ActiveAdmin.register Availability do
     column :end_time
     column :updated_at
     column :created_at
-    column "timeout" do |availability| 
-      User.find(availability.user_id).timeout
+    column "Active" do |availability| 
+      !User.find(availability.user_id).timeout
     end
     actions
   end
@@ -42,6 +42,11 @@ ActiveAdmin.register Availability do
   filter :end_time
   filter :updated_at
   filter :created_at
+
+  scope :all
+  scope :active
+  scope :not_active
+
 
   form do |f|
     f.inputs do
@@ -54,14 +59,21 @@ ActiveAdmin.register Availability do
   end
 
   csv do
-    column :id
+    column "Availability Id" do |availability|
+      availability.id
+    end
+    column "User Id" do |availability|
+      availability.user_id
+    end
+    column "email" do |availability|
+      User.find(availability[:user_id]).email
+    end
     column :day
     column :start_time
     column :end_time
     column :updated_at
     column :created_at
-    column :user_id
-    column "timeout" do |availability| 
+    column "Active" do |availability| 
       User.find(availability.user_id).timeout
     end
   end
