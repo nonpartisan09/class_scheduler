@@ -6,10 +6,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import TextField from '@material-ui/core/TextField';
 
-import TimeSelector from './TimeSelector';
 import DaysMultipleSelect from './DaysMultipleSelect';
-
-import getTimesValuesList from './utils/getTimeValuesList';
 
 const EARLIEST_TIME = {
   hour: '00',
@@ -24,14 +21,10 @@ class AvailabilitySelector extends Component {
   constructor(props) {
     super(props);
 
-    const hoursList = getTimesValuesList(Number(EARLIEST_TIME.hour), Number(LATEST_TIME.hour));
-    const minutesList = getTimesValuesList(Number(EARLIEST_TIME.minute), Number(LATEST_TIME.minute));
     const isAllDay = props.isAllDay;
 
     this.state = {
-      isAllDay: isAllDay,
-      hoursList: hoursList,
-      minutesList: minutesList,
+      isAllDay: isAllDay
     };
 
     if (isAllDay) {
@@ -84,8 +77,8 @@ class AvailabilitySelector extends Component {
   }
  
   render() {
-    const { days, selectedDays, startTime, endTime, className } = this.props;
-    const { hoursList, minutesList, isAllDay } = this.state;
+    const { days, selectedDays, className } = this.props;
+    const { isAllDay } = this.state;
     const defaultCSSClass = 'availabilitySelectorContainer';
     const classes = className ? `${defaultCSSClass} ${className}` : defaultCSSClass; 
     return (
@@ -140,34 +133,7 @@ class AvailabilitySelector extends Component {
             classes={ {root: 'timePickerLabel', label: 'timePickerLabel'} }
             labelPlacement='start'
           />
-          {/* <TimeSelector 
-            hoursList={ hoursList }
-            minutesList={ minutesList }
-            onChange={ this.updateStartTimeHandler }
-            label={ (
-              <FormattedMessage
-                id='AvailabilitySelector.startLabel'
-                defaultMessage='From'
-              />
-            ) }
-            disabled={ isAllDay }
-            hour={ startTime.hour }
-            minute={ startTime.minute }
-          /> */}
-          {/* <TimeSelector
-            hoursList={ hoursList }
-            minutesList={ minutesList }
-            onChange={ this.updateEndTimeHandler }
-            label={ (
-              <FormattedMessage
-                id='AvailabilitySelector.endLabel'
-                defaultMessage='To'
-              />
-            ) }
-            disabled={ isAllDay }
-            hour={ endTime.hour }
-            minute={ endTime.minute }
-          /> */}
+         
           <FormControlLabel
             control={ (
               <Checkbox

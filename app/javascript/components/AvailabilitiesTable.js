@@ -4,6 +4,7 @@ import _ from 'lodash';
 import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
 import Switch from '@material-ui/core/Switch';
+import { withStyles } from '@material-ui/core/styles';
 import { FormattedMessage } from 'react-intl';
 
 import {
@@ -20,14 +21,22 @@ import SnackBarComponent from './reusable/SnackBarComponent';
 import formatLink from './utils/Link';
 import AvailabilityTimeFormatPrefs from './utils/AvailabilityTimeFormatPrefs';
 
-const styles = {
-  thumbOff: {
-    backgroundColor: '#ffd6cc',
+const TimeFormatSwitch = withStyles({
+  switchBase: {
+    color: '#ffd6cc',
   },
-  trackOff: {
-    backgroundColor: '#ffb39c',
+  checked: { 'background-color': 'transparent' },
+  track: {
+    backgroundColor: '#ffb39c'
   },
-};
+})(Switch);
+
+const AvailabilityTableHead = withStyles({
+  head: {
+    color: '#f1582a',
+  },
+})(TableCell);
+
 class AvailabilitiesTable extends Component {
   constructor(props, context) {
     super(props, context);
@@ -130,48 +139,47 @@ class AvailabilitiesTable extends Component {
               defaultMessage='24-Hour'
             />
           </span>
-          <Switch
-            label={ (                  
-              <FormattedMessage
-                id='AvailabilityTable.12HourFormat'
-                defaultMessage='12-Hour'
-              /> 
-            ) }
-            thumbStyle={ styles.thumbOff }
-            trackStyle={ styles.trackOff }
-            labelPosition="right"
+          <TimeFormatSwitch
+            color='primary'
             onChange={ this.handleTimeFormatToggle }
             checked={ show12HourFormat }
           />
+          <span>
+            <FormattedMessage
+              id='AvailabilityTable.12HourFormat'
+              defaultMessage='12-Hour'
+              /> 
+          </span>
         </div>
 
         <div className='tableHideSmallScreen'>
-          <Table selectable={ false }>
-            <TableHead displaySelectAll={ false }>
+          <Table>
+            <TableHead>
               <TableRow>
-                <TableCell key='day'>
+                <TableCell />
+                <AvailabilityTableHead key='day'>
                   <FormattedMessage
                     id='Availabilities.day'
                     defaultMessage='Day'
                   />
-                </TableCell>
-                <TableCell key='start_time'>
+                </AvailabilityTableHead>
+                <AvailabilityTableHead key='start_time'>
                   <FormattedMessage
                     id='startTime'
                     defaultMessage='Start Time'
                   />
-                </TableCell>
-                <TableCell key='end_time'>
+                </AvailabilityTableHead>
+                <AvailabilityTableHead key='end_time'>
                   <FormattedMessage
                     id='endTime'
                     defaultMessage='End Time'
                   />
-                </TableCell>
+                </AvailabilityTableHead>
                 { this.renderDeleteColumn() }
               </TableRow>
             </TableHead>
 
-            <TableBody displayRowCheckbox={ false }>
+            <TableBody>
               { tableContent }
             </TableBody>
           </Table>
@@ -227,12 +235,12 @@ class AvailabilitiesTable extends Component {
   renderDeleteColumn() {
     if (this.props.deletable) {
       return (
-        <TableCell key='delete'>
+        <AvailabilityTableHead key='delete'>
           <FormattedMessage
             id='Delete'
             defaultMessage='Delete'
           />
-        </TableCell>
+        </AvailabilityTableHead>
       );
     }
   }

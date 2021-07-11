@@ -22,7 +22,7 @@ class AvailabilityIndexPage extends Component {
 
     return (
       <div>
-        <Paper zDepth={ 1 } className={ timeout || !responsive ? 'paperOverride untimelyResponses' : 'paperOverride' } rounded={ false }>
+        <Paper elevation={ 1 } className={ timeout || !responsive ? 'paperOverride untimelyResponses' : 'paperOverride' } square={ true }>
           <PageHeader title={ (
             <FormattedMessage
               id='AvailabilityIndexPage.Header'
@@ -78,7 +78,7 @@ class AvailabilityIndexPage extends Component {
   renderAvailablePrograms() {
     return _.map(this.props.programs, ({ name }) => (
       <li key={ name } className='availabilityListItem'>
-        <Chip key={ name }>{ name }</Chip>
+        <Chip key={ name } label={ name } />
       </li>
       ));
   }

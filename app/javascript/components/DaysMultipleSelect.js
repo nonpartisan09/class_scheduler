@@ -24,15 +24,21 @@ class DaysMultipleSelect extends Component {
   }
 
   selectionRendererDay(values) {
+    const { days } = this.props;
+    const allDays =  days;
+
     if (_.size(values) > 1) {
-      return values.join(', ');
+      return _.trimEnd(_.map(values, (value) => {
+        return allDays[value];
+      }).join(', '), ', '); 
     } else if (_.size(values) === 1) {
-      return values.toString();
+      return allDays[values];
     }
   }
 
 render() {
     const { errors, selectedDays } = this.props;
+    console.log(selectedDays);
 
     return (
       <Select
@@ -62,7 +68,7 @@ render() {
       _.map(days, (day, index) => (
         <MenuItem 
           key={ day + index }  
-          value={ day }  
+          value={ index }  
         >
           <Checkbox checked={ _.indexOf(selectedDays, index) > -1  } />
           <ListItemText primary={ day } />
