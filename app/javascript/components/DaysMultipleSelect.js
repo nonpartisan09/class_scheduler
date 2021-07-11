@@ -7,6 +7,8 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import Checkbox from '@material-ui/core/Checkbox';
 import ListItemText from '@material-ui/core/ListItemText';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormControl from '@material-ui/core/FormControl';
 
 
 
@@ -37,27 +39,27 @@ class DaysMultipleSelect extends Component {
   }
 
 render() {
-    const { errors, selectedDays } = this.props;
-    console.log(selectedDays);
+    const { selectedDays } = this.props;
 
     return (
-      <Select
-        // hintText={ (
-        //   <FormattedMessage
-        //     id='SearchBar.days'
-        //     defaultMessage='Day(s)'
-        //   />
-        // ) }
-        className="userFormInputField"
-        value={ selectedDays }
-        // errorText={ errors.days }
-        onChange={ this.handleDaysSelection }
-        multiple
-        renderValue={ this.selectionRendererDay }
-        fullWidth
+      <FormControl>
+        <InputLabel>
+          <FormattedMessage
+            id='SearchBar.days'
+            defaultMessage='Day(s)'
+          />
+        </InputLabel>
+        <Select
+          className="userFormInputField"
+          value={ selectedDays }
+          onChange={ this.handleDaysSelection }
+          multiple
+          renderValue={ this.selectionRendererDay }
+          fullWidth
       >
-        { this.getDaysMenuItems() }
-      </Select>
+          { this.getDaysMenuItems() }
+        </Select>
+      </FormControl>
     );
   }
 
