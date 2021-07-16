@@ -4,19 +4,41 @@ import PropTypes from 'prop-types';
 import Paper from '@material-ui/core/Paper';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import CloseIcon from '@material-ui/icons/Close';
+import { withStyles
+      } from '@material-ui/core/styles';
 import { FormattedMessage } from 'react-intl';
 import Avatar from '@material-ui/core/Avatar';
 
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
 import Button from '@material-ui/core/Button';
 
 import formatLink from './utils/Link';
 import PageHeader from './reusable/PageHeader';
 
+const ConversationAvatar = withStyles({
+  root: {
+    color: 'rgb(255, 255, 255)',
+    backgroundColor: 'rgb(188, 188, 188)',
+    userSelect: 'none',
+    display: 'inline-flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    fontSize: '20px',
+    borderRadius: '50%',
+    height: '40px',
+    width: '40px', 
+    position: 'absolute',
+    top: '8px',
+    left: '16px'
+  },
+})(Avatar);
+
 class ConversationIndexPage extends Component {
   constructor(props, context) {
     super(props, context);
+    this.untimelyConversation = false;
     this.untimelyConversation = props.currentUser.volunteer && props.conversations && props.conversations.some(convo => !convo.is_timely);
     console.log(props);
     console.log(this.untimelyConversation);
@@ -27,10 +49,13 @@ class ConversationIndexPage extends Component {
     };
   }
 
+
+  
+
   render() {
     return (
       <div>
-        <Paper zDepth={ 1 } className='paperOverride' rounded={ false }>
+        <div className='paperOverride conversationIndexPageOverride'>
           <PageHeader title={ (
             <FormattedMessage
               id='ConversationIndexPage.header'
@@ -42,7 +67,7 @@ class ConversationIndexPage extends Component {
             { this.renderInbox() }
             { this.renderError() }
           </div>
-        </Paper>
+        </div>
       </div>
     );
   }
@@ -136,14 +161,23 @@ class ConversationIndexPage extends Component {
 
     return _.map(conversations, (conversation) => {
       const { conversee, id, conversee_avatar, is_first_message_unread, is_timely } = conversation;
+      if (!is_timely) this.untimelyConversation = true;
       return (
-        <ListItem
+        <div 
           className={ is_timely || !currentUser.volunteer ? '' : 'untimely-conversation' }
           onClick={ this.handleClick(id) }
           key={ conversee }
-          leftAvatar={ <Avatar className='avatar' src={ conversee_avatar } /> }
-          primaryText={ this.renderNewMessage({ conversee, is_first_message_unread }) }
-        />
+        >
+          <span className='conversationIndexSpan'>
+            <div className='conversationIndexDiv'>
+              <ConversationAvatar className='avatar' src={ conversee_avatar } />
+              <span>
+                { this.renderNewMessage({ conversee, is_first_message_unread }) }
+              </span>
+            </div>
+          </span>
+          
+        </div>
       );
     });
   }
