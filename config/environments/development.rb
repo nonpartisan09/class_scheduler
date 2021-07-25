@@ -63,4 +63,6 @@ Rails.application.configure do
 
   config.action_mailer.default_options = { from: 'noreply@tutoria.io' }
   config.active_job.queue_adapter = :async
+
+  ENV["RESPONSIVE_JOB_TOKEN"] ||= "yri7Lu6QEWaCxhC2rakK"
 end

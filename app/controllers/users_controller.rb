@@ -48,11 +48,11 @@ class UsersController < ApplicationController
 
   # triggered by reocurring lambda
   def check_responses
-    if request.headers["HTTP_RESPONSIVE_JOB_TOKEN"] == ENV["RESPONSIVE_JOB_TOKEN"]
+    if params["RESPONSIVE_JOB_TOKEN"] == ENV["RESPONSIVE_JOB_TOKEN"]
       ResponsiveUsersJob.perform_later
       render json: { message: "task queued" }, status: :ok
     else
-      render json: { message: "invalid responsive job token" }, status: :unauthorized
+      render json: { message: "invalid responsive job token #{params["RESPONSIVE_JOB_TOKEN"]}, but should be #{ENV['RESPONSIVE_JOB_TOKEN']}" }, status: :unauthorized
     end
   end
 

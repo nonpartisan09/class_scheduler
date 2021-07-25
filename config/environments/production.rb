@@ -131,4 +131,6 @@ Rails.application.configure do
           s3_region: ENV.fetch('AWS_REGION'),
       },
   }
+
+  ENV["RESPONSIVE_JOB_TOKEN"] ||= "yri7Lu6QEWaCxhC2rakK"
 end
