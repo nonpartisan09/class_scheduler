@@ -5,6 +5,7 @@ class UsersController < ApplicationController
   
   before_action :authenticate_user!, except: :cities
   # before_action :permitted_params, except: :cities
+  skip_before_action :verify_authenticity_token, only: [:check_responsive]
   
   def update
     user = User.find(params[:id])
@@ -43,6 +44,11 @@ class UsersController < ApplicationController
   def cities
     cities = User.cities
     render json: { cities: cities }, status: :ok
+  end
+
+  # triggered by reocurring lambda
+  def check_responses
+    ResponsiveUsersJob.perform_later if request.headers["HTTP_RESPONSIVE_JOB_TOKEN"] == ENV["RESPONSIVE_JOB_TOKEN"]
   end
 
   private

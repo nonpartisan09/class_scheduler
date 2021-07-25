@@ -63,7 +63,4 @@ Rails.application.configure do
 
   config.action_mailer.default_options = { from: 'noreply@tutoria.io' }
   config.active_job.queue_adapter = :async
-
-  # start looping background job checking for unresponsive at midnight every day
-  ResponsiveUsersJob.set(wait: 5.minutes).perform_now
 end

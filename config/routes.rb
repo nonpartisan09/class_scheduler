@@ -35,6 +35,7 @@ Rails.application.routes.draw do
     get 'volunteers', to: 'results#show'
     get 'my_profile', to: 'user_profiles#show'
     get 'messages/:id', to: 'messages#update'
+    post 'update_user_timeout', to: 'users#check_responses'
 
     # needed for devise
     devise_scope :user do
