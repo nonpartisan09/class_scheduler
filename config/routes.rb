@@ -3,6 +3,7 @@
 Rails.application.routes.draw do
   devise_for :users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
+  post 'check_responses', to: 'users#check_responses'
 
   scope '(:locale)', locale: /en|es/ do
     root 'application#index'
@@ -35,7 +36,6 @@ Rails.application.routes.draw do
     get 'volunteers', to: 'results#show'
     get 'my_profile', to: 'user_profiles#show'
     get 'messages/:id', to: 'messages#update'
-    post 'update_user_timeout', to: 'users#check_responses'
 
     # needed for devise
     devise_scope :user do

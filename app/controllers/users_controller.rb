@@ -5,8 +5,9 @@ class UsersController < ApplicationController
   
   before_action :authenticate_user!, except: :cities
   # before_action :permitted_params, except: :cities
-  skip_before_action :verify_authenticity_token, only: [:check_responsive]
-  
+  skip_before_action :verify_authenticity_token, only: [:check_responses]
+  prepend_before_action :require_no_authentication, only: [:check_responses]
+
   def update
     user = User.find(params[:id])
     user.update!(timeout: params[:timeout])
@@ -48,7 +49,12 @@ class UsersController < ApplicationController
 
   # triggered by reocurring lambda
   def check_responses
-    ResponsiveUsersJob.perform_later if request.headers["HTTP_RESPONSIVE_JOB_TOKEN"] == ENV["RESPONSIVE_JOB_TOKEN"]
+    if request.headers["HTTP_RESPONSIVE_JOB_TOKEN"] == ENV["RESPONSIVE_JOB_TOKEN"]
+      ResponsiveUsersJob.perform_later
+      render json: { message: "task queued" }, status: :ok
+    else
+      render json: { message: "invalid responsive job token" }, status: :unauthorized
+    end
   end
 
   private
