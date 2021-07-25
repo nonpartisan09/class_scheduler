@@ -3,10 +3,9 @@
 class UsersController < ApplicationController
   include AvailabilitiesSorter
   
-  before_action :authenticate_user!, except: :cities
+  before_action :authenticate_user!, except: [:cities, :check_responses]
   # before_action :permitted_params, except: :cities
   skip_before_action :verify_authenticity_token, only: [:check_responses]
-  prepend_before_action :require_no_authentication, only: [:check_responses]
 
   def update
     user = User.find(params[:id])
