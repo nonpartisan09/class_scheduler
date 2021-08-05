@@ -38,6 +38,6 @@ class Conversation < ApplicationRecord
     last_message = messages.first
     time_since_last_message = DateTime.now.to_i - last_message.created_at.to_i
 
-    return last_message.user.volunteer? || time_since_last_message < 2.days
+    return last_message.user.volunteer? || time_since_last_message < 2.days || last_message.created_at > 5.days
   end
 end
