@@ -224,12 +224,11 @@ class User < ActiveRecord::Base
 
   def self.audit_conversations(users)
     users.each do |user|
-      user.received_conversations.none? do |convo| 
-        unless convo.is_timely?
-          user.create_timeout(convo)
-          true
-        end
-      end && user.timeout && user.update!(timeout: false) # only update if they are currently timed out
+      user.received_conversations.each do |convo| 
+        user.create_timeout(convo) unless convo.is_timely?
+      end
+
+      user.timeout && user.update!(timeout: false)
     end
   end
 end
