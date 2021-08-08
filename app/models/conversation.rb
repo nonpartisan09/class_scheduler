@@ -34,7 +34,7 @@ class Conversation < ApplicationRecord
     author == user || recipient == user
   end
 
-  def is_timely?
+  def check_timely
     last_message = messages.order(created_at: :desc).first
     time_since_last_message = DateTime.now.to_i - last_message.created_at.to_i
 

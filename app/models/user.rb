@@ -169,23 +169,13 @@ class User < ActiveRecord::Base
     known_cities
   end
 
-  # Added as a class method to avoid n+1 query when performing User::responsive? for each
-  # user from ResponsiveUsersJob
   def self.all_responsive?
     users = User.all.includes(received_conversations: :messages)
     User.audit_conversations(users)
   end
   
-  # “Premature optimization is the root of all evil”
-  def responsive?
-    self.received_conversations.all? { |convo| convo.is_timely? }
-  end
-
   # creates a timeout and send email for use when volunteers is unresponsive
-  def create_timeout(conversation)
-    return if timeout # no need to send email or update record if already timed out
-
-    self.update!(timeout: true)
+  def send_unresponsive_email(conversation)
     client = conversation.author
     program = client.programs.first # currenttly we are not saving the program selected to conversation, this is a stopgap measure
 
@@ -224,11 +214,18 @@ class User < ActiveRecord::Base
 
   def self.audit_conversations(users)
     users.each do |user|
+      is_responsive = true
+
       user.received_conversations.each do |convo| 
-        user.create_timeout(convo) unless convo.is_timely?
+        if !convo.check_timely && convo.timely?
+          user.update!(unresponsive: true, timeout: true)
+          convo.update!(timely: false)
+          user.send_unresponsive_email(convo)
+          is_responsive = false
+        end
       end
 
-      user.timeout && user.update!(timeout: false)
+      is_responsive && user.unresponsive && user.update!(unresponsive: false)
     end
   end
 end

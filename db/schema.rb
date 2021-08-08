@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_26_140413) do
+ActiveRecord::Schema.define(version: 2021_08_08_135753) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -51,6 +51,7 @@ ActiveRecord::Schema.define(version: 2020_11_26_140413) do
     t.integer "recipient_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "timely", default: true
     t.index ["author_id", "recipient_id"], name: "index_conversations_on_author_id_and_recipient_id", unique: true
   end
 
@@ -202,6 +203,7 @@ ActiveRecord::Schema.define(version: 2020_11_26_140413) do
     t.string "phone_number"
     t.string "how_they_found_us"
     t.boolean "timeout", default: false
+    t.boolean "unresponsive", default: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
