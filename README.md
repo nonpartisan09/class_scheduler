@@ -18,7 +18,6 @@ volunteers.
 - `$ rake db:seed`
 - `$ rake assets:precompile`
 - `$ foreman start`
-
 ## SSL certificates
 
 are provided by Let's Encrypt via the use of certbot on the server

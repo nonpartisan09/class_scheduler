@@ -2,11 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Paper from 'material-ui/Paper';
 import Parser from 'html-react-parser';
+import { ENGLISH } from './utils/availableLocales';
 
-const TermsAndConditions = ({ terms_and_conditions })=> {
+const TermsAndConditions = ({ terms_and_conditions, locale })=> {
   const content = function(){
-    if (terms_and_conditions) {
-      return Parser(terms_and_conditions);
+    if (locale && terms_and_conditions) {
+      return Parser(terms_and_conditions[locale]);
     } else {
       return null;
     }
@@ -24,11 +25,16 @@ const TermsAndConditions = ({ terms_and_conditions })=> {
 };
 
 TermsAndConditions.propTypes = {
-  terms_and_conditions: PropTypes.string
+  locale: PropTypes.string,
+  terms_and_conditions: PropTypes.shape({
+    description: PropTypes.node,
+    spanish_description: PropTypes.node,
+  })
 };
 
 TermsAndConditions.defaultProps = {
-  terms_and_conditions: ''
+  locale: ENGLISH,
+  terms_and_conditions: {}
 };
 
 export default TermsAndConditions;

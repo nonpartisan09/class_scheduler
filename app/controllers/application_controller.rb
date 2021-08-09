@@ -83,7 +83,10 @@ class ApplicationController < ActionController::Base
     decorate_user_if_present
 
     terms_and_conditions = TermsAndConditions.last
-    terms_and_conditions = terms_and_conditions[:description]
+    terms_and_conditions = page_content = {
+      :en => terms_and_conditions[:description],
+      :es => terms_and_conditions[:spanish_description]
+    }
 
     @data = {
         :currentUser => @user,
