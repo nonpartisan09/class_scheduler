@@ -13,11 +13,14 @@ volunteers.
 
 - `$ bundle install`
 - `$ yarn install`
-- `$ rake db:create RAILS_ENV=development`
-- `$ rake db:migrate RAILS_ENV=development`
-- `$ rake db:seed`
-- `$ rake assets:precompile`
-- `$ foreman start`
+- `$ bundle exec rails db:setup`
+- `$ foreman start` (OR you can `bundle exec rails s` + `bin/webpack-dev-server` )
+
 ## SSL certificates
 
 are provided by Let's Encrypt via the use of certbot on the server
+
+## Troubleshooting
+- to install the "pg" gem first run the command to set libpg-dev headers:
+  ubuntu: `sudo apt-get install --reinstall libpq-dev`
+  mac OS: `brew install libpq-dev`
