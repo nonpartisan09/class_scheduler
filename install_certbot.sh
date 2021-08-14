@@ -1,3 +1,5 @@
+# removed because it causes a failure when deploying on eb, instead
+# ssh into the server and run this script line by line to install certbot
 #!/bin/bash
 set -e -u
 
