@@ -187,6 +187,10 @@ class User < ActiveRecord::Base
     end
   end
 
+  def all_timely
+    received_conversations.all?(&:timely)
+  end
+
   private
 
   def self.city_client_count(city, state)
@@ -214,18 +218,16 @@ class User < ActiveRecord::Base
 
   def self.audit_conversations(users)
     users.each do |user|
-      is_responsive = true
 
       user.received_conversations.each do |convo| 
         if !convo.check_timely && convo.timely?
           user.update!(unresponsive: true, timeout: true)
           convo.update!(timely: false)
           user.send_unresponsive_email(convo)
-          is_responsive = false
         end
       end
 
-      is_responsive && user.unresponsive && user.update!(unresponsive: false)
+      user.all_timely && user.unresponsive && user.update!(unresponsive: false)
     end
   end
 end
