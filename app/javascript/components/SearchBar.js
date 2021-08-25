@@ -9,6 +9,8 @@ import { FormattedMessage } from 'react-intl';
 import TextField from '@material-ui/core/TextField';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
+import Checkbox from '@material-ui/core/Checkbox';
+import ListItemText from '@material-ui/core/ListItemText';
 import Button from '@material-ui/core/Button';
 
 import SearchValidationSchema from './schema/SearchValidationSchema';
@@ -92,7 +94,7 @@ class SearchBar extends Component {
                 defaultMessage='Program(s)'
               />
             ) }
-            value={ program }
+            value={ programs }
             onChange={ this.changeHandlerProgram }
             multiple
             errorText={ errors.program }
@@ -102,15 +104,11 @@ class SearchBar extends Component {
               return (
                 <MenuItem 
                   key={ id } 
-                  insetChildren 
-                  checked={ _.indexOf(program, id) > -1 } 
-                  value={ id } 
-                  primaryText={ (
-                    <span> 
-                      { name } 
-                    </span>
-                  ) } 
-                />
+                  value={ name }  
+                >
+                  <Checkbox checked={  _.indexOf(program, id) > -1  } />
+                  <ListItemText primary={ name } />
+                </MenuItem>
               );
             })}
           </Select>
@@ -130,18 +128,15 @@ class SearchBar extends Component {
             selectionRenderer={ this.selectionRendererLanguage }
           >
             { _.map(languages, ({ name, id }) => {
+              console.log(language);
               return (
                 <MenuItem 
-                  key={ id } 
-                  insetChildren 
-                  checked={ _.indexOf(language, id) > -1 } 
-                  value={ id } 
-                  primaryText={ (
-                    <span> 
-                      { name } 
-                    </span> 
-                  ) } 
-                />
+                  key={ name } 
+                  value={ name }  
+                >
+                  <Checkbox checked={  _.indexOf(program, id) > -1  } />
+                  <ListItemText primary={ name } />
+                </MenuItem>
               );
             })}
           </Select>
