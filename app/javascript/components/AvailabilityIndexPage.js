@@ -1,9 +1,9 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Paper from 'material-ui/Paper';
-import RaisedButton from 'material-ui/RaisedButton';
-import Chip from 'material-ui/Chip';
+import Paper from '@material-ui/core/Paper';
+import Button from '@material-ui/core/Button';
+import Chip from '@material-ui/core/Chip';
 import { FormattedMessage } from 'react-intl';
 
 import { postData } from './utils/sendData';
@@ -22,7 +22,7 @@ class AvailabilityIndexPage extends Component {
 
     return (
       <div>
-        <Paper zDepth={ 1 } className={ timeout || !responsive ? 'paperOverride untimelyResponses' : 'paperOverride' } rounded={ false }>
+        <Paper elevation={ 1 } className={ timeout || !responsive ? 'paperOverride untimelyResponses' : 'paperOverride' } square={ true }>
           <PageHeader title={ (
             <FormattedMessage
               id='AvailabilityIndexPage.Header'
@@ -54,17 +54,17 @@ class AvailabilityIndexPage extends Component {
               &nbsp;&nbsp;
               {
                 !!availabilities.length && (
-                  <RaisedButton
-                    primary
+                  <Button
+                    variant='contained'
+                    color='primary'
                     disabled={ !responsive }
                     onClick={ timeout || !responsive ? () => this.toggleAvailabilities(false) : () =>this.toggleAvailabilities(true) }
-                    label={ (
-                      <FormattedMessage
-                        id={ timeout || !responsive ? 'AvailabilityIndexPage.InactiveAvailabilitiesButton': 'AvailabilityIndexPage.ActiveAvailabilitiesButton' }
-                        defaultMessage={ timeout || !responsive ? 'Reactivate Availabilities' : 'Deactivate Availabilities' }
-                      />
-                    ) }
-                  />
+                  >
+                    <FormattedMessage
+                      id={ timeout || !responsive ? 'AvailabilityIndexPage.InactiveAvailabilitiesButton': 'AvailabilityIndexPage.ActiveAvailabilitiesButton' }
+                      defaultMessage={ timeout || !responsive ? 'Reactivate Availabilities' : 'Deactivate Availabilities' }
+                    />
+                  </Button>
                 )
               }
             </div>
@@ -78,7 +78,7 @@ class AvailabilityIndexPage extends Component {
   renderAvailablePrograms() {
     return _.map(this.props.programs, ({ name }) => (
       <li key={ name } className='availabilityListItem'>
-        <Chip key={ name }>{ name }</Chip>
+        <Chip key={ name } label={ name } />
       </li>
       ));
   }
@@ -102,16 +102,16 @@ class AvailabilityIndexPage extends Component {
       return (
         <div>
           <a href={ formatLink('/availabilities/new', locale) }>
-            <RaisedButton
-              primary
+            <Button
+              variant='contained'
+              color='primary'
               className='conversationButton'
-              label={ (
-                <FormattedMessage
-                  id='availabilityCreateNew'
-                  defaultMessage='Create new availabilities'
-                />
-                ) }
-            />
+            >
+              <FormattedMessage
+                id='availabilityCreateNew'
+                defaultMessage='Create new availabilities'
+              />
+            </Button>
           </a>
         </div>
       );

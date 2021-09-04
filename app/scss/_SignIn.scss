@@ -6,6 +6,10 @@
 
 .signInLink, .signInLinkSecondaryContainer {
     margin-top: 24px;
+
+    &.MuiButtonBase-root {
+        margin-top: 24px;
+    }
 }
 
 .signInEmailInputField > label {

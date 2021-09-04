@@ -3,21 +3,32 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
-import SelectField from 'material-ui/SelectField';
-import MenuItem from 'material-ui/MenuItem';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+import Checkbox from '@material-ui/core/Checkbox';
+import ListItemText from '@material-ui/core/ListItemText';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormControl from '@material-ui/core/FormControl';
 
 
 
 class DaysMultipleSelect extends Component {
-  handleDaysSelection = (event, index, values) => {
-    const { onChange } = this.props;
-    onChange(values);    
+  constructor(props) {
+    super(props);
+
+    this.selectionRendererDay = this.selectionRendererDay.bind(this);
+    this.handleDaysSelection = this.handleDaysSelection.bind(this);
   }
 
-  selectionRendererDay = (values) => {
+  handleDaysSelection = (event) => {
+    const { onChange } = this.props;
+    onChange(event.target.value);    
+  }
+
+  selectionRendererDay(values) {
     const { days } = this.props;
     const allDays =  days;
-     
+
     if (_.size(values) > 1) {
       return _.trimEnd(_.map(values, (value) => {
         return allDays[value];
@@ -28,25 +39,27 @@ class DaysMultipleSelect extends Component {
   }
 
 render() {
-    const { errors, selectedDays } = this.props;
+    const { selectedDays } = this.props;
 
     return (
-      <SelectField
-        hintText={ (
+      <FormControl>
+        <InputLabel>
           <FormattedMessage
             id='SearchBar.days'
             defaultMessage='Day(s)'
           />
-        ) }
-        value={ selectedDays }
-        errorText={ errors.days }
-        onChange={ this.handleDaysSelection }
-        multiple
-        selectionRenderer={ this.selectionRendererDay }
-        fullWidth
+        </InputLabel>
+        <Select
+          className="userFormInputField"
+          value={ selectedDays }
+          onChange={ this.handleDaysSelection }
+          multiple
+          renderValue={ this.selectionRendererDay }
+          fullWidth
       >
-        { this.getDaysMenuItems() }
-      </SelectField>
+          { this.getDaysMenuItems() }
+        </Select>
+      </FormControl>
     );
   }
 
@@ -54,18 +67,14 @@ render() {
     const { days, selectedDays } = this.props;
    
     return (
-      _.map(days, (value, index) => (
+      _.map(days, (day, index) => (
         <MenuItem 
-          key={ value + index } 
-          insetChildren 
-          checked={ _.indexOf(selectedDays, index) > -1 } 
-          value={ index } 
-          primaryText={ (
-            <span> 
-              { value } 
-            </span> 
-          ) } 
-        />
+          key={ day + index }  
+          value={ index }  
+        >
+          <Checkbox checked={ _.indexOf(selectedDays, index) > -1  } />
+          <ListItemText primary={ day } />
+        </MenuItem>
       ))
     );
   }
@@ -74,17 +83,11 @@ render() {
 DaysMultipleSelect.propTypes = {
   days: PropTypes.array.isRequired,
   selectedDays: PropTypes.array,
-  errors: PropTypes.shape({
-    days: PropTypes.string
-  }),
   onChange: PropTypes.func,  
 };
 
 DaysMultipleSelect.defaultProps = {
   selectedDays: [],
-  errors: {
-    days: ''
-  },
   onChange: () => {},
 };
 

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
 import PropTypes from 'prop-types';
-import Paper from 'material-ui/Paper';
+import Paper from '@material-ui/core/Paper';
 import Message from './Message';
 import MessageButtons, { MessageTypes } from './reusable/MessageButtons';
 
