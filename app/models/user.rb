@@ -22,6 +22,7 @@ class User < ActiveRecord::Base
   has_many :availabilities, dependent: :destroy
 
   has_many :received_conversations, class_name: 'Conversation', foreign_key: 'recipient_id'
+  has_many :authored_conversations, class_name: 'Conversation', foreign_key: 'author_id'
 
   geocoded_by :full_address
   after_validation :geocode, if: ->(obj) { obj.full_address.present? }
@@ -175,21 +176,9 @@ class User < ActiveRecord::Base
     User.audit_conversations(users)
   end
   
-  # `User::responsive?` checks if any conversations older than 48 hours have no volunteer 
-  # response by iterateing through every message of every conversation for the user.
   # “Premature optimization is the root of all evil”
   def responsive?
-    self.received_conversations.order(created_at: :asc).each_with_index do |convo, idx| 
-      last_message = convo.messages.first
-      next if last_message.user_id == self.id # return if the last message is from our volunteer
-
-      time_difference = (Time.now.utc - last_message.created_at)/3600 # converted to hours
-      if time_difference > 48
-        return false
-      end
-    end
-
-    return true
+    self.received_conversations.all? { |convo| convo.is_timely? }
   end
 
   # creates a timeout and send email for use when volunteers is unresponsive
@@ -201,10 +190,10 @@ class User < ActiveRecord::Base
     program = client.programs.first # currenttly we are not saving the program selected to conversation, this is a stopgap measure
 
     UserMailer.unresponsive_volunteer(self, client, conversation, program).deliver_later
-    if client.locale == "en"
-      UserMailer.unresponsive_client_eng(self, client, conversation, program).deliver_later
-    elsif client.locale == "es"
+    if client.locale == "es"
       UserMailer.unresponsive_client_esp(self, client, conversation, program).deliver_later
+    else # client.locale == "en"
+      UserMailer.unresponsive_client_eng(self, client, conversation, program).deliver_later
     end
   end
 
@@ -235,7 +224,12 @@ class User < ActiveRecord::Base
 
   def self.audit_conversations(users)
     users.each do |user|
-      user.update(timeout: !user.responsive?)
+      user.received_conversations.none? do |convo| 
+        unless convo.is_timely?
+          user.create_timeout(convo)
+          true
+        end
+      end && user.timeout && user.update!(timeout: false) # only update if they are currently timed out
     end
   end
 end

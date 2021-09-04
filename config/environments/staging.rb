@@ -133,6 +133,5 @@ Rails.application.configure do
       },
   }
 
-  # start looping background job checking for unresponsive at midnight every day
-  ResponsiveUsersJob.set(wait: 5.minutes).perform_later
+  ENV["RESPONSIVE_JOB_TOKEN"] ||= "yri7Lu6QEWaCxhC2rakK"
 end
