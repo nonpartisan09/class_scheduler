@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 
-import RaisedButton from 'material-ui/RaisedButton';
-import TextField from 'material-ui/TextField';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
 import { FormattedMessage } from 'react-intl';
 
 class ReviewContainer extends Component {
@@ -38,19 +38,20 @@ class ReviewContainer extends Component {
             hintText=''
             errorText={ this.state.error }
             errorStyle={ { float: 'left', margin: '-6px 0' } }
-            floatingLabelText={ (
+            label={ (
               <FormattedMessage
                 id='ReviewContainer.comment'
                 defaultMessage='Leave a comment'
               />
             ) }
             onChange={ this.handleChangeComment }
-            floatingLabelFixed
+            
           />
         </div>
 
-        <RaisedButton
-          primary
+        <Button
+          variant='contained'
+          color="primary"
           className='reviewContainerSubmitButton'
           label={ (
             <FormattedMessage
@@ -58,8 +59,9 @@ class ReviewContainer extends Component {
               defaultMessage='Submit Review'
             />
           ) }
-          onClick={ this.handleSubmit }
-        />
+          onClick={ this.handleSubmit } > Submit Review
+           </Button>
+        
       </div>
     );
   }
@@ -112,7 +114,11 @@ class ReviewContainer extends Component {
       this.setState({
         error: 'Please leave a rating'
       });
-    } else {
+    } else if (!review) {
+      this.setState({
+        error: 'Minimum 1 star rating required'
+      });
+    }else {
       onClick(review, comment);
     }
   }
