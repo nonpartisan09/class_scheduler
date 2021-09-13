@@ -111,9 +111,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
         showPrograms: false,
         showLanguages: false,
         user: props.currentUser,
-        localTimezone: usersTimezone,
-        languageError: false,
-        programError: false
+        localTimezone: usersTimezone
       };
  
       let fieldsToUpdate = [];
@@ -677,10 +675,11 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
             <br />
             <Button
               variant='contained'
-              label={ <FormattedMessage id='Profile.findTimezone' defaultMessage='Find my timezone' /> }
-              primary
               onClick={ this.updateUserTimezone }
-            />          
+              color='primary'
+            >
+              <FormattedMessage id='Profile.findTimezone' defaultMessage='Find my timezone' />
+            </Button>          
           </>
         );
       }
@@ -753,17 +752,14 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
             <div className='userFormInnerButton userFormSecondButton'>
               <Button
                 className='userFormProgramButton'
-                primary
-                label={
-                  (
-                    <FormattedMessage
-                      id='UserForm.updatePrograms'
-                      defaultMessage='Update my programs'
-                    />
-                  )
-                }
+                color='primary'
                 onClick={ this.handleShowPrograms }
-              />
+              >
+                <FormattedMessage
+                  id='UserForm.updatePrograms'
+                  defaultMessage='Update my programs'
+                />
+              </Button>
             </div>
           );
         }
@@ -783,17 +779,14 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
             <div className='userFormInnerButton userFormSecondButton'>
               <Button
                 className='userFormLanguageButton'
-                primary
-                label={
-                  (
-                    <FormattedMessage
-                      id='UserForm.myLanguages'
-                      defaultMessage='Update My Languages'
-                    />
-                  )
-                }
+                color='primary'
                 onClick={ this.handleShowLanguages }
-              />
+              >
+                <FormattedMessage
+                  id='UserForm.myLnaguages'
+                  defaultMessage='Update My Languages'
+                  />
+              </Button>
             </div>
           );
         }
@@ -802,7 +795,6 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
 
     renderLanguages() {
       const { languages } = this.props;
-      const { languageError} = this.state;
             
       if (_.size(languages) > 0) {
         const { errors, validateHandler, currentUser: { languages: userLanguages } } = this.props;
@@ -912,7 +904,6 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                 value={ password_confirmation }
                 type='password'
                 className='userFormInputField passwordConfirmation'
-                
                 label={
                   (
                     <FormattedMessage
@@ -933,17 +924,14 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
             <div className='userFormInnerButton'>
               <Button
                 className='userFormPasswordButton'
-                primary
-                label={
-                  (
-                    <FormattedMessage
-                      id='UserForm.updatePassword'
-                      defaultMessage='Update my password'
-                    />
-                  )
-                }
+                color='primary'
                 onClick={ this.handleShowPassword }
-              />
+              >
+                <FormattedMessage
+                  id='UserForm.updatePassword'
+                  defaultMessage='Update my password'
+                />
+              </Button>
             </div>
           );
         }
@@ -1221,7 +1209,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
 
     renderPrograms() {
       const { validateHandler, errors, programs, currentUser: { programs: userPrograms=[] } } = this.props;
-      const { programError } = this.state;
+
       return (
         <div className='userFormInputField programs'>
           { this.renderProgramLabel() }
