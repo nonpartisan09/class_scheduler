@@ -222,7 +222,6 @@ class User < ActiveRecord::Base
       user.received_conversations.each do |convo| 
         if !convo.check_timely && convo.timely?
           user.update!(unresponsive: true, timeout: true)
-          convo.update!(timely: false)
           user.send_unresponsive_email(convo)
         end
       end

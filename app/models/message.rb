@@ -10,7 +10,7 @@ class Message < ApplicationRecord
   validates :body, presence: true
 
   def update_responsiveness
-    if self.user.unresponsive? && !self.conversation.timely?
+    if self.user.unresponsive? || !self.conversation.timely?
       self.user.update(unresponsive: false)
       self.conversation.update(timely: true)
     end
