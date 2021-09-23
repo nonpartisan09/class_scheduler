@@ -50,9 +50,10 @@ gem 'ffi', '~> 1.11'
 
 gem 'active_model_serializers', '~> 0.10.0'
 
+gem 'puma', '~> 3.12.6'
+
 group :development, :test do
   # elastic beanstalk has a globally installed version of puma
-  gem 'puma', '~> 3.12.6'
 
 	gem 'factory_bot_rails', '~> 4.8'
 
