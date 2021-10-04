@@ -1,25 +1,25 @@
-import _ from 'lodash';
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import QueryString from 'query-string';
+import _ from "lodash";
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import QueryString from "query-string";
 
-import validate from 'react-joi-validation';
-import { FormattedMessage } from 'react-intl';
+import validate from "react-joi-validation";
+import { FormattedMessage } from "react-intl";
 
-import TextField from 'material-ui/TextField';
-import SelectField from 'material-ui/SelectField';
-import MenuItem from 'material-ui/MenuItem';
-import RaisedButton from 'material-ui/RaisedButton';
+import TextField from "material-ui/TextField";
+import SelectField from "material-ui/SelectField";
+import MenuItem from "material-ui/MenuItem";
+import RaisedButton from "material-ui/RaisedButton";
 
-import SearchValidationSchema from './schema/SearchValidationSchema';
-import { getData } from './utils/sendData';
-import SearchOptionalFields from './SearchOptionalFields';
-import formatLink from './utils/Link';
-import SnackBarComponent from './reusable/SnackBarComponent';
-import SearchUrl from './utils/SearchUrl';
-import PageHeader from './reusable/PageHeader';
+import SearchValidationSchema from "./schema/SearchValidationSchema";
+import { getData } from "./utils/sendData";
+import SearchOptionalFields from "./SearchOptionalFields";
+import formatLink from "./utils/Link";
+import SnackBarComponent from "./reusable/SnackBarComponent";
+import SearchUrl from "./utils/SearchUrl";
+import PageHeader from "./reusable/PageHeader";
 
-import AvailabilitySelector from './AvailabilitySelector';
+import AvailabilitySelector from "./AvailabilitySelector";
 
 class SearchBar extends Component {
   constructor(props) {
@@ -33,7 +33,7 @@ class SearchBar extends Component {
     this.changeHandlerDay = this.changeHandlerDay.bind(this);
 
     this.state = {
-      error: '',
+      error: "",
       status: 0,
       showSnackBar: false,
     };
@@ -46,178 +46,154 @@ class SearchBar extends Component {
       changeHandler,
       changeValue,
       validateHandler,
-      search: {
-        distance,
-        program,
-        language,
-        start_time,
-        end_time,
-        day,
-      },
-      currentUser: {
-        city,
-        timezone,
-        locale
-      },
+      search: { distance, program, language, start_time, end_time, day },
+      currentUser: { city, timezone, locale },
       validateAllHandler,
       days,
     } = this.props;
-  
+
     return (
       <div>
-        { this.renderTitle() }
+        {this.renderTitle()}
 
-        <div className='searchBarContainer'>
+        <div className="searchBarContainer">
           <TextField
-            value={ timezone }
-            className='searchBarTimezone'
-            name='searchBarTimezone'
+            value={timezone}
+            className="searchBarTimezone"
+            name="searchBarTimezone"
             disabled
           />
 
-          <div className='searchBarTimezoneLink'>
-            <a href={ formatLink('/my_profile', locale) } className='slidingLink'>
+          <div className="searchBarTimezoneLink">
+            <a href={formatLink("/my_profile", locale)} className="slidingLink">
               <FormattedMessage
-                id='SearchBar.timezoneLink'
-                defaultMessage='Not your timezone?'
+                id="SearchBar.timezoneLink"
+                defaultMessage="Not your timezone?"
               />
             </a>
           </div>
 
           <SelectField
-            className='searchBarOption'
-            hintText={ (
+            className="searchBarOption"
+            hintText={
               <FormattedMessage
-                id='SearchBar.programs'
-                defaultMessage='Program(s)'
+                id="SearchBar.programs"
+                defaultMessage="Program(s)"
               />
-            ) }
-            value={ program }
-            onChange={ this.changeHandlerProgram }
+            }
+            value={program}
+            onChange={this.changeHandlerProgram}
             multiple
-            errorText={ errors.program }
-            selectionRenderer={ this.selectionRendererProgram }
+            errorText={errors.program}
+            selectionRenderer={this.selectionRendererProgram}
           >
-            { _.map(programs, ({ name, id }) => {
+            {_.map(programs, ({ name, id }) => {
               return (
-                <MenuItem 
-                  key={ id } 
-                  insetChildren 
-                  checked={ _.indexOf(program, id) > -1 } 
-                  value={ id } 
-                  primaryText={ (
-                    <span> 
-                      { name } 
-                    </span>
-                  ) } 
+                <MenuItem
+                  key={id}
+                  insetChildren
+                  checked={_.indexOf(program, id) > -1}
+                  value={id}
+                  primaryText={<span>{name}</span>}
                 />
               );
             })}
           </SelectField>
 
           <SelectField
-            className='searchBarOption'
-            hintText={ (
+            className="searchBarOption"
+            hintText={
               <FormattedMessage
-                id='SearchBar.languages'
-                defaultMessage='Language(s)'
+                id="SearchBar.languages"
+                defaultMessage="Language(s)"
               />
-            ) }
-            value={ language }
-            onChange={ this.changeHandlerLanguage }
+            }
+            value={language}
+            onChange={this.changeHandlerLanguage}
             multiple
-            errorText={ errors.language }
-            selectionRenderer={ this.selectionRendererLanguage }
+            errorText={errors.language}
+            selectionRenderer={this.selectionRendererLanguage}
           >
-            { _.map(languages, ({ name, id }) => {
+            {_.map(languages, ({ name, id }) => {
               return (
-                <MenuItem 
-                  key={ id } 
-                  insetChildren 
-                  checked={ _.indexOf(language, id) > -1 } 
-                  value={ id } 
-                  primaryText={ (
-                    <span> 
-                      { name } 
-                    </span> 
-                  ) } 
+                <MenuItem
+                  key={id}
+                  insetChildren
+                  checked={_.indexOf(language, id) > -1}
+                  value={id}
+                  primaryText={<span>{name}</span>}
                 />
               );
             })}
           </SelectField>
 
-          <AvailabilitySelector 
-            days={ days } 
-            selectedDays={ day } 
-            startTime={ start_time }
-            endTime={ end_time }
-            onChange={ this.changeHandlerAvailability }
-            className='searchAvailabilityContainer'
+          <AvailabilitySelector
+            days={days}
+            selectedDays={day}
+            startTime={start_time}
+            endTime={end_time}
+            onChange={this.changeHandlerAvailability}
+            className="searchAvailabilityContainer"
             isAllDay
           />
 
           <SearchOptionalFields
-            onChange={ changeHandler }
-            changeValue={ changeValue }
-            onBlur={ validateHandler }
-            distance={ distance }
-            city={ city }
-            errors={ errors }
+            onChange={changeHandler}
+            changeValue={changeValue}
+            onBlur={validateHandler}
+            distance={distance}
+            city={city}
+            errors={errors}
           />
 
           <RaisedButton
-            onClick={ validateAllHandler(this.handleSubmit) }
-            className='searchBarOption searchBarButton'
-            label={ (
-              <FormattedMessage
-                id='SearchBar.searchTitle'
-              /> 
-            ) }
+            onClick={validateAllHandler(this.handleSubmit)}
+            className="searchBarOption searchBarButton"
+            label={<FormattedMessage id="SearchBar.searchTitle" />}
             primary
           />
 
-          <div className='emptyVolunteerResults'>
-            { this.renderResults() }
-          </div>
+          <div className="emptyVolunteerResults">{this.renderResults()}</div>
         </div>
 
-        { this.renderSnackBar() }
+        {this.renderSnackBar()}
       </div>
     );
   }
 
   renderSnackBar() {
     if (this.state.showSnackBar) {
-      return <SnackBarComponent open={ this.state.showSnackBar } message={ this.state.error } />;
+      return (
+        <SnackBarComponent
+          open={this.state.showSnackBar}
+          message={this.state.error}
+        />
+      );
     }
   }
 
   renderTitle() {
-    const { location: { search }  } = this.props;
+    const {
+      location: { search },
+    } = this.props;
     const urlQueries = QueryString.parse(search);
 
-    if (urlQueries.signup === 'true') {
+    if (urlQueries.signup === "true") {
       return (
-        <div className='signUpHeader'>
-          <PageHeader
-            title={ (
-              <FormattedMessage
-                id='signUpHeader'
-              />
-            ) }
-          />
+        <div className="signUpHeader">
+          <PageHeader title={<FormattedMessage id="signUpHeader" />} />
         </div>
       );
     } else {
       return (
-        <div className='searchBarHeaderContainer'>
+        <div className="searchBarHeaderContainer">
           <PageHeader
-            title={ (
+            title={
               <FormattedMessage
-                id='SearchBar.searchTitle'
-                defaultMessage='Search for Volunteers'
+                id="SearchBar.searchTitle"
+                defaultMessage="Search for Volunteers"
               />
-            ) }
+            }
           />
         </div>
       );
@@ -230,8 +206,8 @@ class SearchBar extends Component {
     if (status === 204) {
       return (
         <FormattedMessage
-          id='NewAvailability.noResultMessage'
-          defaultMessage=' Sorry, it seems no volunteers match these filters.'
+          id="NewAvailability.noResultMessage"
+          defaultMessage=" Sorry, it seems no volunteers match these filters."
         />
       );
     }
@@ -239,42 +215,45 @@ class SearchBar extends Component {
 
   changeHandlerProgram(event, index, value) {
     const { changeValue } = this.props;
-    changeValue('program', value, { validate: true });
+    changeValue("program", value, { validate: true });
   }
 
   changeHandlerLanguage(event, index, value) {
     const { changeValue } = this.props;
-    changeValue('language', value, { validate: true });
+    changeValue("language", value, { validate: true });
   }
 
   changeHandlerDay(event, index, value) {
     const { changeValue } = this.props;
-    changeValue('day', value, { validate: true });
+    changeValue("day", value, { validate: true });
   }
 
   changeHandlerAvailability = (availability) => {
     const { changeValues } = this.props;
 
-    changeValues([ 
-      ['day', availability.days],
-      ['start_time', availability.startTime],
-      ['end_time', availability.endTime]
-    ] );
-  }
+    changeValues([
+      ["day", availability.days],
+      ["start_time", availability.startTime],
+      ["end_time", availability.endTime],
+    ]);
+  };
 
   selectionRendererProgram(values) {
     const { programs } = this.props;
     if (_.size(values) > 1) {
       const newValues = _.map(programs, ({ name, id }) => {
-        if ( _.indexOf(values, id) > -1) {
+        if (_.indexOf(values, id) > -1) {
           return `${name}, `;
         }
       });
 
-      return _.trimEnd(newValues.join(''), ', ');
-
+      return _.trimEnd(newValues.join(""), ", ");
     } else if (_.size(values) === 1) {
-      return _.map(programs, ({ name, id }) => { if (_.indexOf(values, id) > -1) { return name; } });
+      return _.map(programs, ({ name, id }) => {
+        if (_.indexOf(values, id) > -1) {
+          return name;
+        }
+      });
     }
   }
 
@@ -282,15 +261,18 @@ class SearchBar extends Component {
     const { languages } = this.props;
     if (_.size(values) > 1) {
       const newValues = _.map(languages, ({ name, id }) => {
-        if ( _.indexOf(values, id) > -1) {
+        if (_.indexOf(values, id) > -1) {
           return `${name}, `;
         }
       });
 
-      return _.trimEnd(newValues.join(''), ', ');
-
+      return _.trimEnd(newValues.join(""), ", ");
     } else if (_.size(values) === 1) {
-      return _.map(languages, ({ name, id }) => { if (_.indexOf(values, id) > -1) { return name; } });
+      return _.map(languages, ({ name, id }) => {
+        if (_.indexOf(values, id) > -1) {
+          return name;
+        }
+      });
     }
   }
 
@@ -303,34 +285,38 @@ class SearchBar extends Component {
   }
 
   postSearch() {
-    const { search, history, currentUser: { locale } } = this.props;
+    const {
+      search,
+      history,
+      currentUser: { locale },
+    } = this.props;
 
     const requestParams = {
       url: SearchUrl({ ...search, locale }),
       jsonBody: null,
-      method: 'GET',
+      method: "GET",
       successCallBack: (response, status) => {
         if (status === 204) {
           this.setState({
-            status
+            status,
           });
         } else {
-         history.push(formatLink('/volunteers', locale),
-           { ...response,
-             ...{ search }
-           });
+          history.push(formatLink("/volunteers", locale), {
+            ...response,
+            ...{ search },
+          });
         }
       },
       errorCallBack: (message) => {
         this.setState({
           showSnackBar: true,
-          error: message
+          error: message,
         });
 
         setTimeout(() => {
           this.handleHideSnackBar();
         }, 2000);
-      }
+      },
     };
 
     return getData(requestParams);
@@ -358,11 +344,11 @@ SearchBar.propTypes = {
     distance: PropTypes.number,
     start_time: PropTypes.shape({
       hour: PropTypes.string,
-      minute: PropTypes.string
+      minute: PropTypes.string,
     }),
     end_time: PropTypes.shape({
       hour: PropTypes.string,
-      minute: PropTypes.string
+      minute: PropTypes.string,
     }),
   }),
   validateAllHandler: PropTypes.func.isRequired,
@@ -375,21 +361,21 @@ SearchBar.propTypes = {
   }).isRequired,
   location: PropTypes.shape({
     search: PropTypes.string,
-  })
+  }),
 };
 
 SearchBar.defaultProps = {
   location: {
-    search: ''
+    search: "",
   },
   days: [],
   errors: {},
   programs: [],
   languages: [],
   currentUser: {
-    first_name: '',
-    email: '',
-    city: ''
+    first_name: "",
+    email: "",
+    city: "",
   },
   search: {
     day: [],
@@ -401,8 +387,8 @@ SearchBar.defaultProps = {
 
 const validationOptions = {
   joiSchema: SearchValidationSchema,
-  only: 'search',
-  allowUnknown: true
+  only: "search",
+  allowUnknown: true,
 };
 
 export default validate(SearchBar, validationOptions);
