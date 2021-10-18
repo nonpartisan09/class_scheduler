@@ -1192,6 +1192,7 @@ GEM
     crass (1.0.6)
     css_parser (1.9.0)
       addressable
+    daemons (1.4.1)
     database_cleaner (1.99.0)
     debase (0.2.4.1)
       debase-ruby_core_source (>= 0.10.2)
@@ -1472,6 +1473,7 @@ DEPENDENCIES
   aws-sdk (~> 3.0)
   byebug (~> 11.0)
   capybara (~> 3.25)
+  daemons
   database_cleaner (~> 1.7)
   debase (= 0.2.4.1)
   delayed_job (~> 4.1)

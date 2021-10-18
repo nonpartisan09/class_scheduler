@@ -32,7 +32,7 @@ gem 'aws-sdk', '~> 3.0', require: false
 gem 'pg', '~> 1.1'
 
 gem 'will_paginate', '~> 3.1'
-
+gem "daemons"
 gem 'delayed_job', '~> 4.1'
 gem 'devise', '~> 4.6'
 

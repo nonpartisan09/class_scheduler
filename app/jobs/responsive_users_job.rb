@@ -1,7 +1,7 @@
 class ResponsiveUsersJob < ApplicationJob
-    queue_as :default
+  queue_as :default
 
-    def perform()
-        User.all_responsive?
-    end
+  def perform()
+    User.audit_conversations
+  end
 end 

@@ -122,6 +122,11 @@ class User < ActiveRecord::Base
     end
   end
 
+  def unresponsive!
+    user.update!(unresponsive: true, timeout: true)
+    user.send_unresponsive_email(convo)
+  end
+
   def admin_user_creation!
     generated_password = Devise.friendly_token.first(8)
     self.password = generated_password
@@ -169,11 +174,6 @@ class User < ActiveRecord::Base
     known_cities
   end
 
-  def self.all_responsive?
-    users = User.all.includes(received_conversations: :messages)
-    User.audit_conversations(users)
-  end
-  
   # creates a timeout and send email for use when volunteers is unresponsive
   def send_unresponsive_email(conversation)
     client = conversation.author
@@ -189,6 +189,23 @@ class User < ActiveRecord::Base
 
   def all_timely
     received_conversations.all?(&:timely)
+  end
+
+  def audit_conversations
+    received_conversations.each do |convo| 
+      unresponsive! if !convo.check_timely && convo.timely?
+    end
+
+    all_timely && unresponsive && update!(unresponsive: false)
+  end
+
+  def audit_conversation(conversation)
+    unresponsive! unless conversation.check_timely && conversation.timely?
+  end
+
+  def self.audit_conversations
+    users = User.all.includes(received_conversations: :messages)
+    users.each(&:audit_conversations)
   end
 
   private
@@ -214,19 +231,5 @@ class User < ActiveRecord::Base
                       .limit(1)
                       .pluck('latitude', 'longitude')
     coordinates[0]
-  end
-
-  def self.audit_conversations(users)
-    users.each do |user|
-
-      user.received_conversations.each do |convo| 
-        if !convo.check_timely && convo.timely?
-          user.update!(unresponsive: true, timeout: true)
-          user.send_unresponsive_email(convo)
-        end
-      end
-
-      user.all_timely && user.unresponsive && user.update!(unresponsive: false)
-    end
   end
 end

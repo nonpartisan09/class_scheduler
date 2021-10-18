@@ -91,7 +91,7 @@ Rails.application.configure do
   # config.cache_store = :mem_cache_store
 
   # Use a real queuing backend for Active Job (and separate queues per environment)
-  config.active_job.queue_adapter = :async
+  config.active_job.queue_adapter = :delayed_job
   # config.active_job.queue_name_prefix = "tutoria_#{Rails.env}"
   config.action_mailer.perform_caching = false
 
@@ -132,6 +132,4 @@ Rails.application.configure do
           s3_region: ENV.fetch('AWS_REGION'),
       },
   }
-
-  ENV["RESPONSIVE_JOB_TOKEN"] ||= "yri7Lu6QEWaCxhC2rakK"
 end
