@@ -1,25 +1,46 @@
 .availabilityIndexContainer {
-    margin: 48px;
+  margin: 48px;
 }
 
 .availabilityIndexListContainer, .availabilityIndexProgramsContainer {
-    list-style: none;
-    -webkit-padding-start: 0;
-    display: inline-flex;
-    margin-top: 6px;
+  list-style: none;
+  -webkit-padding-start: 0;
+  display: block;
+  margin-top: 6px;
 }
 
 .availabilityIndexProgramsContainer {
-    margin: 6px 0 0 12px;
+  margin: 6px 0 0 12px;
+  display: inline-flex;
 }
 
 .availabilityListItem {
-    padding-left: 0;
-    margin-right: 6px;
+  padding-left: 0;
+  margin-right: 6px;
+}
+
+.activeAvailabilities {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 3rem;
+}
+
+.inactiveAvailabilities {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  justify-content: space-between;
+  color: lightcoral;
+}
+
+.untimelyResponses {
+  border: 3px solid lightcoral !important;
 }
 
 @media (max-width: 650px)  {
-    .availabilityIndexProgramsContainer {
-        margin: 12px 0;
-    }
+  .availabilityIndexProgramsContainer {
+    margin: 12px 0;
+  }
 }

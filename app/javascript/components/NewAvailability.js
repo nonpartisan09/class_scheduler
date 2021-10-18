@@ -6,9 +6,8 @@ import { FormattedMessage } from 'react-intl';
 import Joi from 'joi-browser';
 import validate from 'react-joi-validation';
 
-import FlatButton from 'material-ui/FlatButton';
-import RaisedButton from 'material-ui/RaisedButton';
-import TextField from 'material-ui/TextField';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
 
 import FormData from './utils/FormData';
 import formatLink from './utils/Link';
@@ -115,6 +114,15 @@ class NewAvailability extends Component {
       validateAllHandler,
       currentUser,
     } = this.props;
+    const { availabilities } = this.props.data;
+    
+    const emptyAvailabilites =  
+      availabilities[0].days.length === 0 || 
+      availabilities[0].endTime.minute === '' || 
+      availabilities[0].endTime.hour === '' || 
+      availabilities[0].startTime.minute === '' || 
+      availabilities[0].startTime.hour === '';
+    
 
       return (
         <div>
@@ -125,32 +133,33 @@ class NewAvailability extends Component {
               <div>
                 <TextField
                   value={ currentUser.timezone }
-                  className='newAvailabilityTimezone'
+                  classes={ {root: 'newAvailabilityTimezone'} }
                   name='timezoneAvailability'
                   disabled
-              />
+                />
 
                 <a href={ formatLink('/my_profile', currentUser.locale) } className='slidingLink'>
                   <FormattedMessage
                     id='NewAvailability.updateTimezone'
                     defaultMessage='Not your timezone?'
-                />
+                  />
                 </a>
               </div>
-
-              <RaisedButton
-                className='addAvailabilitiesButton'
-                label={ (
-                  <FormattedMessage
-                    id='NewAvailability.addAvailabilities'
-                    defaultMessage='Create All Availabilities'
-                  />
-                  ) }
-                primary
-                onClick={ validateAllHandler(this.handleSubmit) }
-              />
-
+              
               { this.renderAvailabilities() }
+              
+              <Button
+                variant='contained'
+                className='addAvailabilitiesButton'
+                color="primary"
+                disabled={ emptyAvailabilites }
+                onClick={ validateAllHandler(this.handleSubmit) }
+              >
+                <FormattedMessage
+                  id='NewAvailability.addAvailabilities'
+                  defaultMessage='Save All Availabilities'
+                />
+              </Button>
             </form>
           </div>
         </div>
@@ -171,11 +180,12 @@ class NewAvailability extends Component {
 
   handleSubmit() {
     const { validateAll } = this.props;
-
+    console.log('trying');
     validateAll(() => {
       const { errors } = this.props;
 
       if (_.size(errors) === 0) {
+        console.log('in if');
         const { currentUser: { locale } } = this.props;
         const { availabilities } = this.props.data;
 
@@ -242,6 +252,7 @@ class NewAvailability extends Component {
   };
 
   renderAvailabilityErrors = (errors) => {
+    console.log(errors);
     const errorsList = this.getAvailabilityErrorsFlattened(errors);
     return errorsList.map((error) => (
       <ErrorField 
@@ -281,23 +292,26 @@ class NewAvailability extends Component {
             { availabilityErrors ? this.renderAvailabilityErrors(availabilityErrors) : null }
           </div>
 
-          <FlatButton
-            primary
-            label={ (
-              <FormattedMessage
-                id='NewAvailability.addAvailability'
-                defaultMessage='Add other availability'
-              />
-            ) }
+          <Button
+            color="primary"
             onClick={ this.handleAddAvailability }
-          />
+          >
+            <FormattedMessage
+              id='NewAvailability.addAvailability'
+              defaultMessage='Add other availability'
+            />
+          </Button>
           { index === 0 ?
             null : (
-              <FlatButton
-                primary
-                label={ <FormattedMessage id='NewAvailability.removeAvailability' defaultMessage='Remove availability' /> }
+              <Button
+                color="primary"
                 onClick={ () => this.handleRemoveAvailability(index) }
-              />
+              >
+                <FormattedMessage 
+                  id='NewAvailability.removeAvailability' 
+                  defaultMessage='Remove availability' 
+                />
+              </Button>
             ) }
         </div>
       );

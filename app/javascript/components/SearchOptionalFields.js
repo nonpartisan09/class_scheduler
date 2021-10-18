@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import TimePicker from 'material-ui/TimePicker';
-import MenuItem from 'material-ui/MenuItem';
-import SelectField from 'material-ui/SelectField';
-import FlatButton from 'material-ui/FlatButton';
+import { TimePicker } from '@material-ui/pickers';
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
+import Button from '@material-ui/core/Button';
 import { FormattedMessage } from 'react-intl';
 
 const UNIT = 'miles';
@@ -27,7 +27,7 @@ class SearchOptionalFields extends Component {
   render() {
     return (
       <div className='searchBarOptionalFieldContainer'>
-         { this.renderDistanceButton() }
+        { this.renderDistanceButton() }
 
         { this.renderDistance() }
       </div>
@@ -40,7 +40,7 @@ class SearchOptionalFields extends Component {
     if (city) {
       return (
         <div className='searchBarDistanceButton'>
-          <FlatButton
+          <Button
             primary
             label={ (
               <FormattedMessage
@@ -69,6 +69,7 @@ class SearchOptionalFields extends Component {
       return (
         <TimePicker
           className='searchBarStartTimePicker'
+          ampm={ false }
           format='24hr'
           hintText={  <FormattedMessage id='from' /> }
           value={ start_time }
@@ -135,7 +136,7 @@ class SearchOptionalFields extends Component {
     const { showDistance } = this.state;
     if (showDistance) {
       return (
-        <SelectField
+        <Select
           className='searchBarDistanceOption'
           value={ distance }
           errorText={ errors.distance }
@@ -158,7 +159,7 @@ class SearchOptionalFields extends Component {
           <MenuItem insetChildren checked={ distance === 25 } key={ 3 } value={ 25 } primaryText={ `25 ${UNIT}` } />
           <MenuItem insetChildren checked={ distance === 50 } key={ 4 } value={ 50 } primaryText={ `50 ${UNIT}` } />
           <MenuItem insetChildren checked={ distance === 100 } key={ 5 } value={ 100 } primaryText={ `100 ${UNIT}` } />
-        </SelectField>
+        </Select>
       );
     }
   }

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Paper from 'material-ui/Paper';
+import Paper from '@material-ui/core/Paper';
 import Parser from 'html-react-parser';
 
 const TermsAndConditions = ({ terms_and_conditions })=> {

@@ -23,11 +23,21 @@ class Conversation < ApplicationRecord
     where(author_id: sender_id, recipient_id: recipient_id).or(where(author_id: recipient_id, recipient_id: sender_id)).limit(1)
   end
 
+  scope :timely, -> { joins(:recipient).where("users.timeout=false") }
+  scope :untimely, -> { joins(:recipient).where("users.timeout=true") }
+
   def with(current_user)
     author == current_user ? recipient : author
   end
 
   def participates?(user)
     author == user || recipient == user
+  end
+
+  def is_timely?
+    last_message = messages.first
+    time_since_last_message = DateTime.now.to_i - last_message.created_at.to_i
+
+    return last_message.user.volunteer? || time_since_last_message < 2.days
   end
 end

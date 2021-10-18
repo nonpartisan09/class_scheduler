@@ -6,9 +6,8 @@ import { FormattedMessage } from 'react-intl';
 import Joi from 'joi-browser';
 import validate from 'react-joi-validation';
 
-import RaisedButton from 'material-ui/RaisedButton';
-import FlatButton from 'material-ui/FlatButton';
-import TextField from 'material-ui/TextField';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
 
 import FormData from './utils/FormData';
 import SnackBarComponent from './reusable/SnackBarComponent';
@@ -59,27 +58,26 @@ class NewPasswordPage extends Component {
             name='email'
             value={ email }
             className='signInEmailInputField'
-            hintText=''
-            floatingLabelText={ <FormattedMessage id='NewPasswordPage.enterEmail' defaultMessage='Please enter your email to recover your password' /> }
-            floatingLabelFixed
-            errorText={ errors.email }
+            label={ <FormattedMessage id='NewPasswordPage.enterEmail' defaultMessage='Please enter your email to recover your password' /> }
+            error={ !_.isEmpty(errors) }
             onChange={ changeHandler('email') }
             onBlur={ validateHandler('email') }
             fullWidth
+            helperText={ errors.email }
           />
 
           { this.renderSubmitButton() }
 
           <div className='signInLinkSecondaryContainer'>
             <a href={ formatLink('/sign_up/client', locale) } className='signInLinkSecondary'>
-              <FlatButton primary label={ <FormattedMessage id='signUpClient' /> } />
+              <Button color='primary'><FormattedMessage id='signUpClient' /></Button>
             </a>
 
             <a href={ formatLink('/sign_up/volunteer', locale) } className='signInLinkSecondary'>
-              <FlatButton primary label={ <FormattedMessage id='signUpVolunteer' /> } />
+              <Button color='primary'><FormattedMessage id='signUpVolunteer' /></Button>
             </a>
           </div>
-
+          
           { this.renderSnackBar() }
         </form>
       </div>
@@ -88,16 +86,16 @@ class NewPasswordPage extends Component {
 
   renderSubmitButton() {
     return (
-      <RaisedButton
-        primary
-        label={ (
-          <FormattedMessage
-            id='resetPassword'
-          />
-        ) }
+      <Button
+        variant='contained'
+        color='primary'
         onClick={ this.handleForgotClick }
         className='signInLink'
-      />
+      >
+        <FormattedMessage
+          id='resetPassword'
+        />
+      </Button>
     );
   }
 

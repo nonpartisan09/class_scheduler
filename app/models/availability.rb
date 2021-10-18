@@ -8,6 +8,10 @@ class Availability < ApplicationRecord
     where('(start_time BETWEEN ? AND ?)', range.first, range.last)
   }
 
+  scope :not_active, -> { joins(:user).where("users.timeout=true") }
+  scope :active, -> { joins(:user).where("users.timeout=false") }
+
+
   def start_in_time_zone
     self.start_time.in_time_zone(self.timezone).strftime("%R")
   end

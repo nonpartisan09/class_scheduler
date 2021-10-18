@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '~> 2.5.0'
+ruby '~> 2.6.6'
 
 git_source(:github) do |repo_name|
   repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
@@ -8,7 +8,7 @@ git_source(:github) do |repo_name|
 end
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.2.2.1'
+gem 'rails', '~> 5.2.5'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
@@ -39,7 +39,6 @@ gem 'devise', '~> 4.6'
 # geolocate users
 gem 'geocoder', '~> 1.6'
 
-gem 'puma', '~> 3.12.6'
 # image helper
 gem 'paperclip', '~> 6.1'
 
@@ -52,6 +51,9 @@ gem 'ffi', '~> 1.11'
 gem 'active_model_serializers', '~> 0.10.0'
 
 group :development, :test do
+  # elastic beanstalk has a globally installed version of puma
+  gem 'puma', '~> 3.12.6'
+
 	gem 'factory_bot_rails', '~> 4.8'
 
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -69,7 +71,6 @@ group :development, :test do
 end
 
 group :development do
-  gem 'gem_bench', '~> 1.0', :require => false, :group => :development
   gem 'guard-rspec', '~> 4.7', require: false
   gem 'listen', '~> 3.1'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring

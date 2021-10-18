@@ -1,21 +1,19 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
-import FlatButton from 'material-ui/FlatButton';
-import RaisedButton from 'material-ui/RaisedButton';
-import Divider from 'material-ui/Divider';
-import Toggle from 'material-ui/Toggle';
-
+import Button from '@material-ui/core/Button';
+import Divider from '@material-ui/core/Divider';
+import Switch from '@material-ui/core/Switch';
+import { withStyles } from '@material-ui/core/styles';
 import { FormattedMessage } from 'react-intl';
 
 import {
   Table,
   TableBody,
-  TableHeader,
-  TableHeaderColumn,
+  TableHead,
   TableRow,
-  TableRowColumn,
-} from 'material-ui/Table';
+  TableCell
+} from '@material-ui/core';
 
 import { postData } from './utils/sendData';
 import SnackBarComponent from './reusable/SnackBarComponent';
@@ -23,14 +21,22 @@ import SnackBarComponent from './reusable/SnackBarComponent';
 import formatLink from './utils/Link';
 import AvailabilityTimeFormatPrefs from './utils/AvailabilityTimeFormatPrefs';
 
-const styles = {
-  thumbOff: {
-    backgroundColor: '#ffd6cc',
+const TimeFormatSwitch = withStyles({
+  switchBase: {
+    color: '#ffd6cc',
   },
-  trackOff: {
-    backgroundColor: '#ffb39c',
+  checked: { 'background-color': 'transparent' },
+  track: {
+    backgroundColor: '#ffb39c'
   },
-};
+})(Switch);
+
+const AvailabilityTableHead = withStyles({
+  head: {
+    color: '#f1582a',
+  },
+})(TableCell);
+
 class AvailabilitiesTable extends Component {
   constructor(props, context) {
     super(props, context);
@@ -46,21 +52,21 @@ class AvailabilitiesTable extends Component {
   }
 
   render() {
-    const { availabilities, timezone } = this.props;
+    const { availabilities, timezone, timeout } = this.props;
     const { show12HourFormat } = this.state;
 
     const tableContent =  _.map(availabilities, ({ day, start_time, end_time, id, start_time_12_hour, end_time_12_hour  }) => {
       return(
-        <TableRow className='availabilitiesTableRow' key={ 'body' + day + start_time + end_time }>
-          <TableRowColumn>
+        <TableRow className={ timeout ? 'availabilitiesTableRow untimelyRow' : 'availabilitiesTableRow' } key={ 'body' + day + start_time + end_time }>
+          <TableCell>
             { day }
-          </TableRowColumn>
-          <TableRowColumn>
+          </TableCell>
+          <TableCell>
             { show12HourFormat ? start_time_12_hour : start_time }
-          </TableRowColumn>
-          <TableRowColumn>
+          </TableCell>
+          <TableCell>
             { show12HourFormat ? end_time_12_hour : end_time }
-          </TableRowColumn>
+          </TableCell>
           { this.renderDeleteRow(id) }
         </TableRow>
       );
@@ -68,7 +74,9 @@ class AvailabilitiesTable extends Component {
 
     const listContent =  _.map(availabilities, ({ day, start_time, end_time, id, start_time_12_hour, end_time_12_hour }) => {
       return(
-        <div key={ 'list' + day + start_time + end_time + timezone } className='availabilityTableItemContainer'>
+        <div 
+          key={ 'list' + day + start_time + end_time + timezone } 
+          className={ timeout ? 'untimelyRow availabilityTableItemContainer' : 'availabilityTableItemContainer' }>
           <li>
             <span>
               <FormattedMessage
@@ -131,48 +139,47 @@ class AvailabilitiesTable extends Component {
               defaultMessage='24-Hour'
             />
           </span>
-          <Toggle
-            label={ (                  
-              <FormattedMessage
-                id='AvailabilityTable.12HourFormat'
-                defaultMessage='12-Hour'
-              /> 
-            ) }
-            thumbStyle={ styles.thumbOff }
-            trackStyle={ styles.trackOff }
-            labelPosition="right"
-            onToggle={ this.handleTimeFormatToggle }
-            toggled={ show12HourFormat }
+          <TimeFormatSwitch
+            color='primary'
+            onChange={ this.handleTimeFormatToggle }
+            checked={ show12HourFormat }
           />
+          <span>
+            <FormattedMessage
+              id='AvailabilityTable.12HourFormat'
+              defaultMessage='12-Hour'
+              /> 
+          </span>
         </div>
 
         <div className='tableHideSmallScreen'>
-          <Table selectable={ false }>
-            <TableHeader displaySelectAll={ false }>
+          <Table>
+            <TableHead>
               <TableRow>
-                <TableHeaderColumn key='day'>
+                <TableCell />
+                <AvailabilityTableHead key='day'>
                   <FormattedMessage
                     id='Availabilities.day'
                     defaultMessage='Day'
                   />
-                </TableHeaderColumn>
-                <TableHeaderColumn key='start_time'>
+                </AvailabilityTableHead>
+                <AvailabilityTableHead key='start_time'>
                   <FormattedMessage
                     id='startTime'
                     defaultMessage='Start Time'
                   />
-                </TableHeaderColumn>
-                <TableHeaderColumn key='end_time'>
+                </AvailabilityTableHead>
+                <AvailabilityTableHead key='end_time'>
                   <FormattedMessage
                     id='endTime'
                     defaultMessage='End Time'
                   />
-                </TableHeaderColumn>
+                </AvailabilityTableHead>
                 { this.renderDeleteColumn() }
               </TableRow>
-            </TableHeader>
+            </TableHead>
 
-            <TableBody displayRowCheckbox={ false }>
+            <TableBody>
               { tableContent }
             </TableBody>
           </Table>
@@ -190,17 +197,17 @@ class AvailabilitiesTable extends Component {
     if (this.props.deletable) {
       return (
         <li className='availabilitiesTableButton'>
-          <RaisedButton
-            primary
+          <Button
+            variant='contained'
+            color='primary'
             fullWidth
             onClick={ this.handleDelete(id) }
-            label={ (
-              <FormattedMessage
-                id='Delete'
-                defaultMessage='Delete'
-              />
-              ) }
-          />
+          >
+            <FormattedMessage
+              id='Delete'
+              defaultMessage='Delete'
+            />
+          </Button>
         </li>
       );
     }
@@ -210,18 +217,17 @@ class AvailabilitiesTable extends Component {
   renderDeleteRow(id) {
     if (this.props.deletable) {
       return (
-        <TableRowColumn>
-          <FlatButton
-            primary
+        <TableCell>
+          <Button
+            color='primary'
             onClick={ this.handleDelete(id) }
-            label={ (
-              <FormattedMessage
-                id='Delete'
-                defaultMessage='Delete'
-              />
-              ) }
-          />
-        </TableRowColumn>
+          >
+            <FormattedMessage
+              id='Delete'
+              defaultMessage='Delete'
+            />
+          </Button>
+        </TableCell>
       );
     }
 
@@ -229,12 +235,12 @@ class AvailabilitiesTable extends Component {
   renderDeleteColumn() {
     if (this.props.deletable) {
       return (
-        <TableHeaderColumn key='delete'>
+        <AvailabilityTableHead key='delete'>
           <FormattedMessage
             id='Delete'
             defaultMessage='Delete'
           />
-        </TableHeaderColumn>
+        </AvailabilityTableHead>
       );
     }
   }
@@ -289,14 +295,16 @@ AvailabilitiesTable.propTypes = {
   availabilities: PropTypes.oneOfType([ PropTypes.array, PropTypes.object ]),
   timezone: PropTypes.string,
   locale: PropTypes.string,
-  deletable: PropTypes.bool
+  deletable: PropTypes.bool,
+  timeout: PropTypes.bool
 };
 
 AvailabilitiesTable.defaultProps = {
   availabilities: {},
   timezone: '',
   locale: '',
-  deletable: false
+  deletable: false,
+  timeout: false
 };
 
 export default AvailabilitiesTable;

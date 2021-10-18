@@ -21,6 +21,9 @@ class User < ActiveRecord::Base
 
   has_many :availabilities, dependent: :destroy
 
+  has_many :received_conversations, class_name: 'Conversation', foreign_key: 'recipient_id'
+  has_many :authored_conversations, class_name: 'Conversation', foreign_key: 'author_id'
+
   geocoded_by :full_address
   after_validation :geocode, if: ->(obj) { obj.full_address.present? }
 
@@ -53,6 +56,7 @@ class User < ActiveRecord::Base
   scope :with_availabilities, -> { includes(:availabilities).where.not(availabilities: { id: nil }) }
 
   scope :active, -> { where(active: true) }
+  scope :timed_out, -> { where(timeout: true) }
 
   def self.authentication_keys
     [:email]
@@ -165,6 +169,34 @@ class User < ActiveRecord::Base
     known_cities
   end
 
+  # Added as a class method to avoid n+1 query when performing User::responsive? for each
+  # user from ResponsiveUsersJob
+  def self.all_responsive?
+    users = User.all.includes(received_conversations: :messages)
+    User.audit_conversations(users)
+  end
+  
+  # “Premature optimization is the root of all evil”
+  def responsive?
+    self.received_conversations.all? { |convo| convo.is_timely? }
+  end
+
+  # creates a timeout and send email for use when volunteers is unresponsive
+  def create_timeout(conversation)
+    return if timeout # no need to send email or update record if already timed out
+
+    self.update!(timeout: true)
+    client = conversation.author
+    program = client.programs.first # currenttly we are not saving the program selected to conversation, this is a stopgap measure
+
+    UserMailer.unresponsive_volunteer(self, client, conversation, program).deliver_later
+    if client.locale == "es"
+      UserMailer.unresponsive_client_esp(self, client, conversation, program).deliver_later
+    else # client.locale == "en"
+      UserMailer.unresponsive_client_eng(self, client, conversation, program).deliver_later
+    end
+  end
+
   private
 
   def self.city_client_count(city, state)
@@ -188,5 +220,16 @@ class User < ActiveRecord::Base
                       .limit(1)
                       .pluck('latitude', 'longitude')
     coordinates[0]
+  end
+
+  def self.audit_conversations(users)
+    users.each do |user|
+      user.received_conversations.none? do |convo| 
+        unless convo.is_timely?
+          user.create_timeout(convo)
+          true
+        end
+      end && user.timeout && user.update!(timeout: false) # only update if they are currently timed out
+    end
   end
 end

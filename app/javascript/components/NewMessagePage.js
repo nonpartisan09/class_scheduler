@@ -113,6 +113,7 @@ class NewMessagePage extends Component {
             />
           </form>
 
+
           <Fab disabled={ disabled } color="primary" onClick={ this.handleSubmit } style={ { position: 'absolute', bottom: '-24px', right: '0px' } }>
             <SendIcon />
           </Fab>
