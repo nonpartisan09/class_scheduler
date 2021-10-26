@@ -1031,6 +1031,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
           errors,
           currentUser: {
             terms_and_conditions,
+            privacy_policy,
             contact_permission,
             locale
           }
@@ -1042,7 +1043,16 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
               <a href={ formatLink('/terms_of_use', locale) } className='slidingLink' target='_blank' rel='noreferrer noopener'>
                 <FormattedMessage
                   id='UserForm.termsRead'
-                  defaultMessage='Please read Tutoría’s terms of use.'
+                  defaultMessage='Please read Tutoría’s Term of Use.'
+                />
+              </a>
+            </div>
+
+            <div className='userPrivacyPolicy'>
+              <a href={ formatLink('/privacy_policy', locale) } className='slidingLink' target='_blank' rel='noreferrer noopener'>
+                <FormattedMessage
+                  id='UserForm.privacyRead'
+                  defaultMessage='Please read Tutoría’s Privacy Policy.'
                 />
               </a>
             </div>
@@ -1055,13 +1065,29 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                 (
                   <FormattedMessage
                     id='UserForm.termsAccept'
-                    defaultMessage='I accept tutoría’s terms of use'
+                    defaultMessage='I accept Tutoría’s Terms of Use'
                   />
                 )
               }
             />
 
             <ErrorField error={ this.errorLanguageHandler('terms_and_conditions') } />
+
+            <Checkbox
+              checked={ privacy_policy }
+              className='userFormInputField privacyPolicy'
+              onCheck={ changeHandler('privacy_policy', { validate: true, strategy: useSecondArgument }) }
+              label={
+                (
+                  <FormattedMessage
+                    id='UserForm.privacysAccept'
+                    defaultMessage='I accept Tutoría’s Privacy Policy'
+                  />
+                )
+              }
+            />
+
+            <ErrorField error={ this.errorLanguageHandler('privacy_policy') } />
 
             <Checkbox
               label={
