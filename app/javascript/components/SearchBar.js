@@ -12,6 +12,10 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Checkbox from '@material-ui/core/Checkbox';
 import ListItemText from '@material-ui/core/ListItemText';
 import Button from '@material-ui/core/Button';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormControl from '@material-ui/core/FormControl';
+import Grid from '@material-ui/core/Grid';
+import FormHelperText from '@material-ui/core/FormHelperText';
 
 import SearchValidationSchema from './schema/SearchValidationSchema';
 import { getData } from './utils/sendData';
@@ -22,6 +26,7 @@ import SearchUrl from './utils/SearchUrl';
 import PageHeader from './reusable/PageHeader';
 
 import AvailabilitySelector from './AvailabilitySelector';
+
 
 class SearchBar extends Component {
   constructor(props) {
@@ -85,61 +90,68 @@ class SearchBar extends Component {
               />
             </a>
           </div>
-
-          <Select
-            className='searchBarOption'
-            hintText={ (
-              <FormattedMessage
-                id='SearchBar.programs'
-                defaultMessage='Program(s)'
+          <Grid container spacing={ 3 }>
+            <Grid item xs={ 6 }>
+              <FormControl fullWidth error={ errors.program !== undefined }>
+                <InputLabel>
+                  <FormattedMessage
+                    id='SearchBar.programs'
+                    defaultMessage='Program(s)'
               />
-            ) }
-            value={ programs }
-            onChange={ this.changeHandlerProgram }
-            multiple
-            errorText={ errors.program }
-            selectionRenderer={ this.selectionRendererProgram }
+                </InputLabel>
+                <Select
+                  className='searchBarOption'
+                  value={ program }
+                  onChange={ this.changeHandlerProgram }
+                  multiple
+                  renderValue={ this.selectionRendererProgram }
           >
-            { _.map(programs, ({ name, id }) => {
+                  { _.map(programs, ({ name, id }) => {
               return (
                 <MenuItem 
                   key={ id } 
-                  value={ name }  
+                  value={ id }  
                 >
                   <Checkbox checked={  _.indexOf(program, id) > -1  } />
                   <ListItemText primary={ name } />
                 </MenuItem>
               );
             })}
-          </Select>
-
-          <Select
-            className='searchBarOption'
-            hintText={ (
-              <FormattedMessage
-                id='SearchBar.languages'
-                defaultMessage='Language(s)'
+                </Select>
+                <FormHelperText>{ errors.program }</FormHelperText>
+              </FormControl>
+            </Grid>
+            <Grid item xs={ 6 }>
+              <FormControl fullWidth error={ errors.language !== undefined }>
+                <InputLabel>
+                  <FormattedMessage
+                    id='SearchBar.languages'
+                    defaultMessage='Language(s)'
               />
-            ) }
-            value={ language }
-            onChange={ this.changeHandlerLanguage }
-            multiple
-            errorText={ errors.language }
-            selectionRenderer={ this.selectionRendererLanguage }
+                </InputLabel>
+                <Select
+                  className='searchBarOption'
+                  value={ language }
+                  onChange={ this.changeHandlerLanguage }
+                  multiple
+                  renderValue={ this.selectionRendererLanguage }
           >
-            { _.map(languages, ({ name, id }) => {
-              console.log(language);
+                  { _.map(languages, ({ name, id }) => {
               return (
                 <MenuItem 
                   key={ name } 
-                  value={ name }  
+                  value={ id }  
                 >
-                  <Checkbox checked={  _.indexOf(program, id) > -1  } />
+                  <Checkbox checked={  _.indexOf(language, id) > -1  } />
                   <ListItemText primary={ name } />
                 </MenuItem>
               );
             })}
-          </Select>
+                </Select>
+                <FormHelperText>{ errors.language }</FormHelperText>
+              </FormControl>
+            </Grid>
+          </Grid>
 
           <AvailabilitySelector 
             days={ days } 
@@ -162,15 +174,15 @@ class SearchBar extends Component {
 
           <Button
             variant='contained'
+            color='primary'
             onClick={ validateAllHandler(this.handleSubmit) }
             className='searchBarOption searchBarButton'
-            label={ (
-              <FormattedMessage
-                id='SearchBar.searchTitle'
+          >
+            <FormattedMessage
+              id='SearchBar.searchTitle'
+              defaultMessage='SearchBar.searchTitle'
               /> 
-            ) }
-            primary
-          />
+          </Button>
 
           <div className='emptyVolunteerResults'>
             { this.renderResults() }
@@ -233,14 +245,14 @@ class SearchBar extends Component {
     }
   }
 
-  changeHandlerProgram(event, index, value) {
+  changeHandlerProgram(event) {
     const { changeValue } = this.props;
-    changeValue('program', value, { validate: true });
+    changeValue('program', event.target.value, { validate: true });
   }
 
-  changeHandlerLanguage(event, index, value) {
+  changeHandlerLanguage(event) {
     const { changeValue } = this.props;
-    changeValue('language', value, { validate: true });
+    changeValue('language', event.target.value, { validate: true });
   }
 
   changeHandlerDay(event, index, value) {
