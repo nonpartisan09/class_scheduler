@@ -19,7 +19,7 @@ ActiveAdmin.register TermsAndConditions do
   index do
     selectable_column
     id_column
-    column :updated_atit
+    column :updated_at
     column :created_at
     actions
   end
