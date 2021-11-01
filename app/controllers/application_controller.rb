@@ -85,7 +85,7 @@ class ApplicationController < ActionController::Base
     terms_and_conditions = TermsAndConditions.last
     terms_and_conditions = page_content = {
       :en => terms_and_conditions[:description],
-      :es => terms_and_conditions[:spanish_description]
+      :es => terms_and_conditions[:spanish_description] || terms_and_conditions[:description]
     }
 
     @data = {
