@@ -15,7 +15,9 @@ import Switch from '@material-ui/core/Switch';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
+import FormHelperText from '@material-ui/core/FormHelperText';
 import ListItemText from '@material-ui/core/ListItemText';
+import { withStyles } from '@material-ui/core/styles';
 import validate, { useSecondArgument } from 'react-joi-validation';
 
 import { FormattedMessage } from 'react-intl';
@@ -38,9 +40,41 @@ import data from '../../../../build/locales/data.json';
 
 const { SIGN_UP, UPDATE_PROFILE } = UserFormConstants;
 
+const TextFieldWithStyle = withStyles({
+  root: {
+    '& .MuiFormHelperText-root': {
+      color: 'red !important',
+    },
+  },
+})(TextField);
+
+const FormHelperTextWithStyle = withStyles({
+  root: {
+    '& .MuiFormHelperText-root': {
+      color: 'red !important',
+    },
+    color: 'red !important'
+  },
+})(FormHelperText);
+
+const FormControlLabelWithStyle = withStyles({
+  root: {
+    '& .MuiFormControlLabel-label': {
+      color: 'rgb(167, 169, 172) !important',
+      fontSize: '14px'
+    },
+    marginLeft: 'auto !important',
+  },
+})(FormControlLabel);
+
+
 const withUserForm = (WrappedComponent, schema, wrappedProps) => {
 
+
+
   class UserForm extends Component {
+
+    
     constructor(props, context) {
       super(props, context);
 
@@ -77,7 +111,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
         showPrograms: false,
         showLanguages: false,
         user: props.currentUser,
-        localTimezone: usersTimezone,
+        localTimezone: usersTimezone
       };
  
       let fieldsToUpdate = [];
@@ -113,6 +147,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
       this.sortArrayProps(props);
     }
 
+    
 
     render() {
       const {
@@ -137,6 +172,8 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
       
 
 
+
+
       return (
         <div>
           <WrappedComponent currentUser={ currentUser } />
@@ -158,7 +195,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
 
               { this.renderPreferredLocale() }
 
-              <TextField
+              <TextFieldWithStyle
                 name='email'
                 value={ email }
                 className='userFormInputField email'                
@@ -180,7 +217,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
 
               <br />
 
-              <TextField
+              <TextFieldWithStyle
                 name='phone_number'
                 value={ phone_number }
                 className='userFormInputField phoneNumber'                
@@ -202,7 +239,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
 
               <br />
 
-              <TextField
+              <TextFieldWithStyle
                 name='first_name'
                 value={ first_name }                
                 className='userFormInputField firstName'
@@ -224,7 +261,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
 
               <br />
 
-              <TextField
+              <TextFieldWithStyle
                 name='last_name'
                 value={ last_name }                
                 className='userFormInputField lastName'
@@ -268,7 +305,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                 classes={ { badge: 'userFormBadge' } }
                 style={ { padding: '0' } }
               >
-                <TextField
+                <TextFieldWithStyle
                   name='address'
                   value={ address }                  
                   className='userFormInputField address'
@@ -292,7 +329,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
 
               <br />
 
-              <TextField
+              <TextFieldWithStyle
                 name='city'
                 value={ city }                  
                 className='userFormInputField city'
@@ -343,6 +380,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                   ) 
                 ) }
                 </Select>
+                <FormHelperText>{ this.errorLanguageHandler('timezone') }</FormHelperText>
            
                 { this. renderFindTimezoneButton() }
               </div>
@@ -350,7 +388,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
 
               { this.renderHowTheyFoundUs() }
 
-              <TextField
+              <TextFieldWithStyle
                 name='description'
                 value={ description }                
                 className='userFormInputField description'
@@ -436,6 +474,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                   </MenuItem>
               )) }
               </Select>
+              <FormHelperText>{ this.errorLanguageHandler('country') }</FormHelperText>
             </FormControl>
             <FormControl className='userFormInputField state'>
               <InputLabel>
@@ -462,6 +501,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                   </MenuItem>
                   )) }
               </Select>
+              <FormHelperText>{ this.errorLanguageHandler('state') }</FormHelperText>
             </FormControl>
           </section>
           
@@ -501,6 +541,8 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                 </MenuItem>
               ))}
             </Select>
+            <FormHelperTextWithStyle>{ this.errorLanguageHandler('country') }</FormHelperTextWithStyle>
+
 
             <Select
               style={ { 'minWidth': 250 + 'px' } }              
@@ -529,6 +571,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                 </MenuItem>
               )) }
             </Select>
+            <FormHelperTextWithStyle>{ this.errorLanguageHandler('state') }</FormHelperTextWithStyle>
           </section>          
         );
       }  
@@ -545,7 +588,8 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
               defaultMessage='Willing to meet'
             />
             :
-            <Switch
+            <FormControlLabelWithStyle
+              control={ <Switch style={ { color: 'green' } } disabled /> }
               label={
                 (
                   <FormattedMessage
@@ -554,8 +598,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                   />
                 )
               }
-              disabled
-              style={ { color: 'green' } }
+              labelPlacement='start'
             />
           </div>
         );
@@ -565,7 +608,8 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
             <FormattedMessage
               id='UserForm.meetToggle'
             />
-            <Switch
+            <FormControlLabelWithStyle
+              control={ <Switch disabled /> }
               label={
               (
                 <FormattedMessage
@@ -573,8 +617,8 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                   defaultMessage='Exclusively Online'
                 />
               )
-            }
-              disabled
+              }
+              labelPlacement='start'
             />
           </div>
         );
@@ -631,10 +675,11 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
             <br />
             <Button
               variant='contained'
-              label={ <FormattedMessage id='Profile.findTimezone' defaultMessage='Find my timezone' /> }
-              primary
               onClick={ this.updateUserTimezone }
-            />          
+              color='primary'
+            >
+              <FormattedMessage id='Profile.findTimezone' defaultMessage='Find my timezone' />
+            </Button>          
           </>
         );
       }
@@ -707,17 +752,14 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
             <div className='userFormInnerButton userFormSecondButton'>
               <Button
                 className='userFormProgramButton'
-                primary
-                label={
-                  (
-                    <FormattedMessage
-                      id='UserForm.updatePrograms'
-                      defaultMessage='Update my programs'
-                    />
-                  )
-                }
+                color='primary'
                 onClick={ this.handleShowPrograms }
-              />
+              >
+                <FormattedMessage
+                  id='UserForm.updatePrograms'
+                  defaultMessage='Update my programs'
+                />
+              </Button>
             </div>
           );
         }
@@ -737,17 +779,14 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
             <div className='userFormInnerButton userFormSecondButton'>
               <Button
                 className='userFormLanguageButton'
-                primary
-                label={
-                  (
-                    <FormattedMessage
-                      id='UserForm.myLanguages'
-                      defaultMessage='Update My Languages'
-                    />
-                  )
-                }
+                color='primary'
                 onClick={ this.handleShowLanguages }
-              />
+              >
+                <FormattedMessage
+                  id='UserForm.myLnaguages'
+                  defaultMessage='Update My Languages'
+                  />
+              </Button>
             </div>
           );
         }
@@ -756,7 +795,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
 
     renderLanguages() {
       const { languages } = this.props;
-      
+            
       if (_.size(languages) > 0) {
         const { errors, validateHandler, currentUser: { languages: userLanguages } } = this.props;
         
@@ -769,12 +808,14 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                 />
             </InputLabel>
             <Select
+              id='languages'
               value={ userLanguages }
               className='userFormInputField languages'
               onChange={ this.changeHandlerLanguages }
               onBlur={ validateHandler('languages') }
               multiple
-              // helperText={ this.errorLanguageHandler('languages') }
+              error={ this.errorLanguageHandler('languages') }
+              //helperText={ this.errorLanguageHandler('languages') }
               renderValue={ this.selectionRenderer }
             >
               { _.map(languages, ({ name, id }) => {
@@ -789,6 +830,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                 );
               })}
             </Select>
+            <FormHelperTextWithStyle>{ this.errorLanguageHandler('languages') }</FormHelperTextWithStyle>
           </div>
         );
       }
@@ -813,7 +855,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
 
           return (
             <div>
-              <TextField
+              <TextFieldWithStyle
                 name='current_password'
                 value={ current_password }
                 type='password'
@@ -835,7 +877,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
 
               <br />
 
-              <TextField
+              <TextFieldWithStyle
                 name='password'
                 value={ password }
                 type='password'
@@ -857,12 +899,11 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
 
               <br />
 
-              <TextField
+              <TextFieldWithStyle
                 name='password_confirmation'
                 value={ password_confirmation }
                 type='password'
                 className='userFormInputField passwordConfirmation'
-                
                 label={
                   (
                     <FormattedMessage
@@ -883,17 +924,14 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
             <div className='userFormInnerButton'>
               <Button
                 className='userFormPasswordButton'
-                primary
-                label={
-                  (
-                    <FormattedMessage
-                      id='UserForm.updatePassword'
-                      defaultMessage='Update my password'
-                    />
-                  )
-                }
+                color='primary'
                 onClick={ this.handleShowPassword }
-              />
+              >
+                <FormattedMessage
+                  id='UserForm.updatePassword'
+                  defaultMessage='Update my password'
+                />
+              </Button>
             </div>
           );
         }
@@ -910,7 +948,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
         return (
           <div>
             <br />
-            <TextField
+            <TextFieldWithStyle
               name='password'
               value={ password }
               type='password'
@@ -932,7 +970,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
 
             <br />
 
-            <TextField
+            <TextFieldWithStyle
               name='password_confirmation'
               value={ password_confirmation }
               type='password'
@@ -989,6 +1027,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                 />
           </InputLabel>
           <Select
+            name='howTheyFoundUs'
             value={ how_they_found_us }
             className='userFormInputField howTheyFoundUs'
             // helperText={ this.errorLanguageHandler('how_they_found_us') }
@@ -1020,6 +1059,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
               )
             }
           </Select>
+          <FormHelperTextWithStyle>{ this.errorLanguageHandler('how_they_found_us') }</FormHelperTextWithStyle>
 
           <br />
         </div>
@@ -1126,6 +1166,8 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                 />
           </InputLabel>
           <Select
+
+            name='locale'
             value={ locale }
             className='userFormInputField locale'
             // helperText={ this.errorLanguageHandler('locale') }
@@ -1142,6 +1184,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
               <ListItemText primary="Español" />
             </MenuItem>
           </Select>
+          <FormHelperTextWithStyle>{ this.errorLanguageHandler('locale') }</FormHelperTextWithStyle>
         </div>
       );
     }
@@ -1177,12 +1220,14 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                 />
           </InputLabel>
           <Select
+            name='programs'
             value={ userPrograms }
             className='userFormInputField programs'
             onChange={ this.changeHandlerPrograms }
             onBlur={ validateHandler('programs') }
             multiple
-            // helperText={ this.errorLanguageHandler('programs') }
+            error={ this.errorLanguageHandler('programs') }
+            //helperText={ this.errorLanguageHandler('programs') }
             renderValue={ this.selectionRenderer }
           >
             { programs.map( ({ name, spanish_name, id }) => {
@@ -1198,6 +1243,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
               );
             })}
           </Select>
+          <FormHelperTextWithStyle>{ this.errorLanguageHandler('programs') }</FormHelperTextWithStyle>
         </div>
       );
     }
