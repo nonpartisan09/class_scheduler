@@ -9,8 +9,7 @@ class UserProfilesController < ApplicationController
     end
     user = UserDecorator.new(current_user).updateable
     programs = Program.all
-    # Trello card 226 - @Brian-Tutoria - changing list of "Language(s) I can speak" on sign up page to be ordered by url_slug 
-    # languages = Language.all
+    #url_slug refers to the language in English
     languages = Language.order('url_slug')
     timezones = ActiveSupport::TimeZone.all.map(&:name)
     timezone_map = get_timezone_mapping
