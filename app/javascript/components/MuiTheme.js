@@ -8,6 +8,7 @@ const secondaryColor1= '#ade1f4';
 const disabledTextColor= '#a7a9ac';
 const accentColor= '#f1592a';
 const secondaryColor4= '#d7df21';
+const disabledButtonColor= '#e5e5e5';
 
 export default {
   fontFamily: 'Robotolight, sans-serif',
@@ -37,6 +38,7 @@ export default {
     primaryTextColor: primaryTextColor,
     secondaryTextColor: secondaryColor4,
     disabledTextColor: disabledTextColor,
+    disabledColor: disabledButtonColor,
   },
 
   textField: {

@@ -1,48 +1,57 @@
 .conversationBox {
-    padding: 24px;
+  padding: 24px;
 }
 
 .conversationButton {
-    margin: 24px 0;
+  margin: 24px 0;
 }
 
 .conversationIndexPageLink, .conversationIndexPageLink:visited  {
-    text-decoration: none;
-    color: inherit;
+  text-decoration: none;
+  color: inherit;
 }
 
 .conversationIndexPageUnread {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 .alertInfo {
-    color: #0c5460;
-    background-color: #d1ecf1;
-    border-color: #bee5eb;
-    font-size: 0.85em;
-    transition: all 1.2ms ease-out;
+  color: #0c5460;
+  background-color: #d1ecf1;
+  border-color: #bee5eb;
+  font-size: 0.85em;
+  transition: all 1.2ms ease-out;
 }
 
 .alert {
-    position: relative;
-    padding: .75rem 1.25rem;
-    margin-bottom: 1rem;
-    border: 1px solid transparent;
-    border-radius: .25rem;
+  position: relative;
+  padding: .75rem 1.25rem;
+  margin-bottom: 1rem;
+  border: 1px solid transparent;
+  border-radius: .25rem;
 }
 
 .alertCloseButton > svg {
-    margin: auto 0;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    right: 6px;
+  margin: auto 0;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 6px;
 }
 
 .alertCloseButton:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .avatar {
-    object-fit: cover;
+  object-fit: cover;
+}
+
+.untimely-conversation {
+  border: 3px solid lightcoral !important;
+  border-radius: 5px;
+}
+
+.untimely-warning span {
+  color: lightcoral;
 }

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_18_064232) do
+ActiveRecord::Schema.define(version: 2021_08_29_163738) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -120,6 +120,13 @@ ActiveRecord::Schema.define(version: 2019_08_18_064232) do
     t.index ["user_id"], name: "index_messages_on_user_id"
   end
 
+  create_table "privacy_policy", force: :cascade do |t|
+    t.text "description"
+    t.text "spanish_description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "programs", force: :cascade do |t|
     t.string "name"
     t.string "url_slug"
@@ -161,6 +168,7 @@ ActiveRecord::Schema.define(version: 2019_08_18_064232) do
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "spanish_description"
   end
 
   create_table "users", force: :cascade do |t|
@@ -201,6 +209,7 @@ ActiveRecord::Schema.define(version: 2019_08_18_064232) do
     t.datetime "thumbnail_image_updated_at"
     t.string "phone_number"
     t.string "how_they_found_us"
+    t.boolean "timeout", default: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

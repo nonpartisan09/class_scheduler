@@ -16,7 +16,9 @@ import PageHeader from './reusable/PageHeader';
 class ConversationIndexPage extends Component {
   constructor(props, context) {
     super(props, context);
-
+    this.untimelyConversation = props.currentUser.volunteer && props.conversations && props.conversations.some(convo => !convo.is_timely);
+    console.log(props);
+    console.log(this.untimelyConversation);
     this.handleClose = this.handleClose.bind(this);
 
     this.state = {
@@ -37,10 +39,24 @@ class ConversationIndexPage extends Component {
           { this.renderAlertInfo() }
           <div className='conversationBox'>
             { this.renderInbox() }
+            { this.renderError() }
           </div>
         </Paper>
       </div>
     );
+  }
+
+  renderError() {
+    if (this.untimelyConversation) {
+      return (
+        <p className="untimely-warning">
+          <FormattedMessage
+            id='ConversationIndexPage.DeactivatedError'
+            defaultMessage=' Please note messages older than a month are automatically deleted.'
+          />
+        </p>
+      );
+    }
   }
 
   renderAlertInfo() {
@@ -113,13 +129,13 @@ class ConversationIndexPage extends Component {
   }
 
   renderConversations() {
-    const { conversations } = this.props;
+    const { conversations, currentUser } = this.props;
 
     return _.map(conversations, (conversation) => {
-      const { conversee, id, conversee_avatar, is_first_message_unread } = conversation;
-
+      const { conversee, id, conversee_avatar, is_first_message_unread, is_timely } = conversation;
       return (
         <ListItem
+          className={ is_timely || !currentUser.volunteer ? '' : 'untimely-conversation' }
           onClick={ this.handleClick(id) }
           key={ conversee }
           leftAvatar={ <Avatar className='avatar' src={ conversee_avatar } /> }
@@ -139,13 +155,21 @@ class ConversationIndexPage extends Component {
     if (is_first_message_unread) {
       return (
         <span className='conversationIndexPageUnread'>
-          Conversation with { conversee }
+          <FormattedMessage
+            id='ConversationIndexPage.NewMessage'
+            defaultMessage='Conversation with '
+          />
+          { conversee }
         </span>
       );
     } else {
       return (
         <span>
-          Conversation with { conversee }
+          <FormattedMessage
+            id='ConversationIndexPage.NewMessage'
+            defaultMessage='Conversation with '
+          />
+          { conversee }
         </span>
       );
     }

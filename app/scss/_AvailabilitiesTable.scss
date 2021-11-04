@@ -1,25 +1,29 @@
 .availabilitiesTableRow {
-    text-align: right;
+  text-align: right;
 }
 
 .availabilityTableItemContainer {
-    margin-bottom: 12px;
+  margin-bottom: 12px;
 }
 
 .tableHideSmallScreen {
-    display: block;
+  display: block;
 }
 
 .tableHideMediumScreen {
-    display: none;
+  display: none;
 }
 
 .tableHideSmallScreen th:first-of-type {
-    display: none;
+  display: none;
 }
 
 .tableHideSmallScreen th:last-of-type span {
-    display: block;
+  display: block;
+}
+
+.untimelyRow {
+  background-color: lightgray;
 }
 
 .timeFormatToggleContainer {
@@ -38,17 +42,17 @@
 }
 
 @media (max-width: 650px)  {
-   .tableHideSmallScreen {
-       display: none;
-   }
+  .tableHideSmallScreen {
+    display: none;
+  }
 
-    .smallScreenAvailabilityTableDivider {
-        margin: 24px 0;
-    }
+  .smallScreenAvailabilityTableDivider {
+    margin: 24px 0;
+  }
 
-    .tableHideMediumScreen {
-        display: block;
-    }
+  .tableHideMediumScreen {
+    display: block;
+  }
 
   .availabilitiesTableButton {
     margin: 12px 0;

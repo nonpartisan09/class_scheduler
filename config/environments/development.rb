@@ -1,6 +1,6 @@
 Rails.application.configure do
   # Verifies that versions and hashed value of the package contents in the project's package.json
-  config.webpacker.check_yarn_integrity = true
+  config.webpacker.check_yarn_integrity = false
 
   # Settings specified here will take precedence over those in config/application.rb.
   config.static_base_url =  "http://localhost:5000/system"
@@ -62,4 +62,7 @@ Rails.application.configure do
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
   config.action_mailer.default_options = { from: 'noreply@tutoria.io' }
+  config.active_job.queue_adapter = :async
+
+  ENV["RESPONSIVE_JOB_TOKEN"] ||= "yri7Lu6QEWaCxhC2rakK"
 end
