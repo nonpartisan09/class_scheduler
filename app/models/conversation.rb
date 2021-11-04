@@ -23,6 +23,9 @@ class Conversation < ApplicationRecord
     where(author_id: sender_id, recipient_id: recipient_id).or(where(author_id: recipient_id, recipient_id: sender_id)).limit(1)
   end
 
+  scope :timely, -> { joins(:recipient).where("users.timeout=false") }
+  scope :untimely, -> { joins(:recipient).where("users.timeout=true") }
+
   def with(current_user)
     author == current_user ? recipient : author
   end
@@ -32,10 +35,9 @@ class Conversation < ApplicationRecord
   end
 
   def is_timely?
-    return true if created_at > Time.now - 2.days
+    last_message = messages.first
+    time_since_last_message = DateTime.now.to_i - last_message.created_at.to_i
 
-    messages.any? do |message|
-      message.user_id != author_id
-    end
+    return last_message.user.volunteer? || time_since_last_message < 2.days || last_message.created_at > 5.days
   end
 end

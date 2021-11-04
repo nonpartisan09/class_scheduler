@@ -1,11 +1,14 @@
 source 'https://rubygems.org'
 
-ruby '~> 2.5.0'
+ruby '~> 2.6.6'
 
 git_source(:github) do |repo_name|
   repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
   "https://github.com/#{repo_name}.git"
 end
+
+# manually install the last working commit of mimemagic that rails 5.2.5 depends on
+gem 'mimemagic', :git => 'git://github.com/mimemagicrb/mimemagic', :ref => 'd5ebc0cd846dcc68142622c76ad71d021768b7c2'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.5'
@@ -19,7 +22,7 @@ gem 'activeadmin', '~> 1.3'
 gem 'uglifier', '~> 4.1', require: false
 
 # needed for Heroku
-# gem 'delayed_job_active_record', '~> 4.1'
+gem 'delayed_job_active_record', '~> 4.1'
 
 # Use React for views
 gem 'webpacker', '~> 4.0'
@@ -39,7 +42,6 @@ gem 'devise', '~> 4.6'
 # geolocate users
 gem 'geocoder', '~> 1.6'
 
-gem 'puma', '~> 3.12.6'
 # image helper
 gem 'paperclip', '~> 6.1'
 
@@ -52,6 +54,9 @@ gem 'ffi', '~> 1.11'
 gem 'active_model_serializers', '~> 0.10.0'
 
 group :development, :test do
+  # elastic beanstalk has a globally installed version of puma
+  gem 'puma', '~> 3.12.6'
+
 	gem 'factory_bot_rails', '~> 4.8'
 
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -64,12 +69,11 @@ group :development, :test do
   gem 'awesome_print', '~> 1.8'
 
   # Add support for debugging in VSCode
-  # gem 'ruby-debug-ide', '0.7.2'
-  # gem 'debase', '0.2.4.1'
+  gem 'ruby-debug-ide', '0.7.2'
+  gem 'debase', '0.2.4.1'
 end
 
 group :development do
-  gem 'gem_bench', '~> 1.0', :require => false, :group => :development
   gem 'guard-rspec', '~> 4.7', require: false
   gem 'listen', '~> 3.1'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring

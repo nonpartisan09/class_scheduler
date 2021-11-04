@@ -91,7 +91,7 @@ Rails.application.configure do
   # config.cache_store = :mem_cache_store
 
   # Use a real queuing backend for Active Job (and separate queues per environment)
-  # config.active_job.queue_adapter     = :resque
+  config.active_job.queue_adapter = :async
   # config.active_job.queue_name_prefix = "tutoria_#{Rails.env}"
   config.action_mailer.perform_caching = false
 
@@ -133,6 +133,5 @@ Rails.application.configure do
       },
   }
 
-  # start looping background job checking for unresponsive at midnight every day
-  ResponsiveUsersJob.set(wait: 5.minutes).perform_later
+  ENV["RESPONSIVE_JOB_TOKEN"] ||= "yri7Lu6QEWaCxhC2rakK"
 end

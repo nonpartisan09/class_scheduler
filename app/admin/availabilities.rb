@@ -30,8 +30,8 @@ ActiveAdmin.register Availability do
     column :end_time
     column :updated_at
     column :created_at
-    column "timeout" do |availability| 
-      User.find(availability.user_id).timeout
+    column "Active" do |availability| 
+      !User.find(availability.user_id).timeout
     end
     actions
   end
@@ -43,8 +43,9 @@ ActiveAdmin.register Availability do
   filter :updated_at
   filter :created_at
 
-  scope :timed_out
-  scope :not_timed_out
+  scope :all
+  scope :active
+  scope :not_active
 
 
   form do |f|
@@ -72,7 +73,7 @@ ActiveAdmin.register Availability do
     column :end_time
     column :updated_at
     column :created_at
-    column "Timeout" do |availability| 
+    column "Active" do |availability| 
       User.find(availability.user_id).timeout
     end
   end
