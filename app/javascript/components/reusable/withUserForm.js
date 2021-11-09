@@ -1065,7 +1065,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                 (
                   <FormattedMessage
                     id='UserForm.termsAccept'
-                    defaultMessage='I accept Tutoría’s Terms of Use'
+                    defaultMessage='I accept Tutoría’s Terms of Use.'
                   />
                 )
               }
@@ -1081,7 +1081,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                 (
                   <FormattedMessage
                     id='UserForm.privacysAccept'
-                    defaultMessage='I accept Tutoría’s Privacy Policy'
+                    defaultMessage='I accept Tutoría’s Privacy Policy.'
                   />
                 )
               }
