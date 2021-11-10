@@ -53,7 +53,7 @@ class NewMessagePage extends Component {
             (
               <FormattedMessage
                 id='NewMessagePage.header'
-                defaultMessage='Send new message'
+                defaultMessage='Send New Message'
               />
             )
             }
@@ -113,7 +113,8 @@ class NewMessagePage extends Component {
             />
           </form>
 
-          <Fab disabled={ disabled } onClick={ this.handleSubmit } style={ { position: 'absolute', bottom: '-24px', right: '0' } }>
+
+          <Fab disabled={ disabled } color="primary" onClick={ this.handleSubmit } style={ { position: 'absolute', bottom: '-24px', right: '0px' } }>
             <SendIcon />
           </Fab>
 

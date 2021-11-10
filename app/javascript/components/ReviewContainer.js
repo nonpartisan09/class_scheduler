@@ -28,16 +28,15 @@ class ReviewContainer extends Component {
 
     return (
       <div>
-        <div className='reviewContainerReview'>
+        <div className='reviewContainerReview' 
+        >
           { this.renderReview() }
         </div>
         <div className='reviewContainerComment'>
           <TextField
             name='comment'
             value={ comment }
-            hintText=''
-            errorText={ this.state.error }
-            errorStyle={ { float: 'left', margin: '-6px 0' } }
+            
             label={ (
               <FormattedMessage
                 id='ReviewContainer.comment'
@@ -51,16 +50,18 @@ class ReviewContainer extends Component {
 
         <Button
           variant='contained'
-          primary
+          color="primary"
           className='reviewContainerSubmitButton'
+          style={ {  top: '22px', left: '10px' } }
           label={ (
             <FormattedMessage
               id='ReviewContainer.SubmitButton'
               defaultMessage='Submit Review'
             />
           ) }
-          onClick={ this.handleSubmit }
-        />
+          onClick={ this.handleSubmit } > Submit Review
+           </Button>
+        
       </div>
     );
   }

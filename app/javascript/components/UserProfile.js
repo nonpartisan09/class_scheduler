@@ -58,7 +58,7 @@ class UserProfile extends Component {
   render() {
     return (
       <div>
-        <Paper zDepth={ 1 } className='paperOverride userProfilePaper' rounded={ false }>
+        <Paper className='paperOverride userProfilePaper' >
           { this.renderContent() }
         </Paper>
         { this.renderSnackBar() }
@@ -104,17 +104,19 @@ class UserProfile extends Component {
 
           <div className='userProfileButtonAndDetailsContainer'>
             <Link to={ { pathname: '/messages/new', query: { recipient: url_slug, userName: first_name } } } className='userProfileLink'>
-              <Button
+              <Button 
                 variant='contained'
                 className='userProfileMessageButton'
+                color="primary"
+                style={ {  top: '20px', right: '10px' } }
                 label={ (
                   <FormattedMessage
                     id='UserProfile.messageUser'
                     defaultMessage='Message User'
                   />
                 ) }
-                primary
-              />
+              >Message User
+              </Button>
             </Link>
 
             <div className='userProfileReviewAndComment'>
@@ -181,7 +183,7 @@ class UserProfile extends Component {
             { !user.timeout && this.renderAvailabilities() }
 
             <Link className='userProfileSendEmail' to={ { pathname: '/messages/new', query: { recipient: url_slug, userName: first_name } } }>
-              <Fab>
+              <Fab color="primary" >
                 <EditIcon />
               </Fab>
             </Link>
@@ -195,15 +197,16 @@ class UserProfile extends Component {
     return (
       <div className='userProfileBackButton'>
         <Button
-          primary
+          color="primary"
           label={ (
             <FormattedMessage
               id='UserProfile.Back'
               defaultMessage='Back to search results'
-            />
+            /> 
           ) }
           onClick={ this.handleViewProfileClick }
-        />
+        > 
+        </Button>
       </div>
     );
   }
