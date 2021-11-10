@@ -22,9 +22,9 @@ import {
   CardContent,
   CardHeader,
   TextField,
-  ExpansionPanel,
-  ExpansionPanelDetails,
-  ExpansionPanelSummary,
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
   Button,
   Radio,
   // Switch,
@@ -33,7 +33,7 @@ import {
   // FormGroup,
   // Grid,
   // ButtonGroup
-} from '@material-ui/core';
+} from '@material-ui/core/';
 import validate from 'react-joi-validation';
 import PropTypes from 'prop-types';
 
@@ -374,7 +374,7 @@ class Homepage extends Component {
   }
 
   toggleVideoSize() {
-    this.state.enlargeVideo ? this.setState({ enlargeVideo: false }) : this.setState({ enlargeVideo: true })
+    this.state.enlargeVideo ? this.setState({ enlargeVideo: false }) : this.setState({ enlargeVideo: true });
   }
 
   getButtonLanguage(locale) {
@@ -587,15 +587,15 @@ class Homepage extends Component {
           onBlur={ validateHandler('first_name') }
         />
         <span className='expansionPanel'>
-          <ExpansionPanel>
-            <ExpansionPanelSummary expandIcon={ <FaCaretDown /> }>
+          <Accordion>
+            <AccordionSummary expandIcon={ <FaCaretDown /> }>
               <p className='languageSelectorTitle'>
                 <FormattedMessage
                   id='UserForm.locale'
                 />
               </p>
-            </ExpansionPanelSummary>
-            <ExpansionPanelDetails>
+            </AccordionSummary>
+            <AccordionDetails>
               <span className='languageButtonsContainer'>
                 <Button
                   className={
@@ -634,8 +634,8 @@ class Homepage extends Component {
                   { this.state.languageChecked === SPANISH ? <FaCheck size={ size } /> : '' }
                 </Button>
               </span>
-            </ExpansionPanelDetails>
-          </ExpansionPanel>
+            </AccordionDetails>
+          </Accordion>
         </span>
         <span className='radioButtons'>
           <RadioGroup

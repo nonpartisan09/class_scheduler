@@ -5,10 +5,10 @@ import { FormattedMessage } from 'react-intl';
 
 import validate from 'react-joi-validation';
 
-import Paper from 'material-ui/Paper';
-import TextField from 'material-ui/TextField';
-import FloatingActionButton from 'material-ui/FloatingActionButton';
-import SendIcon from 'material-ui/svg-icons/content/send';
+import Paper from '@material-ui/core/Paper';
+import TextField from '@material-ui/core/TextField';
+import Fab from '@material-ui/core/Fab';
+import SendIcon from '@material-ui/icons/Send';
 
 import MessageSchema from './schema/MessageSchema';
 import FormData from './utils/FormData';
@@ -44,7 +44,7 @@ class NewMessagePage extends Component {
       validateHandler
     } = this.props;
 
-    let disabled = this.props.message.body && this.props.message.subject ? false : true
+    let disabled = this.props.message.body && this.props.message.subject ? false : true;
 
     return (
       <div>
@@ -53,7 +53,7 @@ class NewMessagePage extends Component {
             (
               <FormattedMessage
                 id='NewMessagePage.header'
-                defaultMessage='Send new message'
+                defaultMessage='Send New Message'
               />
             )
             }
@@ -66,7 +66,7 @@ class NewMessagePage extends Component {
               value={ userName }
               className='userFormInputField recipient'
               hintText=''
-              floatingLabelText={
+              label={
                 (
                   <FormattedMessage
                     id='NewMessagePage.recipient'
@@ -74,24 +74,23 @@ class NewMessagePage extends Component {
                   />
                 )
               }
-              floatingLabelFixed
+              
             />
 
             <TextField
               name='subject'
               value={ subject }
               className='userFormInputField subject'
-              hintText=''
-              floatingLabelText={
+              hintText={ errors.subject }
+              label={
                 (
                   <FormattedMessage
                     id='NewMessagePage.subject'
                     defaultMessage='Subject'
                   />
                 )
-              }
-              floatingLabelFixed
-              errorText={ errors.subject }
+              }              
+              error={ _.has(errors, 'subject') }
               onChange={ changeHandler('subject') }
               onBlur={ validateHandler('subject') }
             />
@@ -99,25 +98,25 @@ class NewMessagePage extends Component {
               name='body'
               value={ body }
               className='userFormInputField body'
-              hintText=''
-              floatingLabelText={
+              hintText={ errors.body }
+              label={
                 (
                   <FormattedMessage
                     id='NewMessagePage.messageBody'
                     defaultMessage='Body'
                   />
                 )
-              }
-              floatingLabelFixed
-              errorText={ errors.body }
+              }              
+              error={ _.has(errors, 'body') }
               onChange={ changeHandler('body') }
               onBlur={ validateHandler('body') }
             />
           </form>
 
-          <FloatingActionButton disabled={disabled} onClick={ this.handleSubmit } style={ { position: 'absolute', bottom: '-24px', right: '0' } }>
+
+          <Fab disabled={ disabled } color="primary" onClick={ this.handleSubmit } style={ { position: 'absolute', bottom: '-24px', right: '0px' } }>
             <SendIcon />
-          </FloatingActionButton>
+          </Fab>
 
           { this.renderSnackBar() }
         </Paper>
