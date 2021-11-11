@@ -68,6 +68,7 @@ ActiveAdmin.register User do
       :phone_number,
       :state,
       :terms_and_conditions,
+      :privacy_policy,
       :timezone,
       :updated_at,
       :url_slug,

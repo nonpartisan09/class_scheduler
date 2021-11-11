@@ -1133,7 +1133,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
               control={ (
                 <Checkbox
                   checked={ privacy_policy }
-                  className='userFormInputField privacyPolicy'
+                  className='privacyPolicy'
                   onCheck={ changeHandler('privacy_policy', { validate: true, strategy: useSecondArgument }) }
                   color='primary'
             />
@@ -1186,11 +1186,9 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                 />
           </InputLabel>
           <Select
-
             name='locale'
             value={ locale }
             className='userFormInputField locale'
-            // helperText={ this.errorLanguageHandler('locale') }
             onChange={ this.changeLocaleHandler }
             onBlur={ validateHandler('locale') }
             renderValue={ (selected) => selected === 'en' ? 'English' : 'Español' }
@@ -1247,7 +1245,6 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
             onBlur={ validateHandler('programs') }
             multiple
             error={ this.errorLanguageHandler('programs') }
-            //helperText={ this.errorLanguageHandler('programs') }
             renderValue={ this.selectionRenderer }
           >
             { programs.map( ({ name, spanish_name, id }) => {

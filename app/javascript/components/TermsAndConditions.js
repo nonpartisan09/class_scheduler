@@ -15,7 +15,7 @@ const TermsAndConditions = ({ terms_and_conditions, locale })=> {
 
   return (
     <div>
-      <Paper zDepth={ 1 } className='paperOverride' rounded={ false }>
+      <Paper className='paperOverride' square>
         <div className='termsAndConditionsContainer'>
           { content }
         </div>

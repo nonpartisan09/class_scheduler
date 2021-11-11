@@ -101,9 +101,9 @@ class ApplicationController < ActionController::Base
     decorate_user_if_present
 
     privacy_policy = PrivacyPolicy.last
-    privacy_policy =  {
+    privacy_policy =  page_content ={
       :en => privacy_policy[:description],
-      :es => privacy_policy[:spanish_description]
+      :es => privacy_policy[:spanish_description] || privacy_policy[:description]
     }
 
     @data = {
@@ -125,7 +125,7 @@ class ApplicationController < ActionController::Base
   end
   
   def sitemap
-    @pages = ["", "/about", "/faq" , "/sign_up/client", "/sign_up/volunteer", "/terms_of_use" ]
+    @pages = ["", "/about", "/faq" , "/sign_up/client", "/sign_up/volunteer", "/terms_of_use", "/privacy_policy" ]
     headers['Content-Type'] = 'application/xml'
     @host = "#{request.protocol}#{request.host}"
   end
