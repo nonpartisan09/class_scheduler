@@ -115,7 +115,7 @@ const App = ({ data }) => {
               <Route exact path={ `/${locale}/sign_in` } render={ props => <SignIn { ...data } { ...props } locale={ language } /> } />
               <Route exact path={ `/${locale}/sign_up/:role` } render={ (props) => <SignUp { ...data } { ...props } locale={ language } /> } />
               <Route exact path={ `/${locale}/volunteer_sign_up_completed` } render={ (props) => <CustomPage { ...data } { ...props } locale={ language } /> } />
-              <Route exact path={ `/${locale}/terms_of_use` } render={ (props) => <TermsAndConditions { ...data } { ...props } /> } />
+              <Route exact path={ `/${locale}/terms_of_use` } render={ (props) => <TermsAndConditions { ...data } { ...props } locale={ language } /> } />
               <Route exact path='/' render={ () => <Homepage { ...data } locale={ language } /> } />
               <Route exact path='/inbox' render={ (props) => <ConversationIndexPage { ...data } { ...props } /> } />
               <Route exact path='/inbox/:id' render={ (props) => <ConversationPage { ...data } { ...props } /> } />

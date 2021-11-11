@@ -9,7 +9,8 @@ class UserProfilesController < ApplicationController
     end
     user = UserDecorator.new(current_user).updateable
     programs = Program.all
-    languages = Language.all
+    #url_slug refers to the language in English
+    languages = Language.order('url_slug')
     timezones = ActiveSupport::TimeZone.all.map(&:name)
     timezone_map = get_timezone_mapping
 

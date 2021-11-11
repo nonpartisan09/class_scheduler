@@ -99,6 +99,7 @@ class NewMessagePage extends Component {
               value={ body }
               className='userFormInputField body'
               hintText={ errors.body }
+              multiline
               label={
                 (
                   <FormattedMessage

@@ -82,7 +82,7 @@ class Footer extends Component {
               <a href={ formatLink('/terms_of_use', locale) }>
                 <FormattedMessage
                   id='Footer.TAC'
-                  defaultMessage='Terms & Conditions'
+                  defaultMessage='Terms of Use'
                 />
               </a>
             </span>
