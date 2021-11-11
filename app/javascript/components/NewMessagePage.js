@@ -97,7 +97,7 @@ class NewMessagePage extends Component {
             <TextField
               name='body'
               value={ body }
-              className='userFormInputField body'
+              className='userFormInputField
               hintText={ errors.body }
               multiline
               label={
@@ -113,7 +113,6 @@ class NewMessagePage extends Component {
               onBlur={ validateHandler('body') }
             />
           </form>
-
 
           <Fab disabled={ disabled } color="primary" onClick={ this.handleSubmit } style={ { position: 'absolute', bottom: '-24px', right: '0px' } }>
             <SendIcon />
