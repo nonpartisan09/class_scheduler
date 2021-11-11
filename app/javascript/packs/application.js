@@ -21,7 +21,7 @@ import {
 
 } from 'react-router-dom';
 import { ThemeProvider as MuiThemeProvider } from '@material-ui/core/styles';
-import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
+import createMuiTheme from '@material-ui/core/styles/createTheme';
 
 /* localization */
 
@@ -54,6 +54,7 @@ import SearchResults from '../components/SearchResults';
 import CustomPage from '../components/CustomPage';
 import ConversationPage from '../components/ConversationPage';
 import UserReviewIndexPage from '../components/UserReviewIndexPage';
+import PrivacyPolicy from '../components/PrivacyPolicy';
 
 import localeData from '../../../build/locales/data.json';
 
@@ -134,6 +135,7 @@ const App = ({ data }) => {
               <Route exact path='/sign_up/:role' render={ (props) => <SignUp { ...data } { ...props } /> } />
               <Route exact path='/volunteer_sign_up_completed' render={ (props) => <CustomPage { ...data } { ...props } locale={ language } /> } />
               <Route exact path='/terms_of_use' render={ (props) => <TermsAndConditions { ...data } { ...props } locale={ language } /> } />
+              <Route exact path='/privacy_policy' render={ (props) => <PrivacyPolicy { ...data } { ...props } locale={ language } /> } />
               <Route path='/*' render={ () => <NotFoundPage { ...data } /> } />
             </Switch>
           </ContentWrapper>

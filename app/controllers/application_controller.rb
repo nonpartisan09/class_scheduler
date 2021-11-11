@@ -94,6 +94,24 @@ class ApplicationController < ActionController::Base
     render :t_and_c
   end
 
+  def priv_pol
+    decorate_user_if_present
+
+    privacy_policy = PrivacyPolicy.last
+    privacy_policy =  {
+      :en => privacy_policy[:description],
+      :es => privacy_policy[:spanish_description]
+    }
+
+    @data = {
+        :currentUser => @user,
+        :privacy_policy => privacy_policy,
+        :locale => I18n.locale.to_s
+    }
+
+    render :priv_pol
+  end
+
   def not_found
     decorate_user_if_present
 

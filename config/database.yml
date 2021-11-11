@@ -11,11 +11,12 @@
 #
 default: &default
   adapter: postgresql
-  encoding: utf8
-  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  username: postgres
-  password:
-  host: localhost
+  pool: <%= ENV.fetch("DB_POOL_SIZE") { ENV.fetch("RAILS_MAX_THREADS") { 5 } * 1.2 } %>
+  username: <%= ENV['DB_USERNAME'] %>
+  password: <%= ENV['DB_PASSWORD'] %>
+  host: <%= ENV['DB_HOST'] %>
+  port: <%= ENV['DB_PORT'] || "5432" %>
+  timeout: 5000
 
 production:
   adapter: postgresql

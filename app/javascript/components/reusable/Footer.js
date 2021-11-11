@@ -67,7 +67,7 @@ class Footer extends Component {
                   defaultMessage='About'
                 />
               </a>
-              <a href={ formatLink('/privacypolicy', locale) }>
+              <a href={ formatLink('/privacy_policy', locale) }>
                 <FormattedMessage
                   id='privacypolicyPage'
                   defaultMessage='Privacy Policy'
