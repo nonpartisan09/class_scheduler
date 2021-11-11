@@ -859,8 +859,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                 name='current_password'
                 value={ current_password }
                 type='password'
-                className='userFormInputField current_password'
-                
+                className='userFormInputField current_password'                
                 label={
                   (
                     <FormattedMessage
@@ -868,8 +867,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                       defaultMessage='Current Password'
                     />
                   )
-                }
-                
+                }                
                 helperText={ this.errorLanguageHandler('password') }
                 onChange={ changeHandler('current_password') }
                 onBlur={ validateHandler('current_password') }
@@ -881,8 +879,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                 name='password'
                 value={ password }
                 type='password'
-                className='userFormInputField password'
-                
+                className='userFormInputField password'                
                 label={
                   (
                     <FormattedMessage
@@ -890,8 +887,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                       defaultMessage='New Password'
                     />
                   )
-                }
-                
+                }                
                 helperText={ this.errorLanguageHandler('password') }
                 onChange={ changeHandler('password') }
                 onBlur={ validateHandler('password') }
@@ -911,8 +907,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                       defaultMessage='New Password Confirmation'
                     />
                   )
-                }
-                
+                }                
                 helperText={ this.errorLanguageHandler('password_confirmation') }
                 onChange={ changeHandler('password_confirmation') }
                 onBlur={ validateHandler('password_confirmation') }
@@ -952,8 +947,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
               name='password'
               value={ password }
               type='password'
-              className='userFormInputField password'
-              
+              className='userFormInputField password'              
               label={
                 (
                   <FormattedMessage
@@ -961,8 +955,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                     defaultMessage='Password'
                   />
                 )
-              }
-              
+              }              
               helperText={ this.errorLanguageHandler('password') }
               onChange={ changeHandler('password') }
               onBlur={ validateHandler('password') }
@@ -974,8 +967,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
               name='password_confirmation'
               value={ password_confirmation }
               type='password'
-              className='userFormInputField passwordConfirmation'
-              
+              className='userFormInputField passwordConfirmation'              
               label={
                 (
                   <FormattedMessage
@@ -983,8 +975,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                     defaultMessage='Password Confirmation'
                   />
                 )
-              }
-              
+              }              
               helperText={ this.errorLanguageHandler('password_confirmation') }
               onChange={ changeHandler('password_confirmation') }
               onBlur={ validateHandler('password_confirmation') }
@@ -1093,6 +1084,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
           errors,
           currentUser: {
             terms_and_conditions,
+            privacy_policy,
             contact_permission,
             locale
           }
@@ -1104,7 +1096,16 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
               <a href={ formatLink('/terms_of_use', locale) } className='slidingLink' target='_blank' rel='noreferrer noopener'>
                 <FormattedMessage
                   id='UserForm.termsRead'
-                  defaultMessage='Please read Tutoría’s terms of use.'
+                  defaultMessage='Please read Tutoría’s Term of Use.'
+                />
+              </a>
+            </div>
+
+            <div className='userPrivacyPolicy'>
+              <a href={ formatLink('/privacy_policy', locale) } className='slidingLink' target='_blank' rel='noreferrer noopener'>
+                <FormattedMessage
+                  id='UserForm.privacyRead'
+                  defaultMessage='Please read Tutoría’s Privacy Policy.'
                 />
               </a>
             </div>
@@ -1118,16 +1119,35 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                 />
                 ) }
               label={
-                  (
-                    <FormattedMessage
-                      id='UserForm.termsAccept'
-                      defaultMessage='I accept tutoría’s terms of use'
-                    />
-                  )
-                } 
-            />            
-
+                (
+                  <FormattedMessage
+                    id='UserForm.termsAccept'
+                    defaultMessage='I accept Tutoría’s Terms of Use.'
+                  />
+                )
+              }
+            />
             <ErrorField error={ this.errorLanguageHandler('terms_and_conditions') } />
+            <br />
+            <FormControlLabel
+              control={ (
+                <Checkbox
+                  checked={ privacy_policy }
+                  className='privacyPolicy'
+                  onCheck={ changeHandler('privacy_policy', { validate: true, strategy: useSecondArgument }) }
+                  color='primary'
+            />
+            ) }
+              label={
+              (
+                <FormattedMessage
+                  id='UserForm.privacysAccept'
+                  defaultMessage='I accept Tutoría’s Privacy Policy.'
+                />
+              )
+            }
+            />
+            <ErrorField error={ this.errorLanguageHandler('privacy_policy') } />
             <br />
             <FormControlLabel
               control={ (
@@ -1166,11 +1186,9 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                 />
           </InputLabel>
           <Select
-
             name='locale'
             value={ locale }
             className='userFormInputField locale'
-            // helperText={ this.errorLanguageHandler('locale') }
             onChange={ this.changeLocaleHandler }
             onBlur={ validateHandler('locale') }
             renderValue={ (selected) => selected === 'en' ? 'English' : 'Español' }
@@ -1227,7 +1245,6 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
             onBlur={ validateHandler('programs') }
             multiple
             error={ this.errorLanguageHandler('programs') }
-            //helperText={ this.errorLanguageHandler('programs') }
             renderValue={ this.selectionRenderer }
           >
             { programs.map( ({ name, spanish_name, id }) => {

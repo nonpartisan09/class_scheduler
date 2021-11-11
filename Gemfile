@@ -7,6 +7,9 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
+# manually install the last working commit of mimemagic that rails 5.2.5 depends on
+gem 'mimemagic', :git => 'git://github.com/mimemagicrb/mimemagic', :ref => 'd5ebc0cd846dcc68142622c76ad71d021768b7c2'
+
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.5'
 
