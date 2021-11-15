@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 
-import RaisedButton from 'material-ui/RaisedButton';
-import TextField from 'material-ui/TextField';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
 import { FormattedMessage } from 'react-intl';
 
 class ReviewContainer extends Component {
@@ -28,38 +28,40 @@ class ReviewContainer extends Component {
 
     return (
       <div>
-        <div className='reviewContainerReview'>
+        <div className='reviewContainerReview' 
+        >
           { this.renderReview() }
         </div>
         <div className='reviewContainerComment'>
           <TextField
             name='comment'
             value={ comment }
-            hintText=''
-            errorText={ this.state.error }
-            errorStyle={ { float: 'left', margin: '-6px 0' } }
-            floatingLabelText={ (
+            
+            label={ (
               <FormattedMessage
                 id='ReviewContainer.comment'
                 defaultMessage='Leave a comment'
               />
             ) }
             onChange={ this.handleChangeComment }
-            floatingLabelFixed
+            
           />
         </div>
 
-        <RaisedButton
-          primary
+        <Button
+          variant='contained'
+          color="primary"
           className='reviewContainerSubmitButton'
+          style={ {  top: '22px', left: '10px' } }
           label={ (
             <FormattedMessage
               id='ReviewContainer.SubmitButton'
               defaultMessage='Submit Review'
             />
           ) }
-          onClick={ this.handleSubmit }
-        />
+          onClick={ this.handleSubmit } > Submit Review
+           </Button>
+        
       </div>
     );
   }

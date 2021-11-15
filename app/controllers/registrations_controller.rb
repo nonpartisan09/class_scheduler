@@ -128,6 +128,7 @@ class RegistrationsController < Devise::RegistrationsController
         :role,
         :state,
         :terms_and_conditions,
+        :privacy_policy,
         :thumbnail_image,
         :timezone,
         :programs => '',

@@ -2,14 +2,13 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import { Link } from 'react-router-dom';
-import Paper from 'material-ui/Paper';
-import RaisedButton from 'material-ui/RaisedButton';
-import FlatButton from 'material-ui/FlatButton';
-import RefreshIndicator from 'material-ui/RefreshIndicator';
+import Paper from '@material-ui/core/Paper';
+import Button from '@material-ui/core/Button';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import { FormattedMessage } from 'react-intl';
-import FloatingActionButton from 'material-ui/FloatingActionButton';
-import EditIcon from 'material-ui/svg-icons/image/edit';
+import Fab from '@material-ui/core/Fab';
+import EditIcon from '@material-ui/icons/Edit';
 import METHODS from './utils/RestConstants';
 
 import { postData } from './utils/sendData';
@@ -59,7 +58,7 @@ class UserProfile extends Component {
   render() {
     return (
       <div>
-        <Paper zDepth={ 1 } className='paperOverride userProfilePaper' rounded={ false }>
+        <Paper className='paperOverride userProfilePaper' >
           { this.renderContent() }
         </Paper>
         { this.renderSnackBar() }
@@ -75,11 +74,11 @@ class UserProfile extends Component {
         <div>
           { this.renderBackButton() }
           <div className='userProfileRefreshIndicator'>
-            <RefreshIndicator
+            <CircularProgress
               size={ 50 }
               top={ 0 }
               left={ 0 }
-              loadingColor="#FF9800"
+              color="#FF9800"
               status='loading'
             />
           </div>
@@ -105,16 +104,19 @@ class UserProfile extends Component {
 
           <div className='userProfileButtonAndDetailsContainer'>
             <Link to={ { pathname: '/messages/new', query: { recipient: url_slug, userName: first_name } } } className='userProfileLink'>
-              <RaisedButton
+              <Button 
+                variant='contained'
                 className='userProfileMessageButton'
+                color="primary"
+                style={ {  top: '20px', right: '10px' } }
                 label={ (
                   <FormattedMessage
                     id='UserProfile.messageUser'
                     defaultMessage='Message User'
                   />
                 ) }
-                primary
-              />
+              >Message User
+              </Button>
             </Link>
 
             <div className='userProfileReviewAndComment'>
@@ -181,9 +183,9 @@ class UserProfile extends Component {
             { !user.timeout && this.renderAvailabilities() }
 
             <Link className='userProfileSendEmail' to={ { pathname: '/messages/new', query: { recipient: url_slug, userName: first_name } } }>
-              <FloatingActionButton>
+              <Fab color="primary" >
                 <EditIcon />
-              </FloatingActionButton>
+              </Fab>
             </Link>
           </div>
         </div>
@@ -194,16 +196,17 @@ class UserProfile extends Component {
   renderBackButton() {
     return (
       <div className='userProfileBackButton'>
-        <FlatButton
-          primary
+        <Button
+          color="primary"
           label={ (
             <FormattedMessage
               id='UserProfile.Back'
               defaultMessage='Back to search results'
-            />
+            /> 
           ) }
           onClick={ this.handleViewProfileClick }
-        />
+        > 
+        </Button>
       </div>
     );
   }

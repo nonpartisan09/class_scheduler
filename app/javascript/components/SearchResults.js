@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 import ReactPaginate from 'react-paginate';
 import { FormattedMessage } from 'react-intl';
 
-import DropDownMenu from 'material-ui/DropDownMenu';
-import MenuItem from 'material-ui/MenuItem';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
 import SearchResultItem from './SearchResultItem';
 import { HIGHEST, RECENT, CLOSEST, NEWEST } from './SortFilter';
 import { getData } from './utils/sendData';
@@ -68,22 +68,22 @@ class SearchResults extends Component {
     if (isCurrentUserLocated(currentUser)) {
       return (
         <div className='searchResultDropdown'>
-          <DropDownMenu value={ this.state.sortBy } onClose={ this.handleBlur } onChange={ this.handleChange }>
+          <Select value={ this.state.sortBy } onClose={ this.handleBlur } onChange={ this.handleChange }>
             <MenuItem value={ RECENT } primaryText='Recently Logged In' />
             <MenuItem value={ CLOSEST } primaryText='Closest' />
             <MenuItem value={ HIGHEST } primaryText='Highest Rating' />
             <MenuItem value={ NEWEST } primaryText='Newly created' />
-          </DropDownMenu>
+          </Select>
         </div>
       );
     } else {
       return (
         <div className='searchResultDropdown'>
-          <DropDownMenu value={ this.state.sortBy } onClose={ this.handleBlur } onChange={ this.handleChange }>
+          <Select value={ this.state.sortBy } onClose={ this.handleBlur } onChange={ this.handleChange }>
             <MenuItem value={ RECENT } primaryText='Recently Logged In' />
             <MenuItem value={ HIGHEST } primaryText='Highest Rating' />
             <MenuItem value={ NEWEST } primaryText='Newly created' />
-          </DropDownMenu>
+          </Select>
         </div>
       );
     }

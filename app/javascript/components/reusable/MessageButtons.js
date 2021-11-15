@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import FlatButton from 'material-ui/FlatButton';
+import Button from '@material-ui/core/Button';
 import { FormattedMessage } from 'react-intl';
-import { CardActions } from 'material-ui/Card';
+import CardActions from '@material-ui/core/CardActions';
 import { Link } from 'react-router-dom';
-import RaisedButton from 'material-ui/RaisedButton';
-import EmailIcon from 'material-ui/svg-icons/communication/email';
+import EmailIcon from '@material-ui/icons/Email';
 
 import formatLink from '../utils/Link';
 
@@ -28,8 +27,9 @@ class MessageButtons extends Component {
     return (
       <CardActions className="message-buttons">
         <Link to={ { pathname: formatLink('/messages/new', locale), query: { recipient: newMessageRecipient, userName: newMessageFirstName } } }>
-          <RaisedButton
+          <Button
             className='messageButtonItem'
+            variant='contained'
             label={ (
               <span>
                 <div className='searchResultItemRequestIcon'>
@@ -45,7 +45,7 @@ class MessageButtons extends Component {
             />
         </Link>
         <a href={ formatLink(`/profiles/${newMessageRecipient}`, locale) }>
-          <FlatButton
+          <Button
             className='searchResultItemVisitProfile'
             label={ (
               <FormattedMessage
