@@ -1,4 +1,4 @@
-ActiveAdmin.register TermsAndConditions do
+ActiveAdmin.register PrivacyPolicy do
   permit_params :description,
       :spanish_description,
       :created_at,
@@ -6,6 +6,7 @@ ActiveAdmin.register TermsAndConditions do
       :id
 
   actions :all
+  menu label: 'Privacy Policy'
 
   controller do
     def action_methods

@@ -4,10 +4,10 @@ import Paper from '@material-ui/core/Paper';
 import Parser from 'html-react-parser';
 import { ENGLISH } from './utils/availableLocales';
 
-const TermsAndConditions = ({ terms_and_conditions, locale })=> {
+const PrivacyPolicy = ({ privacy_policy, locale })=> {
   const content = function(){
-    if (locale && terms_and_conditions) {
-      return Parser(terms_and_conditions[locale]);
+    if (locale && privacy_policy) {
+      return Parser(privacy_policy[locale]);
     } else {
       return null;
     }
@@ -16,25 +16,23 @@ const TermsAndConditions = ({ terms_and_conditions, locale })=> {
   return (
     <div>
       <Paper className='paperOverride' square>
-        <div className='termsAndConditionsContainer'>
-          { content }
-        </div>
+        { content }
       </Paper>
     </div>
   );
 };
 
-TermsAndConditions.propTypes = {
+PrivacyPolicy.propTypes = {
   locale: PropTypes.string,
-  terms_and_conditions: PropTypes.shape({
+  privacy_policy: PropTypes.shape({
     description: PropTypes.node,
     spanish_description: PropTypes.node,
   })
 };
 
-TermsAndConditions.defaultProps = {
+PrivacyPolicy.defaultProps = {
   locale: ENGLISH,
-  terms_and_conditions: {}
+  privacy_policy: {}
 };
 
-export default TermsAndConditions;
+export default PrivacyPolicy;

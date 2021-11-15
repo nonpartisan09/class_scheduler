@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
-import MoodIcon from 'material-ui/svg-icons/social/mood';
-import { Card, CardHeader } from 'material-ui/Card';
+import MoodIcon from '@material-ui/icons/Mood';
+import Card from '@material-ui/core/Card';
+import CardHeader from '@material-ui/core/CardHeader';
 
 import ReviewAsStars from './ReviewAsStars';
 import formatLink from './utils/Link';

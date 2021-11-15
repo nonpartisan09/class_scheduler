@@ -83,7 +83,10 @@ class ApplicationController < ActionController::Base
     decorate_user_if_present
 
     terms_and_conditions = TermsAndConditions.last
-    terms_and_conditions = terms_and_conditions[:description]
+    terms_and_conditions = page_content = {
+      :en => terms_and_conditions[:description],
+      :es => terms_and_conditions[:spanish_description] || terms_and_conditions[:description]
+    }
 
     @data = {
         :currentUser => @user,
@@ -92,6 +95,24 @@ class ApplicationController < ActionController::Base
     }
 
     render :t_and_c
+  end
+
+  def priv_pol
+    decorate_user_if_present
+
+    privacy_policy = PrivacyPolicy.last
+    privacy_policy =  page_content ={
+      :en => privacy_policy[:description],
+      :es => privacy_policy[:spanish_description] || privacy_policy[:description]
+    }
+
+    @data = {
+        :currentUser => @user,
+        :privacy_policy => privacy_policy,
+        :locale => I18n.locale.to_s
+    }
+
+    render :priv_pol
   end
 
   def not_found
@@ -104,7 +125,7 @@ class ApplicationController < ActionController::Base
   end
   
   def sitemap
-    @pages = ["", "/about", "/faq" , "/sign_up/client", "/sign_up/volunteer", "/terms_of_use" ]
+    @pages = ["", "/about", "/faq" , "/sign_up/client", "/sign_up/volunteer", "/terms_of_use", "/privacy_policy" ]
     headers['Content-Type'] = 'application/xml'
     @host = "#{request.protocol}#{request.host}"
   end

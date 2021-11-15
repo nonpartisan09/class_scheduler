@@ -6,9 +6,9 @@ import {
   AppBar,
   Toolbar,
   Menu,
-  ExpansionPanel,
-  ExpansionPanelSummary,
-  ExpansionPanelDetails,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
   Avatar,
 } from '@material-ui/core';
 import {
@@ -136,8 +136,8 @@ class Header extends Component {
     if (this.props.mobile) {
       return(
         <div className='wholeHeader'>
-          <ExpansionPanel className='menuMobile'>
-            <ExpansionPanelSummary
+          <Accordion className='menuMobile'>
+            <AccordionSummary
               expandIcon={ (
                 <FaBars
                   size={ menuIconSize }
@@ -145,13 +145,13 @@ class Header extends Component {
               ) }
             >
               { this.renderHomeButton() }
-            </ExpansionPanelSummary>
-            <ExpansionPanelDetails
-              classes={ { root: 'menuMobileExpansionPanelDetails' } }
+            </AccordionSummary>
+            <AccordionDetails
+              classes={ { root: 'menuMobileAccordionDetails' } }
             >
               { this.renderMobileElements() }
-            </ExpansionPanelDetails>
-          </ExpansionPanel>
+            </AccordionDetails>
+          </Accordion>
           <SnackBarComponent
             open={ this.state.showSnackBar }
             message={ this.state.message }
@@ -260,10 +260,10 @@ class Header extends Component {
     if (this.props.mobile) {
       return(
         <div className='langaugeMenuMobile'>
-          <ExpansionPanel
+          <Accordion
             classes={ { root: 'langaugeMenuMobilePanel', rounded: 'langaugeMenuMobilePanelRounded' } }
           >
-            <ExpansionPanelSummary
+            <AccordionSummary
               expandIcon={ (
                 <FaChevronDown />
               ) }
@@ -273,8 +273,8 @@ class Header extends Component {
                 id='Header.selectLanguage'
                 defaultMessage='Select Language'
               />
-            </ExpansionPanelSummary>
-            <ExpansionPanelDetails
+            </AccordionSummary>
+            <AccordionDetails
               classes={ { root: 'languageMenuContent' } }
             >
               <SliderButton
@@ -291,8 +291,8 @@ class Header extends Component {
               >
                 { languageSpanishValue }
               </SliderButton>
-            </ExpansionPanelDetails>
-          </ExpansionPanel>
+            </AccordionDetails>
+          </Accordion>
         </div>
       );
     } else {
@@ -438,10 +438,10 @@ class Header extends Component {
     if (this.props.mobile) {
       return(
         <div className='signedOutMenuMobile'>
-          <ExpansionPanel
+          <Accordion
             classes={ { root: 'signedOutMenuMobilePanel', rounded: 'signedOutMenuMobilePanelRounded' } }
           >
-            <ExpansionPanelSummary
+            <AccordionSummary
               expandIcon={ (
                 <FaChevronDown
                   className='signUpMenuChevron'
@@ -453,8 +453,8 @@ class Header extends Component {
                 id='signUp'
                 defaultMessage='Sign Up'
               />
-            </ExpansionPanelSummary>
-            <ExpansionPanelDetails
+            </AccordionSummary>
+            <AccordionDetails
               classes={ { root: 'signedOutMenuContent' } }
             >
               <SliderButton
@@ -473,8 +473,8 @@ class Header extends Component {
                   default='Sign Up As Volunteer'
                 />
               </SliderButton>
-            </ExpansionPanelDetails>
-          </ExpansionPanel>
+            </AccordionDetails>
+          </Accordion>
           <SliderButton
             to={ formatLink('/sign_in', locale) }
           >
@@ -613,10 +613,10 @@ class Header extends Component {
       if(this.props.mobile) {
         return(
           <span className='signedOutMenuMobile'>
-            <ExpansionPanel
+            <Accordion
               classes={ { root: 'signedOutMenuMobilePanel', rounded: 'signedOutMenuMobilePanelRounded' } }
             >
-              <ExpansionPanelSummary
+              <AccordionSummary
                 expandIcon={ (
                   <FaChevronDown
                     className='signUpMenuChevron'
@@ -629,8 +629,8 @@ class Header extends Component {
                   defaultMessage='User: {username}'
                   values={ { username: currentUser.first_name } }
                 />
-              </ExpansionPanelSummary>
-              <ExpansionPanelDetails
+              </AccordionSummary>
+              <AccordionDetails
                 classes={ { root: 'signedOutMenuContent' } }
               >
                 <SliderButton
@@ -649,8 +649,8 @@ class Header extends Component {
                     default='Sign out'
                   />
                 </SliderButton>
-              </ExpansionPanelDetails>
-            </ExpansionPanel>
+              </AccordionDetails>
+            </Accordion>
           </span>
         );
       } else {

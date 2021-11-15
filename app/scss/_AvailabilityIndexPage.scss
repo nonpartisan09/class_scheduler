@@ -5,12 +5,13 @@
 .availabilityIndexListContainer, .availabilityIndexProgramsContainer {
   list-style: none;
   -webkit-padding-start: 0;
-  display: inline-flex;
+  display: block;
   margin-top: 6px;
 }
 
 .availabilityIndexProgramsContainer {
   margin: 6px 0 0 12px;
+  display: inline-flex;
 }
 
 .availabilityListItem {

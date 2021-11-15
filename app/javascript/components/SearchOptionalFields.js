@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import TimePicker from 'material-ui/TimePicker';
-import MenuItem from 'material-ui/MenuItem';
-import SelectField from 'material-ui/SelectField';
-import FlatButton from 'material-ui/FlatButton';
+import { TimePicker } from '@material-ui/pickers';
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
+import Checkbox from '@material-ui/core/Checkbox';
+import ListItemText from '@material-ui/core/ListItemText';
+import Button from '@material-ui/core/Button';
+import FormControl from '@material-ui/core/FormControl';
+import FormHelperText from '@material-ui/core/FormHelperText';
 import { FormattedMessage } from 'react-intl';
 
 const UNIT = 'miles';
@@ -16,6 +20,7 @@ class SearchOptionalFields extends Component {
     this.handleToggleStartTime = this.handleToggleStartTime.bind(this);
     this.handleToggleEndTime = this.handleToggleEndTime.bind(this);
     this.handleToggleDistance = this.handleToggleDistance.bind(this);
+    this.selectionRendererDistance = this.selectionRendererDistance.bind(this);
 
 
     this.state = {
@@ -27,7 +32,7 @@ class SearchOptionalFields extends Component {
   render() {
     return (
       <div className='searchBarOptionalFieldContainer'>
-         { this.renderDistanceButton() }
+        { this.renderDistanceButton() }
 
         { this.renderDistance() }
       </div>
@@ -40,17 +45,15 @@ class SearchOptionalFields extends Component {
     if (city) {
       return (
         <div className='searchBarDistanceButton'>
-          <FlatButton
-            primary
-            label={ (
-              <FormattedMessage
-                id='searchOptionalFields.distance'
-                defaultMessage='Distance'
-              />
-            ) }
+          <Button
+            color='primary'
             onClick={ this.handleToggleDistance }
-            fullWidth
-          />
+          >
+            <FormattedMessage
+              id='searchOptionalFields.distance'
+              defaultMessage='Distance'
+            />
+          </Button>
         </div>
       );
     }
@@ -69,6 +72,7 @@ class SearchOptionalFields extends Component {
       return (
         <TimePicker
           className='searchBarStartTimePicker'
+          ampm={ false }
           format='24hr'
           hintText={  <FormattedMessage id='from' /> }
           value={ start_time }
@@ -134,38 +138,64 @@ class SearchOptionalFields extends Component {
 
     const { showDistance } = this.state;
     if (showDistance) {
-      return (
-        <SelectField
-          className='searchBarDistanceOption'
-          value={ distance }
-          errorText={ errors.distance }
-          onChange={ this.changeHandlerDistance }
-        >
-          <MenuItem
-            insetChildren
-            checked={ distance === 0 }
-            key={ 0 }
-            value={ 0 }
-            primaryText={ (
-              <FormattedMessage
-                id='SearchOptionalFields.any'
-                defaultMessage='Any'
+      return (        
+        <FormControl fullWidth error={ errors.distance !== undefined }>
+          <Select
+            className='searchBarDistanceOption'
+            value={ distance }
+            onChange={ this.changeHandlerDistance }
+            renderValue={ this.selectionRendererDistance }
+          >
+            <MenuItem
+              key={ 0 }
+              value={ 0 }
+          >
+              <Checkbox checked={ distance === 0 } />
+              <ListItemText primary={ (
+                <FormattedMessage
+                  id='SearchOptionalFields.any'
+                  defaultMessage='Any'
               />
-            ) }
-          />
-          <MenuItem insetChildren checked={ distance === 5 } key={ 1 } value={ 5 } primaryText={ `5 ${UNIT}` } />
-          <MenuItem insetChildren checked={ distance === 10 } key={ 2 } value={ 10 } primaryText={ `10 ${UNIT}` } />
-          <MenuItem insetChildren checked={ distance === 25 } key={ 3 } value={ 25 } primaryText={ `25 ${UNIT}` } />
-          <MenuItem insetChildren checked={ distance === 50 } key={ 4 } value={ 50 } primaryText={ `50 ${UNIT}` } />
-          <MenuItem insetChildren checked={ distance === 100 } key={ 5 } value={ 100 } primaryText={ `100 ${UNIT}` } />
-        </SelectField>
+            ) } />
+            </MenuItem>
+            <MenuItem key={ 1 } value={ 5 }>
+              <Checkbox checked={ distance === 5 } />
+              <ListItemText primary={ `5 ${UNIT}` } />
+            </MenuItem>
+            <MenuItem key={ 2 } value={ 10 }>
+              <Checkbox checked={ distance === 10 } />
+              <ListItemText primary={ `10 ${UNIT}` } />
+            </MenuItem>
+            <MenuItem key={ 3 } value={ 25 }>
+              <Checkbox checked={ distance === 25 } />
+              <ListItemText primary={ `25 ${UNIT}` } />
+            </MenuItem>
+            <MenuItem key={ 4 } value={ 50 }>
+              <Checkbox checked={ distance === 50 } />
+              <ListItemText primary={ `50 ${UNIT}` } />
+            </MenuItem>
+            <MenuItem key={ 5 } value={ 100 }>
+              <Checkbox checked={ distance === 100 } />
+              <ListItemText primary={ `100 ${UNIT}` } />
+            </MenuItem>
+          </Select>
+          <FormHelperText>{ errors.distance }</FormHelperText>
+        </FormControl>
       );
     }
   }
 
-  changeHandlerDistance(event, index, value) {
+  selectionRendererDistance(value) {
+    if (value === 0) {
+      return 'Any';
+    } else {
+      return `${value} ${UNIT}`;
+    }
+  }
+
+  changeHandlerDistance(event) {
     const { changeValue } = this.props;
-    changeValue('distance', value, { validate: true });
+    changeValue('distance', event.target.value, { validate: true });
   }
 
 }

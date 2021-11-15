@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   scope '(:locale)', locale: /en|es/ do
     root 'application#index'
     get 'terms_of_use' => 'application#t_and_c'
+    get 'privacy_policy' => 'application#priv_pol'
     get 'about' => 'application#about_page'
     get 'faq' => 'application#faq_page'
     get 'volunteer_sign_up_completed' => 'application#volunteer_sign_up_completed_page'

@@ -11,7 +11,8 @@ class RegistrationsController < Devise::RegistrationsController
 
     validate_role_params
     programs = Program.all
-    languages = Language.all
+    #url_slug refers to the language in English
+    languages = Language.order('url_slug')
     timezones = ActiveSupport::TimeZone.all.map(&:name)
     timezone_map = get_timezone_mapping
     how_they_found_us_options = @role_url_slug == 'volunteer' \
@@ -127,6 +128,7 @@ class RegistrationsController < Devise::RegistrationsController
         :role,
         :state,
         :terms_and_conditions,
+        :privacy_policy,
         :thumbnail_image,
         :timezone,
         :programs => '',

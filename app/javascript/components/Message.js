@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Avatar from 'material-ui/Avatar';
+import Avatar from '@material-ui/core/Avatar';
 import { FormattedMessage } from 'react-intl';
-import Divider from 'material-ui/Divider';
+import Divider from '@material-ui/core/Divider';
 import {
   Card,
   CardHeader,
-  CardText
-} from 'material-ui';
+  CardContent
+} from '@material-ui/core';
 import Linkify from 'linkifyjs/react';
 import { postData } from './utils/sendData';
 import FormData from './utils/FormData';
@@ -51,9 +51,9 @@ class Message extends Component {
             avatar={ this.renderAvatar() }
             title={ this.renderSubject() }
           />
-          <CardText expandable style={ styles }>
+          <CardContent expandable style={ styles }>
             <Linkify tagName='div'>{ body }</Linkify> 
-          </CardText>
+          </CardContent>
         </Card>
         { this.renderDivider() }
       </div>

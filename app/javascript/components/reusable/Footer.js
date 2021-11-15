@@ -67,6 +67,12 @@ class Footer extends Component {
                   defaultMessage='About'
                 />
               </a>
+              <a href={ formatLink('/privacy_policy', locale) }>
+                <FormattedMessage
+                  id='Footer.Priv'
+                  defaultMessage='Privacy Policy'
+                />
+              </a>
               <a href={ formatLink('/faq', locale) }>
                 <FormattedMessage
                   id='FAQPage'
@@ -76,7 +82,7 @@ class Footer extends Component {
               <a href={ formatLink('/terms_of_use', locale) }>
                 <FormattedMessage
                   id='Footer.TAC'
-                  defaultMessage='Terms & Conditions'
+                  defaultMessage='Terms of Use'
                 />
               </a>
             </span>

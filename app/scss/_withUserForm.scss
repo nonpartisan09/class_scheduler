@@ -45,11 +45,25 @@
 
 
 .userFormInputField {
-    min-width: 500px;
+    min-width: 500px ;
+    padding-bottom: 10px;
+
+    &.MuiFormControl-root{
+        min-width: 500px ;
+        padding-bottom: 10px;
+    }
 }
 
 .userFormInputField > label {
-  color: #0099ff !important;
+    color: #0099ff !important;
+    
+    &.MuiInputLabel-root {
+        transform: scale(0.75);
+    }    
+}
+
+.userFormBadge {
+    transform: 'translateY(18px)';
 }
 
 .userFormImage {

@@ -20,6 +20,19 @@
     width: auto !important;
 }
 
+
+.timePickerLabel {
+    &.MuiFormControlLabel-root {
+        margin-left: 0px;
+        margin-right: 16px;
+    }
+    
+    &.MuiTypography-root.MuiFormControlLabel-label.MuiTypography-body1 {
+        margin-right: 20px;
+    }
+}
+
+
 @media (max-width: 700px) {
     .availabilitySelectorContainer > div {
         flex-direction: column;
