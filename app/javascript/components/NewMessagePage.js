@@ -97,7 +97,7 @@ class NewMessagePage extends Component {
             <TextField
               name='body'
               value={ body }
-              className='userFormInputField
+              className='userFormInputField'
               hintText={ errors.body }
               multiline
               label={
