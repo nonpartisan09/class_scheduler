@@ -35,7 +35,7 @@ gem 'aws-sdk', '~> 3.0', require: false
 gem 'pg', '~> 1.1'
 
 gem 'will_paginate', '~> 3.1'
-
+gem "daemons"
 gem 'delayed_job', '~> 4.1'
 gem 'devise', '~> 4.6'
 
@@ -53,9 +53,10 @@ gem 'ffi', '~> 1.11'
 
 gem 'active_model_serializers', '~> 0.10.0'
 
+gem 'puma', '~> 3.12.6'
+
 group :development, :test do
   # elastic beanstalk has a globally installed version of puma
-  gem 'puma', '~> 3.12.6'
 
 	gem 'factory_bot_rails', '~> 4.8'
 

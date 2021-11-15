@@ -18,7 +18,7 @@ ActiveAdmin.register Conversation do
       link_to User.find(conversation[:recipient_id]).email, admin_user_path(conversation[:recipient_id])
     end
     column "Timely" do |conversation|
-      conversation.is_timely?
+      conversation.timely?
     end
     column :updated_at
     column :created_at

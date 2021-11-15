@@ -34,10 +34,17 @@ class Conversation < ApplicationRecord
     author == user || recipient == user
   end
 
-  def is_timely?
-    last_message = messages.first
+  def check_timely
+    return if messages.empty?
+
+    last_message = messages.order(created_at: :desc).first
     time_since_last_message = DateTime.now.to_i - last_message.created_at.to_i
 
-    return last_message.user.volunteer? || time_since_last_message < 2.days || last_message.created_at > 5.days
+    is_timely = last_message.user.volunteer? || # if the last message is from the volunteer, it is timely 
+      time_since_last_message < 2.days || # it is still timely if the last message is newer than 2 days
+      last_message.created_at < DateTime.now - 5.days # don't mark untimely if older than 5 days
+
+    self.update(timely: is_timely) if is_timely != self.timely
+    return is_timely
   end
 end

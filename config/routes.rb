@@ -3,7 +3,7 @@
 Rails.application.routes.draw do
   devise_for :users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
-  post 'check_responses', to: 'users#check_responses'
+  get 'check_responses', to: 'users#check_responses'
 
   scope '(:locale)', locale: /en|es/ do
     root 'application#index'

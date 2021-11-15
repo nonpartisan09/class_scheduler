@@ -199,7 +199,7 @@ class UserDecorator
   end
 
   def responsive
-    @user.responsive?
+    !@user.unresponsive?
   end
 
   def timeout

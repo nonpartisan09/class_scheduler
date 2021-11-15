@@ -19,10 +19,12 @@
 
 /node_modules
 /public
+/public/*
 /yarn-error.log
 /vendor/bundle
 
 .byebug_history
+/public/packs
 /public/packs-test
 
 .idea

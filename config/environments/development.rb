@@ -28,6 +28,7 @@ Rails.application.configure do
   # Care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.delivery_method = :letter_opener
+  config.action_mailer.perform_deliveries = true
   config.action_mailer.default_url_options = { :host => 'http://localhost:5000' }
 
   config.roadie_options = {
@@ -62,7 +63,15 @@ Rails.application.configure do
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
   config.action_mailer.default_options = { from: 'noreply@tutoria.io' }
-  config.active_job.queue_adapter = :async
+  config.active_job.queue_adapter = :delayed_job
+end
 
-  ENV["RESPONSIVE_JOB_TOKEN"] ||= "yri7Lu6QEWaCxhC2rakK"
+LetterOpener.configure do |config|
+  # To overrider the location for message storage.
+  # Default value is `tmp/letter_opener`
+  config.location = Rails.root.join('tmp', 'my_mails')
+
+  # To render only the message body, without any metadata or extra containers or styling.
+  # Default value is `:default` that renders styled message with showing useful metadata.
+  config.message_template = :light
 end

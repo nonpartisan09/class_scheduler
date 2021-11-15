@@ -122,6 +122,11 @@ class User < ActiveRecord::Base
     end
   end
 
+  def unresponsive!
+    user.update!(unresponsive: true, timeout: true)
+    user.send_unresponsive_email(convo)
+  end
+
   def admin_user_creation!
     generated_password = Devise.friendly_token.first(8)
     self.password = generated_password
@@ -169,23 +174,8 @@ class User < ActiveRecord::Base
     known_cities
   end
 
-  # Added as a class method to avoid n+1 query when performing User::responsive? for each
-  # user from ResponsiveUsersJob
-  def self.all_responsive?
-    users = User.all.includes(received_conversations: :messages)
-    User.audit_conversations(users)
-  end
-  
-  # “Premature optimization is the root of all evil”
-  def responsive?
-    self.received_conversations.all? { |convo| convo.is_timely? }
-  end
-
   # creates a timeout and send email for use when volunteers is unresponsive
-  def create_timeout(conversation)
-    return if timeout # no need to send email or update record if already timed out
-
-    self.update!(timeout: true)
+  def send_unresponsive_email(conversation)
     client = conversation.author
     program = client.programs.first # currenttly we are not saving the program selected to conversation, this is a stopgap measure
 
@@ -195,6 +185,27 @@ class User < ActiveRecord::Base
     else # client.locale == "en"
       UserMailer.unresponsive_client_eng(self, client, conversation, program).deliver_later
     end
+  end
+
+  def all_timely
+    received_conversations.all?(&:timely)
+  end
+
+  def audit_conversations
+    received_conversations.each do |convo| 
+      unresponsive! if !convo.check_timely && convo.timely?
+    end
+
+    all_timely && unresponsive && update!(unresponsive: false)
+  end
+
+  def audit_conversation(conversation)
+    unresponsive! unless conversation.check_timely && conversation.timely?
+  end
+
+  def self.audit_conversations
+    users = User.all.includes(received_conversations: :messages)
+    users.each(&:audit_conversations)
   end
 
   private
@@ -220,15 +231,5 @@ class User < ActiveRecord::Base
                       .limit(1)
                       .pluck('latitude', 'longitude')
     coordinates[0]
-  end
-
-  def self.audit_conversations(users)
-    users.each do |user|
-      user.received_conversations.each do |convo| 
-        user.create_timeout(convo) unless convo.is_timely?
-      end
-
-      user.timeout && user.update!(timeout: false)
-    end
   end
 end

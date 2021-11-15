@@ -38,10 +38,6 @@ const ConversationAvatar = withStyles({
 class ConversationIndexPage extends Component {
   constructor(props, context) {
     super(props, context);
-    this.untimelyConversation = false;
-    this.untimelyConversation = props.currentUser.volunteer && props.conversations && props.conversations.some(convo => !convo.is_timely);
-    console.log(props);
-    console.log(this.untimelyConversation);
     this.handleClose = this.handleClose.bind(this);
 
     this.state = {
@@ -73,12 +69,12 @@ class ConversationIndexPage extends Component {
   }
 
   renderError() {
-    if (this.untimelyConversation) {
+    if (!this.props.currentUser.responsive) {
       return (
         <p className="untimely-warning">
           <FormattedMessage
             id='ConversationIndexPage.DeactivatedError'
-            defaultMessage=' Please note messages older than a month are automatically deleted.'
+            defaultMessage='* Conversations outlined in red have messages received 48 hours ago and require a response.'
           />
         </p>
       );
@@ -160,11 +156,10 @@ class ConversationIndexPage extends Component {
     const { conversations, currentUser } = this.props;
 
     return _.map(conversations, (conversation) => {
-      const { conversee, id, conversee_avatar, is_first_message_unread, is_timely } = conversation;
-      if (!is_timely) this.untimelyConversation = true;
+      const { conversee, id, conversee_avatar, is_first_message_unread, timely } = conversation;
       return (
-        <div 
-          className={ is_timely || !currentUser.volunteer ? '' : 'untimely-conversation' }
+        <div
+          className={ timely || !currentUser.volunteer ? '' : 'untimely-conversation' }
           onClick={ this.handleClick(id) }
           key={ conversee }
         >
@@ -235,6 +230,7 @@ ConversationIndexPage.propTypes = {
     volunteer: PropTypes.bool,
     client: PropTypes.bool,
     locale: PropTypes.string,
+    responsive: PropTypes.bool
   }),
 };
 
@@ -250,6 +246,7 @@ ConversationIndexPage.defaultProps = {
     password: '',
     password_confirmation: '',
     thumbnail_image: '',
+    responsive: true,
   },
 };
 
