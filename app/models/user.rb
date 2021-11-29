@@ -122,9 +122,9 @@ class User < ActiveRecord::Base
     end
   end
 
-  def unresponsive!
-    user.update!(unresponsive: true, timeout: true)
-    user.send_unresponsive_email(convo)
+  def unresponsive!(convo)
+    self.update!(unresponsive: true, timeout: true)
+    self.send_unresponsive_email(convo)
   end
 
   def admin_user_creation!
@@ -200,7 +200,7 @@ class User < ActiveRecord::Base
   end
 
   def audit_conversation(conversation)
-    unresponsive! unless conversation.check_timely && conversation.timely?
+    unresponsive!(conversation) unless conversation.check_timely && conversation.timely?
   end
 
   def self.audit_conversations
