@@ -89,8 +89,8 @@ class ConversationIndexPage extends Component {
             id='ConversationIndexPage.alertInfo'
             defaultMessage=' Please note messages older than a month are automatically deleted.'
           />
-          <span className='alertCloseButton' onClick={this.handleClose}>
-            <CloseIcon color='#0c5460' style={{ width: '20x', height: '20px' }} />
+          <span className='alertCloseButton' onClick={ this.handleClose }>
+            <CloseIcon color='#0c5460' style={ { width: '20x', height: '20px' } } />
           </span>
         </div>
       );
@@ -107,34 +107,31 @@ class ConversationIndexPage extends Component {
       const button = function () {
         if (client) {
           return (
-            <a href={ formatLink('/search', locale) }>
-              <Button
-                variant='contained'
-                primary
-                label={ (
-                  <FormattedMessage
-                    id='ConversationIndexPage.Search'
-                    defaultMessage='Search for volunteers'
-                  />
-                ) }
-                className='conversationButton'
-              />
-            </a>
+            <Button
+              variant='contained'
+              primary
+              className='conversationButton'
+              href={ formatLink('/search', locale) }
+              >
+              <FormattedMessage
+                id='ConversationIndexPage.Search'
+                defaultMessage='Search for volunteers'
+            /> 
+            </Button>
+            
           );
         } else if (volunteer) {
           return (
-            <a href={ formatLink('/availabilities/new', locale) }>
-              <Button
-                variant='contained'
-                primary
-                className='conversationButton'
-                label={(
-                  <FormattedMessage
-                    id='availabilityCreateNew'
-                  />
-                ) }
+            <Button
+              variant='contained'
+              primary
+              className='conversationButton'
+              href={ formatLink('/availabilities/new', locale) }
+              >
+              <FormattedMessage
+                id='availabilityCreateNew'
               />
-            </a>
+            </Button>
           );
         }
       }();

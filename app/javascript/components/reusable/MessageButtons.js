@@ -30,33 +30,30 @@ class MessageButtons extends Component {
           <Button
             className='messageButtonItem'
             variant='contained'
-            label={ (
-              <span>
-                <div className='searchResultItemRequestIcon'>
-                  <EmailIcon color='white' />
-                </div>
-                <FormattedMessage
-                  id={ messageType.id }
-                  defaultMessage={ messageType.default }
-                    />
-              </span>
-                ) }
             primary
-            />
-        </Link>
-        <a href={ formatLink(`/profiles/${newMessageRecipient}`, locale) }>
-          <Button
-            className='searchResultItemVisitProfile'
-            label={ (
+          >
+            <span>
+              <div className='searchResultItemRequestIcon'>
+                <EmailIcon color='white' />
+              </div>
               <FormattedMessage
-                id='SearchResultItem.viewProfile'
-                defaultMessage='View Profile'
-                />
-                ) }
-            primary
-            onClick={ handleViewProfileClick }
-            />
-        </a>
+                id={ messageType.id }
+                defaultMessage={ messageType.default }
+                    />
+            </span>
+          </Button>
+        </Link>
+        <Button
+          className='searchResultItemVisitProfile'
+          primary
+          onClick={ handleViewProfileClick }
+          href={ formatLink(`/profiles/${newMessageRecipient}`, locale) }
+          >
+          <FormattedMessage
+            id='SearchResultItem.viewProfile'
+            defaultMessage='View Profile'
+             /> 
+        </Button>
       </CardActions>
         );
   }
