@@ -31,20 +31,25 @@ class ReviewContainer extends Component {
         <div className='reviewContainerReview' 
         >
           { this.renderReview() }
+          { this.state.error && (
+          <p className='MuiFormHelperText-root Mui-error MuiFormHelperText-filled'>
+            { this.state.error }
+          </p>
+) }
         </div>
         <div className='reviewContainerComment'>
           <TextField
             name='comment'
-            value={ comment }
-            
+            value={ comment }            
             label={ (
               <FormattedMessage
                 id='ReviewContainer.comment'
                 defaultMessage='Leave a comment'
               />
             ) }
-            onChange={ this.handleChangeComment }
-            
+            error={ this.state.error }
+            onChange={ this.handleChangeComment } 
+            helperText={ this.state.error }           
           />
         </div>
 
@@ -53,14 +58,12 @@ class ReviewContainer extends Component {
           color="primary"
           className='reviewContainerSubmitButton'
           style={ {  top: '22px', left: '10px' } }
-          label={ (
-            <FormattedMessage
-              id='ReviewContainer.SubmitButton'
-              defaultMessage='Submit Review'
-            />
-          ) }
-          onClick={ this.handleSubmit } > Submit Review
-           </Button>
+          onClick={ this.handleSubmit }> 
+          <FormattedMessage
+            id='ReviewContainer.SubmitButton'
+            defaultMessage='Submit Review'
+        />
+        </Button>
         
       </div>
     );
@@ -110,15 +113,11 @@ class ReviewContainer extends Component {
     const { comment, review } = this.state;
     const { onClick } = this.props;
 
-    if (comment && !review) {
+    if (!review) {
       this.setState({
         error: 'Please leave a rating'
       });
-    } else if (!review) {
-      this.setState({
-        error: 'Minimum 1 star rating required'
-      });
-    }else {
+    } else {
       onClick(review, comment);
     }
   }
