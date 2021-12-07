@@ -109,7 +109,7 @@ class ConversationIndexPage extends Component {
           return (
             <Button
               variant='contained'
-              primary
+              color='primary'
               className='conversationButton'
               href={ formatLink('/search', locale) }
               >
@@ -124,7 +124,7 @@ class ConversationIndexPage extends Component {
           return (
             <Button
               variant='contained'
-              primary
+              color='primary'
               className='conversationButton'
               href={ formatLink('/availabilities/new', locale) }
               >

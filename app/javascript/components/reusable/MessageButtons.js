@@ -30,7 +30,7 @@ class MessageButtons extends Component {
           <Button
             className='messageButtonItem'
             variant='contained'
-            primary
+            color='primary'
           >
             <span>
               <div className='searchResultItemRequestIcon'>
@@ -39,13 +39,13 @@ class MessageButtons extends Component {
               <FormattedMessage
                 id={ messageType.id }
                 defaultMessage={ messageType.default }
-                    />
+              />
             </span>
           </Button>
         </Link>
         <Button
           className='searchResultItemVisitProfile'
-          primary
+          color='primary'
           onClick={ handleViewProfileClick }
           href={ formatLink(`/profiles/${newMessageRecipient}`, locale) }
           >

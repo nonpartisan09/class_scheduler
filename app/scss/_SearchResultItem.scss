@@ -50,6 +50,10 @@
 .message-buttons {
   display: flex;
   justify-content: space-evenly;
+
+  & a{
+    text-decoration: none;
+  }
 }
 
 @media (min-width: 750px) {
