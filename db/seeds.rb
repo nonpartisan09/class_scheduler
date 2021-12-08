@@ -36,7 +36,7 @@ Role.create(
 )
 
 TermsAndConditions.create(
-  description: 'some text'
+  description: 'some text',
   spanish_description: 'terms and conditions page in Spanish'
 )
 
