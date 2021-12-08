@@ -26,7 +26,10 @@ class MessageButtons extends Component {
     const { locale, newMessageRecipient, newMessageFirstName, messageType, handleViewProfileClick  } = this.props;
     return (
       <CardActions className="message-buttons">
-        <Link to={ { pathname: formatLink('/messages/new', locale), query: { recipient: newMessageRecipient, userName: newMessageFirstName } } }>
+        <Link
+          to={ { pathname: formatLink('/messages/new', locale), query: { recipient: newMessageRecipient, userName: newMessageFirstName } } }
+          style={ { textDecoration: 'none' } }
+        >
           <Button
             className='messageButtonItem'
             variant='contained'
@@ -48,11 +51,11 @@ class MessageButtons extends Component {
           color='primary'
           onClick={ handleViewProfileClick }
           href={ formatLink(`/profiles/${newMessageRecipient}`, locale) }
-          >
+        >
           <FormattedMessage
             id='SearchResultItem.viewProfile'
             defaultMessage='View Profile'
-             /> 
+          />
         </Button>
       </CardActions>
         );
