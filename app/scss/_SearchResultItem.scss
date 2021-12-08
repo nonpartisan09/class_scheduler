@@ -4,6 +4,7 @@
 
 .searchResultItemDetails p {
     min-height: 14px;
+    font-size: 14px;
 }
 
 .searchResultItemTruncate {
@@ -50,6 +51,10 @@
 .message-buttons {
   display: flex;
   justify-content: space-evenly;
+
+  & a{
+    text-decoration: none;
+  }
 }
 
 @media (min-width: 750px) {
