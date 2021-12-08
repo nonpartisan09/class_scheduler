@@ -4,6 +4,7 @@ import _ from 'lodash';
 
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
+import FormHelperText from '@material-ui/core/FormHelperText';
 import { FormattedMessage } from 'react-intl';
 
 class ReviewContainer extends Component {
@@ -28,14 +29,8 @@ class ReviewContainer extends Component {
 
     return (
       <div>
-        <div className='reviewContainerReview' 
-        >
-          { this.renderReview() }
-          { this.state.error && (
-          <p className='MuiFormHelperText-root Mui-error MuiFormHelperText-filled'>
-            { this.state.error }
-          </p>
-) }
+        <div className='reviewContainerReview'>
+          { this.renderReview() }          
         </div>
         <div className='reviewContainerComment'>
           <TextField
@@ -47,9 +42,7 @@ class ReviewContainer extends Component {
                 defaultMessage='Leave a comment'
               />
             ) }
-            error={ this.state.error }
-            onChange={ this.handleChangeComment } 
-            helperText={ this.state.error }           
+            onChange={ this.handleChangeComment }           
           />
         </div>
 
@@ -70,7 +63,7 @@ class ReviewContainer extends Component {
   }
 
   renderReview() {
-    const { review } = this.state;
+    const { review, error } = this.state;
 
     return [
       _.times(5, (index) => {
@@ -91,7 +84,12 @@ class ReviewContainer extends Component {
             />
           </div>
         );
-      })
+      }),
+      error && (
+        <FormHelperText error>
+          { error }
+        </FormHelperText>
+      )
     ];
   }
 
