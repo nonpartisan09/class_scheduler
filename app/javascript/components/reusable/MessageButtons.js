@@ -33,8 +33,8 @@ class MessageButtons extends Component {
           <Button
             className='messageButtonItem'
             variant='contained'
-            color='primary'            
-            >
+            color='primary'
+          >
             <span>
               <div className='searchResultItemRequestIcon'>
                 <EmailIcon color='white' />
