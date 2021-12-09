@@ -101,45 +101,54 @@ class SignIn extends Component {
             ) }
             label="Remember me"
           />
-
-          <Button
-            variant='contained'
-            color="primary"
-            onClick={ this.handleSignIn }
-            className="signInLink"
-          >
-            <FormattedMessage
-              id="signIn"
-              defaultMessage="Sign In"
-            />
-          </Button>
-
+          <div>
+            <Button
+              variant='contained'
+              color="primary"
+              onClick={ this.handleSignIn }
+              className="signInLink"
+            >
+              <FormattedMessage
+                id="signIn"
+                defaultMessage="Sign In"
+              />
+            </Button>
+          </div>
           <div className="signInLinkSecondaryContainer">
-            <a href={ formatLink('/password/new', locale) } className="signInLinkSecondary">
-              <Button color="primary" onClick={ this.handleForgotClick }>
-                <FormattedMessage
-                  id="SignIn.passwordRecovery"
-                  defaultMessage="Forgot your password?"
-                  />
-              </Button>
-            </a>
-
-            <a href={ formatLink('/sign_up/client', locale) } className="signInLinkSecondary">
-              <Button color="primary">
-                <FormattedMessage
-                  id="signUpClient"
+            <Button 
+              color="primary" 
+              className="signInLinkSecondary"
+              onClick={ this.handleForgotClick }
+              href={ formatLink('/password/new', locale) }
+              >
+              <FormattedMessage
+                id="SignIn.passwordRecovery"
+                defaultMessage="Forgot your password?"
+                className="signInLinkSecondary"
                 />
-              </Button>
-            </a>
+            </Button>
 
-            <a href={ formatLink('/sign_up/volunteer', locale) } className="signInLinkSecondary">
-              <Button color="primary"> 
-                <FormattedMessage
-                  id="signUpVolunteer"
-                  defaultMessage="Sign up as a volunteer"
-                />
-              </Button>
-            </a>
+            <Button 
+              color="primary"
+              href={ formatLink('/sign_up/client', locale) }
+            >
+              <FormattedMessage
+                id="signUpClient"
+                className="signInLinkSecondary"
+              />
+            </Button>
+
+            
+            <Button 
+              color="primary"
+              href={ formatLink('/sign_up/volunteer', locale) }
+              > 
+              <FormattedMessage
+                id="signUpVolunteer"
+                defaultMessage="Sign up as a volunteer"
+                className="signInLinkSecondary"
+              />
+            </Button>
           </div>
 
           { this.renderSnackBar() }
