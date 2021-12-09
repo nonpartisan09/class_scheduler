@@ -19,7 +19,6 @@ class SearchResults extends Component {
     super(props);
 
     this.handleChange = this.handleChange.bind(this);
-    this.handleBlur = this.handleBlur.bind(this);
     this.handlePageClick = this.handlePageClick.bind(this);
 
     const { location: { state } } = props;
@@ -68,21 +67,21 @@ class SearchResults extends Component {
     if (isCurrentUserLocated(currentUser)) {
       return (
         <div className='searchResultDropdown'>
-          <Select value={ this.state.sortBy } onClose={ this.handleBlur } onChange={ this.handleChange }>
-            <MenuItem value={ RECENT } primaryText='Recently Logged In' />
-            <MenuItem value={ CLOSEST } primaryText='Closest' />
-            <MenuItem value={ HIGHEST } primaryText='Highest Rating' />
-            <MenuItem value={ NEWEST } primaryText='Newly created' />
+          <Select value={ this.state.sortBy } onChange={ this.handleChange }>
+            <MenuItem value={ RECENT }>Recently Logged In</MenuItem>
+            <MenuItem value={ CLOSEST }>Closest</MenuItem>
+            <MenuItem value={ HIGHEST }>Highest Rating</MenuItem>
+            <MenuItem value={ NEWEST }>Newly created</MenuItem>
           </Select>
         </div>
       );
     } else {
       return (
         <div className='searchResultDropdown'>
-          <Select value={ this.state.sortBy } onClose={ this.handleBlur } onChange={ this.handleChange }>
-            <MenuItem value={ RECENT } primaryText='Recently Logged In' />
-            <MenuItem value={ HIGHEST } primaryText='Highest Rating' />
-            <MenuItem value={ NEWEST } primaryText='Newly created' />
+          <Select value={ this.state.sortBy } onChange={ this.handleChange }>
+            <MenuItem value={ RECENT }>Recently Logged In</MenuItem>
+            <MenuItem value={ HIGHEST }>Highest Rating</MenuItem>
+            <MenuItem value={ NEWEST }>Newly created</MenuItem>
           </Select>
         </div>
       );
@@ -152,7 +151,7 @@ class SearchResults extends Component {
 
   renderVolunteers() {
     const { volunteers } = this.state;
-
+    console.log('##########'+ this.state.sortBy);
     if (volunteers) {
       const { currentUser: { locale }, currentUser, history } = this.props;
       const { search } = this.state;
@@ -183,18 +182,15 @@ class SearchResults extends Component {
     }
   }
 
-  handleChange(event, index, value) {
-    this.setState({
-      sortBy: value
-    });
-  }
+  handleChange(event) {
+    console.log("in handleChange");
 
-  handleBlur() {
+
     const { sortBy, search } = this.state;
     const { currentUser: { locale } } = this.props;
 
     const requestParams = {
-      url: SearchUrl({ ...search, order: sortBy, locale }),
+      url: SearchUrl({ ...search, order: event.target.value, locale }),
 
       successCallBack: ({ volunteers, current_page, page_count }) => {
         this.setState({
@@ -210,9 +206,12 @@ class SearchResults extends Component {
         });
       }
     };
-
+    this.setState({
+      sortBy: event.target.value
+    });
     return getData(requestParams);
   }
+
 }
 
 SearchResults.propTypes = {
