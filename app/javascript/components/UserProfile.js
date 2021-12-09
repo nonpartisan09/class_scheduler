@@ -58,7 +58,7 @@ class UserProfile extends Component {
   render() {
     return (
       <div>
-        <Paper className='paperOverride userProfilePaper' >
+        <Paper className='paperOverride userProfilePaper'>
           { this.renderContent() }
         </Paper>
         { this.renderSnackBar() }
@@ -109,13 +109,11 @@ class UserProfile extends Component {
                 className='userProfileMessageButton'
                 color="primary"
                 style={ {  top: '20px', right: '10px' } }
-                label={ (
-                  <FormattedMessage
-                    id='UserProfile.messageUser'
-                    defaultMessage='Message User'
-                  />
-                ) }
-              >Message User
+              >
+                <FormattedMessage
+                  id='UserProfile.messageUser'
+                  defaultMessage='Message User'
+                />
               </Button>
             </Link>
 
@@ -183,7 +181,7 @@ class UserProfile extends Component {
             { !user.timeout && this.renderAvailabilities() }
 
             <Link className='userProfileSendEmail' to={ { pathname: '/messages/new', query: { recipient: url_slug, userName: first_name } } }>
-              <Fab color="primary" >
+              <Fab color="primary">
                 <EditIcon />
               </Fab>
             </Link>
@@ -205,8 +203,7 @@ class UserProfile extends Component {
             /> 
           ) }
           onClick={ this.handleViewProfileClick }
-        > 
-        </Button>
+         />
       </div>
     );
   }

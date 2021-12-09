@@ -4,6 +4,7 @@ import _ from 'lodash';
 
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
+import FormHelperText from '@material-ui/core/FormHelperText';
 import { FormattedMessage } from 'react-intl';
 
 class ReviewContainer extends Component {
@@ -28,23 +29,20 @@ class ReviewContainer extends Component {
 
     return (
       <div>
-        <div className='reviewContainerReview' 
-        >
-          { this.renderReview() }
+        <div className='reviewContainerReview'>
+          { this.renderReview() }          
         </div>
         <div className='reviewContainerComment'>
           <TextField
             name='comment'
-            value={ comment }
-            
+            value={ comment }            
             label={ (
               <FormattedMessage
                 id='ReviewContainer.comment'
                 defaultMessage='Leave a comment'
               />
             ) }
-            onChange={ this.handleChangeComment }
-            
+            onChange={ this.handleChangeComment }           
           />
         </div>
 
@@ -53,21 +51,19 @@ class ReviewContainer extends Component {
           color="primary"
           className='reviewContainerSubmitButton'
           style={ {  top: '22px', left: '10px' } }
-          label={ (
-            <FormattedMessage
-              id='ReviewContainer.SubmitButton'
-              defaultMessage='Submit Review'
-            />
-          ) }
-          onClick={ this.handleSubmit } > Submit Review
-           </Button>
+          onClick={ this.handleSubmit }> 
+          <FormattedMessage
+            id='ReviewContainer.SubmitButton'
+            defaultMessage='Submit Review'
+        />
+        </Button>
         
       </div>
     );
   }
 
   renderReview() {
-    const { review } = this.state;
+    const { review, error } = this.state;
 
     return [
       _.times(5, (index) => {
@@ -88,7 +84,12 @@ class ReviewContainer extends Component {
             />
           </div>
         );
-      })
+      }),
+      error && (
+        <FormHelperText error>
+          { error }
+        </FormHelperText>
+      )
     ];
   }
 
@@ -110,15 +111,11 @@ class ReviewContainer extends Component {
     const { comment, review } = this.state;
     const { onClick } = this.props;
 
-    if (comment && !review) {
+    if (!review) {
       this.setState({
         error: 'Please leave a rating'
       });
-    } else if (!review) {
-      this.setState({
-        error: 'Minimum 1 star rating required'
-      });
-    }else {
+    } else {
       onClick(review, comment);
     }
   }
