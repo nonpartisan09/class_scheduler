@@ -17,6 +17,8 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import ListItemText from '@material-ui/core/ListItemText';
+import Link from '@material-ui/core/Link';
+import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import validate, { useSecondArgument } from 'react-joi-validation';
 
@@ -287,7 +289,6 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                 <ImageInput
                   icon={ <PhotoIcon /> }
                   value={ thumbnail_image }
-
                   onLoad={ this.handleImageUpload }
                 />
               </div>
@@ -363,7 +364,6 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
                 <Select                
                   value={ timezone }
                   className='userFormInputField timezones'
-                  // helperText={ this.errorLanguageHandler('timezone') }
                   onChange={ this.changeTimezoneHandler }
                   onBlur={ validateHandler('timezone') }
                   renderValue={ (selected) => selected }
@@ -443,7 +443,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
       );
     }
 
-    renderUserRegion(country, state, validateHandler, errors) {
+    renderUserRegion(country, state, validateHandler) {
       if (!country || country === 'United States') {
         const countries = Countries.map(c => c.countryName);
 
@@ -459,7 +459,6 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
               <Select              
                 value={ country ? country : '' }
                 className='userFormInputField country'
-              // helperText={ this.errorLanguageHandler('country') }
                 onChange={ this.changeCountryHandler }
                 onBlur={ validateHandler('country') }
                 renderValue={ (selected) => selected }
@@ -486,7 +485,6 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
               <Select              
                 value={ state }
                 className='userFormInputField state'
-              // helperText={ this.errorLanguageHandler('state') }
                 onChange={ this.changeStateHandler }
                 onBlur={ validateHandler('state') }
                 renderValue={ (selected) => selected }
@@ -526,7 +524,6 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
               }
               value={ country ? country : 'United States' }
               className='userFormInputField country'
-              // helperText={ this.errorLanguageHandler('country') }
               onChange={ this.changeCountryHandler }
               onBlur={ validateHandler('country') }
               renderValue={ (selected) => selected }
@@ -556,7 +553,6 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
               }
               value={ state }
               className='userFormInputField state'
-              // helperText={ this.errorLanguageHandler('state') }
               onChange={ this.changeStateHandler }
               onBlur={ validateHandler('state') }
               renderValue={ (selected) => selected }
@@ -797,7 +793,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
       const { languages } = this.props;
             
       if (_.size(languages) > 0) {
-        const { errors, validateHandler, currentUser: { languages: userLanguages } } = this.props;
+        const { validateHandler, currentUser: { languages: userLanguages } } = this.props;
         
         return (
           <div className='userFormInputField languages'>
@@ -815,7 +811,6 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
               onBlur={ validateHandler('languages') }
               multiple
               error={ this.errorLanguageHandler('languages') }
-              //helperText={ this.errorLanguageHandler('languages') }
               renderValue={ this.selectionRenderer }
             >
               { _.map(languages, ({ name, id }) => {
@@ -845,7 +840,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
 
         if (showPassword) {
           const {
-            errors, changeHandler, validateHandler,
+            changeHandler, validateHandler,
             currentUser: {
               password,
               password_confirmation,
@@ -933,7 +928,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
       } else {
 
         const {
-          errors, changeHandler, validateHandler,
+          changeHandler, validateHandler,
           currentUser: {
             password,
             password_confirmation,
@@ -993,7 +988,6 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
 
       const {
         validateHandler,
-        errors,
         currentUser: {
           how_they_found_us
         },
@@ -1021,7 +1015,6 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
             name='howTheyFoundUs'
             value={ how_they_found_us }
             className='userFormInputField howTheyFoundUs'
-            // helperText={ this.errorLanguageHandler('how_they_found_us') }
             onChange={ this.changeHowTheyFoundUsHandler }
             onBlur={ validateHandler('how_they_found_us') }
             renderValue={ (selected) => selected }
@@ -1081,7 +1074,6 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
       if (type === SIGN_UP) {
         const {
           changeHandler,
-          errors,
           currentUser: {
             terms_and_conditions,
             privacy_policy,
@@ -1092,23 +1084,21 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
 
         return (
           <div>
-            <div className='userFormTermsAndConditionsLink'>
-              <a href={ formatLink('/terms_of_use', locale) } className='slidingLink' target='_blank' rel='noreferrer noopener'>
+            <Typography>
+              <Link href={ formatLink('/terms_of_use', locale) } className='slidingLink' target='_blank' rel='noreferrer noopener'>
                 <FormattedMessage
                   id='UserForm.termsRead'
                   defaultMessage='Please read Tutoría’s Term of Use.'
                 />
-              </a>
-            </div>
-
-            <div className='userPrivacyPolicy'>
-              <a href={ formatLink('/privacy_policy', locale) } className='slidingLink' target='_blank' rel='noreferrer noopener'>
+              </Link>
+              <br />
+              <Link href={ formatLink('/privacy_policy', locale) } className='slidingLink' target='_blank' rel='noreferrer noopener'>
                 <FormattedMessage
                   id='UserForm.privacyRead'
                   defaultMessage='Please read Tutoría’s Privacy Policy.'
                 />
-              </a>
-            </div>
+              </Link>
+            </Typography>
             <FormControlLabel
               control={ (
                 <Checkbox
@@ -1133,15 +1123,15 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
               control={ (
                 <Checkbox
                   checked={ privacy_policy }
-                  className='privacyPolicy'
-                  onCheck={ changeHandler('privacy_policy', { validate: true, strategy: useSecondArgument }) }
+                  name='privacyPolicy'
+                  onChange={ changeHandler('privacy_policy', { validate: true, strategy: useSecondArgument }) }
                   color='primary'
-            />
-            ) }
+                />
+              ) }
               label={
               (
                 <FormattedMessage
-                  id='UserForm.privacysAccept'
+                  id='UserForm.privacyAccept'
                   defaultMessage='I accept Tutoría’s Privacy Policy.'
                 />
               )
@@ -1175,7 +1165,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
     }
 
     renderPreferredLocale() {
-      const { errors, validateHandler, currentUser: { locale } } = this.props;
+      const { validateHandler, currentUser: { locale } } = this.props;
 
       return (
         <div className='userFormInputField locale'>
@@ -1226,7 +1216,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
     }
 
     renderPrograms() {
-      const { validateHandler, errors, programs, currentUser: { programs: userPrograms=[] } } = this.props;
+      const { validateHandler, programs, currentUser: { programs: userPrograms=[] } } = this.props;
 
       return (
         <div className='userFormInputField programs'>
@@ -1454,6 +1444,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
       password_confirmation: PropTypes.string,
       contact_permission: PropTypes.bool,
       terms_and_conditions: PropTypes.bool,
+      privacy_policy: PropTypes.bool,
       current_password: PropTypes.string,
       thumbnail_image: PropTypes.oneOfType([ PropTypes.string, PropTypes.object ]),
       timezone: PropTypes.string,
@@ -1518,6 +1509,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
       thumbnail_image: {},
       contact_permission: false,
       terms_and_conditions: false,
+      privacy_policy: false
     },
   };
 
