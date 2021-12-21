@@ -11,6 +11,7 @@ import TextField from '@material-ui/core/TextField';
 import Checkbox from '@material-ui/core/Checkbox';
 
 import { FormControlLabel } from '@material-ui/core';
+import FormHelperText from '@material-ui/core/FormHelperText';
 import FormData from './utils/FormData';
 import SnackBarComponent from './reusable/SnackBarComponent';
 import { postData } from './utils/sendData';
@@ -24,12 +25,21 @@ import {
 const schema = {
   email: Joi.string().email().required().options({
     language: {
+      string: {
+        email: 'Please enter a valid email.',        
+      },
       any: {
-        allowOnly: 'Please enter a valid email.',
+        required: 'Please enter your email.'
+      }
+    },
+  }),
+  password: Joi.string().required().options({
+    language: {
+      any: {
+        required: 'Please enter your password.'
       },
     },
   }),
-  password: Joi.string().required(),
   remember_me: Joi.boolean(),
 };
 
@@ -62,7 +72,7 @@ class SignIn extends Component {
       <div>
         <PageHeader title={ (
           <FormattedMessage
-            id="signIn"
+            id="SignIn.label"
             defaultMessage="Sign In"
           />
           ) }
@@ -72,26 +82,48 @@ class SignIn extends Component {
             name="email"
             value={ email }
             className="signInEmailInputField"
-            label="Email"
-            
-            errorText={ errors.email }
+            label={ (
+              <FormattedMessage
+                id="SignIn.email"
+                defaultMessage="Email"
+             />
+            ) }
+            InputLabelProps={ {
+              shrink: true
+            } }           
             onChange={ changeHandler('email') }
             onBlur={ validateHandler('email') }
             fullWidth
           />
+          {errors.email && (
+            <FormHelperText error>
+              { errors.email }
+            </FormHelperText>
+          )}
 
           <TextField
             name="password"
             value={ password }
             type="password"
-            label="Password"
-            
-            errorText={ errors.password }
+            label={ (
+              <FormattedMessage
+                id="SignIn.password"
+                defaultMessage="Password"
+             />
+            ) }       
+            InputLabelProps={ {
+              shrink: true
+            } }     
             onChange={ changeHandler('password') }
             onBlur={ validateHandler('password') }
             fullWidth
             className="signInEmailInputField"
           />
+          {errors.password && (
+            <FormHelperText error>
+              { errors.password }
+            </FormHelperText>
+          )}
           <FormControlLabel
             control={ (
               <Checkbox
@@ -99,7 +131,12 @@ class SignIn extends Component {
                 onChange={ changeHandler('remember_me') }            
               />
             ) }
-            label="Remember me"
+            label={ (
+              <FormattedMessage
+                id="SignIn.rememberMe"
+                defaultMessage="Remember me"
+             />
+            ) }
           />
           <div>
             <Button
@@ -109,7 +146,7 @@ class SignIn extends Component {
               className="signInLink"
             >
               <FormattedMessage
-                id="signIn"
+                id="SignIn.label"
                 defaultMessage="Sign In"
               />
             </Button>
@@ -165,15 +202,19 @@ class SignIn extends Component {
 
   renderSnackBar() {
     if (this.state.showSnackBar) {
-      return <SnackBarComponent open={ this.state.showSnackBar } message={ this.state.message } />;
+      return <SnackBarComponent open={ this.state.showSnackBar } message={ this.state.message } handleClose={ this.handleHideSnackBar } />;
     }
     return (null);
   }
 
   handleSignIn() {
-    const { errors, locale } = this.props;
+    const { errors, locale,
+      currentUser: {
+        password,
+        email
+      }} = this.props;
 
-    if (_.size(errors) === 0) {
+    if (_.size(errors) === 0 && password && email) {
       const cUser = this.props.currentUser;
       const attributes = FormData.from({ user: cUser });
 

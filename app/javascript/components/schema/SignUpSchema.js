@@ -113,6 +113,13 @@ const SignUpSchema = {
       }
     }
   }),
+  privacy_policy: Joi.boolean().valid(true).options({
+    language: {
+      any: {
+        allowOnly: 'Please agree to our privacy policy'
+      }
+    }
+  }),
   current_password: Joi.string().min(8).allow('')
 };
 
