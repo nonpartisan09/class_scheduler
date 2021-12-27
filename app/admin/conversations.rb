@@ -63,7 +63,10 @@ ActiveAdmin.register Conversation do
       User.find(conversation[:recipient_id]).email
     end
     column "timely" do |conversation| 
-      User.find(conversation.recipient_id).timeout
+      !User.find(conversation.recipient_id).timeout
+    end
+    column "responsive" do |conversation| 
+      !User.find(conversation.recipient_id).unresponsive
     end
     column :updated_at
     column :created_at

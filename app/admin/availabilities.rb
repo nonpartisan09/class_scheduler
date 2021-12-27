@@ -74,7 +74,7 @@ ActiveAdmin.register Availability do
     column :updated_at
     column :created_at
     column "Active" do |availability| 
-      User.find(availability.user_id).timeout
+      !User.find(availability.user_id).timeout
     end
   end
 end
