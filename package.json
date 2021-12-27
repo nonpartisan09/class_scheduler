@@ -80,5 +80,8 @@
     "test": "jest",
     "start": "bin/webpack",
     "testWatch": "jest --watch"
+  },
+  "engines": {
+    "node": "14.x"
   }
 }
