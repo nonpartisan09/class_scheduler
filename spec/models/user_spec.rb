@@ -61,4 +61,71 @@ RSpec.describe User, type: :model do
     subject.password = nil
     expect(subject).to_not be_valid
   end
+
+  describe "#all_conversations_timely?" do
+    subject(:all_conversations_timely) { volunteer.all_conversations_timely? }
+
+    let(:volunteer) { FactoryBot.create(:volunteer_user) }
+    let(:client) { FactoryBot.create(:client_user) }
+    let(:conversation) { FactoryBot.create(:conversation, author_id: client.id, recipient_id: volunteer.id) }
+    let!(:message) { FactoryBot.create(:message, conversation_id: conversation.id, user_id: client.id, created_at: DateTime.now - 3.days) }
+
+    it "returns false if user has an untimely conversation" do
+      volunteer.audit_conversations
+
+      expect(all_conversations_timely).to be false
+    end
+
+    it "return true if user has no untimely conversations" do
+      conversation.messages.create(user_id: volunteer.id, body: "this is a timely response")
+      volunteer.audit_conversations
+
+      expect(all_conversations_timely).to be true
+    end
+  end
+
+  describe "audit_conversations" do
+    subject(:volunteer) { FactoryBot.create(:volunteer_user) }
+
+    let(:client) { FactoryBot.create(:client_user) }
+    let(:audit_conversations) { volunteer.audit_conversations }
+    let(:conversation) { FactoryBot.create(:conversation, author_id: client.id, recipient_id: volunteer.id) }
+    let!(:message) { FactoryBot.create(:message, conversation_id: conversation.id, user_id: client.id, created_at: DateTime.now - 3.days) }
+
+    it "unresponsive user is not marked unresponsive or timeout before the audit" do
+      aggregate_failures do
+        expect(subject).to_not be_timeout
+        expect(subject).to_not be_unresponsive
+      end
+    end
+
+    it "unresponsive user is marked unresponsive and timeout after the audit" do
+      audit_conversations
+
+      aggregate_failures do
+        expect(subject).to be_timeout
+        expect(subject).to be_unresponsive
+      end
+    end
+
+    it "never marks a client as unresponsive or timeout" do
+      aggregate_failures do
+        expect(client).to_not be_timeout
+        expect(client).to_not be_unresponsive
+      end
+
+      client.audit_conversations
+
+      aggregate_failures do
+        expect(client).to_not be_timeout
+        expect(client).to_not be_unresponsive
+      end
+    end
+  end
+
+  def create_timely_conversation(client, volunteer)
+    convo = Conversation.create(author_id: client.id, recipient_id: volunteer.id)
+    FactoryBot.create(:message, conversation: convo, user_id: client.id, created_at: DateTime.now - 3.days)
+    FactoryBot.create(:message, conversation: convo, user_id: volunteer.id, created_at: DateTime.now)
+  end
 end

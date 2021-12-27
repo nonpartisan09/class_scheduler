@@ -187,16 +187,13 @@ class User < ActiveRecord::Base
     end
   end
 
-  def all_timely
+  def all_conversations_timely?
     received_conversations.all?(&:timely)
   end
 
   def audit_conversations
-    received_conversations.each do |convo| 
-      unresponsive! if !convo.check_timely && convo.timely?
-    end
-
-    all_timely && unresponsive && update!(unresponsive: false)
+    received_conversations.each { |convo| audit_conversation(convo) }
+    all_conversations_timely? && unresponsive? && update!(unresponsive: false)
   end
 
   def audit_conversation(conversation)
