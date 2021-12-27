@@ -193,16 +193,14 @@ class User < ActiveRecord::Base
 
   def audit_conversations
     received_conversations.each { |convo| audit_conversation(convo) }
-    all_conversations_timely? && unresponsive? && update!(unresponsive: false)
+
+    if all_conversations_timely? && unresponsive?
+      update!(unresponsive: false)
+    end
   end
 
   def audit_conversation(conversation)
     unresponsive!(conversation) unless conversation.check_timely && conversation.timely?
-  end
-
-  def self.audit_conversations
-    users = User.all.includes(received_conversations: :messages)
-    users.each(&:audit_conversations)
   end
 
   private
