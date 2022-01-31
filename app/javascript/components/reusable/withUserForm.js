@@ -1074,11 +1074,11 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
       if (type === SIGN_UP) {
         const {
           changeHandler,
+          locale,
           currentUser: {
             terms_and_conditions,
             privacy_policy,
-            contact_permission,
-            locale
+            contact_permission
           }
         } = this.props;
 
@@ -1428,6 +1428,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
 
   UserForm.propTypes = {
     errors: PropTypes.object,
+    locale: PropTypes.string,
     currentUser: PropTypes.shape({
       programs: PropTypes.array,
       first_name: PropTypes.string,
@@ -1478,6 +1479,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
 
   UserForm.defaultProps = {
     errors: {},
+    locale: 'en',
     match: {
       params: {
         role: ' '
