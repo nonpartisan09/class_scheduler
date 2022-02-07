@@ -626,9 +626,11 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
       const { user } = this.state;
 
       const updatedUser = newUser(currentUser, user);
+      
 
       if (_.size(updatedUser) > 0 && _.size(errors) === 0) {
-        const {  validateAllHandler } = this.props;
+        // the validator seems to be broken
+        // const {  validateAllHandler } = this.props;
 
         return (
           <div className='userFormOuterButton'>
@@ -636,7 +638,7 @@ const withUserForm = (WrappedComponent, schema, wrappedProps) => {
               className='userFormSaveButton'
               variant='contained'
               label={ wrappedProps.primaryButtonLabel }
-              onClick={ validateAllHandler(this.handleSubmit) }
+              onClick={ this.handleSubmit }
               color='primary'
             >
               { wrappedProps.primaryButtonLabel }
