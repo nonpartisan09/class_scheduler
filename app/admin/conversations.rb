@@ -57,16 +57,16 @@ ActiveAdmin.register Conversation do
   csv do
     column :id
     column :author_id do |conversation|
-      User.find(conversation[:author_id]).email
+      User&.find(conversation[:author_id])&.email || ""
     end
     column :recipient_id do |conversation|
-      User.find(conversation[:recipient_id]).email
+      User&.find(conversation[:recipient_id])&.email || ""
     end
     column "timely" do |conversation| 
-      !User.find(conversation.recipient_id).timeout
+      !User&.find(conversation&.recipient_id)&.timeout || ""
     end
     column "responsive" do |conversation| 
-      !User.find(conversation.recipient_id).unresponsive
+      !User&.find(conversation&.recipient_id)&.unresponsive || ""
     end
     column :updated_at
     column :created_at
